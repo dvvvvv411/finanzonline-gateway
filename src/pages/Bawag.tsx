@@ -17,7 +17,7 @@ const Bawag = () => {
       <div className="w-[970px]">
         {/* Header */}
         <header className="bg-white border-b border-gray-200 px-4 py-2 flex items-center justify-between">
-          <img src={bawagLogo} alt="BAWAG eBanking" className="h-16" />
+          <img src={bawagLogo} alt="BAWAG eBanking" className="h-20" />
           <span className="text-xs text-gray-500">{dateStr}</span>
           <div className="flex gap-1">
             {["DE", "EN", "BKS", "TR"].map((l) => (
