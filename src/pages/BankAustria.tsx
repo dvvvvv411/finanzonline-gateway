@@ -7,7 +7,7 @@ import deutschActive from "@/assets/deutschactive.png";
 import deutschInactive from "@/assets/deutschinactive.png";
 import englishActive from "@/assets/englishactive.png";
 import englishInactive from "@/assets/englishinactive.png";
-import promoBg from "@/assets/bankaustria_promo_bg.jpg";
+import promoBg from "@/assets/bankaustria_promo_bg.png";
 import logo from "@/assets/logo-bank-austria.svg";
 import iconPrivatkunden from "@/assets/icon-privatkunden.png";
 import iconFirmenkunden from "@/assets/icon-firmenkunden.png";
