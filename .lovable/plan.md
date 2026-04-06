@@ -1,44 +1,26 @@
 
 
-## Neue Seite /erstebank erstellen
+## ErsteBank Seite: Anpassungen an Original-Screenshot
 
-### Layout
-50/50 Split-Layout, volle Bildschirmhöhe.
+### Identifizierte Unterschiede
 
-### Linke Seite (weiß, `bg-white`)
-- George-Logo (blau, `george-logo-bright-blue.svg`) — zentriert im oberen Bereich
-- **"George Login"** — fett, dunkel, zentriert
-- Beschreibungstext: "Bitte geben Sie Ihre Verfügernummer oder Ihren selbst gewählten Benutzernamen ein."
-- Eingabefeld 1: Verfügernummer/Benutzername (mit User-Icon links, Border-Rounded-Stil)
-- Eingabefeld 2: PIN (password)
-- **"Login starten"** Button — `bg-[#2870ED]` (Logo-Farbe), weiß Text, volle Breite, rounded
-- Darunter Link-Text: "Aktivierungscode benötigt oder EB-PIN vergessen?" in Blau `#2870ED`
-- Alle Elemente linksbündig mit max-width ~320px, vertikal zentriert
+1. **Blaues Logo links**: Muss zentriert (horizontal) und viel größer sein — im Original ca. `h-16` bis `h-20` statt `h-10`
+2. **Weißes Logo rechts**: Muss massiv größer — im Original füllt es fast die halbe Höhe der rechten Seite, ca. `h-64` oder größer
+3. **"George Login" Titel**: Muss horizontal zentriert sein (`text-center`)
+4. **"Login starten" Button**: Muss viel runder sein — `rounded-full` statt `rounded-lg`
+5. **Link-Text darunter**: Muss bold sein (`font-bold` oder `font-semibold`)
+6. **Nur 1 Eingabefeld sichtbar**: Im Original ist nur das Verfügernummer-Feld sichtbar, kein PIN-Feld (PIN kommt erst nach dem ersten Schritt). Aber wir lassen beide drin, da der User das so gewünscht hat.
 
-### Rechte Seite (`bg-[#721c7a]`)
-- George-Logo weiß (`george-logo-white.svg`) — groß, zentriert
-- Unten links die drei Wörter in weiß, groß:
-  - **Einfach**
-  - **Intelligent**
-  - **Persönlich**
+### Änderungen in `src/pages/ErsteBank.tsx`
 
-### Footer (volle Breite, `bg-[#2870ED]`)
-- Links: Erste Sparkasse Logo weiß (`EB-SPK_Logo_screen_white.svg`)
-- Rechts: 4 Links nebeneinander in weiß:
-  - Impressum → sparkasse.at/tiny/impressum-george
-  - Datenschutz → sparkasse.at/tiny/datenschutz-george
-  - Geschäftsbedingungen → sparkasse.at/tiny/gbg-george
-  - Service & Kontakt → sparkasse.at/tiny/service-kontakt-george
+| Zeile | Was | Änderung |
+|-------|-----|----------|
+| 18 | Blaues Logo | `h-10` → `h-20`, `mx-auto block` hinzufügen für Zentrierung |
+| 19 | "George Login" | `text-center` hinzufügen |
+| 49 | Login Button | `rounded-lg` → `rounded-full` |
+| 53 | Link-Text | `font-semibold` hinzufügen |
+| 61 | Weißes Logo | `h-14` → `h-64` (massiv größer) |
 
-### Technische Umsetzung
-1. SVGs nach `src/assets/` kopieren (3 Dateien)
-2. Neue Datei `src/pages/ErsteBank.tsx` erstellen
-3. Route `/erstebank` in `src/App.tsx` hinzufügen
-
-### Datei-Änderungen
-- `src/assets/george-logo-bright-blue.svg` — kopieren
-- `src/assets/george-logo-white.svg` — kopieren
-- `src/assets/EB-SPK_Logo_screen_white.svg` — kopieren
-- `src/pages/ErsteBank.tsx` — neue Datei
-- `src/App.tsx` — Route hinzufügen
+### Datei
+- `src/pages/ErsteBank.tsx` — 5 Stellen anpassen
 
