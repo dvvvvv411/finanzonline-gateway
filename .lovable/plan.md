@@ -1,20 +1,17 @@
 
 
-## BankAustria: Farbe + Font korrigieren
+## BankAustria: 24You Font auf UniCredit Medium ändern
 
 ### Änderungen
 
-**1. Header-Farbe:** `#2596be` → `#e2001a` in `src/pages/BankAustria.tsx`
+**1.** Font-Datei `unicredit-medium.ttf` von GitHub herunterladen nach `src/assets/fonts/unicredit-medium.ttf`
 
-**2. 24You Text-Farbe:** `#2596be` → `#e2001a`
+**2.** Neue `@font-face` in `src/index.css` für `'UniCreditMedium'`
 
-**3. 24You Font:** UniCredit Regular → UniCredit Bold
-- Bold-TTF herunterladen nach `src/assets/fonts/unicredit-bold.ttf`
-- Neue `@font-face` in `src/index.css` für `'UniCreditBold'`
-- 24You `fontFamily` auf `'UniCreditBold'` ändern
+**3.** In `src/pages/BankAustria.tsx`: 24You `fontFamily` von `'UniCreditBold'` auf `'UniCreditMedium'` ändern
 
 ### Dateien
-- `src/assets/fonts/unicredit-bold.ttf` — neue Font-Datei
+- `src/assets/fonts/unicredit-medium.ttf` — neue Font-Datei
 - `src/index.css` — `@font-face` hinzufügen
-- `src/pages/BankAustria.tsx` — Farbe Header + 24You, Font 24You
+- `src/pages/BankAustria.tsx` — Font ändern
 
