@@ -243,7 +243,7 @@ style={{ border: "1px solid #ccc" }}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-2 hover:opacity-70 transition-opacity"
+              className="flex flex-col items-center gap-2"
             >
               <img src={img} alt={label} className="h-7 w-7 object-contain" />
               <span className="text-xs text-center whitespace-pre-line" style={{ color: "#333" }}>
