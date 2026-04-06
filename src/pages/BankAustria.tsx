@@ -25,10 +25,10 @@ import iconCookie from "@/assets/cookie_policy.png";
 import infoIcon from "@/assets/info-icon.jpeg";
 
 const navItems = [
-  { label: "Privatkunden", icon: iconPrivatkunden },
-  { label: "Firmenkunden", icon: iconFirmenkunden },
-  { label: "Private Banking", icon: iconPrivatebanking },
-  { label: "Über uns", icon: iconUeberuns },
+  { label: "Privatkunden", icon: iconPrivatkunden, href: "https://www.bankaustria.at/index.jsp#" },
+  { label: "Firmenkunden", icon: iconFirmenkunden, href: "https://www.bankaustria.at/firmenkunden-und-freie-berufe.jsp" },
+  { label: "Private Banking", icon: iconPrivatebanking, href: "https://www.bankaustria.at/firmenkunden-und-freie-berufe.jsp" },
+  { label: "Über uns", icon: iconUeberuns, href: "https://www.bankaustria.at/ueber-uns.jsp" },
 ];
 
 const sidebarItems = [
@@ -65,21 +65,26 @@ const BankAustria = () => {
           <Menu size={32} className="text-white" />
         </a>
         {/* White logo area */}
-        <div
+        <a
+          href="https://www.bankaustria.at/index.jsp"
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex items-center px-1 flex-shrink-0"
           style={{ backgroundColor: "#fff", width: "220px" }}
         >
           <img src={logo} alt="Bank Austria" style={{ height: "76px" }} />
-        </div>
+        </a>
         {/* Red nav area */}
         <div
           className="flex-1 flex items-center justify-center gap-10"
           style={{ backgroundColor: "#e2001a" }}
         >
-          {navItems.map(({ label, icon }) => (
+        {navItems.map(({ label, icon, href }) => (
             <a
               key={label}
-              href="#"
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex flex-col items-center gap-1 transition-opacity hover:opacity-80"
             >
               <img src={icon} alt={label} className="h-8 w-8 object-contain" />
@@ -190,7 +195,9 @@ const BankAustria = () => {
 
             <div className="mb-4">
               <a
-                href="#"
+                href="https://banking.bankaustria.at/pinreset"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block text-sm font-medium transition-colors"
                 style={{
                   color: "#00aed0",
@@ -276,7 +283,7 @@ const BankAustria = () => {
               Jetzt von Topkonditionen* unserer Wohnoffensive<br />profitieren.
             </p>
             <a
-              href="https://www.bankaustria.at/wohnoffensive"
+              href="https://www.bankaustria.at/privatkunden-finanzierungen-und-kredite-wohnkredit.jsp?ucid=INT-8612-Wohnkredit_2026-24You"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-6 py-2.5 text-white font-semibold text-sm tracking-wider hover:opacity-90 transition-opacity"
