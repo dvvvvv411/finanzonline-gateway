@@ -83,7 +83,7 @@ const Raiffeisenbank = () => {
 
   return (
     <div
-      className="relative flex min-h-screen flex-col"
+      className="relative flex h-screen overflow-hidden flex-col md:min-h-screen md:h-auto md:overflow-visible"
       style={{ fontFamily: "'Open Sans', sans-serif" }}
     >
       {/* Mobile: Background image top section */}
