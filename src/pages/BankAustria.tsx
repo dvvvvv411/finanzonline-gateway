@@ -291,7 +291,7 @@ const BankAustria = () => {
         </div>
 
         {/* Footer Icons */}
-        <div className="flex justify-center gap-8 py-8" style={{ backgroundColor: "#e5e5e5" }}>
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 justify-items-center py-8 px-4 sm:px-0" style={{ backgroundColor: "#e5e5e5" }}>
           {[
             { img: iconSicherheit, label: "Sicherheits\ninformationen", href: "https://www.bankaustria.at/sicherheit" },
             { img: iconSicherheitscenter, label: "Sicherheitscenter\n+43 (0) 50505 26105", href: "tel:+43505052610" },
