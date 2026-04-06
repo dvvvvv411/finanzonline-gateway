@@ -1,38 +1,51 @@
 
-BankAustria: Language Selector deutlich stärker ausbleichen + kleiner machen
+BankAustria: Language Selector nur noch mit separaten Aktiv/Inaktiv-Bildern
 
-Ziel:
-- Inaktive Flagge soll viel heller/ausgewaschener wirken wie im Screenshot
-- Language Selector insgesamt etwas kleiner
-- Aktive Sprache bleibt mit blauem Kreis und blauem Text (`#00aed0`)
+Ziel
+- Keine CSS-Grau-, Blur-, Fade- oder Sprite-Logik mehr.
+- Für Deutsch und English jeweils das exakt passende hochgeladene Bild verwenden.
+- Blaue Outline bleibt nur um den Kreis.
+- Text bleibt blau bei aktiv, grau bei inaktiv.
+- Selector bleibt mittig zentriert und in der aktuellen kleineren Größe.
 
-Datei:
-- `src/pages/BankAustria.tsx`
+Umsetzung
+1. In `src/pages/BankAustria.tsx` die bisherigen Flag-Imports ersetzen durch 4 Bilder:
+   - `user-uploads://deutschactive.png`
+   - `user-uploads://deutschinactive.png`
+   - `user-uploads://englishactive.png`
+   - `user-uploads://englishinactive.png`
+   (für die Umsetzung werden sie nach `src/assets/` übernommen und importiert)
 
-Umsetzung:
-1. Inaktiven Flag-Zustand deutlich stärker verblassen
-- Den aktuellen Filter `grayscale(100%) brightness(1.8)` ersetzen
-- Nicht nur heller machen, sondern auch Kontrast runternehmen und Transparenz reduzieren
-- Falls das allein noch nicht nah genug am Screenshot ist: zusätzlich einen halbtransparenten weißen Overlay direkt im Kreis nur für inaktive Flags einbauen
+2. Die Sprachdaten umbauen:
+   - `de`: `activeImage` + `inactiveImage`
+   - `en`: `activeImage` + `inactiveImage`
 
-2. Language Selector kleiner machen
-- Kreisgröße von `56x56` auf ca. `46x46` reduzieren
-- Abstand zwischen den beiden Sprachen leicht verkleinern
-- Label unter den Kreisen minimal kleiner machen, damit der ganze Block kompakter wirkt
+3. Beim Rendern je nach `activeLang` direkt das richtige Bild setzen:
+   - Deutsch aktiv → `deutschactive`
+   - Deutsch inaktiv → `deutschinactive`
+   - English aktiv → `englishactive`
+   - English inaktiv → `englishinactive`
 
-3. Bestehendes Verhalten beibehalten
-- Selector bleibt mittig zentriert
-- Outline bleibt nur um den Kreis, nicht um die ganze Box
-- Aktive Flag bleibt farbig, inaktive deutlich ausgewaschen
+4. Die aktuelle Effekt-Logik komplett entfernen:
+   - kein `filter`
+   - kein `opacity`
+   - kein weißes Overlay
+   - kein `height: "200%"`
+   - kein `objectPosition: "top"`
+   - keine Sprite-/Crop-Logik mehr
 
-Technische Details:
-- Bereich: Language-Selector-Block in `src/pages/BankAustria.tsx` (ca. Zeile 149-183)
-- Geplante Stil-Anpassungen für inaktive Flags:
-  - `filter: isActive ? "none" : "grayscale(100%) brightness(2.4) contrast(0.35)"`
-  - `opacity: isActive ? 1 : 0.45`
-- Falls nötig für den exakten Look:
-  - zusätzlicher weißer Overlay-Layer im Kreis, z. B. `background: rgba(255,255,255,0.35)`
-- Geplante Größen:
-  - Kreis: `56 -> 46`
-  - Button-Gap: etwas kleiner
-  - Label: `text-sm -> text-xs`
+5. Den UI-Aufbau beibehalten:
+   - Wrapper bleibt `flex flex-col items-center`
+   - Kreis bleibt kompakt
+   - Border nur am runden Bild-Container:
+     - aktiv: `2px solid #00aed0`
+     - inaktiv: transparent
+   - Label darunter:
+     - aktiv: `#00aed0`
+     - inaktiv: `#999`
+
+Technische Details
+- Datei: `src/pages/BankAustria.tsx`
+- Neue Assets: 4 PNGs in `src/assets/`
+- `activeLang` State bleibt unverändert
+- Bild-Rendering wird vereinfacht auf normales Bild im runden Container (`w-full h-full`), ohne Nachbearbeitung per CSS
