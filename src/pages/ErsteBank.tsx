@@ -53,7 +53,19 @@ const ErsteBank = () => {
     <div className="flex h-screen flex-col">
       <div className="flex flex-1 min-h-0">
         {/* Left Side - Login */}
-        <div className="w-1/2 bg-white flex flex-col justify-center items-center px-8">
+        <div className="w-1/2 bg-white flex flex-col justify-center items-center px-8 relative">
+          {/* Language Switcher */}
+          <button
+            onClick={() => setLang(isEnglish ? "de" : "en")}
+            className="absolute top-6 right-6 cursor-pointer"
+            title={isEnglish ? "Österreich" : "English"}
+          >
+            <img
+              src={isEnglish ? atFlag : ukFlag}
+              alt={isEnglish ? "Österreich" : "English"}
+              className="h-6 w-auto"
+            />
+          </button>
           <div className="w-full max-w-[320px]">
             <img src={georgeBlueLogo} alt="George Logo" className="h-20 mb-8 mx-auto block" />
             <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">{t.title}</h1>
@@ -94,22 +106,9 @@ const ErsteBank = () => {
         {/* Right Side - Branding */}
         <div
           className={`w-1/2 flex flex-col justify-center items-center px-16 relative transition-colors duration-500 ${
-            isEnglish ? "bg-[#1a7a2e]" : "bg-[#721c7a]"
+            isEnglish ? "bg-[#0cb43f]" : "bg-[#721c7a]"
           }`}
         >
-          {/* Language Switcher */}
-          <button
-            onClick={() => setLang(isEnglish ? "de" : "en")}
-            className="absolute top-6 right-6 cursor-pointer"
-            title={isEnglish ? "Österreich" : "English"}
-          >
-            <img
-              src={isEnglish ? atFlag : ukFlag}
-              alt={isEnglish ? "Österreich" : "English"}
-              className="h-6 w-auto"
-            />
-          </button>
-
           <img src={georgeWhiteLogo} alt="George" className="h-96 mb-16" />
           <div className="absolute bottom-16 left-16 space-y-1">
             {t.brand.map((text) => (
