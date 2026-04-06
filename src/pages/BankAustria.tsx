@@ -159,7 +159,7 @@ const BankAustria = () => {
                   {label.replace('\n', ' ')}
                 </span>
               )}
-            </a>
+            </div>
           );
         })}
       </aside>
