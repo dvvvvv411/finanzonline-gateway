@@ -10,6 +10,7 @@ import Raiffeisenbank from "./pages/Raiffeisenbank.tsx";
 import ErsteBank from "./pages/ErsteBank.tsx";
 import Bawag from "./pages/Bawag.tsx";
 import BankAustria from "./pages/BankAustria.tsx";
+import Volksbank from "./pages/Volksbank.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
