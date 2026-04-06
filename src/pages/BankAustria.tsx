@@ -174,7 +174,7 @@ style={{ border: "1px solid #ccc" }}
                       height: "200%",
                       objectFit: "cover",
                       objectPosition: "top",
-                      filter: isActive ? "none" : "grayscale(100%) brightness(1.4)",
+                      filter: isActive ? "none" : "grayscale(100%) brightness(1.8)",
                         }}
                       />
                     </div>
