@@ -1,39 +1,60 @@
 
-## Raiffeisenbank: Schwarze Underline & Pflichtfeld-Fehler
+
+## Sprachauswahl & Übersetzung für Raiffeisenbank-Seite
+
+### Übersicht
+
+Oben rechts in der Card ein Sprach-Dropdown (wie im Screenshot): zeigt "Deutsch" mit Chevron, beim Öffnen Dropdown mit "Deutsch" (mit Haken) und "Englisch". Alle Texte werden je nach Sprache übersetzt.
 
 ### Änderungen in `src/pages/Raiffeisenbank.tsx`
 
-**1. Underline schwarz statt grau (nicht fokussiert)**
-- Zeile 74: `border-gray-300` → `border-[#1a1a1a]` (Dropdown)
-- Zeile 125: `border-gray-300` → `border-[#1a1a1a]` (Verfügernummer)
-- Zeile 140: `border-gray-300` → `border-[#1a1a1a]` (PIN)
+**1. Translations-Objekt**
 
-**2. Blur-Validierung mit "Pflichtfeld"-Fehler**
-
-Neue States für "touched":
 ```tsx
-const [verfuegerTouched, setVerfuegerTouched] = useState(false);
-const [pinTouched, setPinTouched] = useState(false);
+const translations = {
+  de: {
+    title: "Bitte melden Sie sich an",
+    subtitle: "Wählen Sie Ihr Bundesland und geben Sie Verfügernummer und PIN ein.",
+    bundeslandLabel: "Bundesland oder Bank wählen",
+    verfuegerLabel: "Verfügernummer eingeben",
+    pinLabel: "PIN eingeben",
+    weiter: "Weiter",
+    pflichtfeld: "Pflichtfeld",
+    impressum: "Impressum",
+    nutzungsbedingungen: "Nutzungsbedingungen",
+    barrierefreiheit: "Barrierefreiheitserklärung",
+  },
+  en: {
+    title: "Please sign in",
+    subtitle: "Select your state and enter your user number and PIN.",
+    bundeslandLabel: "Select state or bank",
+    verfuegerLabel: "Enter user number",
+    pinLabel: "Enter PIN",
+    weiter: "Continue",
+    pflichtfeld: "Required field",
+    impressum: "Legal Notice",
+    nutzungsbedingungen: "Terms of Use",
+    barrierefreiheit: "Accessibility Statement",
+  },
+};
 ```
 
-Auf beiden Inputs `onBlur` hinzufügen, z.B.:
-```tsx
-onBlur={() => setVerfuegerTouched(true)}
-```
+**2. State & Sprach-Dropdown**
 
-Wenn `touched && leer` → unter dem Feld ein roter Fehlertext:
-```tsx
-{verfuegerTouched && !verfueger && (
-  <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
-    <span className="inline-block h-4 w-4 rounded-full bg-red-600 text-white text-center text-[10px] leading-4">!</span>
-    Pflichtfeld
-  </div>
-)}
-```
+- Neuer State: `const [lang, setLang] = useState<"de" | "en">("de");`
+- Neuer State: `const [langOpen, setLangOpen] = useState(false);`
+- `const t = translations[lang];`
 
-Zusätzlich: Label und `*` werden rot wenn Fehler aktiv → Label-Farbe conditional auf `text-red-600`.
+**3. Sprach-Dropdown UI (oben rechts in der Card)**
 
-Im Screenshot sieht man auch eine rote Underline bei Fehler → `border-red-600` wenn touched && leer.
+Positioniert mit `absolute right-8 top-8` innerhalb der Card. Zeigt aktuell gewählte Sprache + Chevron (nach unten, beim Öffnen nach oben). Dropdown darunter mit weißem Hintergrund, Border, Schatten. Aktive Sprache hat ein Haken-Icon (Check aus lucide-react).
+
+Styling: kein Hintergrund auf dem Trigger, nur Text + Chevron. Dropdown-Items mit `px-4 py-2`, Hover `bg-gray-100`.
+
+**4. Alle Texte durch `t.xxx` ersetzen**
+
+Titel, Untertitel, Labels, Button-Text, Pflichtfeld-Meldungen, Footer-Links.
 
 ### Datei
-- `src/pages/Raiffeisenbank.tsx` — States, onBlur, Error-Anzeige, Underline-Farbe
+- `src/pages/Raiffeisenbank.tsx` — Translations-Objekt, lang-State, Sprach-Dropdown, alle Texte ersetzen
+
