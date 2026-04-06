@@ -331,7 +331,7 @@ const Index = () => {
               <h3 className="mb-4 text-base font-bold text-gray-900">Technische Unterstützung</h3>
               <p className="text-sm leading-relaxed text-gray-800">
                 Fragen Sie Fred, den Chatbot der Finanzverwaltung. Weitere Kontaktmöglichkeiten finden Sie unter{" "}
-                <a href="https://www.bmf.gv.at/services/aemter-behoerden/faoe.html" target="_blank" rel="noopener noreferrer" className="text-[#005a8b] hover:underline">
+                <a href="https://www.bmf.gv.at/services/aemter-behoerden/faoe.html" target="_blank" rel="noopener noreferrer" className="text-[#005a8b] underline">
                   Kundenservice.
                 </a>
               </p>
