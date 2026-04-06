@@ -86,7 +86,7 @@ const Auth = () => {
               onClick={() => setIsLogin(false)}
               className={`flex-1 px-4 py-3 text-sm font-bold ${
                 !isLogin
-                  ? "border-b-2 border-[#E6320F] bg-white text-black"
+                  ? "border-b-2 border-black bg-white text-black"
                   : "bg-[#f5f5f5] text-gray-600 hover:bg-[#eee]"
               }`}
             >
