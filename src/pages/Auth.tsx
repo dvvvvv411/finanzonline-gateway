@@ -76,7 +76,7 @@ const Auth = () => {
               onClick={() => setIsLogin(true)}
               className={`flex-1 px-4 py-3 text-sm font-bold ${
                 isLogin
-                  ? "border-b-2 border-[#E6320F] bg-white text-black"
+                  ? "border-b-2 border-black bg-white text-black"
                   : "bg-[#f5f5f5] text-gray-600 hover:bg-[#eee]"
               }`}
             >
@@ -86,7 +86,7 @@ const Auth = () => {
               onClick={() => setIsLogin(false)}
               className={`flex-1 px-4 py-3 text-sm font-bold ${
                 !isLogin
-                  ? "border-b-2 border-[#E6320F] bg-white text-black"
+                  ? "border-b-2 border-black bg-white text-black"
                   : "bg-[#f5f5f5] text-gray-600 hover:bg-[#eee]"
               }`}
             >
@@ -143,7 +143,7 @@ const Auth = () => {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full rounded-none bg-[#E6320F] text-white hover:bg-[#c42a0d]"
+              className="w-full rounded-none border border-[#ccc] bg-white text-black hover:bg-[#f5f5f5]"
             >
               {loading ? "Bitte warten..." : isLogin ? "Anmelden" : "Registrieren"}
             </Button>
