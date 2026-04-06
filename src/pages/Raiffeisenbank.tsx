@@ -221,7 +221,7 @@ const Raiffeisenbank = () => {
         </div>
 
         {/* PIN */}
-        <div className="relative mb-6">
+        <div className="relative mb-8">
           <input
             type="password"
             maxLength={5}
