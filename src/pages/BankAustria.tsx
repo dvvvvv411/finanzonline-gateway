@@ -78,7 +78,7 @@ const BankAustria = () => {
                 href="#"
                 className="flex flex-col items-center gap-1 transition-opacity hover:opacity-80"
               >
-                <img src={icon} alt={label} className="h-6 w-6 object-contain" />
+                <img src={icon} alt={label} className="h-8 w-8 object-contain" />
                 <span className="text-white text-xs font-bold uppercase tracking-wide">
                   {label}
                 </span>
