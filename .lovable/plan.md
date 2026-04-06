@@ -1,13 +1,16 @@
 
 
-## BankAustria: Logo größer skalieren
+## BankAustria: Login Button breiter + Link-Text fetter
 
-### Änderung in `src/pages/BankAustria.tsx` (Zeile 66-68)
+### Änderungen in `src/pages/BankAustria.tsx`
 
-- Logo-Höhe von `70px` auf `76px` erhöhen
-- Weißen Bereich breiter machen: `width: "200px"` → `width: "220px"` damit das Logo Platz hat
-- Padding entfernen (`px-2` → `px-1`) um maximale Fläche zu nutzen
+**1. Login Button breiter** (Zeile ~137)
+- `px-8` → `px-16` für deutlich breiteren Button
+
+**2. "PIN vergessen..." Link** (Zeilen 122-132)
+- `text-sm` → `text-sm font-medium` für leicht fetteren Text
+- `textDecoration: "underline"` → `textDecoration: "underline"` + `textDecorationThickness: "2.5px"` + `textUnderlineOffset: "3px"` für deutlich dickere Unterstreichung
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Logo-Container und Bild-Höhe anpassen
+- `src/pages/BankAustria.tsx` — 2 kleine Style-Änderungen
 
