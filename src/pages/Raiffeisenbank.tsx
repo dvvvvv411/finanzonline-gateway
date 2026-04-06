@@ -101,7 +101,7 @@ const Raiffeisenbank = () => {
             className={`flex items-center justify-between px-4 py-2 text-base text-gray-700 min-w-[160px] border ${langOpen ? "border-gray-300 bg-white rounded-t-md rounded-b-none" : "border-transparent bg-transparent rounded-md"}`}
           >
             {lang === "de" ? t.deutsch : t.englisch}
-            <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} />
+            <ChevronDown className={`h-7 w-7 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} strokeWidth={2.5} />
           </button>
           {langOpen && (
             <div className="absolute right-0 top-full min-w-full rounded-b-md border border-gray-300 border-t-0 bg-white shadow-lg z-50">
