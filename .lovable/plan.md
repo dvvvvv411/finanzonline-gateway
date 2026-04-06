@@ -1,15 +1,36 @@
 
 
-## Raiffeisenbank: Card breiter, Focus-Styling, Chevron größer
+## Raiffeisenbank: Scrollbar, Card, Titel-Abstand & Button
 
 ### Änderungen in `src/pages/Raiffeisenbank.tsx`
 
-1. **Card breiter** (Zeile 51): `max-w-md` → `max-w-lg` damit der Beschreibungstext und das Label einzeilig passen
+**1. Custom Scrollbar im Dropdown (Zeilen 88-96)**
+Webkit-Scrollbar CSS hinzufügen via `<style>`-Tag oder inline className. Die Firefox-`scrollbarWidth`/`scrollbarColor` reichen nicht — für die gewünschte Optik (keine Pfeile, abgerundet, dicker, dunkler) braucht es Webkit-Pseudo-Elemente. Lösung: eine CSS-Klasse in `src/index.css` hinzufügen:
 
-2. **Eingabefelder dunkler bei Focus** (Zeilen 72, 126, 141): `bg-[#f4f4f4]` bekommt zusätzlich `focus:bg-[#e8e8e8]` (Inputs) bzw. beim Dropdown: wenn `selectOpen`, dann `bg-[#e8e8e8]` statt `bg-[#f4f4f4]`
+```css
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+```
+Dann `className="custom-scrollbar"` auf das Dropdown-Menü setzen.
 
-3. **Chevron größer** (Zeile 80): `h-4 w-4` → `h-5 w-5`
+**2. Card breiter & weniger abgerundet (Zeile 51)**
+`max-w-lg` → `max-w-xl`, `rounded-lg` → `rounded-md`
 
-### Datei
+**3. Mehr Abstand zwischen Titel und Untertitel (Zeile 52)**
+`mb-2` → `mb-4` auf dem `<h1>`
+
+**4. Weiter-Button breiter (Zeile 152)**
+`px-12` → `px-20`
+
+### Dateien
+- `src/index.css` — Custom-Scrollbar-Klasse hinzufügen
 - `src/pages/Raiffeisenbank.tsx` — 4 Stellen ändern
 
