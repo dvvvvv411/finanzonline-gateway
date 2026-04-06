@@ -283,7 +283,7 @@ const BankAustria = () => {
               Jetzt von Topkonditionen* unserer Wohnoffensive<br />profitieren.
             </p>
             <a
-              href="https://www.bankaustria.at/wohnoffensive"
+              href="https://www.bankaustria.at/privatkunden-finanzierungen-und-kredite-wohnkredit.jsp?ucid=INT-8612-Wohnkredit_2026-24You"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-6 py-2.5 text-white font-semibold text-sm tracking-wider hover:opacity-90 transition-opacity"
