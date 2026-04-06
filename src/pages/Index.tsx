@@ -148,9 +148,15 @@ const Index = () => {
                 </div>
               </div>
 
-              <div className="w-full md:w-1/3">
-                <label className="mb-1.5 block text-sm font-medium text-gray-600">Postleitzahl</label>
-                <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="mb-1.5 block text-sm font-medium text-gray-600">Postleitzahl</label>
+                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-sm font-medium text-gray-600">Stadt</label>
+                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                </div>
               </div>
 
               <div>
@@ -178,7 +184,7 @@ const Index = () => {
                       <input
                         ref={inputRef}
                         type="text"
-                        className="h-full flex-1 bg-transparent text-sm outline-none placeholder:text-gray-400"
+                        className={cn("h-full flex-1 bg-transparent text-sm outline-none", selectedBank ? "placeholder:text-black" : "placeholder:text-gray-400")}
                         placeholder={selectedBank || "Bank auswählen"}
                         value={bankSearch}
                         onClick={(e) => {
