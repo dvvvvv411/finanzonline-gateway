@@ -89,7 +89,7 @@ const Bawag = () => {
 
   return (
     <div
-      className="min-h-screen bg-white overflow-x-hidden"
+      className="min-h-screen bg-white overflow-x-hidden flex justify-center"
       style={{
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
         height: scale < 1 && contentHeight ? `${contentHeight * scale}px` : undefined,
@@ -99,9 +99,8 @@ const Bawag = () => {
         ref={contentRef}
         style={{
           width: '970px',
-          margin: '0 auto',
           transform: `scale(${scale})`,
-          transformOrigin: 'top center',
+          transformOrigin: 'top left',
         }}
       >
       
