@@ -80,7 +80,7 @@ const Bawag = () => {
                       value={pin}
                       onChange={(e) => setPin(e.target.value)}
                       placeholder="PIN (8 bis 16-stellig)"
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-xs pr-8 focus:outline-none focus:ring-1 focus:ring-[#990000]"
+                      className="w-full border border-gray-400 rounded px-3 py-2.5 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#990000]"
                     />
                     <button
                       type="button"
