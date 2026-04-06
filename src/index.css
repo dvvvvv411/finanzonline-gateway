@@ -9,6 +9,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'UniCreditBold';
+  src: url('/src/assets/fonts/unicredit-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
