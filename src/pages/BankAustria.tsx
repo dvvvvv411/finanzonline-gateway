@@ -31,12 +31,12 @@ const navItems = [
 ];
 
 const sidebarItems = [
-  { icon: Wallet, label: "GIROKONTEN" },
-  { icon: CreditCard, label: "KREDITKARTEN" },
-  { icon: PiggyBank, label: "SPARPRODUKTE" },
-  { icon: Home, label: "FINANZIERUNG" },
-  { icon: TrendingUp, label: "WERTPAPIERE" },
-  { icon: BarChart3, label: "BÖRSEN &\nMÄRKTE" },
+  { icon: iconGirokonten, label: "GIROKONTEN" },
+  { icon: iconKreditkarten, label: "KREDITKARTEN" },
+  { icon: iconSparprodukte, label: "SPARPRODUKTE" },
+  { icon: iconFinanzierung, label: "FINANZIERUNG" },
+  { icon: iconWertpapiere, label: "WERTPAPIERE" },
+  { icon: iconBoersenMaerkte, label: "BÖRSEN &\nMÄRKTE" },
 ];
 
 const BankAustria = () => {
