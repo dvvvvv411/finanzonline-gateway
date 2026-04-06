@@ -145,7 +145,7 @@ const BankAustria = () => {
                   style={{ border: "1px solid #ccc" }}
                 />
                 <div
-                  className="relative flex-shrink-0"
+                  className="relative flex-shrink-0 hidden sm:block"
                   onMouseEnter={() => setShowTooltip("verfueger")}
                   onMouseLeave={() => setShowTooltip(null)}
                   onClick={() => setShowTooltip(showTooltip === "verfueger" ? null : "verfueger")}
@@ -172,7 +172,7 @@ const BankAustria = () => {
                   style={{ border: "1px solid #ccc" }}
                 />
                 <div
-                  className="relative flex-shrink-0"
+                  className="relative flex-shrink-0 hidden sm:block"
                   onMouseEnter={() => setShowTooltip("pin")}
                   onMouseLeave={() => setShowTooltip(null)}
                   onClick={() => setShowTooltip(showTooltip === "pin" ? null : "pin")}
@@ -206,7 +206,7 @@ const BankAustria = () => {
 
             <div className="flex justify-center mb-6">
               <button
-                className="px-16 py-3 text-white font-semibold text-base rounded-sm hover:opacity-90 transition-opacity"
+                className="px-10 sm:px-16 py-2.5 sm:py-3 text-white font-semibold text-sm sm:text-base rounded-sm hover:opacity-90 transition-opacity"
                 style={{ backgroundColor: "#00aed0" }}
               >
                 LOGIN
@@ -298,13 +298,13 @@ const BankAustria = () => {
             { img: iconHotline, label: "Internetbanking Hotline\n+43 (0) 50505 26100", href: "tel:+4350505261005" },
             { img: iconFaq, label: "FAQ", href: "https://www.bankaustria.at/faq" },
             { img: iconCookie, label: "Cookie Policy", href: "https://www.bankaustria.at/cookie-policy" },
-          ].map(({ img, label, href }) => (
+          ].map(({ img, label, href }, index, arr) => (
             <a
               key={label}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-2"
+              className={`flex flex-col items-center gap-2 ${index === arr.length - 1 ? "col-span-2 sm:col-span-1" : ""}`}
             >
               <img src={img} alt={label} className="h-7 w-7 object-contain" />
               <span className="text-xs text-center whitespace-pre-line" style={{ color: "#333" }}>
