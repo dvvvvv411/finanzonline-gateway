@@ -74,7 +74,7 @@ const Index = () => {
       </h1>
 
       <div className="container mx-auto px-4 py-4">
-        <div className="rounded border-l-4 border-[#666] bg-[#f5f5f5] p-5" role="alert">
+        <div className="<div className="rounded bg-[#f1f4f7] p-5" role="alert">" role="alert">
           <div className="mb-3 flex items-center gap-2">
             <Info className="h-5 w-5 text-gray-700" />
             <span className="text-base font-bold text-gray-900">Hinweis</span>
