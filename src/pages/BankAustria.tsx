@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
-  Menu, Wallet, CreditCard, PiggyBank, Home, TrendingUp, BarChart3,
-  Shield, Phone, HelpCircle, Cookie
+  Menu, Wallet, CreditCard, PiggyBank, Home, TrendingUp, BarChart3
 } from "lucide-react";
 import deutschActive from "@/assets/deutschactive.png";
 import deutschInactive from "@/assets/deutschinactive.png";
