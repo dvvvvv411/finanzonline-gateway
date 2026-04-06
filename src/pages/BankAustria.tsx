@@ -98,18 +98,24 @@ const BankAustria = () => {
           <a
             key={label}
             href="#"
-            className="flex items-center border-l-[3px] border-transparent hover:border-white hover:bg-[#1a1a1a] transition-colors group"
+            className={`border-l-[3px] border-transparent hover:border-white hover:bg-[#1a1a1a] transition-colors group ${sidebarOpen ? "flex flex-row items-center" : "flex flex-col items-center justify-center"}`}
             style={{ height: "80px", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
           >
             <div className="flex items-center justify-center flex-shrink-0" style={{ width: "80px" }}>
-              <img src={icon} alt={label} className="h-6 w-6 object-contain opacity-100" />
+              <img src={icon} alt={label} className="h-6 w-6 object-contain" />
             </div>
-            <span
-              className="text-white text-[11px] font-medium uppercase whitespace-pre-line"
-              style={{ opacity: sidebarOpen ? 1 : 0, transition: "opacity 0.3s ease", width: sidebarOpen ? "220px" : "0px", overflow: "hidden" }}
-            >
-              {label}
-            </span>
+            {/* Collapsed: text below icon */}
+            {!sidebarOpen && (
+              <span className="text-white text-[11px] font-medium uppercase whitespace-pre-line text-center leading-tight">
+                {label}
+              </span>
+            )}
+            {/* Expanded: text right of icon */}
+            {sidebarOpen && (
+              <span className="text-white text-lg font-medium uppercase whitespace-pre-line" style={{ width: "220px" }}>
+                {label}
+              </span>
+            )}
           </a>
         ))}
       </aside>
