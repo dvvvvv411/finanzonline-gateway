@@ -62,10 +62,10 @@ const BankAustria = () => {
         <header className="flex" style={{ height: "80px" }}>
           {/* White logo area */}
           <div
-            className="flex items-center px-4 flex-shrink-0"
-            style={{ backgroundColor: "#fff", width: "200px", borderBottom: "1px solid #ddd" }}
+            className="flex items-center px-2 flex-shrink-0"
+            style={{ backgroundColor: "#fff", width: "200px" }}
           >
-            <img src={logo} alt="Bank Austria" style={{ height: "50px" }} />
+            <img src={logo} alt="Bank Austria" style={{ height: "70px" }} />
           </div>
           {/* Red nav area */}
           <div
@@ -78,7 +78,7 @@ const BankAustria = () => {
                 href="#"
                 className="flex flex-col items-center gap-1 transition-opacity hover:opacity-80"
               >
-                <img src={icon} alt={label} className="h-6 w-6 object-contain" />
+                <img src={icon} alt={label} className="h-8 w-8 object-contain" />
                 <span className="text-white text-xs font-bold uppercase tracking-wide">
                   {label}
                 </span>
