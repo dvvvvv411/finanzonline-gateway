@@ -32,7 +32,7 @@ const sidebarItems = [
   { icon: PiggyBank, label: "SPARPRODUKTE" },
   { icon: Home, label: "FINANZIERUNG" },
   { icon: TrendingUp, label: "WERTPAPIERE" },
-  { icon: BarChart3, label: "BÖRSEN & MÄRKTE" },
+  { icon: BarChart3, label: "BÖRSEN &\nMÄRKTE" },
 ];
 
 const BankAustria = () => {
@@ -86,7 +86,7 @@ const BankAustria = () => {
       {/* Sidebar (below header) */}
       <aside
         className="fixed left-0 top-[80px] flex flex-col z-50"
-        style={{ width: "80px", backgroundColor: "#1a1a1a", height: "calc(100vh - 80px)" }}
+        style={{ width: "80px", backgroundColor: "#333333", height: "calc(100vh - 80px)" }}
       >
         {sidebarItems.map(({ icon: Icon, label }) => (
           <a
@@ -96,7 +96,7 @@ const BankAustria = () => {
             style={{ height: "80px", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
           >
             <Icon size={22} className="text-[#bebebe] group-hover:text-white transition-colors" />
-            <span className="text-[#bebebe] group-hover:text-white text-[9px] text-center mt-1 leading-tight uppercase font-medium transition-colors">
+            <span className="text-[#bebebe] group-hover:text-white text-[10px] text-center mt-1 leading-tight uppercase font-medium transition-colors whitespace-pre-line">
               {label}
             </span>
           </a>
