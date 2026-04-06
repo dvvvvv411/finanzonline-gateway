@@ -131,7 +131,7 @@ const Raiffeisenbank = () => {
         </p>
 
         {/* Bundesland Custom Dropdown */}
-        <div className="relative mb-4" ref={dropdownRef}>
+        <div className="relative mb-6" ref={dropdownRef}>
           <label
             className={`pointer-events-none absolute left-3 z-10 transition-all duration-200 ${
               selectLabelFloated
