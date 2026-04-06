@@ -83,12 +83,12 @@ const Raiffeisenbank = () => {
 
   return (
     <div
-      className="relative flex min-h-screen flex-col"
+      className="relative flex h-screen overflow-hidden flex-col md:min-h-screen md:h-auto md:overflow-visible"
       style={{ fontFamily: "'Open Sans', sans-serif" }}
     >
       {/* Mobile: Background image top section */}
       <div
-        className="h-[40vh] w-full md:hidden"
+        className="flex-1 min-h-0 w-full md:hidden"
         style={{
           backgroundImage: `url(${bgImage})`,
           backgroundSize: "cover",
@@ -107,7 +107,7 @@ const Raiffeisenbank = () => {
       />
 
       {/* Login Card */}
-      <div className="relative z-10 w-full flex-1 bg-white p-6 md:flex-initial md:max-w-2xl md:rounded-sm md:shadow-lg md:p-10 md:mx-auto md:my-auto md:fixed md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
+      <div className="relative z-10 w-full flex-none bg-white p-6 md:flex-initial md:max-w-2xl md:rounded-sm md:shadow-lg md:p-10 md:mx-auto md:my-auto md:fixed md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
         {/* Language Switcher */}
         <div className="absolute right-4 top-4" ref={langRef}>
           <button
