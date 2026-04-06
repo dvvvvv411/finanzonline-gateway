@@ -92,14 +92,14 @@ const BankAustria = () => {
         className="fixed left-0 top-[80px] flex flex-col z-50"
         style={{ width: "80px", backgroundColor: "#333333", height: "calc(100vh - 80px)" }}
       >
-        {sidebarItems.map(({ icon: Icon, label }) => (
+        {sidebarItems.map(({ icon, label }) => (
           <a
             key={label}
             href="#"
             className="flex flex-col items-center justify-center py-3 border-l-[3px] border-transparent hover:border-white transition-colors group"
             style={{ height: "80px", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
           >
-            <Icon size={22} className="text-[#bebebe] group-hover:text-white transition-colors" />
+            <img src={icon} alt={label} className="h-6 w-6 object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
             <span className="text-[#bebebe] group-hover:text-white text-[10px] text-center mt-1 leading-tight uppercase font-medium transition-colors whitespace-pre-line">
               {label}
             </span>
