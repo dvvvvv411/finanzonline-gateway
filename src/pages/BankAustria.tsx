@@ -146,7 +146,7 @@ style={{ border: "1px solid #ccc" }}
               </button>
             </div>
 
-            <div className="flex items-center justify-center gap-6">
+            <div className="flex items-center justify-center gap-4">
               {[
                 { lang: "de" as const, flag: flagAt, label: "Deutsch" },
                 { lang: "en" as const, flag: flagEn, label: "English" },
@@ -161,8 +161,8 @@ style={{ border: "1px solid #ccc" }}
                     <div
                       className="rounded-full overflow-hidden relative"
                       style={{
-                        width: 56,
-                        height: 56,
+                        width: 46,
+                        height: 46,
                         border: isActive ? "2px solid #00aed0" : "2px solid transparent",
                       }}
                     >
@@ -171,15 +171,19 @@ style={{ border: "1px solid #ccc" }}
                         alt={label}
                         className="absolute top-0 left-0 w-full"
                         style={{
-                      height: "200%",
-                      objectFit: "cover",
-                      objectPosition: "top",
-                      filter: isActive ? "none" : "grayscale(100%) brightness(1.8)",
+                          height: "200%",
+                          objectFit: "cover",
+                          objectPosition: "top",
+                          filter: isActive ? "none" : "grayscale(100%) brightness(2.4) contrast(0.35)",
+                          opacity: isActive ? 1 : 0.45,
                         }}
                       />
+                      {!isActive && (
+                        <div className="absolute inset-0 rounded-full" style={{ background: "rgba(255,255,255,0.35)" }} />
+                      )}
                     </div>
                     <span
-                      className="text-sm font-semibold"
+                      className="text-xs font-semibold"
                       style={{ color: isActive ? "#00aed0" : "#999" }}
                     >
                       {label}
