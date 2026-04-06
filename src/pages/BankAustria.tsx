@@ -59,7 +59,7 @@ const BankAustria = () => {
           {/* Red nav area */}
           <div
             className="flex-1 flex items-center justify-center gap-6"
-            style={{ backgroundColor: "#c80a1e" }}
+            style={{ backgroundColor: "#2596be" }}
           >
             {["Privatkunden", "Firmenkunden", "Private Banking", "Über uns"].map((item) => (
               <a
