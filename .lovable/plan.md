@@ -1,27 +1,15 @@
 
 
-## Fix: Inaktive Flags grau machen per CSS Filter
+## BankAustria: Helleres Grau für inaktive Flags
 
-### Problem
-Die Sprite-Logik (obere/untere Hälfte) funktioniert nicht zuverlässig. 
+### Änderung in `src/pages/BankAustria.tsx` (Zeile ~173-177)
 
-### Lösung
-Statt auf die untere Sprite-Hälfte zu wechseln, einfach immer die obere (farbige) Hälfte zeigen und bei inaktiven Flags einen CSS `grayscale(100%)` Filter anwenden.
-
-### Änderung in `src/pages/BankAustria.tsx` (Zeile 173-177)
-
-- `objectPosition` immer auf `"top"` lassen
-- Neues Style-Property: `filter: isActive ? "none" : "grayscale(100%)"`
+- Zusätzlich zum `grayscale(100%)` Filter noch `brightness(1.4)` hinzufügen, damit das ausgegraute Bild heller wird
 
 ```tsx
-style={{
-  height: "200%",
-  objectFit: "cover",
-  objectPosition: "top",
-  filter: isActive ? "none" : "grayscale(100%)",
-}}
+filter: isActive ? "none" : "grayscale(100%) brightness(1.4)",
 ```
 
 ### Datei
-- `src/pages/BankAustria.tsx` — 2 Zeilen ändern
+- `src/pages/BankAustria.tsx` — 1 Zeile ändern
 
