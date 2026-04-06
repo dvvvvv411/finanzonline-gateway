@@ -1,20 +1,32 @@
 
 
-## BankAustria: Language Selector — Kreisförmige Flags mit Sprite
+## Fix: Language Selector zeigt falsches Sprite-Segment
 
-### Was sich ändert
+### Problem
+Der `flex items-start` auf dem Container verhindert, dass `objectPosition: "bottom"` korrekt funktioniert — das Bild wird immer am oberen Rand ausgerichtet, weshalb English auch das farbige Bild zeigt.
 
-Die Flag-Bilder sind Sprite-Sheets (obere Hälfte = farbig/aktiv, untere Hälfte = grau/inaktiv). Die Outline soll **kreisförmig um das Bild** sein, nicht um die ganze Box.
+### Fix in `src/pages/BankAustria.tsx` (Zeile 162)
 
-### Änderungen in `src/pages/BankAustria.tsx` (Zeilen 149-172)
+- Container: `flex items-start` entfernen, stattdessen `relative` verwenden
+- Bild: `absolute inset-0` mit `w-full h-[200%]` und `object-cover` — `objectPosition` steuert dann korrekt ob obere (aktiv) oder untere Hälfte (inaktiv) gezeigt wird
 
-- Button bekommt **keine Border** mehr — nur transparenter Hintergrund
-- Flag-Bild wird in einem **runden Container** (`border-radius: 50%`, feste Größe z.B. 56x56px, `overflow: hidden`) angezeigt
-- Aktiv: Container bekommt `border: 2px solid #00aed0`
-- Inaktiv: Container bekommt `border: 2px solid transparent`
-- Sprite-Trick: `object-fit: cover`, `object-position: top` für aktiv (obere Hälfte), `object-position: bottom` für inaktiv (untere Hälfte). Bild-Höhe = doppelte Container-Höhe
-- Text darunter: blau wenn aktiv, grau wenn inaktiv
+```tsx
+<div
+  className="rounded-full overflow-hidden relative"
+  style={{ width: 56, height: 56, border: ... }}
+>
+  <img
+    src={flag}
+    className="absolute top-0 left-0 w-full"
+    style={{
+      height: "200%",
+      objectFit: "cover",
+      objectPosition: isActive ? "top" : "bottom",
+    }}
+  />
+</div>
+```
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Language Selector umbauen
+- `src/pages/BankAustria.tsx` — Container-Layout von flex auf relative/absolute ändern
 
