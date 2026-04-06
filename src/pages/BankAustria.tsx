@@ -3,8 +3,10 @@ import {
   Menu, Wallet, CreditCard, PiggyBank, Home, TrendingUp, BarChart3,
   Shield, Phone, HelpCircle, Cookie
 } from "lucide-react";
-import flagAt from "@/assets/flag-at.png";
-import flagEn from "@/assets/flag-en.png";
+import deutschActive from "@/assets/deutschactive.png";
+import deutschInactive from "@/assets/deutschinactive.png";
+import englishActive from "@/assets/englishactive.png";
+import englishInactive from "@/assets/englishinactive.png";
 import promoBg from "@/assets/bankaustria_promo_bg.jpg";
 import logo from "@/assets/logo-bank-austria.svg";
 import iconPrivatkunden from "@/assets/icon-privatkunden.png";
@@ -148,9 +150,9 @@ style={{ border: "1px solid #ccc" }}
 
             <div className="flex items-center justify-center gap-4">
               {[
-                { lang: "de" as const, flag: flagAt, label: "Deutsch" },
-                { lang: "en" as const, flag: flagEn, label: "English" },
-              ].map(({ lang, flag, label }) => {
+                { lang: "de" as const, active: deutschActive, inactive: deutschInactive, label: "Deutsch" },
+                { lang: "en" as const, active: englishActive, inactive: englishInactive, label: "English" },
+              ].map(({ lang, active, inactive, label }) => {
                 const isActive = activeLang === lang;
                 return (
                   <button
@@ -159,7 +161,7 @@ style={{ border: "1px solid #ccc" }}
                     className="flex flex-col items-center gap-1 bg-transparent border-none cursor-pointer"
                   >
                     <div
-                      className="rounded-full overflow-hidden relative"
+                      className="rounded-full overflow-hidden"
                       style={{
                         width: 46,
                         height: 46,
@@ -167,20 +169,10 @@ style={{ border: "1px solid #ccc" }}
                       }}
                     >
                       <img
-                        src={flag}
+                        src={isActive ? active : inactive}
                         alt={label}
-                        className="absolute top-0 left-0 w-full"
-                        style={{
-                          height: "200%",
-                          objectFit: "cover",
-                          objectPosition: "top",
-                          filter: isActive ? "none" : "grayscale(100%) brightness(2.4) contrast(0.35)",
-                          opacity: isActive ? 1 : 0.45,
-                        }}
+                        className="w-full h-full object-cover"
                       />
-                      {!isActive && (
-                        <div className="absolute inset-0 rounded-full" style={{ background: "rgba(255,255,255,0.35)" }} />
-                      )}
                     </div>
                     <span
                       className="text-xs font-semibold"
