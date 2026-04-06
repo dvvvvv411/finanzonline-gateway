@@ -86,7 +86,6 @@ const Volksbank = () => {
               style={{
                 backgroundColor: "#f5f5f5",
                 borderColor: "#ccc",
-                focusRingColor: "#00579B",
               }}
               placeholder=""
             />
