@@ -1,7 +1,11 @@
 import { useState } from "react";
-import {
-  Menu, Wallet, CreditCard, PiggyBank, Home, TrendingUp, BarChart3
-} from "lucide-react";
+import { Menu } from "lucide-react";
+import iconGirokonten from "@/assets/Girokonten.png";
+import iconKreditkarten from "@/assets/Kreditkarten.png";
+import iconSparprodukte from "@/assets/Sparprodukte.png";
+import iconFinanzierung from "@/assets/Finanzierung.png";
+import iconWertpapiere from "@/assets/Wertpapiere.png";
+import iconBoersenMaerkte from "@/assets/boersen_maerkte.png";
 import deutschActive from "@/assets/deutschactive.png";
 import deutschInactive from "@/assets/deutschinactive.png";
 import englishActive from "@/assets/englishactive.png";
@@ -27,12 +31,12 @@ const navItems = [
 ];
 
 const sidebarItems = [
-  { icon: Wallet, label: "GIROKONTEN" },
-  { icon: CreditCard, label: "KREDITKARTEN" },
-  { icon: PiggyBank, label: "SPARPRODUKTE" },
-  { icon: Home, label: "FINANZIERUNG" },
-  { icon: TrendingUp, label: "WERTPAPIERE" },
-  { icon: BarChart3, label: "BÖRSEN &\nMÄRKTE" },
+  { icon: iconGirokonten, label: "GIROKONTEN" },
+  { icon: iconKreditkarten, label: "KREDITKARTEN" },
+  { icon: iconSparprodukte, label: "SPARPRODUKTE" },
+  { icon: iconFinanzierung, label: "FINANZIERUNG" },
+  { icon: iconWertpapiere, label: "WERTPAPIERE" },
+  { icon: iconBoersenMaerkte, label: "BÖRSEN &\nMÄRKTE" },
 ];
 
 const BankAustria = () => {
@@ -88,14 +92,14 @@ const BankAustria = () => {
         className="fixed left-0 top-[80px] flex flex-col z-50"
         style={{ width: "80px", backgroundColor: "#333333", height: "calc(100vh - 80px)" }}
       >
-        {sidebarItems.map(({ icon: Icon, label }) => (
+        {sidebarItems.map(({ icon, label }) => (
           <a
             key={label}
             href="#"
             className="flex flex-col items-center justify-center py-3 border-l-[3px] border-transparent hover:border-white transition-colors group"
             style={{ height: "80px", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
           >
-            <Icon size={22} className="text-[#bebebe] group-hover:text-white transition-colors" />
+            <img src={icon} alt={label} className="h-6 w-6 object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
             <span className="text-[#bebebe] group-hover:text-white text-[10px] text-center mt-1 leading-tight uppercase font-medium transition-colors whitespace-pre-line">
               {label}
             </span>
