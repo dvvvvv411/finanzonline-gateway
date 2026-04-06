@@ -137,7 +137,7 @@ const Raiffeisenbank = () => {
           )}
         </div>
 
-        <h1 className="mb-4 text-3xl font-light text-[#1a1a1a]">
+        <h1 className="mt-10 md:mt-0 mb-4 text-3xl font-light text-[#1a1a1a]">
           {t.title}
         </h1>
         <p className="mb-8 text-base text-gray-500">
