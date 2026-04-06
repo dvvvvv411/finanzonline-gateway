@@ -290,7 +290,7 @@ const Index = () => {
                 rel="noopener noreferrer"
                 className="group overflow-hidden rounded-lg"
               >
-                <div className="aspect-[16/10] w-full overflow-hidden">
+                <div className="aspect-[4/3] w-full overflow-hidden rounded-lg">
                   <img
                     src={item.img}
                     alt={item.title}
