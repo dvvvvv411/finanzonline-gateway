@@ -1,13 +1,21 @@
 
 
-## BankAustria: UniCredit Regular als Standard-Font
+## BankAustria Header: Icons + Styling für Nav-Items
 
-### Änderung
+### Änderungen
 
-In `src/pages/BankAustria.tsx`: Die `fontFamily` des Root-`<div>` von `"'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"` auf `"'UniCredit', sans-serif"` ändern.
+**1. Icons kopieren**
+- `user-uploads://privatkunden.png` → `src/assets/icon-privatkunden.png`
+- `user-uploads://firmenkunden.png` → `src/assets/icon-firmenkunden.png`
+- `user-uploads://privatebanking.png` → `src/assets/icon-privatebanking.png`
+- `user-uploads://ueberuns.png` → `src/assets/icon-ueberuns.png`
 
-Die `@font-face` für `'UniCredit'` ist bereits in `src/index.css` definiert und die Font-Datei `src/assets/fonts/unicredit-regular.ttf` existiert bereits. Der 24You-Text behält `'UniCreditMedium'`.
+**2. Header Nav-Items umbauen** (`src/pages/BankAustria.tsx`, Zeilen 60-73)
+- Statt einfacher Text-Links: Icon (als `<img>`) über dem Text
+- Text: uppercase, weiß, bold
+- Layout pro Item: `flex flex-col items-center` (Icon oben, Text unten)
+- Header-Höhe ggf. leicht erhöhen damit Icons + Text reinpassen
 
 ### Datei
-- `src/pages/BankAustria.tsx` — fontFamily im Root-Element ändern
+- `src/pages/BankAustria.tsx` — Nav-Bereich im Header umbauen
 
