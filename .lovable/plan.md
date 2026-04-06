@@ -1,13 +1,15 @@
 
 
-## Hinweis-Box Styling anpassen
+## Aktuelles-Bilder: Hover & Größe anpassen
 
-### Änderung in `src/pages/Index.tsx` (Zeile 77)
+### Änderungen in `src/pages/Index.tsx`
 
-Aktuelle Klassen: `rounded border-l-4 border-[#666] bg-[#f5f5f5] p-5`
-
-Neue Klassen: `rounded bg-[#f1f4f7] p-5` — entfernt `border-l-4 border-[#666]` und ändert Hintergrund zu `#f1f4f7`.
+1. **Zeile 293**: Aspect Ratio von `aspect-[4/3]` auf `aspect-[16/10]` — Bilder werden flacher/rechteckiger
+2. **Zeile 297**: `transition-transform group-hover:scale-105` entfernen — kein Zoom-Effekt mehr
+3. **Zeile 300-302**: Text-Container bekommt Underline bei Hover:
+   - h3: `group-hover:underline` hinzufügen
+   - p: `group-hover:underline` hinzufügen
 
 ### Datei
-- `src/pages/Index.tsx` — eine Zeile ändern
+- `src/pages/Index.tsx` — 3 Zeilen ändern
 
