@@ -137,7 +137,7 @@ const ErsteBank = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-[#2870ED] px-6 py-3 flex items-center justify-between md:justify-between justify-center">
+      <footer className="bg-[#2870ED] px-6 py-3 flex items-center justify-center md:justify-between relative z-50">
         <img src={sparkasseLogo} alt="Erste Sparkasse" className="h-6" />
         <div className="hidden md:flex gap-6">
           {t.footer.map((item) => (
