@@ -61,7 +61,7 @@ const ErsteBank = () => {
             onClick={() => setMenuOpen(true)}
             className="absolute top-6 left-6 md:hidden"
           >
-            <Menu className="h-7 w-7 text-[#2870ED]" />
+            <Menu className="h-7 w-7 text-[#2870ED]" strokeWidth={1.5} />
           </button>
 
           {/* Language Switcher */}
