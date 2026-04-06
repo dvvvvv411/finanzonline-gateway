@@ -308,7 +308,7 @@ const Index = () => {
       </div>
 
       {/* Informationen / Services / Technische Unterstützung */}
-      <div className="mt-10 bg-[#f1f4f7] py-10">
+      <div className="mt-10 bg-white py-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             <div>
