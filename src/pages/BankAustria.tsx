@@ -115,7 +115,7 @@ const BankAustria = () => {
       </aside>
 
       {/* Right Content Area */}
-      <div className="flex-1 flex flex-col" style={{ marginLeft: "80px", marginTop: "80px" }}>
+      <div className="flex-1 flex flex-col" style={{ marginLeft: sidebarOpen ? "300px" : "80px", marginTop: "80px", transition: "margin-left 0.3s ease" }}>
 
         {/* Main Content */}
         <main className="flex-1 px-10 pt-14 pb-8" style={{ backgroundColor: "#fff" }}>
