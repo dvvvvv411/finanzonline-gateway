@@ -1,21 +1,24 @@
 
-
-## Mobile-Anpassungen für /bankaustria
+## Header- und Content-Verlinkungen einbauen
 
 ### Änderungen in `src/pages/BankAustria.tsx`
 
-**1. Cookie Policy mittig zentrieren (Zeile 294)**
-- Bei 5 Items im 2er-Grid ist das 5. (Cookie Policy) allein in der letzten Zeile und linksbündig
-- Lösung: Das letzte Item mit `col-span-2 sm:col-span-1` versehen, damit es auf Mobile die volle Breite einnimmt und zentriert wird
-- Dazu den `.map()` anpassen: dem letzten Element (Cookie Policy) eine extra Klasse geben
+**1. Nav-Items mit Links (Zeile 28-33):**
+- `navItems`-Array um `href` erweitern:
+  - Privatkunden → `https://www.bankaustria.at/index.jsp#`
+  - Firmenkunden → `https://www.bankaustria.at/firmenkunden-und-freie-berufe.jsp`
+  - Private Banking → `https://www.bankaustria.at/firmenkunden-und-freie-berufe.jsp`
+  - Über uns → `https://www.bankaustria.at/ueber-uns.jsp`
+- Die `<a href="#">` in der Nav-Schleife durch `href={item.href}` ersetzen, `target="_blank"` + `rel="noopener noreferrer"`
 
-**2. Info-Icons auf Mobile ausblenden (Zeilen 147-160, 174-187)**
-- Die `<div>`-Wrapper der Info-Icons bekommen `hidden sm:block` → auf Mobile unsichtbar
-- Die Inputs bleiben `w-full` und nehmen dann die volle Breite ein
+**2. Logo-Link (Zeile 71-74):**
+- Das Logo-`<div>` in einen `<a href="https://www.bankaustria.at/index.jsp" target="_blank" rel="noopener noreferrer">` wrappen
 
-**3. Login-Button verkleinern (Zeile 209)**
-- `px-16 py-3 text-base` → `px-10 sm:px-16 py-2.5 sm:py-3 text-sm sm:text-base`
+**3. PIN vergessen Link (Zeile ~199):**
+- `href="#"` → `href="https://banking.bankaustria.at/pinreset"`, `target="_blank"`, `rel="noopener noreferrer"`
+
+**4. Mehr Erfahren Button (Zeile ~248):**
+- `href` → `https://www.bankaustria.at/privatkunden-finanzierungen-und-kredite-wohnkredit.jsp?ucid=INT-8612-Wohnkredit_2026-24You`
 
 ### Datei
 - `src/pages/BankAustria.tsx`
-
