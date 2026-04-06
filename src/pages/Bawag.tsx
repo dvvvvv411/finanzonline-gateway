@@ -229,9 +229,9 @@ const Bawag = () => {
                 <div className="p-3">
                   <h2 className="font-bold text-sm mb-2 text-[#990000]">Service & Info</h2>
                   <ul className="space-y-1">
-                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Sicherheitsregeln</a></li>
-                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Anmeldung / Erste Schritte</a></li>
-                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />3D Secure Online Bezahlung</a></li>
+                    <li><a href="https://www.bawag.at/bawag/sicherheit#regeln" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Sicherheitsregeln</a></li>
+                    <li><a href="https://www.bawag.at/bawag/privatkunden/ebanking-apps/onlinebanking/erste-schritte-ebanking-app" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Anmeldung / Erste Schritte</a></li>
+                    <li><a href="https://www.bawag.at/bawag/privatkunden/services-infos/3dsecure" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />3D Secure Online Bezahlung</a></li>
                   </ul>
                 </div>
 
