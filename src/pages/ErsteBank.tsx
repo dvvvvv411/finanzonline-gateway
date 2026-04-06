@@ -58,7 +58,7 @@ const ErsteBank = () => {
 
         {/* Right Side - Branding */}
         <div className="w-1/2 bg-[#721c7a] flex flex-col justify-center items-center px-16 relative">
-          <img src={georgeWhiteLogo} alt="George" className="h-14 mb-16" />
+          <img src={georgeWhiteLogo} alt="George" className="h-64 mb-16" />
           <div className="absolute bottom-16 left-16 space-y-1">
             <p className="text-white text-4xl font-light">Einfach</p>
             <p className="text-white text-4xl font-light">Intelligent</p>
