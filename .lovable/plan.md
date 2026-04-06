@@ -1,19 +1,23 @@
 
 
-## Fix: FinanzOnline Header Layout
+## Hinweis-Box unter dem Header
 
-### Änderungen an `src/pages/Index.tsx`
+### Design (nach Original)
+- Hellblauer/grauer Hintergrund-Kasten mit linkem blauen Rand (wie `alert-hinweis` auf FinanzOnline)
+- Info-Icon (ℹ️) + "Hinweis" als Überschrift oben
+- Darunter der Fließtext
+- Zentriert im Container, gleiche Breite wie Header-Content
 
-1. **Border entfernen** - Kein `border-b` am Header
-2. **Titel schwarz** - Statt rot (#E6320F) wird die Überschrift schwarz
-3. **BMF Logo kleiner** - Etwas kleiner skalieren (h-10 statt h-16)
-4. **Layout anpassen** - Logos oben links/rechts fixiert, mehr Abstand zum Titel
-5. **Padding/Spacing** - Dem Original anpassen mit mehr vertikalem Abstand zwischen Logos und Titel
+### Text-Inhalt (Registrierung/Datenaktualisierung)
+Dringlicher aber seriöser Hinweis:
+- **Titel-Zeile:** "Wichtiger Hinweis zur Aktualisierung Ihrer Registrierungsdaten"
+- **Text:** Aufforderung, die Zugangsdaten und persönlichen Daten zu überprüfen und zu aktualisieren, da die Registrierung in Kürze abläuft. Hinweis auf Konsequenzen (eingeschränkter Zugang) und Link zur Aktualisierung.
 
 ### Technisch
-- Entferne `border-b border-gray-200` vom Header
-- Ändere `style={{ color: "#E6320F" }}` zu `text-black`
-- BMF Logo: `h-8 md:h-10` (kleiner als FinanzOnline Logo)
-- FinanzOnline Logo: `h-8 md:h-12`
-- Titel bekommt mehr `py-8 md:py-12` für Abstand
+- Ein Info-Circle SVG inline oder als Lucide-Icon (`Info` aus `lucide-react`)
+- Styling per Tailwind: `bg-[#e8f0fe]` oder ähnlich heller Blauton, `border-l-4 border-blue-500`, padding, rounded
+- Eingefügt in `Index.tsx` direkt nach dem `</header>` Tag im Container
+
+### Datei
+- `src/pages/Index.tsx` — Hinweis-Box als neue Sektion nach dem Header einfügen
 
