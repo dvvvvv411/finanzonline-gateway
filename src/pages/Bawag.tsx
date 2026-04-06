@@ -245,6 +245,15 @@ const Bawag = () => {
               </div>
             </div>
           </div>
+
+          {/* Clickable area bottom-right for promo */}
+          <a
+            href="https://www.bawag.at/bawag/privatkunden/services-infos/vop?utm_source=BAWAG&utm_medium=eBanking_Login"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute bottom-0 right-0 w-[580px] h-[300px] cursor-pointer"
+            aria-label="Entdecken"
+          />
         </div>
 
         {/* Footer */}
