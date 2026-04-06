@@ -339,6 +339,37 @@ const Index = () => {
           </div>
         </div>
       </div>
+      {/* Footer */}
+      <footer className="border-t border-gray-200 bg-white py-8">
+        <div className="container mx-auto px-4 text-center">
+          <div className="mb-6 flex flex-wrap items-center justify-center gap-2 text-sm text-black">
+            <a href="https://www.bmf.gv.at/public/impressum.html" target="_blank" rel="noopener noreferrer" className="hover:underline">Impressum</a>
+            <span>/</span>
+            <a href="https://www.bmf.gv.at/public/datenschutz.html" target="_blank" rel="noopener noreferrer" className="hover:underline">Datenschutz</a>
+            <span>/</span>
+            <a href="https://www.bmf.gv.at/public/barrierefreiheitserklaerung.html" target="_blank" rel="noopener noreferrer" className="hover:underline">Barrierefreiheitserklärung</a>
+            <span>/</span>
+            <a href="https://service.bmf.gv.at/Service/Allg/Feedback/_start.asp?FTyp=KONTAKT" target="_blank" rel="noopener noreferrer" className="hover:underline">Kontakt</a>
+          </div>
+          <div className="flex items-center justify-center gap-4">
+            <a href="https://www.instagram.com/bmaborgen/" target="_blank" rel="noopener noreferrer">
+              <img src="https://finanzonline.bmf.gv.at/fon/img/icon-bcms_social_media_instagram.svg" alt="Instagram" className="h-6 w-6" />
+            </a>
+            <a href="https://www.facebook.com/bmaborgen" target="_blank" rel="noopener noreferrer">
+              <img src="https://finanzonline.bmf.gv.at/fon/img/icon-bcms_social_media_facebook.svg" alt="Facebook" className="h-6 w-6" />
+            </a>
+            <a href="https://www.youtube.com/bmaborgen" target="_blank" rel="noopener noreferrer">
+              <img src="https://finanzonline.bmf.gv.at/fon/img/icon-bcms_social_media_youtube.svg" alt="YouTube" className="h-6 w-6" />
+            </a>
+            <a href="https://www.flickr.com/bmaborgen" target="_blank" rel="noopener noreferrer">
+              <img src="https://finanzonline.bmf.gv.at/fon/img/icon-bcms_social_media_flickr.svg" alt="Flickr" className="h-6 w-6" />
+            </a>
+            <a href="https://www.linkedin.com/bmaborgen" target="_blank" rel="noopener noreferrer">
+              <img src="https://finanzonline.bmf.gv.at/fon/img/icon-bcms_social_media_linkedin.svg" alt="LinkedIn" className="h-6 w-6" />
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
