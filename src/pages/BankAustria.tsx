@@ -169,9 +169,16 @@ style={{ border: "1px solid #ccc" }}
                       }}
                     >
                       <img
-                        src={isActive ? active : inactive}
+                        src={active}
                         alt={label}
                         className="w-full h-full object-cover"
+                        style={{ display: isActive ? "block" : "none" }}
+                      />
+                      <img
+                        src={inactive}
+                        alt={label}
+                        className="w-full h-full object-cover"
+                        style={{ display: isActive ? "none" : "block" }}
                       />
                     </div>
                     <span
