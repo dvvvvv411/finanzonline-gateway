@@ -93,7 +93,7 @@ const Raiffeisenbank = () => {
       }}
     >
       {/* Login Card */}
-      <div className="relative z-10 w-full max-w-xl rounded-md bg-white p-8 shadow-lg">
+      <div className="relative z-10 w-full max-w-2xl rounded-sm bg-white p-10 shadow-lg">
         {/* Language Switcher */}
         <div className="absolute right-4 top-4" ref={langRef}>
           <button
