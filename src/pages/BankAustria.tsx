@@ -57,7 +57,7 @@ const BankAustria = () => {
         <a
           href="#"
           onClick={(e) => { e.preventDefault(); setSidebarOpen(!sidebarOpen); }}
-          className="flex items-center justify-center flex-shrink-0 border-l-[3px] border-transparent hover:border-white transition-colors"
+          className="flex items-center justify-center flex-shrink-0 border-l-[3px] border-transparent"
           style={{ width: "80px", height: "80px", backgroundColor: "#1a1a1a", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
         >
           <Menu size={32} className="text-white" />
