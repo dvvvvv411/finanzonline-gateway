@@ -250,6 +250,7 @@ const Bawag = () => {
           </div>
           <p className="text-[10px] text-black text-center">© BAWAG P.S.K.</p>
         </footer>
+        </div>
       </div>
     </div>
   );
