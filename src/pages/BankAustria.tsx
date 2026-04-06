@@ -272,7 +272,7 @@ const BankAustria = () => {
           <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.35)" }} />
           <div className="relative z-10 px-4 sm:px-12 max-w-xl">
             <p className="text-white text-2xl sm:text-5xl font-normal mb-2">Lässt sich einrichten</p>
-            <p className="text-white text-xl font-bold mb-4">
+            <p className="text-white text-sm sm:text-xl font-bold mb-4">
               Jetzt von Topkonditionen* unserer Wohnoffensive<br />profitieren.
             </p>
             <a
