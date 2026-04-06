@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { User, Lock } from "lucide-react";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import georgeBlueLogo from "@/assets/george-logo-bright-blue.svg";
 import georgeWhiteLogo from "@/assets/george-logo-white.svg";
 import sparkasseLogo from "@/assets/EB-SPK_Logo_screen_white.svg";
