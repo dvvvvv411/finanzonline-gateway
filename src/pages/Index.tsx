@@ -255,7 +255,7 @@ const Index = () => {
 
         {/* Aktuelles Sektion */}
         <div className="mt-10">
-          <h2 className="mb-6 text-center text-xl font-bold text-black md:text-2xl">Aktuelles</h2>
+          <h2 className="mb-6 text-lg font-bold text-black md:text-xl">Aktuelles</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {[
               {
@@ -288,7 +288,7 @@ const Index = () => {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                className="group overflow-hidden rounded-lg"
               >
                 <div className="aspect-[16/10] w-full overflow-hidden">
                   <img
