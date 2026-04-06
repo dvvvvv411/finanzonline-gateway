@@ -49,7 +49,7 @@ const Raiffeisenbank = () => {
         {/* Bundesland Select - Floating Label */}
         <div className="relative mb-4">
           <label
-            className={`pointer-events-none absolute left-0 transition-all duration-200 ${
+            className={`pointer-events-none absolute left-3 transition-all duration-200 ${
               selectLabelFloated
                 ? "top-1 text-xs text-gray-500"
                 : "top-3 text-sm text-gray-500"
