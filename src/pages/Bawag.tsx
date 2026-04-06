@@ -202,7 +202,7 @@ const Bawag = () => {
                 </div>
 
                 <div className="mt-auto pt-3">
-                  <a href="#" className="text-[11px] text-[#990000] hover:underline flex items-center gap-1">
+                  <a href="https://services.bawag.at/main?formName=unlock-ebanking" target="_blank" rel="noopener noreferrer" className="text-[11px] text-[#990000] hover:underline flex items-center gap-1">
                     <ChevronRight className="h-4 w-4" />
                     {t.forgotPin}
                   </a>
