@@ -1,24 +1,16 @@
 
+## Fix: Bank Dropdown schließt sich beim Klick ins Eingabefeld
 
-## Bank Dropdown Verbesserungen
+### Problem
+Der `PopoverTrigger` mit `asChild` macht das gesamte `<div>` zum Trigger. Klickt man auf das Input-Feld, toggelt Radix den Popover (öffnet und schließt sofort wieder). Nur der Icon-Bereich funktioniert zufällig, weil dort kein Focus-Event konkurriert.
 
-### 1. Alle 14 Bank-Icons einbinden
-Icons nach `src/assets/` kopieren:
-- Bereits vorhanden (10): oberbank, bank_austria, bank99, bankhaus_spängler, bawag_psk, dadat_bank, dolomiten_bank, easy_bank, erste_bank, hypo_noe
-- Neu (4): volksbank, raiffeisen_bank, schelhammer, sparda_bank
+### Lösung in `src/pages/Index.tsx`
 
-`banks` Array wird zu Objekt-Array mit Icon-Referenz umgebaut. Jede Bank bekommt ihr Icon (h-5 w-5) neben dem Namen.
+**Den Popover nicht mehr über den Trigger toggeln lassen**, sondern komplett manuell steuern:
 
-### 2. Suchleiste in den Trigger integrieren
-- Der Trigger wird zu einem editierbaren Input-Feld
-- Placeholder "Bank auswählen", beim Tippen filtert sich die Liste
-- `CommandInput` aus dem Popover-Body entfernen
-- Stattdessen State für Suchbegriff im Trigger, der an `Command` weitergegeben wird
+1. `PopoverTrigger` entfernen oder durch ein normales `<div>` ersetzen (kein `asChild` Trigger mehr)
+2. `Popover` behält `open={bankOpen}` und `onOpenChange` — aber `onOpenChange` soll nur schließen wenn man außerhalb klickt (das macht Radix automatisch)
+3. Das `<div>` mit dem Input bekommt nur `onClick={() => setBankOpen(true)}` und `onFocus` auf dem Input öffnet ebenfalls
+4. Alternativ einfacher: `PopoverTrigger` behalten, aber `onClick` auf dem Input mit `e.stopPropagation()` versehen, damit der Trigger-Toggle nicht ausgelöst wird — und das Input öffnet den Popover selbst via `setBankOpen(true)`
 
-### 3. Minimale Custom Scrollbar
-- CSS-basierte dünne Scrollbar auf der `CommandList` via Tailwind-Utilities oder inline styles
-- Dünn, grau, abgerundet — statt der breiten nativen Browser-Scrollbar
-
-### Datei
-- `src/pages/Index.tsx` — Banks-Array, Dropdown-Logik, Scrollbar-Styling
-
+**Gewählter Ansatz**: `e.stopPropagation()` auf dem `<input>` Element hinzufügen, damit Klicks aufs Input nicht den Trigger-Toggle auslösen. Der Input öffnet den Popover über seinen eigenen `onFocus`/`onClick` Handler.
