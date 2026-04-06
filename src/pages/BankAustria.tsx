@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
-  Menu, Wallet, CreditCard, PiggyBank, Home, TrendingUp, BarChart3,
-  Shield, Phone, HelpCircle, Cookie
+  Menu, Wallet, CreditCard, PiggyBank, Home, TrendingUp, BarChart3
 } from "lucide-react";
 import deutschActive from "@/assets/deutschactive.png";
 import deutschInactive from "@/assets/deutschinactive.png";
@@ -13,6 +12,11 @@ import iconPrivatkunden from "@/assets/icon-privatkunden.png";
 import iconFirmenkunden from "@/assets/icon-firmenkunden.png";
 import iconPrivatebanking from "@/assets/icon-privatebanking.png";
 import iconUeberuns from "@/assets/icon-ueberuns.png";
+import iconSicherheit from "@/assets/sicherheitsinformationen.png";
+import iconSicherheitscenter from "@/assets/sicherheitscenter.png";
+import iconHotline from "@/assets/internetbanking_hotline.png";
+import iconFaq from "@/assets/faq.png";
+import iconCookie from "@/assets/cookie_policy.png";
 
 const navItems = [
   { label: "Privatkunden", icon: iconPrivatkunden },
@@ -226,23 +230,22 @@ style={{ border: "1px solid #ccc" }}
         </div>
 
         {/* Footer Icons */}
-        <div className="flex justify-center gap-8 py-8" style={{ backgroundColor: "#f5f5f5" }}>
+        <div className="flex justify-center gap-8 py-8" style={{ backgroundColor: "#e5e5e5" }}>
           {[
-            { icon: Shield, label: "Sicherheits\ninformationen", href: "https://www.bankaustria.at/sicherheit" },
-            { icon: Phone, label: "Sicherheitscenter\n+43 (0) 50505 26105", href: "tel:+43505052610" },
-            { icon: Phone, label: "Internetbanking Hotline\n+43 (0) 50505 26100", href: "tel:+4350505261005" },
-            { icon: HelpCircle, label: "FAQ", href: "https://www.bankaustria.at/faq" },
-            { icon: Cookie, label: "Cookie Policy", href: "https://www.bankaustria.at/cookie-policy" },
-          ].map(({ icon: Icon, label, href }) => (
+            { img: iconSicherheit, label: "Sicherheits\ninformationen", href: "https://www.bankaustria.at/sicherheit" },
+            { img: iconSicherheitscenter, label: "Sicherheitscenter\n+43 (0) 50505 26105", href: "tel:+43505052610" },
+            { img: iconHotline, label: "Internetbanking Hotline\n+43 (0) 50505 26100", href: "tel:+4350505261005" },
+            { img: iconFaq, label: "FAQ", href: "https://www.bankaustria.at/faq" },
+            { img: iconCookie, label: "Cookie Policy", href: "https://www.bankaustria.at/cookie-policy" },
+          ].map(({ img, label, href }) => (
             <a
               key={label}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-2 hover:opacity-70 transition-opacity"
-              style={{ color: "#00aed0" }}
             >
-              <Icon size={28} />
+              <img src={img} alt={label} className="h-7 w-7 object-contain" />
               <span className="text-xs text-center whitespace-pre-line" style={{ color: "#333" }}>
                 {label}
               </span>
