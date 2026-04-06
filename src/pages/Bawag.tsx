@@ -220,7 +220,7 @@ const Bawag = () => {
                   <p className="text-xs text-gray-600 leading-relaxed">
                     Die BAWAG versendet keine E-Mails mit direkten eBanking Login-Links!
                   </p>
-                  <a href="#" className="text-xs text-[#990000] hover:underline mt-1 inline-flex items-center gap-0.5">
+                  <a href="https://www.bawag.at/bawag/sicherheit#aktuell" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline mt-1 inline-flex items-center gap-0.5">
                     <ChevronRight className="h-4 w-4" />
                     Mehr Infos
                   </a>
