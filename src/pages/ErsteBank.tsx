@@ -155,32 +155,27 @@ const ErsteBank = () => {
       </footer>
 
       {/* Mobile Sidebar Overlay */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-50 bg-[#2870ED] flex flex-col md:hidden">
-          <button
-            onClick={() => setMenuOpen(false)}
-            className="absolute top-6 left-6"
-          >
-            <X className="h-7 w-7 text-white" />
-          </button>
-          <div className="flex flex-col space-y-6 p-8 pt-20">
-            {t.footer.map((item) => (
-              <a
-                key={item.label}
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white text-lg hover:underline"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-          <div className="mt-auto pb-8 flex justify-center">
-            <img src={sparkasseLogo} alt="Erste Sparkasse" className="h-8" />
-          </div>
+      <div className={`fixed inset-0 bottom-0 z-40 bg-[#2870ED] flex flex-col md:hidden transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <button
+          onClick={() => setMenuOpen(false)}
+          className="absolute top-6 left-6"
+        >
+          <X className="h-7 w-7 text-white" />
+        </button>
+        <div className="flex flex-col space-y-6 p-8 pt-20">
+          {t.footer.map((item) => (
+            <a
+              key={item.label}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white text-lg hover:underline"
+            >
+              {item.label}
+            </a>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
