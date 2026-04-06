@@ -5,6 +5,17 @@ import {
 } from "lucide-react";
 import promoBg from "@/assets/bankaustria_promo_bg.jpg";
 import logo from "@/assets/logo-bank-austria.svg";
+import iconPrivatkunden from "@/assets/icon-privatkunden.png";
+import iconFirmenkunden from "@/assets/icon-firmenkunden.png";
+import iconPrivatebanking from "@/assets/icon-privatebanking.png";
+import iconUeberuns from "@/assets/icon-ueberuns.png";
+
+const navItems = [
+  { label: "Privatkunden", icon: iconPrivatkunden },
+  { label: "Firmenkunden", icon: iconFirmenkunden },
+  { label: "Private Banking", icon: iconPrivatebanking },
+  { label: "Über uns", icon: iconUeberuns },
+];
 
 const sidebarItems = [
   { icon: Menu, label: "MENÜ" },
@@ -58,16 +69,19 @@ const BankAustria = () => {
           </div>
           {/* Red nav area */}
           <div
-            className="flex-1 flex items-center justify-center gap-6"
+            className="flex-1 flex items-center justify-center gap-10"
             style={{ backgroundColor: "#e2001a" }}
           >
-            {["Privatkunden", "Firmenkunden", "Private Banking", "Über uns"].map((item) => (
+            {navItems.map(({ label, icon }) => (
               <a
-                key={item}
+                key={label}
                 href="#"
-                className="text-sm font-medium transition-colors text-white/80 hover:text-white"
+                className="flex flex-col items-center gap-1 transition-opacity hover:opacity-80"
               >
-                {item}
+                <img src={icon} alt={label} className="h-6 w-6 object-contain" />
+                <span className="text-white text-xs font-bold uppercase tracking-wide">
+                  {label}
+                </span>
               </a>
             ))}
           </div>
