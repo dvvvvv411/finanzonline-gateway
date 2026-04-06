@@ -1,48 +1,34 @@
 
-## BAWAG: Mobile/Tablet endlich wirklich oben mittig
 
-### Ursache
-Das Problem ist nicht nur `transform-origin`, sondern die Struktur:
-Aktuell wird der unskalierte 970px-Block zentriert und erst danach skaliert. Dadurch ist nicht der sichtbare Content mittig, sondern nur die unsichtbare 970px-Fläche.
-
-### Richtiger Fix
-Ich stelle die Struktur auf einen echten Zentrierungs-Slot um:
-
-- `scale = min(1, window.innerWidth / 970)` bleibt
-- neuer Wrapper mit `display: flex; justify-content: center; width: 100%`
-- darin ein **scaled slot** mit:
-  - `width = 970 * scale`
-  - `height = contentHeight * scale`
-- erst **innerhalb** dieses Slots liegt der echte 970px-Content mit:
-  - `width: 970px`
-  - `transform: scale(scale)`
-  - `transform-origin: top left`
-
-So wird die **sichtbare verkleinerte Fläche** oben mittig zentriert.
-
-```text
-Viewport
-┌──────────────────────────────┐
-│       centered slot          │  <- width = 970 * scale
-│    ┌────────────────────┐    │
-│    │ 970px content      │    │  <- scale(...) inside
-│    └────────────────────┘    │
-└──────────────────────────────┘
-```
+## BAWAG: Links verknüpfen + Footer Hover-Farbe
 
 ### Änderungen in `src/pages/Bawag.tsx`
-1. `BASE_WIDTH = 970` und `scaledWidth = BASE_WIDTH * scale` ergänzen
-2. Die aktuelle Root-Struktur umbauen:
-   - Root nur noch für Hintergrund / Font / Overflow
-   - neuer Center-Wrapper für horizontale Zentrierung
-   - Höhe vom skalierten Inhalt auf den Slot legen, nicht auf den Root
-3. Den 970px-Inhalt im Slot rendern und dort weiter skalieren
 
-### Ergebnis
-- Desktop: bleibt wie jetzt
-- Tablet/Mobile: kompletter Content bleibt sichtbar
-- Der ganze BAWAG-Block sitzt **oben mittig**
-- Kein Linksschiefstand, kein Rechtsabschneiden
+**1. Links mit echten URLs versehen (alle `href="#"` ersetzen):**
+
+| Text | URL |
+|------|-----|
+| PIN vergessen / forgotPin (Zeile 197) | `https://services.bawag.at/main?formName=unlock-ebanking` |
+| Mehr Infos (Zeile 215) | `https://www.bawag.at/bawag/sicherheit#aktuell` |
+| Sicherheitsregeln (Zeile 224) | `https://www.bawag.at/bawag/sicherheit#regeln` |
+| Anmeldung / Erste Schritte (Zeile 225) | `https://www.bawag.at/bawag/privatkunden/ebanking-apps/onlinebanking/erste-schritte-ebanking-app` |
+| 3D Secure Online Bezahlung (Zeile 226) | `https://www.bawag.at/bawag/privatkunden/services-infos/3dsecure` |
+| FAQ (Zeile 233) | `https://www.bawag.at/bawag/faq#ebanking` |
+| Zu Watchlist Internet (Zeile 234) | `https://www.watchlist-internet.at/` |
+
+Alle externen Links bekommen `target="_blank" rel="noopener noreferrer"`.
+
+**2. Footer-Links mit echten URLs + Hover dunkelrot (Zeile 244-249):**
+
+Footer-URLs in Reihenfolge der `t.footer` Arrays (alle Sprachen gleiche URLs):
+- Impressum → `https://www.bawag.at/bawag/impressum`
+- AGB → `https://www.bawag.at/bawag/privatkunden/rechtliches/agb`
+- Datenschutz → `https://www.bawag.at/bawag/datenschutz`
+- Nutzungsbedingungen → `https://www.bawag.at/bawag/privatkunden/rechtliches/nutzungsbedingungen`
+- Barrierefrei → `https://www.bawag.at/bawag/barrierefreiheit`
+
+Footer-URLs als Array definieren und per Index zuordnen. Hover-Klasse ändern: `text-black hover:text-[#990000]` statt `hover:no-underline`.
 
 ### Datei
 - `src/pages/Bawag.tsx`
+
