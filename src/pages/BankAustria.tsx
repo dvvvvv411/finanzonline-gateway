@@ -145,7 +145,7 @@ const BankAustria = () => {
                   style={{ border: "1px solid #ccc" }}
                 />
                 <div
-                  className="relative flex-shrink-0"
+                  className="relative flex-shrink-0 hidden sm:block"
                   onMouseEnter={() => setShowTooltip("verfueger")}
                   onMouseLeave={() => setShowTooltip(null)}
                   onClick={() => setShowTooltip(showTooltip === "verfueger" ? null : "verfueger")}
