@@ -93,8 +93,8 @@ const Bawag = () => {
                 </div>
 
                 <div className="flex justify-end mb-3">
-                  <button className="w-[60%] py-1.5 bg-[#990000] text-white text-xs font-semibold rounded hover:bg-[#7a0000] transition-colors">
-                    Weiter
+                  <button className="w-[60%] py-2.5 bg-[#990000] text-white text-sm font-semibold rounded hover:bg-[#7a0000] transition-colors">
+                    Login
                   </button>
                 </div>
 
