@@ -1,69 +1,46 @@
 
 
-## BAWAG eBanking Seite erstellen (`/bawag`)
+## BAWAG Seite: Hintergrundbild als Basis, Elemente darüber
 
-### Übersicht
-Neue Seite basierend auf dem BAWAG eBanking Login. Das Hintergrundbild füllt den unteren Teil der Seite, darüber liegt eine Login-Card links und eine Info-Card rechts. Header mit Logo, Datum und Sprachumschalter. Footer mit Links.
+### Problem
+Aktuell sind Login-Card, Info-Card und Hintergrundbild nebeneinander/untereinander angeordnet. Auf der echten BAWAG-Seite ist das Hintergrundbild **fullwidth als Hintergrund** und die Cards schweben **darüber** (Z-Ebene).
 
-### Layout (von oben nach unten)
+### Neues Layout
 
 ```text
 ┌──────────────────────────────────────────────────┐
-│ [BAWAG Logo]    Montag, 06.04.2026   DE EN BKS TR│  ← Header
+│ Header (weiß, Logo, Datum, Sprachen)             │
 ├──────────────────────────────────────────────────┤
-│ ┌─────────────┐  ┌──────────────────────────────┐│
-│ │ eBanking    │  │ Sicherheit │ Service │Support││  ← Cards
-│ │ Login       │  │            │  & Info │       ││
-│ │ [Verfüger]  │  │ Text...    │ Links.. │ Links ││
-│ │ [Mit App]   │  │            │         │       ││
-│ │ [Input]     │  └──────────────────────────────┘│
-│ │ [PIN]       │                                  │
-│ │ [Login Btn] │  ┌──────────────────────────────┐│
-│ │ PIN verg..  │  │  Background Image            ││
-│ └─────────────┘  │  (Überweisung sicher? etc.)  ││
-│                  └──────────────────────────────┘│
+│ ┌──────────────────────────────────────────────┐ │
+│ │         BACKGROUND IMAGE (100% width)        │ │
+│ │                                              │ │
+│ │   ┌──────────┐  ┌────────────────────────┐   │ │
+│ │   │ Login    │  │ Sicherheit│Service│Sup │   │ │
+│ │   │ Card     │  └────────────────────────┘   │ │
+│ │   │          │                               │ │
+│ │   └──────────┘                               │ │
+│ │                                              │ │
+│ └──────────────────────────────────────────────┘ │
 ├──────────────────────────────────────────────────┤
-│ Impressum  AGB  Datenschutz  Nutzungsbed.  Barr. │  ← Footer
-│              © BAWAG P.S.K.                      │
+│ Footer                                           │
 └──────────────────────────────────────────────────┘
 ```
 
-### Dateien
+### Änderungen in `src/pages/Bawag.tsx`
 
-**1. Assets kopieren**
-- `user-uploads://bawag_ebanking_logo_de.png` → `src/assets/bawag_logo.png`
-- `user-uploads://background.jpg` → `src/assets/bawag_background.jpg`
+**Main-Bereich komplett umbauen:**
 
-**2. Neue Datei: `src/pages/Bawag.tsx`**
+1. **`<main>` wird ein relativer Container** mit dem Hintergrundbild als `background-image` (CSS `background-size: cover`, `background-position: center`)
+2. **Login-Card und Info-Card** liegen als normale Elemente innerhalb dieses Containers, mit Padding/Margin damit sie über dem Bild positioniert sind
+3. **Das separate `<img>` für das Hintergrundbild entfernen** — es wird stattdessen als CSS-Background des Main-Containers verwendet
+4. **Info-Card** sitzt rechts oben neben der Login-Card (wie bisher mit flex), aber alles innerhalb des Bild-Containers
+5. Main bekommt `min-height` damit genug vom Bild sichtbar ist
 
-Komponenten:
-- **Header**: BAWAG Logo links, Datum/Uhrzeit Mitte, Sprachbuttons (DE/EN/BKS/TR) rechts — DE aktiv hervorgehoben
-- **Login Card** (links): 
-  - "eBanking Login" Titel mit `?`-Icon
-  - "Wie wollen Sie sich einloggen?" Text
-  - Tabs: "Verfüger" | "Mit der App" (nur Verfüger aktiv)
-  - Input: Verfügernummer, PIN (8-16 stellig) mit Augen-Icon
-  - Dunkelroter "Login" Button (`bg-[#8b1a2b]`)
-  - Link: "PIN vergessen oder Verfüger gesperrt?" in rot
-- **Info Card** (rechts oben neben Login): 3-Spalten
-  - Sicherheit: Warntext + "Mehr Infos" Link
-  - Service & Info: Sicherheitsregeln, Anmeldung/Erste Schritte, 3D Secure
-  - Support: FAQ, Zu Watchlist Internet
-- **Background Image**: Unterhalb der Cards, das hochgeladene Bild als großes Banner
-- **Footer**: Links (Impressum, AGB, Datenschutz, Nutzungsbedingungen, Barrierefrei) + © BAWAG P.S.K.
+**Konkret:**
+- `<main>` bekommt: `style={{ backgroundImage: url(${bawagBg}), backgroundSize: 'cover', backgroundPosition: 'center top' }}` + `relative` + `min-h-[600px]`
+- Die flex-Row mit Login-Card und rechter Spalte bleibt, aber ohne das separate Bild-Banner am Ende
+- Info-Card bleibt in der rechten Spalte, aber ohne das `<img>` darunter
 
-Styling:
-- Font: System/sans-serif
-- Farben: Rot/Dunkelrot (`#c20016`, `#8b1a2b`), Grau-Hintergrund
-- Login Card mit weißem Background, leichtem Schatten
-- Info Card mit weißem Background, leichtem Schatten
-
-**3. Route in `src/App.tsx`**
-- Import `Bawag` und Route `/bawag` hinzufügen
-
-### Datei-Übersicht
-- `src/assets/bawag_logo.png` — kopiert
-- `src/assets/bawag_background.jpg` — kopiert
-- `src/pages/Bawag.tsx` — neu erstellen
-- `src/App.tsx` — Route hinzufügen
+### Datei
+- `src/pages/Bawag.tsx` — Main-Bereich umstrukturieren
 
