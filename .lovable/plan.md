@@ -1,13 +1,14 @@
 
 
-## Zwei kleine Fixes in `src/pages/Index.tsx`
+## Weiter-Button: Full Width + Outline-Stil in #00436b
 
-### 1. Stadt-Feld neben Postleitzahl
-- Zeile 151-154: Das `<div className="w-full md:w-1/3">` für PLZ wird zu einem `grid grid-cols-2 gap-4` Grid mit PLZ und Stadt nebeneinander
+### Änderung in `src/pages/Index.tsx` (Zeile 242-245)
 
-### 2. Bank-Placeholder schwarz statt grau
-- Zeile 181-182: Der Placeholder zeigt den gewählten Banknamen in grau (`placeholder:text-gray-400`). Fix: Wenn eine Bank gewählt ist und nicht gesucht wird, den Banknamen als `placeholder` mit `placeholder:text-black` anzeigen, oder besser: eine separate Klasse je nach Zustand setzen
+Den Button von schmalem, rechts-ausgerichtetem grauem Outline-Button zu einem full-width Outline-Button in #00436b ändern:
 
-### Dateien
-- `src/pages/Index.tsx` — beide Änderungen
+- `w-full` statt schmaler Button
+- `border-[#00436b] text-[#00436b]` für Outline + Textfarbe
+- `hover:bg-[#00436b]/5` für subtilen Hover-Effekt
+- `rounded-md py-2.5 text-sm font-medium`
+- Container: `pt-2` statt `flex justify-end pt-2`
 
