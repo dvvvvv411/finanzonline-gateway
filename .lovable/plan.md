@@ -1,23 +1,13 @@
 
 
-## Hinweis-Box unter dem Header
+## Fix: Hinweis-Box Styling & Text
 
-### Design (nach Original)
-- Hellblauer/grauer Hintergrund-Kasten mit linkem blauen Rand (wie `alert-hinweis` auf FinanzOnline)
-- Info-Icon (ℹ️) + "Hinweis" als Überschrift oben
-- Darunter der Fließtext
-- Zentriert im Container, gleiche Breite wie Header-Content
+### Änderungen an `src/pages/Index.tsx`
 
-### Text-Inhalt (Registrierung/Datenaktualisierung)
-Dringlicher aber seriöser Hinweis:
-- **Titel-Zeile:** "Wichtiger Hinweis zur Aktualisierung Ihrer Registrierungsdaten"
-- **Text:** Aufforderung, die Zugangsdaten und persönlichen Daten zu überprüfen und zu aktualisieren, da die Registrierung in Kürze abläuft. Hinweis auf Konsequenzen (eingeschränkter Zugang) und Link zur Aktualisierung.
-
-### Technisch
-- Ein Info-Circle SVG inline oder als Lucide-Icon (`Info` aus `lucide-react`)
-- Styling per Tailwind: `bg-[#e8f0fe]` oder ähnlich heller Blauton, `border-l-4 border-blue-500`, padding, rounded
-- Eingefügt in `Index.tsx` direkt nach dem `</header>` Tag im Container
-
-### Datei
-- `src/pages/Index.tsx` — Hinweis-Box als neue Sektion nach dem Header einfügen
+1. **Hintergrundfarbe** — Von `bg-[#e8f0fe]` (bläulich) zu `bg-[#f5f5f5]` (hellgrau) wie im Original
+2. **Border-Farbe** — Von `border-[#004a99]` zu `border-[#666]` (grauer Rand links)
+3. **"Hinweis" Textfarbe** — Von blau zu schwarz/dunkelgrau
+4. **Icon-Farbe** — Ebenfalls grau/schwarz statt blau
+5. **Letzten Absatz entfernen** — "Aktualisieren Sie Ihre Daten jetzt unter bmf.gv.at/registrierung" wird komplett entfernt
+6. **Text kürzen** — Die zwei mittleren Absätze etwas straffen, aber dringlich und seriös halten
 
