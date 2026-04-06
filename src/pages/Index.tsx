@@ -30,6 +30,11 @@ import dolomitenIcon from "@/assets/dolomiten_bank.png";
 import spardaIcon from "@/assets/sparda_bank.png";
 import dadatIcon from "@/assets/dadat_bank.png";
 
+import idAustriaImg from "@/assets/IDAustria.png";
+import finanznaviImg from "@/assets/Finanznavi.jpg";
+import kundenserviceImg from "@/assets/Kundenservice.png";
+import steuerbuchImg from "@/assets/steuerbuch.jpg";
+
 const banks = [
   { name: "Raiffeisen Bank", icon: raiffeisenIcon },
   { name: "Erste Bank", icon: ersteIcon },
@@ -245,6 +250,59 @@ const Index = () => {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Aktuelles Sektion */}
+        <div className="mt-10">
+          <h2 className="mb-6 text-center text-xl font-bold text-black md:text-2xl">Aktuelles</h2>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                img: idAustriaImg,
+                title: "Infos zur ID Austria",
+                text: "Alle Informationen zur ID Austria und wie Sie diese aktivieren können.",
+                link: "https://www.oesterreich.gv.at/id-austria.html",
+              },
+              {
+                img: finanznaviImg,
+                title: "Finanznavi",
+                text: "Ihr digitaler Wegweiser für Ihre Finanzentscheidungen.",
+                link: "https://finanznavi.gv.at/",
+              },
+              {
+                img: kundenserviceImg,
+                title: "Kundenservice",
+                text: "Alle Informationen zu unserem Kundenservice.",
+                link: "https://www.bmf.gv.at/services/aemter-behoerden/faoe.html",
+              },
+              {
+                img: steuerbuchImg,
+                title: "Das Steuerbuch 2026",
+                text: "Tipps zur Arbeitnehmerveranlagung 2025 für Lohnsteuerzahler/innen",
+                link: "https://www.bmf.gv.at/public/top-themen/steuerbuch-2026.html",
+              },
+            ].map((item) => (
+              <a
+                key={item.title}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+              >
+                <div className="aspect-[16/10] w-full overflow-hidden">
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="mb-1 text-sm font-bold text-gray-900">{item.title}</h3>
+                  <p className="text-xs leading-relaxed text-gray-600">{item.text}</p>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
       </div>
