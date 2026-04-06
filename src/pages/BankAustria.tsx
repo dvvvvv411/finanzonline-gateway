@@ -141,10 +141,9 @@ const BankAustria = () => {
         {sidebarIcons.map((icon, index) => {
           const label = t.sidebar[index];
           return (
-            <a
+            <div
               key={index}
-              href="#"
-              className={`border-l-[3px] border-transparent hover:border-white hover:bg-[#1a1a1a] transition-colors group ${sidebarOpen ? "flex flex-row items-center" : "flex flex-col items-center justify-center"}`}
+              className={`border-l-[3px] border-transparent hover:border-white hover:bg-[#1a1a1a] transition-colors group cursor-pointer ${sidebarOpen ? "flex flex-row items-center" : "flex flex-col items-center justify-center"}`}
               style={{ height: "80px", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
             >
               <div className="flex items-center justify-center flex-shrink-0" style={{ width: "80px" }}>
