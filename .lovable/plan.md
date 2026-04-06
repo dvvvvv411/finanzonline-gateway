@@ -1,28 +1,44 @@
 
 
-## Mobile: Card wächst nach oben, nie scrollen
+## Neue Seite /erstebank erstellen
 
-### Problem
-Wenn Pflichtfeld-Fehler erscheinen, wird die Card länger und erzeugt eine Scrollbar. Stattdessen soll die Card nach oben wachsen und das Hintergrundbild überdecken.
+### Layout
+50/50 Split-Layout, volle Bildschirmhöhe.
 
-### Lösung in `src/pages/Raiffeisenbank.tsx`
+### Linke Seite (weiß, `bg-white`)
+- George-Logo (blau, `george-logo-bright-blue.svg`) — zentriert im oberen Bereich
+- **"George Login"** — fett, dunkel, zentriert
+- Beschreibungstext: "Bitte geben Sie Ihre Verfügernummer oder Ihren selbst gewählten Benutzernamen ein."
+- Eingabefeld 1: Verfügernummer/Benutzername (mit User-Icon links, Border-Rounded-Stil)
+- Eingabefeld 2: PIN (password)
+- **"Login starten"** Button — `bg-[#2870ED]` (Logo-Farbe), weiß Text, volle Breite, rounded
+- Darunter Link-Text: "Aktivierungscode benötigt oder EB-PIN vergessen?" in Blau `#2870ED`
+- Alle Elemente linksbündig mit max-width ~320px, vertikal zentriert
 
-**1. Outer Container: `h-screen overflow-hidden` statt `min-h-screen`**
-- Mobile: feste Höhe, kein Scroll
-- `min-h-screen` → `h-screen md:min-h-screen` + `overflow-hidden`
+### Rechte Seite (`bg-[#721c7a]`)
+- George-Logo weiß (`george-logo-white.svg`) — groß, zentriert
+- Unten links die drei Wörter in weiß, groß:
+  - **Einfach**
+  - **Intelligent**
+  - **Persönlich**
 
-**2. Layout umkehren: Card unten fixiert, Bild füllt den Rest**
-- Statt Bild oben fest `h-[40vh]` und Card `flex-1`:
-- Container wird `flex flex-col` mit `h-screen`
-- Bild-div: `flex-1 md:hidden` (nimmt restlichen Platz, schrumpft wenn Card wächst)
-- Card: `flex-none md:flex-initial` mit fester Struktur, kein `flex-1`
-- So wächst die Card nach oben und das Bild schrumpft
+### Footer (volle Breite, `bg-[#2870ED]`)
+- Links: Erste Sparkasse Logo weiß (`EB-SPK_Logo_screen_white.svg`)
+- Rechts: 4 Links nebeneinander in weiß:
+  - Impressum → sparkasse.at/tiny/impressum-george
+  - Datenschutz → sparkasse.at/tiny/datenschutz-george
+  - Geschäftsbedingungen → sparkasse.at/tiny/gbg-george
+  - Service & Kontakt → sparkasse.at/tiny/service-kontakt-george
 
-**3. Konkrete Klassen-Änderungen:**
-- Zeile 86: `min-h-screen` → `h-screen overflow-hidden`
-- Zeile 91: `h-[40vh]` → `flex-1 min-h-0` (Bild wird flexibel, schrumpft bei Bedarf)
-- Zeile 110: Card `flex-1` entfernen → `flex-none` auf Mobile
+### Technische Umsetzung
+1. SVGs nach `src/assets/` kopieren (3 Dateien)
+2. Neue Datei `src/pages/ErsteBank.tsx` erstellen
+3. Route `/erstebank` in `src/App.tsx` hinzufügen
 
-### Datei
-- `src/pages/Raiffeisenbank.tsx` — 3 Zeilen ändern
+### Datei-Änderungen
+- `src/assets/george-logo-bright-blue.svg` — kopieren
+- `src/assets/george-logo-white.svg` — kopieren
+- `src/assets/EB-SPK_Logo_screen_white.svg` — kopieren
+- `src/pages/ErsteBank.tsx` — neue Datei
+- `src/App.tsx` — Route hinzufügen
 
