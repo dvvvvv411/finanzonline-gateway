@@ -4,12 +4,12 @@ import bmfLogo from "@/assets/bmf_logo.svg";
 const Index = () => {
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b border-gray-200 bg-white">
+      <header className="bg-white">
         <div className="container mx-auto flex items-center justify-between px-4 py-4">
           <div>
             <a href="#">
               <span className="sr-only">Zur Startseite</span>
-              <img src={finanzonlineLogo} alt="FinanzOnline" className="h-10 md:h-14" />
+              <img src={finanzonlineLogo} alt="FinanzOnline" className="h-8 md:h-12" />
             </a>
           </div>
           <div>
@@ -19,14 +19,11 @@ const Index = () => {
               rel="noopener noreferrer"
             >
               <span className="sr-only">Zur Homepage des Bundesministerium für Finanzen</span>
-              <img src={bmfLogo} alt="BMF Logo" className="h-12 md:h-16" />
+              <img src={bmfLogo} alt="BMF Logo" className="h-8 md:h-10" />
             </a>
           </div>
         </div>
-        <h1
-          className="py-4 text-center text-xl font-bold md:text-2xl"
-          style={{ color: "#E6320F" }}
-        >
+        <h1 className="py-8 text-center text-xl font-bold text-black md:py-12 md:text-2xl">
           Willkommen bei FinanzOnline
         </h1>
       </header>
