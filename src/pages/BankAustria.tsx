@@ -146,29 +146,46 @@ style={{ border: "1px solid #ccc" }}
               </button>
             </div>
 
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-6">
               {[
                 { lang: "de" as const, flag: flagAt, label: "Deutsch" },
                 { lang: "en" as const, flag: flagEn, label: "English" },
-              ].map(({ lang, flag, label }) => (
-                <button
-                  key={lang}
-                  onClick={() => setActiveLang(lang)}
-                  className="flex flex-col items-center gap-1 px-4 py-2 rounded transition-all"
-                  style={{
-                    border: activeLang === lang ? "2px solid #00aed0" : "2px solid transparent",
-                    color: activeLang === lang ? "#00aed0" : "#999",
-                  }}
-                >
-                  <img
-                    src={flag}
-                    alt={label}
-                    className="h-10 w-auto"
-                    style={{ filter: activeLang === lang ? "none" : "grayscale(100%)", opacity: activeLang === lang ? 1 : 0.5 }}
-                  />
-                  <span className="text-sm font-semibold">{label}</span>
-                </button>
-              ))}
+              ].map(({ lang, flag, label }) => {
+                const isActive = activeLang === lang;
+                return (
+                  <button
+                    key={lang}
+                    onClick={() => setActiveLang(lang)}
+                    className="flex flex-col items-center gap-1 bg-transparent border-none cursor-pointer"
+                  >
+                    <div
+                      className="rounded-full overflow-hidden flex items-start"
+                      style={{
+                        width: 56,
+                        height: 56,
+                        border: isActive ? "2px solid #00aed0" : "2px solid transparent",
+                      }}
+                    >
+                      <img
+                        src={flag}
+                        alt={label}
+                        style={{
+                          width: "100%",
+                          height: "200%",
+                          objectFit: "cover",
+                          objectPosition: isActive ? "top" : "bottom",
+                        }}
+                      />
+                    </div>
+                    <span
+                      className="text-sm font-semibold"
+                      style={{ color: isActive ? "#00aed0" : "#999" }}
+                    >
+                      {label}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </main>
