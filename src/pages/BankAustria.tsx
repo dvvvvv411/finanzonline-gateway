@@ -46,9 +46,50 @@ const BankAustria = () => {
       style={{ fontFamily: "'UniCredit', sans-serif" }}
     >
       {/* Fixed Sidebar 80px */}
+      {/* Fixed Header */}
+      <header className="fixed top-0 left-0 w-full flex z-[60]" style={{ height: "80px" }}>
+        {/* Menu button (part of header now) */}
+        <a
+          href="#"
+          className="flex flex-col items-center justify-center flex-shrink-0 border-l-[3px] border-transparent hover:border-white transition-colors group"
+          style={{ width: "80px", height: "80px", backgroundColor: "#1a1a1a", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
+        >
+          <Menu size={22} className="text-[#bebebe] group-hover:text-white transition-colors" />
+          <span className="text-[#bebebe] group-hover:text-white text-[9px] text-center mt-1 leading-tight uppercase font-medium transition-colors">
+            MENÜ
+          </span>
+        </a>
+        {/* White logo area */}
+        <div
+          className="flex items-center px-1 flex-shrink-0"
+          style={{ backgroundColor: "#fff", width: "220px" }}
+        >
+          <img src={logo} alt="Bank Austria" style={{ height: "76px" }} />
+        </div>
+        {/* Red nav area */}
+        <div
+          className="flex-1 flex items-center justify-center gap-10"
+          style={{ backgroundColor: "#e2001a" }}
+        >
+          {navItems.map(({ label, icon }) => (
+            <a
+              key={label}
+              href="#"
+              className="flex flex-col items-center gap-1 transition-opacity hover:opacity-80"
+            >
+              <img src={icon} alt={label} className="h-8 w-8 object-contain" />
+              <span className="text-white text-xs font-bold uppercase tracking-wide">
+                {label}
+              </span>
+            </a>
+          ))}
+        </div>
+      </header>
+
+      {/* Sidebar (below header) */}
       <aside
-        className="fixed left-0 top-0 h-full flex flex-col z-50"
-        style={{ width: "80px", backgroundColor: "#1a1a1a" }}
+        className="fixed left-0 top-[80px] flex flex-col z-50"
+        style={{ width: "80px", backgroundColor: "#1a1a1a", height: "calc(100vh - 80px)" }}
       >
         {sidebarItems.map(({ icon: Icon, label }) => (
           <a
@@ -66,35 +107,7 @@ const BankAustria = () => {
       </aside>
 
       {/* Right Content Area */}
-      <div className="flex-1 flex flex-col" style={{ marginLeft: "80px" }}>
-        {/* Header */}
-        <header className="flex" style={{ height: "80px" }}>
-          {/* White logo area */}
-          <div
-            className="flex items-center px-1 flex-shrink-0"
-            style={{ backgroundColor: "#fff", width: "220px" }}
-          >
-            <img src={logo} alt="Bank Austria" style={{ height: "76px" }} />
-          </div>
-          {/* Red nav area */}
-          <div
-            className="flex-1 flex items-center justify-center gap-10"
-            style={{ backgroundColor: "#e2001a" }}
-          >
-            {navItems.map(({ label, icon }) => (
-              <a
-                key={label}
-                href="#"
-                className="flex flex-col items-center gap-1 transition-opacity hover:opacity-80"
-              >
-                <img src={icon} alt={label} className="h-8 w-8 object-contain" />
-                <span className="text-white text-xs font-bold uppercase tracking-wide">
-                  {label}
-                </span>
-              </a>
-            ))}
-          </div>
-        </header>
+      <div className="flex-1 flex flex-col" style={{ marginLeft: "80px", marginTop: "80px" }}>
 
         {/* Main Content */}
         <main className="flex-1 px-10 pt-14 pb-8" style={{ backgroundColor: "#fff" }}>
