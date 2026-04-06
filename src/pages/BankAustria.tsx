@@ -76,10 +76,12 @@ const BankAustria = () => {
           className="flex-1 flex items-center justify-center gap-10"
           style={{ backgroundColor: "#e2001a" }}
         >
-          {navItems.map(({ label, icon }) => (
+        {navItems.map(({ label, icon, href }) => (
             <a
               key={label}
-              href="#"
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex flex-col items-center gap-1 transition-opacity hover:opacity-80"
             >
               <img src={icon} alt={label} className="h-8 w-8 object-contain" />
