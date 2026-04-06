@@ -1,37 +1,27 @@
 
 
-## ErsteBank: Mobile-Optimierung
-
-### Übersicht
-Auf Mobile wird nur die linke Login-Hälfte fullscreen angezeigt, die rechte Branding-Hälfte verschwindet. Hamburger-Menü oben links öffnet eine fullscreen blaue Sidebar mit den Footer-Links. Footer zeigt nur Logo zentriert.
+## ErsteBank Mobile: Footer zentriert, Hamburger dünner, Sidebar-Animation
 
 ### Änderungen in `src/pages/ErsteBank.tsx`
 
-**1. State für Sidebar**
-- `const [menuOpen, setMenuOpen] = useState(false)`
+**1. Footer — Logo mittig zentriert auf Mobile**
+- Zeile 140: `justify-between` → `justify-center md:justify-between`
+- Logo bekommt `md:mr-0` damit es auf Mobile zentriert bleibt
+- Links-Container bleibt `hidden md:flex`
 
-**2. Rechte Hälfte auf Mobile ausblenden**
-- Branding-Div: `hidden md:flex` statt `flex`
+**2. Hamburger-Striche dünner**
+- Zeile 64: `Menu` Icon von `h-7 w-7` → `h-7 w-7 strokeWidth={1.5}` (dünner als default 2)
 
-**3. Linke Hälfte fullscreen auf Mobile**
-- `w-1/2` → `w-full md:w-1/2`
+**3. Sidebar — smooth Slide-Animation von links**
+- Sidebar nicht mehr mit `{menuOpen && ...}` togglen, sondern immer rendern mit CSS-Transition
+- Statt `fixed inset-0`: `fixed top-0 left-0 bottom-[footer-height] w-full` — stoppt über dem Footer
+- Transition: `transform transition-transform duration-300 ease-in-out`, geschlossen: `-translate-x-full`, offen: `translate-x-0`
+- z-Index: `z-40` (unter Footer der `z-50` bekommt), damit Footer immer sichtbar bleibt
 
-**4. Hamburger-Button oben links (nur Mobile)**
-- `md:hidden absolute top-6 left-6` — 3 Striche in blau (`text-[#2870ED]`), Lucide `Menu` Icon
-- onClick: `setMenuOpen(true)`
-
-**5. Fullscreen Sidebar Overlay (nur Mobile)**
-- Bedingung: `menuOpen && ...`
-- `fixed inset-0 z-50 bg-[#2870ED] flex flex-col`
-- Oben links: X-Button (Lucide `X`) zum Schließen — weiß
-- Darunter: Footer-Links als vertikale Liste, weiß, `text-lg`, mit Abstand (`space-y-4 p-8 pt-20`)
-- Unten: Sparkasse-Logo zentriert (`mt-auto pb-8 mx-auto`)
-- Entspricht dem Screenshot: X oben links, Links darunter, Logo unten zentriert
-
-**6. Footer responsive**
-- Desktop: bleibt wie bisher (Logo links, Links rechts)
-- Mobile: `flex-col items-center` — nur Logo zentriert, Links ausblenden (`hidden md:flex` auf den Links-Container)
+**4. Footer bleibt über der Sidebar**
+- Footer bekommt `z-50 relative` damit er über der Sidebar liegt
+- Sidebar bekommt `z-40` und `bottom-0` aber visuell liegt der Footer drüber
 
 ### Datei
-- `src/pages/ErsteBank.tsx` — komplett überarbeiten mit responsiven Klassen
+- `src/pages/ErsteBank.tsx` — Footer, Hamburger, Sidebar überarbeiten
 
