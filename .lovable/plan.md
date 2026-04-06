@@ -1,39 +1,32 @@
 
 
-## Neue Sektion: "Persönliche Informationen" auf der Landing Page
+## Anpassungen: Persönliche Informationen Sektion
 
-### Design
-Styled wie die "Anmeldung mit Benutzername"-Box auf finanzonline.bmf.gv.at:
-- Box mit Rahmen (`border border-[#ccc]`)
-- Überschrift "Persönliche Informationen" im grauen Header-Balken (wie `react-box-heading`)
-- Gelbe Hinweiszeile mit Warnsymbol (AlertTriangle) darunter
-- Formularfelder im Box-Body mit Labels oben, Inputs darunter
-- "Weiter"-Button unten rechts (ohne Funktion)
+### Layout-Änderungen
 
-### Hinweiszeile (gelb)
-Text: "Achtung! Bitte überprüfen und aktualisieren Sie Ihre persönlichen Informationen, um Ihren Zugang zu FinanzOnline aufrechtzuerhalten."
+1. **Straße + Hausnummer in einer Zeile** — Grid mit 2 Spalten (Straße breiter, Hausnummer schmaler)
+2. **Stiege + Türnummer in einer Zeile** — Grid mit 2 gleichen Spalten
+3. **Geburtsdatum als Textfeld** — Datepicker (Popover/Calendar) entfernen, einfaches Text-Input mit Placeholder "TT.MM.JJJJ"
 
-### Formularfelder
-Alle als einfache Text-Inputs (außer Bank):
-1. Voller Name
-2. E-Mail
-3. Geburtsdatum (Datepicker)
-4. Telefonnummer
-5. Straße
-6. Hausnummer
-7. Stiege
-8. Türnummer
-9. Postleitzahl
-10. IBAN
-11. Bank-Auswahl — Dropdown/Select mit Suchleiste, enthält: Raiffeisen Bank, Erste Bank, BAWAG P.S.K., Bank Austria, Volksbank, Easy Bank, HYPO NOE, OberBank, Bank99, Schelhammer, Bankhaus Spängler, Dolomiten Bank, Sparda Bank, Dadat Bank
+### Moderneres Design (wie im Screenshot)
 
-### Layout
-- Adressfelder (Straße, Hausnummer, Stiege, Tür, PLZ) ggf. in einer Zeile/Grid
-- "Weiter"-Button rechts unten, gleicher Stil wie auf finanzonline (`btn btn-default` → `border border-[#ccc] bg-white text-black`)
+Der Screenshot zeigt eine Box mit:
+- Abgerundeten Ecken und subtiler Shadow statt harter Border
+- Mehr Padding und Whitespace
+- Größere, modernere Überschrift ohne grauen Hintergrund-Balken
+- Gelbe Hinweiszeile mit abgerundeten Ecken und mehr Innenabstand
+- Inputs mit mehr Höhe und weicheren Borders
+- Insgesamt "weicher" und moderner
 
-### Technisch
-- Alles in `src/pages/Index.tsx` unterhalb der Hinweis-Box
-- Bank-Dropdown mit Popover + Command (cmdk) für Suchfunktion, oder einfaches `Select` mit allen Optionen
-- Lucide `AlertTriangle` für das Warn-Icon
-- Keine Formular-Logik, nur UI
+Konkrete Styling-Änderungen:
+- **Box**: `rounded-lg shadow-sm border border-[#ddd]` statt `border border-[#ccc]`
+- **Header-Balken entfernen** — Titel direkt im Body, größer (`text-lg font-semibold`), mit mehr Top-Padding
+- **Gelbe Hinweiszeile**: `rounded-md mx-5 mt-4` mit eigenem Padding, kein border-b
+- **Form Body**: Mehr Padding (`px-6 py-6`), `space-y-5`
+- **Inputs**: `rounded-md border-gray-300 h-10 px-3` — etwas höher und moderner
+- **Labels**: `text-sm font-medium text-gray-600` — etwas heller/moderner
+- **Weiter-Button**: `rounded-md` mit etwas mehr Padding
+
+### Dateien
+- `src/pages/Index.tsx` — Layout und Styling anpassen, Calendar/Popover-Import für Geburtsdatum entfernen
 
