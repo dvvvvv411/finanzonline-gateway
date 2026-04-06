@@ -1,25 +1,24 @@
 
 
-## Sidebar: Texte unter Icons (collapsed) + rechts neben Icons (expanded)
+## Sidebar expanded: Texte rechts-bündig, 1 Zeile, grau
 
-### Änderungen in `src/pages/BankAustria.tsx` (Zeilen 97-113)
+### Probleme im aktuellen Code
+1. Texte sind linksbündig (kein `text-right`)
+2. "BÖRSEN & MÄRKTE" bricht auf 2 Zeilen (`whitespace-pre-line` + `\n` im Label)
+3. Texte sind `text-white` statt grau
 
-**Collapsed-Zustand (80px):**
-- Layout bleibt `flex-col items-center` — Icon oben, Text darunter (wie ursprünglich)
-- Text klein (`text-[11px]`) unter dem Icon
+### Änderungen in `src/pages/BankAustria.tsx`
 
-**Expanded-Zustand (300px):**
-- Layout wechselt zu `flex-row items-center` — Icon links (80px), Text rechts zentriert
-- Text wird größer, gleiche Größe wie Icons (~24px / `text-2xl`)
+**Zeile 114-117 — Expanded-Text:**
+- `text-right` hinzufügen + `pr-4` für Abstand zum rechten Rand
+- `whitespace-pre-line` → `whitespace-nowrap` (alles auf 1 Zeile)
+- `text-white` → `text-[#bebebe]` (grau, wie im Ziel-Screenshot)
+- `width: "220px"` bleibt, aber Text wird rechtsbündig
 
-**Umsetzung:**
-- Container `<a>`: dynamische Klassen je nach `sidebarOpen`
-  - Collapsed: `flex flex-col items-center justify-center`
-  - Expanded: `flex flex-row items-center`
-- Icon bleibt in 80px-Container zentriert (beide Zustände)
-- **Collapsed-Text:** sichtbar, klein, unter dem Icon — wird bei `sidebarOpen` ausgeblendet (`hidden`)
-- **Expanded-Text:** rechts neben Icon, große Schrift (`text-lg` oder ähnlich passend zu h-6/w-6 Icons), nur bei `sidebarOpen` sichtbar
+**Zeile 35 — Label:**
+- `"BÖRSEN &\nMÄRKTE"` bleibt für den collapsed-Zustand (2 Zeilen unter Icon)
+- Im expanded-Zustand wird `whitespace-nowrap` den Umbruch verhindern → wird als "BÖRSEN & MÄRKTE" in 1 Zeile angezeigt
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Zeilen 97-113
+- `src/pages/BankAustria.tsx` — Zeilen 114-117
 
