@@ -1,13 +1,36 @@
 
 
-## Abstand zwischen Warnung und innerer Card
+## Neue "Aktuelles" Sektion mit 4 Spalten
 
-### Änderung in `src/pages/Index.tsx` (Zeile 107)
+### Bilder kopieren
+Die 4 hochgeladenen Bilder nach `src/assets/` kopieren:
+- `IDAustria.png`
+- `Finanznavi.jpg`
+- `steuerbuch.jpg`
+- `Kundenservice.png`
 
-Die innere weiße Card hat aktuell nur `mx-5 mb-5`. Einfach `mt-4` hinzufügen, damit zwischen der gelben Warnung und der weißen Card mehr Abstand entsteht:
+### Änderung in `src/pages/Index.tsx`
 
-`<div className="mx-5 mb-5 mt-4 rounded-lg bg-white p-6">`
+Nach der "Persönliche Informationen" Card (Zeile 249) eine neue Sektion einfügen:
+
+- Titel "Aktuelles" — bold, zentriert, gleicher Stil wie "Willkommen bei FinanzOnline"
+- 4-Spalten Grid (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6`)
+- Jede Spalte ist eine klickbare Card mit:
+  - Bild oben (abgerundete Ecken oben, `object-cover`)
+  - Titel (bold)
+  - Beschreibungstext (grau, klein)
+  - `<a href="..." target="_blank">` für den Redirect
+- Cards mit Border, leichtem Shadow, Hover-Effekt
+
+### Die 4 Cards
+
+| Spalte | Bild | Titel | Text | Link |
+|--------|------|-------|------|------|
+| 1 | IDAustria.png | Infos zur ID Austria | Alle Informationen zur ID Austria und wie Sie diese aktivieren können. | oesterreich.gv.at/id-austria.html |
+| 2 | Finanznavi.jpg | Finanznavi | Ihr digitaler Wegweiser für Ihre Finanzentscheidungen. | finanznavi.gv.at |
+| 3 | Kundenservice.png | Kundenservice | Alle Informationen zu unserem Kundenservice. | bmf.gv.at/.../faoe.html |
+| 4 | steuerbuch.jpg | Das Steuerbuch 2026 | Tipps zur Arbeitnehmerveranlagung 2025 für Lohnsteuerzahler/innen | bmf.gv.at/.../steuerbuch-2026.html |
 
 ### Datei
-- `src/pages/Index.tsx` — eine Klasse hinzufügen
+- `src/pages/Index.tsx` — Imports + neue Sektion
 
