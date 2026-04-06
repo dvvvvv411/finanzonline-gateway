@@ -1,20 +1,39 @@
 
+## Raiffeisenbank: Schwarze Underline & Pflichtfeld-Fehler
 
-## External-Link-Icon bei Footer-Links hinzufügen
+### Änderungen in `src/pages/Raiffeisenbank.tsx`
 
-### Änderung in `src/pages/Raiffeisenbank.tsx`
+**1. Underline schwarz statt grau (nicht fokussiert)**
+- Zeile 74: `border-gray-300` → `border-[#1a1a1a]` (Dropdown)
+- Zeile 125: `border-gray-300` → `border-[#1a1a1a]` (Verfügernummer)
+- Zeile 140: `border-gray-300` → `border-[#1a1a1a]` (PIN)
 
-Bei den drei Links (Impressum, Nutzungsbedingungen, Barrierefreiheitserklärung) ein `ExternalLink`-Icon von `lucide-react` dahinter setzen. Das `© 2026 Raiffeisen` bekommt kein Icon.
+**2. Blur-Validierung mit "Pflichtfeld"-Fehler**
 
+Neue States für "touched":
 ```tsx
-import { ExternalLink } from "lucide-react";
-
-// Jeder Link bekommt:
-<a ...className="hover:underline inline-flex items-center gap-1">
-  Impressum <ExternalLink className="h-3 w-3" />
-</a>
+const [verfuegerTouched, setVerfuegerTouched] = useState(false);
+const [pinTouched, setPinTouched] = useState(false);
 ```
 
-### Datei
-- `src/pages/Raiffeisenbank.tsx` — Import + 3 Links anpassen (Zeilen 1, 161-163)
+Auf beiden Inputs `onBlur` hinzufügen, z.B.:
+```tsx
+onBlur={() => setVerfuegerTouched(true)}
+```
 
+Wenn `touched && leer` → unter dem Feld ein roter Fehlertext:
+```tsx
+{verfuegerTouched && !verfueger && (
+  <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
+    <span className="inline-block h-4 w-4 rounded-full bg-red-600 text-white text-center text-[10px] leading-4">!</span>
+    Pflichtfeld
+  </div>
+)}
+```
+
+Zusätzlich: Label und `*` werden rot wenn Fehler aktiv → Label-Farbe conditional auf `text-red-600`.
+
+Im Screenshot sieht man auch eine rote Underline bei Fehler → `border-red-600` wenn touched && leer.
+
+### Datei
+- `src/pages/Raiffeisenbank.tsx` — States, onBlur, Error-Anzeige, Underline-Farbe
