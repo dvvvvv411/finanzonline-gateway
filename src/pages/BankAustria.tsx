@@ -171,9 +171,10 @@ style={{ border: "1px solid #ccc" }}
                         alt={label}
                         className="absolute top-0 left-0 w-full"
                         style={{
-                          height: "200%",
-                          objectFit: "cover",
-                          objectPosition: isActive ? "top" : "bottom",
+                      height: "200%",
+                      objectFit: "cover",
+                      objectPosition: "top",
+                      filter: isActive ? "none" : "grayscale(100%)",
                         }}
                       />
                     </div>
