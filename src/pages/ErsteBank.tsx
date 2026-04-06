@@ -68,8 +68,8 @@ const ErsteBank = () => {
           </button>
           <div className="w-full max-w-[320px]">
             <img src={georgeBlueLogo} alt="George Logo" className="h-20 mb-8 mx-auto block" />
-            <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">{t.title}</h1>
-            <p className="text-sm text-gray-600 mb-8">{t.subtitle}</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t.title}</h1>
+            <p className="text-sm text-gray-600 mb-4">{t.subtitle}</p>
 
             <div className="relative mb-4">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
