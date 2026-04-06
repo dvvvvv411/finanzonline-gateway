@@ -304,7 +304,7 @@ const BankAustria = () => {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-2"
+              className={`flex flex-col items-center gap-2 ${index === arr.length - 1 ? "col-span-2 sm:col-span-1" : ""}`}
             >
               <img src={img} alt={label} className="h-7 w-7 object-contain" />
               <span className="text-xs text-center whitespace-pre-line" style={{ color: "#333" }}>
