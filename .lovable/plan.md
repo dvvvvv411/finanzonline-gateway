@@ -1,29 +1,15 @@
 
 
-## BankAustria: Footer-Icons austauschen + Hintergrundfarbe ändern
+## BankAustria: Hover entfernen + Disclaimer-Sektion vertiefen
 
 ### Änderungen
 
-**1. Icons als Bilder importieren**
-- 5 hochgeladene PNGs nach `src/assets/` kopieren:
-  - `sicherheitsinformationen.png`
-  - `sicherheitscenter.png`
-  - `internetbanking_hotline.png`
-  - `faq.png`
-  - `cookie_policy.png`
-- Lucide-Icons (`Shield`, `Phone`, `HelpCircle`, `Cookie`) durch `<img>`-Tags mit den neuen Assets ersetzen
+**1. Hover-Effekt bei Footer-Icons entfernen**
+- Zeile 246: `hover:opacity-70 transition-opacity` entfernen → nur `flex flex-col items-center gap-2`
 
-**2. Footer-Icons Sektion: Hintergrund auf `#e5e5e5`**
-- Zeile 229: `backgroundColor: "#f5f5f5"` → `backgroundColor: "#e5e5e5"`
+**2. Disclaimer-Sektion (`*Exklusiv...`) mehr Padding**
+- Zeile 228: `py-3` → `py-8` für deutlich mehr vertikalen Abstand
 
-**3. Disclaimer-Sektion bleibt bei `#f5f5f5`**
-- Zeile 224 bleibt unverändert (`backgroundColor: "#f5f5f5"`)
-- Dadurch entsteht visuell ein Farbunterschied/Abstand zwischen den beiden Sektionen
-
-**4. Nicht mehr benötigte Lucide-Imports entfernen**
-- `Shield`, `Phone`, `HelpCircle`, `Cookie` aus dem Import entfernen (falls nirgends sonst verwendet)
-
-### Dateien
-- `src/assets/` — 5 neue Icon-PNGs
-- `src/pages/BankAustria.tsx` — Icons ersetzen, Hintergrundfarbe ändern, Imports aufräumen
+### Datei
+- `src/pages/BankAustria.tsx` — 2 kleine Änderungen
 
