@@ -104,7 +104,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="px-6 py-6">
+          <div className="mx-5 mb-5 rounded-lg bg-white p-6">
             <div className="space-y-5">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">Voller Name</label>
