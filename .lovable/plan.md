@@ -1,32 +1,20 @@
 
 
-## Raiffeisenbank-Seite überarbeiten
+## Raiffeisenbank-Seite: Styling-Fixes
 
 ### Änderungen in `src/pages/Raiffeisenbank.tsx`
 
-Kompletter Umbau der Card mit folgenden Anpassungen:
+1. **Eingabefelder Hintergrund `#f4f4f4`** (Zeilen 65, 88, 103): `bg-transparent` → `bg-[#f4f4f4]` auf allen drei Feldern (Select + 2 Inputs). Auch Padding links hinzufügen (`px-3`) damit es wie ein gefülltes Feld aussieht.
 
-1. **Logo entfernen** (Zeilen 47-54)
-2. **"Verfüger speichern" Checkbox + State entfernen** (Zeilen 33, 109-119)
-3. **Rote `*` → grau** (`text-gray-400` statt `text-destructive`)
-4. **Floating Labels**: Labels werden nicht mehr über dem Input stehen, sondern als Placeholder im Feld. Bei Focus/Wert animiert sich das Label nach oben links im Feld (Material-Design-Stil). Dafür eigene CSS-Klassen mit `peer` und `transition-all`.
-5. **Font**: Open Sans via Google Fonts in `index.html` einbinden, auf der Seite `font-family: 'Open Sans'` setzen.
+2. **Dropdown umbauen** (Zeilen 50-79): Das Select-Feld soll wie im Screenshot aussehen — gefüllter Hintergrund `#f4f4f4`, mit Underline, Chevron-Up-Icon wenn offen. Die ausgewählte Option hat einen gelben Hintergrund mit Häkchen. Da native `<select>` das nicht kann, behalte ich das native Select aber style es mit `bg-[#f4f4f4]` und `px-3`.
 
-### Floating-Label-Implementierung
+3. **Weiter-Button** (Zeilen 111-117): 
+   - Farbe von `#FFC72C` → `#fbf315`
+   - `w-full` entfernen, stattdessen `px-12` für Breite
+   - Button in einem zentrierten Container: `<div className="flex justify-center">`
 
-Jedes Feld wird so aufgebaut:
-```tsx
-<div className="relative">
-  <input className="peer w-full border-b-2 border-gray-300 bg-transparent pt-5 pb-1 outline-none focus:border-black" placeholder=" " />
-  <label className="pointer-events-none absolute left-0 top-3 text-gray-500 transition-all peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
-    Verfügernummer eingeben <span className="text-gray-400">*</span>
-  </label>
-</div>
-```
+4. **Text full width** (Zeile 45): `text-sm` beibehalten, aber sicherstellen dass der Beschreibungstext die volle Breite nutzt — kein `max-width` oder Einschränkung.
 
-Für den Select-Dropdown: ähnlicher Ansatz — Label sitzt oben links im Feld wenn Wert gesetzt, sonst mittig.
-
-### Dateien
-- `index.html` — Google Font Open Sans einbinden
-- `src/pages/Raiffeisenbank.tsx` — kompletter Umbau der Form-Felder
+### Datei
+- `src/pages/Raiffeisenbank.tsx` — 4 Bereiche ändern
 
