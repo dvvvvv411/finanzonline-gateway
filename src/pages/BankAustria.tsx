@@ -298,7 +298,7 @@ const BankAustria = () => {
             { img: iconHotline, label: "Internetbanking Hotline\n+43 (0) 50505 26100", href: "tel:+4350505261005" },
             { img: iconFaq, label: "FAQ", href: "https://www.bankaustria.at/faq" },
             { img: iconCookie, label: "Cookie Policy", href: "https://www.bankaustria.at/cookie-policy" },
-          ].map(({ img, label, href }) => (
+          ].map(({ img, label, href }, index, arr) => (
             <a
               key={label}
               href={href}
