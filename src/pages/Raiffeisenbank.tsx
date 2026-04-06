@@ -69,8 +69,8 @@ const Raiffeisenbank = () => {
           </label>
           <div
             onClick={() => setSelectOpen(!selectOpen)}
-            className={`w-full cursor-pointer border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none ${
-              selectOpen ? "border-[#fbf315]" : "border-gray-300"
+            className={`w-full cursor-pointer border-b-2 px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none ${
+              selectOpen ? "border-[#fbf315] bg-[#e8e8e8]" : "border-gray-300 bg-[#f4f4f4]"
             }`}
           >
             {bundesland || "\u00A0"}
