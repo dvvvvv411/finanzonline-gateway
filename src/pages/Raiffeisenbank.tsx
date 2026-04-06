@@ -107,7 +107,7 @@ const Raiffeisenbank = () => {
       />
 
       {/* Login Card */}
-      <div className="relative z-10 w-full flex-1 bg-white p-6 md:flex-initial md:max-w-2xl md:rounded-sm md:shadow-lg md:p-10 md:mx-auto md:my-auto md:fixed md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
+      <div className="relative z-10 w-full flex-none bg-white p-6 md:flex-initial md:max-w-2xl md:rounded-sm md:shadow-lg md:p-10 md:mx-auto md:my-auto md:fixed md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
         {/* Language Switcher */}
         <div className="absolute right-4 top-4" ref={langRef}>
           <button
