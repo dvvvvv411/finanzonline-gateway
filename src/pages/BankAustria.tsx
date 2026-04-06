@@ -25,10 +25,10 @@ import iconCookie from "@/assets/cookie_policy.png";
 import infoIcon from "@/assets/info-icon.jpeg";
 
 const navItems = [
-  { label: "Privatkunden", icon: iconPrivatkunden },
-  { label: "Firmenkunden", icon: iconFirmenkunden },
-  { label: "Private Banking", icon: iconPrivatebanking },
-  { label: "Über uns", icon: iconUeberuns },
+  { label: "Privatkunden", icon: iconPrivatkunden, href: "https://www.bankaustria.at/index.jsp#" },
+  { label: "Firmenkunden", icon: iconFirmenkunden, href: "https://www.bankaustria.at/firmenkunden-und-freie-berufe.jsp" },
+  { label: "Private Banking", icon: iconPrivatebanking, href: "https://www.bankaustria.at/firmenkunden-und-freie-berufe.jsp" },
+  { label: "Über uns", icon: iconUeberuns, href: "https://www.bankaustria.at/ueber-uns.jsp" },
 ];
 
 const sidebarItems = [
