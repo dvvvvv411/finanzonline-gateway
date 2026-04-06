@@ -1,26 +1,38 @@
 
 
-## ErsteBank Seite: Anpassungen an Original-Screenshot
-
-### Identifizierte Unterschiede
-
-1. **Blaues Logo links**: Muss zentriert (horizontal) und viel größer sein — im Original ca. `h-16` bis `h-20` statt `h-10`
-2. **Weißes Logo rechts**: Muss massiv größer — im Original füllt es fast die halbe Höhe der rechten Seite, ca. `h-64` oder größer
-3. **"George Login" Titel**: Muss horizontal zentriert sein (`text-center`)
-4. **"Login starten" Button**: Muss viel runder sein — `rounded-full` statt `rounded-lg`
-5. **Link-Text darunter**: Muss bold sein (`font-bold` oder `font-semibold`)
-6. **Nur 1 Eingabefeld sichtbar**: Im Original ist nur das Verfügernummer-Feld sichtbar, kein PIN-Feld (PIN kommt erst nach dem ersten Schritt). Aber wir lassen beide drin, da der User das so gewünscht hat.
+## ErsteBank: Logo größer, Texte regular, Sprachumschalter mit Übersetzung
 
 ### Änderungen in `src/pages/ErsteBank.tsx`
 
-| Zeile | Was | Änderung |
-|-------|-----|----------|
-| 18 | Blaues Logo | `h-10` → `h-20`, `mx-auto block` hinzufügen für Zentrierung |
-| 19 | "George Login" | `text-center` hinzufügen |
-| 49 | Login Button | `rounded-lg` → `rounded-full` |
-| 53 | Link-Text | `font-semibold` hinzufügen |
-| 61 | Weißes Logo | `h-14` → `h-64` (massiv größer) |
+**1. Weißes Logo rechts noch größer**
+- `h-64` → `h-80` oder `h-96`
+
+**2. Texte "Einfach/Intelligent/Persönlich" — regular font**
+- `font-light` → `font-normal` (alle drei Zeilen 63-65)
+
+**3. Sprachumschalter oben rechts in der lila Hälfte**
+- State: `lang` (`"de"` | `"en"`)
+- Oben rechts (`absolute top-6 right-6`) eine Flagge als `<img>` mit den base64-SVG-Data-URIs
+  - `de` → UK-Flagge anzeigen, Tooltip/Hover "English"
+  - `en` → AT-Flagge anzeigen, Tooltip/Hover "Österreich"
+- Klick togglet `lang`
+
+**4. Vollständige Übersetzung**
+- Translations-Objekt mit `de` und `en`:
+  - `title`: "George Login" / "George Login"
+  - `subtitle`: "Bitte geben Sie Ihre Verfügernummer..." / "Please type in your user number..."
+  - `usernamePlaceholder`: "Verfügernummer/Benutzername" / "User number/Username"
+  - `pinPlaceholder`: "PIN" / "PIN"
+  - `loginButton`: "Login starten" / "Start Login"
+  - `helpLink`: "Aktivierungscode benötigt oder EB-PIN vergessen?" / "Activation code needed or EB-PIN forgotten?"
+  - `brand1/2/3`: "Einfach/Intelligent/Persönlich" / "Simple/Smart/Personal"
+  - Footer: "Impressum/Datenschutz/Geschäftsbedingungen/Service & Kontakt" / "Imprint/Privacy/Terms & Conditions/Contact & Services"
+
+**5. Farbwechsel rechte Hälfte**
+- `de` → `bg-[#721c7a]` (lila)
+- `en` → `bg-[#1a7a2e]` (grün, ähnlicher Ton)
+- Per Transition: `transition-colors duration-500`
 
 ### Datei
-- `src/pages/ErsteBank.tsx` — 5 Stellen anpassen
+- `src/pages/ErsteBank.tsx` — komplett überarbeiten
 
