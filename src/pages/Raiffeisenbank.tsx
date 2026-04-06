@@ -91,7 +91,7 @@ const Raiffeisenbank = () => {
               style={{
                 maxHeight: "160px",
                 overflowY: "auto",
-                scrollbarWidth: "thick",
+                scrollbarWidth: "auto" as any,
                 scrollbarColor: "#c4c4c4 transparent",
               }}
             >
