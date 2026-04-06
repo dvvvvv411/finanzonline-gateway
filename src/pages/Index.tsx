@@ -1,16 +1,37 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import finanzonlineLogo from "@/assets/finanzonline_at_Logo.svg";
+import bmfLogo from "@/assets/bmf_logo.svg";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-white">
+      <header className="border-b border-gray-200 bg-white">
+        <div className="container mx-auto flex items-center justify-between px-4 py-4">
+          <div>
+            <a href="#">
+              <span className="sr-only">Zur Startseite</span>
+              <img src={finanzonlineLogo} alt="FinanzOnline" className="h-10 md:h-14" />
+            </a>
+          </div>
+          <div>
+            <a
+              href="https://www.bmf.gv.at/public.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="sr-only">Zur Homepage des Bundesministerium für Finanzen</span>
+              <img src={bmfLogo} alt="BMF Logo" className="h-12 md:h-16" />
+            </a>
+          </div>
+        </div>
+        <h1
+          className="py-4 text-center text-xl font-bold md:text-2xl"
+          style={{ color: "#E6320F" }}
+        >
+          Willkommen bei FinanzOnline
+        </h1>
+      </header>
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
