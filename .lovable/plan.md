@@ -1,14 +1,13 @@
 
 
-## Sidebar: Icons und Texte immer hell darstellen
+## Sidebar: Hover-Hintergrundfarbe wie Menü-Button
 
-### Änderungen
+### Änderung
 
-**Zeile ~97-100 in BankAustria.tsx:**
-- Icons: `opacity-70 group-hover:opacity-100` → `opacity-100` (immer volle Deckkraft)
-- Texte: `text-[#bebebe] group-hover:text-white` → `text-white` (immer weiß)
-- Hover-Animation (border-left) bleibt bestehen
+**Zeile 99 in BankAustria.tsx:**
+- Dem `<a>`-Element die Klasse `hover:bg-[#1a1a1a]` hinzufügen (gleiche Farbe wie der Menü-Button im Header)
+- Bestehende Klassen bleiben erhalten
 
 ### Datei
-- `src/pages/BankAustria.tsx`
+- `src/pages/BankAustria.tsx` — Zeile 99
 
