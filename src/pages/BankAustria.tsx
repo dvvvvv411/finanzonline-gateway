@@ -12,6 +12,11 @@ import iconPrivatkunden from "@/assets/icon-privatkunden.png";
 import iconFirmenkunden from "@/assets/icon-firmenkunden.png";
 import iconPrivatebanking from "@/assets/icon-privatebanking.png";
 import iconUeberuns from "@/assets/icon-ueberuns.png";
+import iconSicherheit from "@/assets/sicherheitsinformationen.png";
+import iconSicherheitscenter from "@/assets/sicherheitscenter.png";
+import iconHotline from "@/assets/internetbanking_hotline.png";
+import iconFaq from "@/assets/faq.png";
+import iconCookie from "@/assets/cookie_policy.png";
 
 const navItems = [
   { label: "Privatkunden", icon: iconPrivatkunden },
