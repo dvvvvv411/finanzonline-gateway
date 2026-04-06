@@ -62,8 +62,8 @@ const BankAustria = () => {
         <header className="flex" style={{ height: "80px" }}>
           {/* White logo area */}
           <div
-            className="flex items-center px-4 flex-shrink-0"
-            style={{ backgroundColor: "#fff", width: "200px", borderBottom: "1px solid #ddd" }}
+            className="flex items-center px-2 flex-shrink-0"
+            style={{ backgroundColor: "#fff", width: "200px" }}
           >
             <img src={logo} alt="Bank Austria" style={{ height: "70px" }} />
           </div>
