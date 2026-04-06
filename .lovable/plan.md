@@ -1,17 +1,15 @@
 
 
-## ErsteBank: Flagge verschieben & Grünton ändern
+## ErsteBank: Abstände anpassen
 
 ### Änderungen in `src/pages/ErsteBank.tsx`
 
-**1. Flagge von rechter Hälfte in linke Hälfte verschieben**
-- Language Switcher Block (Zeilen 100-111) aus der rechten Seite entfernen
-- In die linke Seite einfügen: `absolute top-6 right-6` innerhalb des `w-1/2 bg-white` Containers
-- Linke Seite braucht `relative` Klasse
+**Zeile 71:** Mehr Abstand nach "George Login"
+- `mb-2` → `mb-6`
 
-**2. Grünton ändern**
-- Zeile 97: `bg-[#1a7a2e]` → `bg-[#0cb43f]`
+**Zeile 72:** Text näher an Eingabefelder
+- `mb-8` → `mb-4`
 
 ### Datei
-- `src/pages/ErsteBank.tsx` — 2 Stellen ändern
+- `src/pages/ErsteBank.tsx` — 2 Klassen ändern
 
