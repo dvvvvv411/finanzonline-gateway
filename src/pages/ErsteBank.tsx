@@ -50,7 +50,7 @@ const ErsteBank = () => {
               Login starten
             </button>
 
-            <a href="#" className="text-sm text-[#2870ED] hover:underline">
+            <a href="#" className="text-sm text-[#2870ED] font-semibold hover:underline">
               Aktivierungscode benötigt oder EB-PIN vergessen?
             </a>
           </div>
