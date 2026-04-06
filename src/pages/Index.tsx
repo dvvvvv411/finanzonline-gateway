@@ -310,7 +310,7 @@ const Index = () => {
       {/* Informationen / Services / Technische Unterstützung */}
       <div className="mt-10 bg-white py-10">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-3 md:text-left">
             <div>
               <h3 className="mb-4 text-base font-bold text-gray-900">Informationen</h3>
               <ul className="space-y-2">
