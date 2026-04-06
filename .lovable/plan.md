@@ -1,17 +1,13 @@
 
 
-## BankAustria: 24You Font auf UniCredit Medium ändern
+## BankAustria: UniCredit Regular als Standard-Font
 
-### Änderungen
+### Änderung
 
-**1.** Font-Datei `unicredit-medium.ttf` von GitHub herunterladen nach `src/assets/fonts/unicredit-medium.ttf`
+In `src/pages/BankAustria.tsx`: Die `fontFamily` des Root-`<div>` von `"'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"` auf `"'UniCredit', sans-serif"` ändern.
 
-**2.** Neue `@font-face` in `src/index.css` für `'UniCreditMedium'`
+Die `@font-face` für `'UniCredit'` ist bereits in `src/index.css` definiert und die Font-Datei `src/assets/fonts/unicredit-regular.ttf` existiert bereits. Der 24You-Text behält `'UniCreditMedium'`.
 
-**3.** In `src/pages/BankAustria.tsx`: 24You `fontFamily` von `'UniCreditBold'` auf `'UniCreditMedium'` ändern
-
-### Dateien
-- `src/assets/fonts/unicredit-medium.ttf` — neue Font-Datei
-- `src/index.css` — `@font-face` hinzufügen
-- `src/pages/BankAustria.tsx` — Font ändern
+### Datei
+- `src/pages/BankAustria.tsx` — fontFamily im Root-Element ändern
 
