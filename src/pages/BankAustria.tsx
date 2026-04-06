@@ -126,8 +126,8 @@ const BankAustria = () => {
                   color: "#00aed0",
                   textDecoration: "underline",
                   textDecorationColor: "black",
-                  textDecorationThickness: "2.5px",
-                  textUnderlineOffset: "3px",
+                  textDecorationThickness: "1.5px",
+                  textUnderlineOffset: "1px",
                 }}
               >
                 PIN vergessen oder Verfügernummer gesperrt?
