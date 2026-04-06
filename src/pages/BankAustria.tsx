@@ -112,8 +112,8 @@ const BankAustria = () => {
             )}
             {/* Expanded: text right of icon */}
             {sidebarOpen && (
-              <span className="text-white text-lg font-medium uppercase whitespace-pre-line" style={{ width: "220px" }}>
-                {label}
+              <span className="text-[#bebebe] text-lg font-medium uppercase whitespace-nowrap text-right pr-4" style={{ width: "220px" }}>
+                {label.replace('\n', ' ')}
               </span>
             )}
           </a>
