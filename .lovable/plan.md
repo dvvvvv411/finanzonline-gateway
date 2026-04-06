@@ -1,13 +1,13 @@
 
 
-## BankAustria: Helleres Grau für inaktive Flags
+## BankAustria: Flags noch heller/verblasster
 
-### Änderung in `src/pages/BankAustria.tsx` (Zeile ~173-177)
+### Änderung in `src/pages/BankAustria.tsx`
 
-- Zusätzlich zum `grayscale(100%)` Filter noch `brightness(1.4)` hinzufügen, damit das ausgegraute Bild heller wird
+- `brightness(1.4)` → `brightness(1.8)` für deutlich verblassteren Look bei inaktiven Flags
 
 ```tsx
-filter: isActive ? "none" : "grayscale(100%) brightness(1.4)",
+filter: isActive ? "none" : "grayscale(100%) brightness(1.8)",
 ```
 
 ### Datei
