@@ -146,13 +146,29 @@ style={{ border: "1px solid #ccc" }}
               </button>
             </div>
 
-            <div className="flex items-center gap-4">
-              <button className="flex items-center gap-1 text-sm font-semibold" style={{ color: "#333" }}>
-                <span className="text-base">🇦🇹</span> Deutsch
-              </button>
-              <button className="flex items-center gap-1 text-sm" style={{ color: "#999" }}>
-                <span className="text-base">🇬🇧</span> English
-              </button>
+            <div className="flex items-center justify-center gap-4">
+              {[
+                { lang: "de" as const, flag: flagAt, label: "Deutsch" },
+                { lang: "en" as const, flag: flagEn, label: "English" },
+              ].map(({ lang, flag, label }) => (
+                <button
+                  key={lang}
+                  onClick={() => setActiveLang(lang)}
+                  className="flex flex-col items-center gap-1 px-4 py-2 rounded transition-all"
+                  style={{
+                    border: activeLang === lang ? "2px solid #00aed0" : "2px solid transparent",
+                    color: activeLang === lang ? "#00aed0" : "#999",
+                  }}
+                >
+                  <img
+                    src={flag}
+                    alt={label}
+                    className="h-10 w-auto"
+                    style={{ filter: activeLang === lang ? "none" : "grayscale(100%)", opacity: activeLang === lang ? 1 : 0.5 }}
+                  />
+                  <span className="text-sm font-semibold">{label}</span>
+                </button>
+              ))}
             </div>
           </div>
         </main>
