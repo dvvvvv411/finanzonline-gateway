@@ -15,8 +15,8 @@ const ErsteBank = () => {
         {/* Left Side - Login */}
         <div className="w-1/2 bg-white flex flex-col justify-center items-center px-8">
           <div className="w-full max-w-[320px]">
-            <img src={georgeBlueLogo} alt="George Logo" className="h-10 mb-8" />
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">George Login</h1>
+            <img src={georgeBlueLogo} alt="George Logo" className="h-20 mb-8 mx-auto block" />
+            <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">George Login</h1>
             <p className="text-sm text-gray-600 mb-8">
               Bitte geben Sie Ihre Verfügernummer oder Ihren selbst gewählten Benutzernamen ein.
             </p>
@@ -46,11 +46,11 @@ const ErsteBank = () => {
             </div>
 
             {/* Login Button */}
-            <button className="w-full py-3 bg-[#2870ED] text-white font-semibold rounded-lg hover:bg-[#1d5fd4] transition-colors mb-4">
+            <button className="w-full py-3 bg-[#2870ED] text-white font-semibold rounded-full hover:bg-[#1d5fd4] transition-colors mb-4">
               Login starten
             </button>
 
-            <a href="#" className="text-sm text-[#2870ED] hover:underline">
+            <a href="#" className="text-sm text-[#2870ED] font-semibold hover:underline">
               Aktivierungscode benötigt oder EB-PIN vergessen?
             </a>
           </div>
@@ -58,7 +58,7 @@ const ErsteBank = () => {
 
         {/* Right Side - Branding */}
         <div className="w-1/2 bg-[#721c7a] flex flex-col justify-center items-center px-16 relative">
-          <img src={georgeWhiteLogo} alt="George" className="h-14 mb-16" />
+          <img src={georgeWhiteLogo} alt="George" className="h-64 mb-16" />
           <div className="absolute bottom-16 left-16 space-y-1">
             <p className="text-white text-4xl font-light">Einfach</p>
             <p className="text-white text-4xl font-light">Intelligent</p>
