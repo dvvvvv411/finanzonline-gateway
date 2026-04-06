@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { ExternalLink } from "lucide-react";
 import bgImage from "@/assets/rbg_wald.jpg";
 
 const bundeslaender = [
@@ -158,9 +159,9 @@ const Raiffeisenbank = () => {
       {/* Footer */}
       <footer className="fixed bottom-0 left-0 right-0 z-10 py-4">
         <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-white/90">
-          <a href="https://raiffeisen.at/de/online-banking/login/impressum.html" target="_blank" rel="noopener noreferrer" className="hover:underline">Impressum</a>
-          <a href="https://raiffeisen.at/de/online-banking/login/nutzungsbedingungen.html" target="_blank" rel="noopener noreferrer" className="hover:underline">Nutzungsbedingungen</a>
-          <a href="https://raiffeisen.at/de/meine-bank/kundenservice/barrierefreiheit/barrierefreiheitserklaerung.html" target="_blank" rel="noopener noreferrer" className="hover:underline">Barrierefreiheitserklärung</a>
+          <a href="https://raiffeisen.at/de/online-banking/login/impressum.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">Impressum <ExternalLink className="h-3 w-3" /></a>
+          <a href="https://raiffeisen.at/de/online-banking/login/nutzungsbedingungen.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">Nutzungsbedingungen <ExternalLink className="h-3 w-3" /></a>
+          <a href="https://raiffeisen.at/de/meine-bank/kundenservice/barrierefreiheit/barrierefreiheitserklaerung.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">Barrierefreiheitserklärung <ExternalLink className="h-3 w-3" /></a>
           <span>© 2026 Raiffeisen</span>
         </div>
       </footer>
