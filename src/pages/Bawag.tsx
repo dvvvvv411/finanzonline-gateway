@@ -49,7 +49,7 @@ const Bawag = () => {
         >
           {/* Login Card */}
           <div className="absolute top-5 left-5 w-[320px]">
-            <div className="bg-white rounded-lg shadow-sm min-h-[420px] flex flex-col">
+            <div className="bg-white rounded-lg shadow-sm min-h-[380px] flex flex-col">
               <div className="px-4 py-3 rounded-t-lg flex items-center justify-between">
                 <h1 className="text-base font-semibold text-black">eBanking Login</h1>
                 <span className="font-bold text-gray-400 text-base cursor-pointer">?</span>
@@ -57,8 +57,8 @@ const Bawag = () => {
 
               <div className="p-4 flex-1 flex flex-col">
                 {/* Verfüger tab */}
-                <div className="mb-4">
-                  <span className="text-[#990000] text-xs font-semibold border-b-2 border-[#990000] pb-1">
+                <div className="mb-4 text-center border-b border-gray-200">
+                  <span className="text-[#990000] text-xs font-semibold border-b-2 border-[#990000] pb-1 inline-block">
                     Verfüger
                   </span>
                 </div>
