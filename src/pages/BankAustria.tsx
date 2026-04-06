@@ -255,19 +255,18 @@ style={{ border: "1px solid #ccc" }}
         </div>
 
         {/* Footer */}
-        <footer className="px-10 py-6" style={{ backgroundColor: "#333", color: "#aaa" }}>
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-4 text-sm">
-              <span className="text-white font-medium">UniCredit Bank Austria AG</span>
-              <a href="https://www.bankaustria.at/impressum" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Impressum</a>
-              <a href="https://www.bankaustria.at/agb" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">AGB</a>
-              <a href="https://www.bankaustria.at/datenschutz" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Datenschutzerklärung</a>
-            </div>
+        <footer className="w-full py-10 flex flex-col items-center text-white text-sm" style={{ backgroundColor: "#666666" }}>
+          <div className="flex items-center gap-2 mb-3">
+            <a href="http://www.bankaustria.at/" target="_blank" rel="noopener noreferrer" className="hover:underline">UniCredit Bank Austria AG</a>
+            <span className="opacity-60">|</span>
+            <a href="http://www.bankaustria.at/rechtliches-impressum.jsp" target="_blank" rel="noopener noreferrer" className="hover:underline">Impressum</a>
+            <span className="opacity-60">|</span>
+            <a href="http://www.bankaustria.at/rechtliches-agb.jsp" target="_blank" rel="noopener noreferrer" className="hover:underline">AGB</a>
+            <span className="opacity-60">|</span>
+            <a href="http://www.bankaustria.at/rechtliches-datenschutz.jsp" target="_blank" rel="noopener noreferrer" className="hover:underline">Datenschutzerklärung</a>
           </div>
-          <div className="flex items-center justify-between">
-            <span className="text-xs">© 2026 UniCredit Bank Austria AG</span>
-            <span className="text-white font-bold text-sm tracking-wider">UniCredit</span>
-          </div>
+          <p className="mb-6">© 2026 UniCredit Bank Austria AG</p>
+          <img src={unicreditLogo} alt="UniCredit" className="h-8 object-contain" />
         </footer>
       </div>
     </div>
