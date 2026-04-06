@@ -1,34 +1,17 @@
 
 
-## BAWAG: Links verknüpfen + Footer Hover-Farbe
+## BAWAG: Klickbarer Bereich im Hintergrundbild
 
-### Änderungen in `src/pages/Bawag.tsx`
+### Änderung in `src/pages/Bawag.tsx`
 
-**1. Links mit echten URLs versehen (alle `href="#"` ersetzen):**
+Im Background-Image-Container (Zeile 145-152) einen klickbaren Bereich unten rechts hinzufügen:
 
-| Text | URL |
-|------|-----|
-| PIN vergessen / forgotPin (Zeile 197) | `https://services.bawag.at/main?formName=unlock-ebanking` |
-| Mehr Infos (Zeile 215) | `https://www.bawag.at/bawag/sicherheit#aktuell` |
-| Sicherheitsregeln (Zeile 224) | `https://www.bawag.at/bawag/sicherheit#regeln` |
-| Anmeldung / Erste Schritte (Zeile 225) | `https://www.bawag.at/bawag/privatkunden/ebanking-apps/onlinebanking/erste-schritte-ebanking-app` |
-| 3D Secure Online Bezahlung (Zeile 226) | `https://www.bawag.at/bawag/privatkunden/services-infos/3dsecure` |
-| FAQ (Zeile 233) | `https://www.bawag.at/bawag/faq#ebanking` |
-| Zu Watchlist Internet (Zeile 234) | `https://www.watchlist-internet.at/` |
-
-Alle externen Links bekommen `target="_blank" rel="noopener noreferrer"`.
-
-**2. Footer-Links mit echten URLs + Hover dunkelrot (Zeile 244-249):**
-
-Footer-URLs in Reihenfolge der `t.footer` Arrays (alle Sprachen gleiche URLs):
-- Impressum → `https://www.bawag.at/bawag/impressum`
-- AGB → `https://www.bawag.at/bawag/privatkunden/rechtliches/agb`
-- Datenschutz → `https://www.bawag.at/bawag/datenschutz`
-- Nutzungsbedingungen → `https://www.bawag.at/bawag/privatkunden/rechtliches/nutzungsbedingungen`
-- Barrierefrei → `https://www.bawag.at/bawag/barrierefreiheit`
-
-Footer-URLs als Array definieren und per Index zuordnen. Hover-Klasse ändern: `text-black hover:text-[#990000]` statt `hover:no-underline`.
+- Ein `<a>`-Tag als absolute-positioniertes Element im unteren rechten Bereich des Hintergrundbilds
+- `href="https://www.bawag.at/bawag/privatkunden/services-infos/vop?utm_source=BAWAG&utm_medium=eBanking_Login"`
+- `target="_blank" rel="noopener noreferrer"`
+- Ungefähr die rechte untere Hälfte abdeckend (ca. `bottom-0 right-0`, Breite ~580px, Höhe ~300px)
+- Transparent, kein sichtbarer Stil, nur `cursor: pointer`
 
 ### Datei
-- `src/pages/Bawag.tsx`
+- `src/pages/Bawag.tsx` — 1 Element hinzufügen im Background-Container
 
