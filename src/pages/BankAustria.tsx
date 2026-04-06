@@ -121,11 +121,13 @@ const BankAustria = () => {
             <div className="mb-4">
               <a
                 href="#"
-                className="inline-block text-sm transition-colors"
+                className="inline-block text-sm font-medium transition-colors"
                 style={{
                   color: "#00aed0",
                   textDecoration: "underline",
                   textDecorationColor: "black",
+                  textDecorationThickness: "2.5px",
+                  textUnderlineOffset: "3px",
                 }}
               >
                 PIN vergessen oder Verfügernummer gesperrt?
