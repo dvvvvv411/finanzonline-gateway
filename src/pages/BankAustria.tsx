@@ -195,7 +195,9 @@ const BankAustria = () => {
 
             <div className="mb-4">
               <a
-                href="#"
+                href="https://banking.bankaustria.at/pinreset"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block text-sm font-medium transition-colors"
                 style={{
                   color: "#00aed0",
