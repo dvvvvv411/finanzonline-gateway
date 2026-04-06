@@ -23,7 +23,7 @@ const BankAustria = () => {
   return (
     <div
       className="min-h-screen flex"
-      style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}
+      style={{ fontFamily: "'UniCredit', sans-serif" }}
     >
       {/* Fixed Sidebar 80px */}
       <aside
