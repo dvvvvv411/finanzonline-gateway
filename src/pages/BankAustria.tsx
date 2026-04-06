@@ -206,8 +206,8 @@ style={{ border: "1px solid #ccc" }}
         >
           <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.35)" }} />
           <div className="relative z-10 px-12 max-w-xl">
-            <p className="text-white text-3xl font-light mb-2">Lässt sich einrichten</p>
-            <p className="text-white text-base mb-4">
+            <p className="text-white text-5xl font-bold mb-2">Lässt sich einrichten</p>
+            <p className="text-white text-xl font-bold mb-4">
               Jetzt von Topkonditionen* unserer Wohnoffensive<br />profitieren.
             </p>
             <a
@@ -220,9 +220,9 @@ style={{ border: "1px solid #ccc" }}
               MEHR ERFAHREN
             </a>
           </div>
-        </div>
-        <div className="px-10 py-2 text-[10px]" style={{ backgroundColor: "#e8e8e8", color: "#666" }}>
-          *Exklusiv für neue oder bestehende Bank Austria Girokontokund:innen – vorbehaltlich positiver Kreditentscheidung. Aktionsbedingungen unter bankaustria/wohnoffensive.jsp
+          <div className="absolute bottom-0 left-0 w-full px-10 py-2 text-sm text-white z-10">
+            *Exklusiv für neue oder bestehende Bank Austria Girokontokund:innen – vorbehaltlich positiver Kreditentscheidung. Aktionsbedingungen unter bankaustria/wohnoffensive.jsp
+          </div>
         </div>
 
         {/* Footer Icons */}
