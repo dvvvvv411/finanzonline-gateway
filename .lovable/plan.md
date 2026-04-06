@@ -1,101 +1,51 @@
 
 
-## Neue Seite: /bankaustria
+## BankAustria Optimierungen
 
-### Visualisierung
+### Änderungen in `src/pages/BankAustria.tsx`
 
-```text
-┌─────────────────────────────────────────────────────────────────────┐
-│ HEADER  bg:#c80a1e  h:80px                                         │
-│ ☰  [Bank Austria Logo]          PRIVAT  FIRMA  PRIVATE B.  ÜBER UNS│
-├────┬────────────────────────────────────────────────────────────────┤
-│SIDE│  MAIN CONTENT  bg:white                                       │
-│bar │                                                               │
-│80px│   ┌─────────────────────────────────────────────────────┐     │
-│    │   │  24You          (rot/türkis Schriftzug)             │     │
-│GIRO│   └─────────────────────────────────────────────────────┘     │
-│KONT│                                                               │
-│    │   ┌─────────────────────────────────────────────────────┐     │
-│KRED│   │  ⚠ WARNUNG  bg:#fff3cd  border:#ffc107              │     │
-│ITKR│   │  Derzeit versenden Betrüger Phishing-Mails ...      │     │
-│    │   │  Folgen Sie keinen Login-Links ...                   │     │
-│SPAR│   │  Sicherheitscenter: 050505-26105                    │     │
-│    │   └─────────────────────────────────────────────────────┘     │
-│FINA│                                                               │
-│NZIE│   ┌─────────────────────────────────────────────────────┐     │
-│    │   │         LOGIN FORM  zentriert                        │     │
-│WERT│   │  ┌───────────────────────────────────┐              │     │
-│PAP │   │  │ Verfügernummer                    │  border:cyan │     │
-│    │   │  └───────────────────────────────────┘              │     │
-│BÖRS│   │  ┌───────────────────────────────────┐              │     │
-│EN  │   │  │ PIN                               │  border:cyan │     │
-│    │   │  └───────────────────────────────────┘              │     │
-│bg: │   │  PIN vergessen?  (link)                             │     │
-│#1a │   │         [ LOGIN ]  bg:#00aed0  white text           │     │
-│1a1a│   │                                                     │     │
-│    │   │  Gefälschte Mails! (rot)  Details anzeigen (link)   │     │
-│    │   │  [DE Flag] Deutsch  [EN Flag] English               │     │
-│    │   └─────────────────────────────────────────────────────┘     │
-├────┴────────────────────────────────────────────────────────────────┤
-│ PROMO BANNER  (Hintergrundbild mit Haus)                           │
-│   "Lässt sich einrichten"                                          │
-│   Jetzt von Topkonditionen profitieren.  [ MEHR ERFAHREN ]         │
-│   * Kleingedrucktes                                                │
-├─────────────────────────────────────────────────────────────────────┤
-│ FOOTER ICONS  bg:#f5f5f5                                           │
-│ 🔒Sicherheits-  📞Sicherheits-  📞Internetbanking  ❓FAQ  🍪Cookie│
-│   infos           center 26105     Hotline 26100                   │
-├─────────────────────────────────────────────────────────────────────┤
-│ FOOTER  bg:#333  text:white                                        │
-│ UniCredit Bank Austria AG | Impressum | AGB | Datenschutz          │
-│ © 2026 UniCredit Bank Austria AG              [UniCredit Logo]     │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**1. Logo austauschen**
+- SVG-Datei aus Upload nach `src/assets/` kopieren
+- Im Header: Text "Bank Austria / Member of UniCredit" ersetzen durch `<img>` mit dem SVG-Logo
+- Header-Hintergrund von `#c80a1e` auf `#fff` (weiß) ändern
+- Nav-Links Farbe anpassen (dunkel statt weiß)
 
-### Layout (basierend auf Screenshot + HTML)
+**2. Hamburger-Menü in Sidebar verschieben**
+- Menu-Icon aus dem Header entfernen
+- Oben in der Sidebar (vor GIROKONTEN) einen neuen Eintrag mit Menu-Icon + "MENU" Label einfügen (gleiche 80px Höhe)
 
-**1. Header (dunkelrot #c80a1e, volle Breite, h:80px)**
-- Links: Hamburger-Menü + Bank Austria Logo (Member of UniCredit) weiss
-- Rechts: 4 Nav-Items: PRIVATKUNDEN, FIRMENKUNDEN, PRIVATE BANKING, ÜBER UNS
+**3. Fullscreen machen**
+- Skalierungs-Logik (BASE_WIDTH, scale, transform) komplett entfernen
+- Seite nimmt volle Viewport-Breite ein, kein fester Container
 
-**2. Linke Sidebar (dunkelgrau #1a1a1a, ~80px breit)**
-- Vertikale Icons + Labels: GIROKONTEN, KREDITKARTEN, SPARPRODUKTE, FINANZIERUNG, WERTPAPIERE, BÖRSEN & MÄRKTE
-- Hover: bg:#262626 + weisser left-border
+**4. Warning-Box und "Gefälschte Mails" entfernen**
+- Komplette Warning-Box (Zeilen 100-119) löschen
+- "Gefälschte Bank Austria Mails im Umlauf!" Text + Details-Button (Zeilen 166-179) löschen
+- State `showWarning` entfernen
 
-**3. Hauptbereich (weiss)**
-- "24You" Schriftzug in rot/türkis
-- Gelbe Warnbox mit Phishing-Warnung (3 Absätze)
-- Login-Formular: Verfügernummer + PIN, türkis (#00aed0) Borders
-- "PIN vergessen oder Verfügernummer gesperrt?" Link
-- LOGIN Button (türkis, weiss Text)
-- "Gefälschte Bank Austria Mails im Umlauf!" (rot) + "Details anzeigen"
-- DE/EN Sprachwahl
+**5. 24You Text anpassen**
+- Mittig zentrieren (`text-center`)
+- Komplett rot (#c80a1e), nicht mehr türkis/rot gemischt
 
-**4. Promo-Banner (Hintergrundbild)**
-- "Lässt sich einrichten" + Wohnoffensive Text + MEHR ERFAHREN Button (türkis)
+**6. Eingabefelder anpassen**
+- Border von `#00aed0` (türkis) auf grau (`#ccc`) ändern
+- Text zentrieren (`text-center` auf inputs)
+- Placeholder-Text ebenfalls zentriert
 
-**5. Footer-Icons (hellgrau #f5f5f5)**
-- 5 Icons mit Labels: Sicherheitsinformationen, Sicherheitscenter, Internetbanking Hotline, FAQ, Cookie Policy
+**7. Eye-Icon bei PIN entfernen**
+- Eye/EyeOff Button komplett entfernen
+- PIN-Input immer `type="password"`
+- State `showPin` entfernen
 
-**6. Footer (dunkelgrau #333)**
-- UniCredit Bank Austria AG | Impressum | AGB | Datenschutzerklärung
-- © 2026 + UniCredit Logo
+**8. "PIN vergessen" Link umpositionieren**
+- Von über den Inputs nach unter das PIN-Feld verschieben
+- Schwarze Outline (border) hinzufügen, als Button-artig gestaltet
 
-### Technische Umsetzung
-
-**Neue Dateien:**
-- `src/pages/BankAustria.tsx` — komplette Seite
-
-**Geänderte Dateien:**
-- `src/App.tsx` — Route `/bankaustria` hinzufügen
-
-**Farben:** #c80a1e (rot), #00aed0 (türkis), #1a1a1a (sidebar), #f5f5f5 (footer-icons), #333 (footer)
-
-**Skalierung:** Gleiche centered-slot Logik wie Bawag (Basisbreite ~1200px)
-
-**Icons:** Lucide (Menu, Lock, CreditCard, PiggyBank, Home, TrendingUp, BarChart3, Shield, Phone, HelpCircle, Cookie)
+**9. Login-Button nicht full-width**
+- `w-full` entfernen, stattdessen `px-8` für normale Breite
+- Zentriert mit `flex justify-center` Wrapper
 
 ### Dateien
-- `src/pages/BankAustria.tsx` — neue Seite
-- `src/App.tsx` — Route hinzufügen
+- `src/assets/logo-bank-austria.svg` — Logo kopieren
+- `src/pages/BankAustria.tsx` — alle Änderungen
 
