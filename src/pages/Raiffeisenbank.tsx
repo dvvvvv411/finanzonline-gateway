@@ -274,10 +274,10 @@ const Raiffeisenbank = () => {
       </div>
 
       {/* Bottom shadow gradient */}
-      <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-[9] h-32" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)" }} />
+      <div className="hidden md:block pointer-events-none fixed bottom-0 left-0 right-0 z-[9] h-32" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)" }} />
 
       {/* Footer */}
-      <footer className="fixed bottom-0 left-0 right-0 z-10 py-4">
+      <footer className="hidden md:fixed md:block bottom-0 left-0 right-0 z-10 py-4">
         <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-white/90">
           <a href="https://raiffeisen.at/de/online-banking/login/impressum.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">{t.impressum} <ExternalLink className="h-3 w-3" /></a>
           <a href="https://raiffeisen.at/de/online-banking/login/nutzungsbedingungen.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">{t.nutzungsbedingungen} <ExternalLink className="h-3 w-3" /></a>
