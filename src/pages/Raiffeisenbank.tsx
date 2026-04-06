@@ -41,6 +41,7 @@ const translations = {
     pinLabel: "Enter PIN",
     weiter: "Continue",
     pflichtfeld: "Required field",
+    verfuegerSpeichern: "Save user number",
     impressum: "Legal Notice",
     nutzungsbedingungen: "Terms of Use",
     barrierefreiheit: "Accessibility Statement",
