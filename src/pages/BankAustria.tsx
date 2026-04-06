@@ -3,6 +3,8 @@ import {
   Menu, Wallet, CreditCard, PiggyBank, Home, TrendingUp, BarChart3,
   Shield, Phone, HelpCircle, Cookie
 } from "lucide-react";
+import flagAt from "@/assets/flag-at.png";
+import flagEn from "@/assets/flag-en.png";
 import promoBg from "@/assets/bankaustria_promo_bg.jpg";
 import logo from "@/assets/logo-bank-austria.svg";
 import iconPrivatkunden from "@/assets/icon-privatkunden.png";
