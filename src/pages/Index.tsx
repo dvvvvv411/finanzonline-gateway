@@ -239,8 +239,8 @@ const Index = () => {
                 </Popover>
               </div>
 
-              <div className="flex justify-end pt-2">
-                <button className="rounded-md border border-[#ccc] bg-white px-8 py-2.5 text-sm text-black hover:bg-[#f5f5f5]">
+              <div className="pt-2">
+                <button className="w-full rounded-md border border-[#00436b] bg-white py-2.5 text-sm font-medium text-[#00436b] hover:bg-[#00436b]/5">
                   Weiter
                 </button>
               </div>
