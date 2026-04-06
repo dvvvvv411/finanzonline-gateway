@@ -1,19 +1,13 @@
 
 
-## BankAustria: Icons größer, Logo größer, Divider entfernen
+## BankAustria: Logo größer skalieren
 
-### Änderungen in `src/pages/BankAustria.tsx`
+### Änderung in `src/pages/BankAustria.tsx` (Zeile 66-68)
 
-**1. Nav-Icons größer** (Zeile 81)
-- Von `h-6 w-6` auf `h-8 w-8`
-
-**2. Bank Austria Logo größer** (Zeile 68)
-- Von `height: "50px"` auf `height: "70px"` damit es den weißen Bereich (80px hoch) fast komplett ausfüllt
-- Ggf. padding reduzieren (`px-4` → `px-2`)
-
-**3. Divider unter dem Logo-Bereich entfernen** (Zeile 66)
-- `borderBottom: "1px solid #ddd"` entfernen
+- Logo-Höhe von `70px` auf `76px` erhöhen
+- Weißen Bereich breiter machen: `width: "200px"` → `width: "220px"` damit das Logo Platz hat
+- Padding entfernen (`px-2` → `px-1`) um maximale Fläche zu nutzen
 
 ### Datei
-- `src/pages/BankAustria.tsx` — 3 kleine Änderungen
+- `src/pages/BankAustria.tsx` — Logo-Container und Bild-Höhe anpassen
 
