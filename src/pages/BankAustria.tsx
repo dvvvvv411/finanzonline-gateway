@@ -86,7 +86,7 @@ const BankAustria = () => {
       {/* Sidebar (below header) */}
       <aside
         className="fixed left-0 top-[80px] flex flex-col z-50"
-        style={{ width: "80px", backgroundColor: "#1a1a1a", height: "calc(100vh - 80px)" }}
+        style={{ width: "80px", backgroundColor: "#333333", height: "calc(100vh - 80px)" }}
       >
         {sidebarItems.map(({ icon: Icon, label }) => (
           <a
