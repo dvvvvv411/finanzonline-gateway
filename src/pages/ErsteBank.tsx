@@ -115,7 +115,7 @@ const ErsteBank = () => {
               {t.loginButton}
             </button>
 
-            <a href="#" className="text-sm text-[#2870ED] font-semibold hover:underline">
+            <a href="https://www.sparkasse.at/sgruppe/privatkunden/digitales-banking/inside/s-identity-app" target="_blank" rel="noopener noreferrer" className="text-sm text-[#2870ED] font-semibold hover:underline">
               {t.helpLink}
             </a>
           </div>
