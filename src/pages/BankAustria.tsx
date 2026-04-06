@@ -5,6 +5,17 @@ import {
 } from "lucide-react";
 import promoBg from "@/assets/bankaustria_promo_bg.jpg";
 import logo from "@/assets/logo-bank-austria.svg";
+import iconPrivatkunden from "@/assets/icon-privatkunden.png";
+import iconFirmenkunden from "@/assets/icon-firmenkunden.png";
+import iconPrivatebanking from "@/assets/icon-privatebanking.png";
+import iconUeberuns from "@/assets/icon-ueberuns.png";
+
+const navItems = [
+  { label: "Privatkunden", icon: iconPrivatkunden },
+  { label: "Firmenkunden", icon: iconFirmenkunden },
+  { label: "Private Banking", icon: iconPrivatebanking },
+  { label: "Über uns", icon: iconUeberuns },
+];
 
 const sidebarItems = [
   { icon: Menu, label: "MENÜ" },
