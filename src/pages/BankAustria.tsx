@@ -96,7 +96,7 @@ const BankAustria = () => {
             style={{ height: "80px", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
           >
             <Icon size={22} className="text-[#bebebe] group-hover:text-white transition-colors" />
-            <span className="text-[#bebebe] group-hover:text-white text-[9px] text-center mt-1 leading-tight uppercase font-medium transition-colors">
+            <span className="text-[#bebebe] group-hover:text-white text-[10px] text-center mt-1 leading-tight uppercase font-medium transition-colors whitespace-pre-line">
               {label}
             </span>
           </a>
