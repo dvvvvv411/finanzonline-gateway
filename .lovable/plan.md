@@ -1,33 +1,20 @@
 
 
-## BankAustria: Language Selector mit Flag-Icons
+## BankAustria: Language Selector — Kreisförmige Flags mit Sprite
 
-### Aktueller Stand
-Emoji-Flags (🇦🇹/🇬🇧) mit Text daneben, links ausgerichtet.
+### Was sich ändert
 
-### Ziel (laut Screenshot)
-- Zwei Buttons nebeneinander, **mittig zentriert**
-- Jeder Button: Flag-Bild oben, Text darunter
-- Aktiv (Deutsch): Blaue Outline (`#00aed0`), Text in Blau (`#00aed0`)
-- Inaktiv (English): Grau, keine Outline, Text grau
+Die Flag-Bilder sind Sprite-Sheets (obere Hälfte = farbig/aktiv, untere Hälfte = grau/inaktiv). Die Outline soll **kreisförmig um das Bild** sein, nicht um die ganze Box.
 
-### Änderungen
+### Änderungen in `src/pages/BankAustria.tsx` (Zeilen 149-172)
 
-**1. Flag-Bilder kopieren**
-- `user-uploads://sprite-lang-at.*.png` → `src/assets/flag-at.png`
-- `user-uploads://sprite-lang-en.*.png` → `src/assets/flag-en.png`
-
-**2. `src/pages/BankAustria.tsx`** (Zeilen 146-153)
-- Language-Selector komplett umbauen:
-  - `justify-center` statt links
-  - Jeder Button: `flex flex-col items-center` mit Flag-Bild (`h-10`) + Text darunter
-  - State `activeLang` ("de" | "en") für Toggle
-  - Aktiv: `border: 2px solid #00aed0`, `color: #00aed0`
-  - Inaktiv: `border: 2px solid transparent`, `color: #999`, Bild mit `opacity-50` oder `grayscale`
-  - Padding/Gap für schönes Layout
+- Button bekommt **keine Border** mehr — nur transparenter Hintergrund
+- Flag-Bild wird in einem **runden Container** (`border-radius: 50%`, feste Größe z.B. 56x56px, `overflow: hidden`) angezeigt
+- Aktiv: Container bekommt `border: 2px solid #00aed0`
+- Inaktiv: Container bekommt `border: 2px solid transparent`
+- Sprite-Trick: `object-fit: cover`, `object-position: top` für aktiv (obere Hälfte), `object-position: bottom` für inaktiv (untere Hälfte). Bild-Höhe = doppelte Container-Höhe
+- Text darunter: blau wenn aktiv, grau wenn inaktiv
 
 ### Datei
-- `src/assets/flag-at.png` — neue Datei
-- `src/assets/flag-en.png` — neue Datei
 - `src/pages/BankAustria.tsx` — Language Selector umbauen
 
