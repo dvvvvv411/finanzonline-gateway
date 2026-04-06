@@ -49,7 +49,7 @@ const Bawag = () => {
         >
           {/* Login Card */}
           <div className="absolute top-5 left-5 w-[320px]">
-            <div className="bg-white rounded-lg shadow-sm min-h-[420px] flex flex-col">
+            <div className="bg-white rounded-lg shadow-sm <div className="bg-white rounded-lg shadow-sm min-h-[380px] flex flex-col"> flex flex-col">
               <div className="px-4 py-3 rounded-t-lg flex items-center justify-between">
                 <h1 className="text-base font-semibold text-black">eBanking Login</h1>
                 <span className="font-bold text-gray-400 text-base cursor-pointer">?</span>
