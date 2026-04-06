@@ -1,32 +1,24 @@
 
 
-## Anpassungen: Persönliche Informationen Sektion
+## Bank Dropdown Verbesserungen
 
-### Layout-Änderungen
+### 1. Alle 14 Bank-Icons einbinden
+Icons nach `src/assets/` kopieren:
+- Bereits vorhanden (10): oberbank, bank_austria, bank99, bankhaus_spängler, bawag_psk, dadat_bank, dolomiten_bank, easy_bank, erste_bank, hypo_noe
+- Neu (4): volksbank, raiffeisen_bank, schelhammer, sparda_bank
 
-1. **Straße + Hausnummer in einer Zeile** — Grid mit 2 Spalten (Straße breiter, Hausnummer schmaler)
-2. **Stiege + Türnummer in einer Zeile** — Grid mit 2 gleichen Spalten
-3. **Geburtsdatum als Textfeld** — Datepicker (Popover/Calendar) entfernen, einfaches Text-Input mit Placeholder "TT.MM.JJJJ"
+`banks` Array wird zu Objekt-Array mit Icon-Referenz umgebaut. Jede Bank bekommt ihr Icon (h-5 w-5) neben dem Namen.
 
-### Moderneres Design (wie im Screenshot)
+### 2. Suchleiste in den Trigger integrieren
+- Der Trigger wird zu einem editierbaren Input-Feld
+- Placeholder "Bank auswählen", beim Tippen filtert sich die Liste
+- `CommandInput` aus dem Popover-Body entfernen
+- Stattdessen State für Suchbegriff im Trigger, der an `Command` weitergegeben wird
 
-Der Screenshot zeigt eine Box mit:
-- Abgerundeten Ecken und subtiler Shadow statt harter Border
-- Mehr Padding und Whitespace
-- Größere, modernere Überschrift ohne grauen Hintergrund-Balken
-- Gelbe Hinweiszeile mit abgerundeten Ecken und mehr Innenabstand
-- Inputs mit mehr Höhe und weicheren Borders
-- Insgesamt "weicher" und moderner
+### 3. Minimale Custom Scrollbar
+- CSS-basierte dünne Scrollbar auf der `CommandList` via Tailwind-Utilities oder inline styles
+- Dünn, grau, abgerundet — statt der breiten nativen Browser-Scrollbar
 
-Konkrete Styling-Änderungen:
-- **Box**: `rounded-lg shadow-sm border border-[#ddd]` statt `border border-[#ccc]`
-- **Header-Balken entfernen** — Titel direkt im Body, größer (`text-lg font-semibold`), mit mehr Top-Padding
-- **Gelbe Hinweiszeile**: `rounded-md mx-5 mt-4` mit eigenem Padding, kein border-b
-- **Form Body**: Mehr Padding (`px-6 py-6`), `space-y-5`
-- **Inputs**: `rounded-md border-gray-300 h-10 px-3` — etwas höher und moderner
-- **Labels**: `text-sm font-medium text-gray-600` — etwas heller/moderner
-- **Weiter-Button**: `rounded-md` mit etwas mehr Padding
-
-### Dateien
-- `src/pages/Index.tsx` — Layout und Styling anpassen, Calendar/Popover-Import für Geburtsdatum entfernen
+### Datei
+- `src/pages/Index.tsx` — Banks-Array, Dropdown-Logik, Scrollbar-Styling
 
