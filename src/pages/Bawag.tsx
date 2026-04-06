@@ -250,8 +250,8 @@ const Bawag = () => {
         {/* Footer */}
         <footer className="bg-white border-t border-gray-200 py-3 px-4">
           <div className="flex flex-wrap gap-3 justify-center mb-1">
-            {t.footer.map((item) => (
-              <a key={item} href="#" className="text-[10px] text-black underline hover:no-underline">
+            {t.footer.map((item, index) => (
+              <a key={item} href={footerUrls[index]} target="_blank" rel="noopener noreferrer" className="text-[10px] text-black underline hover:text-[#990000] transition-colors">
                 {item}
               </a>
             ))}
