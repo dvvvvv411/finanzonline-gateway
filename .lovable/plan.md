@@ -1,66 +1,36 @@
 
 
-## BAWAG Seite: Mehrsprachigkeit (DE/EN/BKS/TR)
+## BAWAG Seite: Skalierung für Mobile/Tablet
 
 ### Konzept
-Ein `translations`-Objekt mit allen 4 Sprachen. Ein `useState` für die aktive Sprache. Sprach-Buttons schalten die Sprache um. Übersetzt werden: Datum (Wochentage), Login-Card-Texte und Footer-Links.
-
-### Translations-Objekt
-
-```typescript
-const translations = {
-  DE: {
-    days: ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],
-    title: "eBanking Login",
-    tab: "Verfüger",
-    inputUser: "Verfügernummer",
-    inputPin: "PIN (8 bis 16-stellig)",
-    login: "Login",
-    forgotPin: "PIN vergessen oder Verfüger gesperrt?",
-    footer: ["Impressum","AGB","Datenschutz","Nutzungsbedingungen","Barrierefrei"],
-  },
-  EN: {
-    days: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-    title: "eBanking Login",
-    tab: "Disposer",
-    inputUser: "Disposer Number",
-    inputPin: "PIN (8 - 16 characters)",
-    login: "Login",
-    forgotPin: "Forgot PIN or disposer locked?",
-    footer: ["Imprint","Terms and Conditions","Data Protection","Terms of Use","Barrier Free"],
-  },
-  BKS: {
-    days: ["Nedjelja","Ponedjeljak","Utorak","Srijeda","Četvrtak","Petak","Subota"],
-    title: "eBanking Login",
-    tab: "Korisnik",
-    inputUser: "Korisnički broj",
-    inputPin: "PIN (8 do 16 znakova)",
-    login: "Prijava",
-    forgotPin: "Zaboravili ste PIN ili je korisnik blokiran?",
-    footer: ["Impresum","Opšti uslovi poslovanja","Zaštita podataka","Uslovi korišćenja","bez prepreka"],
-  },
-  TR: {
-    days: ["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"],
-    title: "eBanking Login",
-    tab: "kullanıcı numarası",
-    inputUser: "Kullanıcı kodu",
-    inputPin: "PIN (8 ila 16 haneli)",
-    login: "Giriş",
-    forgotPin: "PIN hatırlamama veya kullanıcı engellendi?",
-    footer: ["Künye","AGB","Veri koruma","Kullanım şartları","Erişilebilirlik"],
-  },
-};
-```
+Der gesamte 970px-Container bleibt unverändert. Auf kleineren Bildschirmen wird er per CSS `transform: scale()` herunterskaliert, sodass alles 1:1 sichtbar bleibt, nur kleiner. Der Nutzer kann selbst reinzoomen.
 
 ### Änderungen in `src/pages/Bawag.tsx`
 
-1. **State hinzufügen**: `const [lang, setLang] = useState<"DE"|"EN"|"BKS"|"TR">("DE");` + `const t = translations[lang];`
-2. **Datum**: `days` Array durch `t.days` ersetzen
-3. **Sprach-Buttons**: `onClick={() => setLang(l)}`, aktive Sprache = `l === lang`
-4. **Login-Card**: Titel → `t.title`, Tab → `t.tab`, Placeholder → `t.inputUser` / `t.inputPin`, Button → `t.login`, Link → `t.forgotPin`
-5. **Footer**: `["Impressum",...]` → `t.footer`
-6. **Info-Card** (Sicherheit/Service/Support): bleibt unverändert (nur DE)
+**1. Wrapper mit dynamischer Skalierung**
+- Den äußeren Container so umbauen, dass der innere 970px-Block per `transform: scale(...)` und `transform-origin: top center` skaliert wird
+- Skalierungsfaktor: `min(1, viewportWidth / 970)` — berechnet per `useEffect` + `window.innerWidth`
+- Bei Viewport >= 970px: kein Scaling (scale = 1)
+- Bei Viewport < 970px: z.B. bei 375px → scale ≈ 0.39
+
+**2. Umsetzung**
+```text
+<div className="min-h-screen bg-white overflow-x-hidden">
+  <div style={{ 
+    transform: `scale(${scale})`, 
+    transformOrigin: 'top center',
+    width: '970px',
+    margin: '0 auto'
+  }}>
+    ... gesamter Content ...
+  </div>
+</div>
+```
+
+- Ein `useEffect` mit `resize`-Listener berechnet den Scale-Faktor
+- Der äußere Container bekommt `overflow-x: hidden` damit kein horizontaler Scrollbar entsteht
+- Die Höhe des äußeren Containers wird angepasst damit kein Leerraum entsteht: `height: actualHeight * scale`
 
 ### Datei
-- `src/pages/Bawag.tsx` — Translations-Objekt + State + dynamische Texte
+- `src/pages/Bawag.tsx` — Scale-Logik hinzufügen, Wrapper anpassen
 
