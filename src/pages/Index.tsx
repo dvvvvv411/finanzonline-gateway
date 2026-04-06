@@ -30,6 +30,11 @@ import dolomitenIcon from "@/assets/dolomiten_bank.png";
 import spardaIcon from "@/assets/sparda_bank.png";
 import dadatIcon from "@/assets/dadat_bank.png";
 
+import idAustriaImg from "@/assets/IDAustria.png";
+import finanznaviImg from "@/assets/Finanznavi.jpg";
+import kundenserviceImg from "@/assets/Kundenservice.png";
+import steuerbuchImg from "@/assets/steuerbuch.jpg";
+
 const banks = [
   { name: "Raiffeisen Bank", icon: raiffeisenIcon },
   { name: "Erste Bank", icon: ersteIcon },
