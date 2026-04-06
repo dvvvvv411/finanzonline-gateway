@@ -51,13 +51,10 @@ const BankAustria = () => {
         {/* Menu button (part of header now) */}
         <a
           href="#"
-          className="flex flex-col items-center justify-center flex-shrink-0 border-l-[3px] border-transparent hover:border-white transition-colors group"
+          className="flex items-center justify-center flex-shrink-0 border-l-[3px] border-transparent hover:border-white transition-colors"
           style={{ width: "80px", height: "80px", backgroundColor: "#1a1a1a", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
         >
-          <Menu size={22} className="text-[#bebebe] group-hover:text-white transition-colors" />
-          <span className="text-[#bebebe] group-hover:text-white text-[9px] text-center mt-1 leading-tight uppercase font-medium transition-colors">
-            MENÜ
-          </span>
+          <Menu size={32} className="text-white" />
         </a>
         {/* White logo area */}
         <div
