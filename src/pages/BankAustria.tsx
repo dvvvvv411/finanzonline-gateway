@@ -225,7 +225,7 @@ style={{ border: "1px solid #ccc" }}
             </a>
           </div>
         </div>
-        <div className="w-full px-10 py-3 text-sm" style={{ color: "#666", backgroundColor: "#f5f5f5" }}>
+        <div className="w-full px-10 py-8 text-sm" style={{ color: "#666", backgroundColor: "#f5f5f5" }}>
           *Exklusiv für neue oder bestehende Bank Austria Girokontokund:innen – vorbehaltlich positiver Kreditentscheidung. Aktionsbedingungen unter bankaustria/wohnoffensive.jsp
         </div>
 
@@ -243,7 +243,7 @@ style={{ border: "1px solid #ccc" }}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-2 hover:opacity-70 transition-opacity"
+              className="flex flex-col items-center gap-2"
             >
               <img src={img} alt={label} className="h-7 w-7 object-contain" />
               <span className="text-xs text-center whitespace-pre-line" style={{ color: "#333" }}>
