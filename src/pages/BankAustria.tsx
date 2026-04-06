@@ -65,12 +65,15 @@ const BankAustria = () => {
           <Menu size={32} className="text-white" />
         </a>
         {/* White logo area */}
-        <div
+        <a
+          href="https://www.bankaustria.at/index.jsp"
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex items-center px-1 flex-shrink-0"
           style={{ backgroundColor: "#fff", width: "220px" }}
         >
           <img src={logo} alt="Bank Austria" style={{ height: "76px" }} />
-        </div>
+        </a>
         {/* Red nav area */}
         <div
           className="flex-1 flex items-center justify-center gap-10"
