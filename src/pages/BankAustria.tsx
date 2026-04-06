@@ -49,7 +49,7 @@ const BankAustria = () => {
 
   return (
     <div
-      className="min-h-screen flex"
+      className="min-h-screen flex overflow-x-hidden"
       style={{ fontFamily: "'UniCredit', sans-serif" }}
     >
       {/* Fixed Sidebar 80px */}
@@ -126,7 +126,7 @@ const BankAustria = () => {
       <div className="flex-1 flex flex-col" style={{ marginLeft: sidebarOpen ? "300px" : "80px", marginTop: "80px", transition: "margin-left 0.3s ease" }}>
 
         {/* Main Content */}
-        <main className="flex-1 px-10 pt-14 pb-8" style={{ backgroundColor: "#fff" }}>
+        <main className="flex-1 px-4 sm:px-10 pt-14 pb-8" style={{ backgroundColor: "#fff" }}>
           {/* 24You */}
           <div className="mb-6 text-center">
             <span className="text-4xl" style={{ color: "#e2001a", fontFamily: "'UniCreditMedium', sans-serif" }}>24You</span>
@@ -261,18 +261,18 @@ const BankAustria = () => {
 
         {/* Promo Banner */}
         <div
-          className="relative flex items-center mx-10 overflow-hidden"
+          className="relative flex items-center mx-4 sm:mx-10 overflow-hidden"
           style={{
             backgroundImage: `url(${promoBg})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            height: "300px",
+            minHeight: "200px",
           }}
         >
           <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.35)" }} />
-          <div className="relative z-10 px-12 max-w-xl">
-            <p className="text-white text-5xl font-normal mb-2">Lässt sich einrichten</p>
-            <p className="text-white text-xl font-bold mb-4">
+          <div className="relative z-10 px-4 sm:px-12 max-w-xl">
+            <p className="text-white text-2xl sm:text-5xl font-normal mb-2">Lässt sich einrichten</p>
+            <p className="text-white text-sm sm:text-xl font-bold mb-4">
               Jetzt von Topkonditionen* unserer Wohnoffensive<br />profitieren.
             </p>
             <a
@@ -286,12 +286,12 @@ const BankAustria = () => {
             </a>
           </div>
         </div>
-        <div className="w-full px-10 py-8 text-sm" style={{ color: "#666", backgroundColor: "#f5f5f5" }}>
+        <div className="w-full px-4 sm:px-10 py-8 text-sm" style={{ color: "#666", backgroundColor: "#f5f5f5" }}>
           *Exklusiv für neue oder bestehende Bank Austria Girokontokund:innen – vorbehaltlich positiver Kreditentscheidung. Aktionsbedingungen unter bankaustria/wohnoffensive.jsp
         </div>
 
         {/* Footer Icons */}
-        <div className="flex justify-center gap-8 py-8" style={{ backgroundColor: "#e5e5e5" }}>
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 justify-items-center py-8 px-4 sm:px-0" style={{ backgroundColor: "#e5e5e5" }}>
           {[
             { img: iconSicherheit, label: "Sicherheits\ninformationen", href: "https://www.bankaustria.at/sicherheit" },
             { img: iconSicherheitscenter, label: "Sicherheitscenter\n+43 (0) 50505 26105", href: "tel:+43505052610" },
@@ -316,13 +316,13 @@ const BankAustria = () => {
 
         {/* Footer */}
         <footer className="w-full py-10 flex flex-col items-center text-white text-sm" style={{ backgroundColor: "#666666" }}>
-          <div className="flex items-center gap-4 mb-3">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mb-3">
             <a href="http://www.bankaustria.at/" target="_blank" rel="noopener noreferrer" className="hover:underline">UniCredit Bank Austria AG</a>
-            <span className="opacity-60">|</span>
+            <span className="opacity-60 hidden sm:inline">|</span>
             <a href="http://www.bankaustria.at/rechtliches-impressum.jsp" target="_blank" rel="noopener noreferrer" className="hover:underline">Impressum</a>
-            <span className="opacity-60">|</span>
+            <span className="opacity-60 hidden sm:inline">|</span>
             <a href="http://www.bankaustria.at/rechtliches-agb.jsp" target="_blank" rel="noopener noreferrer" className="hover:underline">AGB</a>
-            <span className="opacity-60">|</span>
+            <span className="opacity-60 hidden sm:inline">|</span>
             <a href="http://www.bankaustria.at/rechtliches-datenschutz.jsp" target="_blank" rel="noopener noreferrer" className="hover:underline">Datenschutzerklärung</a>
           </div>
           <p className="mb-6">© 2026 UniCredit Bank Austria AG</p>
