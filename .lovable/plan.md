@@ -1,36 +1,32 @@
 
 
-## Neue Seite `/raiffeisenbank` erstellen
+## Raiffeisenbank-Seite überarbeiten
 
-### Übersicht
+### Änderungen in `src/pages/Raiffeisenbank.tsx`
 
-Eine neue Seite im Raiffeisen-Login-Stil mit Wald-Hintergrundbild und zentrierter Login-Card.
+Kompletter Umbau der Card mit folgenden Anpassungen:
+
+1. **Logo entfernen** (Zeilen 47-54)
+2. **"Verfüger speichern" Checkbox + State entfernen** (Zeilen 33, 109-119)
+3. **Rote `*` → grau** (`text-gray-400` statt `text-destructive`)
+4. **Floating Labels**: Labels werden nicht mehr über dem Input stehen, sondern als Placeholder im Feld. Bei Focus/Wert animiert sich das Label nach oben links im Feld (Material-Design-Stil). Dafür eigene CSS-Klassen mit `peer` und `transition-all`.
+5. **Font**: Open Sans via Google Fonts in `index.html` einbinden, auf der Seite `font-family: 'Open Sans'` setzen.
+
+### Floating-Label-Implementierung
+
+Jedes Feld wird so aufgebaut:
+```tsx
+<div className="relative">
+  <input className="peer w-full border-b-2 border-gray-300 bg-transparent pt-5 pb-1 outline-none focus:border-black" placeholder=" " />
+  <label className="pointer-events-none absolute left-0 top-3 text-gray-500 transition-all peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
+    Verfügernummer eingeben <span className="text-gray-400">*</span>
+  </label>
+</div>
+```
+
+Für den Select-Dropdown: ähnlicher Ansatz — Label sitzt oben links im Feld wenn Wert gesetzt, sonst mittig.
 
 ### Dateien
-
-**1. Bild kopieren:** `user-uploads://rbg_wald.jpg` → `src/assets/rbg_wald.jpg`
-
-**2. Neue Seite:** `src/pages/Raiffeisenbank.tsx`
-
-- **Hintergrund:** Vollbild-Waldbild (`object-cover`, `min-h-screen`)
-- **Zentrierte weiße Card** mit abgerundeten Ecken und Schatten, vertikal+horizontal zentriert via Flexbox
-- **Card-Inhalt:**
-  - Raiffeisen-Logo oben (aus `src/assets/raiffeisen_bank.png`)
-  - Titel: **"Bitte melden Sie sich an"**
-  - Beschreibung: "Wählen Sie Ihr Bundesland und geben Sie Verfügernummer und PIN ein."
-  - **Dropdown** "Bundesland oder Bank wählen *" mit Optionen: Burgenland, Kärnten, Niederösterreich/Wien, Oberösterreich, Salzburg, Steiermark, Tirol, Vorarlberg, Oberösterreich/Bank Direkt, Oberösterreich/PRIVAT BANK, Tirol/Jungholz, Alpen Privatbank
-  - **Input** "Verfügernummer eingeben *"
-  - **Input** "PIN eingeben *" (type=password)
-  - **Checkbox** "Verfüger speichern"
-  - **Gelber Button** "Weiter" (volle Breite, gelb `bg-[#FFC72C]` oder ähnlich Raiffeisen-Gelb)
-- **Footer** am unteren Seitenrand, zentriert, über dem Hintergrund:
-  - Links: Impressum → `raiffeisen.at/.../impressum.html`, Nutzungsbedingungen → `raiffeisen.at/.../nutzungsbedingungen.html`, Barrierefreiheitserklärung → `raiffeisen.at/.../barrierefreiheitserklaerung.html`, © 2026 Raiffeisen
-  - Weißer/heller Text da auf dunklem Hintergrund
-
-**3. Route hinzufügen:** `src/App.tsx` — `/raiffeisenbank` → `<Raiffeisenbank />`
-
-### Styling-Details
-- Card: `max-w-md`, `bg-white`, `rounded-xl`, `shadow-lg`, `p-8`
-- Hintergrund: `fixed` oder `cover` damit es den ganzen Viewport füllt
-- Footer: `fixed bottom-0` oder am Ende der Seite, Text weiß/hell, Links mit External-Link-Icon optional
+- `index.html` — Google Font Open Sans einbinden
+- `src/pages/Raiffeisenbank.tsx` — kompletter Umbau der Form-Felder
 
