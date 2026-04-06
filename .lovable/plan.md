@@ -1,21 +1,25 @@
 
 
-## Sidebar: Farbe, Textgröße und Zeilenumbruch anpassen
+## Sidebar: Lucide-Icons durch hochgeladene PNGs ersetzen
 
 ### Änderungen
 
-**1. Sidebar Hintergrundfarbe ändern**
-- Zeile 89: `backgroundColor: "#1a1a1a"` → `backgroundColor: "#333333"`
+**1. 6 PNGs nach `src/assets/` kopieren**
+- `Girokonten.png`, `Kreditkarten.png`, `Sparprodukte.png`, `Finanzierung.png`, `Wertpapiere.png`, `börsen_märkte.png`
 
-**2. Texte in der Sidebar größer**
-- Zeile 99: `text-[9px]` → `text-[10px]` oder `text-[11px]`
+**2. Imports hinzufügen + Lucide-Imports aufräumen**
+- 6 neue `import` Statements für die PNGs
+- `Wallet, CreditCard, PiggyBank, Home, TrendingUp, BarChart3` aus dem Lucide-Import entfernen (nur `Menu` bleibt)
 
-**3. "BÖRSEN & MÄRKTE" auf 2 Zeilen**
-- Zeile 35: Label ändern von `"BÖRSEN & MÄRKTE"` → `"BÖRSEN &\nMÄRKTE"`
-- Zeile 100: `{label}` → `{label.split('\n').map(...)}` mit `<br />` dazwischen, oder alternativ das Label direkt mit `dangerouslySetInnerHTML` oder zwei `<span>`-Blöcken rendern
+**3. `sidebarItems` Array umbauen**
+- Statt Lucide-Komponenten (`icon: Wallet`) jetzt PNG-Pfade (`icon: iconGirokonten`)
+- Typ ändert sich von React-Komponente zu String (Bild-URL)
 
-**4. Hover bleibt wie bisher** — keine Änderung nötig (bg bleibt default, Icon/Text werden weiß)
+**4. Sidebar-Rendering anpassen (Zeile 91-101)**
+- `<Icon size={22} .../>` → `<img src={icon} className="h-6 w-6 object-contain ..." />`
+- Hover-Effekt: `opacity` oder `brightness` Filter statt `text-color`, da PNGs keine `currentColor` unterstützen
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Zeilen 35, 89, 99-100
+- `src/assets/` — 6 neue PNGs
+- `src/pages/BankAustria.tsx` — Imports, sidebarItems, Rendering
 
