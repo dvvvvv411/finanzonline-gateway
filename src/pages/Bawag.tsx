@@ -99,7 +99,7 @@ const Bawag = () => {
           height: scale < 1 ? 'auto' : undefined,
         }}
       >
-        <div style={{ height: scale < 1 ? 0 : undefined }}>
+      
         {/* Header */}
         <header className="bg-white border-b border-gray-200 px-4 py-2 flex items-center justify-between">
           <img src={bawagLogo} alt="BAWAG eBanking" className="h-20" />
