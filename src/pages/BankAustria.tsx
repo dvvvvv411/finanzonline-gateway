@@ -126,7 +126,7 @@ const BankAustria = () => {
       <div className="flex-1 flex flex-col" style={{ marginLeft: sidebarOpen ? "300px" : "80px", marginTop: "80px", transition: "margin-left 0.3s ease" }}>
 
         {/* Main Content */}
-        <main className="flex-1 px-10 pt-14 pb-8" style={{ backgroundColor: "#fff" }}>
+        <main className="flex-1 px-4 sm:px-10 pt-14 pb-8" style={{ backgroundColor: "#fff" }}>
           {/* 24You */}
           <div className="mb-6 text-center">
             <span className="text-4xl" style={{ color: "#e2001a", fontFamily: "'UniCreditMedium', sans-serif" }}>24You</span>
