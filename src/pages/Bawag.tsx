@@ -57,8 +57,8 @@ const Bawag = () => {
 
               <div className="p-4 flex-1 flex flex-col">
                 {/* Verfüger tab */}
-                <div className="mb-4">
-                  <span className="text-[#990000] text-xs font-semibold border-b-2 border-[#990000] pb-1">
+                <div className="mb-4 text-center border-b border-gray-200">
+                  <span className="text-[#990000] text-xs font-semibold border-b-2 border-[#990000] pb-1 inline-block">
                     Verfüger
                   </span>
                 </div>
