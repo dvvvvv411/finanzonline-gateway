@@ -320,6 +320,7 @@ const BankAustria = () => {
               </span>
             </a>
           ))}
+          </div>
         </div>
 
         {/* Footer */}
