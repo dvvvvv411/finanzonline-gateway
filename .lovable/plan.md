@@ -1,15 +1,21 @@
 
 
-## Header: Menü-Button Hover-Effekt entfernen
+## Promo-Banner: Abstand links und rechts hinzufügen
 
 ### Änderung
 
-**Zeile 60 in `src/pages/BankAustria.tsx`:**
-- `hover:border-white` entfernen aus den Klassen des Menü-Buttons
-- `transition-colors` kann ebenfalls entfernt werden (nicht mehr nötig)
+**Zeile 228-237 in `src/pages/BankAustria.tsx`:**
+- Den Promo-Banner-Container mit `px-10` (gleicher Abstand wie `main`) und etwas vertikalem Abstand umwickeln
+- Oder direkt dem Banner `mx-10` und `rounded` hinzufügen, damit es nicht mehr edge-to-edge geht
 
-Ergebnis: `className="flex items-center justify-center flex-shrink-0 border-l-[3px] border-transparent"`
+Konkret: Das `<div>` des Promo Banners (Zeile 229-230) ändern von:
+- `className="relative w-full flex items-center"`
+
+zu:
+- `className="relative flex items-center mx-10 overflow-hidden"`
+
+Das `mx-10` sorgt für 40px Abstand links (zur Sidebar) und rechts (zum Seitenrand). `overflow-hidden` stellt sicher, dass das Hintergrundbild sauber abgeschnitten wird.
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Zeile 60
+- `src/pages/BankAustria.tsx` — Zeile 229-230
 
