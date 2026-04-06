@@ -32,7 +32,7 @@ const sidebarItems = [
   { icon: PiggyBank, label: "SPARPRODUKTE" },
   { icon: Home, label: "FINANZIERUNG" },
   { icon: TrendingUp, label: "WERTPAPIERE" },
-  { icon: BarChart3, label: "BÖRSEN & MÄRKTE" },
+  { icon: BarChart3, label: "BÖRSEN &\nMÄRKTE" },
 ];
 
 const BankAustria = () => {
