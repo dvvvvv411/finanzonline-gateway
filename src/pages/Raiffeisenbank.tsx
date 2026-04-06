@@ -93,10 +93,10 @@ const Raiffeisenbank = () => {
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-xl rounded-md bg-white p-8 shadow-lg">
         {/* Language Switcher */}
-        <div className="absolute right-8 top-8" ref={langRef}>
+        <div className="absolute right-4 top-4" ref={langRef}>
           <button
             onClick={() => setLangOpen(!langOpen)}
-            className={`flex items-center justify-between border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 min-w-[160px] ${langOpen ? "rounded-t-md rounded-b-none" : "rounded-md"}`}
+            className={`flex items-center justify-between px-4 py-2 text-base text-gray-700 min-w-[160px] border ${langOpen ? "border-gray-300 bg-white rounded-t-md rounded-b-none" : "border-transparent bg-transparent rounded-md"}`}
           >
             {lang === "de" ? t.deutsch : t.englisch}
             <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} />
