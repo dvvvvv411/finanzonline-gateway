@@ -59,7 +59,7 @@ const BankAustria = () => {
           {/* Red nav area */}
           <div
             className="flex-1 flex items-center justify-center gap-6"
-            style={{ backgroundColor: "#c80a1e" }}
+            style={{ backgroundColor: "#2596be" }}
           >
             {["Privatkunden", "Firmenkunden", "Private Banking", "Über uns"].map((item) => (
               <a
@@ -77,7 +77,7 @@ const BankAustria = () => {
         <main className="flex-1 px-10 py-8" style={{ backgroundColor: "#fff" }}>
           {/* 24You */}
           <div className="mb-6 text-center">
-            <span className="text-4xl font-light" style={{ color: "#c80a1e" }}>24You</span>
+            <span className="text-4xl font-light" style={{ color: "#2596be", fontFamily: "'UniCredit', sans-serif" }}>24You</span>
           </div>
 
           {/* Login Form */}
