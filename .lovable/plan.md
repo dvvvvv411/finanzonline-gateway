@@ -1,21 +1,19 @@
 
 
-## BankAustria Header: Icons + Styling für Nav-Items
+## BankAustria: Icons größer, Logo größer, Divider entfernen
 
-### Änderungen
+### Änderungen in `src/pages/BankAustria.tsx`
 
-**1. Icons kopieren**
-- `user-uploads://privatkunden.png` → `src/assets/icon-privatkunden.png`
-- `user-uploads://firmenkunden.png` → `src/assets/icon-firmenkunden.png`
-- `user-uploads://privatebanking.png` → `src/assets/icon-privatebanking.png`
-- `user-uploads://ueberuns.png` → `src/assets/icon-ueberuns.png`
+**1. Nav-Icons größer** (Zeile 81)
+- Von `h-6 w-6` auf `h-8 w-8`
 
-**2. Header Nav-Items umbauen** (`src/pages/BankAustria.tsx`, Zeilen 60-73)
-- Statt einfacher Text-Links: Icon (als `<img>`) über dem Text
-- Text: uppercase, weiß, bold
-- Layout pro Item: `flex flex-col items-center` (Icon oben, Text unten)
-- Header-Höhe ggf. leicht erhöhen damit Icons + Text reinpassen
+**2. Bank Austria Logo größer** (Zeile 68)
+- Von `height: "50px"` auf `height: "70px"` damit es den weißen Bereich (80px hoch) fast komplett ausfüllt
+- Ggf. padding reduzieren (`px-4` → `px-2`)
+
+**3. Divider unter dem Logo-Bereich entfernen** (Zeile 66)
+- `borderBottom: "1px solid #ddd"` entfernen
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Nav-Bereich im Header umbauen
+- `src/pages/BankAustria.tsx` — 3 kleine Änderungen
 
