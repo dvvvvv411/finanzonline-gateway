@@ -27,7 +27,6 @@ const navItems = [
 ];
 
 const sidebarItems = [
-  { icon: Menu, label: "MENÜ" },
   { icon: Wallet, label: "GIROKONTEN" },
   { icon: CreditCard, label: "KREDITKARTEN" },
   { icon: PiggyBank, label: "SPARPRODUKTE" },
