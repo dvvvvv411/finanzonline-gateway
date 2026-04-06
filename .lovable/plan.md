@@ -1,16 +1,12 @@
 
 
-## Bilder bei Aktuelles abrunden und mehr Höhe
+## Hinweis-Box Styling anpassen
 
-### Problem
-Die Bilder haben `overflow-hidden` auf dem Bild-Container, aber die Abrundung (`rounded-lg`) ist nur auf dem äußeren `<a>`-Tag. Dadurch sieht man die abgerundeten Ecken nicht am Bild selbst. Außerdem ist `aspect-[16/10]` zu flach — Bilder werden abgeschnitten.
+### Änderung in `src/pages/Index.tsx` (Zeile 77)
 
-### Änderungen in `src/pages/Index.tsx`
+Aktuelle Klassen: `rounded border-l-4 border-[#666] bg-[#f5f5f5] p-5`
 
-1. **Zeile 293**: Bild-Container `rounded-lg` hinzufügen, damit alle 4 Ecken des Bildes sichtbar abgerundet sind:
-   `<div className="aspect-[4/3] w-full overflow-hidden rounded-lg">`
-
-2. **Aspect Ratio**: Von `aspect-[16/10]` auf `aspect-[4/3]` ändern — gibt mehr Höhe, sodass Bilder weniger abgeschnitten werden
+Neue Klassen: `rounded bg-[#f1f4f7] p-5` — entfernt `border-l-4 border-[#666]` und ändert Hintergrund zu `#f1f4f7`.
 
 ### Datei
 - `src/pages/Index.tsx` — eine Zeile ändern
