@@ -1,34 +1,48 @@
 
+## BAWAG: Mobile/Tablet endlich wirklich oben mittig
 
-## BAWAG Seite: Mobile/Tablet Skalierung Fix
+### Ursache
+Das Problem ist nicht nur `transform-origin`, sondern die Struktur:
+Aktuell wird der unskalierte 970px-Block zentriert und erst danach skaliert. Dadurch ist nicht der sichtbare Content mittig, sondern nur die unsichtbare 970px-Fläche.
 
-### Problem
-`transform-origin: top center` positioniert den Ankerpunkt bei 485px (Mitte von 970px), was bei einem 390px Viewport den Content nach rechts verschiebt und abschneidet.
+### Richtiger Fix
+Ich stelle die Struktur auf einen echten Zentrierungs-Slot um:
 
-### Lösung
-- `transformOrigin` auf `'top left'` ändern
-- `margin: '0 auto'` entfernen
-- Stattdessen bei `scale < 1`: kein Margin nötig, da `970 * scale = viewportWidth` — der Content füllt exakt die Breite
-- Bei `scale === 1`: Content zentrieren via Wrapper mit `display: flex; justify-content: center`
+- `scale = min(1, window.innerWidth / 970)` bleibt
+- neuer Wrapper mit `display: flex; justify-content: center; width: 100%`
+- darin ein **scaled slot** mit:
+  - `width = 970 * scale`
+  - `height = contentHeight * scale`
+- erst **innerhalb** dieses Slots liegt der echte 970px-Content mit:
+  - `width: 970px`
+  - `transform: scale(scale)`
+  - `transform-origin: top left`
 
-### Umsetzung in `src/pages/Bawag.tsx`
-
-**Äußerer Container (Zeile 91-97):**
-- Wird zu einem Flex-Container mit `justify-content: center`
-
-**Innerer Container (Zeile 98-106):**
-- `transformOrigin: 'top left'` statt `'top center'`
-- `margin: '0 auto'` entfernen
+So wird die **sichtbare verkleinerte Fläche** oben mittig zentriert.
 
 ```text
-VORHER (mobile 390px):
-  970px Box mit origin=center → rechts verschoben, abgeschnitten
-
-NACHHER (mobile 390px):
-  970px Box mit origin=top left → scale(0.4) → 388px breit → passt links bündig
-  Bei Desktop >= 970px → scale(1), flex-center zentriert den Block
+Viewport
+┌──────────────────────────────┐
+│       centered slot          │  <- width = 970 * scale
+│    ┌────────────────────┐    │
+│    │ 970px content      │    │  <- scale(...) inside
+│    └────────────────────┘    │
+└──────────────────────────────┘
 ```
 
-### Datei
-- `src/pages/Bawag.tsx` — 2 Zeilen ändern
+### Änderungen in `src/pages/Bawag.tsx`
+1. `BASE_WIDTH = 970` und `scaledWidth = BASE_WIDTH * scale` ergänzen
+2. Die aktuelle Root-Struktur umbauen:
+   - Root nur noch für Hintergrund / Font / Overflow
+   - neuer Center-Wrapper für horizontale Zentrierung
+   - Höhe vom skalierten Inhalt auf den Slot legen, nicht auf den Root
+3. Den 970px-Inhalt im Slot rendern und dort weiter skalieren
 
+### Ergebnis
+- Desktop: bleibt wie jetzt
+- Tablet/Mobile: kompletter Content bleibt sichtbar
+- Der ganze BAWAG-Block sitzt **oben mittig**
+- Kein Linksschiefstand, kein Rechtsabschneiden
+
+### Datei
+- `src/pages/Bawag.tsx`
