@@ -144,7 +144,7 @@ const Raiffeisenbank = () => {
           <div
             onClick={() => setSelectOpen(!selectOpen)}
             onBlur={() => setBundeslandTouched(true)}
-            className={`w-full cursor-pointer border-b-2 px-3 pb-2 pt-6 text-base text-[#1a1a1a] outline-none ${
+            className={`w-full cursor-pointer border-b-2 px-3 pb-1 pt-5 text-base text-[#1a1a1a] outline-none ${
               selectOpen ? "border-[#fbf315] bg-[#e8e8e8]" : bundeslandTouched && !bundesland ? "border-red-600 bg-[#f4f4f4]" : "border-[#1a1a1a] bg-[#f4f4f4]"
             }`}
           >
