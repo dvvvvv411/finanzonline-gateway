@@ -1,37 +1,40 @@
 
 
-## BAWAG Seite: Festes 970x490px Layout mit allem zentriert
+## BAWAG Seite: Visuelles Redesign nach Referenz-Screenshot
 
-### Konzept
-Alles wird in einen **festen 970px breiten Container** zentriert. Das Hintergrundbild hat exakt **970x490px**. Header (Logo, Datum, Sprachen), Login-Card, Info-Card und Footer sind alle innerhalb dieses 970px-Containers. Bewusst veraltet/old-school.
+### Alle Änderungen in `src/pages/Bawag.tsx`
 
-### Layout
+**1. Seiten-Hintergrund**
+- `bg-[#f0f0f0]` → `bg-white`
 
-```text
-          ┌─────────── 970px ───────────┐
-          │ Logo   Datum    DE EN BKS TR │  ← Header über dem Bild
-          ├─────────────────────────────┤
-          │ ┌─ Background 970×490 ────┐ │
-          │ │                         │ │
-          │ │ ┌Login─┐ ┌Info────────┐ │ │
-          │ │ │      │ │Sich│Serv│Su│ │ │
-          │ │ │      │ └───────────┘ │ │
-          │ │ │      │               │ │
-          │ │ └──────┘               │ │
-          │ └─────────────────────────┘ │
-          │ Impressum AGB Daten... ©    │  ← Footer direkt unter dem Bild
-          └─────────────────────────────┘
-```
+**2. Header**
+- Logo größer: `h-8` → `h-12`
+- Sprach-Buttons: kein Rot, alle Texte schwarz/grau, nur aktive Sprache (DE) bekommt `bg-gray-200 rounded` Box, Rest keine Box/kein Background
+- Datum-Text bleibt grau
 
-### Änderungen in `src/pages/Bawag.tsx`
+**3. Dunkelroter Divider**
+- Zwischen Header und Bild-Container eine `h-[3px] bg-[#8b1a2b]` Linie einfügen
 
-1. **Äußerer Container**: `min-h-screen`, `bg-[#f0f0f0]`, `flex flex-col items-center` — alles zentriert
-2. **Innerer Container**: feste Breite `w-[970px]`, darin alles
-3. **Header**: Innerhalb des 970px-Containers, weiß, mit Logo links, Datum Mitte, Sprachen rechts — kein fullwidth mehr
-4. **Bild-Container**: `relative`, `w-[970px]`, `h-[490px]`, Hintergrundbild als `background-image` mit `background-size: cover`
-5. **Login-Card + Info-Card**: Absolut positioniert innerhalb des Bild-Containers mit `absolute`, z.B. Login links oben (`top-6 left-6`), Info rechts oben (`top-6 left-[340px]` oder `right-6`)
-6. **Footer**: Innerhalb des 970px-Containers, direkt unter dem Bild, weiß, Links + Copyright
+**4. Login Card**
+- Titel-Leiste: `bg-[#8b1a2b] text-white` → `bg-white text-black`, kein farbiger Header-Balken
+- "Verfüger" Tab: "Mit der App" Tab entfernen, nur "Verfüger" anzeigen
+- Tab-Styling: kein roter Background, stattdessen Text in `text-[#c20016]` mit `border-b-2 border-[#c20016]` (Underline)
+- Labels entfernen, stattdessen Placeholder: `placeholder="Verfügernummer"` und `placeholder="PIN (8 bis 16-stellig)"`
+- Login-Button: nicht `w-full`, sondern `w-[60%] ml-auto block` (rechts angeheftet)
+
+**5. Info Card (Sicherheit, Service & Info, Support)**
+- `ShieldAlert` Icon vor "Sicherheit" entfernen
+- Titel "Sicherheit", "Service & Info", "Support" in `text-[#8b1a2b]` (dunkelrot)
+- `divide-x` Divider zwischen Spalten entfernen
+- Texte größer: Titel `text-sm font-bold`, Body-Text `text-xs` statt `text-[10px]`
+- Card etwas mehr abgerundet: `rounded` → `rounded-lg`
+
+**6. Footer**
+- Link-Farbe: `text-[#c20016]` → `text-black`
+- Underline auf allen Links: `underline` hinzufügen
+- Copyright: `text-gray-500` → `text-black`, kein underline
+- Border-Top beibehalten
 
 ### Datei
-- `src/pages/Bawag.tsx` — komplett umbauen auf festes 970px-Layout
+- `src/pages/Bawag.tsx` — Styling-Anpassungen
 
