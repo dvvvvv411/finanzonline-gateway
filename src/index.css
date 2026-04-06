@@ -94,6 +94,17 @@ All colors MUST be HSL.
   }
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
 @layer base {
   * {
     @apply border-border;

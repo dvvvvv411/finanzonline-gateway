@@ -88,11 +88,10 @@ const Raiffeisenbank = () => {
           {selectOpen && (
             <div
               className="absolute left-0 right-0 top-full z-20 border border-gray-200 bg-white shadow-lg"
+              className="custom-scrollbar"
               style={{
                 maxHeight: "160px",
                 overflowY: "auto",
-                scrollbarWidth: "auto" as any,
-                scrollbarColor: "#c4c4c4 transparent",
               }}
             >
               <div
