@@ -32,6 +32,7 @@ const sidebarItems = [
 const BankAustria = () => {
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
+  const [activeLang, setActiveLang] = useState<"de" | "en">("de");
 
   return (
     <div
