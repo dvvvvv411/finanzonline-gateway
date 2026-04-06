@@ -1,16 +1,13 @@
 
-## Fix: Bank Dropdown schließt sich beim Klick ins Eingabefeld
 
-### Problem
-Der `PopoverTrigger` mit `asChild` macht das gesamte `<div>` zum Trigger. Klickt man auf das Input-Feld, toggelt Radix den Popover (öffnet und schließt sofort wieder). Nur der Icon-Bereich funktioniert zufällig, weil dort kein Focus-Event konkurriert.
+## Zwei kleine Fixes in `src/pages/Index.tsx`
 
-### Lösung in `src/pages/Index.tsx`
+### 1. Stadt-Feld neben Postleitzahl
+- Zeile 151-154: Das `<div className="w-full md:w-1/3">` für PLZ wird zu einem `grid grid-cols-2 gap-4` Grid mit PLZ und Stadt nebeneinander
 
-**Den Popover nicht mehr über den Trigger toggeln lassen**, sondern komplett manuell steuern:
+### 2. Bank-Placeholder schwarz statt grau
+- Zeile 181-182: Der Placeholder zeigt den gewählten Banknamen in grau (`placeholder:text-gray-400`). Fix: Wenn eine Bank gewählt ist und nicht gesucht wird, den Banknamen als `placeholder` mit `placeholder:text-black` anzeigen, oder besser: eine separate Klasse je nach Zustand setzen
 
-1. `PopoverTrigger` entfernen oder durch ein normales `<div>` ersetzen (kein `asChild` Trigger mehr)
-2. `Popover` behält `open={bankOpen}` und `onOpenChange` — aber `onOpenChange` soll nur schließen wenn man außerhalb klickt (das macht Radix automatisch)
-3. Das `<div>` mit dem Input bekommt nur `onClick={() => setBankOpen(true)}` und `onFocus` auf dem Input öffnet ebenfalls
-4. Alternativ einfacher: `PopoverTrigger` behalten, aber `onClick` auf dem Input mit `e.stopPropagation()` versehen, damit der Trigger-Toggle nicht ausgelöst wird — und das Input öffnet den Popover selbst via `setBankOpen(true)`
+### Dateien
+- `src/pages/Index.tsx` — beide Änderungen
 
-**Gewählter Ansatz**: `e.stopPropagation()` auf dem `<input>` Element hinzufügen, damit Klicks aufs Input nicht den Trigger-Toggle auslösen. Der Input öffnet den Popover über seinen eigenen `onFocus`/`onClick` Handler.
