@@ -109,19 +109,6 @@ const ErsteBank = () => {
             isEnglish ? "bg-[#0cb43f]" : "bg-[#721c7a]"
           }`}
         >
-          {/* Language Switcher */}
-          <button
-            onClick={() => setLang(isEnglish ? "de" : "en")}
-            className="absolute top-6 right-6 cursor-pointer"
-            title={isEnglish ? "Österreich" : "English"}
-          >
-            <img
-              src={isEnglish ? atFlag : ukFlag}
-              alt={isEnglish ? "Österreich" : "English"}
-              className="h-6 w-auto"
-            />
-          </button>
-
           <img src={georgeWhiteLogo} alt="George" className="h-96 mb-16" />
           <div className="absolute bottom-16 left-16 space-y-1">
             {t.brand.map((text) => (
