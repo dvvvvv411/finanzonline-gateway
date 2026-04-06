@@ -143,7 +143,7 @@ const Auth = () => {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full rounded-none bg-[#E6320F] text-white hover:bg-[#c42a0d]"
+              className="w-full rounded-none border border-[#ccc] bg-white text-black hover:bg-[#f5f5f5]"
             >
               {loading ? "Bitte warten..." : isLogin ? "Anmelden" : "Registrieren"}
             </Button>
