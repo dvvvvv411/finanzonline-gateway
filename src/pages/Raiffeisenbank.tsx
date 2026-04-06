@@ -26,6 +26,7 @@ const translations = {
     pinLabel: "PIN eingeben",
     weiter: "Weiter",
     pflichtfeld: "Pflichtfeld",
+    verfuegerSpeichern: "Verfüger speichern",
     impressum: "Impressum",
     nutzungsbedingungen: "Nutzungsbedingungen",
     barrierefreiheit: "Barrierefreiheitserklärung",
