@@ -246,18 +246,6 @@ const Raiffeisenbank = () => {
           )}
         </div>
 
-        {/* Verfüger speichern Checkbox */}
-        <div className="mb-8 flex items-center gap-2">
-          <input
-            type="checkbox"
-            id="save-verfueger"
-            className="h-5 w-5 cursor-pointer accent-[#1a1a1a]"
-          />
-          <label htmlFor="save-verfueger" className="cursor-pointer text-base text-[#1a1a1a]">
-            {t.verfuegerSpeichern}
-          </label>
-          <Info className="h-5 w-5 cursor-pointer text-gray-400" />
-        </div>
 
         {/* Weiter Button */}
         <div className="flex justify-center">
