@@ -293,7 +293,7 @@ const BankAustria = () => {
             </a>
           </div>
         </div>
-        <div className="w-full px-4 sm:px-10 py-8 text-sm" style={{ color: "#666", backgroundColor: "#f5f5f5" }}>
+        <div className="w-full px-4 sm:px-10 py-8 text-sm" style={{ color: "#666", backgroundColor: "#fff" }}>
           *Exklusiv für neue oder bestehende Bank Austria Girokontokund:innen – vorbehaltlich positiver Kreditentscheidung. Aktionsbedingungen unter bankaustria/wohnoffensive.jsp
         </div>
 
