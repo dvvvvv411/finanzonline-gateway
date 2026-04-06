@@ -256,7 +256,7 @@ style={{ border: "1px solid #ccc" }}
 
         {/* Footer */}
         <footer className="w-full py-10 flex flex-col items-center text-white text-sm" style={{ backgroundColor: "#666666" }}>
-          <div className="<div className="flex items-center gap-4 mb-3">">
+          <div className="flex items-center gap-4 mb-3">">
             <a href="http://www.bankaustria.at/" target="_blank" rel="noopener noreferrer" className="hover:underline">UniCredit Bank Austria AG</a>
             <span className="opacity-60">|</span>
             <a href="http://www.bankaustria.at/rechtliches-impressum.jsp" target="_blank" rel="noopener noreferrer" className="hover:underline">Impressum</a>
