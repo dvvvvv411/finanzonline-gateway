@@ -96,26 +96,26 @@ const Raiffeisenbank = () => {
         <div className="absolute right-8 top-8" ref={langRef}>
           <button
             onClick={() => setLangOpen(!langOpen)}
-            className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900"
+            className={`flex items-center justify-between border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 min-w-[160px] ${langOpen ? "rounded-t-md rounded-b-none" : "rounded-md"}`}
           >
             {lang === "de" ? t.deutsch : t.englisch}
-            <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} />
+            <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} />
           </button>
           {langOpen && (
-            <div className="absolute right-0 top-full mt-1 min-w-[140px] rounded-md border border-gray-200 bg-white py-1 shadow-lg">
+            <div className="absolute right-0 top-full min-w-full rounded-b-md border border-gray-300 border-t-0 bg-white shadow-lg z-50">
               <div
                 onClick={() => { setLang("de"); setLangOpen(false); }}
-                className="flex cursor-pointer items-center justify-between px-4 py-2 text-sm hover:bg-gray-100"
+                className="flex cursor-pointer items-center justify-between px-4 py-2 text-base hover:bg-gray-100"
               >
                 {translations[lang].deutsch}
-                {lang === "de" && <Check className="h-4 w-4 text-gray-700" />}
+                {lang === "de" && <Check className="h-5 w-5 text-gray-700" />}
               </div>
               <div
                 onClick={() => { setLang("en"); setLangOpen(false); }}
-                className="flex cursor-pointer items-center justify-between px-4 py-2 text-sm hover:bg-gray-100"
+                className="flex cursor-pointer items-center justify-between px-4 py-2 text-base hover:bg-gray-100"
               >
                 {translations[lang].englisch}
-                {lang === "en" && <Check className="h-4 w-4 text-gray-700" />}
+                {lang === "en" && <Check className="h-5 w-5 text-gray-700" />}
               </div>
             </div>
           )}
