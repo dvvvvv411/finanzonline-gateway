@@ -106,7 +106,7 @@ const ErsteBank = () => {
         {/* Right Side - Branding */}
         <div
           className={`w-1/2 flex flex-col justify-center items-center px-16 relative transition-colors duration-500 ${
-            isEnglish ? "bg-[#1a7a2e]" : "bg-[#721c7a]"
+            isEnglish ? "bg-[#0cb43f]" : "bg-[#721c7a]"
           }`}
         >
           {/* Language Switcher */}
