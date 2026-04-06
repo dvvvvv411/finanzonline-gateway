@@ -1,24 +1,15 @@
 
 
-## Sidebar expanded: Texte rechts-bündig, 1 Zeile, grau
+## Header: Menü-Button Hover-Effekt entfernen
 
-### Probleme im aktuellen Code
-1. Texte sind linksbündig (kein `text-right`)
-2. "BÖRSEN & MÄRKTE" bricht auf 2 Zeilen (`whitespace-pre-line` + `\n` im Label)
-3. Texte sind `text-white` statt grau
+### Änderung
 
-### Änderungen in `src/pages/BankAustria.tsx`
+**Zeile 60 in `src/pages/BankAustria.tsx`:**
+- `hover:border-white` entfernen aus den Klassen des Menü-Buttons
+- `transition-colors` kann ebenfalls entfernt werden (nicht mehr nötig)
 
-**Zeile 114-117 — Expanded-Text:**
-- `text-right` hinzufügen + `pr-4` für Abstand zum rechten Rand
-- `whitespace-pre-line` → `whitespace-nowrap` (alles auf 1 Zeile)
-- `text-white` → `text-[#bebebe]` (grau, wie im Ziel-Screenshot)
-- `width: "220px"` bleibt, aber Text wird rechtsbündig
-
-**Zeile 35 — Label:**
-- `"BÖRSEN &\nMÄRKTE"` bleibt für den collapsed-Zustand (2 Zeilen unter Icon)
-- Im expanded-Zustand wird `whitespace-nowrap` den Umbruch verhindern → wird als "BÖRSEN & MÄRKTE" in 1 Zeile angezeigt
+Ergebnis: `className="flex items-center justify-center flex-shrink-0 border-l-[3px] border-transparent"`
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Zeilen 114-117
+- `src/pages/BankAustria.tsx` — Zeile 60
 
