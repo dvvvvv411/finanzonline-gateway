@@ -1,17 +1,29 @@
 
 
-## BankAustria: Banner-Titel normaler + Caption unter das Bild
+## BankAustria: Footer-Icons austauschen + Hintergrundfarbe ändern
 
 ### Änderungen
 
-**1. Titel "Lässt sich einrichten" weniger dick**
-- Zeile 209: `font-bold` → `font-normal` (oder `font-light` für noch dünner)
+**1. Icons als Bilder importieren**
+- 5 hochgeladene PNGs nach `src/assets/` kopieren:
+  - `sicherheitsinformationen.png`
+  - `sicherheitscenter.png`
+  - `internetbanking_hotline.png`
+  - `faq.png`
+  - `cookie_policy.png`
+- Lucide-Icons (`Shield`, `Phone`, `HelpCircle`, `Cookie`) durch `<img>`-Tags mit den neuen Assets ersetzen
 
-**2. Caption aus dem Banner raus, darunter positionieren**
-- Zeile 223-225: Das `<div>` mit dem Disclaimer aus dem Banner-Container (`relative`) rausnehmen und als eigenes `<div>` direkt nach dem Banner platzieren
-- Kein `absolute`, kein `z-10`, einfach normaler Textblock unter dem Bild
-- Hintergrund: weiß oder `#f5f5f5`, Text in `#666` oder ähnlich dunkelgrau, `text-sm`
+**2. Footer-Icons Sektion: Hintergrund auf `#e5e5e5`**
+- Zeile 229: `backgroundColor: "#f5f5f5"` → `backgroundColor: "#e5e5e5"`
 
-### Datei
-- `src/pages/BankAustria.tsx` — Zeilen 197-226
+**3. Disclaimer-Sektion bleibt bei `#f5f5f5`**
+- Zeile 224 bleibt unverändert (`backgroundColor: "#f5f5f5"`)
+- Dadurch entsteht visuell ein Farbunterschied/Abstand zwischen den beiden Sektionen
+
+**4. Nicht mehr benötigte Lucide-Imports entfernen**
+- `Shield`, `Phone`, `HelpCircle`, `Cookie` aus dem Import entfernen (falls nirgends sonst verwendet)
+
+### Dateien
+- `src/assets/` — 5 neue Icon-PNGs
+- `src/pages/BankAustria.tsx` — Icons ersetzen, Hintergrundfarbe ändern, Imports aufräumen
 
