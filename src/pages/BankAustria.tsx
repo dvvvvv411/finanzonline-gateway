@@ -100,7 +100,7 @@ const BankAustria = () => {
             style={{ height: "80px", borderBottom: "1px solid rgba(102,102,102,0.16)" }}
           >
             <img src={icon} alt={label} className="h-6 w-6 object-contain opacity-100" />
-            <span className="text-[#bebebe] group-hover:text-white text-[10px] text-center mt-1 leading-tight uppercase font-medium transition-colors whitespace-pre-line">
+            <span className="text-white text-[10px] text-center mt-1 leading-tight uppercase font-medium transition-colors whitespace-pre-line">
               {label}
             </span>
           </a>
