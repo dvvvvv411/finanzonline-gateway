@@ -148,9 +148,15 @@ const Index = () => {
                 </div>
               </div>
 
-              <div className="w-full md:w-1/3">
-                <label className="mb-1.5 block text-sm font-medium text-gray-600">Postleitzahl</label>
-                <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="mb-1.5 block text-sm font-medium text-gray-600">Postleitzahl</label>
+                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-sm font-medium text-gray-600">Stadt</label>
+                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                </div>
               </div>
 
               <div>
