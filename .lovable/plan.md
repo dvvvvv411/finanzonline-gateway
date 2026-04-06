@@ -1,26 +1,17 @@
 
-
-## Sprachauswahl-Dropdown wie im Screenshot anpassen
-
-### Problem
-Aktuell ist der Trigger nur ein kleiner Textlink. Im Screenshot sieht man einen **gerahmten, breiten Button** mit großem Chevron — wie ein eigenes Select-Feld.
+## Sprachauswahl: Position & transparenter Hintergrund
 
 ### Änderungen in `src/pages/Raiffeisenbank.tsx`
 
-**Trigger-Button (Zeilen 97-103):**
-- Breiter gerahmter Button: `border border-gray-300 rounded-md px-4 py-2 min-w-[160px] justify-between`
-- Text größer: `text-base` statt `text-sm`
-- Chevron größer: `h-5 w-5` statt `h-4 w-4`
-- Hintergrund weiß: `bg-white`
+**1. Position weiter oben rechts (Zeile 96)**
+- `right-8 top-8` → `right-4 top-4` (näher an der Card-Ecke)
 
-**Dropdown-Menü (Zeilen 105-120):**
-- Breite an Trigger anpassen: `min-w-full` statt `min-w-[140px]`
-- Kein `mt-1` Gap, direkt anschließend: `mt-0 top-full`
-- Rounded nur unten: `rounded-t-none rounded-b-md`
-- Border oben entfernen: `border-t-0`
-- Items Text größer: `text-base`
-- Checkmark größer: `h-5 w-5`
+**2. Transparenter Trigger im Default-Zustand (Zeile 99)**
+- Aktuell: `border border-gray-300 bg-white rounded-md` — sieht wie eine Card/Box aus
+- Neu: `border-transparent bg-transparent` im geschlossenen Zustand, erst beim Öffnen `border border-gray-300 bg-white`
+- Konkret: conditional Klassen basierend auf `langOpen`:
+  - Geschlossen: `border border-transparent bg-transparent`
+  - Geöffnet: `border border-gray-300 bg-white rounded-t-md rounded-b-none`
 
 ### Datei
-- `src/pages/Raiffeisenbank.tsx` — Zeilen 96-121
-
+- `src/pages/Raiffeisenbank.tsx` — Zeilen 96 und 99 anpassen
