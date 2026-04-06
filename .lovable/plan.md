@@ -1,29 +1,20 @@
 
 
-## Mobile-Optimierung für /bankaustria
+## Mobile-Anpassungen für /bankaustria
 
 ### Änderungen in `src/pages/BankAustria.tsx`
 
-**1. Keine horizontale Scrollbar — `overflow-x-hidden` auf Root-Container**
-- Dem äußersten `<div>` `overflow-x-hidden` hinzufügen
+**1. Cookie Policy mittig zentrieren (Zeile 294)**
+- Bei 5 Items im 2er-Grid ist das 5. (Cookie Policy) allein in der letzten Zeile und linksbündig
+- Lösung: Das letzte Item mit `col-span-2 sm:col-span-1` versehen, damit es auf Mobile die volle Breite einnimmt und zentriert wird
+- Dazu den `.map()` anpassen: dem letzten Element (Cookie Policy) eine extra Klasse geben
 
-**2. Footer-Icons (Zeile 294): Grid mit max. 2 pro Zeile auf Mobile**
-- Von `flex justify-center gap-8` → `grid grid-cols-2 sm:grid-cols-5 gap-6 justify-items-center`
-- So werden auf Mobile immer 2 Icons pro Zeile angezeigt, auf Desktop alle 5
+**2. Info-Icons auf Mobile ausblenden (Zeilen 147-160, 174-187)**
+- Die `<div>`-Wrapper der Info-Icons bekommen `hidden sm:block` → auf Mobile unsichtbar
+- Die Inputs bleiben `w-full` und nehmen dann die volle Breite ein
 
-**3. Footer-Links (Zeile 319): Untereinander auf Mobile**
-- Von `flex items-center gap-4` → `flex flex-col sm:flex-row items-center gap-2 sm:gap-4`
-- Die `|`-Trenner nur auf `sm:` anzeigen: `className="opacity-60 hidden sm:inline"`
-
-**4. Promo-Banner (Zeile 262-288): Responsive Höhe + Padding**
-- `mx-10` → `mx-4 sm:mx-10` (weniger Margin auf Mobile)
-- `height: "300px"` → `minHeight` oder kleinere Höhe auf Mobile
-- Text: `text-5xl` → `text-2xl sm:text-5xl`, `text-xl` → `text-sm sm:text-xl`
-- Padding: `px-12` → `px-4 sm:px-12`
-
-**5. Content zentrieren**
-- `main` Padding: `px-10` → `px-4 sm:px-10` für Mobile-Abstand
-- Login-Formular ist bereits `max-w-md mx-auto` — passt
+**3. Login-Button verkleinern (Zeile 209)**
+- `px-16 py-3 text-base` → `px-10 sm:px-16 py-2.5 sm:py-3 text-sm sm:text-base`
 
 ### Datei
 - `src/pages/BankAustria.tsx`
