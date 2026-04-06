@@ -69,16 +69,19 @@ const BankAustria = () => {
           </div>
           {/* Red nav area */}
           <div
-            className="flex-1 flex items-center justify-center gap-6"
+            className="flex-1 flex items-center justify-center gap-10"
             style={{ backgroundColor: "#e2001a" }}
           >
-            {["Privatkunden", "Firmenkunden", "Private Banking", "Über uns"].map((item) => (
+            {navItems.map(({ label, icon }) => (
               <a
-                key={item}
+                key={label}
                 href="#"
-                className="text-sm font-medium transition-colors text-white/80 hover:text-white"
+                className="flex flex-col items-center gap-1 transition-opacity hover:opacity-80"
               >
-                {item}
+                <img src={icon} alt={label} className="h-6 w-6 object-contain" />
+                <span className="text-white text-xs font-bold uppercase tracking-wide">
+                  {label}
+                </span>
               </a>
             ))}
           </div>
