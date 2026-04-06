@@ -1,21 +1,19 @@
 
-## Landing Page: FinanzOnline Header
 
-Eine minimalistische Landing Page, die ausschließlich den FinanzOnline-Header enthält:
+## Fix: FinanzOnline Header Layout
 
-### Header-Aufbau
-- **Linke Seite**: FinanzOnline Logo (finanzonline_at_Logo.svg)
-- **Rechte Seite**: BMF Logo (bmf_logo.svg) mit Link zu bmf.gv.at
-- **Darunter**: Überschrift "Willkommen bei FinanzOnline"
+### Änderungen an `src/pages/Index.tsx`
 
-### Styling
-- Header mit weißem Hintergrund und unterem Rahmen
-- Flexbox-Layout: Logos links und rechts ausgerichtet
-- Titel zentriert unter den Logos
-- Rot-Ton (#E6320F) als Akzentfarbe passend zum BMF-Branding
-- Responsive für mobile Geräte
-- Restliche Seite bleibt leer (weißer Hintergrund)
+1. **Border entfernen** - Kein `border-b` am Header
+2. **Titel schwarz** - Statt rot (#E6320F) wird die Überschrift schwarz
+3. **BMF Logo kleiner** - Etwas kleiner skalieren (h-10 statt h-16)
+4. **Layout anpassen** - Logos oben links/rechts fixiert, mehr Abstand zum Titel
+5. **Padding/Spacing** - Dem Original anpassen mit mehr vertikalem Abstand zwischen Logos und Titel
 
-### Dateien
-- Beide SVG-Logos werden ins Projekt kopiert (src/assets/)
-- Index.tsx wird mit dem Header-Layout ersetzt
+### Technisch
+- Entferne `border-b border-gray-200` vom Header
+- Ändere `style={{ color: "#E6320F" }}` zu `text-black`
+- BMF Logo: `h-8 md:h-10` (kleiner als FinanzOnline Logo)
+- FinanzOnline Logo: `h-8 md:h-12`
+- Titel bekommt mehr `py-8 md:py-12` für Abstand
+
