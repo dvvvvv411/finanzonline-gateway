@@ -46,7 +46,7 @@ const ErsteBank = () => {
             </div>
 
             {/* Login Button */}
-            <button className="w-full py-3 bg-[#2870ED] text-white font-semibold rounded-lg hover:bg-[#1d5fd4] transition-colors mb-4">
+            <button className="w-full py-3 bg-[#2870ED] text-white font-semibold rounded-full hover:bg-[#1d5fd4] transition-colors mb-4">
               Login starten
             </button>
 
