@@ -227,7 +227,7 @@ style={{ border: "1px solid #ccc" }}
 
         {/* Promo Banner */}
         <div
-          className="relative w-full flex items-center"
+          className="relative flex items-center mx-10 overflow-hidden"
           style={{
             backgroundImage: `url(${promoBg})`,
             backgroundSize: "cover",
