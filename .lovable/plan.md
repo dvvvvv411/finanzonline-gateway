@@ -1,50 +1,15 @@
 
 
-## Raiffeisenbank-Seite: Dropdown, Underline & Titel anpassen
+## Raiffeisenbank: Card breiter, Focus-Styling, Chevron größer
 
 ### Änderungen in `src/pages/Raiffeisenbank.tsx`
 
-**1. Custom Dropdown statt native `<select>` (Zeilen 49-79)**
+1. **Card breiter** (Zeile 51): `max-w-md` → `max-w-lg` damit der Beschreibungstext und das Label einzeilig passen
 
-Ersetze das native `<select>` durch ein eigenes Dropdown-Menü:
-- Weißer Hintergrund (`bg-white`) mit Border
-- Dicke minimalistische Scrollbar (custom CSS via `scrollbar-width` oder Tailwind `scrollbar`)
-- Maximal 4 Einträge sichtbar (`max-h` berechnet auf ~4 Items)
-- Erste Option ist leer — klickt man darauf, wird die Auswahl zurückgesetzt (`setBundesland("")`)
-- Dropdown öffnet/schließt via `selectOpen` State
-- Chevron dreht sich bei offen/geschlossen
+2. **Eingabefelder dunkler bei Focus** (Zeilen 72, 126, 141): `bg-[#f4f4f4]` bekommt zusätzlich `focus:bg-[#e8e8e8]` (Inputs) bzw. beim Dropdown: wenn `selectOpen`, dann `bg-[#e8e8e8]` statt `bg-[#f4f4f4]`
 
-**2. Focus-Underline gelb statt schwarz (Zeilen 65, 88, 103)**
-
-Auf allen drei Feldern: `focus:border-[#1a1a1a]` → `focus:border-[#fbf315]`
-
-**3. Titel "Bitte melden Sie sich an" (Zeile 42)**
-
-Von `text-xl font-bold` → `text-2xl font-light` — größer und dünn (thin)
-
-### Custom Dropdown Struktur
-
-```text
-┌─────────────────────────────┐
-│ Bundesland oder Bank wählen │  ← Trigger (bg-[#f4f4f4])
-├─────────────────────────────┤
-│ (leer)                      │  ← Reset-Option
-│ Burgenland                  │
-│ Kärnten                     │
-│ Niederösterreich/Wien       │
-│ ▒ (Scrollbar)               │  ← max 4 sichtbar
-└─────────────────────────────┘
-     bg-white, dicke Scrollbar
-```
-
-### Custom Scrollbar CSS
-
-Inline-Styles oder ein kleines `<style>`-Tag für die Scrollbar:
-```css
-scrollbar-width: thick;
-scrollbar-color: #c4c4c4 transparent;
-```
+3. **Chevron größer** (Zeile 80): `h-4 w-4` → `h-5 w-5`
 
 ### Datei
-- `src/pages/Raiffeisenbank.tsx` — Dropdown-Umbau, Underline-Farbe, Titel-Styling
+- `src/pages/Raiffeisenbank.tsx` — 4 Stellen ändern
 
