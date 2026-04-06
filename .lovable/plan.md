@@ -1,32 +1,27 @@
 
 
-## Fix: Language Selector zeigt falsches Sprite-Segment
+## Fix: Inaktive Flags grau machen per CSS Filter
 
 ### Problem
-Der `flex items-start` auf dem Container verhindert, dass `objectPosition: "bottom"` korrekt funktioniert — das Bild wird immer am oberen Rand ausgerichtet, weshalb English auch das farbige Bild zeigt.
+Die Sprite-Logik (obere/untere Hälfte) funktioniert nicht zuverlässig. 
 
-### Fix in `src/pages/BankAustria.tsx` (Zeile 162)
+### Lösung
+Statt auf die untere Sprite-Hälfte zu wechseln, einfach immer die obere (farbige) Hälfte zeigen und bei inaktiven Flags einen CSS `grayscale(100%)` Filter anwenden.
 
-- Container: `flex items-start` entfernen, stattdessen `relative` verwenden
-- Bild: `absolute inset-0` mit `w-full h-[200%]` und `object-cover` — `objectPosition` steuert dann korrekt ob obere (aktiv) oder untere Hälfte (inaktiv) gezeigt wird
+### Änderung in `src/pages/BankAustria.tsx` (Zeile 173-177)
+
+- `objectPosition` immer auf `"top"` lassen
+- Neues Style-Property: `filter: isActive ? "none" : "grayscale(100%)"`
 
 ```tsx
-<div
-  className="rounded-full overflow-hidden relative"
-  style={{ width: 56, height: 56, border: ... }}
->
-  <img
-    src={flag}
-    className="absolute top-0 left-0 w-full"
-    style={{
-      height: "200%",
-      objectFit: "cover",
-      objectPosition: isActive ? "top" : "bottom",
-    }}
-  />
-</div>
+style={{
+  height: "200%",
+  objectFit: "cover",
+  objectPosition: "top",
+  filter: isActive ? "none" : "grayscale(100%)",
+}}
 ```
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Container-Layout von flex auf relative/absolute ändern
+- `src/pages/BankAustria.tsx` — 2 Zeilen ändern
 
