@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Lock } from "lucide-react";
+import { User, Lock, Menu, X } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import georgeBlueLogo from "@/assets/george-logo-bright-blue.svg";
 import georgeWhiteLogo from "@/assets/george-logo-white.svg";
@@ -46,6 +46,7 @@ const ErsteBank = () => {
   const [username, setUsername] = useState("");
   const [pin, setPin] = useState("");
   const [lang, setLang] = useState<"de" | "en">("de");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const t = translations[lang];
   const isEnglish = lang === "en";
@@ -54,7 +55,15 @@ const ErsteBank = () => {
     <div className="flex h-screen flex-col">
       <div className="flex flex-1 min-h-0">
         {/* Left Side - Login */}
-        <div className="w-1/2 bg-white flex flex-col justify-center items-center px-8 relative">
+        <div className="w-full md:w-1/2 bg-white flex flex-col justify-center items-center px-8 relative">
+          {/* Hamburger Menu - Mobile only */}
+          <button
+            onClick={() => setMenuOpen(true)}
+            className="absolute top-6 left-6 md:hidden"
+          >
+            <Menu className="h-7 w-7 text-[#2870ED]" />
+          </button>
+
           {/* Language Switcher */}
           <TooltipProvider>
             <Tooltip>
@@ -112,9 +121,9 @@ const ErsteBank = () => {
           </div>
         </div>
 
-        {/* Right Side - Branding */}
+        {/* Right Side - Branding (hidden on mobile) */}
         <div
-          className={`w-1/2 flex flex-col justify-center items-center px-16 relative transition-colors duration-500 ${
+          className={`hidden md:flex w-1/2 flex-col justify-center items-center px-16 relative transition-colors duration-500 ${
             isEnglish ? "bg-[#0cb43f]" : "bg-[#721c7a]"
           }`}
         >
@@ -128,9 +137,9 @@ const ErsteBank = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-[#2870ED] px-6 py-3 flex items-center justify-between">
+      <footer className="bg-[#2870ED] px-6 py-3 flex items-center justify-between md:justify-between justify-center">
         <img src={sparkasseLogo} alt="Erste Sparkasse" className="h-6" />
-        <div className="flex gap-6">
+        <div className="hidden md:flex gap-6">
           {t.footer.map((item) => (
             <a
               key={item.label}
@@ -144,6 +153,34 @@ const ErsteBank = () => {
           ))}
         </div>
       </footer>
+
+      {/* Mobile Sidebar Overlay */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-50 bg-[#2870ED] flex flex-col md:hidden">
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="absolute top-6 left-6"
+          >
+            <X className="h-7 w-7 text-white" />
+          </button>
+          <div className="flex flex-col space-y-6 p-8 pt-20">
+            {t.footer.map((item) => (
+              <a
+                key={item.label}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white text-lg hover:underline"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+          <div className="mt-auto pb-8 flex justify-center">
+            <img src={sparkasseLogo} alt="Erste Sparkasse" className="h-8" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
