@@ -290,16 +290,16 @@ const Index = () => {
                 rel="noopener noreferrer"
                 className="group overflow-hidden rounded-lg"
               >
-                <div className="aspect-[4/3] w-full overflow-hidden rounded-lg">
+                <div className="aspect-[16/10] w-full overflow-hidden rounded-lg">
                   <img
                     src={item.img}
                     alt={item.title}
-                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                    className="h-full w-full object-cover"
                   />
                 </div>
                 <div className="p-4">
-                  <h3 className="mb-1 text-sm font-bold text-gray-900">{item.title}</h3>
-                  <p className="text-xs leading-relaxed text-gray-600">{item.text}</p>
+                  <h3 className="mb-1 text-sm font-bold text-gray-900 group-hover:underline">{item.title}</h3>
+                  <p className="text-xs leading-relaxed text-gray-600 group-hover:underline">{item.text}</p>
                 </div>
               </a>
             ))}
