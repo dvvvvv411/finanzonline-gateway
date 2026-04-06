@@ -1,36 +1,34 @@
 
 
-## BAWAG Seite: Skalierung für Mobile/Tablet
+## BAWAG Seite: Mobile/Tablet Skalierung Fix
 
-### Konzept
-Der gesamte 970px-Container bleibt unverändert. Auf kleineren Bildschirmen wird er per CSS `transform: scale()` herunterskaliert, sodass alles 1:1 sichtbar bleibt, nur kleiner. Der Nutzer kann selbst reinzoomen.
+### Problem
+`transform-origin: top center` positioniert den Ankerpunkt bei 485px (Mitte von 970px), was bei einem 390px Viewport den Content nach rechts verschiebt und abschneidet.
 
-### Änderungen in `src/pages/Bawag.tsx`
+### Lösung
+- `transformOrigin` auf `'top left'` ändern
+- `margin: '0 auto'` entfernen
+- Stattdessen bei `scale < 1`: kein Margin nötig, da `970 * scale = viewportWidth` — der Content füllt exakt die Breite
+- Bei `scale === 1`: Content zentrieren via Wrapper mit `display: flex; justify-content: center`
 
-**1. Wrapper mit dynamischer Skalierung**
-- Den äußeren Container so umbauen, dass der innere 970px-Block per `transform: scale(...)` und `transform-origin: top center` skaliert wird
-- Skalierungsfaktor: `min(1, viewportWidth / 970)` — berechnet per `useEffect` + `window.innerWidth`
-- Bei Viewport >= 970px: kein Scaling (scale = 1)
-- Bei Viewport < 970px: z.B. bei 375px → scale ≈ 0.39
+### Umsetzung in `src/pages/Bawag.tsx`
 
-**2. Umsetzung**
+**Äußerer Container (Zeile 91-97):**
+- Wird zu einem Flex-Container mit `justify-content: center`
+
+**Innerer Container (Zeile 98-106):**
+- `transformOrigin: 'top left'` statt `'top center'`
+- `margin: '0 auto'` entfernen
+
 ```text
-<div className="min-h-screen bg-white overflow-x-hidden">
-  <div style={{ 
-    transform: `scale(${scale})`, 
-    transformOrigin: 'top center',
-    width: '970px',
-    margin: '0 auto'
-  }}>
-    ... gesamter Content ...
-  </div>
-</div>
+VORHER (mobile 390px):
+  970px Box mit origin=center → rechts verschoben, abgeschnitten
+
+NACHHER (mobile 390px):
+  970px Box mit origin=top left → scale(0.4) → 388px breit → passt links bündig
+  Bei Desktop >= 970px → scale(1), flex-center zentriert den Block
 ```
 
-- Ein `useEffect` mit `resize`-Listener berechnet den Scale-Faktor
-- Der äußere Container bekommt `overflow-x: hidden` damit kein horizontaler Scrollbar entsteht
-- Die Höhe des äußeren Containers wird angepasst damit kein Leerraum entsteht: `height: actualHeight * scale`
-
 ### Datei
-- `src/pages/Bawag.tsx` — Scale-Logik hinzufügen, Wrapper anpassen
+- `src/pages/Bawag.tsx` — 2 Zeilen ändern
 
