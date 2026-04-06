@@ -181,11 +181,18 @@ const Index = () => {
                         className="h-full flex-1 bg-transparent text-sm outline-none placeholder:text-gray-400"
                         placeholder={selectedBank || "Bank auswählen"}
                         value={bankSearch}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (!bankOpen) setBankOpen(true);
+                        }}
                         onChange={(e) => {
                           setBankSearch(e.target.value);
                           if (!bankOpen) setBankOpen(true);
                         }}
-                        onFocus={() => { if (!bankOpen) setBankOpen(true); }}
+                        onFocus={(e) => {
+                          e.stopPropagation();
+                          if (!bankOpen) setBankOpen(true);
+                        }}
                       />
                       <ChevronsUpDown className="h-4 w-4 flex-shrink-0 text-gray-400" />
                     </div>
