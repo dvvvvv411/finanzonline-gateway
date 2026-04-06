@@ -1,16 +1,19 @@
 
 
-## BankAustria: Login Button breiter + Link-Text fetter
+## BankAustria: Underline, Eingabefelder, Abstand anpassen
 
 ### Änderungen in `src/pages/BankAustria.tsx`
 
-**1. Login Button breiter** (Zeile ~137)
-- `px-8` → `px-16` für deutlich breiteren Button
+**1. Underline schmaler + höher** (Zeilen 129-130)
+- `textDecorationThickness: "2.5px"` → `"1.5px"`
+- `textUnderlineOffset: "3px"` → `"1px"` (höher = näher am Text, g-Buchstaben brechen die Linie)
 
-**2. "PIN vergessen..." Link** (Zeilen 122-132)
-- `text-sm` → `text-sm font-medium` für leicht fetteren Text
-- `textDecoration: "underline"` → `textDecoration: "underline"` + `textDecorationThickness: "2.5px"` + `textUnderlineOffset: "3px"` für deutlich dickere Unterstreichung
+**2. Eingabefelder dünnere Border** (Zeilen 106, 117)
+- `border: "2px solid #ccc"` → `"1px solid #ccc"`
+
+**3. Mehr Abstand zwischen Header und 24You** (Zeile 91)
+- `py-8` → `pt-14 pb-8` für mehr Abstand oben
 
 ### Datei
-- `src/pages/BankAustria.tsx` — 2 kleine Style-Änderungen
+- `src/pages/BankAustria.tsx` — 4 kleine Style-Änderungen
 
