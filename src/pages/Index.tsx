@@ -288,7 +288,7 @@ const Index = () => {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                className="group overflow-hidden rounded-lg"
               >
                 <div className="aspect-[16/10] w-full overflow-hidden">
                   <img
