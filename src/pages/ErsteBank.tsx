@@ -16,7 +16,7 @@ const ErsteBank = () => {
         <div className="w-1/2 bg-white flex flex-col justify-center items-center px-8">
           <div className="w-full max-w-[320px]">
             <img src={georgeBlueLogo} alt="George Logo" className="h-20 mb-8 mx-auto block" />
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">George Login</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">George Login</h1>
             <p className="text-sm text-gray-600 mb-8">
               Bitte geben Sie Ihre Verfügernummer oder Ihren selbst gewählten Benutzernamen ein.
             </p>
