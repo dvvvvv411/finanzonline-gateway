@@ -62,7 +62,7 @@ const Raiffeisenbank = () => {
             onChange={(e) => setBundesland(e.target.value)}
             onFocus={() => setSelectFocused(true)}
             onBlur={() => setSelectFocused(false)}
-            className="w-full appearance-none border-b-2 border-gray-300 bg-transparent pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#1a1a1a]"
+            className="w-full appearance-none border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#1a1a1a]"
           >
             <option value="" disabled hidden></option>
             {bundeslaender.map((bl) => (
