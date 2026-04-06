@@ -136,7 +136,7 @@ const BankAustria = () => {
 
             <div className="flex justify-center mb-6">
               <button
-                className="px-8 py-3 text-white font-semibold text-base rounded-sm hover:opacity-90 transition-opacity"
+                className="px-16 py-3 text-white font-semibold text-base rounded-sm hover:opacity-90 transition-opacity"
                 style={{ backgroundColor: "#00aed0" }}
               >
                 LOGIN
