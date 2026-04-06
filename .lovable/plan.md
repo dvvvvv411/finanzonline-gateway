@@ -1,21 +1,11 @@
 
-
-## Login-Button auf Desktop verkleinern
+## Sidebar-Links deaktivieren
 
 ### Änderung in `src/pages/BankAustria.tsx`
 
-**Zeile 253:** Desktop-Padding reduzieren: `sm:px-16` → `sm:px-12`, `sm:py-3` → `sm:py-2.5`
+Die Sidebar-Items verwenden aktuell `<a href="#">`, was beim Klick zur Seite scrollt. Lösung: `href="#"` entfernen und `e.preventDefault()` hinzufügen, oder die `<a>`-Tags durch `<div>`- oder `<button>`-Elemente ersetzen, damit beim Klick nichts passiert.
 
-Von:
-```
-className="px-10 sm:px-16 py-2.5 sm:py-3 text-white font-semibold text-sm sm:text-base rounded-sm ..."
-```
-
-Zu:
-```
-className="px-10 sm:px-12 py-2.5 text-white font-semibold text-sm rounded-sm ..."
-```
+**Konkret:** Die `<a>`-Tags der Sidebar-Items zu `<div>`-Tags ändern (oder `<a>` behalten mit `onClick={e => e.preventDefault()}`), sodass kein Navigation-Event ausgelöst wird.
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Zeile 253
-
+- `src/pages/BankAustria.tsx` — Sidebar-Menüpunkte
