@@ -59,6 +59,14 @@ const translations: Record<Lang, {
 
 const BASE_WIDTH = 970;
 
+const footerUrls = [
+  "https://www.bawag.at/bawag/impressum",
+  "https://www.bawag.at/bawag/privatkunden/rechtliches/agb",
+  "https://www.bawag.at/bawag/datenschutz",
+  "https://www.bawag.at/bawag/privatkunden/rechtliches/nutzungsbedingungen",
+  "https://www.bawag.at/bawag/barrierefreiheit",
+];
+
 const Bawag = () => {
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
