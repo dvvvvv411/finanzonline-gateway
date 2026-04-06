@@ -65,7 +65,7 @@ const BankAustria = () => {
             className="flex items-center px-4 flex-shrink-0"
             style={{ backgroundColor: "#fff", width: "200px", borderBottom: "1px solid #ddd" }}
           >
-            <img src={logo} alt="Bank Austria" style={{ height: "50px" }} />
+            <img src={logo} alt="Bank Austria" style={{ height: "70px" }} />
           </div>
           {/* Red nav area */}
           <div
