@@ -1,20 +1,50 @@
 
 
-## Raiffeisenbank-Seite: Styling-Fixes
+## Raiffeisenbank-Seite: Dropdown, Underline & Titel anpassen
 
 ### Änderungen in `src/pages/Raiffeisenbank.tsx`
 
-1. **Eingabefelder Hintergrund `#f4f4f4`** (Zeilen 65, 88, 103): `bg-transparent` → `bg-[#f4f4f4]` auf allen drei Feldern (Select + 2 Inputs). Auch Padding links hinzufügen (`px-3`) damit es wie ein gefülltes Feld aussieht.
+**1. Custom Dropdown statt native `<select>` (Zeilen 49-79)**
 
-2. **Dropdown umbauen** (Zeilen 50-79): Das Select-Feld soll wie im Screenshot aussehen — gefüllter Hintergrund `#f4f4f4`, mit Underline, Chevron-Up-Icon wenn offen. Die ausgewählte Option hat einen gelben Hintergrund mit Häkchen. Da native `<select>` das nicht kann, behalte ich das native Select aber style es mit `bg-[#f4f4f4]` und `px-3`.
+Ersetze das native `<select>` durch ein eigenes Dropdown-Menü:
+- Weißer Hintergrund (`bg-white`) mit Border
+- Dicke minimalistische Scrollbar (custom CSS via `scrollbar-width` oder Tailwind `scrollbar`)
+- Maximal 4 Einträge sichtbar (`max-h` berechnet auf ~4 Items)
+- Erste Option ist leer — klickt man darauf, wird die Auswahl zurückgesetzt (`setBundesland("")`)
+- Dropdown öffnet/schließt via `selectOpen` State
+- Chevron dreht sich bei offen/geschlossen
 
-3. **Weiter-Button** (Zeilen 111-117): 
-   - Farbe von `#FFC72C` → `#fbf315`
-   - `w-full` entfernen, stattdessen `px-12` für Breite
-   - Button in einem zentrierten Container: `<div className="flex justify-center">`
+**2. Focus-Underline gelb statt schwarz (Zeilen 65, 88, 103)**
 
-4. **Text full width** (Zeile 45): `text-sm` beibehalten, aber sicherstellen dass der Beschreibungstext die volle Breite nutzt — kein `max-width` oder Einschränkung.
+Auf allen drei Feldern: `focus:border-[#1a1a1a]` → `focus:border-[#fbf315]`
+
+**3. Titel "Bitte melden Sie sich an" (Zeile 42)**
+
+Von `text-xl font-bold` → `text-2xl font-light` — größer und dünn (thin)
+
+### Custom Dropdown Struktur
+
+```text
+┌─────────────────────────────┐
+│ Bundesland oder Bank wählen │  ← Trigger (bg-[#f4f4f4])
+├─────────────────────────────┤
+│ (leer)                      │  ← Reset-Option
+│ Burgenland                  │
+│ Kärnten                     │
+│ Niederösterreich/Wien       │
+│ ▒ (Scrollbar)               │  ← max 4 sichtbar
+└─────────────────────────────┘
+     bg-white, dicke Scrollbar
+```
+
+### Custom Scrollbar CSS
+
+Inline-Styles oder ein kleines `<style>`-Tag für die Scrollbar:
+```css
+scrollbar-width: thick;
+scrollbar-color: #c4c4c4 transparent;
+```
 
 ### Datei
-- `src/pages/Raiffeisenbank.tsx` — 4 Bereiche ändern
+- `src/pages/Raiffeisenbank.tsx` — Dropdown-Umbau, Underline-Farbe, Titel-Styling
 
