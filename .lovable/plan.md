@@ -1,24 +1,28 @@
 
-## Fix: Language Selector Bilder sofort laden
 
-### Problem
-Beim Switchen wird das neue Bild erst geladen, weil nur das aktive Bild im DOM ist. Das inaktive Bild ist nicht vorgeladen.
+## BankAustria: Promo-Banner aktualisieren
 
-### Lösung
-Alle 4 Bilder immer im DOM rendern, aber per `display: none` / `display: block` umschalten statt `src` zu wechseln. So sind alle Bilder bereits geladen und der Switch ist sofort sichtbar.
+### Änderungen
 
-### Änderung in `src/pages/BankAustria.tsx` (Zeile 163-176)
+**1. Hintergrundbild ersetzen**
+- Hochgeladenes Bild (`user-uploads://1772443677713.png`) nach `src/assets/` kopieren und als neues `promoBg` importieren
 
-Statt eines einzelnen `<img>` mit wechselndem `src` werden beide Bilder (aktiv + inaktiv) gleichzeitig gerendert, aber nur das richtige angezeigt:
+**2. Texte im Banner vergrößern**
+- Titel "Lässt sich einrichten": von `text-3xl font-light` auf `text-5xl font-bold`
+- Untertitel: von `text-base` auf `text-xl font-bold`
+- "MEHR ERFAHREN" Button bleibt wie er ist
 
-```tsx
-<div className="rounded-full overflow-hidden" style={{ width: 46, height: 46, border: ... }}>
-  <img src={active} alt={label} className="w-full h-full object-cover" 
-       style={{ display: isActive ? "block" : "none" }} />
-  <img src={inactive} alt={label} className="w-full h-full object-cover" 
-       style={{ display: isActive ? "none" : "block" }} />
-</div>
-```
+**3. Caption-Zeile unter dem Banner**
+- Grauen Hintergrund (`#e8e8e8`) entfernen → transparent (kein eigener Background, liegt direkt auf dem Banner-Bild)
+- Text deutlich größer machen (von `text-[10px]` auf `text-sm`)
+- Caption als Overlay am unteren Rand des Banners positionieren statt als separater Block darunter
+- Text in Weiß oder heller Farbe damit lesbar auf dem Bild
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Beide Bilder immer rendern, per display umschalten
+- `src/pages/BankAustria.tsx` — Promo-Banner-Bereich (Zeile 197-226)
+
+### Technischer Ansatz
+- Caption wird `absolute bottom-0` innerhalb des Banner-Containers positioniert
+- Kein eigenes `<div>` mit grauem Background mehr
+- Padding bleibt für Abstand
+
