@@ -1,46 +1,37 @@
 
 
-## BAWAG Seite: Hintergrundbild als Basis, Elemente darüber
+## BAWAG Seite: Festes 970x490px Layout mit allem zentriert
 
-### Problem
-Aktuell sind Login-Card, Info-Card und Hintergrundbild nebeneinander/untereinander angeordnet. Auf der echten BAWAG-Seite ist das Hintergrundbild **fullwidth als Hintergrund** und die Cards schweben **darüber** (Z-Ebene).
+### Konzept
+Alles wird in einen **festen 970px breiten Container** zentriert. Das Hintergrundbild hat exakt **970x490px**. Header (Logo, Datum, Sprachen), Login-Card, Info-Card und Footer sind alle innerhalb dieses 970px-Containers. Bewusst veraltet/old-school.
 
-### Neues Layout
+### Layout
 
 ```text
-┌──────────────────────────────────────────────────┐
-│ Header (weiß, Logo, Datum, Sprachen)             │
-├──────────────────────────────────────────────────┤
-│ ┌──────────────────────────────────────────────┐ │
-│ │         BACKGROUND IMAGE (100% width)        │ │
-│ │                                              │ │
-│ │   ┌──────────┐  ┌────────────────────────┐   │ │
-│ │   │ Login    │  │ Sicherheit│Service│Sup │   │ │
-│ │   │ Card     │  └────────────────────────┘   │ │
-│ │   │          │                               │ │
-│ │   └──────────┘                               │ │
-│ │                                              │ │
-│ └──────────────────────────────────────────────┘ │
-├──────────────────────────────────────────────────┤
-│ Footer                                           │
-└──────────────────────────────────────────────────┘
+          ┌─────────── 970px ───────────┐
+          │ Logo   Datum    DE EN BKS TR │  ← Header über dem Bild
+          ├─────────────────────────────┤
+          │ ┌─ Background 970×490 ────┐ │
+          │ │                         │ │
+          │ │ ┌Login─┐ ┌Info────────┐ │ │
+          │ │ │      │ │Sich│Serv│Su│ │ │
+          │ │ │      │ └───────────┘ │ │
+          │ │ │      │               │ │
+          │ │ └──────┘               │ │
+          │ └─────────────────────────┘ │
+          │ Impressum AGB Daten... ©    │  ← Footer direkt unter dem Bild
+          └─────────────────────────────┘
 ```
 
 ### Änderungen in `src/pages/Bawag.tsx`
 
-**Main-Bereich komplett umbauen:**
-
-1. **`<main>` wird ein relativer Container** mit dem Hintergrundbild als `background-image` (CSS `background-size: cover`, `background-position: center`)
-2. **Login-Card und Info-Card** liegen als normale Elemente innerhalb dieses Containers, mit Padding/Margin damit sie über dem Bild positioniert sind
-3. **Das separate `<img>` für das Hintergrundbild entfernen** — es wird stattdessen als CSS-Background des Main-Containers verwendet
-4. **Info-Card** sitzt rechts oben neben der Login-Card (wie bisher mit flex), aber alles innerhalb des Bild-Containers
-5. Main bekommt `min-height` damit genug vom Bild sichtbar ist
-
-**Konkret:**
-- `<main>` bekommt: `style={{ backgroundImage: url(${bawagBg}), backgroundSize: 'cover', backgroundPosition: 'center top' }}` + `relative` + `min-h-[600px]`
-- Die flex-Row mit Login-Card und rechter Spalte bleibt, aber ohne das separate Bild-Banner am Ende
-- Info-Card bleibt in der rechten Spalte, aber ohne das `<img>` darunter
+1. **Äußerer Container**: `min-h-screen`, `bg-[#f0f0f0]`, `flex flex-col items-center` — alles zentriert
+2. **Innerer Container**: feste Breite `w-[970px]`, darin alles
+3. **Header**: Innerhalb des 970px-Containers, weiß, mit Logo links, Datum Mitte, Sprachen rechts — kein fullwidth mehr
+4. **Bild-Container**: `relative`, `w-[970px]`, `h-[490px]`, Hintergrundbild als `background-image` mit `background-size: cover`
+5. **Login-Card + Info-Card**: Absolut positioniert innerhalb des Bild-Containers mit `absolute`, z.B. Login links oben (`top-6 left-6`), Info rechts oben (`top-6 left-[340px]` oder `right-6`)
+6. **Footer**: Innerhalb des 970px-Containers, direkt unter dem Bild, weiß, Links + Copyright
 
 ### Datei
-- `src/pages/Bawag.tsx` — Main-Bereich umstrukturieren
+- `src/pages/Bawag.tsx` — komplett umbauen auf festes 970px-Layout
 
