@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { ExternalLink } from "lucide-react";
 import bgImage from "@/assets/rbg_wald.jpg";
 
 const bundeslaender = [
