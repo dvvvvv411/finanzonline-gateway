@@ -308,9 +308,9 @@ const Index = () => {
       </div>
 
       {/* Informationen / Services / Technische Unterstützung */}
-      <div className="mt-10 bg-[#f1f4f7] py-10">
+      <div className="mt-10 bg-white py-10">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-3 md:text-left">
             <div>
               <h3 className="mb-4 text-base font-bold text-gray-900">Informationen</h3>
               <ul className="space-y-2">
@@ -331,7 +331,7 @@ const Index = () => {
               <h3 className="mb-4 text-base font-bold text-gray-900">Technische Unterstützung</h3>
               <p className="text-sm leading-relaxed text-gray-800">
                 Fragen Sie Fred, den Chatbot der Finanzverwaltung. Weitere Kontaktmöglichkeiten finden Sie unter{" "}
-                <a href="https://www.bmf.gv.at/services/aemter-behoerden/faoe.html" target="_blank" rel="noopener noreferrer" className="text-[#005a8b] hover:underline">
+                <a href="https://www.bmf.gv.at/services/aemter-behoerden/faoe.html" target="_blank" rel="noopener noreferrer" className="text-[#005a8b] underline">
                   Kundenservice.
                 </a>
               </p>
