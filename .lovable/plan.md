@@ -1,14 +1,21 @@
 
 
-## Header: MENÜ-Text entfernen + Icon größer und weißer
+## Sidebar: Farbe, Textgröße und Zeilenumbruch anpassen
 
 ### Änderungen
 
-**Zeile 52-61:** MENÜ-Button vereinfachen
-- `<span>` mit "MENÜ" Text komplett entfernen
-- Menu-Icon: `size={22}` → `size={32}`, Farbe von `text-[#bebebe]` → `text-white`
-- Container bleibt `flex items-center justify-center`, ohne `flex-col` (nicht mehr nötig da nur 1 Element)
+**1. Sidebar Hintergrundfarbe ändern**
+- Zeile 89: `backgroundColor: "#1a1a1a"` → `backgroundColor: "#333333"`
+
+**2. Texte in der Sidebar größer**
+- Zeile 99: `text-[9px]` → `text-[10px]` oder `text-[11px]`
+
+**3. "BÖRSEN & MÄRKTE" auf 2 Zeilen**
+- Zeile 35: Label ändern von `"BÖRSEN & MÄRKTE"` → `"BÖRSEN &\nMÄRKTE"`
+- Zeile 100: `{label}` → `{label.split('\n').map(...)}` mit `<br />` dazwischen, oder alternativ das Label direkt mit `dangerouslySetInnerHTML` oder zwei `<span>`-Blöcken rendern
+
+**4. Hover bleibt wie bisher** — keine Änderung nötig (bg bleibt default, Icon/Text werden weiß)
 
 ### Datei
-- `src/pages/BankAustria.tsx` — Zeile 52-61
+- `src/pages/BankAustria.tsx` — Zeilen 35, 89, 99-100
 
