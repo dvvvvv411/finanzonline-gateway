@@ -159,7 +159,7 @@ style={{ border: "1px solid #ccc" }}
                     className="flex flex-col items-center gap-1 bg-transparent border-none cursor-pointer"
                   >
                     <div
-                      className="rounded-full overflow-hidden flex items-start"
+                      className="rounded-full overflow-hidden relative"
                       style={{
                         width: 56,
                         height: 56,
@@ -169,8 +169,8 @@ style={{ border: "1px solid #ccc" }}
                       <img
                         src={flag}
                         alt={label}
+                        className="absolute top-0 left-0 w-full"
                         style={{
-                          width: "100%",
                           height: "200%",
                           objectFit: "cover",
                           objectPosition: isActive ? "top" : "bottom",
