@@ -1,15 +1,19 @@
 
-## Zwei Anpassungen in BankAustria.tsx
+## Footer-Icons näher zusammenrücken
 
-### 1. Hintergrundfarbe der Disclaimer-Sektion
-Die Sektion mit dem `*Exklusiv...`-Text hat aktuell `backgroundColor: "#f5f5f5"` (hellgrau). Ändern zu `#fff` (weiß), passend zu den Sektionen darüber.
+### Änderung in `src/pages/BankAustria.tsx`
 
-**Zeile ~289:** `backgroundColor: "#f5f5f5"` → `backgroundColor: "#fff"`
+**Zeile 301:** `gap-6` → `gap-2` (oder `gap-3` für minimal mehr Luft)
 
-### 2. Logo im Header größer
-Das Logo hat aktuell `height: "76px"`. Vergrößern auf ~90px.
+Von:
+```
+className="grid grid-cols-2 sm:grid-cols-5 gap-6 justify-items-center py-8 px-4 sm:px-0"
+```
 
-**Zeile ~75:** `height: "76px"` → `height: "90px"`
+Zu:
+```
+className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3 justify-items-center py-8 px-4 sm:px-0"
+```
 
 ### Datei
-- `src/pages/BankAustria.tsx`
+- `src/pages/BankAustria.tsx` — Zeile 301
