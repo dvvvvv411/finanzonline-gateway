@@ -49,7 +49,7 @@ const BankAustria = () => {
 
   return (
     <div
-      className="min-h-screen flex"
+      className="min-h-screen flex overflow-x-hidden"
       style={{ fontFamily: "'UniCredit', sans-serif" }}
     >
       {/* Fixed Sidebar 80px */}
