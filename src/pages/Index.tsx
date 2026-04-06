@@ -88,9 +88,9 @@ const Index = () => {
         </div>
 
         {/* Persönliche Informationen Box */}
-        <div className="mt-6 overflow-hidden rounded-lg border border-[#ddd] shadow-sm" role="region" aria-labelledby="region-personal">
+        <div className="mt-6 overflow-hidden rounded-lg border border-[#ddd] bg-[#f1f4f7] shadow-sm" role="region" aria-labelledby="region-personal">
           <div className="px-6 pt-6">
-            <h2 id="region-personal" className="text-lg font-semibold text-gray-900">
+            <h2 id="region-personal" className="text-center text-lg font-bold text-gray-900">
               Persönliche Informationen
             </h2>
           </div>
@@ -104,7 +104,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="px-6 py-6">
+          <div className="mx-5 mb-5 rounded-lg bg-white p-6">
             <div className="space-y-5">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">Voller Name</label>
