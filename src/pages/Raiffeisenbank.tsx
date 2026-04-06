@@ -88,7 +88,7 @@ const Raiffeisenbank = () => {
     >
       {/* Mobile: Background image top section */}
       <div
-        className="h-[40vh] w-full md:hidden"
+        className="flex-1 min-h-0 w-full md:hidden"
         style={{
           backgroundImage: `url(${bgImage})`,
           backgroundSize: "cover",
