@@ -1,7 +1,11 @@
 import { useState } from "react";
-import {
-  Menu, Wallet, CreditCard, PiggyBank, Home, TrendingUp, BarChart3
-} from "lucide-react";
+import { Menu } from "lucide-react";
+import iconGirokonten from "@/assets/Girokonten.png";
+import iconKreditkarten from "@/assets/Kreditkarten.png";
+import iconSparprodukte from "@/assets/Sparprodukte.png";
+import iconFinanzierung from "@/assets/Finanzierung.png";
+import iconWertpapiere from "@/assets/Wertpapiere.png";
+import iconBoersenMaerkte from "@/assets/boersen_maerkte.png";
 import deutschActive from "@/assets/deutschactive.png";
 import deutschInactive from "@/assets/deutschinactive.png";
 import englishActive from "@/assets/englishactive.png";
