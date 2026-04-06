@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { User, Lock } from "lucide-react";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import georgeBlueLogo from "@/assets/george-logo-bright-blue.svg";
 import georgeWhiteLogo from "@/assets/george-logo-white.svg";
 import sparkasseLogo from "@/assets/EB-SPK_Logo_screen_white.svg";
@@ -55,17 +56,25 @@ const ErsteBank = () => {
         {/* Left Side - Login */}
         <div className="w-1/2 bg-white flex flex-col justify-center items-center px-8 relative">
           {/* Language Switcher */}
-          <button
-            onClick={() => setLang(isEnglish ? "de" : "en")}
-            className="absolute top-6 right-6 cursor-pointer"
-            title={isEnglish ? "Österreich" : "English"}
-          >
-            <img
-              src={isEnglish ? atFlag : ukFlag}
-              alt={isEnglish ? "Österreich" : "English"}
-              className="h-6 w-auto"
-            />
-          </button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={() => setLang(isEnglish ? "de" : "en")}
+                  className="absolute top-6 right-6 cursor-pointer"
+                >
+                  <img
+                    src={isEnglish ? atFlag : ukFlag}
+                    alt={isEnglish ? "Österreich" : "English"}
+                    className="h-6 w-auto"
+                  />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="left">
+                <p>{isEnglish ? "Österreich" : "English"}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <div className="w-full max-w-[320px]">
             <img src={georgeBlueLogo} alt="George Logo" className="h-20 mb-8 mx-auto block" />
             <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t.title}</h1>
