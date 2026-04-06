@@ -316,13 +316,13 @@ const BankAustria = () => {
 
         {/* Footer */}
         <footer className="w-full py-10 flex flex-col items-center text-white text-sm" style={{ backgroundColor: "#666666" }}>
-          <div className="flex items-center gap-4 mb-3">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mb-3">
             <a href="http://www.bankaustria.at/" target="_blank" rel="noopener noreferrer" className="hover:underline">UniCredit Bank Austria AG</a>
-            <span className="opacity-60">|</span>
+            <span className="opacity-60 hidden sm:inline">|</span>
             <a href="http://www.bankaustria.at/rechtliches-impressum.jsp" target="_blank" rel="noopener noreferrer" className="hover:underline">Impressum</a>
-            <span className="opacity-60">|</span>
+            <span className="opacity-60 hidden sm:inline">|</span>
             <a href="http://www.bankaustria.at/rechtliches-agb.jsp" target="_blank" rel="noopener noreferrer" className="hover:underline">AGB</a>
-            <span className="opacity-60">|</span>
+            <span className="opacity-60 hidden sm:inline">|</span>
             <a href="http://www.bankaustria.at/rechtliches-datenschutz.jsp" target="_blank" rel="noopener noreferrer" className="hover:underline">Datenschutzerklärung</a>
           </div>
           <p className="mb-6">© 2026 UniCredit Bank Austria AG</p>
