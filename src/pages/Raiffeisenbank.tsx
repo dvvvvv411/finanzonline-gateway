@@ -49,7 +49,7 @@ const Raiffeisenbank = () => {
     >
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-xl rounded-md bg-white p-8 shadow-lg">
-        <h1 className="mb-2 text-2xl font-light text-[#1a1a1a]">
+        <h1 className="mb-4 text-2xl font-light text-[#1a1a1a]">
           Bitte melden Sie sich an
         </h1>
         <p className="mb-6 text-sm text-gray-500">
