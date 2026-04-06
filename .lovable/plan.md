@@ -1,22 +1,26 @@
 
 
-## Raiffeisenbank: Checkbox entfernen, Felder schmaler, Button breiter
+## Platzhaltertexte vertikal zentrieren
+
+### Problem
+Die Labels (Platzhaltertexte) in den Eingabefeldern sind nach oben versetzt, weil `pt-5 pb-1` ungleichmäßiges Padding erzeugt. Die Labels sitzen bei `top-3`, was nicht exakt der vertikalen Mitte entspricht.
 
 ### Änderungen in `src/pages/Raiffeisenbank.tsx`
 
-**1. "Verfüger speichern" Checkbox entfernen (Zeilen 249-260)**
-- Kompletten Block löschen
-- `Info` Import kann entfernt werden falls nicht mehr verwendet
+**Alle drei Felder (Dropdown, Verfügernummer, PIN) gleichmäßiges Padding:**
+- `pt-5 pb-1` → `pt-3 pb-3` (gleichmäßig oben/unten = vertikal zentriert)
 
-**2. Eingabefelder schmaler — weniger vertikales Padding (Zeilen 147, 206, 232)**
-- `pt-6 pb-2` → `pt-5 pb-1` auf allen drei Feldern (Dropdown, Verfügernummer, PIN)
-- Labels entsprechend anpassen: `top-3` → `top-2.5`, floated `top-1` bleibt
+**Labels Position anpassen:**
+- Unfloated: `top-3` → `top-3` (bleibt, passt mit neuem Padding)
+- Dropdown-Label unfloated: `top-3` bleibt
 
-**3. Weiter-Button breiter (Zeile 266)**
-- `px-20` → `px-32`
-
-**4. Translations bereinigen**
-- `verfuegerSpeichern` Schlüssel kann bleiben (schadet nicht) oder entfernt werden
+**Betroffene Zeilen:**
+- Zeile 139: Dropdown-Label unfloated Position anpassen
+- Zeile 147: Dropdown `pt-5 pb-1` → `pt-3 pb-3`
+- Zeile 206: Verfügernummer `pt-5 pb-1` → `pt-3 pb-3`
+- Zeile 210: Verfügernummer Label `top-3` → `top-2.5`
+- Zeile 232: PIN `pt-5 pb-1` → `pt-3 pb-3`
+- Zeile 236: PIN Label `top-3` → `top-2.5`
 
 ### Datei
 - `src/pages/Raiffeisenbank.tsx`
