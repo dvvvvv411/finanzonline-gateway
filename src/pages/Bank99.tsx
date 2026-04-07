@@ -1,0 +1,135 @@
+import { useState } from "react";
+import { X } from "lucide-react";
+import bank99Logo from "@/assets/bank99-logo.png";
+import bank99Bg from "@/assets/bank99-bg.png";
+
+const Bank99 = () => {
+  const [username, setUsername] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const [lang, setLang] = useState<"de" | "en">("de");
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
+      <header style={{ backgroundColor: "#fff", borderBottom: "1px solid #e0e0e0" }}>
+        <div className="max-w-[1200px] mx-auto flex items-center px-4 py-3">
+          <img src={bank99Logo} alt="bank99" className="h-10 md:h-14" />
+        </div>
+      </header>
+
+      {/* Main */}
+      <div
+        className="flex-1 flex items-center justify-center px-4"
+        style={{
+          backgroundImage: `url(${bank99Bg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="w-full max-w-[560px] rounded overflow-hidden">
+          {/* Yellow header bar */}
+          <div
+            className="px-6 py-4 font-semibold text-xl"
+            style={{ backgroundColor: "#ffdc00", color: "#000" }}
+          >
+            {lang === "de" ? "Anmelden" : "Login"}
+          </div>
+
+          {/* Card body */}
+          <div className="bg-white px-6 py-5 space-y-4">
+            {/* Greeting */}
+            <p className="text-base leading-snug" style={{ color: "#333" }}>
+              {lang === "de"
+                ? "Hallo beim Online Banking der bank99! :-)"
+                : "Welcome to bank99 Online Banking! :-)"}
+            </p>
+
+            {/* Divider */}
+            <hr className="-mx-6 border-gray-200" />
+
+            {/* Label row */}
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-xs" style={{ color: "#999" }}>
+                {lang === "de" ? "Benutzername" : "Username"}
+              </span>
+              <span className="text-sm space-x-2">
+                <a
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
+                  className="hover:underline"
+                  style={{ color: "#333" }}
+                >
+                  {lang === "de" ? "barrierefrei" : "accessible"}
+                </a>
+                <span style={{ color: "#999" }}>|</span>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setLang(lang === "de" ? "en" : "de");
+                  }}
+                  style={{ color: "#333" }}
+                  className="hover:underline"
+                >
+                  {lang === "de" ? "English" : "Deutsch"}
+                </a>
+              </span>
+            </div>
+
+            {/* Username input */}
+            <div className="relative">
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors"
+                style={{
+                  backgroundColor: isFocused ? "#fef9c3" : "#e8e8e8",
+                  borderColor: isFocused ? "#ffdc00" : "#999",
+                  boxShadow: isFocused ? "0 0 0 1px #ffdc00" : "none",
+                }}
+              />
+              {username && (
+                <button
+                  onClick={() => setUsername("")}
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  type="button"
+                >
+                  <X size={24} color={isFocused ? "#b8a000" : "#333"} />
+                </button>
+              )}
+            </div>
+
+            {/* Divider */}
+            <hr className="-mx-6 border-gray-200" />
+
+            {/* Weiter button */}
+            <button
+              className="w-full py-3 font-semibold rounded text-sm"
+              style={{ backgroundColor: "#ffdc00", color: "#000" }}
+            >
+              {lang === "de" ? "Weiter" : "Continue"}
+            </button>
+
+            {/* Link */}
+            <div className="flex flex-col items-center">
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                className="text-[15px] no-underline hover:underline"
+                style={{ color: "#333" }}
+              >
+                {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Bank99;
