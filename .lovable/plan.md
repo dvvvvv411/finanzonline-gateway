@@ -1,59 +1,29 @@
 
+Easybank — 3 gezielte Fixes
 
-## Easybank — 8 Korrekturen
+1. Language-Selector Dropdown
+- Aktuell ist im Header noch ein natives `<select>` drin. Deshalb kommt der blaue Browser-Background beim geöffneten ausgewählten Eintrag.
+- Fix: Ich ersetze den Header-Selector in `src/pages/Easybank.tsx` durch den vorhandenen Radix/shadcn `Select`.
+- Der aktuell gewählte Eintrag bekommt im geöffneten Dropdown einen grauen Background statt blau, inkl. Fokus-/Checked-State.
 
-### Änderungen in `src/pages/Easybank.tsx`
+2. Titel von Warnung / Hilfe-Hotline / Info
+- Aktuell stehen die 3 Titel noch auf `text-base font-normal`.
+- Fix: Ich mache sie auf allen 3 Cards leicht kräftiger und leicht größer, einheitlich, ohne sonst etwas am Card-Layout zu ändern.
 
-| Nr | Was | Aktuell | Fix |
-|----|-----|---------|-----|
-| 1 | Input focus outline | `focus:ring-[#177991]` | `focus:ring-[#4b9920]` (alle 3 Inputs: Verfüger, PIN, App) |
-| 2 | Hint-Texte Schriftgröße | `text-[10px]` | `text-xs` (12px) — Zeilen 268, 291 |
-| 3 | PIN Auge: einmal aktiviert = verschwindet | Toggle hin/her | `setShowPin(true)` statt Toggle, dann Button ausblenden wenn `showPin === true` |
-| 4 | Footer Texte größer | `text-[11px]` | `text-xs` (12px) — Zeilen 446, 450 |
-| 5 | Login Card Outline | `border-black` | `border-[#949494]` — Zeile 200 |
-| 6 | Login Button Bold | `font-semibold` | `font-bold` — Zeile 297 |
-| 7 | Warnung: Abstand Weiterlesen-bestätigen | `ml-[28px]` div hat impliziten Abstand | Abstand entfernen, `mt-0` sicherstellen — Zeile 376 |
-| 8 | App-Tab Input auch `focus:ring-[#4b9920]` | `focus:ring-[#177991]` | `focus:ring-[#4b9920]` — Zeile 320 |
+3. Abstand zwischen „bestätigen!“ und „Weiterlesen“
+- Der Abstand kommt aktuell daher, dass `Weiterlesen` noch in einem separaten Wrapper unter dem Text hängt.
+- Fix: Ich baue den Inhalt der Warnung-Card hart um:
+  - Icon links
+  - rechts eine einzige Textspalte
+  - der Warnungstext bleibt hart umbrochen
+  - `Weiterlesen` sitzt direkt darunter in derselben Spalte
+- Den separaten `ml-[28px]`-Block entferne ich komplett, damit wirklich kein zusätzlicher Zwischenraum mehr bleibt.
 
-### Details
-
-**Zeile 266, 281, 320** — Focus ring Farbe:
-```
-focus:ring-[#4b9920]
-```
-
-**Zeile 268, 291** — Hint-Texte:
-```
-text-xs statt text-[10px]
-```
-
-**Zeile 283-289** — Auge Button nur zeigen wenn `!showPin`:
-```tsx
-{!showPin && (
-  <button type="button" onClick={() => setShowPin(true)} ...>
-    <Eye className="h-5 w-5" />
-  </button>
-)}
-```
-
-**Zeile 200** — Login Card Border:
-```
-border-[#949494]
-```
-
-**Zeile 297** — Login Button:
-```
-font-bold statt font-semibold
-```
-
-**Zeile 376** — Weiterlesen direkt unter Text, kein Abstand:
-Aktuell hat die `div.ml-[28px]` möglicherweise Margin. Sicherstellen dass kein Abstand zwischen dem Text-Block und dem Weiterlesen-Link ist. Die `flex gap-2` im Parent erzeugt keinen vertikalen Abstand, aber der separate div für Weiterlesen könnte margin haben. Fix: `mt-0` explizit oder die Struktur anpassen damit Weiterlesen direkt nach "bestätigen!" kommt ohne Lücke.
-
-**Zeilen 446, 450** — Footer:
-```
-text-xs statt text-[11px]
-```
-
-### Datei
+Dateien
 - `src/pages/Easybank.tsx`
+- optional zusätzlich `src/components/ui/select.tsx`, falls ich den grauen Selected-State zentral statt nur lokal auf der Easybank-Seite setze
 
+Wichtig
+- Ich ändere hier nur diese 3 Punkte.
+- Keine neue Änderung an Breite/Tiefe der Cards.
+- Die Warnung-Card bleibt sonst unverändert, außer Titelstil und dem harten Entfernen des Leerraums vor „Weiterlesen“.
