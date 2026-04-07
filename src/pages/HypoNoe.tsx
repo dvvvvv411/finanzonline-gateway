@@ -38,7 +38,7 @@ const HypoNoe = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Info text */}
-            <p className="text-[13px] leading-snug" style={{ color: "#333" }}>
+            <p className="text-sm leading-snug" style={{ color: "#333" }}>
               Beim Login wird eine sichere Verbindung aufgebaut. Bitte halten Sie Ihre Anmeldedaten geheim und achten Sie darauf, dass Sie Ihre Anmeldedaten auf keiner Ihnen unbekannten Seite eingeben. Unsere Mitarbeiter werden Sie niemals nach Ihren Anmeldedaten befragen.
             </p>
 
@@ -56,7 +56,7 @@ const HypoNoe = () => {
             </p>
 
             {/* Divider */}
-            <hr className="-mx-6 border-gray-200" />
+            <hr className="border-gray-200" />
 
             {/* Label row */}
             <div className="flex items-center">
@@ -128,7 +128,7 @@ const HypoNoe = () => {
 
             {/* Weiter button */}
             <button
-              className="w-full py-2 text-white font-semibold text-sm"
+              className="w-full py-2 text-white font-normal text-sm"
               style={{ backgroundColor: "#0066cc" }}
             >
               Weiter
