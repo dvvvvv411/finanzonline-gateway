@@ -85,7 +85,7 @@ const Oberbank = () => {
       </div>
 
       {/* Thin gray line */}
-      <div style={{ height: 1, background: "#e0e0e0" }} />
+      <div style={{ height: 1, background: "#e0e0e0", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }} />
 
       {/* Main content */}
       <div
