@@ -113,7 +113,7 @@ const Bank99 = () => {
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-[15px] underline font-semibold"
+                className="text-[13px] underline font-semibold"
                 style={{ color: "#007ed1" }}
               >
                 {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
