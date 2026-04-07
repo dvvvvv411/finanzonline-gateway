@@ -175,7 +175,7 @@ const Dadatbank = () => {
               </a>
               <a
                 href="#"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#b631a5" }}
               >
                 {lang === "de" ? "Demoversion" : "Demo version"}
