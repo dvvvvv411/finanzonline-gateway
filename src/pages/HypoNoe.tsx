@@ -29,7 +29,7 @@ const HypoNoe = () => {
         <div className="w-full max-w-[560px] overflow-hidden">
           {/* Blue header bar */}
           <div
-            className="px-6 py-4 text-white className="px-6 py-4 text-white font-normal text-2xl""
+            className="px-6 py-4 text-white font-normal text-2xl"
             style={{ backgroundColor: "#0066cc" }}
           >
             Login 24/7 Internetbanking
