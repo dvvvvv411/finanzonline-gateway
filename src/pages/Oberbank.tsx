@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronRight, ChevronLeft, ChevronDown } from "lucide-react";
 import oberbankLogo from "@/assets/oberbank-logo.png";
 import slide1 from "@/assets/oberbank-slide-1.jpg";
@@ -22,6 +22,8 @@ const Oberbank = () => {
   const [pin, setPin] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [meldungenOpen, setMeldungenOpen] = useState(false);
+  const [cardHeight, setCardHeight] = useState<number | undefined>(undefined);
+  const loginCardRef = useRef<HTMLDivElement>(null);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((p) => (p + 1) % slides.length);
@@ -35,6 +37,15 @@ const Oberbank = () => {
     const t = setInterval(nextSlide, 5000);
     return () => clearInterval(t);
   }, [nextSlide]);
+
+  useEffect(() => {
+    if (!loginCardRef.current) return;
+    const ro = new ResizeObserver(([entry]) => {
+      setCardHeight(entry.contentRect.height + 2); // +2 for border
+    });
+    ro.observe(loginCardRef.current);
+    return () => ro.disconnect();
+  }, []);
 
   return (
     <div
@@ -90,9 +101,10 @@ const Oberbank = () => {
         style={{ maxWidth: 1200, margin: "0 auto", width: "100%", padding: "30px 20px" }}
       >
         {/* 3-column layout */}
-        <div style={{ display: "flex", gap: 20, alignItems: "stretch" }}>
+        <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
           {/* Login Card */}
           <div
+            ref={loginCardRef}
             style={{
               flex: 1,
               background: "#fff",
@@ -132,7 +144,8 @@ const Oberbank = () => {
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
                   style={{
-                    flex: 1,
+                    flex: "1 1 0",
+                    minWidth: 0,
                     padding: "8px 10px",
                     border: "1px solid #ccc",
                     borderRadius: 2,
@@ -143,6 +156,8 @@ const Oberbank = () => {
                 />
                 <select
                   style={{
+                    flex: "1 1 0",
+                    minWidth: 0,
                     padding: "8px 10px",
                     border: "1px solid #ccc",
                     borderRadius: 2,
@@ -211,6 +226,7 @@ const Oberbank = () => {
               background: "#fff",
               border: "1px solid #e0e0e0",
               borderRadius: 2,
+              ...(cardHeight ? { height: cardHeight, overflow: "hidden" } : {}),
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
@@ -253,6 +269,7 @@ const Oberbank = () => {
               borderRadius: 2,
               overflow: "hidden",
               position: "relative",
+              ...(cardHeight ? { height: cardHeight } : {}),
             }}
           >
             {/* Image */}
