@@ -53,7 +53,7 @@ const Schelhammer = () => {
             {/* Label row */}
             <div className="flex items-center justify-between">
               <span className="font-normal text-sm" style={{ color: "#999" }}>
-                {lang === "de" ? "Benutzername" : "Username"}
+                {lang === "de" ? "Benutzername" : "User name or authorised party number"}
               </span>
               <span className="text-sm">
                 <a
@@ -62,6 +62,7 @@ const Schelhammer = () => {
                     e.preventDefault();
                     setLang(lang === "de" ? "en" : "de");
                   }}
+                  className="no-underline hover:underline"
                   style={{ color: "#d31220" }}
                 >
                   {lang === "de" ? "English" : "Deutsch"}
@@ -130,22 +131,20 @@ const Schelhammer = () => {
 
             {/* First time login link */}
             <div className="text-center">
-              <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
-                className="text-[15px] no-underline hover:underline"
+              <span
+                className="text-[15px]"
                 style={{ color: "#d31220" }}
               >
-                {lang === "de" ? "Sie melden sich zum ersten Mal an?" : "First time logging in?"}
-              </a>
+                {lang === "de" ? "Sie melden sich zum ersten Mal an?" : "You are logging in for the first time?"}
+              </span>
             </div>
 
             {/* Terms text */}
-            <p className="text-[15px] text-center" style={{ color: "#333" }}>
-              {lang === "de"
-                ? "Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu."
-                : "By entering your access data, you expressly agree to the bank's terms of use."}
-            </p>
+            {lang === "de" && (
+              <p className="text-[15px] text-center" style={{ color: "#333" }}>
+                Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu.
+              </p>
+            )}
 
             {/* Full-width divider above button */}
             <hr className="-mx-6 border-gray-200" />
@@ -164,16 +163,18 @@ const Schelhammer = () => {
             {/* Links */}
             <div className="flex flex-col items-center" style={{ gap: 0 }}>
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://www.banking.co.at/banking/login.xhtml?m=45#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#d31220" }}
               >
                 {lang === "de" ? "Benutzername vergessen" : "Forgot username"}
               </a>
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://www.banking.co.at/banking/login.xhtml?m=45#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#d31220" }}
               >
