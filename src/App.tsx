@@ -12,6 +12,7 @@ import Bawag from "./pages/Bawag.tsx";
 import BankAustria from "./pages/BankAustria.tsx";
 import Volksbank from "./pages/Volksbank.tsx";
 import Easybank from "./pages/Easybank.tsx";
+import HypoNoe from "./pages/HypoNoe.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
