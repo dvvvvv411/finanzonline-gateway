@@ -163,16 +163,18 @@ const Schelhammer = () => {
             {/* Links */}
             <div className="flex flex-col items-center" style={{ gap: 0 }}>
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://www.banking.co.at/banking/login.xhtml?m=45#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#d31220" }}
               >
                 {lang === "de" ? "Benutzername vergessen" : "Forgot username"}
               </a>
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://www.banking.co.at/banking/login.xhtml?m=45#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#d31220" }}
               >
