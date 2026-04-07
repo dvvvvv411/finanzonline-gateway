@@ -86,8 +86,18 @@ const Oberbank = () => {
         rel="stylesheet"
       />
 
-      {/* Red top bar */}
+      {/* Red top bar - desktop only */}
       {!isMobile && <div style={{ height: 35, background: "#c90000" }} />}
+
+      {/* Mobile: Header first, then cookie banner */}
+      {isMobile && (
+        <>
+          <div style={{ background: "#fff", padding: "20px 20px", textAlign: "center" }}>
+            <img src={oberbankLogo} alt="Oberbank" style={{ height: 32 }} />
+          </div>
+          <div style={{ height: 1, background: "#e0e0e0", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }} />
+        </>
+      )}
 
       {/* Cookie banner */}
       <div style={{ background: "#e5e5ea", padding: isMobile ? "12px 20px" : "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "center" : "center", gap: isMobile ? 12 : 20, textAlign: isMobile ? "center" : "left" }}>
@@ -123,13 +133,15 @@ const Oberbank = () => {
         </div>
       </div>
 
-      {/* Header with logo */}
-      <div style={{ background: "#fff", padding: isMobile ? "20px 20px" : "20px 40px", textAlign: isMobile ? "center" : "left" }}>
-        <img src={oberbankLogo} alt="Oberbank" style={{ height: 32 }} />
-      </div>
-
-      {/* Thin gray line */}
-      <div style={{ height: 1, background: "#e0e0e0", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }} />
+      {/* Desktop: Header after cookie banner */}
+      {!isMobile && (
+        <>
+          <div style={{ background: "#fff", padding: "20px 40px", textAlign: "left" }}>
+            <img src={oberbankLogo} alt="Oberbank" style={{ height: 32 }} />
+          </div>
+          <div style={{ height: 1, background: "#e0e0e0", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }} />
+        </>
+      )}
 
       {/* Main content */}
       <div
