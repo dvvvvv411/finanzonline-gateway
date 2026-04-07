@@ -256,7 +256,7 @@ const Oberbank = () => {
                   onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                 >
                   <span>{link}</span>
-                  <ChevronRight size={16} color="#999" />
+                  <ChevronRight size={14} color="#999" />
                 </a>
               ))}
             </div>
