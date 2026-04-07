@@ -92,8 +92,8 @@ const Oberbank = () => {
       {/* Mobile: Header first, then cookie banner */}
       {isMobile && (
         <>
-          <div style={{ background: "#fff", padding: "20px 20px", textAlign: "center" }}>
-            <img src={oberbankLogo} alt="Oberbank" style={{ height: 32 }} />
+          <div style={{ background: "#fff", padding: "20px 20px", display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}>
+            <img src={oberbankLogo} alt="Oberbank" style={{ height: 32, display: "block", margin: "0 auto" }} />
           </div>
           <div style={{ height: 1, background: "#e0e0e0", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }} />
         </>
@@ -120,10 +120,10 @@ const Oberbank = () => {
               background: "#c90000",
               color: "#fff",
               border: "none",
-              padding: "6px 32px",
+              padding: isMobile ? "4px 20px" : "6px 32px",
               borderRadius: 4,
               cursor: "pointer",
-              fontSize: 13,
+              fontSize: isMobile ? 12 : 13,
               fontFamily: "'Roboto', sans-serif",
               boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
             }}
@@ -165,7 +165,7 @@ const Oberbank = () => {
               flexDirection: "column",
             }}
           >
-            <div style={{ padding: "20px 20px 0" }}>
+            <div style={{ padding: isMobile ? "20px 20px 16px" : "20px 20px 0" }}>
               <h2 style={{ fontSize: 16, fontWeight: 400, color: "#495c62", margin: "0 0 20px" }}>
                 Kundenportal Login
               </h2>
