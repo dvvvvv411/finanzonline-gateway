@@ -59,7 +59,7 @@ const Oberbank = () => {
       />
 
       {/* Red top bar */}
-      <div style={{ height: 8, background: "#c90000" }} />
+      <div style={{ height: 35, background: "#c90000" }} />
 
       {/* Cookie banner */}
       <div style={{ background: "#e8e8e8", padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", alignItems: "center", gap: 20 }}>
@@ -75,11 +75,12 @@ const Oberbank = () => {
               background: "#c90000",
               color: "#fff",
               border: "none",
-              padding: "6px 20px",
-              borderRadius: 20,
+              padding: "6px 32px",
+              borderRadius: 4,
               cursor: "pointer",
               fontSize: 13,
               fontFamily: "'Roboto', sans-serif",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
             }}
           >
             Schließen
@@ -184,7 +185,7 @@ const Oberbank = () => {
                   display: "block",
                   width: "auto",
                   marginLeft: "auto",
-                  padding: "6px 24px",
+                  padding: "6px 32px",
                   background: "#c90000",
                   color: "#fff",
                   border: "none",
