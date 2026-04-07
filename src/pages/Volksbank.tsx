@@ -59,17 +59,28 @@ const Volksbank = () => {
             </div>
 
             {/* Username input */}
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors focus:ring-2 focus:ring-[#196bc1] focus:border-[#196bc1] focus:bg-[#f0f5ff]"
-              style={{
-                backgroundColor: "#e8e8e8",
-                borderColor: "#999",
-              }}
-              placeholder=""
-            />
+            <div className="relative">
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors focus:ring-1 focus:ring-[#196bc1] focus:border-[#196bc1] focus:bg-[#d6e5f4]"
+                style={{
+                  backgroundColor: "#e8e8e8",
+                  borderColor: "#999",
+                }}
+                placeholder=""
+              />
+              {username && (
+                <button
+                  onClick={() => setUsername("")}
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  type="button"
+                >
+                  <X size={18} color="#196bc1" />
+                </button>
+              )}
+            </div>
 
             {/* Terms text */}
             <p className="text-sm" style={{ color: "#333" }}>
