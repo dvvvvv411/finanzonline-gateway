@@ -4,11 +4,11 @@
 
 ### Änderungen in `src/pages/HypoNoe.tsx`
 
-| Nr | Was | Fix |
-|----|-----|-----|
-| 1 | Eingabefeld Ecken | Zeile 76: `rounded-sm` hinzufügen |
-| 2 | Abstand zwischen Links | Zeile 141: `gap: 0` → `gap: 8px` (oder `gap-2`) |
-| 3 | Font Family | Zeile 11: Auf dem äußersten `<div>` ein `style={{ fontFamily: "Arial, 'Helvetica Neue', Helvetica, sans-serif" }}` setzen |
+| Nr | Was | Aktuell | Neu |
+|----|-----|---------|-----|
+| 1 | Weiter Button Text | `font-semibold` (Zeile 131) | `font-normal` |
+| 2 | Divider über Benutzername | `-mx-6` (Zeile 59) → full width | `-mx-6` entfernen → gleiche Breite wie Content/Eingabefeld |
+| 3 | Info-Text Schriftgröße | `text-[13px]` (Zeile 41) | `text-sm` (14px) |
 
 ### Datei
 - `src/pages/HypoNoe.tsx`
