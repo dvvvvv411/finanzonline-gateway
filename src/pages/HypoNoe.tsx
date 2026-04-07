@@ -8,7 +8,7 @@ const HypoNoe = () => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ fontFamily: "Arial, 'Helvetica Neue', Helvetica, sans-serif" }}>
       {/* Header */}
       <header style={{ backgroundColor: "#fff" }}>
         <div className="max-w-[1200px] mx-auto flex items-center px-4 py-2">
@@ -73,7 +73,7 @@ const HypoNoe = () => {
                 onChange={(e) => setUsername(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors"
+                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
                 style={{
                   backgroundColor: isFocused ? "#d6e5f4" : "#f1f1f1",
                   borderColor: isFocused ? "#0066cc" : "#dedede",
@@ -138,7 +138,7 @@ const HypoNoe = () => {
             <hr className="-mx-6 border-gray-200" />
 
             {/* Links */}
-            <div className="flex flex-col items-center" style={{ gap: 0 }}>
+            <div className="flex flex-col items-center gap-2">
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
