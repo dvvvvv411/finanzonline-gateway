@@ -375,7 +375,7 @@ const Easybank = () => {
                         )}
                       </div>
                     </div>
-                    <div className="ml-[28px]">
+                    <div className="ml-[28px] mt-0">
                       <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-[#4b9920] underline hover:no-underline">
                         {t.warnungLink}
                       </a>
