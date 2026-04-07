@@ -6,32 +6,163 @@ import slide1 from "@/assets/oberbank-slide-1.jpg";
 import slide2 from "@/assets/oberbank-slide-2.jpg";
 import slide3 from "@/assets/oberbank-slide-3.jpg";
 
+type Lang = "DE" | "EN" | "HU" | "CS" | "SK";
+
+const translations: Record<Lang, {
+  cookieText: string;
+  cookieLink: string;
+  close: string;
+  loginTitle: string;
+  userPlaceholder: string;
+  pinPlaceholder: string;
+  sslText: string;
+  next: string;
+  firstLogin: string;
+  linksTitle: string;
+  links: string[];
+  footerLinks: string[];
+  languageNames: string[];
+}> = {
+  DE: {
+    cookieText: "Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum Datenschutz finden Sie",
+    cookieLink: "hier",
+    close: "Schließen",
+    loginTitle: "Kundenportal Login",
+    userPlaceholder: "Banking-Nummer",
+    pinPlaceholder: "Ihre PIN",
+    sslText: "Ihre Anmeldung im Kundenportal geschieht über gesicherte SSL Verbindungen.",
+    next: "Weiter",
+    firstLogin: "Erstanmeldung",
+    linksTitle: "Weiterführende Links",
+    links: [
+      "Funktionsübersicht / Video",
+      "FAQs - Häufig gestellte Fragen",
+      "Wertpapier-Infos",
+      "Sicherheit",
+      "Security-App",
+      "Servicenummern",
+      "Support-Tool (Fernwartung)",
+    ],
+    footerLinks: ["Impressum", "AGB", "Filialfinder", "Fernwartung"],
+    languageNames: ["Deutsch", "Englisch", "Ungarisch", "Tschechisch", "Slowakisch"],
+  },
+  EN: {
+    cookieText: "We use technically necessary cookies on this website, which are required for the smooth operation of the website and enable security-relevant functionalities. Further information on data protection can be found",
+    cookieLink: "here",
+    close: "Close",
+    loginTitle: "Login",
+    userPlaceholder: "Disposer",
+    pinPlaceholder: "Your Pin",
+    sslText: "Your registration in the customer portal is done via secure SSL connections.",
+    next: "Next",
+    firstLogin: "First Login",
+    linksTitle: "Outgoing links",
+    links: [
+      "Function Overview / Video",
+      "FAQs - Frequently asked questions",
+      "Bonds Information",
+      "Security",
+      "Security-App",
+      "Service numbers",
+      "Fastviewer (Support tool)",
+    ],
+    footerLinks: ["imprint", "AGB", "branch finder", "Remote maintenance"],
+    languageNames: ["German", "English", "Hungarian", "Czech", "Slovakian"],
+  },
+  HU: {
+    cookieText: "Ezen a weboldalon technikailag szükséges sütiket használunk, amelyek a weboldal zavartalan működéséhez szükségesek, és a biztonsággal kapcsolatos funkciókat teszik lehetővé. Az adatvédelemmel kapcsolatos további információk",
+    cookieLink: "itt",
+    close: "Bezárás",
+    loginTitle: "Ügyfélportál bejelentkezés",
+    userPlaceholder: "Felhasználói azonosító",
+    pinPlaceholder: "Jelszó",
+    sslText: "A bejelentkezés SSL tanúsítvánnnyal biztosított.",
+    next: "Belépés",
+    firstLogin: "Első belépés",
+    linksTitle: "Továbbvezető linkek",
+    links: [
+      "Jellemzők",
+      "Gyakori kérdések",
+      "Értékpapír információk",
+      "Biztonság",
+      "Security-App",
+      "Ügyfélszolgálati telefonszám",
+      "Fastviewer (Support tool)",
+    ],
+    footerLinks: ["Impresszum", "ÁSZF", "Fiókkereső", "Távsegítség"],
+    languageNames: ["Német", "Angol", "Magyar", "Cseh", "Szlovák"],
+  },
+  CS: {
+    cookieText: "Na těchto webových stránkách používáme technicky nezbytné soubory cookie, které jsou potřeba pro bezproblémový provoz webových stránek a umožňují funkce související se zabezpečenímí. Další informace o ochraně osobních údajů naleznete",
+    cookieLink: "zde",
+    close: "Zavřít",
+    loginTitle: "Přihlášení do Klientského portálu",
+    userPlaceholder: "Číslo bankovnictví",
+    pinPlaceholder: "Vaše heslo",
+    sslText: "Přihlášení do Klientského portálu je zabezpečeno prostřednictvím SSL.",
+    next: "Dále",
+    firstLogin: "První přihlášení",
+    linksTitle: "Odkazy",
+    links: [
+      "Přehled funkcí",
+      "Často kladené otázky",
+      "Bonds Information",
+      "Zabezpečení",
+      "Security-App",
+      "Support",
+      "Fastviewer (Support tool)",
+    ],
+    footerLinks: ["Impresum", "Všeobecné obchodní podmínky", "Vyhledávač filiálek", "Vzdálená správa"],
+    languageNames: ["Německy", "Anglicky", "Maďarsky", "Česky", "Slovensky"],
+  },
+  SK: {
+    cookieText: "Na tejto webovej stránke používame technicky nevyhnutné súbory cookie, ktoré sú potrebné na bezproblémové fungovanie webovej stránky a umožňujú funkcie súvisiace s bezpečnosťou. Ďalšie informácie o ochrane údajov nájdete",
+    cookieLink: "tu",
+    close: "Zatvoriť",
+    loginTitle: "Prihlásenie do klientského portálu",
+    userPlaceholder: "Číslo užívateľa",
+    pinPlaceholder: "Vaše heslo",
+    sslText: "Prihlásenie sa uskutočňuje prostredníctvom zabezpečených SSL pripojení.",
+    next: "Ďalej",
+    firstLogin: "Prvé prihlásenie",
+    linksTitle: "Ďalšie odkazy",
+    links: [
+      "Prehľad funkcií",
+      "Často kladené otázky",
+      "Bonds Information",
+      "Bezpečnosť",
+      "Security-App",
+      "Support",
+      "Fastviewer (Support tool)",
+    ],
+    footerLinks: ["Impressum", "VOP", "Vyhľadávač filiálok", "Diaľkový prístup"],
+    languageNames: ["Nemecky", "Anglicky", "Maďarsky", "Česky", "Slovensky"],
+  },
+};
+
+const langKeys: Lang[] = ["DE", "EN", "HU", "CS", "SK"];
+
+const linkHrefs = [
+  "https://www.oberbank.at/kundenportal",
+  "https://www.oberbank.at/kundenportal-faqs",
+  "https://www.oberbank.at/wertpapier-infos",
+  "https://www.oberbank.at/kundenportal-sicherheit",
+  "https://www.oberbank.at/security-app",
+  "https://www.oberbank.at/kontakt",
+  "https://www.oberbank.at/fastviewer-support",
+];
+
+const footerHrefs = [
+  "https://www.oberbank.at/impressum",
+  "https://www.oberbank.at/agb",
+  "https://www.oberbank.at/filialfinder",
+  "https://www.oberbank.at/fastviewer-support",
+];
+
 const slides = [
   { src: slide1, href: "https://www.banking-oberbank.at/login?p_p_auth=LCbiBLVt&p_p_id=loginportlet_WAR_loginportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage&p_p_col_id=&p_p_col_count=0&_loginportlet_WAR_loginportlet_javax.faces.resource=cmsMedia&_loginportlet_WAR_loginportlet_ln=bankingResources&_loginportlet_WAR_loginportlet_oid=8944898" },
   { src: slide2, href: "https://www.oberbank.at/unabhaengigkeit?mtm_campaign=AT_Generationenwechsel&mtm_kwd=kp" },
   { src: slide3, href: "https://www.banking-oberbank.at/login?p_p_auth=LCbiBLVt&p_p_id=loginportlet_WAR_loginportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage&p_p_col_id=&p_p_col_count=0&_loginportlet_WAR_loginportlet_javax.faces.resource=cmsMedia&_loginportlet_WAR_loginportlet_ln=bankingResources&_loginportlet_WAR_loginportlet_oid=10804916" },
-];
-
-const links = [
-  { label: "Funktionsübersicht / Video", href: "https://www.oberbank.at/kundenportal" },
-  { label: "FAQs - Häufig gestellte Fragen", href: "https://www.oberbank.at/kundenportal-faqs" },
-  { label: "Wertpapier-Infos", href: "https://www.oberbank.at/wertpapier-infos" },
-  { label: "Sicherheit", href: "https://www.oberbank.at/kundenportal-sicherheit" },
-  { label: "Security-App", href: "https://www.oberbank.at/security-app" },
-  { label: "Servicenummern", href: "https://www.oberbank.at/kontakt" },
-  { label: "Support-Tool (Fernwartung)", href: "https://www.oberbank.at/fastviewer-support" },
-];
-
-const footerLinks = [
-  { label: "Impressum", href: "https://www.oberbank.at/impressum" },
-  { label: "AGB", href: "https://www.oberbank.at/agb" },
-  { label: "Filialfinder", href: "https://www.oberbank.at/filialfinder" },
-  { label: "Fernwartung", href: "https://www.oberbank.at/fastviewer-support" },
-];
-
-const languageOptions = [
-  { value: "DE", label: "Deutsch" },
-  { value: "EN", label: "English" },
 ];
 
 const Oberbank = () => {
@@ -41,10 +172,17 @@ const Oberbank = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showPin, setShowPin] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const [language, setLanguage] = useState("DE");
+  const [language, setLanguage] = useState<Lang>("DE");
   const [hoveredLanguage, setHoveredLanguage] = useState<string | null>(null);
   const [cookieBannerVisible, setCookieBannerVisible] = useState(true);
   const languageDropdownRef = useRef<HTMLDivElement | null>(null);
+
+  const t = translations[language];
+
+  const languageOptions = langKeys.map((key, i) => ({
+    value: key,
+    label: t.languageNames[i],
+  }));
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((p) => (p + 1) % slides.length);
@@ -55,8 +193,8 @@ const Oberbank = () => {
   }, []);
 
   useEffect(() => {
-    const t = setInterval(nextSlide, 5000);
-    return () => clearInterval(t);
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
   }, [nextSlide]);
 
   useEffect(() => {
@@ -69,13 +207,11 @@ const Oberbank = () => {
         setHoveredLanguage(null);
       }
     };
-
     document.addEventListener("mousedown", handleMouseDown);
     return () => document.removeEventListener("mousedown", handleMouseDown);
   }, []);
 
-  const selectedLanguage =
-    languageOptions.find((option) => option.value === language) ?? languageOptions[0];
+  const selectedLanguage = languageOptions.find((o) => o.value === language) ?? languageOptions[0];
 
   return (
     <div
@@ -90,7 +226,7 @@ const Oberbank = () => {
       {/* Red top bar - desktop only */}
       {!isMobile && <div style={{ height: 35, background: "#c90000" }} />}
 
-      {/* Mobile: Header first, then cookie banner */}
+      {/* Mobile: Header first */}
       {isMobile && (
         <>
           <div style={{ background: "#fff", padding: "20px 20px", display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}>
@@ -104,16 +240,14 @@ const Oberbank = () => {
       {cookieBannerVisible && (
         <div style={{ background: "#e5e5ea", padding: isMobile ? "12px 20px" : "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "center" : "center", gap: isMobile ? 12 : 20, textAlign: isMobile ? "center" : "left" }}>
           <div style={{ flex: isMobile ? undefined : 9 }}>
-            Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website
-            erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum
-            Datenschutz finden Sie{" "}
+            {t.cookieText}{" "}
             <a
               href="https://www.oberbank.at/cookies-kundenportal"
               target="_blank"
               rel="noopener noreferrer"
               style={{ textDecoration: "none", fontWeight: 700, color: "#333" }}
             >
-              hier
+              {t.cookieLink}
             </a>.
           </div>
           <div style={{ flex: isMobile ? undefined : 1, textAlign: isMobile ? "center" : "right" }}>
@@ -131,7 +265,7 @@ const Oberbank = () => {
                 boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
               }}
             >
-              <span style={{ fontWeight: 700 }}>Schließen</span>
+              <span style={{ fontWeight: 700 }}>{t.close}</span>
             </button>
           </div>
         </div>
@@ -152,7 +286,6 @@ const Oberbank = () => {
         className="flex-1"
         style={{ maxWidth: 1200, margin: "0 auto", width: "100%", padding: isMobile ? "30px 48px" : "30px 20px" }}
       >
-        {/* 3-column layout */}
         <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "flex-start", gap: 16, alignItems: isMobile ? "stretch" : "start" }}>
           {/* Login Card */}
           <div
@@ -171,13 +304,13 @@ const Oberbank = () => {
           >
             <div style={{ padding: isMobile ? "20px 20px 16px" : "20px 20px 0" }}>
               <h2 style={{ fontSize: 16, fontWeight: 400, color: "#495c62", margin: "0 0 20px" }}>
-                Kundenportal Login
+                {t.loginTitle}
               </h2>
 
               <input
                 className="oberbank-input"
                 type="text"
-                placeholder="Banking-Nummer"
+                placeholder={t.userPlaceholder}
                 value={bankingNummer}
                 onChange={(e) => setBankingNummer(e.target.value)}
                 style={{
@@ -198,7 +331,7 @@ const Oberbank = () => {
                   <input
                     className="oberbank-input"
                     type={showPin ? "text" : "password"}
-                    placeholder="Ihre PIN"
+                    placeholder={t.pinPlaceholder}
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
                     style={{
@@ -247,11 +380,7 @@ const Oberbank = () => {
                 </div>
                 <div
                   ref={languageDropdownRef}
-                  style={{
-                    position: "relative",
-                    flex: "1 1 0",
-                    minWidth: 0,
-                  }}
+                  style={{ position: "relative", flex: "1 1 0", minWidth: 0 }}
                 >
                   <button
                     type="button"
@@ -302,13 +431,12 @@ const Oberbank = () => {
                       {languageOptions.map((option, index) => {
                         const isHovered = hoveredLanguage === option.value;
                         const isSelected = language === option.value;
-
                         return (
                           <button
                             key={option.value}
                             type="button"
                             role="option"
-                            aria-selected={language === option.value}
+                            aria-selected={isSelected}
                             onMouseEnter={() => setHoveredLanguage(option.value)}
                             onMouseLeave={() => setHoveredLanguage(null)}
                             onClick={() => {
@@ -339,7 +467,7 @@ const Oberbank = () => {
               </div>
 
               <p style={{ fontSize: 12, color: "#495c62", lineHeight: 1.5, margin: "0 0 12px" }}>
-                Ihre Anmeldung im Kundenportal geschieht über gesicherte SSL Verbindungen.
+                {t.sslText}
               </p>
 
               <button
@@ -357,7 +485,7 @@ const Oberbank = () => {
                   boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
                 }}
               >
-                Weiter
+                {t.next}
               </button>
             </div>
 
@@ -390,7 +518,7 @@ const Oberbank = () => {
                     cursor: "default",
                   }}
                 >
-                  Erstanmeldung
+                  {t.firstLogin}
                 </span>
               </div>
             </div>
@@ -411,14 +539,14 @@ const Oberbank = () => {
           >
             <div style={{ padding: "20px 20px 0" }}>
               <h2 style={{ fontSize: 16, fontWeight: 400, color: "#495c62", margin: "0 0 20px" }}>
-                Weiterführende Links
+                {t.linksTitle}
               </h2>
             </div>
             <div style={{ padding: "0 20px", display: "flex", flexDirection: "column", flex: 1 }}>
-              {links.map((link, i) => (
+              {t.links.map((label, i) => (
                 <a
                   key={i}
-                  href={link.href}
+                  href={linkHrefs[i]}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -436,7 +564,7 @@ const Oberbank = () => {
                   onMouseEnter={(e) => (e.currentTarget.style.background = "#f9f9f9")}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                 >
-                  <span>{link.label}</span>
+                  <span>{label}</span>
                   <ChevronRight size={16} color="#32464d" />
                 </a>
               ))}
@@ -494,7 +622,6 @@ const Oberbank = () => {
               ))}
             </div>
 
-            {/* Navigation overlay */}
             <div
               style={{
                 position: "absolute",
@@ -572,17 +699,17 @@ const Oberbank = () => {
           }}
         >
           <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 12 : 28 }}>
-            {footerLinks.map((link) => (
+            {t.footerLinks.map((label, i) => (
               <a
-                key={link.label}
-                href={link.href}
+                key={i}
+                href={footerHrefs[i]}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: "#495c62", textDecoration: "none" }}
                 onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
                 onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
               >
-                {link.label}
+                {label}
               </a>
             ))}
           </div>
