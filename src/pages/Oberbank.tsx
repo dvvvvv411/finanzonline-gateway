@@ -365,6 +365,7 @@ const Oberbank = () => {
                 display: "flex",
                 alignItems: "stretch",
                 justifyContent: "flex-end",
+                marginRight: isMobile ? 12 : 0,
               }}
             >
               <div
