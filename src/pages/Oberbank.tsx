@@ -553,7 +553,7 @@ const Oberbank = () => {
             fontSize: 13,
           }}
         >
-          <div style={{ display: "flex", gap: 28 }}>
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 12 : 28 }}>
             {footerLinks.map((link) => (
               <a
                 key={link.label}
