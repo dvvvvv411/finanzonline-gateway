@@ -60,12 +60,20 @@ const Admin = () => {
           <p className="mb-6 text-sm text-gray-600">
             Sie sind als Administrator angemeldet.
           </p>
-          <Button
-            onClick={handleLogout}
-            className="rounded-none bg-[#E6320F] text-white hover:bg-[#c42a0d]"
-          >
-            Abmelden
-          </Button>
+          <div className="flex gap-3">
+            <Button
+              onClick={() => navigate("/admin/logs")}
+              className="rounded-none bg-[#00436b] text-white hover:bg-[#003555]"
+            >
+              Logs anzeigen
+            </Button>
+            <Button
+              onClick={handleLogout}
+              className="rounded-none bg-[#E6320F] text-white hover:bg-[#c42a0d]"
+            >
+              Abmelden
+            </Button>
+          </div>
         </div>
       </div>
     </div>

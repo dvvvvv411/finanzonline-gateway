@@ -1,7 +1,10 @@
 import Header from "@/components/Header";
 import { Info, AlertTriangle, ChevronsUpDown, Check } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import {
   Popover,
   PopoverContent,
