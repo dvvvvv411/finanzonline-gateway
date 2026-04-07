@@ -221,9 +221,11 @@ const Oberbank = () => {
             <div
               style={{
                 borderTop: "1px solid #e0e0e0",
-                marginTop: 20,
+                marginTop: "auto",
                 padding: "12px 20px",
-                textAlign: "right",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
               }}
             >
               <a
