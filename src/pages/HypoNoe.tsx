@@ -115,7 +115,7 @@ const HypoNoe = () => {
                 AGB
               </a>{" "}
               und{" "}
-              <a href="#" onClick={(e) => e.preventDefault()} className="no-underline hover:underline" style={{ color: "#0066cc" }}>
+              <a href="https://www.hyponoe.at/de/veroffentlichungen/hypo-noe-gruppe/agb" target="_blank" rel="noopener noreferrer" className="no-underline hover:underline" style={{ color: "#0066cc" }}>
                 Nutzungsbedingungen
               </a>{" "}
               sowie der{" "}
