@@ -30,7 +30,7 @@ const Bank99 = () => {
         <div className="w-full max-w-[560px] overflow-hidden">
           {/* Yellow header bar */}
           <div
-            className="px-6 py-3 font-semibold text-2xl"
+            className="px-6 py-4 font-semibold text-2xl"
             style={{ backgroundColor: "#ffdc00", color: "#000" }}
           >
             {lang === "de" ? "Anmelden" : "Login"}
