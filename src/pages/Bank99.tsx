@@ -56,7 +56,7 @@ const Bank99 = () => {
             {/* Label row */}
             <div className="flex items-center justify-between">
               <span className="font-normal text-sm" style={{ color: "#999" }}>
-                {lang === "de" ? "Benutzername" : "Username"}
+                {lang === "de" ? "Benutzername" : "user name"}
               </span>
               <span className="text-sm">
                 <a
