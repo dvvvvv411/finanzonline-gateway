@@ -35,6 +35,7 @@ const languageOptions = [
 ];
 
 const Oberbank = () => {
+  const isMobile = useIsMobile();
   const [bankingNummer, setBankingNummer] = useState("");
   const [pin, setPin] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
