@@ -99,7 +99,7 @@ const Bank99 = () => {
 
             {/* Weiter button */}
             <button
-              className="w-full py-2.5 font-semibold rounded text-sm"
+              className="w-full py-2 font-semibold text-sm"
               style={{ backgroundColor: "#ffdc00", color: "#000" }}
             >
               {lang === "de" ? "Weiter" : "Continue"}
