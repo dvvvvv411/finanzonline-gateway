@@ -1,23 +1,28 @@
 
 
-## Oberbank — Erstanmeldung Divider + PIN-Icons + Text-Styling
+## Oberbank — Carousel: Smooth Slide-Animation + Navigation-Styling
 
 ### Datei: `src/pages/Oberbank.tsx`
 
-#### 1. Erstanmeldung: Vertikale Divider links und rechts
-Der Erstanmeldung-Footer-Bereich (Zeilen 222-243) wird umgebaut: Das Layout bekommt links und rechts vom Text "Erstanmeldung" jeweils einen vertikalen Divider (`border-left` / `border-right` in Farbe `#e0e0e0`), die vom oberen Divider (borderTop) bis zum unteren Card-Rand reichen. Umsetzung: "Erstanmeldung" in ein Element mit `borderLeft: "1px solid #e0e0e0"` und `borderRight: "1px solid #e0e0e0"` wrappen, `height: "100%"`, `padding: "0 20px"`, zentriert. Der äußere Container behält `justifyContent: "flex-end"` und bekommt eine feste Höhe damit die Divider sichtbar sind.
+#### 1. Smooth Slide-Animation
+Aktuell wird nur das `src` des `<img>` gewechselt — kein Übergang. Umgebaut zu einem horizontalen Slide-Container:
+- Alle 3 Bilder nebeneinander in einem `div` mit `display: "flex"`, `width: "300%"`
+- Container wird per `transform: translateX(-${currentSlide * 33.333}%)` verschoben
+- `transition: "transform 0.5s ease"` für smooth sliding von links nach rechts
 
-#### 2. PIN-Icons: Custom SVG statt Eye/EyeOff
-Die `Eye`/`EyeOff`-Icons (Zeile 176) werden durch custom inline SVGs ersetzt:
-- **Anzeigen**: Ein Kreis mit einem kurzen Strich oben (wie ein Lollipop/Pin-Symbol)
-- **Ausblenden**: Dasselbe Symbol mit einem diagonalen Strich von oben-links nach unten-rechts
+#### 2. Navigation ohne Pill-Background
+- Die Wrapper-`div` (Zeile 340-352): `background: "rgba(0,0,0,0.3)"`, `borderRadius: 20`, `padding: "4px 8px"` entfernen → `background: "none"`, `borderRadius: 0`, `padding: 0`
 
-Die Icons werden als inline `<svg>` Elemente gerendert (16×16), Farbe `#495c62`.
+#### 3. Pfeile als ausgefüllte Dreiecke
+- `ChevronLeft`/`ChevronRight` (Zeilen 365, 392) ersetzen durch custom inline SVGs:
+  - Linker Pfeil: ausgefülltes Dreieck nach links, `fill: "#555"` (dunkelgrau)
+  - Rechter Pfeil: ausgefülltes Dreieck nach rechts, `fill: "#555"`
+  - Größe: 14×14px
 
-#### 3. Erstanmeldung Text: kleiner + bold
-- `fontSize: 14` → `fontSize: 12`
-- `fontWeight` hinzufügen: `700`
+#### 4. Dots-Farbe anpassen
+- Inaktive Dots: `rgba(255,255,255,0.6)` → `#999` (passend ohne dunklen Pill-Hintergrund)
+- Aktiver Dot bleibt `#c90000`
 
 ### Datei
-- `src/pages/Oberbank.tsx`
+- `src/pages/Oberbank.tsx` — Carousel-Bereich (Zeilen 312-395)
 
