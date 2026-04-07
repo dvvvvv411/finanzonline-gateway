@@ -167,7 +167,7 @@ const AdminLogs = () => {
               })}
               {submissions.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={9} className="text-center text-gray-400 py-8">
+                  <TableCell colSpan={10} className="text-center text-gray-400 py-8">
                     Keine Einträge vorhanden
                   </TableCell>
                 </TableRow>
