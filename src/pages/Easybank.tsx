@@ -349,7 +349,7 @@ const Easybank = () => {
                   </div>
                   <div className="h-[2px] bg-[#f6f6f6]" />
                   <div className="p-3">
-                    <div className="flex gap-2 mb-2">
+                    <div className="flex gap-2">
                       <RedWarningIcon />
                       <div>
                         <p className="text-xs text-black leading-snug">
