@@ -120,7 +120,7 @@ const Oberbank = () => {
               background: "#c90000",
               color: "#fff",
               border: "none",
-              padding: "6px 32px",
+              padding: isMobile ? "4px 20px" : "6px 32px",
               borderRadius: 4,
               cursor: "pointer",
               fontSize: 13,
