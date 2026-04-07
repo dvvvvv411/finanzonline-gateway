@@ -101,6 +101,39 @@ const Bank99 = () => {
               )}
             </div>
 
+            {/* Password label */}
+            <div className="flex items-center justify-between">
+              <span className="font-normal text-sm" style={{ color: "#999" }}>
+                {lang === "de" ? "Passwort" : "password"}
+              </span>
+            </div>
+
+            {/* Password input */}
+            <div className="relative">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onFocus={() => setIsPasswordFocused(true)}
+                onBlur={() => setIsPasswordFocused(false)}
+                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
+                style={{
+                  backgroundColor: "#fff",
+                  borderColor: isPasswordFocused ? "#ffdc00" : "#dddddd",
+                  boxShadow: isPasswordFocused ? "0 0 0 1px #ffdc00" : "none",
+                }}
+              />
+              {password && (
+                <button
+                  onClick={() => setPassword("")}
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  type="button"
+                >
+                  <X size={24} color={isPasswordFocused ? "#b8a000" : "#333"} />
+                </button>
+              )}
+            </div>
+
             {/* Divider */}
             <hr className="-mx-6 border-gray-200" />
 
