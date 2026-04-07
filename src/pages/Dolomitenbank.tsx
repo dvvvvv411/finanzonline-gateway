@@ -44,7 +44,7 @@ const Dolomitenbank = () => {
             <p className="text-base leading-tight" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten. Unsere Mitarbeiter werden Sie zu keinem Zeitpunkt nach Ihrem Passwort oder einer TAN fragen."
-                : "When you log in, a secure connection is established. Please make sure that you do not enter your access details on any site unknown to you and keep them secret. Our employees will never ask you for your password or a TAN."}
+                : "You can register for your new online banking service here. When you log in, a secure connection is established. Please make sure that you do not enter your access details on any other site and keep them secret. We will never ask you for your PIN or a TAN."}
             </p>
 
             {/* Divider */}
