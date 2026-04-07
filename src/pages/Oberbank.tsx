@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { ChevronRight, ChevronLeft, ChevronDown, Eye, EyeOff } from "lucide-react";
+import { ChevronRight, ChevronLeft, ChevronDown } from "lucide-react";
 import oberbankLogo from "@/assets/oberbank-logo.png";
 import slide1 from "@/assets/oberbank-slide-1.jpg";
 import slide2 from "@/assets/oberbank-slide-2.jpg";
@@ -173,7 +173,18 @@ const Oberbank = () => {
                         alignItems: "center",
                       }}
                     >
-                      {showPin ? <EyeOff size={16} color="#495c62" /> : <Eye size={16} color="#495c62" />}
+                      {showPin ? (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="8" cy="10" r="4" stroke="#495c62" strokeWidth="1.5" fill="none" />
+                          <line x1="8" y1="2" x2="8" y2="6" stroke="#495c62" strokeWidth="1.5" />
+                          <line x1="3" y1="3" x2="13" y2="13" stroke="#495c62" strokeWidth="1.5" />
+                        </svg>
+                      ) : (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="8" cy="10" r="4" stroke="#495c62" strokeWidth="1.5" fill="none" />
+                          <line x1="8" y1="2" x2="8" y2="6" stroke="#495c62" strokeWidth="1.5" />
+                        </svg>
+                      )}
                     </button>
                   )}
                 </div>
@@ -224,22 +235,32 @@ const Oberbank = () => {
               style={{
                 borderTop: "1px solid #e0e0e0",
                 marginTop: "auto",
-                padding: "12px 20px",
                 display: "flex",
-                alignItems: "center",
+                alignItems: "stretch",
                 justifyContent: "flex-end",
               }}
             >
-              <a
-                href="#"
+              <div
                 style={{
-                  color: "#495c62",
-                  fontSize: 14,
-                  textDecoration: "none",
+                  borderLeft: "1px solid #e0e0e0",
+                  borderRight: "1px solid #e0e0e0",
+                  padding: "12px 20px",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                Erstanmeldung
-              </a>
+                <a
+                  href="#"
+                  style={{
+                    color: "#495c62",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    textDecoration: "none",
+                  }}
+                >
+                  Erstanmeldung
+                </a>
+              </div>
             </div>
           </div>
 
