@@ -61,7 +61,7 @@ const Bank99 = () => {
                     setLang(lang === "de" ? "en" : "de");
                   }}
                   style={{ color: "#007ed1" }}
-                  className="underline font-semibold"
+                  className="text-[15px] underline font-semibold"
                 >
                   {lang === "de" ? "English" : "Deutsch"}
                 </a>
@@ -113,7 +113,7 @@ const Bank99 = () => {
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-[15px] underline font-semibold"
+                className="text-[13px] underline font-semibold"
                 style={{ color: "#007ed1" }}
               >
                 {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
