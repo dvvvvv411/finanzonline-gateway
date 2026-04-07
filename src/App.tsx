@@ -17,6 +17,7 @@ import HypoNoe from "./pages/HypoNoe.tsx";
 import Oberbank from "./pages/Oberbank.tsx";
 import Schelhammer from "./pages/Schelhammer.tsx";
 import BankhausSpaengler from "./pages/BankhausSpaengler.tsx";
+import Dolomitenbank from "./pages/Dolomitenbank.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
