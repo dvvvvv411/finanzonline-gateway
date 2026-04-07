@@ -547,7 +547,8 @@ const Oberbank = () => {
             margin: "0 auto",
             padding: "16px 20px",
             display: "flex",
-            alignItems: "center",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: isMobile ? "flex-start" : "center",
             justifyContent: "space-between",
             fontSize: 13,
           }}
