@@ -168,7 +168,7 @@ const Dadatbank = () => {
                 href="https://konto.dad.at/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#b631a5" }}
               >
                 {lang === "de" ? "Login mit Ersatz Passwort" : "Login with replacement password"}
