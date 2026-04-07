@@ -1,8 +1,12 @@
 
-## Spardabank — Logo verkleinern & Abstand vor Live Hilfe
+
+## Spardabank — Link-Redirects hinzufügen
 
 ### Datei: `src/pages/Spardabank.tsx`
 
-1. **Logo verkleinern** (Z.18): `h-6 md:h-10` → `h-4 md:h-7` und `object-contain` hinzufügen, damit es nicht verzerrt wird
+Alle drei Links (Z.155-179) bekommen echte URLs statt `href="#"` und die `onClick={(e) => e.preventDefault()}` werden entfernt, `target="_blank"` und `rel="noopener noreferrer"` hinzugefügt:
 
-2. **Abstand zwischen "Passwort vergessen?" und "Live Hilfe"** (Z.171): `mt-2` zum Live-Hilfe-Link hinzufügen, um visuellen Abstand zu schaffen
+1. **Benutzername vergessen?** → `https://banking.sparda.at/banking/login.xhtml?m=44&f=2#`
+2. **Passwort vergessen?** → `https://banking.sparda.at/banking/login.xhtml?m=44&f=2#`
+3. **Live Hilfe** → `https://banking.sparda.at/banking/login.xhtml?m=44&f=2#`
+
