@@ -367,46 +367,48 @@ const Easybank = () => {
                   </div>
                 </div>
 
-                {/* Hilfe/Hotline */}
-                <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col min-h-[155px]">
-                  <div className="px-3 py-2">
-                    <h2 className="text-[#008080] text-base font-normal">{t.hilfeTitle}</h2>
+                {/* Hilfe + Info Wrapper — gleiche Tiefe */}
+                <div className="flex-[2] flex gap-4 items-stretch">
+                  {/* Hilfe/Hotline */}
+                  <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col">
+                    <div className="px-3 py-2">
+                      <h2 className="text-[#008080] text-base font-normal">{t.hilfeTitle}</h2>
+                    </div>
+                    <div className="h-[2px] bg-[#f6f6f6]" />
+                    <div className="p-3 flex-1">
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                        {t.hilfePin}
+                      </a>
+                      <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                        {t.hilfeFaq}
+                      </a>
+                    </div>
                   </div>
-                  <div className="h-[2px] bg-[#f6f6f6]" />
-                  <div className="p-3 flex-1">
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
-                      <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                      {t.hilfePin}
-                    </a>
-                    <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
-                      <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                      {t.hilfeFaq}
-                    </a>
-                  </div>
-                </div>
-
-                {/* Info */}
-                <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col min-h-[155px]">
-                  <div className="px-3 py-2">
-                    <h2 className="text-[#008080] text-base font-normal">{t.infoTitle}</h2>
-                  </div>
-                  <div className="h-[2px] bg-[#f6f6f6]" />
-                  <div className="p-3 flex-1">
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
-                      <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                      <span className="font-bold">{t.infoDebit}</span>
-                    </a>
-                    <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all whitespace-pre-line">
-                      <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                      {t.infoApp}
-                    </a>
-                    <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
-                      <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                      {t.infoWatchlist}
-                    </a>
+                  {/* Info */}
+                  <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col">
+                    <div className="px-3 py-2">
+                      <h2 className="text-[#008080] text-base font-normal">{t.infoTitle}</h2>
+                    </div>
+                    <div className="h-[2px] bg-[#f6f6f6]" />
+                    <div className="p-3 flex-1">
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                        <span className="font-bold">{t.infoDebit}</span>
+                      </a>
+                      <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all whitespace-pre-line">
+                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                        {t.infoApp}
+                      </a>
+                      <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                        {t.infoWatchlist}
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
