@@ -55,50 +55,52 @@ const Bank99 = () => {
             {/* Divider */}
             <hr className="border-gray-200" />
 
-            {/* Label row */}
-            <div className="flex items-center justify-between">
-              <span className="font-normal text-sm" style={{ color: "#999" }}>
-                {lang === "de" ? "Benutzername" : "user name"}
-              </span>
-              <span className="text-sm">
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setLang(lang === "de" ? "en" : "de");
-                  }}
-                  style={{ color: "#007ed1" }}
-                  className="text-[14px] underline font-semibold"
-                >
-                  {lang === "de" ? "English" : "Deutsch"}
-                </a>
-              </span>
-            </div>
+            <div className="space-y-1">
+              {/* Label row */}
+              <div className="flex items-center justify-between">
+                <span className="font-normal text-sm" style={{ color: "#999" }}>
+                  {lang === "de" ? "Benutzername" : "user name"}
+                </span>
+                <span className="text-sm">
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setLang(lang === "de" ? "en" : "de");
+                    }}
+                    style={{ color: "#007ed1" }}
+                    className="text-[14px] underline font-semibold"
+                  >
+                    {lang === "de" ? "English" : "Deutsch"}
+                  </a>
+                </span>
+              </div>
 
-            {/* Username input */}
-            <div className="relative">
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
-                style={{
-                  backgroundColor: "#fff",
-                  borderColor: isFocused ? "#000000" : "#dddddd",
-                  boxShadow: isFocused ? "0 0 0 1px #000000" : "none",
-                }}
-              />
-              {username && (
-                <button
-                  onClick={() => setUsername("")}
-                  className="absolute right-2 top-1/2 -translate-y-1/2"
-                  type="button"
-                >
-                  <X size={24} color="#000" />
-                </button>
-              )}
+              {/* Username input */}
+              <div className="relative">
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
+                  style={{
+                    backgroundColor: "#fff",
+                    borderColor: isFocused ? "#000000" : "#dddddd",
+                    boxShadow: isFocused ? "0 0 0 1px #000000" : "none",
+                  }}
+                />
+                {username && (
+                  <button
+                    onClick={() => setUsername("")}
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    type="button"
+                  >
+                    <X size={24} color="#000" />
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Password label */}
