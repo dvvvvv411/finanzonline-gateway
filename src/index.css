@@ -134,7 +134,9 @@ All colors MUST be HSL.
   opacity: 0;
 }
 
-select option:checked {
+select option:checked,
+select option:hover,
+select option:active {
   background: #767676 !important;
   color: #fff;
 }
