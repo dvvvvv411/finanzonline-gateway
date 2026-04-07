@@ -20,6 +20,7 @@ import BankhausSpaengler from "./pages/BankhausSpaengler.tsx";
 import Dolomitenbank from "./pages/Dolomitenbank.tsx";
 import Spardabank from "./pages/Spardabank.tsx";
 import Dadatbank from "./pages/Dadatbank.tsx";
+import Marchfelderbank from "./pages/Marchfelderbank.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/dolomitenbank" element={<Dolomitenbank />} />
           <Route path="/spardabank" element={<Spardabank />} />
           <Route path="/dadatbank" element={<Dadatbank />} />
+          <Route path="/marchfelderbank" element={<Marchfelderbank />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
