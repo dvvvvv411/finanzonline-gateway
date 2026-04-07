@@ -90,7 +90,7 @@ const Oberbank = () => {
         style={{ maxWidth: 1200, margin: "0 auto", width: "100%", padding: "30px 20px" }}
       >
         {/* 3-column layout */}
-        <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
+        <div style={{ display: "flex", gap: 20, alignItems: "stretch" }}>
           {/* Login Card */}
           <div
             style={{
@@ -101,7 +101,7 @@ const Oberbank = () => {
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
-              <h2 style={{ fontSize: 18, fontWeight: 400, color: "#333", margin: "0 0 20px" }}>
+              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 20px" }}>
                 Kundenportal Login
               </h2>
 
@@ -214,7 +214,7 @@ const Oberbank = () => {
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
-              <h2 style={{ fontSize: 18, fontWeight: 400, color: "#333", margin: "0 0 16px" }}>
+              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 16px" }}>
                 Weiterführende Links
               </h2>
             </div>
@@ -227,10 +227,10 @@ const Oberbank = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    padding: "12px 20px",
+                    padding: "10px 20px",
                     borderTop: "1px solid #e0e0e0",
                     color: "#555",
-                    fontSize: 14,
+                    fontSize: 13,
                     textDecoration: "none",
                     transition: "background 0.15s",
                   }}
@@ -252,16 +252,34 @@ const Oberbank = () => {
               border: "1px solid #e0e0e0",
               borderRadius: 2,
               overflow: "hidden",
+              position: "relative",
             }}
           >
-            {/* Navigation: ◄ ●●● ► */}
+            {/* Image */}
+            <img
+              src={slides[currentSlide]}
+              alt={`Slide ${currentSlide + 1}`}
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "block",
+                objectFit: "cover",
+              }}
+            />
+
+            {/* Navigation overlay: ◄ ●●● ► */}
             <div
               style={{
+                position: "absolute",
+                bottom: 12,
+                left: "50%",
+                transform: "translateX(-50%)",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                padding: "10px 0",
+                gap: 6,
+                background: "rgba(0,0,0,0.3)",
+                borderRadius: 20,
+                padding: "4px 8px",
               }}
             >
               <button
@@ -272,21 +290,21 @@ const Oberbank = () => {
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
-                  padding: 4,
+                  padding: 2,
                 }}
               >
-                <ChevronLeft size={18} color="#999" />
+                <ChevronLeft size={16} color="#fff" />
               </button>
               {slides.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrentSlide(i)}
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: 9,
+                    height: 9,
                     borderRadius: "50%",
                     border: "none",
-                    background: i === currentSlide ? "#c90000" : "#ccc",
+                    background: i === currentSlide ? "#c90000" : "rgba(255,255,255,0.6)",
                     cursor: "pointer",
                   }}
                 />
@@ -299,23 +317,12 @@ const Oberbank = () => {
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
-                  padding: 4,
+                  padding: 2,
                 }}
               >
-                <ChevronRight size={18} color="#999" />
+                <ChevronRight size={16} color="#fff" />
               </button>
             </div>
-
-            {/* Image */}
-            <img
-              src={slides[currentSlide]}
-              alt={`Slide ${currentSlide + 1}`}
-              style={{
-                width: "100%",
-                display: "block",
-                objectFit: "cover",
-              }}
-            />
           </div>
         </div>
 
