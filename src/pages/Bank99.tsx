@@ -30,14 +30,14 @@ const Bank99 = () => {
         <div className="w-full max-w-[560px] overflow-hidden">
           {/* Yellow header bar */}
           <div
-            className="px-6 py-3 font-semibold text-2xl"
+            className="px-6 py-4 font-semibold text-2xl"
             style={{ backgroundColor: "#ffdc00", color: "#000" }}
           >
             {lang === "de" ? "Anmelden" : "Login"}
           </div>
 
           {/* Card body */}
-          <div className="bg-white px-6 py-3 space-y-3">
+          <div className="bg-white px-6 py-5 space-y-4">
             {/* Greeting */}
             <p className="text-sm leading-snug font-semibold" style={{ color: "#333" }}>
               {lang === "de"
