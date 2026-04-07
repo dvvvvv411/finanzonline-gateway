@@ -1,27 +1,18 @@
 
-Oberbank — Mobile-Fixes (nur `src/pages/Oberbank.tsx`)
 
-1. Logo in Mobile wirklich mittig erzwingen
-- Ursache: `textAlign: "center"` reicht hier nicht zuverlässig, weil das Logo als `<img>` durch Tailwind/Browser-Reset blockartig gerendert wird.
-- Den mobilen Header auf `display: "flex"`, `justifyContent: "center"`, `alignItems: "center"`, `width: "100%"` umstellen.
-- Dem Logo zusätzlich `display: "block"` und `margin: "0 auto"` geben.
-- Reihenfolge bleibt: Logo ganz oben, Cookie-Banner direkt darunter.
+## Fix: Divider über Erstanmeldung full-width machen
 
-2. "Schließen"-Button in Mobile kleiner machen
-- Nur auf Mobile Padding und Schrift leicht reduzieren, z. B. kleineres Horizontal-Padding und `fontSize: 12`.
-- Desktop bleibt unverändert.
+### Datei: `src/pages/Oberbank.tsx`
 
-3. Mehr Abstand unter dem "Weiter"-Button
-- Im oberen Content-Bereich der Login-Card unten mehr Mobile-Abstand ergänzen.
-- Das mache ich über zusätzlichen `paddingBottom` im Content-Block oder `marginBottom` am Button, ohne die Card-Struktur zu ändern.
+**Problem:** Der Divider (`borderTop`) auf dem Erstanmeldung-Container (Zeile 362) liegt innerhalb des gepadded Content-Bereichs. Er erreicht nicht die Kanten der Card.
 
-4. Divider unterhalb trotzdem full width lassen
-- Die Linie bleibt auf dem äußeren `Erstanmeldung`-Container mit `borderTop`.
-- Es wird nur der Abstand oberhalb angepasst, nicht der Divider selbst.
-- Dadurch bleibt die Linie über die komplette Card-Breite bis zum Rand.
+**Lösung:** Die Padding-Struktur der Login-Card so anpassen, dass der Divider außerhalb des gepadded Bereichs sitzt:
 
-Technische Details
-- Nur `src/pages/Oberbank.tsx` anfassen.
-- Kein Eingriff in `src/App.css`; die Datei ist hier nicht relevant.
-- Keine anderen Änderungen an Desktop, Dropdown oder restlichem Layout.
-- Nach Umsetzung prüfen auf `/oberbank` bei Mobile-Breite 390px: Logo exakt mittig, kleinerer Cookie-Button, mehr Luft unter „Weiter“, Divider weiterhin full width.
+- Den Content-Bereich (Zeile 358) schließt das `<div>` mit Padding. Der Erstanmeldung-Block (Zeile 361-390) sitzt danach, aber **innerhalb** der Card — das ist korrekt.
+- Das eigentliche Problem: Der Erstanmeldung-Container hat `marginRight: isMobile ? 12 : 0` (Zeile 368), was den Divider auf Mobile rechts abschneidet.
+- **Fix:** `marginRight` auf dem Erstanmeldung-Container entfernen (auf `0` setzen für beide). Stattdessen den inneren "Erstanmeldung"-Button-Container (Zeile 371) mit `marginRight: isMobile ? 12 : 0` versehen, damit nur der Button eingerückt ist, aber der `borderTop`-Divider die volle Card-Breite behält.
+
+### Technisch
+- Zeile 368: `marginRight: isMobile ? 12 : 0` → `marginRight: 0`
+- Zeile 371-378: Dem inneren div `marginRight: isMobile ? 12 : 0` hinzufügen
+
