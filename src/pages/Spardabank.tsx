@@ -171,7 +171,7 @@ const Spardabank = () => {
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0 inline-flex items-center gap-1"
+                className="text-[15px] no-underline hover:underline leading-tight py-0 mt-2 inline-flex items-center gap-1"
                 style={{ color: "#006cd4" }}
               >
                 <Info size={16} />
