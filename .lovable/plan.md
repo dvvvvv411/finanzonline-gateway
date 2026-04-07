@@ -1,24 +1,27 @@
 
+Oberbank — Mobile-Fixes (nur `src/pages/Oberbank.tsx`)
 
-## Oberbank — Mobile View Fixes
+1. Logo in Mobile wirklich mittig erzwingen
+- Ursache: `textAlign: "center"` reicht hier nicht zuverlässig, weil das Logo als `<img>` durch Tailwind/Browser-Reset blockartig gerendert wird.
+- Den mobilen Header auf `display: "flex"`, `justifyContent: "center"`, `alignItems: "center"`, `width: "100%"` umstellen.
+- Dem Logo zusätzlich `display: "block"` und `margin: "0 auto"` geben.
+- Reihenfolge bleibt: Logo ganz oben, Cookie-Banner direkt darunter.
 
-### Datei: `src/pages/Oberbank.tsx`
+2. "Schließen"-Button in Mobile kleiner machen
+- Nur auf Mobile Padding und Schrift leicht reduzieren, z. B. kleineres Horizontal-Padding und `fontSize: 12`.
+- Desktop bleibt unverändert.
 
-#### 1. Logo-Header ÜBER Cookie-Banner (Zeilen 89-132)
-Auf Mobile: Reihenfolge umdrehen — Header mit Logo kommt **vor** dem Cookie-Banner. Lösung: Den Header-Block (Zeilen 126-129) und die graue Linie (Zeile 132) vor den Cookie-Banner-Block verschieben, wenn `isMobile`. Alternativ einfacher: beide Blöcke umordnen mit bedingtem Rendering:
-- Wenn `isMobile`: erst Header (Logo zentriert), dann Cookie-Banner
-- Wenn Desktop: erst rote Leiste, dann Cookie-Banner, dann Header
+3. Mehr Abstand unter dem "Weiter"-Button
+- Im oberen Content-Bereich der Login-Card unten mehr Mobile-Abstand ergänzen.
+- Das mache ich über zusätzlichen `paddingBottom` im Content-Block oder `marginBottom` am Button, ohne die Card-Struktur zu ändern.
 
-#### 2. Cards schmaler / mehr Seitenabstand (Zeile 137)
-Main Content Container `padding` auf Mobile erhöhen:
-- Von `"30px 24px"` auf `"30px 36px"` (mehr Abstand links/rechts)
+4. Divider unterhalb trotzdem full width lassen
+- Die Linie bleibt auf dem äußeren `Erstanmeldung`-Container mit `borderTop`.
+- Es wird nur der Abstand oberhalb angepasst, nicht der Divider selbst.
+- Dadurch bleibt die Linie über die komplette Card-Breite bis zum Rand.
 
-#### 3. Weiter-Button full width + zentriert (Zeilen 329-345)
-Auf Mobile:
-- `width: isMobile ? "100%" : "auto"`
-- `marginLeft: isMobile ? 0 : "auto"` (nicht mehr rechts-ausgerichtet)
-- `textAlign: "center"` implizit durch full width
-
-#### 4. Erstanmeldung mehr Abstand rechts (Zeilen 358-373)
-Auf Mobile: `padding: "12px 20px"` statt `"12px 20px"` — mehr rechten Abstand hinzufügen, z.B. `marginRight: isMobile ? 12 : 0` auf dem äußeren Container, oder den `justifyContent` von `"flex-end"` auf `"center"` ändern wenn `isMobile`.
-
+Technische Details
+- Nur `src/pages/Oberbank.tsx` anfassen.
+- Kein Eingriff in `src/App.css`; die Datei ist hier nicht relevant.
+- Keine anderen Änderungen an Desktop, Dropdown oder restlichem Layout.
+- Nach Umsetzung prüfen auf `/oberbank` bei Mobile-Breite 390px: Logo exakt mittig, kleinerer Cookie-Button, mehr Luft unter „Weiter“, Divider weiterhin full width.
