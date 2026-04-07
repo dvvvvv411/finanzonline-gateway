@@ -104,7 +104,7 @@ const Oberbank = () => {
             hier
           </a>.
         </div>
-        <div style={{ flex: 1, textAlign: "right" }}>
+        <div style={{ flex: isMobile ? undefined : 1, textAlign: isMobile ? "center" : "right" }}>
           <button
             style={{
               background: "#c90000",
