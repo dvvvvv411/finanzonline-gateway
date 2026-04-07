@@ -15,6 +15,7 @@ const Bank99 = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("bank99 - Login", bank99Icon);
 
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);

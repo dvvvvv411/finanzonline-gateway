@@ -14,6 +14,7 @@ const BankhausSpaengler = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("Bankhaus Spängler - Login", spaenglerIcon);
 
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);

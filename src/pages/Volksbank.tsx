@@ -15,6 +15,7 @@ const Volksbank = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("Volksbank - Login", volksbankIcon);
 
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);

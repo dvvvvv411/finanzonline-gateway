@@ -15,6 +15,7 @@ const Dadatbank = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("DADAT - Login", dadatbankIcon);
 
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);

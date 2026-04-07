@@ -15,6 +15,7 @@ const Schelhammer = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("Schelhammer - Login", schelhammerIcon);
 
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);

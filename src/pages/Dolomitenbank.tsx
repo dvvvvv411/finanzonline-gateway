@@ -15,6 +15,7 @@ const Dolomitenbank = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("DolomitenBanking - Login", dolomitenbankIcon);
 
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
