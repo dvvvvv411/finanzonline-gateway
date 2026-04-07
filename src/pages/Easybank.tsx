@@ -413,7 +413,6 @@ const Easybank = () => {
                   </div>
                 </div>
               </div>
-              </div>
 
               {/* Banner */}
               <div className="flex-1">
