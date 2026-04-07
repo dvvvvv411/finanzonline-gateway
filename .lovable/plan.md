@@ -1,29 +1,15 @@
 
 
-## Schelhammer — Links, Übersetzungen & Hover-Underline
+## Schelhammer — Benutzername-Label Abstand verkleinern
+
+### Problem
+Das Username-Label (Z.54-71) und das Input (Z.74-99) sind separate Blöcke im `space-y-4` Container. Das Passwort hat Label+Input zusammen in einem `<div className="space-y-1">` (Z.102), daher ist der Abstand dort kleiner.
+
+Beim Username wird `-mt-3` verwendet (Z.74), aber das Label ist nicht im selben Wrapper wie das Input.
 
 ### Datei: `src/pages/Schelhammer.tsx`
 
-1. **"Sie melden sich zum ersten Mal an?" — keine Weiterleitung** (Z.133-140):
-   - `href="#"` und `onClick` entfernen, stattdessen `<span>` verwenden (kein Link, nur Text in rot, kein cursor-pointer)
-
-2. **"Benutzername vergessen" Link** (Z.166-173):
-   - `href="#"` → `href="https://www.banking.co.at/banking/login.xhtml?m=45#"`
-   - `onClick` entfernen, `target="_blank" rel="noopener noreferrer"` hinzufügen
-
-3. **"Passwort vergessen" Link** (Z.174-181):
-   - `href="#"` → `href="https://www.banking.co.at/banking/login.xhtml?m=45#"`
-   - `onClick` entfernen, `target="_blank" rel="noopener noreferrer"` hinzufügen
-
-4. **English-Link Hover-Underline** (Z.59-68):
-   - `className` hinzufügen: `"no-underline hover:underline"`
-
-5. **Übersetzungen anpassen**:
-   - Username-Label (Z.56): `"Username"` → `"User name or authorised party number"`
-   - First-time-login (Z.139): `"First time logging in?"` → `"You are logging in for the first time?"`
-   - Button (Z.158): `"Continue"` (bleibt)
-   - Forgot links (Z.172, 180): `"Forgot username"` / `"Forgot password"` (bleiben)
-
-6. **Terms-Text im Englischen ausblenden** (Z.143-148):
-   - Nur rendern wenn `lang === "de"`: `{lang === "de" && <p>...</p>}`
+1. **Label-Row und Username-Input in ein gemeinsames `<div className="space-y-1">` wrappen** (Z.53-99):
+   - Das `<div className="flex items-center justify-between">` (Label+English-Link) und das Username-Input-Div zusammen in `<div className="space-y-1">` packen
+   - `-mt-3` vom Input-Div (Z.74) entfernen, da `space-y-1` den Abstand regelt
 
