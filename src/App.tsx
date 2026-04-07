@@ -18,6 +18,7 @@ import Oberbank from "./pages/Oberbank.tsx";
 import Schelhammer from "./pages/Schelhammer.tsx";
 import BankhausSpaengler from "./pages/BankhausSpaengler.tsx";
 import Dolomitenbank from "./pages/Dolomitenbank.tsx";
+import Spardabank from "./pages/Spardabank.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/schelhammer" element={<Schelhammer />} />
           <Route path="/bankhausspaengler" element={<BankhausSpaengler />} />
           <Route path="/dolomitenbank" element={<Dolomitenbank />} />
+          <Route path="/spardabank" element={<Spardabank />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
