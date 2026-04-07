@@ -568,7 +568,7 @@ const Oberbank = () => {
               </a>
             ))}
           </div>
-          <span style={{ color: "#495c62" }}>© 2026 Oberbank AG</span>
+          <span style={{ color: "#495c62", marginTop: isMobile ? 16 : 0 }}>© 2026 Oberbank AG</span>
         </div>
       </div>
     </div>
