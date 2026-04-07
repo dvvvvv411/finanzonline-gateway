@@ -101,39 +101,40 @@ const Oberbank = () => {
       )}
 
       {/* Cookie banner */}
-      <div style={{ background: "#e5e5ea", padding: isMobile ? "12px 20px" : "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "center" : "center", gap: isMobile ? 12 : 20, textAlign: isMobile ? "center" : "left" }}>
-        <div style={{ flex: isMobile ? undefined : 9 }}>
-          Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website
-          erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum
-          Datenschutz finden Sie{" "}
-          <a
-            href="https://www.oberbank.at/cookies-kundenportal"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: "none", fontWeight: 700, color: "#333" }}
-          >
-            hier
-          </a>.
+      {cookieBannerVisible && (
+        <div style={{ background: "#e5e5ea", padding: isMobile ? "12px 20px" : "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "center" : "center", gap: isMobile ? 12 : 20, textAlign: isMobile ? "center" : "left" }}>
+          <div style={{ flex: isMobile ? undefined : 9 }}>
+            Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website
+            erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum
+            Datenschutz finden Sie{" "}
+            <a
+              href="https://www.oberbank.at/cookies-kundenportal"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none", fontWeight: 700, color: "#333" }}
+            >
+              hier
+            </a>.
+          </div>
+          <div style={{ flex: isMobile ? undefined : 1, textAlign: isMobile ? "center" : "right" }}>
+            <button
+              onClick={() => setCookieBannerVisible(false)}
+              style={{
+                background: "#c90000",
+                color: "#fff",
+                border: "none",
+                padding: isMobile ? "4px 20px" : "6px 32px",
+                borderRadius: 4,
+                cursor: "pointer",
+                fontSize: isMobile ? 12 : 13,
+                fontFamily: "'Roboto', sans-serif",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+              }}
+            >
+              <span style={{ fontWeight: 700 }}>Schließen</span>
+            </button>
+          </div>
         </div>
-        <div style={{ flex: isMobile ? undefined : 1, textAlign: isMobile ? "center" : "right" }}>
-          <button
-            onClick={() => setCookieBannerVisible(false)}
-            style={{
-              background: "#c90000",
-              color: "#fff",
-              border: "none",
-              padding: isMobile ? "4px 20px" : "6px 32px",
-              borderRadius: 4,
-              cursor: "pointer",
-              fontSize: isMobile ? 12 : 13,
-              fontFamily: "'Roboto', sans-serif",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-            }}
-          >
-            <span style={{ fontWeight: 700 }}>Schließen</span>
-          </button>
-        </div>
-      </div>
       )}
 
       {/* Desktop: Header after cookie banner */}
