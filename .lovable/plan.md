@@ -1,28 +1,24 @@
 
 
-## Oberbank — Carousel: Smooth Slide-Animation + Navigation-Styling
+## Oberbank — Eye-Icon korrigieren + Carousel-Pfeile Abstand
 
 ### Datei: `src/pages/Oberbank.tsx`
 
-#### 1. Smooth Slide-Animation
-Aktuell wird nur das `src` des `<img>` gewechselt — kein Übergang. Umgebaut zu einem horizontalen Slide-Container:
-- Alle 3 Bilder nebeneinander in einem `div` mit `display: "flex"`, `width: "300%"`
-- Container wird per `transform: translateX(-${currentSlide * 33.333}%)` verschoben
-- `transition: "transform 0.5s ease"` für smooth sliding von links nach rechts
+#### 1. PIN Eye-Icon: Richtiges Auge-Symbol
+Die aktuellen custom SVGs (Kreis + Strich) sehen schlecht aus. Ersetzen durch ein **richtiges Auge-SVG** — ein klassisches Eye-Icon wie man es von Passwort-Feldern kennt (mandelförmiges Auge mit Pupille in der Mitte). Für "ausblenden" dasselbe mit diagonalem Durchstrich.
 
-#### 2. Navigation ohne Pill-Background
-- Die Wrapper-`div` (Zeile 340-352): `background: "rgba(0,0,0,0.3)"`, `borderRadius: 20`, `padding: "4px 8px"` entfernen → `background: "none"`, `borderRadius: 0`, `padding: 0`
+**Show-Icon** (Zeilen 177-181): Mandelförmiges Auge mit Kreis-Pupille, Stroke `#495c62`
+**Hide-Icon** (Zeilen 183-186): Dasselbe Auge + diagonale Linie durchgestrichen
 
-#### 3. Pfeile als ausgefüllte Dreiecke
-- `ChevronLeft`/`ChevronRight` (Zeilen 365, 392) ersetzen durch custom inline SVGs:
-  - Linker Pfeil: ausgefülltes Dreieck nach links, `fill: "#555"` (dunkelgrau)
-  - Rechter Pfeil: ausgefülltes Dreieck nach rechts, `fill: "#555"`
-  - Größe: 14×14px
+SVG-Pfade:
+- Auge: Zwei symmetrische Kurven (oberes/unteres Lid) + Kreis in der Mitte
+- Durchstrich: Linie von links-oben nach rechts-unten
 
-#### 4. Dots-Farbe anpassen
-- Inaktive Dots: `rgba(255,255,255,0.6)` → `#999` (passend ohne dunklen Pill-Hintergrund)
-- Aktiver Dot bleibt `#c90000`
+#### 2. Carousel: Mehr Abstand zwischen Pfeilen und Dots
+Aktuell hat der Navigation-Container `gap: 6` (Zeile 362). Wird umgebaut:
+- Pfeile bekommen jeweils `marginRight: 10` (linker Pfeil) bzw. `marginLeft: 10` (rechter Pfeil) für deutlich mehr Abstand zu den Dots
+- Alternativ: `gap` zwischen Dots bleibt klein (6px), aber die Pfeile werden mit extra Margin separiert
 
 ### Datei
-- `src/pages/Oberbank.tsx` — Carousel-Bereich (Zeilen 312-395)
+- `src/pages/Oberbank.tsx`
 
