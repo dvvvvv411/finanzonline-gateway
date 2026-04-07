@@ -95,8 +95,9 @@ const HypoNoe = () => {
             {/* Erste Anmeldung */}
             <div className="text-center">
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://internetbanking.hyponoe.at/banking/erstlogin2c/erstlogin2c.xhtml"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-sm no-underline hover:underline"
                 style={{ color: "#0066cc" }}
               >
