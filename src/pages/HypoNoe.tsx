@@ -6,6 +6,8 @@ import hyponoeBg from "@/assets/hyponoe-bg.png";
 const HypoNoe = () => {
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [password, setPassword] = useState("");
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Arial, 'Helvetica Neue', Helvetica, sans-serif" }}>
