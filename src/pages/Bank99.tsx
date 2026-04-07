@@ -19,7 +19,7 @@ const Bank99 = () => {
 
       {/* Main */}
       <div
-        className="flex-1 flex items-center justify-center px-4"
+        className="relative flex-1 flex items-center justify-center px-4"
         style={{ backgroundColor: "#dfe3ec" }}
       >
         {/* Background image overlay - hidden on mobile */}
