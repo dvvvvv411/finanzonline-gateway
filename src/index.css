@@ -130,6 +130,10 @@ All colors MUST be HSL.
   color: #99999d;
 }
 
+.oberbank-input:focus::placeholder {
+  opacity: 0;
+}
+
 @layer base {
   * {
     @apply border-border;
