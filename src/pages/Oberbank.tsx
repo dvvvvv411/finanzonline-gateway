@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
-import { ChevronRight, ChevronLeft, ChevronDown } from "lucide-react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { ChevronRight, ChevronDown } from "lucide-react";
 import oberbankLogo from "@/assets/oberbank-logo.png";
 import slide1 from "@/assets/oberbank-slide-1.jpg";
 import slide2 from "@/assets/oberbank-slide-2.jpg";
@@ -17,12 +17,21 @@ const links = [
   "Support-Tool (Fernwartung)",
 ];
 
+const languageOptions = [
+  { value: "DE", label: "Deutsch" },
+  { value: "EN", label: "English" },
+];
+
 const Oberbank = () => {
   const [bankingNummer, setBankingNummer] = useState("");
   const [pin, setPin] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [meldungenOpen, setMeldungenOpen] = useState(false);
   const [showPin, setShowPin] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const [language, setLanguage] = useState("DE");
+  const [hoveredLanguage, setHoveredLanguage] = useState<string | null>(null);
+  const languageDropdownRef = useRef<HTMLDivElement | null>(null);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((p) => (p + 1) % slides.length);
@@ -36,6 +45,24 @@ const Oberbank = () => {
     const t = setInterval(nextSlide, 5000);
     return () => clearInterval(t);
   }, [nextSlide]);
+
+  useEffect(() => {
+    const handleMouseDown = (event: MouseEvent) => {
+      if (
+        languageDropdownRef.current &&
+        !languageDropdownRef.current.contains(event.target as Node)
+      ) {
+        setLangOpen(false);
+        setHoveredLanguage(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleMouseDown);
+    return () => document.removeEventListener("mousedown", handleMouseDown);
+  }, []);
+
+  const selectedLanguage =
+    languageOptions.find((option) => option.value === language) ?? languageOptions[0];
 
 
 
@@ -188,28 +215,97 @@ const Oberbank = () => {
                     </button>
                   )}
                 </div>
-                <select
+                <div
+                  ref={languageDropdownRef}
                   style={{
+                    position: "relative",
                     flex: "1 1 0",
                     minWidth: 0,
-                    padding: "8px 10px",
-                    paddingRight: 34,
-                    border: "1px solid #e5e5ea",
-                    background: "#e5e5ea",
-                    borderRadius: 2,
-                    fontSize: 14,
-                    cursor: "pointer",
-                    appearance: "none",
-                    WebkitAppearance: "none",
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23495c62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6,9 12,15 18,9'/%3E%3C/svg%3E")`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "right 10px center",
-                    backgroundSize: "16px",
                   }}
                 >
-                  <option>Deutsch</option>
-                  <option>English</option>
-                </select>
+                  <button
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded={langOpen}
+                    onClick={() => {
+                      setLangOpen((prev) => !prev);
+                      setHoveredLanguage(null);
+                    }}
+                    style={{
+                      width: "100%",
+                      padding: "8px 10px",
+                      border: "1px solid #e5e5ea",
+                      background: "#e5e5ea",
+                      borderRadius: 2,
+                      fontSize: 14,
+                      cursor: "pointer",
+                      appearance: "none",
+                      WebkitAppearance: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      boxSizing: "border-box",
+                      color: "#495c62",
+                      textAlign: "left",
+                    }}
+                  >
+                    <span>{selectedLanguage.label}</span>
+                    <ChevronDown size={16} color="#495c62" style={{ flexShrink: 0, marginLeft: 8 }} />
+                  </button>
+
+                  {langOpen && (
+                    <div
+                      role="listbox"
+                      aria-label="Sprachauswahl"
+                      style={{
+                        position: "absolute",
+                        top: "calc(100% + 4px)",
+                        left: 0,
+                        right: 0,
+                        zIndex: 10,
+                        border: "1px solid #e5e5ea",
+                        borderRadius: 2,
+                        overflow: "hidden",
+                        boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                      }}
+                    >
+                      {languageOptions.map((option, index) => {
+                        const isHovered = hoveredLanguage === option.value;
+                        const isSelected = language === option.value;
+
+                        return (
+                          <button
+                            key={option.value}
+                            type="button"
+                            role="option"
+                            aria-selected={language === option.value}
+                            onMouseEnter={() => setHoveredLanguage(option.value)}
+                            onMouseLeave={() => setHoveredLanguage(null)}
+                            onClick={() => {
+                              setLanguage(option.value);
+                              setLangOpen(false);
+                              setHoveredLanguage(null);
+                            }}
+                            style={{
+                              width: "100%",
+                              padding: "8px 10px",
+                              border: "none",
+                              borderTop: index === 0 ? "none" : "1px solid #e5e5ea",
+                              background: isHovered || isSelected ? "#767676" : "#e5e5ea",
+                              color: isHovered || isSelected ? "#fff" : "#495c62",
+                              fontSize: 14,
+                              textAlign: "left",
+                              cursor: "pointer",
+                              boxSizing: "border-box",
+                            }}
+                          >
+                            {option.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* SSL text */}
