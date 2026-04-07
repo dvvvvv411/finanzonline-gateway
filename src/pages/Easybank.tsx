@@ -424,7 +424,7 @@ const Easybank = () => {
                   {/* Info */}
                   <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col">
                     <div className="px-3 py-2">
-                      <h2 className="text-[#008080] text-base font-normal">{t.infoTitle}</h2>
+                      <h2 className="text-[#008080] text-base font-medium">{t.infoTitle}</h2>
                     </div>
                     <div className="h-[2px] bg-[#f6f6f6]" />
                     <div className="p-3 flex-1">
