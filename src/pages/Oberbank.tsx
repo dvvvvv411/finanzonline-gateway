@@ -244,7 +244,7 @@ const Oberbank = () => {
                     justifyContent: "space-between",
                     padding: "7px 0",
                     borderTop: i === 0 ? "none" : "1px solid #e0e0e0",
-                    color: "#555",
+                    color: "#495c62",
                     fontSize: 12,
                     textDecoration: "none",
                     transition: "background 0.15s",
