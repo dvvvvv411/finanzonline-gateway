@@ -128,7 +128,7 @@ const HypoNoe = () => {
 
             {/* Weiter button */}
             <button
-              className="w-full py-2 text-white font-semibold text-sm"
+              className="w-full py-2 text-white font-normal text-sm"
               style={{ backgroundColor: "#0066cc" }}
             >
               Weiter
