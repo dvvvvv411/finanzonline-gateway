@@ -17,6 +17,7 @@ const BankhausSpaengler = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [lang, setLang] = useState<"de" | "en">("de");
 
   return (
