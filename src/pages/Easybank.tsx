@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Eye, EyeOff, ChevronRight } from "lucide-react";
+import { Eye, ChevronRight } from "lucide-react";
 import easybankLogo from "@/assets/logo-easybank_de.png";
 import easybankBanner from "@/assets/EASY26016_login.jpg";
 
