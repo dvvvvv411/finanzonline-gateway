@@ -29,6 +29,7 @@ import bankhausSpaenglerIcon from "@/assets/bankhaus_spaengler.png";
 import dolomitenIcon from "@/assets/dolomiten_bank.png";
 import spardaIcon from "@/assets/sparda_bank.png";
 import dadatIcon from "@/assets/dadat_bank.png";
+import marchfelderIcon from "@/assets/marchfelder_bank.png";
 
 import idAustriaImg from "@/assets/IDAustria.png";
 import finanznaviImg from "@/assets/Finanznavi.jpg";
@@ -50,6 +51,7 @@ const banks = [
   { name: "Dolomiten Bank", icon: dolomitenIcon },
   { name: "Sparda Bank", icon: spardaIcon },
   { name: "Dadat Bank", icon: dadatIcon },
+  { name: "Marchfelder Bank", icon: marchfelderIcon },
 ];
 
 const Index = () => {
