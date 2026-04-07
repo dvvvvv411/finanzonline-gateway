@@ -151,7 +151,7 @@ const Spardabank = () => {
             <hr className="-mx-6 border-gray-200" />
 
             {/* Links */}
-            <div <div className="flex flex-col items-center gap-0.5">>
+            <div className="flex flex-col items-center gap-0.5">
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
