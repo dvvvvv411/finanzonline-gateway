@@ -29,7 +29,7 @@ const Schelhammer = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="w-full max-w-[560px] rounded overflow-hidden">
+        <div className="w-full max-w-[620px] rounded overflow-hidden">
           {/* Red header bar */}
           <div
             className="px-6 py-4 text-white font-semibold text-2xl"
@@ -152,7 +152,7 @@ const Schelhammer = () => {
 
             {/* Weiter button */}
             <button
-              className="w-full py-2 text-white font-semibold rounded text-base"
+              className="w-full py-2 text-white font-semibold rounded-md text-base"
               style={{ backgroundColor: "#d31220" }}
             >
               {lang === "de" ? "Weiter" : "Continue"}
