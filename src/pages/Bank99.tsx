@@ -119,8 +119,8 @@ const Bank99 = () => {
                 className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
                 style={{
                   backgroundColor: "#fff",
-                  borderColor: isPasswordFocused ? "#ffdc00" : "#dddddd",
-                  boxShadow: isPasswordFocused ? "0 0 0 1px #ffdc00" : "none",
+                  borderColor: isPasswordFocused ? "#000000" : "#dddddd",
+                  boxShadow: isPasswordFocused ? "0 0 0 1px #000000" : "none",
                 }}
               />
               {password && (
