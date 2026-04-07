@@ -1,16 +1,11 @@
 
 
-## Oberbank — Links-Card: Font kleiner + Pfeile größer
+## Oberbank — Pfeile in Weiterführende Links vergrößern
 
-### Änderungen in `src/pages/Oberbank.tsx` (Zeilen 236-258)
+### Änderung in `src/pages/Oberbank.tsx`
 
-| Nr | Was | Aktuell | Neu |
-|----|-----|---------|-----|
-| 1 | **Link-Text fontSize** | `13` | `12` — damit alle 7 Punkte inkl. "Support-Tool (Fernwartung)" sichtbar sind |
-| 2 | **Link padding** | `9px 0` | `7px 0` — etwas kompakter damit alles reinpasst |
-| 3 | **Pfeil-Größe** | `size={14}` | `size={12}` (gleiche Größe wie Text) |
-| 4 | **Pfeil-Farbe** | `color="#999"` | `color="#32464d"` |
+Die `ChevronRight`-Icons in der Links-Card (Zeile 257) haben aktuell `size={12}`. Das wird auf `size={16}` erhöht, damit die Pfeile deutlich sichtbar und proportional zum Text sind. Farbe bleibt `#32464d`.
 
 ### Datei
-- `src/pages/Oberbank.tsx`
+- `src/pages/Oberbank.tsx` — Zeile 257: `size={12}` → `size={16}`
 
