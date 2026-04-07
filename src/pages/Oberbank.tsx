@@ -242,10 +242,10 @@ const Oberbank = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    padding: "9px 0",
+                    padding: "7px 0",
                     borderTop: i === 0 ? "none" : "1px solid #e0e0e0",
                     color: "#555",
-                    fontSize: 13,
+                    fontSize: 12,
                     textDecoration: "none",
                     transition: "background 0.15s",
                     flex: 1,
@@ -254,7 +254,7 @@ const Oberbank = () => {
                   onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                 >
                   <span>{link}</span>
-                  <ChevronRight size={14} color="#999" />
+                  <ChevronRight size={12} color="#32464d" />
                 </a>
               ))}
             </div>
