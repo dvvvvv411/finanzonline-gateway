@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import { Info, AlertTriangle, ChevronsUpDown, Check, Dices } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -76,6 +77,7 @@ const bankRouteMap: Record<string, string> = {
 };
 
 const Index = () => {
+  usePageMeta("FinanzOnline Login", "/favicon.png");
   const navigate = useNavigate();
   const [bankOpen, setBankOpen] = useState(false);
   const [selectedBank, setSelectedBank] = useState("");

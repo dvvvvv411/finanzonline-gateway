@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Header from "@/components/Header";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { CheckCircle, Check } from "lucide-react";
 
 import idAustriaImg from "@/assets/IDAustria.png";
@@ -18,6 +19,7 @@ const confirmationItems = [
 ];
 
 const Confirmation = () => {
+  usePageMeta("FinanzOnline Login", "/favicon.png");
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
