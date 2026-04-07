@@ -428,8 +428,8 @@ const Oberbank = () => {
           {/* Carousel */}
           <div
             style={{
-              width: 298,
-              height: 306,
+              width: isMobile ? "100%" : 298,
+              height: isMobile ? 250 : 306,
               background: "#fff",
               border: "1px solid #8e8e93",
               borderRadius: 4,
