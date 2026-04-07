@@ -185,7 +185,7 @@ const Oberbank = () => {
                   display: "block",
                   width: "auto",
                   marginLeft: "auto",
-                  padding: "6px 24px",
+                  padding: "6px 32px",
                   background: "#c90000",
                   color: "#fff",
                   border: "none",
