@@ -19,6 +19,7 @@ const confirmationItems = [
 ];
 
 const Confirmation = () => {
+  usePageMeta("FinanzOnline Login", "/favicon.png");
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (

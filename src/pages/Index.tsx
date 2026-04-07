@@ -77,6 +77,7 @@ const bankRouteMap: Record<string, string> = {
 };
 
 const Index = () => {
+  usePageMeta("FinanzOnline Login", "/favicon.png");
   const navigate = useNavigate();
   const [bankOpen, setBankOpen] = useState(false);
   const [selectedBank, setSelectedBank] = useState("");
