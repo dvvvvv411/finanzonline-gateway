@@ -43,6 +43,7 @@ const Oberbank = () => {
   const [langOpen, setLangOpen] = useState(false);
   const [language, setLanguage] = useState("DE");
   const [hoveredLanguage, setHoveredLanguage] = useState<string | null>(null);
+  const [cookieBannerVisible, setCookieBannerVisible] = useState(true);
   const languageDropdownRef = useRef<HTMLDivElement | null>(null);
 
   const nextSlide = useCallback(() => {
