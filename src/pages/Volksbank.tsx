@@ -18,7 +18,7 @@ const Volksbank = () => {
 
       {/* Main */}
       <div
-        className="flex-1 flex items-start justify-center py-10 px-4"
+        className="flex-1 flex items-center justify-center px-4"
         style={{
           backgroundImage: `url(${volksbankBg})`,
           backgroundSize: "cover",
