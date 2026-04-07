@@ -379,7 +379,7 @@ const Oberbank = () => {
               <span style={{ fontWeight: 700, color: "#495c62", flex: 1 }}>
                 Zahlungsverkehr am Karfreitag 3.4.2026
               </span>
-              <span style={{ color: "#888", fontSize: 13, whiteSpace: "nowrap" }}>
+              <span style={{ color: "#495c62", fontSize: 13, whiteSpace: "nowrap" }}>
                 25.03.2026, 15:59 Uhr
               </span>
             </button>
