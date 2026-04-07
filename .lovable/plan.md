@@ -1,16 +1,14 @@
 
 
-## Volksbank Card vertikal zentrieren & Text-Zeilenabstand anpassen
+## Volksbank Links & Text Anpassungen
 
 ### Änderungen in `src/pages/Volksbank.tsx`
 
-**1. Vertikale Zentrierung (Zeile 21):**
-- `items-start` → `items-center` und `py-10` entfernen
-- Damit wird die Card sowohl horizontal als auch vertikal zentriert
+**1. Links-Farbe (Zeilen 117, 125):** Farbe ist bereits `#196bc1` — stimmt schon überein mit dem Button.
 
-**2. Info-Text Zeilenabstand enger (Zeile 41):**
-- `leading-relaxed` oder Standard-Line-Height → `leading-snug` hinzufügen auf dem `<p>`-Element
-- Das bringt die Zeilen des Info-Textes näher zusammen
+**2. Links-Abstand reduzieren (Zeile 112):** `gap-0.5` → `gap-0` (kein Abstand zwischen den Zeilen)
+
+**3. Nutzungsbedingungen-Text minimal größer (Zeile 107):** `text-sm` → `text-[15px]`
 
 ### Datei
 - `src/pages/Volksbank.tsx`
