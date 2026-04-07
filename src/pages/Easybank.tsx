@@ -328,10 +328,18 @@ const Easybank = () => {
                         {t.hilfePin}
                       </a>
                       <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
-                      <a href="https://hilfe.easybank.at/faq-easybank/haeufig-gestellte-fragen/ebanking-zugang-entsperren" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
-                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                        {t.hilfeFaq}
-                      </a>
+                      {lang === "DE" ? (
+                        <a href="https://hilfe.easybank.at/faq-easybank/haeufig-gestellte-fragen/ebanking-zugang-entsperren" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                          <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                          {t.hilfeFaq}
+                        </a>
+                      ) : (
+                        <div className="py-2 text-xs text-black">
+                          <div className="font-bold">05 70 05-500</div>
+                          <div className="mt-1">Mo-Fr 07:00am-10:00pm</div>
+                          <div>Sa 08:00am-01:00pm</div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   {/* Info */}
