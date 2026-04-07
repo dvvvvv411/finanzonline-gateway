@@ -126,6 +126,10 @@ All colors MUST be HSL.
   border-radius: 10px;
 }
 
+.oberbank-input::placeholder {
+  color: #99999d;
+}
+
 @layer base {
   * {
     @apply border-border;

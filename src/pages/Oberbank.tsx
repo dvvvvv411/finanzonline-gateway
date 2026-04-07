@@ -140,6 +140,7 @@ const Oberbank = () => {
               {/* PIN + Language row */}
               <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
                 <input
+                  className="oberbank-input"
                   type="password"
                   placeholder="Ihre PIN"
                   value={pin}
