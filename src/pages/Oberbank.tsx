@@ -348,7 +348,7 @@ const Oberbank = () => {
 
         {/* Wichtige Meldungen */}
         <div style={{ marginTop: 30 }}>
-          <h3 style={{ fontSize: 18, fontWeight: 400, color: "#333", marginBottom: 12 }}>
+          <h3 style={{ fontSize: 18, fontWeight: 400, color: "#495c62", marginBottom: 12 }}>
             Wichtige Meldungen
           </h3>
           <div style={{ background: "#fff", border: "1px solid #e0e0e0", borderRadius: 2 }}>
