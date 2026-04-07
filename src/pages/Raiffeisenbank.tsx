@@ -248,7 +248,6 @@ const Raiffeisenbank = () => {
         <div className="relative mb-8">
           <input
             type="password"
-            maxLength={5}
             value={pin}
             onChange={(e) => setPin(e.target.value)}
             onBlur={() => setPinTouched(true)}
