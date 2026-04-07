@@ -160,7 +160,7 @@ const Dolomitenbank = () => {
                 {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
               </a>
               <a
-                href="https://www.banking.co.at/banking/login.xhtml?m=45#"
+                href="https://www.banking.co.at/banking/login.xhtml?m=10#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
