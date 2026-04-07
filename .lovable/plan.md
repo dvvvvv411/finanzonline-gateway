@@ -1,23 +1,23 @@
 
 
-## Oberbank — Login Card: Eingabefelder + Erstanmeldung Fix
+## Oberbank — Erstanmeldung Divider + PIN-Icons + Text-Styling
 
-### Änderungen in `src/pages/Oberbank.tsx`
+### Datei: `src/pages/Oberbank.tsx`
 
-#### 1. Platzhaltertext verschwindet bei Fokus
-Die nativen HTML `<input>` Elemente mit `placeholder` zeigen den Platzhaltertext standardmäßig nur wenn leer — das funktioniert bereits. **Kein Code-Change nötig**, da `placeholder` bei fokussiertem, leerem Feld sichtbar bleibt (Browser-Standard). Falls gewünscht, dass der Placeholder auch bei Fokus verschwindet (bevor man tippt), wird per CSS `input:focus::placeholder { opacity: 0; }` in `src/index.css` hinzugefügt.
+#### 1. Erstanmeldung: Vertikale Divider links und rechts
+Der Erstanmeldung-Footer-Bereich (Zeilen 222-243) wird umgebaut: Das Layout bekommt links und rechts vom Text "Erstanmeldung" jeweils einen vertikalen Divider (`border-left` / `border-right` in Farbe `#e0e0e0`), die vom oberen Divider (borderTop) bis zum unteren Card-Rand reichen. Umsetzung: "Erstanmeldung" in ein Element mit `borderLeft: "1px solid #e0e0e0"` und `borderRight: "1px solid #e0e0e0"` wrappen, `height: "100%"`, `padding: "0 20px"`, zentriert. Der äußere Container behält `justifyContent: "flex-end"` und bekommt eine feste Höhe damit die Divider sichtbar sind.
 
-#### 2. PIN-Feld: Show/Hide Passwort mit Eye-Icon
-- Neuer State: `showPin` (boolean)
-- PIN-Input wird in ein `div` mit `position: relative` gewrappt
-- `type` wird dynamisch: `showPin ? "text" : "password"`
-- Wenn `pin.length > 0`: Eye-Icon (`Eye` / `EyeOff` aus lucide-react) wird rechts im Input angezeigt (absolut positioniert)
-- Klick auf Icon togglet `showPin`
+#### 2. PIN-Icons: Custom SVG statt Eye/EyeOff
+Die `Eye`/`EyeOff`-Icons (Zeile 176) werden durch custom inline SVGs ersetzt:
+- **Anzeigen**: Ein Kreis mit einem kurzen Strich oben (wie ein Lollipop/Pin-Symbol)
+- **Ausblenden**: Dasselbe Symbol mit einem diagonalen Strich von oben-links nach unten-rechts
 
-#### 3. Erstanmeldung vertikal zentrieren
-Der Footer-Bereich (Zeile 197-215) hat `padding: "12px 20px"` — zusätzlich `display: "flex"`, `alignItems: "center"`, `justifyContent: "flex-end"` setzen, damit "Erstanmeldung" vertikal mittig im Footer-Bereich sitzt. `marginTop: 20` durch `marginTop: "auto"` ersetzen, damit der Footer-Bereich den restlichen Platz der Card einnimmt.
+Die Icons werden als inline `<svg>` Elemente gerendert (16×16), Farbe `#495c62`.
 
-### Dateien
-- `src/pages/Oberbank.tsx` — State, PIN-Wrapper, Eye-Icons, Erstanmeldung-Layout
-- `src/index.css` — `input:focus::placeholder { opacity: 0; }` Regel
+#### 3. Erstanmeldung Text: kleiner + bold
+- `fontSize: 14` → `fontSize: 12`
+- `fontWeight` hinzufügen: `700`
+
+### Datei
+- `src/pages/Oberbank.tsx`
 
