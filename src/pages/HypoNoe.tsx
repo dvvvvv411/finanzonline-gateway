@@ -102,7 +102,7 @@ const HypoNoe = () => {
             </div>
 
             {/* Password input */}
-            <div className="relative">
+            <div className="relative !mt-1">
               <input
                 type="password"
                 value={password}
