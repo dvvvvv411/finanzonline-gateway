@@ -1,14 +1,12 @@
 
 
-## Volksbank Links & Text Anpassungen
+## Volksbank-Seite: Links & Barrierefreiheit anpassen
 
 ### Änderungen in `src/pages/Volksbank.tsx`
 
-**1. Links-Farbe (Zeilen 117, 125):** Farbe ist bereits `#196bc1` — stimmt schon überein mit dem Button.
+**1. "Barrierefrei" und den `|`-Strich entfernen (Zeilen 55-58):** Die beiden Elemente (`<a>Barrierefrei</a>` und `<span>|</span>`) löschen, nur "English" bleibt stehen.
 
-**2. Links-Abstand reduzieren (Zeile 112):** `gap-0.5` → `gap-0` (kein Abstand zwischen den Zeilen)
-
-**3. Nutzungsbedingungen-Text minimal größer (Zeile 107):** `text-sm` → `text-[15px]`
+**2. Vergessen-Links (Zeilen 113-128):** Haben bereits `onClick={(e) => e.preventDefault()}` — funktioniert also schon korrekt, kein Forward.
 
 ### Datei
 - `src/pages/Volksbank.tsx`
