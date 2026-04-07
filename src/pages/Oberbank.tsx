@@ -231,8 +231,8 @@ const Oberbank = () => {
               ...(cardHeight ? { height: cardHeight, overflow: "hidden" } : {}),
             }}
           >
-            <div style={{ padding: "20px 20px 0" }}>
-              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 10px" }}>
+            <div style={{ padding: "14px 16px 0" }}>
+              <h2 style={{ fontSize: 14, fontWeight: 400, color: "#333", margin: "0 0 6px" }}>
                 Weiterführende Links
               </h2>
             </div>
@@ -245,10 +245,10 @@ const Oberbank = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    padding: "8px 20px",
+                    padding: "5px 16px",
                     borderTop: "1px solid #e0e0e0",
                     color: "#555",
-                    fontSize: 12,
+                    fontSize: 11,
                     textDecoration: "none",
                     transition: "background 0.15s",
                   }}
