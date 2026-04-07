@@ -74,7 +74,7 @@ const Oberbank = () => {
               boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
             }}
           >
-            Schließen
+            <span style={{ fontWeight: 700 }}>Schließen</span>
           </button>
         </div>
       </div>
