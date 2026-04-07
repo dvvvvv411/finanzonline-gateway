@@ -50,28 +50,26 @@ const Schelhammer = () => {
             {/* Divider */}
             <hr className="border-gray-200" />
 
-            {/* Label row */}
-            <div className="flex items-center justify-between">
-              <span className="font-normal text-sm" style={{ color: "#999" }}>
-                {lang === "de" ? "Benutzername" : "User name or authorised party number"}
-              </span>
-              <span className="text-sm">
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setLang(lang === "de" ? "en" : "de");
-                  }}
-                  className="no-underline hover:underline"
-                  style={{ color: "#d31220" }}
-                >
-                  {lang === "de" ? "English" : "Deutsch"}
-                </a>
-              </span>
-            </div>
-
-            {/* Username input */}
-            <div className="space-y-1 -mt-3">
+            {/* Username block */}
+            <div className="space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="font-normal text-sm" style={{ color: "#999" }}>
+                  {lang === "de" ? "Benutzername" : "User name or authorised party number"}
+                </span>
+                <span className="text-sm">
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setLang(lang === "de" ? "en" : "de");
+                    }}
+                    className="no-underline hover:underline"
+                    style={{ color: "#d31220" }}
+                  >
+                    {lang === "de" ? "English" : "Deutsch"}
+                  </a>
+                </span>
+              </div>
               <div className="relative">
                 <input
                   type="text"
