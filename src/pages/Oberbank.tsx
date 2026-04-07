@@ -384,7 +384,7 @@ const Oberbank = () => {
               </span>
             </button>
             {meldungenOpen && (
-              <div style={{ padding: "0 20px 16px 50px", color: "#555", fontSize: 13, lineHeight: 1.6 }}>
+              <div style={{ padding: "0 20px 16px 50px", color: "#495c62", fontSize: 13, lineHeight: 1.6 }}>
                 Bitte beachten Sie, dass am Karfreitag, 3. April 2026, kein Zahlungsverkehr durchgeführt wird.
                 Aufträge, die an diesem Tag eingereicht werden, werden am nächsten Bankarbeitstag verarbeitet.
               </div>
