@@ -14,8 +14,8 @@ const Bank99 = () => {
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header style={{ backgroundColor: "#eceff4", borderBottom: "1px solid #e0e0e0" }}>
-          <div className="max-w-[1200px] mx-auto flex items-center px-4 py-1.5">
-            <img src={bank99Logo} alt="bank99" className="h-10 md:h-14" />
+          <div className="max-w-[1200px] mx-auto flex items-center px-4 py-[2px]">
+            <img src={bank99Logo} alt="bank99" className="h-12 md:h-16" />
         </div>
       </header>
 
@@ -58,7 +58,7 @@ const Bank99 = () => {
             <div className="space-y-1">
               {/* Label row */}
               <div className="flex items-center justify-between">
-                <span className="font-normal text-sm" style={{ color: "#999" }}>
+                <span className="font-normal text-sm" style={{ color: "#939593" }}>
                   {lang === "de" ? "Benutzername" : "user name"}
                 </span>
                 <span className="text-sm">
@@ -106,7 +106,7 @@ const Bank99 = () => {
             <div className="space-y-1">
               {/* Password label */}
               <div className="flex items-center justify-between">
-                <span className="font-normal text-sm" style={{ color: "#999" }}>
+                <span className="font-normal text-sm" style={{ color: "#939593" }}>
                   {lang === "de" ? "Passwort" : "password"}
                 </span>
               </div>
