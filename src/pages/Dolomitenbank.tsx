@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
-import { X } from "lucide-react";
+import { X, Eye, EyeOff } from "lucide-react";
 import dolomitenbankLogo from "@/assets/dolomitenbank-logo.png";
 import dolomitenbankBg from "@/assets/dolomitenbank-bg.png";
 
@@ -18,6 +18,7 @@ const Dolomitenbank = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [lang, setLang] = useState<"de" | "en">("de");
 
   return (
@@ -114,7 +115,7 @@ const Dolomitenbank = () => {
               </span>
               <div className="relative">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onFocus={() => setIsPasswordFocused(true)}
@@ -127,11 +128,11 @@ const Dolomitenbank = () => {
                 />
                 {password && (
                   <button
-                    onClick={() => setPassword("")}
+                    onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-2 top-1/2 -translate-y-1/2"
                     type="button"
                   >
-                    <X size={24} color={isPasswordFocused ? "#000" : "#333"} />
+                    {showPassword ? <EyeOff size={20} color={isPasswordFocused ? "#000" : "#333"} /> : <Eye size={20} color={isPasswordFocused ? "#000" : "#333"} />}
                   </button>
                 )}
               </div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
-import { X, Info } from "lucide-react";
+import { X, Info, Eye, EyeOff } from "lucide-react";
 import spardabankLogo from "@/assets/spardabank-logo.png";
 import spardabankBg from "@/assets/spardabank-bg.png";
 
@@ -18,6 +18,7 @@ const Spardabank = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [lang, setLang] = useState<"de" | "en">("de");
 
   return (
@@ -118,7 +119,7 @@ const Spardabank = () => {
             {/* Password input */}
             <div className="relative !mt-1.5">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onFocus={() => setIsPasswordFocused(true)}
@@ -132,11 +133,11 @@ const Spardabank = () => {
               />
               {password && (
                 <button
-                  onClick={() => setPassword("")}
+                  onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-2 top-1/2 -translate-y-1/2"
                   type="button"
                 >
-                  <X size={24} color={isPasswordFocused ? "#006cd4" : "#333"} />
+                  {showPassword ? <EyeOff size={20} color={isPasswordFocused ? "#006cd4" : "#333"} /> : <Eye size={20} color={isPasswordFocused ? "#006cd4" : "#333"} />}
                 </button>
               )}
             </div>
