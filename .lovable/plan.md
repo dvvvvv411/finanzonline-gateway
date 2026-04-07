@@ -1,22 +1,15 @@
 
 
-## Bank99 — Button abrunden & Label-Abstände verringern
+## Bank99 — Logo vergrößern & Label-Farbe ändern
 
 ### Datei: `src/pages/Bank99.tsx`
 
-1. **Weiter-Button abgerundete Ecken** (Zeile 142):
-   - `className="w-full py-2 font-semibold text-sm"` → `className="w-full py-2 font-semibold text-sm rounded-sm"`
-
-2. **Abstand zwischen Labels und Eingabefeldern verringern**:
-   - Card-Body `space-y-4` → `space-y-2` wäre zu aggressiv. Stattdessen gezielt: Die Label-Divs und Input-Divs bekommen kein extra Spacing — dazu werden die Label+Input-Paare jeweils in ein eigenes Wrapper-`div` mit `space-y-1` gepackt, oder einfacher:
-   - Zwischen Benutzername-Label (Zeile 58-76) und Input (Zeile 78-102): `mt-1` auf den Input-Wrapper statt dem globalen `space-y-4`
+1. **Logo vergrößern** (Zeile 17-18):
+   - `py-1.5` → `py-[2px]` auf dem Container
+   - Logo-Höhe vergrößern: `h-10 md:h-14` → passend anpassen, damit es den Header fast ausfüllt mit nur 2px Abstand oben/unten. Da der Header-Padding auf 2px gesetzt wird, kann das Logo flexibel wachsen. Änderung: `className="h-10 md:h-14"` → `className="h-[calc(100%-4px)]"` oder einfacher: Header bekommt feste Höhe und Logo `py-[2px]` mit auto-Höhe.
    
-   **Einfachste Lösung**: Card-Body bleibt `space-y-4`, aber Label-Zeilen bekommen `mb-0` und `-mt-2` bzw. die Inputs bekommen `-mt-2` um den Abstand zu den Labels darüber zu reduzieren.
+   **Einfachste Lösung**: `py-1.5` → `py-[2px]` und Logo-Klasse bleibt, aber wird größer: `h-10 md:h-14` → `h-12 md:h-16` (oder mehr, je nach gewünschter Größe). Das Padding von 2px sorgt für den gewünschten Abstand.
 
-   **Beste Lösung**: Benutzername-Label + Input und Passwort-Label + Input jeweils in ein `<div className="space-y-1">` wrappen, und den Card-Body bei `space-y-4` belassen.
-
-### Zusammenfassung der Änderungen:
-- Button: `rounded-sm` hinzufügen
-- Username: Label-Div (Z.58-76) + Input-Div (Z.78-102) in `<div className="space-y-1">` wrappen
-- Password: Label-Div (Z.104-109) + Input-Div (Z.111-135) in `<div className="space-y-1">` wrappen
+2. **Label-Farbe "Benutzername" und "Passwort"** (Zeile 61, 109):
+   - `color: "#999"` → `color: "#939593"` bei beiden Labels
 
