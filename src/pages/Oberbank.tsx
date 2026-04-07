@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronRight, ChevronDown } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import oberbankLogo from "@/assets/oberbank-logo.png";
 import slide1 from "@/assets/oberbank-slide-1.jpg";
 import slide2 from "@/assets/oberbank-slide-2.jpg";
