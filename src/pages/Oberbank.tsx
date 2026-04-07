@@ -266,6 +266,7 @@ const Oberbank = () => {
               borderRadius: 2,
               overflow: "hidden",
               position: "relative",
+              ...(cardHeight ? { height: cardHeight } : {}),
             }}
           >
             {/* Image */}
