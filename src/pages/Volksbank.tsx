@@ -5,6 +5,7 @@ import volksbankBg from "@/assets/volksbank-bg.png";
 
 const Volksbank = () => {
   const [username, setUsername] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col">
