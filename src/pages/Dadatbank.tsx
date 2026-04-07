@@ -159,7 +159,7 @@ const Dadatbank = () => {
                 href="https://www.dad.at/Service/Service/Zugangsdaten"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#b631a5" }}
               >
                 {lang === "de" ? "Zugangsdaten vergessen oder gesperrt" : "Access data forgotten or locked"}
