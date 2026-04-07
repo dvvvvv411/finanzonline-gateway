@@ -109,11 +109,11 @@ const Volksbank = () => {
             </p>
 
             {/* Links */}
-            <div className="flex flex-col items-center gap-0">
+            <div className="flex flex-col items-center" style={{ gap: 0 }}>
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-[15px] no-underline hover:underline"
+                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#196bc1" }}
               >
                 Benutzername vergessen?
@@ -121,7 +121,7 @@ const Volksbank = () => {
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-[15px] no-underline hover:underline"
+                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#196bc1" }}
               >
                 Passwort vergessen?
