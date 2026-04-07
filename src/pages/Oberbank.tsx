@@ -144,7 +144,8 @@ const Oberbank = () => {
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
                   style={{
-                    flex: 1,
+                    flex: "1 1 0",
+                    minWidth: 0,
                     padding: "8px 10px",
                     border: "1px solid #ccc",
                     borderRadius: 2,
@@ -155,6 +156,8 @@ const Oberbank = () => {
                 />
                 <select
                   style={{
+                    flex: "1 1 0",
+                    minWidth: 0,
                     padding: "8px 10px",
                     border: "1px solid #ccc",
                     borderRadius: 2,
