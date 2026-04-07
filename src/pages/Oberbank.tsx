@@ -101,7 +101,7 @@ const Oberbank = () => {
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
-              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 20px" }}>
+              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 14px" }}>
                 Kundenportal Login
               </h2>
 
@@ -117,7 +117,7 @@ const Oberbank = () => {
                   border: "1px solid #ccc",
                   borderRadius: 2,
                   fontSize: 14,
-                  marginBottom: 12,
+                  marginBottom: 10,
                   outline: "none",
                   boxSizing: "border-box",
                   fontFamily: "'Roboto', sans-serif",
@@ -158,7 +158,7 @@ const Oberbank = () => {
               </div>
 
               {/* SSL text */}
-              <p style={{ fontSize: 12, color: "#666", lineHeight: 1.5, margin: "0 0 16px" }}>
+              <p style={{ fontSize: 12, color: "#666", lineHeight: 1.5, margin: "0 0 12px" }}>
                 Ihre Anmeldung im Kundenportal geschieht über gesicherte SSL Verbindungen.
               </p>
 
@@ -168,7 +168,7 @@ const Oberbank = () => {
                   display: "block",
                   width: "auto",
                   marginLeft: "auto",
-                  padding: "8px 32px",
+                  padding: "6px 24px",
                   background: "#c90000",
                   color: "#fff",
                   border: "none",
@@ -214,7 +214,7 @@ const Oberbank = () => {
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
-              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 16px" }}>
+              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 10px" }}>
                 Weiterführende Links
               </h2>
             </div>
@@ -227,10 +227,10 @@ const Oberbank = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    padding: "10px 20px",
+                    padding: "8px 20px",
                     borderTop: "1px solid #e0e0e0",
                     color: "#555",
-                    fontSize: 13,
+                    fontSize: 12,
                     textDecoration: "none",
                     transition: "background 0.15s",
                   }}
@@ -271,7 +271,7 @@ const Oberbank = () => {
             <div
               style={{
                 position: "absolute",
-                bottom: 12,
+                top: 12,
                 left: "50%",
                 transform: "translateX(-50%)",
                 display: "flex",
