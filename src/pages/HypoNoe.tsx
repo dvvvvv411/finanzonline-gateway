@@ -95,7 +95,7 @@ const HypoNoe = () => {
             </div>
 
             {/* Password label */}
-            <div className="flex items-center">
+            <div className="flex items-center -mb-2">
               <span className="font-semibold text-xs" style={{ color: "#999" }}>
                 Passwort
               </span>
