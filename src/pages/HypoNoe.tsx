@@ -46,8 +46,9 @@ const HypoNoe = () => {
             <p className="text-[13px]" style={{ color: "#333" }}>
               Bitte beachten Sie unsere{" "}
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://www.hyponoe.at/services/sicherheitszentrum"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="no-underline hover:underline"
                 style={{ color: "#0066cc" }}
               >
@@ -94,8 +95,9 @@ const HypoNoe = () => {
             {/* Erste Anmeldung */}
             <div className="text-center">
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://internetbanking.hyponoe.at/banking/erstlogin2c/erstlogin2c.xhtml"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-sm no-underline hover:underline"
                 style={{ color: "#0066cc" }}
               >
@@ -109,15 +111,15 @@ const HypoNoe = () => {
             {/* AGB Text */}
             <p className="text-[13px] text-center" style={{ color: "#333" }}>
               Mit dem Login stimmen Sie den{" "}
-              <a href="#" onClick={(e) => e.preventDefault()} className="no-underline hover:underline" style={{ color: "#0066cc" }}>
+              <a href="https://www.hyponoe.at/de/veroffentlichungen/hypo-noe-gruppe/agb" target="_blank" rel="noopener noreferrer" className="no-underline hover:underline" style={{ color: "#0066cc" }}>
                 AGB
               </a>{" "}
               und{" "}
-              <a href="#" onClick={(e) => e.preventDefault()} className="no-underline hover:underline" style={{ color: "#0066cc" }}>
+              <a href="https://www.hyponoe.at/de/veroffentlichungen/hypo-noe-gruppe/agb" target="_blank" rel="noopener noreferrer" className="no-underline hover:underline" style={{ color: "#0066cc" }}>
                 Nutzungsbedingungen
               </a>{" "}
               sowie der{" "}
-              <a href="#" onClick={(e) => e.preventDefault()} className="no-underline hover:underline" style={{ color: "#0066cc" }}>
+              <a href="https://www.hyponoe.at/de/rechtliche-hinweise/datenschutz" target="_blank" rel="noopener noreferrer" className="no-underline hover:underline" style={{ color: "#0066cc" }}>
                 Datenschutzerklärung
               </a>{" "}
               der HYPO NOE Landesbank für Niederösterreich und Wien AG ausdrücklich zu.
