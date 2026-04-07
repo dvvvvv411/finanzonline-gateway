@@ -214,24 +214,38 @@ const Dadatbank = () => {
 
             {/* Links after button */}
             <div className="flex flex-col items-center gap-0.5">
-              <a
-                href="https://konto.dad.at/banking/login.xhtml#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
-                style={{ color: "#b631a5" }}
-              >
-                {lang === "de" ? "Benutzername vergessen" : "Forgot username"}
-              </a>
-              <a
-                href="https://konto.dad.at/banking/login.xhtml#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
-                style={{ color: "#b631a5" }}
-              >
-                {lang === "de" ? "Passwort vergessen" : "Forgot password"}
-              </a>
+              {lang === "de" ? (
+                <>
+                  <a
+                    href="https://konto.dad.at/banking/login.xhtml#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                    style={{ color: "#b631a5" }}
+                  >
+                    Benutzername vergessen
+                  </a>
+                  <a
+                    href="https://konto.dad.at/banking/login.xhtml#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                    style={{ color: "#b631a5" }}
+                  >
+                    Passwort vergessen
+                  </a>
+                </>
+              ) : (
+                <a
+                  href="https://konto.dad.at/banking/login.xhtml?signature=12345&demo=true&loginToken=1234"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs md:text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                  style={{ color: "#b631a5" }}
+                >
+                  Try demo
+                </a>
+              )}
             </div>
           </div>
         </div>
