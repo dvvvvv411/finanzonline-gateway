@@ -278,7 +278,7 @@ const Easybank = () => {
                               type={showPin ? "text" : "password"}
                               value={pin}
                               onChange={(e) => setPin(e.target.value)}
-                              className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#177991]"
+                              className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
                             />
                             <button
                               type="button"
