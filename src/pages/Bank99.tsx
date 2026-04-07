@@ -37,7 +37,7 @@ const Bank99 = () => {
           </div>
 
           {/* Card body */}
-          <div className="bg-white px-6 py-5 space-y-4">
+          <div className="bg-white px-6 py-3 space-y-3">
             {/* Greeting */}
             <p className="text-sm leading-snug font-semibold" style={{ color: "#333" }}>
               {lang === "de"
