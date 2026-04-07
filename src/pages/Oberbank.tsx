@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronRight, ChevronDown } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import oberbankLogo from "@/assets/oberbank-logo.png";
 import slide1 from "@/assets/oberbank-slide-1.jpg";
 import slide2 from "@/assets/oberbank-slide-2.jpg";
@@ -34,6 +35,7 @@ const languageOptions = [
 ];
 
 const Oberbank = () => {
+  const isMobile = useIsMobile();
   const [bankingNummer, setBankingNummer] = useState("");
   const [pin, setPin] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -85,11 +87,11 @@ const Oberbank = () => {
       />
 
       {/* Red top bar */}
-      <div style={{ height: 35, background: "#c90000" }} />
+      {!isMobile && <div style={{ height: 35, background: "#c90000" }} />}
 
       {/* Cookie banner */}
-      <div style={{ background: "#e5e5ea", padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", alignItems: "center", gap: 20 }}>
-        <div style={{ flex: 9 }}>
+      <div style={{ background: "#e5e5ea", padding: isMobile ? "12px 20px" : "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "center" : "center", gap: isMobile ? 12 : 20, textAlign: isMobile ? "center" : "left" }}>
+        <div style={{ flex: isMobile ? undefined : 9 }}>
           Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website
           erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum
           Datenschutz finden Sie{" "}
@@ -102,7 +104,7 @@ const Oberbank = () => {
             hier
           </a>.
         </div>
-        <div style={{ flex: 1, textAlign: "right" }}>
+        <div style={{ flex: isMobile ? undefined : 1, textAlign: isMobile ? "center" : "right" }}>
           <button
             style={{
               background: "#c90000",
@@ -122,7 +124,7 @@ const Oberbank = () => {
       </div>
 
       {/* Header with logo */}
-      <div style={{ background: "#fff", padding: "20px 40px" }}>
+      <div style={{ background: "#fff", padding: isMobile ? "20px 20px" : "20px 40px", textAlign: isMobile ? "center" : "left" }}>
         <img src={oberbankLogo} alt="Oberbank" style={{ height: 32 }} />
       </div>
 
@@ -132,15 +134,15 @@ const Oberbank = () => {
       {/* Main content */}
       <div
         className="flex-1"
-        style={{ maxWidth: 1200, margin: "0 auto", width: "100%", padding: "30px 20px" }}
+        style={{ maxWidth: 1200, margin: "0 auto", width: "100%", padding: isMobile ? "30px 24px" : "30px 20px" }}
       >
         {/* 3-column layout */}
-        <div style={{ display: "flex", justifyContent: "flex-start", gap: 16, alignItems: "start" }}>
+        <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "flex-start", gap: 16, alignItems: isMobile ? "stretch" : "start" }}>
           {/* Login Card */}
           <div
             style={{
-              width: 300,
-              height: 308,
+              width: isMobile ? "100%" : 300,
+              height: isMobile ? "auto" : 308,
               background: "#fff",
               border: "1px solid #8e8e93",
               borderRadius: 4,
@@ -379,8 +381,8 @@ const Oberbank = () => {
           {/* Weiterführende Links */}
           <div
             style={{
-              width: 300,
-              height: 308,
+              width: isMobile ? "100%" : 300,
+              height: isMobile ? "auto" : 308,
               background: "#fff",
               border: "1px solid #8e8e93",
               borderRadius: 4,
@@ -426,8 +428,8 @@ const Oberbank = () => {
           {/* Carousel */}
           <div
             style={{
-              width: 298,
-              height: 306,
+              width: isMobile ? "100%" : 298,
+              height: isMobile ? 250 : 306,
               background: "#fff",
               border: "1px solid #8e8e93",
               borderRadius: 4,
@@ -545,12 +547,13 @@ const Oberbank = () => {
             margin: "0 auto",
             padding: "16px 20px",
             display: "flex",
-            alignItems: "center",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: isMobile ? "flex-start" : "center",
             justifyContent: "space-between",
             fontSize: 13,
           }}
         >
-          <div style={{ display: "flex", gap: 28 }}>
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 12 : 28 }}>
             {footerLinks.map((link) => (
               <a
                 key={link.label}
@@ -565,7 +568,7 @@ const Oberbank = () => {
               </a>
             ))}
           </div>
-          <span style={{ color: "#495c62" }}>© 2026 Oberbank AG</span>
+          <span style={{ color: "#495c62", marginTop: isMobile ? 16 : 0 }}>© 2026 Oberbank AG</span>
         </div>
       </div>
     </div>
