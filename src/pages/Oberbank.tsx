@@ -282,8 +282,8 @@ const Oberbank = () => {
                 width: "100%",
                 height: "100%",
                 display: "block",
-                objectFit: "contain",
-                background: "#fff",
+                objectFit: "cover",
+                objectPosition: "center",
               }}
             />
 
