@@ -104,7 +104,7 @@ const Volksbank = () => {
             <hr className="-mx-6 border-gray-200" />
 
             {/* Terms text */}
-            <p className="text-sm text-center" style={{ color: "#333" }}>
+            <p className="text-[15px] text-center" style={{ color: "#333" }}>
               Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu.
             </p>
 
