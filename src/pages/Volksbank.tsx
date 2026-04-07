@@ -65,10 +65,13 @@ const Volksbank = () => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors focus:ring-1 focus:ring-[#196bc1] focus:border-[#196bc1] focus:bg-[#d6e5f4]"
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors"
                 style={{
-                  backgroundColor: "#e8e8e8",
-                  borderColor: "#999",
+                  backgroundColor: isFocused ? "#d6e5f4" : "#e8e8e8",
+                  borderColor: isFocused ? "#196bc1" : "#999",
+                  boxShadow: isFocused ? "0 0 0 1px #196bc1" : "none",
                 }}
                 placeholder=""
               />
@@ -78,7 +81,7 @@ const Volksbank = () => {
                   className="absolute right-2 top-1/2 -translate-y-1/2"
                   type="button"
                 >
-                  <X size={18} color="#196bc1" />
+                  <X size={24} color={isFocused ? "#196bc1" : "#333"} />
                 </button>
               )}
             </div>
