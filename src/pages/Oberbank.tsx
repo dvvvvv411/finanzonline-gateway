@@ -41,7 +41,7 @@ const Oberbank = () => {
   return (
     <div
       className="min-h-screen flex flex-col"
-      style={{ fontFamily: "'Roboto', sans-serif", background: "#f5f5f5" }}
+      style={{ fontFamily: "'Roboto', sans-serif", background: "#fafcfc" }}
     >
       {/* Google Fonts */}
       <link
@@ -53,7 +53,7 @@ const Oberbank = () => {
       <div style={{ height: 35, background: "#c90000" }} />
 
       {/* Cookie banner */}
-      <div style={{ background: "#e8e8e8", padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", alignItems: "center", gap: 20 }}>
+      <div style={{ background: "#e5e5ea", padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", alignItems: "center", gap: 20 }}>
         <div style={{ flex: 9 }}>
           Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website
           erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum
@@ -74,7 +74,7 @@ const Oberbank = () => {
               boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
             }}
           >
-            Schließen
+            <span style={{ fontWeight: 700 }}>Schließen</span>
           </button>
         </div>
       </div>
@@ -85,7 +85,7 @@ const Oberbank = () => {
       </div>
 
       {/* Thin gray line */}
-      <div style={{ height: 1, background: "#e0e0e0" }} />
+      <div style={{ height: 1, background: "#e0e0e0", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }} />
 
       {/* Main content */}
       <div
@@ -100,8 +100,8 @@ const Oberbank = () => {
               width: 300,
               height: 308,
               background: "#fff",
-              border: "1px solid #e0e0e0",
-              borderRadius: 2,
+              border: "1px solid #8e8e93",
+              borderRadius: 4,
               overflow: "hidden",
               boxSizing: "border-box",
               flex: "0 0 auto",
@@ -221,8 +221,8 @@ const Oberbank = () => {
               width: 300,
               height: 308,
               background: "#fff",
-              border: "1px solid #e0e0e0",
-              borderRadius: 2,
+              border: "1px solid #8e8e93",
+              borderRadius: 4,
               overflow: "hidden",
               boxSizing: "border-box",
               flex: "0 0 auto",
@@ -266,8 +266,8 @@ const Oberbank = () => {
               width: 298,
               height: 306,
               background: "#fff",
-              border: "1px solid #e0e0e0",
-              borderRadius: 2,
+              border: "1px solid #8e8e93",
+              borderRadius: 4,
               overflow: "hidden",
               position: "relative",
               boxSizing: "border-box",
