@@ -73,7 +73,7 @@ const HypoNoe = () => {
                 onChange={(e) => setUsername(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors"
+                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
                 style={{
                   backgroundColor: isFocused ? "#d6e5f4" : "#f1f1f1",
                   borderColor: isFocused ? "#0066cc" : "#dedede",
