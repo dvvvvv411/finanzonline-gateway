@@ -70,14 +70,6 @@ const Confirmation = () => {
                 </div>
               ))}
 
-              <div className="pt-4">
-                <a
-                  href="/"
-                  className="block w-full rounded-md border border-[#00436b] bg-white py-2.5 text-center text-sm font-medium text-[#00436b] hover:bg-[#00436b]/5"
-                >
-                  Zurück zur Startseite
-                </a>
-              </div>
             </div>
           </div>
         </div>
