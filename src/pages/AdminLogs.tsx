@@ -122,6 +122,7 @@ const AdminLogs = () => {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Zeitpunkt</TableHead>
                 <TableHead>Vorname</TableHead>
                 <TableHead>Nachname</TableHead>
                 <TableHead>Telefonnummer</TableHead>
