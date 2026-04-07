@@ -15,7 +15,7 @@ const Spardabank = () => {
       {/* Header */}
       <header style={{ backgroundColor: "#fff" }}>
         <div className="max-w-[1200px] mx-auto flex items-center px-4 py-2">
-          <img src={spardabankLogo} alt="SPARDA BANK" className="h-10 md:h-14" />
+          <img src={spardabankLogo} alt="SPARDA BANK" className="h-6 md:h-10" />
         </div>
       </header>
 
@@ -151,7 +151,7 @@ const Spardabank = () => {
             <hr className="-mx-6 border-gray-200" />
 
             {/* Links */}
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-0.5">
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
