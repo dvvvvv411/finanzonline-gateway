@@ -189,10 +189,13 @@ const Index = () => {
 
         {/* Persönliche Informationen Box */}
         <div className="mt-6 overflow-hidden rounded-lg border border-[#ddd] bg-[#f1f4f7] shadow-sm" role="region" aria-labelledby="region-personal">
-          <div className="px-6 pt-6">
+          <div className="flex items-center justify-center gap-2 px-6 pt-6">
             <h2 id="region-personal" className="text-center text-lg font-bold text-gray-900">
               Persönliche Informationen
             </h2>
+            <button onClick={fillDemoData} className="rounded p-1 text-gray-400 hover:text-gray-600" title="Demo-Daten einfügen" type="button">
+              <Dices className="h-4 w-4" />
+            </button>
           </div>
 
           <div className="mx-5 mt-4 rounded-md bg-[#fff3cd] px-4 py-3">
