@@ -29,7 +29,7 @@ const Schelhammer = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="w-full <div className="w-full max-w-[620px] rounded overflow-hidden"> rounded overflow-hidden">
+        <div className="w-full max-w-[620px] rounded overflow-hidden">
           {/* Red header bar */}
           <div
             className="px-6 py-4 text-white font-semibold text-2xl"
