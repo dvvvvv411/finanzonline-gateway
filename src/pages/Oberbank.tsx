@@ -92,8 +92,8 @@ const Oberbank = () => {
       {/* Mobile: Header first, then cookie banner */}
       {isMobile && (
         <>
-          <div style={{ background: "#fff", padding: "20px 20px", textAlign: "center" }}>
-            <img src={oberbankLogo} alt="Oberbank" style={{ height: 32 }} />
+          <div style={{ background: "#fff", padding: "20px 20px", display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}>
+            <img src={oberbankLogo} alt="Oberbank" style={{ height: 32, display: "block", margin: "0 auto" }} />
           </div>
           <div style={{ height: 1, background: "#e0e0e0", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }} />
         </>
