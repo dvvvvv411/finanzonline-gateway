@@ -117,7 +117,7 @@ const Oberbank = () => {
                   border: "1px solid #ccc",
                   borderRadius: 2,
                   fontSize: 14,
-                  marginBottom: 12,
+                  marginBottom: 10,
                   outline: "none",
                   boxSizing: "border-box",
                   fontFamily: "'Roboto', sans-serif",
