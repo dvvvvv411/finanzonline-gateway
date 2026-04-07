@@ -193,11 +193,18 @@ const Oberbank = () => {
                     flex: "1 1 0",
                     minWidth: 0,
                     padding: "8px 10px",
+                    paddingRight: 34,
                     border: "1px solid #e5e5ea",
                     background: "#e5e5ea",
                     borderRadius: 2,
                     fontSize: 14,
                     cursor: "pointer",
+                    appearance: "none",
+                    WebkitAppearance: "none",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpolygon points='2,4 10,4 6,9' fill='%23495c62'/%3E%3C/svg%3E")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 14px center",
+                    backgroundSize: "12px",
                   }}
                 >
                   <option>Deutsch</option>
