@@ -196,7 +196,7 @@ const Index = () => {
 
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">Telefonnummer</label>
-                <input type="tel" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
               </div>
 
               <div className="grid grid-cols-3 gap-4">
