@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface LoadingOverlayProps {
   message?: string;
@@ -8,6 +8,8 @@ interface LoadingOverlayProps {
 
 const LoadingOverlay = ({ message = "Daten werden überprüft...", duration = 2500, onComplete }: LoadingOverlayProps) => {
   const [visible, setVisible] = useState(true);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -17,10 +19,10 @@ const LoadingOverlay = ({ message = "Daten werden überprüft...", duration = 25
   useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(false);
-      onComplete();
+      onCompleteRef.current();
     }, duration);
     return () => clearTimeout(timer);
-  }, [duration, onComplete]);
+  }, [duration]);
 
   if (!visible) return null;
 
