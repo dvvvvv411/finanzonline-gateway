@@ -381,8 +381,8 @@ const Oberbank = () => {
           {/* Weiterführende Links */}
           <div
             style={{
-              width: 300,
-              height: 308,
+              width: isMobile ? "100%" : 300,
+              height: isMobile ? "auto" : 308,
               background: "#fff",
               border: "1px solid #8e8e93",
               borderRadius: 4,
