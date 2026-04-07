@@ -127,9 +127,11 @@ const Dolomitenbank = () => {
 
             {/* Info text */}
             <p className="text-[15px] text-center" style={{ color: "#000" }}>
-              {lang === "de"
-                ? "Funktioniert der Einstieg nicht? Haben Sie noch eine Verfügernummer? - Hier erfahren Sie wie Sie zu Ihrem neuem Benutzername / Passwort kommen. Ein Einstieg mit Ihrer bisherigen Verfügernummer ist nicht mehr möglich!"
-                : "Having trouble logging in? Do you still have a disposal number? - Here you can find out how to get your new username / password. Logging in with your previous disposal number is no longer possible!"}
+              {lang === "de" ? (
+                <>Funktioniert der Einstieg nicht? Haben Sie noch eine Verfügernummer? - <a href="https://www.dolomitenbank.at/m010/dolomitenbank/de/produkt/umstellung_dolomitenbanking.jsp" target="_blank" rel="noopener noreferrer" className="no-underline hover:underline" style={{ color: "#637781" }}>Hier</a> erfahren Sie wie Sie zu Ihrem neuem Benutzername / Passwort kommen. Ein Einstieg mit Ihrer bisherigen Verfügernummer ist nicht mehr möglich!</>
+              ) : (
+                <>Doesnt getting started work? Do you still have a authorised party number ? - <a href="https://www.dolomitenbank.at/m010/dolomitenbank/de/produkt/umstellung_dolomitenbanking.jsp" target="_blank" rel="noopener noreferrer" className="no-underline hover:underline" style={{ color: "#637781" }}>Here</a> you can find out how to get your new username / password. It is no longer possible to start with your previous authorised party number!</>
+              )}
             </p>
 
             {/* Full-width divider above button */}
