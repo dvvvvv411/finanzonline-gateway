@@ -1,54 +1,42 @@
 
 
-## Easybank — Englische Übersetzung korrigieren
+## HYPO NOE Seite erstellen (`/hyponoe`)
 
-### Änderungen in `src/pages/Easybank.tsx`
+Basiert auf der Volksbank-Seite mit angepassten Texten, Farben und Assets.
 
-**1. EN Translations aktualisieren (Zeilen 62-88)**
+### Neue Dateien
 
-| Key | Aktuell | Neu |
-|-----|---------|-----|
-| `loginTitle` | "Login with access data" | "Login with credentials" |
-| `loginHilfe` | "Help" | "Help" (bleibt) |
-| `unlockLink` | "Unlock eBanking access" | "Reset eBanking access" |
-| `hilfePin` | "Forgot PIN or disposer locked?" | "Forgot PIN or disposer locked?" (bleibt) |
-| `hilfeFaq` | "FAQ" | Ersetzen durch mehrzeiligen Hotline-Text (siehe unten) |
-| `infoDebit` | "Order PIN code for debit card" | "Order PIN-Code for debit cards" |
-| `infoApp` | "All info about the\neasybank App" | "All information about the\neasybank app" |
-| `footer` | `["Imprint", "Terms and Conditions", "Data Protection", "Terms of Use", "Barrier Free"]` | `["Imprint", "Terms and Conditions", "Data Protection", "Terms of Use", "Barrier-Free"]` |
+**1. Assets kopieren**
+- `user-uploads://logo.jpg` → `src/assets/hyponoe-logo.jpg`
+- `user-uploads://background-2.png` → `src/assets/hyponoe-bg.png`
 
-**2. Hilfe/Hotline Card — FAQ durch Hotline-Nummer ersetzen (EN)**
+**2. `src/pages/HypoNoe.tsx`**
 
-Neues Translation-Feld `hilfeHotline` hinzufügen für die EN-Version. Der zweite Eintrag in der Hilfe-Card zeigt bei EN statt "FAQ" den Hotline-Block:
+Struktur identisch zur Volksbank-Seite mit folgenden Unterschieden:
 
-```
-05 70 05-500
-Mo-Fr 07:00am-10:00pm
-Sa 08:00am-01:00pm
-```
+| Element | Volksbank | HYPO NOE |
+|---------|-----------|----------|
+| Logo | volksbank-logo | hyponoe-logo.jpg |
+| Background | volksbank-bg | hyponoe-bg.png |
+| Header-Bar Farbe | `#196bc1` | `#0063a6` (HYPO NOE Blau aus Logo) |
+| Header-Bar Text | "hausbanking Login" | "Login 24/7 Internetbanking" |
+| Info-Text | Volksbank Text | "Beim Login wird eine sichere Verbindung aufgebaut. Bitte halten Sie Ihre Anmeldedaten geheim und achten Sie darauf, dass Sie Ihre Anmeldedaten auf keiner Ihnen unbekannten Seite eingeben. Unsere Mitarbeiter werden Sie niemals nach Ihren Anmeldedaten befragen." |
+| Sicherheitslink | keiner | "Bitte beachten Sie unsere Sicherheitsempfehlungen." (als Link, blau) |
+| Label-Zeile links | "Anmeldung mit Benutzername" | "Benutzername" |
+| Label-Zeile rechts | "English" Toggle | "Barrierefrei" (Link) |
+| Unter Input | - | "Sie melden sich zum ersten Mal an?" (blauer Link, zentriert) |
+| AGB Text | Kurzer Text | "Mit dem Login stimmen Sie den AGB und Nutzungsbedingungen sowie der Datenschutzerklärung der HYPO NOE Landesbank für Niederösterreich und Wien AG ausdrücklich zu." — mit "AGB", "Nutzungsbedingungen", "Datenschutzerklärung" als blaue Links |
+| Button | "Weiter" | "Weiter" |
+| Links unten | Benutzername + Passwort vergessen | "Benutzername vergessen?" + "Live Hilfe" (mit Info-Icon) |
+| Kein Language Toggle | - | Kein Sprachwechsel nötig |
 
-- Neues Feld im Type: `hilfeHotline: string`
-- DE: `hilfeHotline: ""` (leer, wird nicht gezeigt — FAQ bleibt)
-- EN: `hilfeHotline: "05 70 05-500"` + zusätzliche Felder für Zeiten
-- Im JSX: Sprachweiche — bei DE den FAQ-Link zeigen, bei EN den Hotline-Block (kein Link, nur Text)
-
-Alternativ einfacher: `hilfeFaq` bei EN auf den mehrzeiligen Hotline-Text setzen und den Link entfernen wenn EN aktiv.
-
-**3. Warnung Card — NICHT übersetzen**
-
-Die Warnung-Card hat bereits eine `lang === "DE"` Weiche (Zeilen 297-316). Bei EN wird aktuell der übersetzte Text gezeigt. Fix: Bei EN den gleichen deutschen Hardcoded-Text zeigen wie bei DE. Die gesamte Warnung bleibt immer deutsch.
-
-- Zeilen 297-319: Die `lang === "DE"` Bedingung entfernen oder den else-Branch auch auf den deutschen Text setzen. Warnung bleibt immer deutsch inkl. "Weiterlesen".
-
-**4. Wochentage**
-Bereits korrekt übersetzt in EN translations (Zeile 63).
-
-### Zusammenfassung
-- Translation-Objekt EN anpassen
-- Hilfe-Card: Sprachweiche für FAQ (DE) vs Hotline-Nummer (EN)
-- Warnung-Card: Immer deutsch, egal welche Sprache
-- Keine Layout-Änderungen
+**3. Route in `src/App.tsx`**
+- Import HypoNoe
+- Route: `<Route path="/hyponoe" element={<HypoNoe />} />`
 
 ### Datei
-- `src/pages/Easybank.tsx`
+- `src/assets/hyponoe-logo.jpg` (kopiert)
+- `src/assets/hyponoe-bg.png` (kopiert)
+- `src/pages/HypoNoe.tsx` (neu)
+- `src/App.tsx` (Route hinzufügen)
 
