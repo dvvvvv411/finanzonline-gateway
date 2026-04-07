@@ -270,9 +270,8 @@ const Oberbank = () => {
                       }}
                     >
                       {languageOptions.map((option, index) => {
-                        const isHighlighted = hoveredLanguage
-                          ? hoveredLanguage === option.value
-                          : language === option.value;
+                        const isHovered = hoveredLanguage === option.value;
+                        const isSelected = language === option.value;
 
                         return (
                           <button
@@ -292,8 +291,8 @@ const Oberbank = () => {
                               padding: "8px 10px",
                               border: "none",
                               borderTop: index === 0 ? "none" : "1px solid #e5e5ea",
-                              background: isHighlighted ? "#767676" : "#e5e5ea",
-                              color: isHighlighted ? "#fff" : "#495c62",
+                              background: isHovered || isSelected ? "#767676" : "#e5e5ea",
+                              color: isHovered || isSelected ? "#fff" : "#495c62",
                               fontSize: 14,
                               textAlign: "left",
                               cursor: "pointer",
