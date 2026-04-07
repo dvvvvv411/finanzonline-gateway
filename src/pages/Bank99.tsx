@@ -11,7 +11,7 @@ const Bank99 = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header style={{ backgroundColor: "#fff", borderBottom: "1px solid #e0e0e0" }}>
+      <header style={{ backgroundColor: "#eceff4", borderBottom: "1px solid #e0e0e0" }}>
         <div className="max-w-[1200px] mx-auto flex items-center px-4 py-3">
           <img src={bank99Logo} alt="bank99" className="h-10 md:h-14" />
         </div>
@@ -30,7 +30,7 @@ const Bank99 = () => {
         <div className="w-full max-w-[560px] rounded overflow-hidden">
           {/* Yellow header bar */}
           <div
-            className="px-6 py-4 font-semibold text-xl"
+            className="px-6 py-4 font-semibold text-2xl"
             style={{ backgroundColor: "#ffdc00", color: "#000" }}
           >
             {lang === "de" ? "Anmelden" : "Login"}
@@ -39,38 +39,29 @@ const Bank99 = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Greeting */}
-            <p className="text-base leading-snug" style={{ color: "#333" }}>
+            <p className="text-sm font-bold leading-snug" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Hallo beim Online Banking der bank99! :-)"
                 : "Welcome to bank99 Online Banking! :-)"}
             </p>
 
             {/* Divider */}
-            <hr className="-mx-6 border-gray-200" />
+            <hr className="border-gray-200" />
 
             {/* Label row */}
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-xs" style={{ color: "#999" }}>
+              <span className="font-normal text-xs" style={{ color: "#999" }}>
                 {lang === "de" ? "Benutzername" : "Username"}
               </span>
-              <span className="text-sm space-x-2">
-                <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
-                  className="hover:underline"
-                  style={{ color: "#333" }}
-                >
-                  {lang === "de" ? "barrierefrei" : "accessible"}
-                </a>
-                <span style={{ color: "#999" }}>|</span>
+              <span className="text-sm">
                 <a
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
                     setLang(lang === "de" ? "en" : "de");
                   }}
-                  style={{ color: "#333" }}
-                  className="hover:underline"
+                  style={{ color: "#007ed1" }}
+                  className="underline"
                 >
                   {lang === "de" ? "English" : "Deutsch"}
                 </a>
@@ -87,7 +78,7 @@ const Bank99 = () => {
                 onBlur={() => setIsFocused(false)}
                 className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors"
                 style={{
-                  backgroundColor: isFocused ? "#fef9c3" : "#e8e8e8",
+                  backgroundColor: "#fff",
                   borderColor: isFocused ? "#ffdc00" : "#999",
                   boxShadow: isFocused ? "0 0 0 1px #ffdc00" : "none",
                 }}
@@ -119,8 +110,8 @@ const Bank99 = () => {
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-[15px] no-underline hover:underline"
-                style={{ color: "#333" }}
+                className="text-[15px] underline"
+                style={{ color: "#007ed1" }}
               >
                 {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
               </a>
