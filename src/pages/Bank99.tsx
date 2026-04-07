@@ -13,7 +13,7 @@ const Bank99 = () => {
       {/* Header */}
       <header style={{ backgroundColor: "#eceff4", borderBottom: "1px solid #e0e0e0" }}>
         <div className="max-w-[1200px] mx-auto flex items-center px-4 <div className="max-w-[1200px] mx-auto flex items-center px-4 py-1.5">">
-          <img src={bank99Logo} alt="bank99" className="h-10 md:h-14" />
+          <img src={bank99Logo} alt="bank99" <img src={bank99Logo} alt="bank99" className="h-8 md:h-10" /> />
         </div>
       </header>
 
