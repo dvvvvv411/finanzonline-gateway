@@ -99,10 +99,10 @@ const Oberbank = () => {
       {/* Main content */}
       <div
         className="flex-1"
-        style={{ maxWidth: 900, margin: "0 auto", width: "100%", padding: "30px 20px" }}
+        style={{ maxWidth: 780, margin: "0 auto", width: "100%", padding: "30px 20px" }}
       >
         {/* 3-column layout */}
-        <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 16, alignItems: "start" }}>
           {/* Login Card */}
           <div
             ref={loginCardRef}
