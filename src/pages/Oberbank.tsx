@@ -235,22 +235,32 @@ const Oberbank = () => {
               style={{
                 borderTop: "1px solid #e0e0e0",
                 marginTop: "auto",
-                padding: "12px 20px",
                 display: "flex",
-                alignItems: "center",
+                alignItems: "stretch",
                 justifyContent: "flex-end",
               }}
             >
-              <a
-                href="#"
+              <div
                 style={{
-                  color: "#495c62",
-                  fontSize: 14,
-                  textDecoration: "none",
+                  borderLeft: "1px solid #e0e0e0",
+                  borderRight: "1px solid #e0e0e0",
+                  padding: "12px 20px",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                Erstanmeldung
-              </a>
+                <a
+                  href="#"
+                  style={{
+                    color: "#495c62",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    textDecoration: "none",
+                  }}
+                >
+                  Erstanmeldung
+                </a>
+              </div>
             </div>
           </div>
 
