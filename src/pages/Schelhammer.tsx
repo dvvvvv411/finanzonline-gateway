@@ -152,7 +152,7 @@ const Schelhammer = () => {
 
             {/* Weiter button */}
             <button
-              className="w-full py-2 text-white font-semibold rounded text-base"
+              className="w-full py-2 text-white font-semibold rounded-md text-base"
               style={{ backgroundColor: "#d31220" }}
             >
               {lang === "de" ? "Weiter" : "Continue"}
