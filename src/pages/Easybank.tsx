@@ -197,7 +197,7 @@ const Easybank = () => {
           <div className="flex gap-4 p-4" style={{ minHeight: "520px" }}>
             {/* Left: Login Card */}
             <div className="w-[370px] flex-shrink-0">
-              <div className="border border-black rounded bg-white">
+              <div className="border border-[#949494] rounded bg-white">
                 {/* Card header */}
                 <div className="px-4 py-3 bg-[#ecf4dc] flex items-center justify-between rounded-t relative">
                   <h1 className="text-sm font-semibold text-black">{t.loginTitle}</h1>
