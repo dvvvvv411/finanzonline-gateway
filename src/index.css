@@ -23,13 +23,6 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'PostSans';
-  src: url('/src/assets/fonts/PostSans_Medium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-}
-
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
