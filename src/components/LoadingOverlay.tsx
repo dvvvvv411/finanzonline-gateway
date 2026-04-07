@@ -10,6 +10,11 @@ const LoadingOverlay = ({ message = "Daten werden überprüft...", duration = 25
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(false);
       onComplete();
