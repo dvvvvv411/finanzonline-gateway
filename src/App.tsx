@@ -20,6 +20,7 @@ import BankhausSpaengler from "./pages/BankhausSpaengler.tsx";
 import Dolomitenbank from "./pages/Dolomitenbank.tsx";
 import Spardabank from "./pages/Spardabank.tsx";
 import Dadatbank from "./pages/Dadatbank.tsx";
+import Marchfelderbank from "./pages/Marchfelderbank.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
