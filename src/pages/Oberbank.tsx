@@ -177,6 +177,7 @@ const Oberbank = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("Oberbank - Login", oberbankIcon);
 
   const isMobile = useIsMobile();
   const [bankingNummer, setBankingNummer] = useState("");

