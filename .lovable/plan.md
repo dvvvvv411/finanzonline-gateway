@@ -1,30 +1,24 @@
 
 
-## Oberbank — Alle Texte auf `#495c62` umstellen
+## Oberbank — Visuelle Anpassungen (6 Änderungen)
 
-### Betroffene Texte in `src/pages/Oberbank.tsx`
+### Datei: `src/pages/Oberbank.tsx`
 
-Folgende `color`-Werte werden auf `#495c62` geändert:
+| Nr | Was | Aktuell | Neu |
+|----|-----|---------|-----|
+| 1 | **Card-Borders (alle 3)** | `border: "1px solid #e0e0e0"` | `border: "1px solid #8e8e93"` |
+| 2 | **Card-Ecken (alle 3)** | `borderRadius: 2` | `borderRadius: 4` |
+| 3 | **Content-Hintergrund** | `background: "#f5f5f5"` (Zeile 44, Root-Div) | `background: "#fafcfc"` |
+| 4 | **Cookie-Banner Hintergrund** | `background: "#e8e8e8"` (Zeile 56) | `background: "#e5e5ea"` |
+| 5 | **Divider unter Header** | `height: 1, background: "#e0e0e0"` (Zeile 88) | `height: 1, background: "#e0e0e0", boxShadow: "0 2px 4px rgba(0,0,0,0.1)"` |
+| 6 | **Schließen-Button Text** | `Schließen` (Zeile 77) | `<span style={{ fontWeight: 700 }}>Schließen</span>` |
 
-| Zeile | Element | Aktuell | Bleibt/Ändert |
-|-------|---------|---------|---------------|
-| 111 | "Kundenportal Login" Titel | `#333` | → `#495c62` |
-| 172 | SSL-Text | `#666` | → `#495c62` |
-| 208 | "Erstanmeldung" Link | `#333` | → `#495c62` |
-| 232 | "Weiterführende Links" Titel | `#333` | → `#495c62` |
-| 247 | Link-Texte | `#555` | → `#495c62` |
-| 351 | "Wichtige Meldungen" Titel | `#333` | → `#495c62` |
-| 379 | Meldung-Titel (bold) | `#333` | → `#495c62` |
-| 382 | Meldung-Datum | `#888` | → `#495c62` |
-| 387 | Meldung-Inhalt | `#555` | → `#495c62` |
-| 414 | Footer-Links | `#555` | → `#495c62` |
-| 422 | Footer-Copyright | `#888` | → `#495c62` |
-
-### Unverändert (wie gewünscht)
-- Cookie-Banner Text (`#333`) und Button
-- Eingabefelder (Banking-Nummer, PIN, Dropdown)
-- Buttons ("Weiter", "Schließen")
-
-### Datei
-- `src/pages/Oberbank.tsx` — 11 color-Werte ändern
+### Betroffene Zeilen
+- Zeile 44: Root background
+- Zeile 56: Cookie-Banner background
+- Zeile 77: Schließen bold
+- Zeile 88: Divider shadow
+- Zeilen 103-104: Login Card border + radius
+- Zeilen 224-225: Links Card border + radius
+- Zeilen 269-270: Carousel Card border + radius
 
