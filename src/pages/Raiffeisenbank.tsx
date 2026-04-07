@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { ExternalLink, ChevronDown, Check } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import bgImage from "@/assets/rbg_wald.jpg";
 
 const bundeslaender = [
