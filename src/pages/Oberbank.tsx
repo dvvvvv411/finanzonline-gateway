@@ -269,6 +269,8 @@ const Oberbank = () => {
               borderRadius: 2,
               overflow: "hidden",
               position: "relative",
+              boxSizing: "border-box",
+              flex: "0 0 auto",
             }}
           >
             {/* Image */}
