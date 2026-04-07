@@ -175,7 +175,7 @@ const Easybank = () => {
             <div className="flex items-center justify-between">
               <img src={easybankLogo} alt="easybank" className="h-20" />
               <div className="flex items-center gap-3">
-                <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:underline font-semibold">
+                <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:underline">
                   {t.hilfe}
                 </a>
                 <select
