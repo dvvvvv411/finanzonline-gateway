@@ -51,26 +51,29 @@ const Oberbank = () => {
       <div style={{ height: 8, background: "#c90000" }} />
 
       {/* Cookie banner */}
-      <div style={{ background: "#e8e8e8", padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5 }}>
-        Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website
-        erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum
-        Datenschutz finden Sie{" "}
-        <span style={{ textDecoration: "underline", cursor: "pointer" }}>hier</span>.
-        <button
-          style={{
-            float: "right",
-            background: "#c90000",
-            color: "#fff",
-            border: "none",
-            padding: "6px 20px",
-            borderRadius: 3,
-            cursor: "pointer",
-            fontSize: 13,
-            fontFamily: "'Roboto', sans-serif",
-          }}
-        >
-          Schließen
-        </button>
+      <div style={{ background: "#e8e8e8", padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", alignItems: "center", gap: 20 }}>
+        <div style={{ flex: 9 }}>
+          Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website
+          erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum
+          Datenschutz finden Sie{" "}
+          <span style={{ textDecoration: "underline", cursor: "pointer" }}>hier</span>.
+        </div>
+        <div style={{ flex: 1, textAlign: "right" }}>
+          <button
+            style={{
+              background: "#c90000",
+              color: "#fff",
+              border: "none",
+              padding: "6px 20px",
+              borderRadius: 20,
+              cursor: "pointer",
+              fontSize: 13,
+              fontFamily: "'Roboto', sans-serif",
+            }}
+          >
+            Schließen
+          </button>
+        </div>
       </div>
 
       {/* Header with logo */}
