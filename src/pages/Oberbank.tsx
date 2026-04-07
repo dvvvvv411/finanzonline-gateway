@@ -147,11 +147,11 @@ const Oberbank = () => {
                     flex: "1 1 0",
                     minWidth: 0,
                     padding: "8px 10px",
-                    border: "1px solid #ccc",
+                    border: "1px solid #e5e5ea",
+                    background: "#e5e5ea",
                     borderRadius: 2,
                     fontSize: 14,
                     outline: "none",
-                    fontFamily: "'Roboto', sans-serif",
                   }}
                 />
                 <select
