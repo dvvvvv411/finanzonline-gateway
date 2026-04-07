@@ -1,42 +1,24 @@
 
 
-## HYPO NOE Seite erstellen (`/hyponoe`)
+## HYPO NOE — Styling-Anpassungen
 
-Basiert auf der Volksbank-Seite mit angepassten Texten, Farben und Assets.
+### Änderungen in `src/pages/HypoNoe.tsx`
 
-### Neue Dateien
-
-**1. Assets kopieren**
-- `user-uploads://logo.jpg` → `src/assets/hyponoe-logo.jpg`
-- `user-uploads://background-2.png` → `src/assets/hyponoe-bg.png`
-
-**2. `src/pages/HypoNoe.tsx`**
-
-Struktur identisch zur Volksbank-Seite mit folgenden Unterschieden:
-
-| Element | Volksbank | HYPO NOE |
-|---------|-----------|----------|
-| Logo | volksbank-logo | hyponoe-logo.jpg |
-| Background | volksbank-bg | hyponoe-bg.png |
-| Header-Bar Farbe | `#196bc1` | `#0063a6` (HYPO NOE Blau aus Logo) |
-| Header-Bar Text | "hausbanking Login" | "Login 24/7 Internetbanking" |
-| Info-Text | Volksbank Text | "Beim Login wird eine sichere Verbindung aufgebaut. Bitte halten Sie Ihre Anmeldedaten geheim und achten Sie darauf, dass Sie Ihre Anmeldedaten auf keiner Ihnen unbekannten Seite eingeben. Unsere Mitarbeiter werden Sie niemals nach Ihren Anmeldedaten befragen." |
-| Sicherheitslink | keiner | "Bitte beachten Sie unsere Sicherheitsempfehlungen." (als Link, blau) |
-| Label-Zeile links | "Anmeldung mit Benutzername" | "Benutzername" |
-| Label-Zeile rechts | "English" Toggle | "Barrierefrei" (Link) |
-| Unter Input | - | "Sie melden sich zum ersten Mal an?" (blauer Link, zentriert) |
-| AGB Text | Kurzer Text | "Mit dem Login stimmen Sie den AGB und Nutzungsbedingungen sowie der Datenschutzerklärung der HYPO NOE Landesbank für Niederösterreich und Wien AG ausdrücklich zu." — mit "AGB", "Nutzungsbedingungen", "Datenschutzerklärung" als blaue Links |
-| Button | "Weiter" | "Weiter" |
-| Links unten | Benutzername + Passwort vergessen | "Benutzername vergessen?" + "Live Hilfe" (mit Info-Icon) |
-| Kein Language Toggle | - | Kein Sprachwechsel nötig |
-
-**3. Route in `src/App.tsx`**
-- Import HypoNoe
-- Route: `<Route path="/hyponoe" element={<HypoNoe />} />`
+| Nr | Was | Aktuell | Neu |
+|----|-----|---------|-----|
+| 1 | Header border | `borderBottom: "1px solid #e0e0e0"` | Entfernen |
+| 2 | Header padding | `py-3` | `py-2` (schmaler) |
+| 3 | Alle `#0063a6` | 6 Stellen im Code | → `#0066cc` |
+| 4 | Info-Text + Sicherheitstext | `text-base` | `text-[13px]` |
+| 5 | AGB-Text | `text-[15px]` | `text-[13px]` |
+| 6 | Sicherheitsempfehlungen | Ganzer Satz als blauer Link | "Bitte beachten Sie unsere " als normaler schwarzer Text + nur "Sicherheitsempfehlungen." als blauer Link |
+| 7 | Weiter Button | `py-3` | `py-2` |
+| 8 | Input Normalzustand | `bg: #e8e8e8, border: #999` | `bg: #f1f1f1, border: #dedede` |
+| 9 | Barrierefrei | Link vorhanden | Komplett entfernen (Zeilen 65-72), Label-Zeile wird nur noch "Benutzername" |
+| 10 | Header-Bar Text | `text-xl` | `text-2xl` (größer) |
+| 11 | Card Ecken | `rounded` | Entfernen (kantig) |
+| 12 | Button Ecken | `rounded` | Entfernen (kantig) |
 
 ### Datei
-- `src/assets/hyponoe-logo.jpg` (kopiert)
-- `src/assets/hyponoe-bg.png` (kopiert)
-- `src/pages/HypoNoe.tsx` (neu)
-- `src/App.tsx` (Route hinzufügen)
+- `src/pages/HypoNoe.tsx`
 
