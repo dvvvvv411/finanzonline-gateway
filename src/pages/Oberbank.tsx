@@ -124,7 +124,7 @@ const Oberbank = () => {
       </div>
 
       {/* Header with logo */}
-      <div style={{ background: "#fff", padding: "20px 40px" }}>
+      <div style={{ background: "#fff", padding: isMobile ? "20px 20px" : "20px 40px", textAlign: isMobile ? "center" : "left" }}>
         <img src={oberbankLogo} alt="Oberbank" style={{ height: 32 }} />
       </div>
 
