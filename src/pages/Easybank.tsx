@@ -156,7 +156,7 @@ const Easybank = () => {
           {/* Header */}
           <header className="bg-white px-4 py-2">
             <div className="flex items-center justify-end gap-3">
-              <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:underline">
+              <a href="https://www.easybank.at/easybank/services/easy-banking#ebankinghilfe" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold transition-all">
                 {t.hilfe}
               </a>
               <div className="relative">
