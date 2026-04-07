@@ -62,6 +62,7 @@ const Schelhammer = () => {
                     e.preventDefault();
                     setLang(lang === "de" ? "en" : "de");
                   }}
+                  className="no-underline hover:underline"
                   style={{ color: "#d31220" }}
                 >
                   {lang === "de" ? "English" : "Deutsch"}
