@@ -169,7 +169,7 @@ const Oberbank = () => {
               </div>
 
               {/* SSL text */}
-              <p style={{ fontSize: 12, color: "#666", lineHeight: 1.5, margin: "0 0 12px" }}>
+              <p style={{ fontSize: 12, color: "#495c62", lineHeight: 1.5, margin: "0 0 12px" }}>
                 Ihre Anmeldung im Kundenportal geschieht über gesicherte SSL Verbindungen.
               </p>
 
