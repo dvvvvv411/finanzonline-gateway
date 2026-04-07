@@ -258,13 +258,13 @@ const Oberbank = () => {
           {/* Carousel */}
           <div
             style={{
-              flex: 1,
+              width: 298,
+              height: 306,
               background: "#fff",
               border: "1px solid #e0e0e0",
               borderRadius: 2,
               overflow: "hidden",
               position: "relative",
-              ...(cardHeight ? { height: cardHeight } : {}),
             }}
           >
             {/* Image */}
