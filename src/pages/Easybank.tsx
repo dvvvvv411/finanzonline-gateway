@@ -62,7 +62,7 @@ const translations: Record<Lang, {
   EN: {
     days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     hilfe: "Help",
-    loginTitle: "Login with access data",
+    loginTitle: "Login with credentials",
     loginHilfe: "Help",
     tabVerfueger: "Disposer",
     verfuegerLabel: "Disposer number",
@@ -70,19 +70,19 @@ const translations: Record<Lang, {
     pinLabel: "PIN",
     pinHint: "8 - 16 characters",
     loginBtn: "Login",
-    unlockLink: "Unlock eBanking access",
-    warnungTitle: "Warning",
-    warnungBold: "Phishing alert",
-    warnungText: "We will never ask you by email or SMS to enter or confirm TANs, account or credit card data!",
-    warnungLink: "Read more",
+    unlockLink: "Reset eBanking access",
+    warnungTitle: "Warnung",
+    warnungBold: "Achtung vor Phishing",
+    warnungText: "",
+    warnungLink: "Weiterlesen",
     hilfeTitle: "Help/Hotline",
     hilfePin: "Forgot PIN or disposer locked?",
-    hilfeFaq: "FAQ",
+    hilfeFaq: "",
     infoTitle: "Info",
-    infoDebit: "Order PIN code for debit card",
-    infoApp: "All info about the\neasybank App",
+    infoDebit: "Order PIN-Code for debit cards",
+    infoApp: "All information about the\neasybank app",
     infoWatchlist: "To Watchlist Internet",
-    footer: ["Imprint", "Terms and Conditions", "Data Protection", "Terms of Use", "Barrier Free"],
+    footer: ["Imprint", "Terms and Conditions", "Data Protection", "Terms of Use", "Barrier-Free"],
     tooltipTitle: "Login",
     tooltipText: "Log in with your eBanking access data (with disposer number and PIN) or via app (with disposer number or email address).",
   },
@@ -288,34 +288,26 @@ const Easybank = () => {
                 {/* Warnung */}
                 <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col min-h-[220px]">
                   <div className="px-3 py-2">
-                    <h2 className="text-[#008080] text-base font-medium">{t.warnungTitle}</h2>
+                    <h2 className="text-[#008080] text-base font-medium">Warnung</h2>
                   </div>
                   <div className="h-[2px] bg-[#f6f6f6]" />
                   <div className="p-3 flex-1">
                     <div className="flex gap-2">
                       <RedWarningIcon />
                       <div>
-                        {lang === "DE" ? (
-                          <p className="text-xs text-black leading-snug">
-                            <strong>{"Achtung vor"}<br />{"Phishing"}</strong>
-                            <br />
-                            {"Wir fordern Sie"}<br />
-                            {"niemals per E-Mail"}<br />
-                            {"oder SMS auf, TANs,"}<br />
-                            {"Konto- und"}<br />
-                            {"Kreditkarten-Daten"}<br />
-                            {"einzugeben oder zu"}<br />
-                            {"bestätigen!"}
-                          </p>
-                        ) : (
-                          <p className="text-xs text-black leading-snug">
-                            <strong>{t.warnungBold}</strong>
-                            <br />
-                            {t.warnungText}
-                          </p>
-                        )}
+                        <p className="text-xs text-black leading-snug">
+                          <strong>{"Achtung vor"}<br />{"Phishing"}</strong>
+                          <br />
+                          {"Wir fordern Sie"}<br />
+                          {"niemals per E-Mail"}<br />
+                          {"oder SMS auf, TANs,"}<br />
+                          {"Konto- und"}<br />
+                          {"Kreditkarten-Daten"}<br />
+                          {"einzugeben oder zu"}<br />
+                          {"bestätigen!"}
+                        </p>
                         <a href="https://www.easybank.at/easybank/sicherheitsinformationen" target="_blank" rel="noopener noreferrer" className="text-xs text-[#4b9920] underline hover:no-underline mt-0">
-                          {t.warnungLink}
+                          Weiterlesen
                         </a>
                       </div>
                     </div>
@@ -336,10 +328,18 @@ const Easybank = () => {
                         {t.hilfePin}
                       </a>
                       <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
-                      <a href="https://hilfe.easybank.at/faq-easybank/haeufig-gestellte-fragen/ebanking-zugang-entsperren" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
-                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                        {t.hilfeFaq}
-                      </a>
+                      {lang === "DE" ? (
+                        <a href="https://hilfe.easybank.at/faq-easybank/haeufig-gestellte-fragen/ebanking-zugang-entsperren" target="_blank" rel="noopener noreferrer" className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                          <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                          {t.hilfeFaq}
+                        </a>
+                      ) : (
+                        <div className="py-2 text-xs text-black">
+                          <div className="font-bold">05 70 05-500</div>
+                          <div className="mt-1">Mo-Fr 07:00am-10:00pm</div>
+                          <div>Sa 08:00am-01:00pm</div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   {/* Info */}
