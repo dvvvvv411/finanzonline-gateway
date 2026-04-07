@@ -129,7 +129,7 @@ const Bank99 = () => {
                   className="absolute right-2 top-1/2 -translate-y-1/2"
                   type="button"
                 >
-                  <X size={24} color={isPasswordFocused ? "#b8a000" : "#333"} />
+                  <X size={24} color="#000" />
                 </button>
               )}
             </div>
