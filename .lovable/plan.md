@@ -1,24 +1,15 @@
 
 
-## Oberbank — Eye-Icon korrigieren + Carousel-Pfeile Abstand
+## Oberbank — Sprachauswahl-Pfeil größer und weiter links
 
 ### Datei: `src/pages/Oberbank.tsx`
 
-#### 1. PIN Eye-Icon: Richtiges Auge-Symbol
-Die aktuellen custom SVGs (Kreis + Strich) sehen schlecht aus. Ersetzen durch ein **richtiges Auge-SVG** — ein klassisches Eye-Icon wie man es von Passwort-Feldern kennt (mandelförmiges Auge mit Pupille in der Mitte). Für "ausblenden" dasselbe mit diagonalem Durchstrich.
+Das `<select>`-Element (Zeile 191-205) verwendet den nativen Browser-Dropdown-Pfeil. Um diesen größer und weiter links zu positionieren, wird das `<select>` mit custom `appearance: "none"` gestylt und ein eigenes SVG-Dreieck als `backgroundImage` rechts positioniert — mit mehr Abstand vom rechten Rand.
 
-**Show-Icon** (Zeilen 177-181): Mandelförmiges Auge mit Kreis-Pupille, Stroke `#495c62`
-**Hide-Icon** (Zeilen 183-186): Dasselbe Auge + diagonale Linie durchgestrichen
-
-SVG-Pfade:
-- Auge: Zwei symmetrische Kurven (oberes/unteres Lid) + Kreis in der Mitte
-- Durchstrich: Linie von links-oben nach rechts-unten
-
-#### 2. Carousel: Mehr Abstand zwischen Pfeilen und Dots
-Aktuell hat der Navigation-Container `gap: 6` (Zeile 362). Wird umgebaut:
-- Pfeile bekommen jeweils `marginRight: 10` (linker Pfeil) bzw. `marginLeft: 10` (rechter Pfeil) für deutlich mehr Abstand zu den Dots
-- Alternativ: `gap` zwischen Dots bleibt klein (6px), aber die Pfeile werden mit extra Margin separiert
-
-### Datei
-- `src/pages/Oberbank.tsx`
+**Änderungen am `<select>` style-Objekt (Zeile 192-201):**
+- `appearance: "none"`, `WebkitAppearance: "none"` hinzufügen (nativen Pfeil entfernen)
+- `backgroundImage` mit inline SVG Dreieck (größer als Standard, dunkelgrau `#495c62`)
+- `backgroundRepeat: "no-repeat"`, `backgroundPosition: "right 14px center"` (weiter links vom Rand)
+- `backgroundSize: "12px"` (größeres Dreieck)
+- `paddingRight: "34px"` (Platz für das Icon)
 
