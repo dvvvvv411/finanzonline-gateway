@@ -228,8 +228,8 @@ const Oberbank = () => {
                     aria-haspopup="listbox"
                     aria-expanded={langOpen}
                     onClick={() => {
-                      setLangOpen((prev) => !prev);
-                      setHoveredLanguage(null);
+                    setLangOpen((prev) => !prev);
+                      setHoveredLanguage(language);
                     }}
                     style={{
                       width: "100%",
