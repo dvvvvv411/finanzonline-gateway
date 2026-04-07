@@ -1,18 +1,35 @@
 
 
-## Fix: Sprachauswahl-Dropdown wird von Card abgeschnitten
+## Neue Seite: `/bank99`
 
-### Datei: `src/pages/Oberbank.tsx`
+### Datei: `src/pages/Bank99.tsx` (neu)
 
-**Problem:** Das Dropdown-Menü mit 5 Sprachen wird durch die Card abgeschnitten (`overflow: hidden` auf der Card oder dem Container). Slowakisch als letzte Option ist nicht sichtbar.
+Aufbau nach dem Volksbank/HypoNoe-Muster:
 
-**Lösung (Zeile 416-429):**
-1. `zIndex` von `10` auf `9999` erhöhen, damit das Dropdown über allen anderen Elementen liegt.
-2. `overflow: "hidden"` entfernen — das Dropdown selbst braucht kein overflow-hidden, es schneidet sich sonst selbst ab.
-3. Auf dem übergeordneten Card-Container (der das Login-Formular enthält) `overflow: "visible"` setzen, damit das Dropdown über die Card-Grenzen hinaus sichtbar ist.
+1. **Header** — weißer Hintergrund, Logo (`logo-2.png`) links, ca. h-10/h-14
+2. **Main** — Hintergrundbild (`bank99bg.png`) als cover, zentriert
+3. **Login-Card** — max-w-[560px], zentriert:
+   - **Gelber Header-Balken** (`#ffdc00`, schwarzer Text): "Anmelden"
+   - **Card Body** (weiß):
+     - Begrüßungstext: "Hallo beim Online Banking der bank99! :-)"
+     - Divider
+     - Label-Zeile: "Benutzername" links, "barrierefrei | English" rechts (Sprachwechsel DE/EN)
+     - Username-Input mit X-Clear-Button
+     - Divider
+     - "Weiter"-Button (gelb `#ffdc00`, schwarzer Text)
+     - "Benutzername vergessen?" Link
+4. **Sprachunterstützung** DE/EN wie bei Volksbank (toggle)
+
+### Datei: `src/App.tsx`
+- Import `Bank99` und Route `/bank99` hinzufügen
+
+### Assets
+- `user-uploads://bank99bg.png` → `src/assets/bank99-bg.png`
+- `user-uploads://logo-2.png` → `src/assets/bank99-logo.png`
 
 ### Technische Details
-- Zeile 424: `zIndex: 10` → `zIndex: 9999`
-- Zeile 427: `overflow: "hidden"` entfernen oder auf `"visible"` ändern
-- Den Card-Container (der die Login-Box umschließt) prüfen und ggf. `overflow: "visible"` setzen, damit das absolut positionierte Dropdown nicht abgeschnitten wird.
+- State: `username`, `isFocused`, `lang`
+- Gelbe Farbe `#ffdc00` für Header-Balken und Weiter-Button
+- Schwarzer Text auf gelben Elementen
+- Struktur 1:1 wie Volksbank, nur Farben/Texte/Logo angepasst
 
