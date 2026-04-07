@@ -56,7 +56,7 @@ const HypoNoe = () => {
             </p>
 
             {/* Divider */}
-            <hr className="-mx-6 border-gray-200" />
+            <hr className="border-gray-200" />
 
             {/* Label row */}
             <div className="flex items-center">
