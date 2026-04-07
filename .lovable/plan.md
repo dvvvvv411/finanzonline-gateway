@@ -1,47 +1,46 @@
 
-Korrektur: Ich ändere NICHT auf „alle gleich tief“. Dein Ziel ist klar:
 
-```text
-gleich breit      gleich breit      gleich breit
+## Fix: Hilfe Card gleich tief wie Info Card
 
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│   Warnung    │ │ Hilfe/Hotline│ │     Info     │
-│              │ │              │ │              │
-│   Inhalt     │ │   Inhalt     │ │   Inhalt     │
-│ Weiterlesen  │ │     FAQ      │ │  Watchlist   │
-│              │ └──────────────┘ └──────────────┘
-│              │
-└──────────────┘
+### Was du willst
+- Hilfe und Info: **gleiche Tiefe** (Hilfe hat weniger Inhalt → mehr Leerraum unten)
+- Warnung: **NICHT ANFASSEN**
+- Breiten bleiben wie sie sind
 
-Hilfe + Info: gleiche Tiefe
-Warnung: bewusst tiefer
+### Problem
+Aktuell sind Hilfe und Info beide `min-h-[155px]` als separate `flex-1` Kinder mit `items-start`. Info hat 3 Einträge und wird natürlich höher als Hilfe mit 2 Einträgen. Die `min-h` reicht nicht aus — Info wird durch seinen Inhalt größer als 155px, Hilfe bleibt bei 155px.
+
+### Fix in `src/pages/Easybank.tsx`
+
+Hilfe und Info in einen gemeinsamen Wrapper mit `items-stretch` packen. Dadurch werden beide automatisch so tief wie der höhere (Info). Breite bleibt gleich weil der Wrapper `flex-[2]` bekommt und intern beide Cards `flex-1` haben.
+
+**Zeilen 370-411 — Hilfe und Info in Wrapper:**
+
+```tsx
+{/* Hilfe + Info Wrapper — gleiche Tiefe */}
+<div className="flex-[2] flex gap-4 items-stretch">
+  {/* Hilfe/Hotline */}
+  <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col">
+    ...unveraendert...
+  </div>
+  {/* Info */}
+  <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col">
+    ...unveraendert...
+  </div>
+</div>
 ```
 
-### Was ich jetzt ändern werde in `src/pages/Easybank.tsx`
-- Den aktuellen 1+2-Card-Aufbau korrigieren, damit alle 3 Cards wirklich exakt gleich breit sind.
-- Den äußeren 3-Card-Container bei `items-start` lassen, damit NICHT alle Cards automatisch gleich hoch werden.
-- Warnung, Hilfe und Info als 3 direkte Spalten mit jeweils `flex-1`.
-- Hilfe und Info bekommen dieselbe Höhe.
-- Warnung bekommt eine größere Höhe als Hilfe und Info.
-- Die Warnung-Card wird als `flex flex-col` aufgebaut, damit der zusätzliche Leerraum nur unten entsteht und „Weiterlesen“ direkt unter dem Text bleibt.
-- Die Titel von Warnung/Hilfe/Info werden zusätzlich sichtbar größer gemacht als jetzt.
+Warnung behält `flex-1`. Der Wrapper bekommt `flex-[2]` damit Warnung 1/3, Hilfe 1/3, Info 1/3 Breite haben. `items-stretch` im Wrapper zwingt Hilfe auf die gleiche Tiefe wie Info. `min-h-[155px]` von beiden Cards entfernen.
 
-### Warum die bisherige Lösung falsch war
-- Der Fehler war, die Höhe aller 3 Cards angleichen zu wollen.
-- Das ist NICHT dein Ziel.
-- Dein Ziel ist:
-  - gleiche Breite für alle 3
-  - Hilfe und Info gleich tief
-  - Warnung noch tiefer
+**Zusammenfassung der Änderungen:**
 
-### Technisch
-- Kein `items-stretch` auf dem äußeren 3-Card-Container
-- Keine Logik „alle gleich hoch“
-- Stattdessen:
-  - Warnung: `flex-1` + größere `min-h`
-  - Hilfe: `flex-1` + gemeinsame `min-h`
-  - Info: `flex-1` + gleiche `min-h` wie Hilfe
-- Titel: von aktuell `text-[13px]` auf deutlich größer
+| Was | Änderung |
+|-----|----------|
+| Zeile 370-387 (Hilfe) | In neuen Wrapper verschieben, `min-h-[155px]` entfernen |
+| Zeile 389-411 (Info) | In gleichen Wrapper verschieben, `min-h-[155px]` entfernen |
+| Neuer Wrapper | `className="flex-[2] flex gap-4 items-stretch"` |
+| Warnung (Zeile 346-368) | KEINE Änderung |
 
 ### Datei
 - `src/pages/Easybank.tsx`
+
