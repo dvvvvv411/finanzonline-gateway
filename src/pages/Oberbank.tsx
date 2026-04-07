@@ -101,7 +101,7 @@ const Oberbank = () => {
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
-              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 20px" }}>
+              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 14px" }}>
                 Kundenportal Login
               </h2>
 
