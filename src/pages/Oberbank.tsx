@@ -90,7 +90,7 @@ const Oberbank = () => {
       {/* Main content */}
       <div
         className="flex-1"
-        style={{ maxWidth: 780, margin: "0 auto", width: "100%", padding: "30px 20px" }}
+        style={{ margin: "0 auto", width: "100%", padding: "30px 20px" }}
       >
         {/* 3-column layout */}
         <div style={{ display: "flex", justifyContent: "center", gap: 16, alignItems: "start" }}>
