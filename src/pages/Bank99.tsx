@@ -13,7 +13,7 @@ const Bank99 = () => {
       {/* Header */}
       <header style={{ backgroundColor: "#eceff4", borderBottom: "1px solid #e0e0e0" }}>
           <div className="max-w-[1200px] mx-auto flex items-center px-4 py-1.5">
-            <img src={bank99Logo} alt="bank99" className="h-8 md:h-10" />
+            <img src={bank99Logo} alt="bank99" className="h-10 md:h-14" />
         </div>
       </header>
 
@@ -30,14 +30,14 @@ const Bank99 = () => {
         <div className="w-full max-w-[560px] overflow-hidden">
           {/* Yellow header bar */}
           <div
-            className="px-6 py-4 font-semibold text-2xl"
+            className="px-6 py-3 font-semibold text-2xl"
             style={{ backgroundColor: "#ffdc00", color: "#000" }}
           >
             {lang === "de" ? "Anmelden" : "Login"}
           </div>
 
           {/* Card body */}
-          <div className="bg-white px-6 py-5 space-y-4">
+          <div className="bg-white px-6 py-3 space-y-3">
             {/* Greeting */}
             <p className="text-sm leading-snug font-semibold" style={{ color: "#333" }}>
               {lang === "de"
