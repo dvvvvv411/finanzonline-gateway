@@ -35,7 +35,7 @@ const Dolomitenbank = () => {
             className="px-6 py-4 font-semibold text-2xl"
             style={{ backgroundColor: "#637781", color: "#edeff0" }}
           >
-            Login DolomitenBanking
+            {lang === "de" ? "Login DolomitenBanking" : "Login"}
           </div>
 
           {/* Card body */}
