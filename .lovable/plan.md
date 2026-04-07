@@ -1,21 +1,22 @@
 
 
-## Fixes für das Volksbank-Eingabefeld
-
-### Problem 1: Focus-Hintergrund funktioniert nicht
-Das inline `style={{ backgroundColor: "#e8e8e8" }}` überschreibt Tailwinds `focus:bg-[#d6e5f4]`, weil inline Styles immer höhere Priorität haben. **Lösung:** `isFocused` State einführen und die Background-Farbe dynamisch per inline Style setzen.
-
-### Problem 2: X-Icon zu klein und Farblogik
-- `size={18}` → `size={24}` (deutlich größer)
-- Farbe abhängig von `isFocused`: blau (`#196bc1`) wenn fokussiert, schwarz wenn nicht
+## Volksbank-Seite Styling-Anpassungen
 
 ### Änderungen in `src/pages/Volksbank.tsx`
 
-**1. Neuer State:** `const [isFocused, setIsFocused] = useState(false);`
+**1. "hausbanking Login" größer:** `text-lg` → `text-xl`
 
-**2. Input-Feld:** `onFocus` und `onBlur` Handler hinzufügen, inline `backgroundColor` dynamisch: `isFocused ? "#d6e5f4" : "#e8e8e8"`, `borderColor` dynamisch: `isFocused ? "#196bc1" : "#999"`
+**2. Card-Shadow entfernen:** `shadow-lg` → entfernen (Zeile 29)
 
-**3. X-Icon:** `size={18}` → `size={24}`, `color` dynamisch: `isFocused ? "#196bc1" : "#333"`
+**3. Divider zwischen Info-Text und "Anmeldung mit Benutzername":** `<hr>` einfügen (dünne Linie, hellgrau) zwischen Zeile 44 und 47
+
+**4. Info-Text größer:** `text-sm` → `text-base` (Zeile 41)
+
+**5. Nutzungsbedingungen-Text zentriert:** `text-center` hinzufügen (Zeile 90)
+
+**6. Vergessen-Links größer, weniger Abstand:** `text-sm` → `text-[15px]`, `gap-1` → `gap-0.5`, `pt-1` → `pt-0` (Zeile 103)
+
+**7. Full-width Divider über und unter dem Weiter-Button:** Zwei `<hr>`-Elemente mit negativem Margin (`-mx-6`) einfügen, damit sie die volle Card-Breite abdecken — eines vor dem Button, eines danach
 
 ### Datei
 - `src/pages/Volksbank.tsx`
