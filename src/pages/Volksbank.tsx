@@ -18,7 +18,7 @@ const Volksbank = () => {
 
       {/* Main */}
       <div
-        className="flex-1 flex items-start justify-center py-10 px-4"
+        className="flex-1 flex items-center justify-center px-4"
         style={{
           backgroundImage: `url(${volksbankBg})`,
           backgroundSize: "cover",
@@ -38,7 +38,7 @@ const Volksbank = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Info text */}
-            <p className="text-base" style={{ color: "#333" }}>
+            <p className="text-base leading-snug" style={{ color: "#333" }}>
               Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre
               Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten.
             </p>
