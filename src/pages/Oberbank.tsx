@@ -411,7 +411,7 @@ const Oberbank = () => {
               <a
                 key={label}
                 href="#"
-                style={{ color: "#555", textDecoration: "none" }}
+                style={{ color: "#495c62", textDecoration: "none" }}
                 onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
                 onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
               >
