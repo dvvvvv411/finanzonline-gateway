@@ -214,7 +214,7 @@ const Oberbank = () => {
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
-              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 16px" }}>
+              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 10px" }}>
                 Weiterführende Links
               </h2>
             </div>
