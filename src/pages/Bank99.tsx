@@ -39,7 +39,7 @@ const Bank99 = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Greeting */}
-            <p className="text-sm font-bold leading-snug" style={{ color: "#333" }}>
+            <p className="text-sm leading-snug" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Hallo beim Online Banking der bank99! :-)"
                 : "Welcome to bank99 Online Banking! :-)"}
@@ -61,7 +61,7 @@ const Bank99 = () => {
                     setLang(lang === "de" ? "en" : "de");
                   }}
                   style={{ color: "#007ed1" }}
-                  className="underline"
+                  className="underline font-semibold"
                 >
                   {lang === "de" ? "English" : "Deutsch"}
                 </a>
@@ -99,18 +99,21 @@ const Bank99 = () => {
 
             {/* Weiter button */}
             <button
-              className="w-full py-3 font-semibold rounded text-sm"
+              className="w-full py-2.5 font-semibold rounded text-sm"
               style={{ backgroundColor: "#ffdc00", color: "#000" }}
             >
               {lang === "de" ? "Weiter" : "Continue"}
             </button>
+
+            {/* Divider */}
+            <hr className="-mx-6 border-gray-200" />
 
             {/* Link */}
             <div className="flex flex-col items-center">
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-[15px] underline"
+                className="text-[15px] underline font-semibold"
                 style={{ color: "#007ed1" }}
               >
                 {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
