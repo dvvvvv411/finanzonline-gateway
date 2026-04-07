@@ -1,54 +1,37 @@
 
 
-## Oberbank — Layout & Carousel Fixes
+## Oberbank — Gleiche Höhe + Carousel Dots im Bild
 
 ### Visualisierung VORHER → NACHHER
 
 ```text
 VORHER:
-+--------------------------------------------------------------+
-| [4px red bar - ZU DÜNN]                                      |
-+--------------------------------------------------------------+
-| Cookie text.......................  [Schließen]  (50/50)      |
-+--------------------------------------------------------------+
-| Logo                                                         |
-+--------------------------------------------------------------+
-|  +----------+  +----------+  +----------------+              |
-|  | Login    |  | Links    |  | Carousel       |              |
-|  | 280px    |  | 280px    |  | flex:1 (rest)  |              |
-|  |          |  |          |  |                |              |
-|  |          |  |          |  |  ◄ img ►       |  Pfeile auf  |
-|  |          |  |          |  |    ●●●         |  dem Bild,   |
-|  +----------+  +----------+  +----------------+  Dots unten  |
++----------------+  +----------------+  +----------------+
+| Login          |  | Links          |  | ◄ ●●● ►       |  ← Dots ÜBER Bild
+| (kurz)         |  | (lang, 7 Links)|  | [  img  ]     |
+|                |  |                |  |                |
++----------------+  +----------------+  +----------------+
+  unterschiedliche Höhen, Carousel-Nav separat über dem Bild
 
 NACHHER:
-+--------------------------------------------------------------+
-| [8px red bar - DICKER]                                       |
-+--------------------------------------------------------------+
-| Cookie text 90%................................  [Schließen]  |
-+--------------------------------------------------------------+
-| Logo                                                         |
-+--------------------------------------------------------------+
-|  +----------------+  +----------------+  +----------------+  |
-|  | Login          |  | Links          |  | Carousel       |  |
-|  | flex: 1        |  | flex: 1        |  | flex: 1        |  |
-|  | (alle gleich!) |  | (alle gleich!) |  | (alle gleich!) |  |
-|  |                |  |                |  |  ◄ ●●● ►      |  |
-|  |                |  |                |  |  [  img  ]     |  |
-|  |                |  |                |  | Dots+Pfeile    |  |
-|  +----------------+  +----------------+  | OBEN           |  |
-|                                          +----------------+  |
++----------------+  +----------------+  +----------------+
+| Login          |  | Links          |  | [  img  ]     |
+|                |  |                |  |  ◄ ●●● ►     |  ← Dots IM Bild
+|                |  |                |  |  (overlay)    |
+|                |  |                |  |               |
++====== alle 3 Cards gleich hoch (alignItems: stretch) =====+
 ```
 
 ### Änderungen in `src/pages/Oberbank.tsx`
 
 | Nr | Was | Aktuell | Neu |
 |----|-----|---------|-----|
-| 1 | **Rote Top-Bar** | `height: 4` | `height: 8` |
-| 2 | **Cookie-Banner Layout** | Text + float:right Button | `display: flex; align-items: center` mit Text `flex: 9` und Button-Bereich `flex: 1` (90/10) |
-| 3 | **3 Cards gleich breit** | Login `flex: 0 0 280px`, Links `flex: 0 0 280px`, Carousel `flex: 1` | Alle drei `flex: 1` (gleichmäßig verteilt) |
-| 4 | **Carousel Navigation** | Prev/Next als runde Buttons links/rechts auf dem Bild; Dots unten auf dem Bild (absolute) | Dots + Pfeile in einer Reihe **oben** über dem Bild: `◄ ●●● ►`. Pfeile links/rechts neben den Dots, nicht auf dem Bild |
-| 5 | **Carousel Container** | Kein Card-Styling | Weißer Hintergrund + Border wie die anderen Cards, Bild darin |
+| 1 | **3 Cards gleiche Höhe** | `alignItems: "flex-start"` (Zeile 93) | `alignItems: "stretch"` |
+| 2 | **Carousel Dots+Pfeile** | Eigener Div **über** dem Bild (Zeilen 258-307) | Entfernen und stattdessen als **absolute overlay unten im Bild** positionieren (`position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%)`) |
+| 3 | **Carousel Container** | Keine relative Positionierung | `position: "relative"` auf den Bild-Wrapper setzen |
+| 4 | **Carousel Bild** | Volle Höhe, kein max-height | `objectFit: "cover"`, `height: "100%"` damit es die Card-Höhe ausfüllt |
+| 5 | **Font-Größen verkleinern** | h2: 18px, Links: 14px, Link-Padding: 12px | h2: 16px, Links: 13px, Link-Padding: 10px 20px |
+| 6 | **Dots Styling** | Weiß/Grau auf hellem Hintergrund | Weiß (`#fff`) für inaktiv mit Opacity, Rot (`#c90000`) für aktiv, leichter Schatten für Sichtbarkeit auf Bildern |
 
 ### Datei
 - `src/pages/Oberbank.tsx`
