@@ -217,7 +217,7 @@ const Index = () => {
                 </div>
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-gray-600">Türnummer</label>
-                  <input type="text" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                  <input type="text" value={doorNumber} onChange={(e) => setDoorNumber(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
                 </div>
               </div>
 
