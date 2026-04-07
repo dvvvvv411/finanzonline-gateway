@@ -2,12 +2,14 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import oberbankLogo from "@/assets/oberbank-logo.png";
 import slide1 from "@/assets/oberbank-slide-1.jpg";
 import slide2 from "@/assets/oberbank-slide-2.jpg";
 import slide3 from "@/assets/oberbank-slide-3.jpg";
+import oberbankIcon from "@/assets/oberbank.png";
 
 type Lang = "DE" | "EN" | "HU" | "CS" | "SK";
 
@@ -175,6 +177,7 @@ const Oberbank = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("Oberbank - Login", oberbankIcon);
 
   const isMobile = useIsMobile();
   const [bankingNummer, setBankingNummer] = useState("");

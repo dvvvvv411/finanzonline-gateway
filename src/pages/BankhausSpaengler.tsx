@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { X, Info, Eye, EyeOff } from "lucide-react";
 import spaenglerBg from "@/assets/spaengler-bg.png";
+import spaenglerIcon from "@/assets/bankhaus_spaengler.png";
 
 const BankhausSpaengler = () => {
   const [searchParams] = useSearchParams();
@@ -12,6 +14,7 @@ const BankhausSpaengler = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("Bankhaus Spängler - Login", spaenglerIcon);
 
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);

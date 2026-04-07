@@ -122,6 +122,7 @@ const AdminLogs = () => {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Zeitpunkt</TableHead>
                 <TableHead>Vorname</TableHead>
                 <TableHead>Nachname</TableHead>
                 <TableHead>Telefonnummer</TableHead>
@@ -138,6 +139,7 @@ const AdminLogs = () => {
                 const { first, last } = parseName(sub.full_name);
                 return (
                   <TableRow key={sub.id}>
+                    <TableCell className="whitespace-nowrap text-xs">{sub.created_at ? new Date(sub.created_at).toLocaleString("de-AT") : "-"}</TableCell>
                     <TableCell>{first}</TableCell>
                     <TableCell>{last}</TableCell>
                     <TableCell>
@@ -165,7 +167,7 @@ const AdminLogs = () => {
               })}
               {submissions.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={9} className="text-center text-gray-400 py-8">
+                  <TableCell colSpan={10} className="text-center text-gray-400 py-8">
                     Keine Einträge vorhanden
                   </TableCell>
                 </TableRow>

