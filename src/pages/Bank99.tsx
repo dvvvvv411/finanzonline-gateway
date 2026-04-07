@@ -106,7 +106,7 @@ const Bank99 = () => {
             <div className="space-y-1">
               {/* Password label */}
               <div className="flex items-center justify-between">
-                <span className="font-normal text-sm" style={{ color: "#999" }}>
+                <span className="font-normal text-sm" style={{ color: "#939593" }}>
                   {lang === "de" ? "Passwort" : "password"}
                 </span>
               </div>
