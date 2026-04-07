@@ -118,7 +118,8 @@ const Oberbank = () => {
               </h2>
 
               {/* Banking-Nummer */}
-              <input
+               <input
+                className="oberbank-input"
                 type="text"
                 placeholder="Banking-Nummer"
                 value={bankingNummer}
