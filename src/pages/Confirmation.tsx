@@ -18,6 +18,8 @@ const confirmationItems = [
 ];
 
 const Confirmation = () => {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <Header />

