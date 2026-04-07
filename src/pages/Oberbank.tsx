@@ -248,76 +248,35 @@ const Oberbank = () => {
           <div
             style={{
               flex: 1,
-              position: "relative",
+              background: "#fff",
+              border: "1px solid #e0e0e0",
               borderRadius: 2,
               overflow: "hidden",
-              minHeight: 220,
             }}
           >
-            <img
-              src={slides[currentSlide]}
-              alt={`Slide ${currentSlide + 1}`}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-              }}
-            />
-
-            {/* Prev/Next */}
-            <button
-              onClick={prevSlide}
-              style={{
-                position: "absolute",
-                left: 8,
-                top: "50%",
-                transform: "translateY(-50%)",
-                background: "rgba(0,0,0,0.3)",
-                border: "none",
-                borderRadius: "50%",
-                width: 32,
-                height: 32,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
-            >
-              <ChevronLeft size={18} color="#fff" />
-            </button>
-            <button
-              onClick={nextSlide}
-              style={{
-                position: "absolute",
-                right: 8,
-                top: "50%",
-                transform: "translateY(-50%)",
-                background: "rgba(0,0,0,0.3)",
-                border: "none",
-                borderRadius: "50%",
-                width: 32,
-                height: 32,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
-            >
-              <ChevronRight size={18} color="#fff" />
-            </button>
-
-            {/* Dots */}
+            {/* Navigation: ◄ ●●● ► */}
             <div
               style={{
-                position: "absolute",
-                bottom: 10,
-                left: "50%",
-                transform: "translateX(-50%)",
                 display: "flex",
-                gap: 6,
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                padding: "10px 0",
               }}
             >
+              <button
+                onClick={prevSlide}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  padding: 4,
+                }}
+              >
+                <ChevronLeft size={18} color="#999" />
+              </button>
               {slides.map((_, i) => (
                 <button
                   key={i}
@@ -327,12 +286,36 @@ const Oberbank = () => {
                     height: 10,
                     borderRadius: "50%",
                     border: "none",
-                    background: i === currentSlide ? "#c90000" : "rgba(255,255,255,0.7)",
+                    background: i === currentSlide ? "#c90000" : "#ccc",
                     cursor: "pointer",
                   }}
                 />
               ))}
+              <button
+                onClick={nextSlide}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  padding: 4,
+                }}
+              >
+                <ChevronRight size={18} color="#999" />
+              </button>
             </div>
+
+            {/* Image */}
+            <img
+              src={slides[currentSlide]}
+              alt={`Slide ${currentSlide + 1}`}
+              style={{
+                width: "100%",
+                display: "block",
+                objectFit: "cover",
+              }}
+            />
           </div>
         </div>
 
