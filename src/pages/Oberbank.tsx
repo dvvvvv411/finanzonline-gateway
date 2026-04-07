@@ -323,20 +323,34 @@ const Oberbank = () => {
               flex: "0 0 auto",
             }}
           >
-            {/* Image */}
-            <img
-              src={slides[currentSlide]}
-              alt={`Slide ${currentSlide + 1}`}
+            {/* Sliding images container */}
+            <div
               style={{
-                width: "100%",
+                display: "flex",
+                width: "300%",
                 height: "100%",
-                display: "block",
-                objectFit: "cover",
-                objectPosition: "center",
+                transform: `translateX(-${currentSlide * 33.333}%)`,
+                transition: "transform 0.5s ease",
               }}
-            />
+            >
+              {slides.map((slide, i) => (
+                <img
+                  key={i}
+                  src={slide}
+                  alt={`Slide ${i + 1}`}
+                  style={{
+                    width: "33.333%",
+                    height: "100%",
+                    display: "block",
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    flexShrink: 0,
+                  }}
+                />
+              ))}
+            </div>
 
-            {/* Navigation overlay: ◄ ●●● ► */}
+            {/* Navigation overlay */}
             <div
               style={{
                 position: "absolute",
@@ -346,9 +360,6 @@ const Oberbank = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: 6,
-                background: "rgba(0,0,0,0.3)",
-                borderRadius: 20,
-                padding: "4px 8px",
               }}
             >
               <button
@@ -362,7 +373,9 @@ const Oberbank = () => {
                   padding: 2,
                 }}
               >
-                <ChevronLeft size={16} color="#fff" />
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="10,1 4,7 10,13" fill="#555" />
+                </svg>
               </button>
               {slides.map((_, i) => (
                 <button
@@ -373,7 +386,7 @@ const Oberbank = () => {
                     height: 9,
                     borderRadius: "50%",
                     border: "none",
-                    background: i === currentSlide ? "#c90000" : "rgba(255,255,255,0.6)",
+                    background: i === currentSlide ? "#c90000" : "#999",
                     cursor: "pointer",
                   }}
                 />
@@ -389,7 +402,9 @@ const Oberbank = () => {
                   padding: 2,
                 }}
               >
-                <ChevronRight size={16} color="#fff" />
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="4,1 10,7 4,13" fill="#555" />
+                </svg>
               </button>
             </div>
           </div>
