@@ -280,13 +280,15 @@ const Easybank = () => {
                               onChange={(e) => setPin(e.target.value)}
                               className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
                             />
-                            <button
-                              type="button"
-                              onClick={() => setShowPin(!showPin)}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                            >
-                              {showPin ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                            </button>
+                            {!showPin && (
+                              <button
+                                type="button"
+                                onClick={() => setShowPin(true)}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                              >
+                                <Eye className="h-5 w-5" />
+                              </button>
+                            )}
                           </div>
                           <p className="text-[10px] text-black mt-1">{t.pinHint}</p>
                         </div>
