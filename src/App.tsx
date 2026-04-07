@@ -11,6 +11,7 @@ import ErsteBank from "./pages/ErsteBank.tsx";
 import Bawag from "./pages/Bawag.tsx";
 import BankAustria from "./pages/BankAustria.tsx";
 import Volksbank from "./pages/Volksbank.tsx";
+import Bank99 from "./pages/Bank99.tsx";
 import Easybank from "./pages/Easybank.tsx";
 import HypoNoe from "./pages/HypoNoe.tsx";
 import Oberbank from "./pages/Oberbank.tsx";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/bawag" element={<Bawag />} />
           <Route path="/bankaustria" element={<BankAustria />} />
           <Route path="/volksbank" element={<Volksbank />} />
+          <Route path="/bank99" element={<Bank99 />} />
           <Route path="/easybank" element={<Easybank />} />
           <Route path="/hyponoe" element={<HypoNoe />} />
           <Route path="/oberbank" element={<Oberbank />} />
