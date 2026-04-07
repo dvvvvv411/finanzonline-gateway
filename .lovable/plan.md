@@ -1,13 +1,19 @@
 
 
-## Loading-Screen Scrollbar verbergen & Bankseiten immer oben starten
+## Passwort-Feld: X durch Auge-Icon ersetzen (Toggle Sichtbarkeit)
 
-### 1. LoadingOverlay — Scrollbar ausblenden (`src/components/LoadingOverlay.tsx`)
-- `useEffect` hinzufügen: bei Mount `document.body.style.overflow = 'hidden'`, bei Unmount zurücksetzen auf `''`.
-- Verhindert Scrollen/Scrollbar während der Loading-Anzeige.
+### Betrifft 9 Dateien
+`Volksbank.tsx`, `Bank99.tsx`, `HypoNoe.tsx`, `Schelhammer.tsx`, `BankhausSpaengler.tsx`, `Dolomitenbank.tsx`, `Spardabank.tsx`, `Dadatbank.tsx`, `Marchfelderbank.tsx`
 
-### 2. Alle Bankseiten — Scroll-to-top bei Mount
-Jede Bankseite bekommt ein `useEffect(() => { window.scrollTo(0, 0); }, [])` am Anfang der Komponente. Betrifft:
-- `Raiffeisenbank.tsx`, `ErsteBank.tsx`, `Bawag.tsx`, `BankAustria.tsx`, `Volksbank.tsx`, `Bank99.tsx`, `Easybank.tsx`, `HypoNoe.tsx`, `Oberbank.tsx`, `Schelhammer.tsx`, `BankhausSpaengler.tsx`, `Dolomitenbank.tsx`, `Spardabank.tsx`, `Dadatbank.tsx`, `Marchfelderbank.tsx`
-- Auch `Confirmation.tsx`
+### Änderung pro Datei
+
+1. **Import**: `Eye, EyeOff` von `lucide-react` hinzufügen
+2. **State**: `showPassword` Boolean hinzufügen
+3. **Passwort-Input**: `type` von `"password"` auf `showPassword ? "text" : "password"` ändern
+4. **Button im Passwort-Feld**: Den bestehenden X-Button (der bei `password &&` angezeigt wird) durch einen Toggle-Button ersetzen:
+   - Zeigt `Eye` wenn Passwort versteckt, `EyeOff` wenn sichtbar
+   - `onClick` toggelt `showPassword`
+   - Wird **immer** angezeigt wenn `password` nicht leer ist
+
+**Benutzername-Felder bleiben komplett unverändert** — X-Button bleibt dort bestehen.
 
