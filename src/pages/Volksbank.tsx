@@ -44,7 +44,7 @@ const Volksbank = () => {
 
             {/* Label row */}
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-sm" style={{ color: "#999" }}>
+              <span className="font-semibold text-xs" style={{ color: "#999" }}>
                 Anmeldung mit Benutzername
               </span>
               <span className="text-sm space-x-2">
