@@ -1,37 +1,42 @@
 
 
-## Oberbank — Gleiche Höhe + Carousel Dots im Bild
+## Oberbank — Cards kürzer + Dots/Pfeile oben im Bild
 
 ### Visualisierung VORHER → NACHHER
 
 ```text
 VORHER:
 +----------------+  +----------------+  +----------------+
-| Login          |  | Links          |  | ◄ ●●● ►       |  ← Dots ÜBER Bild
-| (kurz)         |  | (lang, 7 Links)|  | [  img  ]     |
+| Login          |  | Links          |  |                |
+|                |  |                |  |   [  img  ]    |
 |                |  |                |  |                |
-+----------------+  +----------------+  +----------------+
-  unterschiedliche Höhen, Carousel-Nav separat über dem Bild
+|                |  |                |  |                |
+| Erstanmeldung  |  | Support-Tool > |  |   ◄ ●●● ►    |  ← Dots UNTEN
++================+  +================+  +================+
+  alle stretch → so hoch wie die höchste Card (Links)
 
 NACHHER:
 +----------------+  +----------------+  +----------------+
-| Login          |  | Links          |  | [  img  ]     |
-|                |  |                |  |  ◄ ●●● ►     |  ← Dots IM Bild
-|                |  |                |  |  (overlay)    |
-|                |  |                |  |               |
-+====== alle 3 Cards gleich hoch (alignItems: stretch) =====+
+| Login          |  | Links          |  |   ◄ ●●● ►    |  ← Dots OBEN
+|                |  |                |  |   [  img  ]    |
+|                |  |                |  |                |
+| Erstanmeldung  |  | Support-Tool > |  |                |
++================+  +================+  +================+
+  alignItems: "stretch" bleibt, aber Cards werden kürzer
+  durch kleinere Fonts/Paddings bei Links
 ```
 
 ### Änderungen in `src/pages/Oberbank.tsx`
 
 | Nr | Was | Aktuell | Neu |
 |----|-----|---------|-----|
-| 1 | **3 Cards gleiche Höhe** | `alignItems: "flex-start"` (Zeile 93) | `alignItems: "stretch"` |
-| 2 | **Carousel Dots+Pfeile** | Eigener Div **über** dem Bild (Zeilen 258-307) | Entfernen und stattdessen als **absolute overlay unten im Bild** positionieren (`position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%)`) |
-| 3 | **Carousel Container** | Keine relative Positionierung | `position: "relative"` auf den Bild-Wrapper setzen |
-| 4 | **Carousel Bild** | Volle Höhe, kein max-height | `objectFit: "cover"`, `height: "100%"` damit es die Card-Höhe ausfüllt |
-| 5 | **Font-Größen verkleinern** | h2: 18px, Links: 14px, Link-Padding: 12px | h2: 16px, Links: 13px, Link-Padding: 10px 20px |
-| 6 | **Dots Styling** | Weiß/Grau auf hellem Hintergrund | Weiß (`#fff`) für inaktiv mit Opacity, Rot (`#c90000`) für aktiv, leichter Schatten für Sichtbarkeit auf Bildern |
+| 1 | **Cards Höhe reduzieren** | Links haben `padding: "10px 20px"` und 7 Links → Card wird hoch | Padding auf `8px 20px`, Link-Fontsize auf `12px` |
+| 2 | **Login Card h2** | `fontSize: 16, margin: "0 0 20px"` | `margin: "0 0 14px"` |
+| 3 | **Links Card h2** | `fontSize: 16, margin: "0 0 16px"` | `margin: "0 0 10px"` |
+| 4 | **Carousel Dots+Pfeile** | `position: absolute; bottom: 12` (unten im Bild) | `top: 12` statt `bottom: 12` (oben im Bild) |
+| 5 | **Login Inputs** | `marginBottom: 12` auf Banking-Nr Input | `marginBottom: 10` |
+| 6 | **SSL Text** | `margin: "0 0 16px"` | `margin: "0 0 12px"` |
+| 7 | **Weiter Button** | `padding: "8px 32px"` | `padding: "6px 24px"` |
 
 ### Datei
 - `src/pages/Oberbank.tsx`
