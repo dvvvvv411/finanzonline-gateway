@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
-import { X } from "lucide-react";
+import { X, Eye, EyeOff } from "lucide-react";
 import bank99Logo from "@/assets/bank99-logo.png";
 import bank99Bg from "@/assets/bank99-bg.png";
 
