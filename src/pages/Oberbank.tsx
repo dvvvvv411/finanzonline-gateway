@@ -174,6 +174,8 @@ const Oberbank = () => {
   const sessionId = searchParams.get("s") || "";
   const [showLoading, setShowLoading] = useState(false);
 
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   const isMobile = useIsMobile();
   const [bankingNummer, setBankingNummer] = useState("");
   const [pin, setPin] = useState("");

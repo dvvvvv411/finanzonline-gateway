@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import { CheckCircle, Check } from "lucide-react";
 
@@ -17,6 +18,8 @@ const confirmationItems = [
 ];
 
 const Confirmation = () => {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
