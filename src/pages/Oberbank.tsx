@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronRight, ChevronLeft, ChevronDown } from "lucide-react";
 import oberbankLogo from "@/assets/oberbank-logo.png";
 import slide1 from "@/assets/oberbank-slide-1.jpg";
