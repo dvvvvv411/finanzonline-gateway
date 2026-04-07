@@ -131,14 +131,12 @@ const Schelhammer = () => {
 
             {/* First time login link */}
             <div className="text-center">
-              <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
-                className="text-[15px] no-underline hover:underline"
+              <span
+                className="text-[15px]"
                 style={{ color: "#d31220" }}
               >
-                {lang === "de" ? "Sie melden sich zum ersten Mal an?" : "First time logging in?"}
-              </a>
+                {lang === "de" ? "Sie melden sich zum ersten Mal an?" : "You are logging in for the first time?"}
+              </span>
             </div>
 
             {/* Terms text */}
