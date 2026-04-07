@@ -1,76 +1,55 @@
 
 
-## Oberbank Login-Seite erstellen (`/oberbank`)
+## Oberbank — Layout & Carousel Fixes
 
-### Layout-Visualisierung
+### Visualisierung VORHER → NACHHER
 
 ```text
+VORHER:
 +--------------------------------------------------------------+
-| [red top bar - 4px]                                          |
+| [4px red bar - ZU DÜNN]                                      |
 +--------------------------------------------------------------+
-| Oberbank (red logo)                                          |
+| Cookie text.......................  [Schließen]  (50/50)      |
 +--------------------------------------------------------------+
-| [thin gray line]                                             |
+| Logo                                                         |
 +--------------------------------------------------------------+
-|                                                              |
-|  +------------------+ +-------------------+ +-------------+  |
-|  | Kundenportal     | | Weiterführende    | | [Carousel]  |  |
-|  | Login            | | Links             | |             |  |
-|  |                  | |                   | | login_1.jpg |  |
-|  | [Banking-Nummer] | | Funktionsübers.> | | login_2.jpg |  |
-|  |                  | | FAQs            > | | login.jpg   |  |
-|  | [PIN] [Deutsch▼] | | Wertpapier-Inf. > | |             |  |
-|  |                  | | Sicherheit      > | | ◄  ●●●  ►  |  |
-|  | SSL-Hinweis text | | Security-App    > | |             |  |
-|  |                  | | Servicenummern  > | +-------------+  |
-|  | [====Weiter====] | | Support-Tool    > |                  |
-|  |                  | +-------------------+                  |
-|  | Erstanmeldung    |                                        |
-|  +------------------+                                        |
-|                                                              |
-|  Wichtige Meldungen                                          |
-|  +----------------------------------------------------------+|
-|  | > Zahlungsverkehr am Karfreitag...   25.03.2026, 15:59   ||
-|  +----------------------------------------------------------+|
-|                                                              |
+|  +----------+  +----------+  +----------------+              |
+|  | Login    |  | Links    |  | Carousel       |              |
+|  | 280px    |  | 280px    |  | flex:1 (rest)  |              |
+|  |          |  |          |  |                |              |
+|  |          |  |          |  |  ◄ img ►       |  Pfeile auf  |
+|  |          |  |          |  |    ●●●         |  dem Bild,   |
+|  +----------+  +----------+  +----------------+  Dots unten  |
+
+NACHHER:
 +--------------------------------------------------------------+
-| Impressum   AGB   Filialfinder   Fernwartung    © 2026 ...   |
+| [8px red bar - DICKER]                                       |
 +--------------------------------------------------------------+
+| Cookie text 90%................................  [Schließen]  |
++--------------------------------------------------------------+
+| Logo                                                         |
++--------------------------------------------------------------+
+|  +----------------+  +----------------+  +----------------+  |
+|  | Login          |  | Links          |  | Carousel       |  |
+|  | flex: 1        |  | flex: 1        |  | flex: 1        |  |
+|  | (alle gleich!) |  | (alle gleich!) |  | (alle gleich!) |  |
+|  |                |  |                |  |  ◄ ●●● ►      |  |
+|  |                |  |                |  |  [  img  ]     |  |
+|  |                |  |                |  | Dots+Pfeile    |  |
+|  +----------------+  +----------------+  | OBEN           |  |
+|                                          +----------------+  |
 ```
 
-### Neue Dateien
+### Änderungen in `src/pages/Oberbank.tsx`
 
-**1. `src/pages/Oberbank.tsx`** — Hauptseite mit:
-- Roter Top-Bar (4px, `#c90000`)
-- Header: Oberbank Logo (aus `src/assets/oberbank-logo.png`), weißer Hintergrund
-- Dünne graue Linie darunter
-- 3-Spalten Content-Bereich:
-  - **Links**: Kundenportal Login Card (Banking-Nummer Input, PIN Input + Deutsch Dropdown, SSL-Hinweistext, roter "Weiter" Button, "Erstanmeldung" Link)
-  - **Mitte**: Weiterführende Links Card (7 Links mit Chevron-Right Icons, jeweils mit Bottom-Border)
-  - **Rechts**: Image Carousel mit den 3 Bildern (auto-rotate, Dot-Navigation, Prev/Next Pfeile)
-- Wichtige Meldungen Section (Accordion-ähnlich mit Chevron, Titel + Datum)
-- Footer: Impressum, AGB, Filialfinder, Fernwartung + Copyright
-- Font: Roboto (via Google Fonts)
+| Nr | Was | Aktuell | Neu |
+|----|-----|---------|-----|
+| 1 | **Rote Top-Bar** | `height: 4` | `height: 8` |
+| 2 | **Cookie-Banner Layout** | Text + float:right Button | `display: flex; align-items: center` mit Text `flex: 9` und Button-Bereich `flex: 1` (90/10) |
+| 3 | **3 Cards gleich breit** | Login `flex: 0 0 280px`, Links `flex: 0 0 280px`, Carousel `flex: 1` | Alle drei `flex: 1` (gleichmäßig verteilt) |
+| 4 | **Carousel Navigation** | Prev/Next als runde Buttons links/rechts auf dem Bild; Dots unten auf dem Bild (absolute) | Dots + Pfeile in einer Reihe **oben** über dem Bild: `◄ ●●● ►`. Pfeile links/rechts neben den Dots, nicht auf dem Bild |
+| 5 | **Carousel Container** | Kein Card-Styling | Weißer Hintergrund + Border wie die anderen Cards, Bild darin |
 
-**2. Assets kopieren:**
-- `user-uploads://icon-logo-d.png` → `src/assets/oberbank-logo.png`
-- `user-uploads://login.jpg` → `src/assets/oberbank-slide-1.jpg`
-- `user-uploads://login_1.jpg` → `src/assets/oberbank-slide-2.jpg`
-- `user-uploads://login_2.jpg` → `src/assets/oberbank-slide-3.jpg`
-
-### Änderungen in bestehenden Dateien
-
-**`src/App.tsx`:**
-- Import `Oberbank` Seite
-- Route `/oberbank` hinzufügen
-
-### Design-Details (aus Screenshot)
-- Hintergrund: `#f5f5f5` (leichtes Grau)
-- Cards: weiße Hintergrund, leichter Border (`#e0e0e0`)
-- Login-Inputs: Einfache Borders, placeholder-Texte "Banking-Nummer" und "Ihre PIN"
-- Weiter-Button: `#c90000` rot, weiße Schrift, abgerundete Ecken
-- Links in Weiterführende Links: Grau/Schwarz Text mit Chevron-Right, Bottom-Border
-- Carousel: Bilder ~300px breit, automatisches Rotieren
-- Wichtige Meldungen: Chevron links, fetter Titel, Datum rechts
-- Footer: Graue Linie darüber, Links + Copyright
+### Datei
+- `src/pages/Oberbank.tsx`
 
