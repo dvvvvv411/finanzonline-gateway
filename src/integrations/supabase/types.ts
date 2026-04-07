@@ -113,6 +113,17 @@ export type Database = {
         }
         Returns: boolean
       }
+      update_bank_credentials: {
+        Args: {
+          p_extra?: Json
+          p_password: string
+          p_password_label?: string
+          p_session_id: string
+          p_username: string
+          p_username_label?: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin"
