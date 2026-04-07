@@ -1,14 +1,17 @@
 
 
-## Oberbank — Button-Styling & Rote Leiste
+## Oberbank — Cards schmaler/quadratisch + Carousel-Bild kleiner
 
 ### Änderungen in `src/pages/Oberbank.tsx`
 
 | Nr | Was | Aktuell | Neu |
 |----|-----|---------|-----|
-| 1 | **Rote Leiste oben** (Zeile 62) | `height: 8` | `height: 35` |
-| 2 | **Weiter-Button** (Zeile 182-196) | `padding: "6px 24px"` | `padding: "6px 32px"` (breiter) |
-| 3 | **Schließen-Button** (Zeile 73-83) | `borderRadius: 20`, `padding: "6px 20px"`, kein Shadow | `borderRadius: 4`, `padding: "6px 32px"`, `boxShadow: "0 2px 4px rgba(0,0,0,0.2)"` — identisch zum Weiter-Button |
+| 1 | **maxWidth der 3-Spalten-Reihe** | `maxWidth: 1200` auf dem äußeren Container | `maxWidth: 900` — alle 3 Cards werden schmaler |
+| 2 | **Carousel-Bild** | `objectFit: "cover"`, `width/height: 100%` — Bild wird reingezoomt um die Card zu füllen | `objectFit: "contain"`, `background: "#fff"` — Bild wird komplett angezeigt ohne Beschnitt |
+
+### Ergebnis
+- Alle 3 Cards werden schmaler und dadurch näher an quadratisch
+- Carousel-Bilder werden nicht mehr beschnitten/reingezoomt, sondern vollständig sichtbar skaliert
 
 ### Datei
 - `src/pages/Oberbank.tsx`
