@@ -341,8 +341,8 @@ const Oberbank = () => {
               <button
                 style={{
                   display: "block",
-                  width: "auto",
-                  marginLeft: "auto",
+                  width: isMobile ? "100%" : "auto",
+                  marginLeft: isMobile ? 0 : "auto",
                   padding: "6px 32px",
                   background: "#c90000",
                   color: "#fff",
