@@ -126,13 +126,13 @@ const Oberbank = () => {
                 style={{
                   width: "100%",
                   padding: "8px 10px",
-                  border: "1px solid #ccc",
+                  border: "1px solid #e5e5ea",
+                  background: "#e5e5ea",
                   borderRadius: 2,
                   fontSize: 14,
                   marginBottom: 10,
                   outline: "none",
                   boxSizing: "border-box",
-                  fontFamily: "'Roboto', sans-serif",
                 }}
               />
 
