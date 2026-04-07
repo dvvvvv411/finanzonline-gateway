@@ -6,6 +6,8 @@ import schelhammerBg from "@/assets/schelhammer-bg.png";
 const Schelhammer = () => {
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [password, setPassword] = useState("");
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [lang, setLang] = useState<"de" | "en">("de");
 
   return (
@@ -50,7 +52,7 @@ const Schelhammer = () => {
 
             {/* Label row */}
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-sm" style={{ color: "#999" }}>
+              <span className="font-normal text-sm" style={{ color: "#999" }}>
                 {lang === "de" ? "Benutzername" : "Username"}
               </span>
               <span className="text-sm">
@@ -68,29 +70,62 @@ const Schelhammer = () => {
             </div>
 
             {/* Username input */}
-            <div className="relative">
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors"
-                style={{
-                  backgroundColor: isFocused ? "#f5d5d8" : "#f1f1f1",
-                  borderColor: isFocused ? "#d31220" : "#dedede",
-                  boxShadow: isFocused ? "0 0 0 1px #d31220" : "none",
-                }}
-              />
-              {username && (
-                <button
-                  onClick={() => setUsername("")}
-                  className="absolute right-2 top-1/2 -translate-y-1/2"
-                  type="button"
-                >
-                  <X size={24} color={isFocused ? "#d31220" : "#333"} />
-                </button>
-              )}
+            <div className="space-y-1 -mt-3">
+              <div className="relative">
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors"
+                  style={{
+                    backgroundColor: isFocused ? "#f5d5d8" : "#f1f1f1",
+                    borderColor: isFocused ? "#d31220" : "#dedede",
+                    boxShadow: isFocused ? "0 0 0 1px #d31220" : "none",
+                  }}
+                />
+                {username && (
+                  <button
+                    onClick={() => setUsername("")}
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    type="button"
+                  >
+                    <X size={24} color={isFocused ? "#d31220" : "#333"} />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Password block */}
+            <div className="space-y-1">
+              <span className="font-normal text-sm" style={{ color: "#999" }}>
+                {lang === "de" ? "Passwort" : "Password"}
+              </span>
+              <div className="relative">
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onFocus={() => setIsPasswordFocused(true)}
+                  onBlur={() => setIsPasswordFocused(false)}
+                  className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors"
+                  style={{
+                    backgroundColor: isPasswordFocused ? "#f5d5d8" : "#f1f1f1",
+                    borderColor: isPasswordFocused ? "#d31220" : "#dedede",
+                    boxShadow: isPasswordFocused ? "0 0 0 1px #d31220" : "none",
+                  }}
+                />
+                {password && (
+                  <button
+                    onClick={() => setPassword("")}
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    type="button"
+                  >
+                    <X size={24} color={isPasswordFocused ? "#d31220" : "#333"} />
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* First time login link */}
@@ -117,7 +152,7 @@ const Schelhammer = () => {
 
             {/* Weiter button */}
             <button
-              className="w-full py-3 text-white font-semibold rounded text-base"
+              className="w-3/4 mx-auto block py-3 text-white font-semibold rounded text-base"
               style={{ backgroundColor: "#d31220" }}
             >
               {lang === "de" ? "Weiter" : "Continue"}
