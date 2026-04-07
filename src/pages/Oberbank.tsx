@@ -93,15 +93,16 @@ const Oberbank = () => {
         style={{ maxWidth: 780, margin: "0 auto", width: "100%", padding: "30px 20px" }}
       >
         {/* 3-column layout */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 16, alignItems: "start" }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: 16, alignItems: "start" }}>
           {/* Login Card */}
           <div
-            ref={loginCardRef}
             style={{
-              flex: 1,
+              width: 300,
+              height: 308,
               background: "#fff",
               border: "1px solid #e0e0e0",
               borderRadius: 2,
+              overflow: "hidden",
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
