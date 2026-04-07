@@ -229,8 +229,8 @@ const Index = () => {
                 <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
-                <div className="col-span-2">
+              <div className="grid grid-cols-[1.5fr_1fr] md:grid-cols-3 gap-4">
+                <div className="md:col-span-2">
                   <label className="mb-1.5 block text-sm font-medium text-gray-600">Straße</label>
                   <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
                 </div>
