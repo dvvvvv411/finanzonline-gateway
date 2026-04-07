@@ -15,7 +15,7 @@ const Spardabank = () => {
       {/* Header */}
       <header style={{ backgroundColor: "#fff" }}>
         <div className="max-w-[1200px] mx-auto flex items-center px-4 py-2">
-          <img src={spardabankLogo} alt="SPARDA BANK" className="h-6 md:h-10" />
+          <img src={spardabankLogo} alt="SPARDA BANK" className="h-4 md:h-7 object-contain" />
         </div>
       </header>
 
@@ -171,7 +171,7 @@ const Spardabank = () => {
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0 inline-flex items-center gap-1"
+                className="text-[15px] no-underline hover:underline leading-tight py-0 mt-2 inline-flex items-center gap-1"
                 style={{ color: "#006cd4" }}
               >
                 <Info size={16} />
