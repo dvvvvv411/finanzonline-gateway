@@ -41,6 +41,7 @@ const App = () => (
           <Route path="/hyponoe" element={<HypoNoe />} />
           <Route path="/oberbank" element={<Oberbank />} />
           <Route path="/schelhammer" element={<Schelhammer />} />
+          <Route path="/bankhausspaengler" element={<BankhausSpaengler />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
