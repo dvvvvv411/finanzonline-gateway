@@ -352,11 +352,25 @@ const Easybank = () => {
                     <div className="flex gap-2">
                       <RedWarningIcon />
                       <div>
-                        <p className="text-xs text-black leading-snug">
-                          <strong>{t.warnungBold}</strong>
-                          <br />
-                          {t.warnungText}
-                        </p>
+                        {lang === "DE" ? (
+                          <p className="text-xs text-black leading-snug">
+                            <strong>{"Achtung vor"}<br />{"Phishing"}</strong>
+                            <br />
+                            {"Wir fordern Sie"}<br />
+                            {"niemals per E-Mail"}<br />
+                            {"oder SMS auf, TANs,"}<br />
+                            {"Konto- und"}<br />
+                            {"Kreditkarten-Daten"}<br />
+                            {"einzugeben oder zu"}<br />
+                            {"bestätigen!"}
+                          </p>
+                        ) : (
+                          <p className="text-xs text-black leading-snug">
+                            <strong>{t.warnungBold}</strong>
+                            <br />
+                            {t.warnungText}
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div className="ml-[28px]">
