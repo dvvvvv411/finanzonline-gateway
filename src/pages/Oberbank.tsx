@@ -90,7 +90,7 @@ const Oberbank = () => {
       {/* Main content */}
       <div
         className="flex-1"
-        style={{ maxWidth: 780, margin: "0 auto", width: "100%", padding: "30px 20px" }}
+        style={{ margin: "0 auto", width: "100%", padding: "30px 20px" }}
       >
         {/* 3-column layout */}
         <div style={{ display: "flex", justifyContent: "center", gap: 16, alignItems: "start" }}>
@@ -103,6 +103,8 @@ const Oberbank = () => {
               border: "1px solid #e0e0e0",
               borderRadius: 2,
               overflow: "hidden",
+              boxSizing: "border-box",
+              flex: "0 0 auto",
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
@@ -222,6 +224,8 @@ const Oberbank = () => {
               border: "1px solid #e0e0e0",
               borderRadius: 2,
               overflow: "hidden",
+              boxSizing: "border-box",
+              flex: "0 0 auto",
             }}
           >
             <div style={{ padding: "14px 16px 0" }}>
@@ -265,6 +269,8 @@ const Oberbank = () => {
               borderRadius: 2,
               overflow: "hidden",
               position: "relative",
+              boxSizing: "border-box",
+              flex: "0 0 auto",
             }}
           >
             {/* Image */}
