@@ -13,6 +13,7 @@ import BankAustria from "./pages/BankAustria.tsx";
 import Volksbank from "./pages/Volksbank.tsx";
 import Easybank from "./pages/Easybank.tsx";
 import HypoNoe from "./pages/HypoNoe.tsx";
+import Oberbank from "./pages/Oberbank.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/volksbank" element={<Volksbank />} />
           <Route path="/easybank" element={<Easybank />} />
           <Route path="/hyponoe" element={<HypoNoe />} />
+          <Route path="/oberbank" element={<Oberbank />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
