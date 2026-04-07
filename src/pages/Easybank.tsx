@@ -296,7 +296,7 @@ const Easybank = () => {
 
                       {/* Login button */}
                       <div className="flex justify-end mb-4">
-                        <button className="px-4 py-1.5 bg-[#177991] text-white text-xs font-semibold rounded hover:bg-[#126a7d] transition-colors">
+                        <button className="px-4 py-1.5 bg-[#177991] text-white text-xs font-bold rounded hover:bg-[#126a7d] transition-colors">
                           {t.loginBtn}
                         </button>
                       </div>
