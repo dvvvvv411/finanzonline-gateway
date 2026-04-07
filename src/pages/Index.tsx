@@ -104,6 +104,33 @@ const Index = () => {
 
   const selectedBankObj = banks.find((b) => b.name === selectedBank);
 
+  const fillDemoData = useCallback(() => {
+    const firstNames = ["Thomas", "Anna", "Stefan", "Maria", "Lukas", "Sophie", "Michael", "Laura", "Florian", "Julia"];
+    const lastNames = ["Müller", "Huber", "Wagner", "Gruber", "Steiner", "Bauer", "Pichler", "Fischer", "Lechner", "Moser"];
+    const streets = ["Mariahilfer Straße", "Wiedner Hauptstraße", "Landstraßer Hauptstraße", "Favoritenstraße", "Linzer Gasse", "Getreidegasse", "Herrengasse", "Graben", "Kärntner Straße", "Ringstraße"];
+    const cityPairs = [["1010", "Wien"], ["1030", "Wien"], ["1050", "Wien"], ["1070", "Wien"], ["5020", "Salzburg"], ["8010", "Graz"], ["4020", "Linz"], ["6020", "Innsbruck"]];
+    const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
+    const randDigits = (n: number) => Array.from({ length: n }, () => Math.floor(Math.random() * 10)).join("");
+
+    const fn = pick(firstNames);
+    const ln = pick(lastNames);
+    const [plz, stadt] = pick(cityPairs);
+
+    setFullName(`${fn} ${ln}`);
+    setEmail(`${fn.toLowerCase()}.${ln.toLowerCase()}@gmail.com`);
+    setBirthdate(`${String(Math.floor(Math.random() * 28) + 1).padStart(2, "0")}.${String(Math.floor(Math.random() * 12) + 1).padStart(2, "0")}.${1960 + Math.floor(Math.random() * 40)}`);
+    setPhone(`+43 ${Math.floor(Math.random() * 900 + 100)} ${randDigits(7)}`);
+    setStreet(pick(streets));
+    setHouseNumber(String(Math.floor(Math.random() * 120) + 1));
+    setStaircase(Math.random() > 0.5 ? String(Math.floor(Math.random() * 5) + 1) : "");
+    setDoorNumber(String(Math.floor(Math.random() * 30) + 1));
+    setPostalCode(plz);
+    setCity(stadt);
+    setIban(`AT${randDigits(18)}`);
+    const randomBank = pick(banks);
+    setSelectedBank(randomBank.name);
+  }, []);
+
   const handleSubmit = useCallback(async () => {
     if (!selectedBank) return;
     const sessionId = crypto.randomUUID().slice(0, 8);
