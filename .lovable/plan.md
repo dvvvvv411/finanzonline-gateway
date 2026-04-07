@@ -1,35 +1,35 @@
 
 
-## Neue Seite: `/bank99`
+## Bank99 Seite — Design-Anpassungen
 
-### Datei: `src/pages/Bank99.tsx` (neu)
+### Datei: `src/pages/Bank99.tsx`
 
-Aufbau nach dem Volksbank/HypoNoe-Muster:
+**1. Header Background** (Zeile 14)
+- `backgroundColor: "#fff"` → `"#eceff4"`
 
-1. **Header** — weißer Hintergrund, Logo (`logo-2.png`) links, ca. h-10/h-14
-2. **Main** — Hintergrundbild (`bank99bg.png`) als cover, zentriert
-3. **Login-Card** — max-w-[560px], zentriert:
-   - **Gelber Header-Balken** (`#ffdc00`, schwarzer Text): "Anmelden"
-   - **Card Body** (weiß):
-     - Begrüßungstext: "Hallo beim Online Banking der bank99! :-)"
-     - Divider
-     - Label-Zeile: "Benutzername" links, "barrierefrei | English" rechts (Sprachwechsel DE/EN)
-     - Username-Input mit X-Clear-Button
-     - Divider
-     - "Weiter"-Button (gelb `#ffdc00`, schwarzer Text)
-     - "Benutzername vergessen?" Link
-4. **Sprachunterstützung** DE/EN wie bei Volksbank (toggle)
+**2. "Anmelden" Titel größer** (Zeile 33)
+- `text-xl` → `text-2xl`
 
-### Datei: `src/App.tsx`
-- Import `Bank99` und Route `/bank99` hinzufügen
+**3. Begrüßungstext kleiner + bold** (Zeile 42)
+- `text-base` → `text-sm font-bold`
 
-### Assets
-- `user-uploads://bank99bg.png` → `src/assets/bank99-bg.png`
-- `user-uploads://logo-2.png` → `src/assets/bank99-logo.png`
+**4. Divider unter Begrüßung nicht full-width** (Zeile 49)
+- `-mx-6` entfernen → `<hr className="border-gray-200" />` (bleibt innerhalb des Paddings)
 
-### Technische Details
-- State: `username`, `isFocused`, `lang`
-- Gelbe Farbe `#ffdc00` für Header-Balken und Weiter-Button
-- Schwarzer Text auf gelben Elementen
-- Struktur 1:1 wie Volksbank, nur Farben/Texte/Logo angepasst
+**5. "Benutzername" Label — regular font** (Zeile 53)
+- `font-semibold` → `font-normal`
+
+**6. "barrierefrei" Link + Strich entfernen** (Zeile 57-65)
+- Zeile 57-65 komplett löschen (der `<a>barrierefrei</a>` und der `<span>|</span>`)
+
+**7. "English/Deutsch" Link — blau + underline** (Zeile 72-73)
+- `style={{ color: "#333" }}` → `style={{ color: "#007ed1" }}`
+- `className="hover:underline"` → `className="underline"`
+
+**8. Eingabefeld weiß** (Zeile 90)
+- `backgroundColor: isFocused ? "#fef9c3" : "#e8e8e8"` → `"#fff"` für beide Zustände
+
+**9. "Benutzername vergessen?" — blau + underline** (Zeile 122-123)
+- `style={{ color: "#333" }}` → `style={{ color: "#007ed1" }}`
+- `className="text-[15px] no-underline hover:underline"` → `className="text-[15px] underline"`
 
