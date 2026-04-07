@@ -123,7 +123,7 @@ const Oberbank = () => {
               padding: isMobile ? "4px 20px" : "6px 32px",
               borderRadius: 4,
               cursor: "pointer",
-              fontSize: 13,
+              fontSize: isMobile ? 12 : 13,
               fontFamily: "'Roboto', sans-serif",
               boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
             }}
