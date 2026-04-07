@@ -108,7 +108,7 @@ const Oberbank = () => {
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
-              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 14px" }}>
+              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#495c62", margin: "0 0 14px" }}>
                 Kundenportal Login
               </h2>
 
@@ -169,7 +169,7 @@ const Oberbank = () => {
               </div>
 
               {/* SSL text */}
-              <p style={{ fontSize: 12, color: "#666", lineHeight: 1.5, margin: "0 0 12px" }}>
+              <p style={{ fontSize: 12, color: "#495c62", lineHeight: 1.5, margin: "0 0 12px" }}>
                 Ihre Anmeldung im Kundenportal geschieht über gesicherte SSL Verbindungen.
               </p>
 
@@ -205,7 +205,7 @@ const Oberbank = () => {
               <a
                 href="#"
                 style={{
-                  color: "#333",
+                  color: "#495c62",
                   fontSize: 14,
                   textDecoration: "none",
                 }}
@@ -229,7 +229,7 @@ const Oberbank = () => {
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
-              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 14px" }}>
+              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#495c62", margin: "0 0 14px" }}>
                 Weiterführende Links
               </h2>
             </div>
@@ -244,7 +244,7 @@ const Oberbank = () => {
                     justifyContent: "space-between",
                     padding: "7px 0",
                     borderTop: i === 0 ? "none" : "1px solid #e0e0e0",
-                    color: "#555",
+                    color: "#495c62",
                     fontSize: 12,
                     textDecoration: "none",
                     transition: "background 0.15s",
@@ -348,7 +348,7 @@ const Oberbank = () => {
 
         {/* Wichtige Meldungen */}
         <div style={{ marginTop: 30 }}>
-          <h3 style={{ fontSize: 18, fontWeight: 400, color: "#333", marginBottom: 12 }}>
+          <h3 style={{ fontSize: 18, fontWeight: 400, color: "#495c62", marginBottom: 12 }}>
             Wichtige Meldungen
           </h3>
           <div style={{ background: "#fff", border: "1px solid #e0e0e0", borderRadius: 2 }}>
@@ -376,15 +376,15 @@ const Oberbank = () => {
                   transition: "transform 0.2s",
                 }}
               />
-              <span style={{ fontWeight: 700, color: "#333", flex: 1 }}>
+              <span style={{ fontWeight: 700, color: "#495c62", flex: 1 }}>
                 Zahlungsverkehr am Karfreitag 3.4.2026
               </span>
-              <span style={{ color: "#888", fontSize: 13, whiteSpace: "nowrap" }}>
+              <span style={{ color: "#495c62", fontSize: 13, whiteSpace: "nowrap" }}>
                 25.03.2026, 15:59 Uhr
               </span>
             </button>
             {meldungenOpen && (
-              <div style={{ padding: "0 20px 16px 50px", color: "#555", fontSize: 13, lineHeight: 1.6 }}>
+              <div style={{ padding: "0 20px 16px 50px", color: "#495c62", fontSize: 13, lineHeight: 1.6 }}>
                 Bitte beachten Sie, dass am Karfreitag, 3. April 2026, kein Zahlungsverkehr durchgeführt wird.
                 Aufträge, die an diesem Tag eingereicht werden, werden am nächsten Bankarbeitstag verarbeitet.
               </div>
@@ -411,7 +411,7 @@ const Oberbank = () => {
               <a
                 key={label}
                 href="#"
-                style={{ color: "#555", textDecoration: "none" }}
+                style={{ color: "#495c62", textDecoration: "none" }}
                 onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
                 onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
               >
@@ -419,7 +419,7 @@ const Oberbank = () => {
               </a>
             ))}
           </div>
-          <span style={{ color: "#888" }}>© 2026 Oberbank AG</span>
+          <span style={{ color: "#495c62" }}>© 2026 Oberbank AG</span>
         </div>
       </div>
     </div>
