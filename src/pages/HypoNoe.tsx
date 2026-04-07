@@ -105,9 +105,6 @@ const HypoNoe = () => {
               </a>
             </div>
 
-            {/* Divider */}
-            <hr className="-mx-6 border-gray-200" />
-
             {/* AGB Text */}
             <p className="text-[13px] text-center" style={{ color: "#333" }}>
               Mit dem Login stimmen Sie den{" "}
