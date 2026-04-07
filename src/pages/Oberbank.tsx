@@ -48,7 +48,7 @@ const Oberbank = () => {
       />
 
       {/* Red top bar */}
-      <div style={{ height: 4, background: "#c90000" }} />
+      <div style={{ height: 8, background: "#c90000" }} />
 
       {/* Cookie banner */}
       <div style={{ background: "#e8e8e8", padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5 }}>
