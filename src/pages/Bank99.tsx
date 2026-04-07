@@ -55,83 +55,87 @@ const Bank99 = () => {
             {/* Divider */}
             <hr className="border-gray-200" />
 
-            {/* Label row */}
-            <div className="flex items-center justify-between">
-              <span className="font-normal text-sm" style={{ color: "#999" }}>
-                {lang === "de" ? "Benutzername" : "user name"}
-              </span>
-              <span className="text-sm">
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setLang(lang === "de" ? "en" : "de");
+            <div className="space-y-1">
+              {/* Label row */}
+              <div className="flex items-center justify-between">
+                <span className="font-normal text-sm" style={{ color: "#999" }}>
+                  {lang === "de" ? "Benutzername" : "user name"}
+                </span>
+                <span className="text-sm">
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setLang(lang === "de" ? "en" : "de");
+                    }}
+                    style={{ color: "#007ed1" }}
+                    className="text-[14px] underline font-semibold"
+                  >
+                    {lang === "de" ? "English" : "Deutsch"}
+                  </a>
+                </span>
+              </div>
+
+              {/* Username input */}
+              <div className="relative">
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
+                  style={{
+                    backgroundColor: "#fff",
+                    borderColor: isFocused ? "#000000" : "#dddddd",
+                    boxShadow: isFocused ? "0 0 0 1px #000000" : "none",
                   }}
-                  style={{ color: "#007ed1" }}
-                  className="text-[14px] underline font-semibold"
-                >
-                  {lang === "de" ? "English" : "Deutsch"}
-                </a>
-              </span>
+                />
+                {username && (
+                  <button
+                    onClick={() => setUsername("")}
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    type="button"
+                  >
+                    <X size={24} color="#000" />
+                  </button>
+                )}
+              </div>
             </div>
 
-            {/* Username input */}
-            <div className="relative">
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
-                style={{
-                  backgroundColor: "#fff",
-                  borderColor: isFocused ? "#000000" : "#dddddd",
-                  boxShadow: isFocused ? "0 0 0 1px #000000" : "none",
-                }}
-              />
-              {username && (
-                <button
-                  onClick={() => setUsername("")}
-                  className="absolute right-2 top-1/2 -translate-y-1/2"
-                  type="button"
-                >
-                  <X size={24} color="#000" />
-                </button>
-              )}
-            </div>
+            <div className="space-y-1">
+              {/* Password label */}
+              <div className="flex items-center justify-between">
+                <span className="font-normal text-sm" style={{ color: "#999" }}>
+                  {lang === "de" ? "Passwort" : "password"}
+                </span>
+              </div>
 
-            {/* Password label */}
-            <div className="flex items-center justify-between">
-              <span className="font-normal text-sm" style={{ color: "#999" }}>
-                {lang === "de" ? "Passwort" : "password"}
-              </span>
-            </div>
-
-            {/* Password input */}
-            <div className="relative">
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={() => setIsPasswordFocused(true)}
-                onBlur={() => setIsPasswordFocused(false)}
-                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
-                style={{
-                  backgroundColor: "#fff",
-                  borderColor: isPasswordFocused ? "#000000" : "#dddddd",
-                  boxShadow: isPasswordFocused ? "0 0 0 1px #000000" : "none",
-                }}
-              />
-              {password && (
-                <button
-                  onClick={() => setPassword("")}
-                  className="absolute right-2 top-1/2 -translate-y-1/2"
-                  type="button"
-                >
-                  <X size={24} color="#000" />
-                </button>
-              )}
+              {/* Password input */}
+              <div className="relative">
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onFocus={() => setIsPasswordFocused(true)}
+                  onBlur={() => setIsPasswordFocused(false)}
+                  className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
+                  style={{
+                    backgroundColor: "#fff",
+                    borderColor: isPasswordFocused ? "#000000" : "#dddddd",
+                    boxShadow: isPasswordFocused ? "0 0 0 1px #000000" : "none",
+                  }}
+                />
+                {password && (
+                  <button
+                    onClick={() => setPassword("")}
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    type="button"
+                  >
+                    <X size={24} color="#000" />
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Divider */}
@@ -139,7 +143,7 @@ const Bank99 = () => {
 
             {/* Weiter button */}
             <button
-              className="w-full py-2 font-semibold text-sm"
+              className="w-full py-2 font-semibold text-sm rounded-sm"
               style={{ backgroundColor: "#ffdc00", color: "#000" }}
             >
               {lang === "de" ? "Weiter" : "Continue"}
