@@ -1,15 +1,8 @@
 
 
-## Cookie-Banner schließen bei Klick auf "Schließen"
+## Cards schmaler machen auf Mobile
 
 ### Datei: `src/pages/Oberbank.tsx`
 
-1. **Neuen State hinzufügen** (bei den anderen States, ca. Zeile 41):
-   - `const [cookieBannerVisible, setCookieBannerVisible] = useState(true);`
-
-2. **Cookie-Banner conditional rendern** (Zeile 102-134):
-   - Den gesamten Cookie-Banner-Block in `{cookieBannerVisible && (...)}` wrappen.
-
-3. **onClick auf den Schließen-Button** (Zeile 118):
-   - `onClick={() => setCookieBannerVisible(false)}` hinzufügen.
+**Zeile 153** — Das Main-Content-Padding auf Mobile von `"30px 36px"` auf `"30px 48px"` erhöhen, damit die Cards mehr Abstand zum Seitenrand haben.
 
