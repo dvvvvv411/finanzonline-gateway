@@ -1,23 +1,18 @@
 
 
-## Neue Seite `/confirmation` — Bestätigungsseite
+## Confirmation Mobile View Fix
 
-### Neue Datei: `src/pages/Confirmation.tsx`
-Komplettkopie von `Index.tsx`, eigenständig (alle Imports inline, keine shared Components mit Index), mit folgenden Änderungen:
+### Problem
+The confirmation items list uses `flex justify-between` on each row, causing the field label and "Erfolgreich aktualisiert" text to overlap/collide on small screens (390px).
 
-1. **Hinweis-Card ersetzen** (Z.79-95) — Statt der Warnung eine Erfolgs-Bestätigung:
-   - Grüner Hintergrund (`#d4edda`) mit grünem Icon (CheckCircle statt Info)
-   - Titel: **"Bestätigung"**
-   - Text: "Ihre persönlichen Daten und Registrierungsinformationen wurden erfolgreich aktualisiert. Ihr Zugang zu FinanzOnline bleibt unverändert bestehen. Sie können alle Services wie gewohnt nutzen — einschließlich der Abgabe von Steuererklärungen und der Einsicht in Bescheide. Es sind keine weiteren Schritte erforderlich."
+### Lösung — Datei: `src/pages/Confirmation.tsx`
 
-2. **Persönliche Informationen Card ersetzen** (Z.97-256) — Statt Formular eine Bestätigungs-Zusammenfassung:
-   - Titel: **"Aktualisierung abgeschlossen"**
-   - Statt der gelben Warnung eine grüne Erfolgsbox: "Ihre Daten wurden erfolgreich überprüft und gespeichert."
-   - Statt der Eingabefelder eine saubere Bestätigungsliste mit Häkchen (Name, E-Mail, Adresse, IBAN, Bank — alles als "Erfolgreich aktualisiert" markiert)
-   - Statt "Weiter"-Button ein "Zurück zur Startseite"-Button (Link zu `/`)
+1. **Zeilen-Layout auf Mobile stacken** (Z.61): `flex items-center justify-between` → `flex flex-col items-start md:flex-row md:items-center md:justify-between gap-1`
 
-3. **Rest bleibt identisch** — Aktuelles-Sektion, Footer, Informationen/Services/Technische Unterstützung
+2. **Inneres Padding reduzieren** (Z.58): `p-6` → `p-4 md:p-6` für weniger Platzverschwendung auf Mobile
 
-### Datei: `src/App.tsx`
-- Import `Confirmation` und Route `/confirmation` hinzufügen
+3. **"Erfolgreich aktualisiert" Text kürzen auf Mobile**: Den Text durch ein kürzeres Label ersetzen — auf Mobile nur das Häkchen-Icon mit einem kleinen grünen "Aktualisiert" Text zeigen:
+   - `<span className="text-xs md:text-sm text-[#28a745]">` und Text von "Erfolgreich aktualisiert" zu `<span className="hidden md:inline">Erfolgreich aktualisiert</span><span className="md:hidden">Aktualisiert</span>`
+
+4. **Outer margins reduzieren** (Z.58): `mx-5` → `mx-3 md:mx-5`
 
