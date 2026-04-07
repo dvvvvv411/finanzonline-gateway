@@ -39,7 +39,7 @@ const Bank99 = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Greeting */}
-            <p className="text-sm leading-snug" style={{ color: "#333" }}>
+            <p className="text-sm leading-snug font-semibold" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Hallo beim Online Banking der bank99! :-)"
                 : "Welcome to bank99 Online Banking! :-)"}
