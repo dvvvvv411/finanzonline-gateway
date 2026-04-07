@@ -1,9 +1,10 @@
 
 
-## Schelhammer — Weiter-Button full width & flacher
+## Schelhammer — Button abrunden & Card breiter
 
 ### Datei: `src/pages/Schelhammer.tsx`
 
-1. **Button full width** (Z.155): `w-3/4 mx-auto block` → `w-full`
-2. **Button flacher** (Z.155): `py-3` → `py-2`
+1. **Weiter-Button abgerundeter** (Z.155): `rounded` → `rounded-md`
+
+2. **Login-Card breiter** (Z.32): `max-w-[560px]` → `max-w-[620px]`
 
