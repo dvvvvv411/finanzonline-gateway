@@ -93,7 +93,7 @@ const Oberbank = () => {
         style={{ margin: "0 auto", width: "100%", padding: "30px 20px" }}
       >
         {/* 3-column layout */}
-        <div style={{ display: "flex", justifyContent: "center", gap: 16, alignItems: "start" }}>
+        <div style={{ display: "flex", justifyContent: "flex-start", gap: 16, alignItems: "start" }}>
           {/* Login Card */}
           <div
             style={{
