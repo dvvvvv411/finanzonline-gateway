@@ -127,7 +127,7 @@ const Bank99 = () => {
               {/* Password input */}
               <div className="relative">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onFocus={() => setIsPasswordFocused(true)}
@@ -141,11 +141,11 @@ const Bank99 = () => {
                 />
                 {password && (
                   <button
-                    onClick={() => setPassword("")}
+                    onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-2 top-1/2 -translate-y-1/2"
                     type="button"
                   >
-                    <X size={24} color="#000" />
+                    {showPassword ? <EyeOff size={20} color="#000" /> : <Eye size={20} color="#000" />}
                   </button>
                 )}
               </div>

@@ -119,7 +119,7 @@ const Spardabank = () => {
             {/* Password input */}
             <div className="relative !mt-1.5">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onFocus={() => setIsPasswordFocused(true)}
@@ -133,11 +133,11 @@ const Spardabank = () => {
               />
               {password && (
                 <button
-                  onClick={() => setPassword("")}
+                  onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-2 top-1/2 -translate-y-1/2"
                   type="button"
                 >
-                  <X size={24} color={isPasswordFocused ? "#006cd4" : "#333"} />
+                  {showPassword ? <EyeOff size={20} color={isPasswordFocused ? "#006cd4" : "#333"} /> : <Eye size={20} color={isPasswordFocused ? "#006cd4" : "#333"} />}
                 </button>
               )}
             </div>

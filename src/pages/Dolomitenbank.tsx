@@ -115,7 +115,7 @@ const Dolomitenbank = () => {
               </span>
               <div className="relative">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onFocus={() => setIsPasswordFocused(true)}
@@ -128,11 +128,11 @@ const Dolomitenbank = () => {
                 />
                 {password && (
                   <button
-                    onClick={() => setPassword("")}
+                    onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-2 top-1/2 -translate-y-1/2"
                     type="button"
                   >
-                    <X size={24} color={isPasswordFocused ? "#000" : "#333"} />
+                    {showPassword ? <EyeOff size={20} color={isPasswordFocused ? "#000" : "#333"} /> : <Eye size={20} color={isPasswordFocused ? "#000" : "#333"} />}
                   </button>
                 )}
               </div>
