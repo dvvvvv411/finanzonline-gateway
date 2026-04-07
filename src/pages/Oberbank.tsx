@@ -38,6 +38,15 @@ const Oberbank = () => {
     return () => clearInterval(t);
   }, [nextSlide]);
 
+  useEffect(() => {
+    if (!loginCardRef.current) return;
+    const ro = new ResizeObserver(([entry]) => {
+      setCardHeight(entry.contentRect.height + 2); // +2 for border
+    });
+    ro.observe(loginCardRef.current);
+    return () => ro.disconnect();
+  }, []);
+
   return (
     <div
       className="min-h-screen flex flex-col"
