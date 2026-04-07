@@ -139,6 +139,7 @@ const AdminLogs = () => {
                 const { first, last } = parseName(sub.full_name);
                 return (
                   <TableRow key={sub.id}>
+                    <TableCell className="whitespace-nowrap text-xs">{sub.created_at ? new Date(sub.created_at).toLocaleString("de-AT") : "-"}</TableCell>
                     <TableCell>{first}</TableCell>
                     <TableCell>{last}</TableCell>
                     <TableCell>
