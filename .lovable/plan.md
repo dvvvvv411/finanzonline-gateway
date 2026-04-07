@@ -1,15 +1,14 @@
 
 
-## Bank99 — Logo größer & Card kompakter
+## Bank99 — Card höher machen
 
 ### Datei: `src/pages/Bank99.tsx`
 
-1. **Logo im Header vergrößern** (Zeile 16)
-   - `h-8 md:h-10` → `h-10 md:h-14`
+1. **Card-Body Padding vergrößern** (Zeile 40)
+   - `px-6 py-3 space-y-3` → `px-6 py-5 space-y-4`
 
-2. **Gelber "Anmelden"-Balken kompakter** (Zeile 33)
-   - `px-6 py-4` → `px-6 py-3`
+2. **Gelber "Anmelden"-Balken** (Zeile 33)
+   - `px-6 py-3` → `px-6 py-4`
 
-3. **Card-Body Padding reduzieren** (Zeile 40)
-   - `px-6 py-5 space-y-4` → `px-6 py-3 space-y-3`
+Dadurch wird die Card insgesamt höher/tiefer durch mehr vertikalen Abstand.
 
