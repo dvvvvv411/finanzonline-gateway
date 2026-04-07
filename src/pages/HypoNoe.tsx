@@ -46,8 +46,9 @@ const HypoNoe = () => {
             <p className="text-[13px]" style={{ color: "#333" }}>
               Bitte beachten Sie unsere{" "}
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://www.hyponoe.at/services/sicherheitszentrum"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="no-underline hover:underline"
                 style={{ color: "#0066cc" }}
               >
