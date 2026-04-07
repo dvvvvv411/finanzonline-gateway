@@ -138,7 +138,7 @@ const HypoNoe = () => {
             <hr className="-mx-6 border-gray-200" />
 
             {/* Links */}
-            <div className="flex flex-col items-center" style={{ gap: 0 }}>
+            <div className="flex flex-col items-center gap-2">
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
