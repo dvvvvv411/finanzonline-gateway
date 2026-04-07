@@ -205,7 +205,7 @@ const Oberbank = () => {
               <a
                 href="#"
                 style={{
-                  color: "#333",
+                  color: "#495c62",
                   fontSize: 14,
                   textDecoration: "none",
                 }}
