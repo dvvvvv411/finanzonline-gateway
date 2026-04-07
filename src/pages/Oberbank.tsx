@@ -41,7 +41,7 @@ const Oberbank = () => {
   return (
     <div
       className="min-h-screen flex flex-col"
-      style={{ fontFamily: "'Roboto', sans-serif", background: "#f5f5f5" }}
+      style={{ fontFamily: "'Roboto', sans-serif", background: "#fafcfc" }}
     >
       {/* Google Fonts */}
       <link
