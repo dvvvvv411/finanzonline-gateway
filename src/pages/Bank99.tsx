@@ -61,7 +61,7 @@ const Bank99 = () => {
                     setLang(lang === "de" ? "en" : "de");
                   }}
                   style={{ color: "#007ed1" }}
-                  className="underline"
+                  className="underline font-semibold"
                 >
                   {lang === "de" ? "English" : "Deutsch"}
                 </a>
