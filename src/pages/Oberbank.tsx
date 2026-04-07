@@ -106,6 +106,8 @@ const Oberbank = () => {
               overflow: "hidden",
               boxSizing: "border-box",
               flex: "0 0 auto",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
