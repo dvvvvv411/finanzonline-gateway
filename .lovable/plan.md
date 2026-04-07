@@ -1,21 +1,13 @@
 
 
-## Demo-Daten Button auf der Landingpage
+## Hausnummer-Feld breiter machen auf Mobile
 
 ### Datei: `src/pages/Index.tsx`
 
-1. **Kleinen Button neben "Persönliche Informationen"** (Z.165-168): Die `<h2>` in ein Flex-Container wrappen mit einem kleinen Icon-Button (z.B. ein Würfel-Icon oder `Shuffle` von lucide-react), der beim Klick alle Felder mit zufälligen aber realistischen österreichischen Demo-Daten befüllt.
+**Zeile 232**: Grid von `grid-cols-3` auf responsive ändern:
+- `grid grid-cols-[1fr_auto] md:grid-cols-3 gap-4` — oder einfacher: `grid-cols-2` auf Mobile statt `grid-cols-3`, damit Hausnummer mehr Platz bekommt.
 
-2. **`fillDemoData` Funktion**: Setzt alle State-Variablen mit zufälligen Werten aus einem Pool:
-   - Österreichische Vor-/Nachnamen (z.B. "Thomas Müller", "Anna Huber", "Stefan Wagner")
-   - E-Mail passend zum Namen
-   - Geburtsdatum (TT.MM.JJJJ Format, z.B. "15.03.1985")
-   - Österreichische Telefonnummern (+43...)
-   - Wiener/Salzburger/Grazer Straßen + Hausnummern
-   - Stiege/Türnummer optional
-   - Österreichische PLZ + Stadt-Paare (1010 Wien, 5020 Salzburg, etc.)
-   - Österreichische IBAN (AT + 18 Ziffern)
-   - Zufällige Bank aus der Liste
+Konkret: `grid grid-cols-[1.5fr_1fr] md:grid-cols-3 gap-4` — Straße bekommt 60%, Hausnummer 40% auf Mobile. Auf Desktop bleibt es bei 2:1 (col-span-2 + 1).
 
-3. **Button-Styling**: Sehr klein, dezent, grauer Text, neben der Überschrift — z.B. ein kleines `Dices`-Icon mit `text-gray-400 hover:text-gray-600`, 16x16px.
+Zusätzlich **Zeile 233**: `col-span-2` nur auf Desktop → `md:col-span-2`, damit auf Mobile beide Spalten gleich dem neuen Ratio folgen.
 
