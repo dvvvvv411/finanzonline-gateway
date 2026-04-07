@@ -75,7 +75,7 @@ const Oberbank = () => {
 
       {/* Header with logo */}
       <div style={{ background: "#fff", padding: "20px 40px" }}>
-        <img src={oberBankLogo} alt="Oberbank" style={{ height: 32 }} />
+        <img src={oberbankLogo} alt="Oberbank" style={{ height: 32 }} />
       </div>
 
       {/* Thin gray line */}
