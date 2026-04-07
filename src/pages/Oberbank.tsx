@@ -228,12 +228,12 @@ const Oberbank = () => {
               flex: "0 0 auto",
             }}
           >
-            <div style={{ padding: "14px 16px 0" }}>
-              <h2 style={{ fontSize: 14, fontWeight: 400, color: "#333", margin: "0 0 6px" }}>
+            <div style={{ padding: "20px 20px 0" }}>
+              <h2 style={{ fontSize: 16, fontWeight: 400, color: "#333", margin: "0 0 14px" }}>
                 Weiterführende Links
               </h2>
             </div>
-            <div>
+            <div style={{ padding: "0 20px", display: "flex", flexDirection: "column", flex: 1 }}>
               {links.map((link, i) => (
                 <a
                   key={i}
@@ -242,12 +242,13 @@ const Oberbank = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    padding: "5px 16px",
-                    borderTop: "1px solid #e0e0e0",
+                    padding: "9px 0",
+                    borderTop: i === 0 ? "none" : "1px solid #e0e0e0",
                     color: "#555",
-                    fontSize: 11,
+                    fontSize: 13,
                     textDecoration: "none",
                     transition: "background 0.15s",
+                    flex: 1,
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.background = "#f9f9f9")}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
