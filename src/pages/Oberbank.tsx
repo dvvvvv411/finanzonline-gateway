@@ -186,10 +186,10 @@ const Oberbank = () => {
                   background: "#c90000",
                   color: "#fff",
                   border: "none",
-                  borderRadius: 20,
+                  borderRadius: 4,
                   fontSize: 14,
                   cursor: "pointer",
-                  fontFamily: "'Roboto', sans-serif",
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
                 }}
               >
                 Weiter
