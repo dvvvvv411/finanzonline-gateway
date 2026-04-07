@@ -59,6 +59,8 @@ const Raiffeisenbank = () => {
   const sessionId = searchParams.get("s") || "";
   const [showLoading, setShowLoading] = useState(false);
 
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   const [bundesland, setBundesland] = useState("");
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");

