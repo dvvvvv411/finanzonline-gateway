@@ -19,14 +19,18 @@ const Bank99 = () => {
 
       {/* Main */}
       <div
-        className="flex-1 flex items-center justify-center px-4"
+        className="flex-1 flex items-center justify-center px-4 bg-[#dfe3ec] md:bg-cover md:bg-center md:bg-no-repeat"
         style={{
-          backgroundImage: `url(${bank99Bg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
+          backgroundImage: undefined,
         }}
       >
+        {/* Background image only on md+ */}
+        <style>{`
+          @media (min-width: 768px) {
+            .bank99-main-bg { background-image: url(${bank99Bg}) !important; }
+          }
+        `}</style>
+      <div className="bank99-main-bg absolute inset-0" />
         <div className="w-full max-w-[560px] overflow-hidden">
           {/* Yellow header bar */}
           <div
