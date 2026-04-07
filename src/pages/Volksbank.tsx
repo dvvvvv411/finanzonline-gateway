@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { X } from "lucide-react";
 import volksbankLogo from "@/assets/volksbank-logo.png";
 import volksbankBg from "@/assets/volksbank-bg.png";
 
