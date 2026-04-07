@@ -51,6 +51,7 @@ const banks = [
   { name: "Dolomiten Bank", icon: dolomitenIcon },
   { name: "Sparda Bank", icon: spardaIcon },
   { name: "Dadat Bank", icon: dadatIcon },
+  { name: "Marchfelder Bank", icon: marchfelderIcon },
 ];
 
 const Index = () => {
