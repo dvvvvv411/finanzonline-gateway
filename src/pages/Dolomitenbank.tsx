@@ -168,14 +168,20 @@ const Dolomitenbank = () => {
               >
                 {lang === "de" ? "Passwort vergessen" : "Forgot password"}
               </a>
-              <div className="h-4" />
-              <a
-                href="#"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
-                style={{ color: "#637781" }}
-              >
-                {lang === "de" ? "Mehr über das DolomitenBanking" : "More about DolomitenBanking"}
-              </a>
+              {lang === "de" && (
+                <>
+                  <div className="h-4" />
+                  <a
+                    href="https://www.dolomitenbank.at/private/dolomitenbanking-internetbanking/internetbanking-dolomitenbanking"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                    style={{ color: "#637781" }}
+                  >
+                    Mehr über das DolomitenBanking
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>
