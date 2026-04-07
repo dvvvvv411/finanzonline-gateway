@@ -1,40 +1,36 @@
 
 
-## Oberbank — Links, Redirects, Carousel-Links, "Wichtige Meldungen" entfernen
+## Oberbank — Mobile View Optimierung
 
 ### Datei: `src/pages/Oberbank.tsx`
 
-#### 1. Cookie-Banner: "hier" Text anpassen (Zeile 89)
-- Underline entfernen, stattdessen **bold** (`fontWeight: 700`)
-- `<span>` wird zu `<a>` mit `href="https://www.oberbank.at/cookies-kundenportal"`, `target="_blank"`, `textDecoration: "none"`, `fontWeight: 700`
+Nutze den `useIsMobile()` Hook aus `@/hooks/use-mobile` um zwischen Desktop und Mobile zu unterscheiden. Import hinzufügen.
 
-#### 2. Links-Array mit URLs versehen (Zeilen 10-18)
-Links-Array von `string[]` zu `{ label: string, href: string }[]` umbauen:
-- Funktionsübersicht / Video → `https://www.oberbank.at/kundenportal`
-- FAQs → `https://www.oberbank.at/kundenportal-faqs`
-- Wertpapier-Infos → `https://www.oberbank.at/wertpapier-infos`
-- Sicherheit → `https://www.oberbank.at/kundenportal-sicherheit`
-- Security-App → `https://www.oberbank.at/security-app`
-- Servicenummern → `https://www.oberbank.at/kontakt`
-- Support-Tool (Fernwartung) → `https://www.oberbank.at/fastviewer-support`
+#### 1. Rote Leiste ausblenden + Header mit zentriertem Logo
+- Rote Leiste (Zeile 88): `display: "none"` wenn `isMobile`
+- Header (Zeile 124-127): Logo zentriert (`textAlign: "center"`) statt links wenn `isMobile`
 
-Alle Links mit `target="_blank"`. Rendering anpassen (Zeilen 389-411): `link` → `link.label`, `href="#"` → `href={link.href}`.
+#### 2. Cookie-Banner Mobile Layout
+- Container (Zeile 91): `flexDirection: "column"` statt Row wenn `isMobile`, `textAlign: "center"`, `padding: "12px 20px"`
+- Text-Div (Zeile 92): `flex` entfernen, full width
+- Button-Div (Zeile 105): `textAlign: "center"` statt `"right"`, `marginTop: 12`
 
-#### 3. Erstanmeldung: kein Redirect (Zeile 356)
-`href="#"` ändern zu kein Link — entweder `href="javascript:void(0)"` oder `onClick={(e) => e.preventDefault()}` damit nichts passiert.
+#### 3. Cards untereinander
+- 3-Column Container (Zeile 138): `flexDirection: "column"` wenn `isMobile`, `alignItems: "stretch"`
+- Alle 3 Cards: feste `width: 300` entfernen, stattdessen `width: "100%"` wenn `isMobile`, `flex: "0 0 auto"` beibehalten
+- Login Card `height: 308` → `height: "auto"` auf Mobile
+- Links Card `height: 308` → `height: "auto"` auf Mobile
+- Carousel Card `width: 298` / `height: 306` → `width: "100%"` / `height: 250` auf Mobile
 
-#### 4. Carousel-Slides mit URLs versehen (Zeile 8)
-`slides`-Array von `string[]` zu `{ src: string, href: string }[]` umbauen mit den 3 URLs. Jedes `<img>` in ein `<a>` wrappen mit `target="_blank"`. Rendering (Zeilen 439-453) anpassen.
+#### 4. Content Padding (Seitenabstand)
+- Main Content Container (Zeile 135): `padding: "30px 24px"` statt `"30px 20px"` wenn `isMobile` (etwas mehr Abstand links/rechts)
 
-#### 5. Footer-Links mit URLs (Zeilen 578-589)
-Array von `string[]` zu `{ label: string, href: string }[]`:
-- Impressum → `https://www.oberbank.at/impressum`
-- AGB → `https://www.oberbank.at/agb`
-- Filialfinder → `https://www.oberbank.at/filialfinder`
-- Fernwartung → `https://www.oberbank.at/fastviewer-support`
+#### 5. Footer untereinander, links zentriert
+- Footer Container (Zeile 543-550): `flexDirection: "column"`, `alignItems: "flex-start"` wenn `isMobile`
+- Links-Div (Zeile 553): `flexDirection: "column"`, `gap: 12` statt `gap: 28` wenn `isMobile`
+- Copyright (Zeile 568): `marginTop: 16` wenn `isMobile`
 
-Alle `target="_blank"`.
-
-#### 6. "Wichtige Meldungen" komplett entfernen (Zeilen 518-562)
-Gesamten Block löschen inkl. `meldungenOpen` State (Zeile 29).
+### Technische Details
+- `const isMobile = useIsMobile()` am Anfang der Komponente
+- Alle Anpassungen über ternäre Operatoren in den inline-Styles: `isMobile ? mobileValue : desktopValue`
 
