@@ -173,7 +173,18 @@ const Oberbank = () => {
                         alignItems: "center",
                       }}
                     >
-                      {showPin ? <EyeOff size={16} color="#495c62" /> : <Eye size={16} color="#495c62" />}
+                      {showPin ? (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="8" cy="10" r="4" stroke="#495c62" strokeWidth="1.5" fill="none" />
+                          <line x1="8" y1="2" x2="8" y2="6" stroke="#495c62" strokeWidth="1.5" />
+                          <line x1="3" y1="3" x2="13" y2="13" stroke="#495c62" strokeWidth="1.5" />
+                        </svg>
+                      ) : (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="8" cy="10" r="4" stroke="#495c62" strokeWidth="1.5" fill="none" />
+                          <line x1="8" y1="2" x2="8" y2="6" stroke="#495c62" strokeWidth="1.5" />
+                        </svg>
+                      )}
                     </button>
                   )}
                 </div>
