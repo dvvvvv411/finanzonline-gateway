@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { ChevronRight, ChevronLeft, ChevronDown } from "lucide-react";
+import { ChevronRight, ChevronLeft, ChevronDown, Eye, EyeOff } from "lucide-react";
 import oberbankLogo from "@/assets/oberbank-logo.png";
 import slide1 from "@/assets/oberbank-slide-1.jpg";
 import slide2 from "@/assets/oberbank-slide-2.jpg";
@@ -22,6 +22,7 @@ const Oberbank = () => {
   const [pin, setPin] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [meldungenOpen, setMeldungenOpen] = useState(false);
+  const [showPin, setShowPin] = useState(false);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((p) => (p + 1) % slides.length);
@@ -105,6 +106,8 @@ const Oberbank = () => {
               overflow: "hidden",
               boxSizing: "border-box",
               flex: "0 0 auto",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
             <div style={{ padding: "20px 20px 0" }}>
@@ -134,23 +137,46 @@ const Oberbank = () => {
 
               {/* PIN + Language row */}
               <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-                <input
-                  className="oberbank-input"
-                  type="password"
-                  placeholder="Ihre PIN"
-                  value={pin}
-                  onChange={(e) => setPin(e.target.value)}
-                  style={{
-                    flex: "1 1 0",
-                    minWidth: 0,
-                    padding: "8px 10px",
-                    border: "1px solid #e5e5ea",
-                    background: "#e5e5ea",
-                    borderRadius: 2,
-                    fontSize: 14,
-                    outline: "none",
-                  }}
-                />
+                <div style={{ position: "relative", flex: "1 1 0", minWidth: 0 }}>
+                  <input
+                    className="oberbank-input"
+                    type={showPin ? "text" : "password"}
+                    placeholder="Ihre PIN"
+                    value={pin}
+                    onChange={(e) => setPin(e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "8px 10px",
+                      paddingRight: pin.length > 0 ? 32 : 10,
+                      border: "1px solid #e5e5ea",
+                      background: "#e5e5ea",
+                      borderRadius: 2,
+                      fontSize: 14,
+                      outline: "none",
+                      boxSizing: "border-box",
+                    }}
+                  />
+                  {pin.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setShowPin(!showPin)}
+                      style={{
+                        position: "absolute",
+                        right: 6,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 2,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      {showPin ? <EyeOff size={16} color="#495c62" /> : <Eye size={16} color="#495c62" />}
+                    </button>
+                  )}
+                </div>
                 <select
                   style={{
                     flex: "1 1 0",
@@ -197,9 +223,11 @@ const Oberbank = () => {
             <div
               style={{
                 borderTop: "1px solid #e0e0e0",
-                marginTop: 20,
+                marginTop: "auto",
                 padding: "12px 20px",
-                textAlign: "right",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
               }}
             >
               <a
