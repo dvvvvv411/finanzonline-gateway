@@ -177,14 +177,32 @@ const Easybank = () => {
               <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:underline">
                 {t.hilfe}
               </a>
-              <select
-                value={lang}
-                onChange={(e) => setLang(e.target.value as Lang)}
-                className="text-[11px] border border-gray-300 rounded px-1 py-0.5 bg-white text-gray-700 cursor-pointer focus:outline-none"
-              >
-                <option value="DE">deutsch</option>
-                <option value="EN">english</option>
-              </select>
+              <div className="relative">
+                <button
+                  onClick={() => {
+                    const el = document.getElementById("lang-dropdown");
+                    if (el) el.classList.toggle("hidden");
+                  }}
+                  className="text-[11px] border border-gray-300 rounded px-2 py-0.5 bg-white text-gray-700 cursor-pointer focus:outline-none flex items-center gap-1"
+                >
+                  {lang === "DE" ? "deutsch" : "english"}
+                  <ChevronDown className="h-3 w-3" />
+                </button>
+                <div id="lang-dropdown" className="hidden absolute right-0 top-full mt-0.5 bg-white border border-gray-300 rounded shadow-md z-50 min-w-[90px]">
+                  {(["DE", "EN"] as Lang[]).map((l) => (
+                    <button
+                      key={l}
+                      onClick={() => {
+                        setLang(l);
+                        document.getElementById("lang-dropdown")?.classList.add("hidden");
+                      }}
+                      className={`block w-full text-left text-[11px] px-2 py-1 ${lang === l ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"}`}
+                    >
+                      {l === "DE" ? "deutsch" : "english"}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
             {/* Row 2: Logo links + Datum rechts */}
             <div className="flex items-center justify-between">
