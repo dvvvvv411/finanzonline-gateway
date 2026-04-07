@@ -140,11 +140,11 @@ const Schelhammer = () => {
             </div>
 
             {/* Terms text */}
-            <p className="text-[15px] text-center" style={{ color: "#333" }}>
-              {lang === "de"
-                ? "Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu."
-                : "By entering your access data, you expressly agree to the bank's terms of use."}
-            </p>
+            {lang === "de" && (
+              <p className="text-[15px] text-center" style={{ color: "#333" }}>
+                Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu.
+              </p>
+            )}
 
             {/* Full-width divider above button */}
             <hr className="-mx-6 border-gray-200" />
