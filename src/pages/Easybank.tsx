@@ -159,7 +159,7 @@ const Easybank = () => {
   return (
     <div
       className="min-h-screen bg-white overflow-x-hidden flex justify-center"
-      style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}
+      style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
     >
       <div style={{ width: `${scaledWidth}px`, height: scaledHeight ? `${scaledHeight}px` : undefined }}>
         <div
