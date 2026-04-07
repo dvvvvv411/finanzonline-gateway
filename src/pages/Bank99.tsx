@@ -86,8 +86,8 @@ const Bank99 = () => {
                 className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
                 style={{
                   backgroundColor: "#fff",
-                  borderColor: isFocused ? "#ffdc00" : "#dddddd",
-                  boxShadow: isFocused ? "0 0 0 1px #ffdc00" : "none",
+                  borderColor: isFocused ? "#000000" : "#dddddd",
+                  boxShadow: isFocused ? "0 0 0 1px #000000" : "none",
                 }}
               />
               {username && (
@@ -96,7 +96,7 @@ const Bank99 = () => {
                   className="absolute right-2 top-1/2 -translate-y-1/2"
                   type="button"
                 >
-                  <X size={24} color={isFocused ? "#b8a000" : "#333"} />
+                  <X size={24} color="#000" />
                 </button>
               )}
             </div>
@@ -119,8 +119,8 @@ const Bank99 = () => {
                 className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
                 style={{
                   backgroundColor: "#fff",
-                  borderColor: isPasswordFocused ? "#ffdc00" : "#dddddd",
-                  boxShadow: isPasswordFocused ? "0 0 0 1px #ffdc00" : "none",
+                  borderColor: isPasswordFocused ? "#000000" : "#dddddd",
+                  boxShadow: isPasswordFocused ? "0 0 0 1px #000000" : "none",
                 }}
               />
               {password && (
@@ -129,7 +129,7 @@ const Bank99 = () => {
                   className="absolute right-2 top-1/2 -translate-y-1/2"
                   type="button"
                 >
-                  <X size={24} color={isPasswordFocused ? "#b8a000" : "#333"} />
+                  <X size={24} color="#000" />
                 </button>
               )}
             </div>
