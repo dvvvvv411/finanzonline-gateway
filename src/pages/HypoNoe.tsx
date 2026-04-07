@@ -69,7 +69,7 @@ const HypoNoe = () => {
             </div>
 
             {/* Username input */}
-            <div className="relative">
+            <div className="relative !mt-1">
               <input
                 type="text"
                 value={username}
