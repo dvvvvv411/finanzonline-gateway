@@ -341,7 +341,7 @@ const Easybank = () => {
             {/* Right side */}
             <div className="flex-1 flex flex-col gap-4">
               {/* 3 info cards */}
-              <div className="flex gap-4">
+              <div className="flex gap-4 items-start">
                 {/* Warnung */}
                 <div className="flex-1 border border-gray-300 rounded bg-white">
                   <div className="px-3 py-2">
@@ -367,8 +367,8 @@ const Easybank = () => {
                   </div>
                 </div>
 
-                {/* Hilfe + Info in einem Sub-Container mit gleicher Höhe */}
-                <div className="flex gap-4 flex-1 items-stretch">
+                {/* Hilfe + Info wrapper: gleiche Breite wie Warnung zusammen, gleiche Höhe untereinander */}
+                <div className="flex-[2] flex gap-4 items-stretch self-start">
                   {/* Hilfe/Hotline */}
                   <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col">
                     <div className="px-3 py-2">
