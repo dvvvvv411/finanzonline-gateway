@@ -118,7 +118,8 @@ const Oberbank = () => {
               </h2>
 
               {/* Banking-Nummer */}
-              <input
+               <input
+                className="oberbank-input"
                 type="text"
                 placeholder="Banking-Nummer"
                 value={bankingNummer}
@@ -126,19 +127,20 @@ const Oberbank = () => {
                 style={{
                   width: "100%",
                   padding: "8px 10px",
-                  border: "1px solid #ccc",
+                  border: "1px solid #e5e5ea",
+                  background: "#e5e5ea",
                   borderRadius: 2,
                   fontSize: 14,
                   marginBottom: 10,
                   outline: "none",
                   boxSizing: "border-box",
-                  fontFamily: "'Roboto', sans-serif",
                 }}
               />
 
               {/* PIN + Language row */}
               <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
                 <input
+                  className="oberbank-input"
                   type="password"
                   placeholder="Ihre PIN"
                   value={pin}
@@ -147,11 +149,11 @@ const Oberbank = () => {
                     flex: "1 1 0",
                     minWidth: 0,
                     padding: "8px 10px",
-                    border: "1px solid #ccc",
+                    border: "1px solid #e5e5ea",
+                    background: "#e5e5ea",
                     borderRadius: 2,
                     fontSize: 14,
                     outline: "none",
-                    fontFamily: "'Roboto', sans-serif",
                   }}
                 />
                 <select
@@ -159,12 +161,11 @@ const Oberbank = () => {
                     flex: "1 1 0",
                     minWidth: 0,
                     padding: "8px 10px",
-                    border: "1px solid #ccc",
+                    border: "1px solid #e5e5ea",
+                    background: "#e5e5ea",
                     borderRadius: 2,
                     fontSize: 14,
-                    background: "#fff",
                     cursor: "pointer",
-                    fontFamily: "'Roboto', sans-serif",
                   }}
                 >
                   <option>Deutsch</option>
@@ -187,10 +188,10 @@ const Oberbank = () => {
                   background: "#c90000",
                   color: "#fff",
                   border: "none",
-                  borderRadius: 20,
+                  borderRadius: 4,
                   fontSize: 14,
                   cursor: "pointer",
-                  fontFamily: "'Roboto', sans-serif",
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
                 }}
               >
                 Weiter
