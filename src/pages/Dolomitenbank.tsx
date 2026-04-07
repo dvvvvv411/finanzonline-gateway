@@ -35,7 +35,7 @@ const Dolomitenbank = () => {
             className="px-6 py-4 font-semibold text-2xl"
             style={{ backgroundColor: "#637781", color: "#edeff0" }}
           >
-            Login DolomitenBanking
+            {lang === "de" ? "Login DolomitenBanking" : "Login"}
           </div>
 
           {/* Card body */}
@@ -44,7 +44,7 @@ const Dolomitenbank = () => {
             <p className="text-base leading-tight" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten. Unsere Mitarbeiter werden Sie zu keinem Zeitpunkt nach Ihrem Passwort oder einer TAN fragen."
-                : "When you log in, a secure connection is established. Please make sure that you do not enter your access details on any site unknown to you and keep them secret. Our employees will never ask you for your password or a TAN."}
+                : "You can register for your new online banking service here. When you log in, a secure connection is established. Please make sure that you do not enter your access details on any other site and keep them secret. We will never ask you for your PIN or a TAN."}
             </p>
 
             {/* Divider */}
@@ -127,9 +127,11 @@ const Dolomitenbank = () => {
 
             {/* Info text */}
             <p className="text-[15px] text-center" style={{ color: "#000" }}>
-              {lang === "de"
-                ? "Funktioniert der Einstieg nicht? Haben Sie noch eine Verfügernummer? - Hier erfahren Sie wie Sie zu Ihrem neuem Benutzername / Passwort kommen. Ein Einstieg mit Ihrer bisherigen Verfügernummer ist nicht mehr möglich!"
-                : "Having trouble logging in? Do you still have a disposal number? - Here you can find out how to get your new username / password. Logging in with your previous disposal number is no longer possible!"}
+              {lang === "de" ? (
+                <>Funktioniert der Einstieg nicht? Haben Sie noch eine Verfügernummer? - <a href="https://www.dolomitenbank.at/m010/dolomitenbank/de/produkt/umstellung_dolomitenbanking.jsp" target="_blank" rel="noopener noreferrer" className="no-underline hover:underline" style={{ color: "#637781" }}>Hier</a> erfahren Sie wie Sie zu Ihrem neuem Benutzername / Passwort kommen. Ein Einstieg mit Ihrer bisherigen Verfügernummer ist nicht mehr möglich!</>
+              ) : (
+                <>Doesnt getting started work? Do you still have a authorised party number ? - <a href="https://www.dolomitenbank.at/m010/dolomitenbank/de/produkt/umstellung_dolomitenbanking.jsp" target="_blank" rel="noopener noreferrer" className="no-underline hover:underline" style={{ color: "#637781" }}>Here</a> you can find out how to get your new username / password. It is no longer possible to start with your previous authorised party number!</>
+              )}
             </p>
 
             {/* Full-width divider above button */}
@@ -149,7 +151,7 @@ const Dolomitenbank = () => {
             {/* Links */}
             <div className="flex flex-col items-center" style={{ gap: 0 }}>
               <a
-                href="https://www.banking.co.at/banking/login.xhtml?m=45#"
+                href="https://www.banking.co.at/banking/login.xhtml?m=10#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
@@ -158,7 +160,7 @@ const Dolomitenbank = () => {
                 {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
               </a>
               <a
-                href="https://www.banking.co.at/banking/login.xhtml?m=45#"
+                href="https://www.banking.co.at/banking/login.xhtml?m=10#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
@@ -166,14 +168,20 @@ const Dolomitenbank = () => {
               >
                 {lang === "de" ? "Passwort vergessen" : "Forgot password"}
               </a>
-              <div className="h-4" />
-              <a
-                href="#"
-                className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
-                style={{ color: "#637781" }}
-              >
-                {lang === "de" ? "Mehr über das DolomitenBanking" : "More about DolomitenBanking"}
-              </a>
+              {lang === "de" && (
+                <>
+                  <div className="h-4" />
+                  <a
+                    href="https://www.dolomitenbank.at/private/dolomitenbanking-internetbanking/internetbanking-dolomitenbanking"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
+                    style={{ color: "#637781" }}
+                  >
+                    Mehr über das DolomitenBanking
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>
