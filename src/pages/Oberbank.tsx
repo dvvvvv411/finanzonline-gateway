@@ -90,8 +90,8 @@ const Oberbank = () => {
       {!isMobile && <div style={{ height: 35, background: "#c90000" }} />}
 
       {/* Cookie banner */}
-      <div style={{ background: "#e5e5ea", padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", alignItems: "center", gap: 20 }}>
-        <div style={{ flex: 9 }}>
+      <div style={{ background: "#e5e5ea", padding: isMobile ? "12px 20px" : "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "center" : "center", gap: isMobile ? 12 : 20, textAlign: isMobile ? "center" : "left" }}>
+        <div style={{ flex: isMobile ? undefined : 9 }}>
           Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website
           erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum
           Datenschutz finden Sie{" "}
