@@ -47,7 +47,7 @@ const Bank99 = () => {
             <p className="text-xs md:text-sm leading-snug font-semibold" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Hallo beim Online Banking der bank99! :-)"
-                : "Welcome to bank99 Online Banking! :-)"}
+                : "Welcome at bank99!"}
             </p>
 
             {/* Divider */}
