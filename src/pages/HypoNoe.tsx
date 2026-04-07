@@ -94,6 +94,39 @@ const HypoNoe = () => {
               )}
             </div>
 
+            {/* Password label */}
+            <div className="flex items-center">
+              <span className="font-semibold text-xs" style={{ color: "#999" }}>
+                Passwort
+              </span>
+            </div>
+
+            {/* Password input */}
+            <div className="relative">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onFocus={() => setIsPasswordFocused(true)}
+                onBlur={() => setIsPasswordFocused(false)}
+                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
+                style={{
+                  backgroundColor: isPasswordFocused ? "#d6e5f4" : "#f1f1f1",
+                  borderColor: isPasswordFocused ? "#0066cc" : "#dedede",
+                  boxShadow: isPasswordFocused ? "0 0 0 1px #0066cc" : "none",
+                }}
+              />
+              {password && (
+                <button
+                  onClick={() => setPassword("")}
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  type="button"
+                >
+                  <X size={24} color={isPasswordFocused ? "#0066cc" : "#333"} />
+                </button>
+              )}
+            </div>
+
             {/* Erste Anmeldung */}
             <div className="text-center">
               <a
