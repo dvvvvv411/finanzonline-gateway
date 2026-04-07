@@ -55,13 +55,16 @@ const Confirmation = () => {
             </div>
           </div>
 
-          <div className="mx-5 mb-5 mt-4 rounded-lg bg-white p-6">
+          <div className="mx-3 mb-5 mt-4 rounded-lg bg-white p-4 md:mx-5 md:p-6">
             <div className="space-y-4">
               {confirmationItems.map((item) => (
-                <div key={item} className="flex items-center justify-between border-b border-gray-100 pb-3 last:border-0">
+                <div key={item} className="flex flex-col items-start gap-1 border-b border-gray-100 pb-3 last:border-0 md:flex-row md:items-center md:justify-between">
                   <span className="text-sm font-medium text-gray-600">{item}</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-[#28a745]">Erfolgreich aktualisiert</span>
+                    <span className="text-xs text-[#28a745] md:text-sm">
+                      <span className="hidden md:inline">Erfolgreich aktualisiert</span>
+                      <span className="md:hidden">Aktualisiert</span>
+                    </span>
                     <Check className="h-4 w-4 text-[#28a745]" />
                   </div>
                 </div>
