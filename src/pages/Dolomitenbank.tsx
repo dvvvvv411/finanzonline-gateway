@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { X, Eye, EyeOff } from "lucide-react";
 import dolomitenbankLogo from "@/assets/dolomitenbank-logo.png";
 import dolomitenbankBg from "@/assets/dolomitenbank-bg.png";
+import dolomitenbankIcon from "@/assets/dolomiten_bank.png";
 
 const Dolomitenbank = () => {
   const [searchParams] = useSearchParams();

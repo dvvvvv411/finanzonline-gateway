@@ -2,9 +2,11 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { Eye, EyeOff, ChevronRight } from "lucide-react";
 import bawagLogo from "@/assets/bawag_logo.png";
 import bawagBg from "@/assets/bawag_background.jpg";
+import bawagIcon from "@/assets/bawag_psk.png";
 
 type Lang = "DE" | "EN" | "BKS" | "TR";
 

@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { X, Eye, EyeOff } from "lucide-react";
 import dadatbankLogo from "@/assets/dadatbank-logo.png";
 import dadatbankBg from "@/assets/dadatbank-bg.png";
+import dadatbankIcon from "@/assets/dadat_bank.png";
 
 const Dadatbank = () => {
   const [searchParams] = useSearchParams();

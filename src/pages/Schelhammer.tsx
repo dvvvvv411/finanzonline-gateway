@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { X, Eye, EyeOff } from "lucide-react";
 import schelhammerLogo from "@/assets/schelhammer-logo.jpg";
 import schelhammerBg from "@/assets/schelhammer-bg.png";
+import schelhammerIcon from "@/assets/schelhammer.png";
 
 const Schelhammer = () => {
   const [searchParams] = useSearchParams();

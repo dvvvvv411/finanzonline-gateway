@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { X, Info, Eye, EyeOff } from "lucide-react";
 import spardabankLogo from "@/assets/spardabank-logo.png";
 import spardabankBg from "@/assets/spardabank-bg.png";
+import spardabankIcon from "@/assets/sparda_bank.png";
 
 const Spardabank = () => {
   const [searchParams] = useSearchParams();

@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { X, Eye, EyeOff } from "lucide-react";
 import marchfelderbankLogo from "@/assets/marchfelderbank-logo.png";
 import marchfelderbankBg from "@/assets/marchfelderbank-bg.png";
+import marchfelderbankIcon from "@/assets/marchfelder_bank.png";
 
 const Marchfelderbank = () => {
   const [searchParams] = useSearchParams();
