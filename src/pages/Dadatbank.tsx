@@ -41,7 +41,7 @@ const Dadatbank = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Info text */}
-            <p className="text-sm leading-snug" style={{ color: "#333" }}>
+            <p className="text-xs md:text-sm leading-snug" style={{ color: "#333" }}>
               {lang === "de" ? (
                 <>
                   Hier können Sie sich für Ihr neues Online Banking anmelden. Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner anderen Seite eingeben und diese geheim halten. Wir werden Sie nie nach Ihrer PIN oder einer TAN fragen!
