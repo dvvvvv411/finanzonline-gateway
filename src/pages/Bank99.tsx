@@ -27,7 +27,7 @@ const Bank99 = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="w-full max-w-[560px] rounded overflow-hidden">
+        <div <div className="w-full max-w-[560px] overflow-hidden">>
           {/* Yellow header bar */}
           <div
             className="px-6 py-4 font-semibold text-2xl"
