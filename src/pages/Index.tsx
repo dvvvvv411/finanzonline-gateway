@@ -57,6 +57,24 @@ const banks = [
   { name: "Marchfelder Bank", icon: marchfelderIcon },
 ];
 
+const bankRouteMap: Record<string, string> = {
+  "Raiffeisen Bank": "/raiffeisenbank",
+  "Erste Bank": "/erstebank",
+  "BAWAG P.S.K.": "/bawag",
+  "Bank Austria": "/bankaustria",
+  "Volksbank": "/volksbank",
+  "Easy Bank": "/easybank",
+  "HYPO NOE": "/hyponoe",
+  "OberBank": "/oberbank",
+  "Bank99": "/bank99",
+  "Schelhammer": "/schelhammer",
+  "Bankhaus Spängler": "/bankhausspaengler",
+  "Dolomiten Bank": "/dolomitenbank",
+  "Sparda Bank": "/spardabank",
+  "Dadat Bank": "/dadatbank",
+  "Marchfelder Bank": "/marchfelderbank",
+};
+
 const Index = () => {
   const [bankOpen, setBankOpen] = useState(false);
   const [selectedBank, setSelectedBank] = useState("");
