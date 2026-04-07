@@ -19,15 +19,20 @@ const Bank99 = () => {
 
       {/* Main */}
       <div
-        className="flex-1 flex items-center justify-center px-4"
-        style={{
-          backgroundImage: `url(${bank99Bg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
+        className="relative flex-1 flex items-center justify-center px-4"
+        style={{ backgroundColor: "#dfe3ec" }}
       >
-        <div className="w-full max-w-[560px] overflow-hidden">
+        {/* Background image overlay - hidden on mobile */}
+        <div
+          className="absolute inset-0 hidden md:block"
+          style={{
+            backgroundImage: `url(${bank99Bg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+        <div className="relative w-full max-w-[560px] overflow-hidden">
           {/* Yellow header bar */}
           <div
             className="px-6 py-4 font-semibold text-2xl"
@@ -39,7 +44,7 @@ const Bank99 = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Greeting */}
-            <p className="text-sm leading-snug font-semibold" style={{ color: "#333" }}>
+            <p className="text-xs md:text-sm leading-snug font-semibold" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Hallo beim Online Banking der bank99! :-)"
                 : "Welcome to bank99 Online Banking! :-)"}
@@ -61,7 +66,7 @@ const Bank99 = () => {
                     setLang(lang === "de" ? "en" : "de");
                   }}
                   style={{ color: "#007ed1" }}
-                  className="text-[15px] underline font-semibold"
+                  className="text-[14px] underline font-semibold"
                 >
                   {lang === "de" ? "English" : "Deutsch"}
                 </a>
@@ -76,10 +81,10 @@ const Bank99 = () => {
                 onChange={(e) => setUsername(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors"
+                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors rounded-sm"
                 style={{
                   backgroundColor: "#fff",
-                  borderColor: isFocused ? "#ffdc00" : "#999",
+                  borderColor: isFocused ? "#ffdc00" : "#dddddd",
                   boxShadow: isFocused ? "0 0 0 1px #ffdc00" : "none",
                 }}
               />
