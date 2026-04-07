@@ -10,8 +10,8 @@ const HypoNoe = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header style={{ backgroundColor: "#fff", borderBottom: "1px solid #e0e0e0" }}>
-        <div className="max-w-[1200px] mx-auto flex items-center px-4 py-3">
+      <header style={{ backgroundColor: "#fff" }}>
+        <div className="max-w-[1200px] mx-auto flex items-center px-4 py-2">
           <img src={hyponoeLogo} alt="HYPO NOE" className="h-10 md:h-14" />
         </div>
       </header>
@@ -26,11 +26,11 @@ const HypoNoe = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="w-full max-w-[560px] rounded overflow-hidden">
+        <div className="w-full max-w-[560px] overflow-hidden">
           {/* Blue header bar */}
           <div
-            className="px-6 py-4 text-white font-semibold text-xl"
-            style={{ backgroundColor: "#0063a6" }}
+            className="px-6 py-4 text-white font-semibold text-2xl"
+            style={{ backgroundColor: "#0066cc" }}
           >
             Login 24/7 Internetbanking
           </div>
@@ -38,19 +38,20 @@ const HypoNoe = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Info text */}
-            <p className="text-base leading-snug" style={{ color: "#333" }}>
+            <p className="text-[13px] leading-snug" style={{ color: "#333" }}>
               Beim Login wird eine sichere Verbindung aufgebaut. Bitte halten Sie Ihre Anmeldedaten geheim und achten Sie darauf, dass Sie Ihre Anmeldedaten auf keiner Ihnen unbekannten Seite eingeben. Unsere Mitarbeiter werden Sie niemals nach Ihren Anmeldedaten befragen.
             </p>
 
             {/* Sicherheitsempfehlungen link */}
-            <p>
+            <p className="text-[13px]" style={{ color: "#333" }}>
+              Bitte beachten Sie unsere{" "}
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-base no-underline hover:underline"
-                style={{ color: "#0063a6" }}
+                className="no-underline hover:underline"
+                style={{ color: "#0066cc" }}
               >
-                Bitte beachten Sie unsere Sicherheitsempfehlungen.
+                Sicherheitsempfehlungen.
               </a>
             </p>
 
@@ -58,18 +59,10 @@ const HypoNoe = () => {
             <hr className="-mx-6 border-gray-200" />
 
             {/* Label row */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center">
               <span className="font-semibold text-xs" style={{ color: "#999" }}>
                 Benutzername
               </span>
-              <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
-                className="text-sm no-underline hover:underline"
-                style={{ color: "#0063a6" }}
-              >
-                Barrierefrei
-              </a>
             </div>
 
             {/* Username input */}
@@ -80,11 +73,11 @@ const HypoNoe = () => {
                 onChange={(e) => setUsername(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors"
+                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors"
                 style={{
-                  backgroundColor: isFocused ? "#d6e5f4" : "#e8e8e8",
-                  borderColor: isFocused ? "#0063a6" : "#999",
-                  boxShadow: isFocused ? "0 0 0 1px #0063a6" : "none",
+                  backgroundColor: isFocused ? "#d6e5f4" : "#f1f1f1",
+                  borderColor: isFocused ? "#0066cc" : "#dedede",
+                  boxShadow: isFocused ? "0 0 0 1px #0066cc" : "none",
                 }}
               />
               {username && (
@@ -93,7 +86,7 @@ const HypoNoe = () => {
                   className="absolute right-2 top-1/2 -translate-y-1/2"
                   type="button"
                 >
-                  <X size={24} color={isFocused ? "#0063a6" : "#333"} />
+                  <X size={24} color={isFocused ? "#0066cc" : "#333"} />
                 </button>
               )}
             </div>
@@ -104,7 +97,7 @@ const HypoNoe = () => {
                 href="#"
                 onClick={(e) => e.preventDefault()}
                 className="text-sm no-underline hover:underline"
-                style={{ color: "#0063a6" }}
+                style={{ color: "#0066cc" }}
               >
                 Sie melden sich zum ersten Mal an?
               </a>
@@ -114,17 +107,17 @@ const HypoNoe = () => {
             <hr className="-mx-6 border-gray-200" />
 
             {/* AGB Text */}
-            <p className="text-[15px] text-center" style={{ color: "#333" }}>
+            <p className="text-[13px] text-center" style={{ color: "#333" }}>
               Mit dem Login stimmen Sie den{" "}
-              <a href="#" onClick={(e) => e.preventDefault()} className="no-underline hover:underline" style={{ color: "#0063a6" }}>
+              <a href="#" onClick={(e) => e.preventDefault()} className="no-underline hover:underline" style={{ color: "#0066cc" }}>
                 AGB
               </a>{" "}
               und{" "}
-              <a href="#" onClick={(e) => e.preventDefault()} className="no-underline hover:underline" style={{ color: "#0063a6" }}>
+              <a href="#" onClick={(e) => e.preventDefault()} className="no-underline hover:underline" style={{ color: "#0066cc" }}>
                 Nutzungsbedingungen
               </a>{" "}
               sowie der{" "}
-              <a href="#" onClick={(e) => e.preventDefault()} className="no-underline hover:underline" style={{ color: "#0063a6" }}>
+              <a href="#" onClick={(e) => e.preventDefault()} className="no-underline hover:underline" style={{ color: "#0066cc" }}>
                 Datenschutzerklärung
               </a>{" "}
               der HYPO NOE Landesbank für Niederösterreich und Wien AG ausdrücklich zu.
@@ -135,8 +128,8 @@ const HypoNoe = () => {
 
             {/* Weiter button */}
             <button
-              className="w-full py-3 text-white font-semibold rounded text-sm"
-              style={{ backgroundColor: "#0063a6" }}
+              className="w-full py-2 text-white font-semibold text-sm"
+              style={{ backgroundColor: "#0066cc" }}
             >
               Weiter
             </button>
@@ -150,7 +143,7 @@ const HypoNoe = () => {
                 href="#"
                 onClick={(e) => e.preventDefault()}
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
-                style={{ color: "#0063a6" }}
+                style={{ color: "#0066cc" }}
               >
                 Benutzername vergessen?
               </a>
@@ -158,7 +151,7 @@ const HypoNoe = () => {
                 href="#"
                 onClick={(e) => e.preventDefault()}
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0 inline-flex items-center gap-1"
-                style={{ color: "#0063a6" }}
+                style={{ color: "#0066cc" }}
               >
                 <Info size={16} />
                 Live Hilfe
