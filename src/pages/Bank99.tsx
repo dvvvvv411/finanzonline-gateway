@@ -58,7 +58,7 @@ const Bank99 = () => {
             <div className="space-y-1">
               {/* Label row */}
               <div className="flex items-center justify-between">
-                <span className="font-normal text-sm" style={{ color: "#999" }}>
+                <span className="font-normal text-sm" style={{ color: "#939593" }}>
                   {lang === "de" ? "Benutzername" : "user name"}
                 </span>
                 <span className="text-sm">
