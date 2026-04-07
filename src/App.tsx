@@ -12,6 +12,7 @@ import Bawag from "./pages/Bawag.tsx";
 import BankAustria from "./pages/BankAustria.tsx";
 import Volksbank from "./pages/Volksbank.tsx";
 import Easybank from "./pages/Easybank.tsx";
+import HypoNoe from "./pages/HypoNoe.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/bankaustria" element={<BankAustria />} />
           <Route path="/volksbank" element={<Volksbank />} />
           <Route path="/easybank" element={<Easybank />} />
+          <Route path="/hyponoe" element={<HypoNoe />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
