@@ -445,11 +445,11 @@ const Easybank = () => {
           <footer className="bg-white border-t border-gray-200 py-3 px-4">
             <div className="flex flex-wrap gap-3 justify-center">
               {t.footer.map((item, index) => (
-                <a key={item} href={footerUrls[index]} target="_blank" rel="noopener noreferrer" className="text-[11px] text-black underline hover:text-[#8ab528] transition-colors">
+                <a key={item} href={footerUrls[index]} target="_blank" rel="noopener noreferrer" className="text-xs text-black underline hover:text-[#8ab528] transition-colors">
                   {item}
                 </a>
               ))}
-              <span className="text-[11px] text-black">© BAWAG P.S.K.</span>
+              <span className="text-xs text-black">© BAWAG P.S.K.</span>
             </div>
           </footer>
         </div>
