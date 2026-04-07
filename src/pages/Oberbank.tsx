@@ -117,6 +117,7 @@ const Oberbank = () => {
         </div>
         <div style={{ flex: isMobile ? undefined : 1, textAlign: isMobile ? "center" : "right" }}>
           <button
+            onClick={() => setCookieBannerVisible(false)}
             style={{
               background: "#c90000",
               color: "#fff",
@@ -133,6 +134,7 @@ const Oberbank = () => {
           </button>
         </div>
       </div>
+      )}
 
       {/* Desktop: Header after cookie banner */}
       {!isMobile && (
