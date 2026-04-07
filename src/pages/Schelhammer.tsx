@@ -53,7 +53,7 @@ const Schelhammer = () => {
             {/* Label row */}
             <div className="flex items-center justify-between">
               <span className="font-normal text-sm" style={{ color: "#999" }}>
-                {lang === "de" ? "Benutzername" : "Username"}
+                {lang === "de" ? "Benutzername" : "User name or authorised party number"}
               </span>
               <span className="text-sm">
                 <a
