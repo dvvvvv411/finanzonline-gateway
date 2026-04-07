@@ -290,7 +290,7 @@ const Easybank = () => {
                               </button>
                             )}
                           </div>
-                          <p className="text-[10px] text-black mt-1">{t.pinHint}</p>
+                          <p className="text-xs text-black mt-1">{t.pinHint}</p>
                         </div>
                       </div>
 
