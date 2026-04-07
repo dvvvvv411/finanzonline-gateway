@@ -153,24 +153,27 @@ const Spardabank = () => {
             {/* Links */}
             <div className="flex flex-col items-center gap-0.5">
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://banking.sparda.at/banking/login.xhtml?m=44&f=2#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#006cd4" }}
               >
                 {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
               </a>
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://banking.sparda.at/banking/login.xhtml?m=44&f=2#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#006cd4" }}
               >
                 {lang === "de" ? "Passwort vergessen?" : "Forgot password?"}
               </a>
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://banking.sparda.at/banking/login.xhtml?m=44&f=2#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[15px] no-underline hover:underline leading-tight py-0 mt-2 inline-flex items-center gap-1"
                 style={{ color: "#006cd4" }}
               >
