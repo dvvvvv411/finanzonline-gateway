@@ -295,27 +295,19 @@ const Easybank = () => {
                     <div className="flex gap-2">
                       <RedWarningIcon />
                       <div>
-                        {lang === "DE" ? (
-                          <p className="text-xs text-black leading-snug">
-                            <strong>{"Achtung vor"}<br />{"Phishing"}</strong>
-                            <br />
-                            {"Wir fordern Sie"}<br />
-                            {"niemals per E-Mail"}<br />
-                            {"oder SMS auf, TANs,"}<br />
-                            {"Konto- und"}<br />
-                            {"Kreditkarten-Daten"}<br />
-                            {"einzugeben oder zu"}<br />
-                            {"bestätigen!"}
-                          </p>
-                        ) : (
-                          <p className="text-xs text-black leading-snug">
-                            <strong>{t.warnungBold}</strong>
-                            <br />
-                            {t.warnungText}
-                          </p>
-                        )}
+                        <p className="text-xs text-black leading-snug">
+                          <strong>{"Achtung vor"}<br />{"Phishing"}</strong>
+                          <br />
+                          {"Wir fordern Sie"}<br />
+                          {"niemals per E-Mail"}<br />
+                          {"oder SMS auf, TANs,"}<br />
+                          {"Konto- und"}<br />
+                          {"Kreditkarten-Daten"}<br />
+                          {"einzugeben oder zu"}<br />
+                          {"bestätigen!"}
+                        </p>
                         <a href="https://www.easybank.at/easybank/sicherheitsinformationen" target="_blank" rel="noopener noreferrer" className="text-xs text-[#4b9920] underline hover:no-underline mt-0">
-                          {t.warnungLink}
+                          Weiterlesen
                         </a>
                       </div>
                     </div>
