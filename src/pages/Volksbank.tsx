@@ -53,10 +53,6 @@ const Volksbank = () => {
               </span>
               <span className="text-sm space-x-2">
                 <a href="#" onClick={(e) => e.preventDefault()} style={{ color: "#196bc1" }}>
-                  Barrierefrei
-                </a>
-                <span style={{ color: "#999" }}>|</span>
-                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: "#196bc1" }}>
                   English
                 </a>
               </span>
