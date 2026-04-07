@@ -47,7 +47,7 @@ const Bank99 = () => {
             <p className="text-xs md:text-sm leading-snug font-semibold" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Hallo beim Online Banking der bank99! :-)"
-                : "Welcome to bank99 Online Banking! :-)"}
+                : "Welcome at bank99!"}
             </p>
 
             {/* Divider */}
@@ -56,7 +56,7 @@ const Bank99 = () => {
             {/* Label row */}
             <div className="flex items-center justify-between">
               <span className="font-normal text-sm" style={{ color: "#999" }}>
-                {lang === "de" ? "Benutzername" : "Username"}
+                {lang === "de" ? "Benutzername" : "user name"}
               </span>
               <span className="text-sm">
                 <a
@@ -116,8 +116,9 @@ const Bank99 = () => {
             {/* Link */}
             <div className="flex flex-col items-center">
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="https://meine.bank99.at/banking/login.xhtml?m=122#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[13px] underline font-semibold"
                 style={{ color: "#007ed1" }}
               >
