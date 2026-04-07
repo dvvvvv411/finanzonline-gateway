@@ -126,7 +126,7 @@ const Dolomitenbank = () => {
             </div>
 
             {/* Info text */}
-            <p className="text-[15px] text-center" style={{ color: "#000" }}>
+            <p className="text-xs md:text-[15px] text-center" style={{ color: "#000" }}>
               {lang === "de" ? (
                 <>Funktioniert der Einstieg nicht? Haben Sie noch eine Verfügernummer? - <a href="https://www.dolomitenbank.at/m010/dolomitenbank/de/produkt/umstellung_dolomitenbanking.jsp" target="_blank" rel="noopener noreferrer" className="no-underline hover:underline" style={{ color: "#637781" }}>Hier</a> erfahren Sie wie Sie zu Ihrem neuem Benutzername / Passwort kommen. Ein Einstieg mit Ihrer bisherigen Verfügernummer ist nicht mehr möglich!</>
               ) : (
