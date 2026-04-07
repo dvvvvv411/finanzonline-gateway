@@ -53,7 +53,7 @@ const Oberbank = () => {
       <div style={{ height: 35, background: "#c90000" }} />
 
       {/* Cookie banner */}
-      <div style={{ <div style={{ background: "#e5e5ea", padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", alignItems: "center", gap: 20 }}>, padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", alignItems: "center", gap: 20 }}>
+      <div style={{ background: "#e5e5ea", padding: "12px 40px", fontSize: 13, color: "#333", lineHeight: 1.5, display: "flex", alignItems: "center", gap: 20 }}>
         <div style={{ flex: 9 }}>
           Wir verwenden auf dieser Seite technisch notwendige Cookies, die für den reibungslosen Betrieb der Website
           erforderlich sind und sicherheitsrelevante Funktionalitäten ermöglichen. Weitere Informationen zum
