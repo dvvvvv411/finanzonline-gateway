@@ -109,7 +109,7 @@ const Volksbank = () => {
             </p>
 
             {/* Links */}
-            <div className="flex flex-col items-center gap-0.5">
+            <div className="flex flex-col items-center gap-0">
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
