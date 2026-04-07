@@ -370,7 +370,7 @@ const Oberbank = () => {
       <div style={{ borderTop: "1px solid #e0e0e0", background: "#fff" }}>
         <div
           style={{
-            maxWidth: 960,
+            maxWidth: 1200,
             margin: "0 auto",
             padding: "16px 20px",
             display: "flex",
