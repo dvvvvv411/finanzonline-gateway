@@ -174,15 +174,15 @@ const Oberbank = () => {
                       }}
                     >
                       {showPin ? (
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="8" cy="10" r="4" stroke="#495c62" strokeWidth="1.5" fill="none" />
-                          <line x1="8" y1="2" x2="8" y2="6" stroke="#495c62" strokeWidth="1.5" />
-                          <line x1="3" y1="3" x2="13" y2="13" stroke="#495c62" strokeWidth="1.5" />
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#495c62" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="12" r="3" />
+                          <line x1="4" y1="4" x2="20" y2="20" />
                         </svg>
                       ) : (
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="8" cy="10" r="4" stroke="#495c62" strokeWidth="1.5" fill="none" />
-                          <line x1="8" y1="2" x2="8" y2="6" stroke="#495c62" strokeWidth="1.5" />
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#495c62" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="12" r="3" />
                         </svg>
                       )}
                     </button>
