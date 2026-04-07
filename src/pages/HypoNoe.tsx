@@ -8,7 +8,7 @@ const HypoNoe = () => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ fontFamily: "Arial, 'Helvetica Neue', Helvetica, sans-serif" }}>
       {/* Header */}
       <header style={{ backgroundColor: "#fff" }}>
         <div className="max-w-[1200px] mx-auto flex items-center px-4 py-2">
