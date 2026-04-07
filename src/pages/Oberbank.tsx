@@ -22,6 +22,8 @@ const Oberbank = () => {
   const [pin, setPin] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [meldungenOpen, setMeldungenOpen] = useState(false);
+  const [cardHeight, setCardHeight] = useState<number | undefined>(undefined);
+  const loginCardRef = useRef<HTMLDivElement>(null);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((p) => (p + 1) % slides.length);
