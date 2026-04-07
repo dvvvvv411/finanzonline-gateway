@@ -1,14 +1,20 @@
 
-## HYPO NOE — Passwort-Feld hinzufügen
+
+## HYPO NOE — Abstand zwischen Labels und Inputs reduzieren
 
 ### Änderungen in `src/pages/HypoNoe.tsx`
 
-Nach dem Benutzername-Eingabefeld (ca. Zeile 90) wird ein identischer Block eingefügt:
+Die Label-Divs ("Benutzername" und "Passwort") und die darunterliegenden Input-Divs sind aktuell durch `space-y-4` (16px) im Card-Body getrennt.
 
-- Label: `Passwort` (gleicher Style wie "Benutzername": `font-semibold text-xs`, Farbe `#999`)
-- Input: `type="password"`, gleiche Styles (bg `#f1f1f1`, border `#dedede`, Focus: bg `#d6e5f4`, border `#0066cc`)
-- Clear-Button (X-Icon) wenn Inhalt vorhanden
-- Neuer State: `password` + `isPasswordFocused`
+**Fix**: Die Labels und Inputs jeweils direkt zusammenrücken, indem nach den Label-Zeilen ein kleinerer Abstand gesetzt wird. Konkret: `space-y-4` bleibt global, aber die Label-Divs bekommen `mb-[-8px]` oder alternativ wird `space-y-4` auf `space-y-3` reduziert und die Labels bekommen eine Klasse wie `mt-1 mb-[-4px]` bzw. einfacher: die `space-y-4` Klasse im Card-Body durch individuelle Margins ersetzen.
+
+**Einfachster Ansatz**: Auf den Label-Zeilen (Zeilen ~65 und ~92) jeweils `className="flex items-center -mb-2"` setzen, damit der Abstand zum darunter liegenden Input auf ~8px reduziert wird.
+
+| Nr | Was | Aktuell | Neu |
+|----|-----|---------|-----|
+| 1 | Benutzername Label | `className="flex items-center"` | `className="flex items-center -mb-2"` |
+| 2 | Passwort Label | `className="flex items-center"` | `className="flex items-center -mb-2"` |
 
 ### Datei
 - `src/pages/HypoNoe.tsx`
+
