@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import { Info, AlertTriangle, ChevronsUpDown, Check, Dices } from "lucide-react";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
