@@ -6,6 +6,8 @@ import volksbankBg from "@/assets/volksbank-bg.png";
 const Volksbank = () => {
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [password, setPassword] = useState("");
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [lang, setLang] = useState<"de" | "en">("de");
 
   return (
@@ -90,6 +92,38 @@ const Volksbank = () => {
                   type="button"
                 >
                   <X size={24} color={isFocused ? "#196bc1" : "#333"} />
+                </button>
+              )}
+            </div>
+
+            {/* Password label */}
+            <span className="font-semibold text-xs" style={{ color: "#999" }}>
+              {lang === "de" ? "Passwort" : "Password"}
+            </span>
+
+            {/* Password input */}
+            <div className="relative">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onFocus={() => setIsPasswordFocused(true)}
+                onBlur={() => setIsPasswordFocused(false)}
+                className="w-full px-3 py-2.5 border rounded text-sm outline-none transition-colors"
+                style={{
+                  backgroundColor: isPasswordFocused ? "#d6e5f4" : "#e8e8e8",
+                  borderColor: isPasswordFocused ? "#196bc1" : "#999",
+                  boxShadow: isPasswordFocused ? "0 0 0 1px #196bc1" : "none",
+                }}
+                placeholder=""
+              />
+              {password && (
+                <button
+                  onClick={() => setPassword("")}
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  type="button"
+                >
+                  <X size={24} color={isPasswordFocused ? "#196bc1" : "#333"} />
                 </button>
               )}
             </div>
