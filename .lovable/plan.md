@@ -1,17 +1,17 @@
 
 
-## HYPO NOE — Label Fixes
+## HYPO NOE — Abstand Label→Input Fix
 
-### Änderungen in `src/pages/HypoNoe.tsx`
+### Problem
+`space-y-4` auf dem Card-Body (Zeile 41) setzt `margin-top: 16px` auf **jedes** Kind-Element. `-mb-3` auf den Labels wirkt dagegen nur teilweise, weil Tailwinds `space-y` über `margin-top` des **nächsten** Elements funktioniert.
 
-| Nr | Was | Aktuell | Neu |
-|----|-----|---------|-----|
-| 1 | Benutzername Label | `font-semibold` (Zeile 66) | `font-normal` |
-| 2 | Passwort Label | `font-semibold` (Zeile 99) | `font-normal` |
-| 3 | Abstand Benutzername Label→Input | `-mb-2` reicht nicht (wird von `space-y-4` überschrieben) | `-mb-3` auf beiden Label-Divs |
-| 4 | Abstand Passwort Label→Input | `-mb-2` | `-mb-3` |
+### Lösung
+Auf den Input-Divs (Zeilen 72 und 104) direkt `!mt-1` setzen, um das `space-y-4` zu überschreiben und den Abstand zwischen Label und Eingabefeld auf 4px zu reduzieren.
 
-Das Problem: `space-y-4` auf dem Parent gibt 16px zwischen allen Kindern. `-mb-2` (8px) reicht nicht, um den Abstand sichtbar zu verringern. Mit `-mb-3` (12px) wird der effektive Abstand auf ~4px reduziert.
+| Nr | Zeile | Aktuell | Neu |
+|----|-------|---------|-----|
+| 1 | 72 | `<div className="relative">` | `<div className="relative !mt-1">` |
+| 2 | 104 | `<div className="relative">` | `<div className="relative !mt-1">` |
 
 ### Datei
 - `src/pages/HypoNoe.tsx`
