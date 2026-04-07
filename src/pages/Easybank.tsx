@@ -172,23 +172,23 @@ const Easybank = () => {
         >
           {/* Header */}
           <header className="bg-white px-4 py-2">
+            {/* Row 1: Hilfe + Sprachauswahl rechts oben */}
+            <div className="flex items-center justify-end gap-3">
+              <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:underline">
+                {t.hilfe}
+              </a>
+              <select
+                value={lang}
+                onChange={(e) => setLang(e.target.value as Lang)}
+                className="text-[11px] border border-gray-300 rounded px-1 py-0.5 bg-white text-gray-700 cursor-pointer focus:outline-none"
+              >
+                <option value="DE">deutsch</option>
+                <option value="EN">english</option>
+              </select>
+            </div>
+            {/* Row 2: Logo links + Datum rechts */}
             <div className="flex items-center justify-between">
               <img src={easybankLogo} alt="easybank" className="h-20" />
-              <div className="flex items-center gap-3">
-                <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:underline">
-                  {t.hilfe}
-                </a>
-                <select
-                  value={lang}
-                  onChange={(e) => setLang(e.target.value as Lang)}
-                  className="text-[11px] border border-gray-300 rounded px-1 py-0.5 bg-white text-gray-700 cursor-pointer focus:outline-none"
-                >
-                  <option value="DE">deutsch</option>
-                  <option value="EN">english</option>
-                </select>
-              </div>
-            </div>
-            <div className="text-right">
               <span className="text-[11px] text-black">{dateStr}</span>
             </div>
           </header>
@@ -209,7 +209,7 @@ const Easybank = () => {
                     {t.loginHilfe}
                   </a>
                   {showHilfeTooltip && (
-                    <div className="absolute top-full right-0 mt-1 z-50 w-[300px] bg-white border border-gray-300 rounded shadow-lg">
+                    <div className="absolute left-full top-0 ml-1 z-50 w-[300px] bg-white border border-gray-300 rounded shadow-lg">
                       <div className="px-3 py-2 text-sm font-semibold text-[#177991]">{t.tooltipTitle}</div>
                       <div className="h-[1px] bg-gray-300" />
                       <div className="px-3 py-2 text-xs text-black leading-relaxed">{t.tooltipText}</div>
@@ -219,7 +219,7 @@ const Easybank = () => {
 
                 <div className="p-4">
                   {/* Question */}
-                  <p className="text-xs text-gray-600 mb-3">{t.loginQuestion}</p>
+                  <p className="text-xs text-black mb-3">{t.loginQuestion}</p>
 
                   {/* Tabs */}
                   <div className="mb-4 border-b border-gray-300">
@@ -309,7 +309,7 @@ const Easybank = () => {
                     </div>
                   ) : (
                     <div>
-                      <p className="text-xs text-gray-600 mb-3">{t.appText}</p>
+                      <p className="text-xs text-black mb-3">{t.appText}</p>
                       <div className="mb-3 flex items-start gap-2">
                         <label className="text-sm font-semibold text-black pt-1.5 w-[130px] flex-shrink-0">{t.appInputLabel}</label>
                         <div className="flex-1">
@@ -345,7 +345,7 @@ const Easybank = () => {
                 {/* Warnung */}
                 <div className="flex-1 border border-gray-300 rounded bg-white">
                   <div className="px-3 py-2">
-                    <h2 className="text-[#009e9a] text-sm font-normal">{t.warnungTitle}</h2>
+                    <h2 className="text-[#008080] text-[13px] font-normal">{t.warnungTitle}</h2>
                   </div>
                   <div className="h-[2px] bg-[#f6f6f6]" />
                   <div className="p-3">
@@ -360,50 +360,56 @@ const Easybank = () => {
                       </div>
                     </div>
                     <div className="ml-[28px]">
-                      <a href="#" onClick={(e) => e.preventDefault()} className="text-[11px] text-[#4b9920] underline hover:no-underline">
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-[#4b9920] underline hover:no-underline">
                         {t.warnungLink}
                       </a>
                     </div>
                   </div>
                 </div>
 
-                {/* Hilfe/Hotline */}
-                <div className="flex-1 border border-gray-300 rounded bg-white">
-                  <div className="px-3 py-2">
-                    <h2 className="text-[#009e9a] text-sm font-normal">{t.hilfeTitle}</h2>
+                {/* Hilfe + Info in einem Sub-Container mit gleicher Höhe */}
+                <div className="flex gap-4 flex-1 items-stretch">
+                  {/* Hilfe/Hotline */}
+                  <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col">
+                    <div className="px-3 py-2">
+                      <h2 className="text-[#008080] text-[13px] font-normal">{t.hilfeTitle}</h2>
+                    </div>
+                    <div className="h-[2px] bg-[#f6f6f6]" />
+                    <div className="p-3 flex-1">
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                        {t.hilfePin}
+                      </a>
+                      <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                        {t.hilfeFaq}
+                      </a>
+                    </div>
                   </div>
-                  <div className="h-[2px] bg-[#f6f6f6]" />
-                  <div className="p-3">
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-[11px] text-black hover:underline flex items-center gap-0.5 pb-2 border-b border-[#f6f6f6]">
-                      <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                      {t.hilfePin}
-                    </a>
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-[11px] text-black hover:underline flex items-center gap-0.5 pt-2">
-                      <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                      {t.hilfeFaq}
-                    </a>
-                  </div>
-                </div>
 
-                {/* Info */}
-                <div className="flex-1 border border-gray-300 rounded bg-white">
-                  <div className="px-3 py-2">
-                    <h2 className="text-[#009e9a] text-sm font-normal">{t.infoTitle}</h2>
-                  </div>
-                  <div className="h-[2px] bg-[#f6f6f6]" />
-                  <div className="p-3">
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-[11px] text-black hover:underline flex items-center gap-0.5 pb-2 border-b border-[#f6f6f6]">
-                      <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                      <span className="font-bold">{t.infoDebit}</span>
-                    </a>
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-[11px] text-black hover:underline flex items-center gap-0.5 py-2 border-b border-[#f6f6f6] whitespace-pre-line">
-                      <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                      {t.infoApp}
-                    </a>
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-[11px] text-black hover:underline flex items-center gap-0.5 pt-2">
-                      <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                      {t.infoWatchlist}
-                    </a>
+                  {/* Info */}
+                  <div className="flex-1 border border-gray-300 rounded bg-white flex flex-col">
+                    <div className="px-3 py-2">
+                      <h2 className="text-[#008080] text-[13px] font-normal">{t.infoTitle}</h2>
+                    </div>
+                    <div className="h-[2px] bg-[#f6f6f6]" />
+                    <div className="p-3 flex-1">
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                        <span className="font-bold">{t.infoDebit}</span>
+                      </a>
+                      <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all whitespace-pre-line">
+                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                        {t.infoApp}
+                      </a>
+                      <div className="h-[1px] bg-[#f6f6f6] -mx-3" />
+                      <a href="#" onClick={(e) => e.preventDefault()} className="text-xs text-black hover:font-bold hover:bg-[#f6f6f6] flex items-center gap-0.5 py-2 -mx-3 px-3 transition-all">
+                        <ChevronRight className="h-3.5 w-3.5 text-black flex-shrink-0" />
+                        {t.infoWatchlist}
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -422,14 +428,14 @@ const Easybank = () => {
 
           {/* Footer */}
           <footer className="bg-white border-t border-gray-200 py-3 px-4">
-            <div className="flex flex-wrap gap-3 justify-center mb-1">
+            <div className="flex flex-wrap gap-3 justify-center">
               {t.footer.map((item, index) => (
-                <a key={item} href={footerUrls[index]} target="_blank" rel="noopener noreferrer" className="text-[10px] text-black underline hover:text-[#8ab528] transition-colors">
+                <a key={item} href={footerUrls[index]} target="_blank" rel="noopener noreferrer" className="text-[11px] text-black underline hover:text-[#8ab528] transition-colors">
                   {item}
                 </a>
               ))}
+              <span className="text-[11px] text-black">© BAWAG P.S.K.</span>
             </div>
-            <p className="text-[10px] text-black text-center">© BAWAG P.S.K.</p>
           </footer>
         </div>
       </div>
