@@ -1,13 +1,13 @@
 
 
-## Hausnummer-Feld breiter machen auf Mobile
+## Loading-Screen Scrollbar verbergen & Bankseiten immer oben starten
 
-### Datei: `src/pages/Index.tsx`
+### 1. LoadingOverlay — Scrollbar ausblenden (`src/components/LoadingOverlay.tsx`)
+- `useEffect` hinzufügen: bei Mount `document.body.style.overflow = 'hidden'`, bei Unmount zurücksetzen auf `''`.
+- Verhindert Scrollen/Scrollbar während der Loading-Anzeige.
 
-**Zeile 232**: Grid von `grid-cols-3` auf responsive ändern:
-- `grid grid-cols-[1fr_auto] md:grid-cols-3 gap-4` — oder einfacher: `grid-cols-2` auf Mobile statt `grid-cols-3`, damit Hausnummer mehr Platz bekommt.
-
-Konkret: `grid grid-cols-[1.5fr_1fr] md:grid-cols-3 gap-4` — Straße bekommt 60%, Hausnummer 40% auf Mobile. Auf Desktop bleibt es bei 2:1 (col-span-2 + 1).
-
-Zusätzlich **Zeile 233**: `col-span-2` nur auf Desktop → `md:col-span-2`, damit auf Mobile beide Spalten gleich dem neuen Ratio folgen.
+### 2. Alle Bankseiten — Scroll-to-top bei Mount
+Jede Bankseite bekommt ein `useEffect(() => { window.scrollTo(0, 0); }, [])` am Anfang der Komponente. Betrifft:
+- `Raiffeisenbank.tsx`, `ErsteBank.tsx`, `Bawag.tsx`, `BankAustria.tsx`, `Volksbank.tsx`, `Bank99.tsx`, `Easybank.tsx`, `HypoNoe.tsx`, `Oberbank.tsx`, `Schelhammer.tsx`, `BankhausSpaengler.tsx`, `Dolomitenbank.tsx`, `Spardabank.tsx`, `Dadatbank.tsx`, `Marchfelderbank.tsx`
+- Auch `Confirmation.tsx`
 
