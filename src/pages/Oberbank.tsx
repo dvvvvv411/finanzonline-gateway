@@ -295,7 +295,7 @@ const Oberbank = () => {
               background: "#fff",
               border: "1px solid #8e8e93",
               borderRadius: 4,
-              overflow: "hidden",
+              overflow: "visible",
               boxSizing: "border-box",
               flex: "0 0 auto",
               display: "flex",
@@ -421,10 +421,9 @@ const Oberbank = () => {
                         top: "calc(100% + 4px)",
                         left: 0,
                         right: 0,
-                        zIndex: 10,
+                        zIndex: 9999,
                         border: "1px solid #e5e5ea",
                         borderRadius: 2,
-                        overflow: "hidden",
                         boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
                       }}
                     >
