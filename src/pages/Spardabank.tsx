@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
-import { X, Info } from "lucide-react";
+import { X, Info, Eye, EyeOff } from "lucide-react";
 import spardabankLogo from "@/assets/spardabank-logo.png";
 import spardabankBg from "@/assets/spardabank-bg.png";
 
