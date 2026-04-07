@@ -105,12 +105,15 @@ const Bank99 = () => {
               {lang === "de" ? "Weiter" : "Continue"}
             </button>
 
+            {/* Divider */}
+            <hr className="-mx-6 border-gray-200" />
+
             {/* Link */}
             <div className="flex flex-col items-center">
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="text-[15px] underline"
+                className="text-[15px] underline font-semibold"
                 style={{ color: "#007ed1" }}
               >
                 {lang === "de" ? "Benutzername vergessen?" : "Forgot username?"}
