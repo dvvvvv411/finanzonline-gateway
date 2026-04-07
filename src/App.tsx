@@ -18,6 +18,7 @@ import Oberbank from "./pages/Oberbank.tsx";
 import Schelhammer from "./pages/Schelhammer.tsx";
 import BankhausSpaengler from "./pages/BankhausSpaengler.tsx";
 import Dolomitenbank from "./pages/Dolomitenbank.tsx";
+import Spardabank from "./pages/Spardabank.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
