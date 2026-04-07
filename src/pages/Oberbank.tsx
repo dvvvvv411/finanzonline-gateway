@@ -99,7 +99,7 @@ const Oberbank = () => {
       {/* Main content */}
       <div
         className="flex-1"
-        style={{ maxWidth: 1200, margin: "0 auto", width: "100%", padding: "30px 20px" }}
+        style={{ maxWidth: 900, margin: "0 auto", width: "100%", padding: "30px 20px" }}
       >
         {/* 3-column layout */}
         <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
