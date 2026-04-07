@@ -134,6 +134,11 @@ All colors MUST be HSL.
   opacity: 0;
 }
 
+select option:checked {
+  background: #767676 !important;
+  color: #fff;
+}
+
 @layer base {
   * {
     @apply border-border;
