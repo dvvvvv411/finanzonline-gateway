@@ -227,10 +227,10 @@ const Oberbank = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    padding: "12px 20px",
+                    padding: "10px 20px",
                     borderTop: "1px solid #e0e0e0",
                     color: "#555",
-                    fontSize: 14,
+                    fontSize: 13,
                     textDecoration: "none",
                     transition: "background 0.15s",
                   }}
