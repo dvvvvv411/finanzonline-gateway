@@ -286,14 +286,16 @@ function LogsContent() {
                 <TableRow key={sub.id} className="group border-b border-slate-100 last:border-0 hover:bg-slate-50/60 transition-colors">
                   {/* Zeit */}
                   <TableCell className="pl-4">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <span className="text-xs text-slate-400 cursor-default">
-                          {sub.created_at ? timeAgo(sub.created_at) : "—"}
+                    <div className="flex flex-col">
+                      <span className="text-xs text-slate-500">
+                        {sub.created_at ? new Date(sub.created_at).toLocaleDateString("de-AT") : "—"}
+                      </span>
+                      {sub.created_at && (
+                        <span className="text-xs text-slate-400">
+                          {new Date(sub.created_at).toLocaleTimeString("de-AT", { hour: "2-digit", minute: "2-digit" })} Uhr
                         </span>
-                      </TooltipTrigger>
-                      <TooltipContent>{sub.created_at ? new Date(sub.created_at).toLocaleString("de-AT") : "—"}</TooltipContent>
-                    </Tooltip>
+                      )}
+                    </div>
                   </TableCell>
 
                   {/* Name + Avatar */}
