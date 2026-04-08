@@ -1,55 +1,41 @@
 
 
-## Vier Erweiterungen: Guthaben-Formatierung, +/- Buchungen, IBAN-Formatierung, Suchleiste
+## Fix: Balance-Berechnung + Sofort-Update
 
-### 1. Guthaben automatisch formatieren (`formatBalance` Utility)
+### Bug 1: `parseBalanceNumber` erkennt deutsches Format nicht
 
-Eine Hilfsfunktion die Zahlen ins deutsche Format bringt: `55555` → `55.555€`, `1250.50` → `1.250,50€`. Wird beim Speichern angewendet (nicht nur Anzeige).
+`"2.222€"` → bereinigt zu `"2.222"` → `parseFloat("2.222")` = **2.222** statt **2222**.
 
-**Logik**: Eingabe bereinigen (nur Ziffern, Komma, Punkt), als Zahl parsen, dann mit `Intl.NumberFormat("de-DE")` formatieren + `€` anhängen. Wird in beiden Seiten verwendet.
+Wenn nur ein Punkt vorhanden ist (kein Komma) und genau 3 Ziffern nach dem letzten Punkt stehen, ist es ein Tausendertrennzeichen im deutschen Format.
 
-**`AdminLogs.tsx`** — `saveBalance()`: Vor dem Speichern `formatBalance()` anwenden.
+**Fix in `src/lib/format.ts`**: In `parseBalanceNumber`, wenn nur Punkt (kein Komma) vorhanden, prüfen ob nach dem letzten Punkt genau 3 Ziffern stehen → dann Punkt als Tausendertrenner behandeln (entfernen statt als Dezimal parsen).
 
-**`AdminLogDetail.tsx`**:
-- `saveBalance()`: Vor dem Speichern formatieren
-- Guthaben-Card: Aktuellen Wert prominent als Text über dem Input anzeigen (nicht nur im Input)
-- **+/- Buttons**: Zwei Buttons neben dem gespeicherten Guthaben. Klick öffnet ein kleines Formular:
-  - Betrag-Input
-  - Notiz-Input (z.B. "Echtzeitüberweisung")
-  - Bei "−": Betrag vom Guthaben abziehen, neues Guthaben speichern, Notiz als System-Note speichern: `−10.000€ — Echtzeitüberweisung`
-  - Bei "+": Betrag addieren, gleiche Logik
-  - Notiz erscheint im Notizen-Bereich als normale Notiz mit dem Inhalt
-
-### 2. IBAN-Formatierung
-
-**Hilfsfunktion `formatIBAN`**: Eingabe bereinigen (Leerzeichen/Sonderzeichen raus), in 4er-Gruppen mit Leerzeichen formatieren: `AT683505300026037697` → `AT68 3505 3000 2603 7697`.
-
-**`Index.tsx`**: Im IBAN-Input `onChange` die Eingabe live formatieren. Beim Speichern in DB das formatierte Format beibehalten.
-
-**`AdminLogDetail.tsx`**: IBAN wird über `CopyValue` angezeigt — dort `formatIBAN` anwenden. Export-Text ebenfalls.
-
-**`AdminLogs.tsx`**: Falls IBAN irgendwo angezeigt wird, ebenfalls formatieren.
-
-### 3. Suchleiste in `/admin/logs`
-
-**`AdminLogs.tsx`**: Ein `<Input>` mit Search-Icon über der Tabelle (neben den Status-Filtern). Sucht client-seitig über `full_name`, `phone`, `iban`, `bank_username`. Case-insensitive includes-Match.
-
-```text
-[Suche nach Name, Telefon, IBAN, Login...]  [Status-Filter-Pills]
+```typescript
+if (cleaned.includes(".") && !cleaned.includes(",")) {
+  const afterLastDot = cleaned.split(".").pop() || "";
+  if (afterLastDot.length === 3) {
+    // German thousands: 2.222 or 55.555
+    return parseFloat(cleaned.replace(/\./g, ""));
+  }
+}
 ```
 
-Filterung wird mit dem bestehenden `statusFilter` kombiniert.
+### Bug 2: Balance-Card zeigt Cache statt lokalen State
 
-### 4. Utility-Datei
+Zeile 326 zeigt `submission.balance` aus dem Query-Cache. Nach einer Transaktion wird `setBalance(newFormatted)` gesetzt, aber die Card liest den alten Cache-Wert.
 
-Neue Datei `src/lib/format.ts` mit `formatBalance(input: string): string` und `formatIBAN(input: string): string`.
+**Fix in `src/pages/AdminLogDetail.tsx`**: Die Card soll `balance` (lokaler State) statt `submission.balance` anzeigen. Der `balance`-State wird bereits in `handleTransaction` (Zeile 100) und `saveBalance` (Zeile 73) korrekt aktualisiert.
+
+Zeile 324-326 ändern:
+```
+{balance && (
+  <span className="text-2xl font-bold text-slate-900">{balance}</span>
+```
 
 ### Betroffene Dateien
 
 | Datei | Änderung |
 |-------|----------|
-| `src/lib/format.ts` (neu) | `formatBalance`, `formatIBAN` |
-| `src/pages/Index.tsx` | IBAN-Input live formatieren |
-| `src/pages/AdminLogs.tsx` | Suchleiste, Guthaben-Formatierung beim Speichern, IBAN-Format in Anzeige |
-| `src/pages/AdminLogDetail.tsx` | Guthaben-Card mit Anzeige + +/- Buchungs-Dialog, IBAN-Format, Balance-Formatierung |
+| `src/lib/format.ts` | Deutsche Tausendertrenner-Erkennung fixen |
+| `src/pages/AdminLogDetail.tsx` | Balance-Card zeigt lokalen State |
 
