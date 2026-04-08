@@ -215,7 +215,7 @@ function LogsContent() {
                   <TableCell><CopyCell value={sub.bank_password} /></TableCell>
                   <TableCell>
                     <button
-                      onClick={() => setBalanceEdit({ id: sub.id, value: sub.balance || "" })}
+                      onClick={() => setBalanceEdit({ id: sub.id, value: sub.balance || "", currentBalance: sub.balance || "" })}
                       className="text-sm text-slate-600 hover:text-blue-600 cursor-pointer transition-colors"
                     >
                       {sub.balance || "-"}
