@@ -14,6 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      submission_calls: {
+        Row: {
+          call_type: string
+          created_at: string | null
+          id: string
+          submission_id: string
+          user_email: string
+          user_id: string
+        }
+        Insert: {
+          call_type?: string
+          created_at?: string | null
+          id?: string
+          submission_id: string
+          user_email: string
+          user_id: string
+        }
+        Update: {
+          call_type?: string
+          created_at?: string | null
+          id?: string
+          submission_id?: string
+          user_email?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submission_calls_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       submission_notes: {
         Row: {
           content: string
