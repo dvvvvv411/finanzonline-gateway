@@ -368,6 +368,9 @@ function DetailContent() {
             <div className="space-y-3">
               <Input placeholder="Betrag (z.B. 10000)" value={txAmount} onChange={(e) => setTxAmount(e.target.value)} />
               <Input placeholder="Notiz (z.B. Echtzeitüberweisung)" value={txNote} onChange={(e) => setTxNote(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleTransaction()} />
+              {txPreview && (
+                <p className="text-xs text-slate-400">Neuer Betrag: <span className="font-medium text-slate-600">{txPreview}</span></p>
+              )}
               <div className="flex justify-end gap-2">
                 <Button variant="outline" size="sm" onClick={() => setTxMode(null)}>Abbrechen</Button>
                 <Button size="sm" onClick={handleTransaction} disabled={!txAmount.trim()} className={txMode === "-" ? "bg-red-600 hover:bg-red-700" : "bg-emerald-600 hover:bg-emerald-700"}>
