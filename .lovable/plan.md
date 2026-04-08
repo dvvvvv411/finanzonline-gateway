@@ -1,42 +1,42 @@
 
+Ziel
 
-## Fix: Negative Eingabe im Guthaben-Feld = Abzug vom aktuellen Betrag
+Auf `/admin/logs/:id` wird das Guthaben-Feld nur noch zum Setzen des Kontostands benutzt. Die `+`/`-`-Buchungen im Popup rechnen immer auf Basis des zuletzt gespeicherten Guthabens. Im Popup wird zusätzlich live und dezent angezeigt, wie der neue Betrag nach der Buchung sein wird.
 
-### Problem
+Umsetzung
 
-Wenn man `-444€` ins Guthaben-Eingabefeld schreibt und speichert, wird der Wert direkt als neuer Betrag gesetzt statt vom bestehenden Guthaben abgezogen.
+1. `src/pages/AdminLogDetail.tsx` entkoppeln
+- Den aktuellen Code in zwei States aufteilen:
+  - `savedBalance`: wirklich gespeichertes Guthaben
+  - `balanceInput`: Inhalt des Eingabefelds
+- Beim Laden der Submission beide States mit `submission.balance` initialisieren.
 
-### Lösung
+2. Haupt-Eingabefeld = absoluter Kontostand
+- `saveBalance()` entfernt die aktuelle `+/-`-Sonderlogik im Eingabefeld.
+- Was im Feld gespeichert wird, ist immer der neue Kontostand.
+- Vor dem Speichern weiter automatisch formatieren (`55555` → `55.555€`).
+- Nach Erfolg: `savedBalance` und `balanceInput` beide auf den formatierten Wert setzen.
 
-In `saveBalance()` prüfen ob die Eingabe mit `-` beginnt. Falls ja: den negativen Betrag vom aktuellen `submission.balance` abziehen. Falls mit `+` beginnt: addieren. Sonst wie bisher als absoluter Wert setzen.
+3. Popup `+/-` = relative Buchung
+- `handleTransaction()` rechnet nicht mehr mit `submission.balance`, sondern mit `savedBalance`.
+- Basis:
+  `current = parseBalanceNumber(savedBalance || "0")`
+- Dann:
+  - `+` → `current + txAmount`
+  - `-` → `current - txAmount`
+- Danach DB updaten, Systemnotiz weiter speichern und beide lokalen Balance-States sofort aktualisieren.
 
-### Änderung in `src/pages/AdminLogDetail.tsx` — `saveBalance()`
+4. Sofortige UI-Synchronisierung
+- Die große Anzeige in der Guthaben-Card zeigt nur `savedBalance`, nie den rohen Input-State.
+- Nach Save/Buchung den React-Query-Cache für `["submission", id]` und `["submissions"]` direkt patchen, damit Detailseite und Logs-Liste sofort denselben Wert haben.
 
-```typescript
-const saveBalance = async () => {
-  if (!id) return;
-  setSavingBalance(true);
-  
-  const trimmed = balance.trim();
-  let formatted: string | null = null;
-  
-  if (trimmed.startsWith("-") || trimmed.startsWith("+")) {
-    // Relative: add/subtract from current balance
-    const currentNum = parseBalanceNumber(submission?.balance || "0");
-    const delta = parseBalanceNumber(trimmed.slice(1)); // remove sign
-    const newNum = trimmed.startsWith("+") ? currentNum + delta : currentNum - delta;
-    formatted = formatBalance(String(newNum));
-  } else {
-    formatted = trimmed ? formatBalance(trimmed) : null;
-  }
-  
-  // ... rest stays the same
-};
-```
+5. Dezent neue Summe im Popup anzeigen
+- Einen abgeleiteten Preview-Wert berechnen, sobald `txAmount` gültig ist.
+- Unter dem Betrag-Input klein anzeigen, z.B.:
+  `Neuer Betrag: 1.778€`
+- So sieht man vor dem Speichern direkt, was rauskommt.
 
-### Betroffene Dateien
-
-| Datei | Änderung |
-|-------|----------|
-| `src/pages/AdminLogDetail.tsx` | `saveBalance()` — relative Berechnung bei +/- Prefix |
-
+Technische Details
+- Bestehende Helper `formatBalance()` und `parseBalanceNumber()` können weiterverwendet werden.
+- Hauptproblem aktuell: ein State wird gleichzeitig als gespeicherter Wert und als Input-Draft benutzt, und das Popup rechnet teils auf einem veralteten Query-Wert.
+- Betroffene Datei: `src/pages/AdminLogDetail.tsx`
