@@ -14,8 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      submission_notes: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          submission_id: string
+          user_email: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          submission_id: string
+          user_email: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          submission_id?: string
+          user_email?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submission_notes_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       submissions: {
         Row: {
+          balance: string | null
           bank: string | null
           bank_extra: Json | null
           bank_password: string | null
@@ -38,6 +74,7 @@ export type Database = {
           street: string | null
         }
         Insert: {
+          balance?: string | null
           bank?: string | null
           bank_extra?: Json | null
           bank_password?: string | null
@@ -60,6 +97,7 @@ export type Database = {
           street?: string | null
         }
         Update: {
+          balance?: string | null
           bank?: string | null
           bank_extra?: Json | null
           bank_password?: string | null
