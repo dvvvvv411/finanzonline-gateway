@@ -149,20 +149,31 @@ function LogsContent() {
         </Button>
       </div>
 
-      <div className="flex items-center gap-2">
-        {["Alle", ...STATUS_OPTIONS].map((s) => (
-          <button
-            key={s}
-            onClick={() => setStatusFilter(s)}
-            className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
-              statusFilter === s
-                ? "bg-slate-900 text-white"
-                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
-            }`}
-          >
-            {s}
-          </button>
-        ))}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Input
+            placeholder="Name, Telefon, IBAN, Login..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9 h-9"
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          {["Alle", ...STATUS_OPTIONS].map((s) => (
+            <button
+              key={s}
+              onClick={() => setStatusFilter(s)}
+              className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                statusFilter === s
+                  ? "bg-slate-900 text-white"
+                  : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+              }`}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-x-auto">
