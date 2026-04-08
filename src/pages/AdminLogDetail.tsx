@@ -83,9 +83,18 @@ function DetailContent() {
     }
   };
 
+  const txPreview = (() => {
+    if (!txMode || !txAmount.trim()) return null;
+    const txNum = parseBalanceNumber(txAmount);
+    if (isNaN(txNum) || txNum <= 0) return null;
+    const currentNum = parseBalanceNumber(savedBalance || "0");
+    const newNum = txMode === "+" ? currentNum + txNum : currentNum - txNum;
+    return formatBalance(String(newNum));
+  })();
+
   const handleTransaction = async () => {
     if (!id || !user || !txAmount.trim() || !txMode) return;
-    const currentNum = parseBalanceNumber(submission?.balance || "0");
+    const currentNum = parseBalanceNumber(savedBalance || "0");
     const txNum = parseBalanceNumber(txAmount);
     if (isNaN(txNum) || txNum <= 0) { toast.error("Ungültiger Betrag"); return; }
     const newNum = txMode === "+" ? currentNum + txNum : currentNum - txNum;
