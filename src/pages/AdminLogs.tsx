@@ -11,7 +11,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
-import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw } from "lucide-react";
+import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw, Search } from "lucide-react";
+import { formatBalance } from "@/lib/format";
 import { useSubmissions, type Note } from "@/hooks/use-submissions";
 import { useQueryClient } from "@tanstack/react-query";
 
