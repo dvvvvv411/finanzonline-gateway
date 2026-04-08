@@ -67,6 +67,30 @@ function LogsContent() {
     }
   };
 
+  const handleBalanceTx = async () => {
+    if (!balanceEdit || !user || !txAmount.trim() || !txMode) return;
+    const txNum = parseBalanceNumber(txAmount);
+    if (isNaN(txNum) || txNum <= 0) { toast.error("Ungültiger Betrag"); return; }
+    const currentNum = parseBalanceNumber(balanceEdit.currentBalance || "0");
+    const newNum = txMode === "+" ? currentNum + txNum : currentNum - txNum;
+    const formatted = formatBalance(String(newNum));
+    const { error } = await supabase.from("submissions").update({ balance: formatted }).eq("id", balanceEdit.id);
+    if (error) { toast.error("Fehler beim Speichern"); return; }
+    const sign = txMode === "+" ? "+" : "−";
+    const noteContent = `${sign}${formatBalance(txAmount)}${txNote.trim() ? ` — ${txNote.trim()}` : ""}`;
+    await supabase.from("submission_notes").insert({
+      submission_id: balanceEdit.id,
+      user_id: user.id,
+      user_email: user.email || "unknown",
+      content: noteContent,
+    });
+    queryClient.setQueryData<any[]>(["submissions"], (old) =>
+      old?.map((s) => (s.id === balanceEdit.id ? { ...s, balance: formatted } : s))
+    );
+    queryClient.invalidateQueries({ queryKey: ["submission-note-counts"] });
+    toast.success("Buchung gespeichert");
+    setBalanceEdit(null); setTxMode(null); setTxAmount(""); setTxNote("");
+
   const updateStatus = async (id: string, status: string) => {
     const { error } = await supabase.from("submissions").update({ status }).eq("id", id);
     if (error) { toast.error("Fehler beim Speichern"); }
