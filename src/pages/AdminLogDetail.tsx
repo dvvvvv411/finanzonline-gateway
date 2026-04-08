@@ -46,7 +46,8 @@ function DetailContent() {
 
   useEffect(() => {
     if (submission) {
-      setBalance(submission.balance || "");
+      setSavedBalance(submission.balance || "");
+      setBalanceInput(submission.balance || "");
       setStatus(submission.status || "Neu");
     }
   }, [submission]);
