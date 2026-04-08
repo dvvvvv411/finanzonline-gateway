@@ -351,7 +351,7 @@ function DetailContent() {
               </div>
             )}
             <div className="flex gap-2">
-              <Input placeholder="z.B. 55555" value={balance} onChange={(e) => setBalance(e.target.value)} onKeyDown={(e) => e.key === "Enter" && saveBalance()} />
+              <Input placeholder="z.B. 55555" value={balanceInput} onChange={(e) => setBalanceInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && saveBalance()} />
               <Button size="sm" onClick={saveBalance} disabled={savingBalance} className="gap-1.5 shrink-0">
                 <Save className="h-4 w-4" /> Speichern
               </Button>
