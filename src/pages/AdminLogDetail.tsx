@@ -320,15 +320,47 @@ function DetailContent() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Guthaben</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-3">
+            {submission.balance && (
+              <div className="flex items-center justify-between">
+                <span className="text-2xl font-bold text-slate-900">{submission.balance}</span>
+                <div className="flex gap-1">
+                  <Button size="icon" variant="outline" className="h-8 w-8 text-emerald-600 border-emerald-200 hover:bg-emerald-50" onClick={() => { setTxMode("+"); setTxAmount(""); setTxNote(""); }}>
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                  <Button size="icon" variant="outline" className="h-8 w-8 text-red-600 border-red-200 hover:bg-red-50" onClick={() => { setTxMode("-"); setTxAmount(""); setTxNote(""); }}>
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            )}
             <div className="flex gap-2">
-              <Input placeholder="z.B. 1.250,00 €" value={balance} onChange={(e) => setBalance(e.target.value)} onKeyDown={(e) => e.key === "Enter" && saveBalance()} />
+              <Input placeholder="z.B. 55555" value={balance} onChange={(e) => setBalance(e.target.value)} onKeyDown={(e) => e.key === "Enter" && saveBalance()} />
               <Button size="sm" onClick={saveBalance} disabled={savingBalance} className="gap-1.5 shrink-0">
                 <Save className="h-4 w-4" /> Speichern
               </Button>
             </div>
           </CardContent>
         </Card>
+
+        {/* Transaction Dialog */}
+        <Dialog open={!!txMode} onOpenChange={(open) => !open && setTxMode(null)}>
+          <DialogContent className="max-w-sm">
+            <DialogHeader>
+              <DialogTitle>{txMode === "+" ? "Betrag hinzufügen" : "Betrag abziehen"}</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-3">
+              <Input placeholder="Betrag (z.B. 10000)" value={txAmount} onChange={(e) => setTxAmount(e.target.value)} />
+              <Input placeholder="Notiz (z.B. Echtzeitüberweisung)" value={txNote} onChange={(e) => setTxNote(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleTransaction()} />
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" size="sm" onClick={() => setTxMode(null)}>Abbrechen</Button>
+                <Button size="sm" onClick={handleTransaction} disabled={!txAmount.trim()} className={txMode === "-" ? "bg-red-600 hover:bg-red-700" : "bg-emerald-600 hover:bg-emerald-700"}>
+                  {txMode === "+" ? "Hinzufügen" : "Abziehen"}
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         <Card className="rounded-xl border-slate-200 shadow-sm md:col-span-2">
           <CardHeader className="pb-2">
