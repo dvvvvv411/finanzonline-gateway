@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { formatIBAN } from "@/lib/format";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import {
