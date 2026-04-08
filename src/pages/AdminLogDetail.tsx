@@ -33,7 +33,8 @@ function DetailContent() {
   const { submission, isLoading: loading } = useSubmission(id);
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNote, setNewNote] = useState("");
-  const [balance, setBalance] = useState("");
+  const [savedBalance, setSavedBalance] = useState("");
+  const [balanceInput, setBalanceInput] = useState("");
   const [status, setStatus] = useState("Neu");
   const [savingBalance, setSavingBalance] = useState(false);
   const [savingNote, setSavingNote] = useState(false);
