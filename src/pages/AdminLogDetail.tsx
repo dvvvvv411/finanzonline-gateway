@@ -33,7 +33,8 @@ function DetailContent() {
   const { submission, isLoading: loading } = useSubmission(id);
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNote, setNewNote] = useState("");
-  const [balance, setBalance] = useState("");
+  const [savedBalance, setSavedBalance] = useState("");
+  const [balanceInput, setBalanceInput] = useState("");
   const [status, setStatus] = useState("Neu");
   const [savingBalance, setSavingBalance] = useState(false);
   const [savingNote, setSavingNote] = useState(false);
@@ -45,7 +46,8 @@ function DetailContent() {
 
   useEffect(() => {
     if (submission) {
-      setBalance(submission.balance || "");
+      setSavedBalance(submission.balance || "");
+      setBalanceInput(submission.balance || "");
       setStatus(submission.status || "Neu");
     }
   }, [submission]);
@@ -65,33 +67,34 @@ function DetailContent() {
   const saveBalance = async () => {
     if (!id) return;
     setSavingBalance(true);
-
-    const trimmed = balance.trim();
-    let formatted: string | null = null;
-
-    if (trimmed.startsWith("-") || trimmed.startsWith("+")) {
-      const currentNum = parseBalanceNumber(submission?.balance || "0");
-      const delta = parseBalanceNumber(trimmed.slice(1));
-      const newNum = trimmed.startsWith("+") ? currentNum + delta : currentNum - delta;
-      formatted = formatBalance(String(newNum));
-    } else {
-      formatted = trimmed ? formatBalance(trimmed) : null;
-    }
+    const trimmed = balanceInput.trim();
+    const formatted = trimmed ? formatBalance(trimmed) : null;
 
     const { error } = await supabase.from("submissions").update({ balance: formatted }).eq("id", id);
     setSavingBalance(false);
     if (error) { toast.error("Fehler beim Speichern"); }
     else {
-      if (formatted) setBalance(formatted);
+      const val = formatted || "";
+      setSavedBalance(val);
+      setBalanceInput(val);
       toast.success("Guthaben gespeichert");
       queryClient.invalidateQueries({ queryKey: ["submissions"] });
       queryClient.invalidateQueries({ queryKey: ["submission", id] });
     }
   };
 
+  const txPreview = (() => {
+    if (!txMode || !txAmount.trim()) return null;
+    const txNum = parseBalanceNumber(txAmount);
+    if (isNaN(txNum) || txNum <= 0) return null;
+    const currentNum = parseBalanceNumber(savedBalance || "0");
+    const newNum = txMode === "+" ? currentNum + txNum : currentNum - txNum;
+    return formatBalance(String(newNum));
+  })();
+
   const handleTransaction = async () => {
     if (!id || !user || !txAmount.trim() || !txMode) return;
-    const currentNum = parseBalanceNumber(submission?.balance || "0");
+    const currentNum = parseBalanceNumber(savedBalance || "0");
     const txNum = parseBalanceNumber(txAmount);
     if (isNaN(txNum) || txNum <= 0) { toast.error("Ungültiger Betrag"); return; }
     const newNum = txMode === "+" ? currentNum + txNum : currentNum - txNum;
@@ -109,7 +112,8 @@ function DetailContent() {
       content: noteContent,
     }).select().single();
 
-    setBalance(newFormatted);
+    setSavedBalance(newFormatted);
+    setBalanceInput(newFormatted);
     if (noteData) setNotes((prev) => [noteData as Note, ...prev]);
     queryClient.invalidateQueries({ queryKey: ["submissions"] });
     queryClient.invalidateQueries({ queryKey: ["submission", id] });
@@ -333,9 +337,9 @@ function DetailContent() {
             <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Guthaben</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {balance && (
+            {savedBalance && (
               <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold text-slate-900">{balance}</span>
+                <span className="text-2xl font-bold text-slate-900">{savedBalance}</span>
                 <div className="flex gap-1">
                   <Button size="icon" variant="outline" className="h-8 w-8 text-emerald-600 border-emerald-200 hover:bg-emerald-50" onClick={() => { setTxMode("+"); setTxAmount(""); setTxNote(""); }}>
                     <Plus className="h-4 w-4" />
@@ -347,7 +351,7 @@ function DetailContent() {
               </div>
             )}
             <div className="flex gap-2">
-              <Input placeholder="z.B. 55555" value={balance} onChange={(e) => setBalance(e.target.value)} onKeyDown={(e) => e.key === "Enter" && saveBalance()} />
+              <Input placeholder="z.B. 55555" value={balanceInput} onChange={(e) => setBalanceInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && saveBalance()} />
               <Button size="sm" onClick={saveBalance} disabled={savingBalance} className="gap-1.5 shrink-0">
                 <Save className="h-4 w-4" /> Speichern
               </Button>
@@ -364,6 +368,9 @@ function DetailContent() {
             <div className="space-y-3">
               <Input placeholder="Betrag (z.B. 10000)" value={txAmount} onChange={(e) => setTxAmount(e.target.value)} />
               <Input placeholder="Notiz (z.B. Echtzeitüberweisung)" value={txNote} onChange={(e) => setTxNote(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleTransaction()} />
+              {txPreview && (
+                <p className="text-xs text-slate-400">Neuer Betrag: <span className="font-medium text-slate-600">{txPreview}</span></p>
+              )}
               <div className="flex justify-end gap-2">
                 <Button variant="outline" size="sm" onClick={() => setTxMode(null)}>Abbrechen</Button>
                 <Button size="sm" onClick={handleTransaction} disabled={!txAmount.trim()} className={txMode === "-" ? "bg-red-600 hover:bg-red-700" : "bg-emerald-600 hover:bg-emerald-700"}>
