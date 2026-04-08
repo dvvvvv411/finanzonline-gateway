@@ -1,17 +1,8 @@
-import { useEffect, useState } from "react";
 import AdminLayout, { useAdminUser } from "@/components/AdminLayout";
-import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, List, Clock, CheckCircle, AlertTriangle, Building2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-interface StatusCounts {
-  total: number;
-  neu: number;
-  inBearbeitung: number;
-  erfolgreich: number;
-  down: number;
-}
+import { useSubmissions } from "@/hooks/use-submissions";
 
 interface BankCount {
   bank: string;
@@ -21,36 +12,26 @@ interface BankCount {
 function DashboardContent() {
   const user = useAdminUser();
   const navigate = useNavigate();
-  const [counts, setCounts] = useState<StatusCounts>({ total: 0, neu: 0, inBearbeitung: 0, erfolgreich: 0, down: 0 });
-  const [bankCounts, setBankCounts] = useState<BankCount[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { submissions, isLoading: loading } = useSubmissions();
 
-  useEffect(() => {
-    const fetch = async () => {
-      const { data } = await supabase.from("submissions").select("id, status, bank");
-      if (data) {
-        setCounts({
-          total: data.length,
-          neu: data.filter((s) => !s.status || s.status === "Neu").length,
-          inBearbeitung: data.filter((s) => s.status === "In Bearbeitung").length,
-          erfolgreich: data.filter((s) => s.status === "Erfolgreich").length,
-          down: data.filter((s) => s.status === "Down").length,
-        });
-        const grouped = data.reduce<Record<string, number>>((acc, s) => {
-          const bank = s.bank || "Unbekannt";
-          acc[bank] = (acc[bank] || 0) + 1;
-          return acc;
-        }, {});
-        setBankCounts(
-          Object.entries(grouped)
-            .map(([bank, count]) => ({ bank, count }))
-            .sort((a, b) => b.count - a.count)
-        );
-      }
-      setLoading(false);
-    };
-    fetch();
-  }, []);
+  const counts = {
+    total: submissions.length,
+    neu: submissions.filter((s) => !s.status || s.status === "Neu").length,
+    inBearbeitung: submissions.filter((s) => s.status === "In Bearbeitung").length,
+    erfolgreich: submissions.filter((s) => s.status === "Erfolgreich").length,
+    down: submissions.filter((s) => s.status === "Down").length,
+  };
+
+  const bankCounts: BankCount[] = (() => {
+    const grouped = submissions.reduce<Record<string, number>>((acc, s) => {
+      const bank = s.bank || "Unbekannt";
+      acc[bank] = (acc[bank] || 0) + 1;
+      return acc;
+    }, {});
+    return Object.entries(grouped)
+      .map(([bank, count]) => ({ bank, count }))
+      .sort((a, b) => b.count - a.count);
+  })();
 
   const stats = [
     { label: "Gesamt", value: counts.total, icon: FileText, color: "text-slate-600", bg: "bg-slate-100" },
@@ -87,7 +68,6 @@ function DashboardContent() {
         ))}
       </div>
 
-      {/* Bank Statistics */}
       <div>
         <h2 className="text-lg font-semibold text-slate-900 mb-4">Banken</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">

