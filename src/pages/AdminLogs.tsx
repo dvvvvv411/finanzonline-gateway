@@ -90,6 +90,7 @@ function LogsContent() {
     queryClient.invalidateQueries({ queryKey: ["submission-note-counts"] });
     toast.success("Buchung gespeichert");
     setBalanceEdit(null); setTxMode(null); setTxAmount(""); setTxNote("");
+  };
 
   const updateStatus = async (id: string, status: string) => {
     const { error } = await supabase.from("submissions").update({ status }).eq("id", id);
