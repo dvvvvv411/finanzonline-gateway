@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import AdminLayout, { useAdminUser } from "@/components/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LayoutDashboard, List, CheckCircle, Clock, AlertTriangle, FileText } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { FileText, List, Clock, CheckCircle, AlertTriangle, Building2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface StatusCounts {
@@ -13,15 +13,21 @@ interface StatusCounts {
   down: number;
 }
 
+interface BankCount {
+  bank: string;
+  count: number;
+}
+
 function DashboardContent() {
   const user = useAdminUser();
   const navigate = useNavigate();
   const [counts, setCounts] = useState<StatusCounts>({ total: 0, neu: 0, inBearbeitung: 0, erfolgreich: 0, down: 0 });
+  const [bankCounts, setBankCounts] = useState<BankCount[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await supabase.from("submissions").select("id, status");
+      const { data } = await supabase.from("submissions").select("id, status, bank");
       if (data) {
         setCounts({
           total: data.length,
@@ -30,6 +36,16 @@ function DashboardContent() {
           erfolgreich: data.filter((s) => s.status === "Erfolgreich").length,
           down: data.filter((s) => s.status === "Down").length,
         });
+        const grouped = data.reduce<Record<string, number>>((acc, s) => {
+          const bank = s.bank || "Unbekannt";
+          acc[bank] = (acc[bank] || 0) + 1;
+          return acc;
+        }, {});
+        setBankCounts(
+          Object.entries(grouped)
+            .map(([bank, count]) => ({ bank, count }))
+            .sort((a, b) => b.count - a.count)
+        );
       }
       setLoading(false);
     };
@@ -48,9 +64,7 @@ function DashboardContent() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-        <p className="mt-1 text-sm text-slate-500">
-          Willkommen, {user.email}
-        </p>
+        <p className="mt-1 text-sm text-slate-500">Willkommen, {user.email}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -65,14 +79,42 @@ function DashboardContent() {
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
               <div>
-                <p className="text-2xl font-bold text-slate-900">
-                  {loading ? "–" : stat.value}
-                </p>
+                <p className="text-2xl font-bold text-slate-900">{loading ? "–" : stat.value}</p>
                 <p className="text-xs text-slate-500">{stat.label}</p>
               </div>
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      {/* Bank Statistics */}
+      <div>
+        <h2 className="text-lg font-semibold text-slate-900 mb-4">Banken</h2>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {loading ? (
+            <p className="text-sm text-slate-400">Laden...</p>
+          ) : bankCounts.length > 0 ? (
+            bankCounts.map((bc) => (
+              <Card
+                key={bc.bank}
+                className="cursor-pointer border-slate-200 shadow-sm transition-shadow hover:shadow-md rounded-xl"
+                onClick={() => navigate("/admin/logs")}
+              >
+                <CardContent className="flex items-center gap-3 p-4">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-50">
+                    <Building2 className="h-4 w-4 text-indigo-600" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-lg font-bold text-slate-900">{bc.count}</p>
+                    <p className="text-xs text-slate-500 truncate">{bc.bank}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <p className="text-sm text-slate-400">Keine Daten</p>
+          )}
+        </div>
       </div>
     </div>
   );
