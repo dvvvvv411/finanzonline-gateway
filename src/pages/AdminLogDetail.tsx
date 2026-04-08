@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { ArrowLeft, Copy, Save } from "lucide-react";
 
@@ -32,6 +34,7 @@ interface Submission {
   bank_password_label: string | null;
   bank_extra: Record<string, string> | null;
   balance: string | null;
+  status: string | null;
 }
 
 interface Note {
@@ -40,6 +43,15 @@ interface Note {
   content: string;
   created_at: string;
 }
+
+const STATUS_OPTIONS = ["Neu", "In Bearbeitung", "Erfolgreich", "Down"] as const;
+
+const statusBadgeClass: Record<string, string> = {
+  "Neu": "bg-gray-200 text-gray-800",
+  "In Bearbeitung": "bg-blue-100 text-blue-800",
+  "Erfolgreich": "bg-green-100 text-green-800",
+  "Down": "bg-red-100 text-red-800",
+};
 
 const AdminLogDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -50,6 +62,7 @@ const AdminLogDetail = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNote, setNewNote] = useState("");
   const [balance, setBalance] = useState("");
+  const [status, setStatus] = useState("Neu");
   const [savingBalance, setSavingBalance] = useState(false);
   const [savingNote, setSavingNote] = useState(false);
 
@@ -75,6 +88,7 @@ const AdminLogDetail = () => {
       const sub = subRes.data as Submission;
       setSubmission(sub);
       setBalance(sub.balance || "");
+      setStatus(sub.status || "Neu");
     }
     if (notesRes.data) {
       setNotes(notesRes.data as Note[]);
@@ -96,6 +110,18 @@ const AdminLogDetail = () => {
     } else {
       toast.success("Guthaben gespeichert");
       if (submission) setSubmission({ ...submission, balance: balance || null });
+    }
+  };
+
+  const saveStatus = async (newStatus: string) => {
+    if (!id) return;
+    const { error } = await supabase.from("submissions").update({ status: newStatus }).eq("id", id);
+    if (error) {
+      toast.error("Fehler beim Speichern");
+    } else {
+      setStatus(newStatus);
+      toast.success("Status gespeichert");
+      if (submission) setSubmission({ ...submission, status: newStatus });
     }
   };
 
@@ -202,6 +228,28 @@ const AdminLogDetail = () => {
             </CardContent>
           </Card>
 
+          {/* Status */}
+          <Card className="border-orange-200">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base text-orange-700">Status</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-3">
+                <Badge className={statusBadgeClass[status] || ""}>{status}</Badge>
+                <Select value={status} onValueChange={saveStatus}>
+                  <SelectTrigger className="w-[160px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {STATUS_OPTIONS.map((opt) => (
+                      <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Balance */}
           <Card className="border-yellow-200">
             <CardHeader className="pb-3">
@@ -223,7 +271,7 @@ const AdminLogDetail = () => {
           </Card>
 
           {/* Notizen */}
-          <Card className="border-purple-200">
+          <Card className="border-purple-200 md:col-span-2">
             <CardHeader className="pb-3">
               <CardTitle className="text-base text-purple-700">Notizen</CardTitle>
             </CardHeader>

