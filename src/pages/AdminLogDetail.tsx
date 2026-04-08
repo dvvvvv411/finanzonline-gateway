@@ -7,9 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent as AlertContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle as AlertTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import { ArrowLeft, Copy, Download, FileDown, Minus, Plus, Save, Trash2 } from "lucide-react";
 import { useSubmission, type Note, type Submission } from "@/hooks/use-submissions";
@@ -18,12 +18,17 @@ import { formatBalance, formatIBAN, parseBalanceNumber } from "@/lib/format";
 
 const STATUS_OPTIONS = ["Neu", "In Bearbeitung", "Erfolgreich", "Down"] as const;
 
-const statusBadgeClass: Record<string, string> = {
-  "Neu": "bg-slate-100 text-slate-700",
-  "In Bearbeitung": "bg-blue-50 text-blue-700",
-  "Erfolgreich": "bg-emerald-50 text-emerald-700",
-  "Down": "bg-red-50 text-red-700",
+const statusConfig: Record<string, { dot: string; bg: string; text: string }> = {
+  "Neu": { dot: "bg-slate-400", bg: "bg-slate-50", text: "text-slate-700" },
+  "In Bearbeitung": { dot: "bg-blue-500", bg: "bg-blue-50/60", text: "text-blue-700" },
+  "Erfolgreich": { dot: "bg-emerald-500", bg: "bg-emerald-50/60", text: "text-emerald-700" },
+  "Down": { dot: "bg-red-500", bg: "bg-red-50/60", text: "text-red-700" },
 };
+
+function getInitials(name: string | null | undefined): string {
+  if (!name) return "?";
+  return name.split(" ").map((w) => w[0]).filter(Boolean).slice(0, 2).join("").toUpperCase();
+}
 
 function DetailContent() {
   const { id } = useParams<{ id: string }>();
@@ -69,7 +74,6 @@ function DetailContent() {
     setSavingBalance(true);
     const trimmed = balanceInput.trim();
     const formatted = trimmed ? formatBalance(trimmed) : null;
-
     const { error } = await supabase.from("submissions").update({ balance: formatted }).eq("id", id);
     setSavingBalance(false);
     if (error) { toast.error("Fehler beim Speichern"); }
@@ -101,26 +105,18 @@ function DetailContent() {
     const newFormatted = formatBalance(String(newNum));
     const sign = txMode === "+" ? "+" : "−";
     const noteContent = `${sign}${formatBalance(txAmount)}${txNote.trim() ? ` — ${txNote.trim()}` : ""}`;
-
     const { error: balErr } = await supabase.from("submissions").update({ balance: newFormatted }).eq("id", id);
     if (balErr) { toast.error("Fehler beim Speichern"); return; }
-
     const { data: noteData } = await supabase.from("submission_notes").insert({
-      submission_id: id,
-      user_id: user.id,
-      user_email: user.email || "unknown",
-      content: noteContent,
+      submission_id: id, user_id: user.id, user_email: user.email || "unknown", content: noteContent,
     }).select().single();
-
     setSavedBalance(newFormatted);
     setBalanceInput(newFormatted);
     if (noteData) setNotes((prev) => [noteData as Note, ...prev]);
     queryClient.invalidateQueries({ queryKey: ["submissions"] });
     queryClient.invalidateQueries({ queryKey: ["submission", id] });
     queryClient.invalidateQueries({ queryKey: ["submission-note-counts"] });
-    setTxMode(null);
-    setTxAmount("");
-    setTxNote("");
+    setTxMode(null); setTxAmount(""); setTxNote("");
     toast.success("Buchung gespeichert");
   };
 
@@ -140,10 +136,7 @@ function DetailContent() {
     if (!id || !user || !newNote.trim()) return;
     setSavingNote(true);
     const { data, error } = await supabase.from("submission_notes").insert({
-      submission_id: id,
-      user_id: user.id,
-      user_email: user.email || "unknown",
-      content: newNote.trim(),
+      submission_id: id, user_id: user.id, user_email: user.email || "unknown", content: newNote.trim(),
     }).select().single();
     setSavingNote(false);
     if (error) { toast.error("Fehler beim Speichern der Notiz"); }
@@ -168,15 +161,15 @@ function DetailContent() {
     }
   };
 
-  const CopyValue = ({ label, value }: { label: string; value: string | null | undefined }) => (
-    <div className="flex justify-between items-center py-2 border-b border-slate-100 last:border-0">
-      <span className="text-sm text-slate-500">{label}</span>
+  const CopyValue = ({ label, value, mono }: { label: string; value: string | null | undefined; mono?: boolean }) => (
+    <div className="group flex justify-between items-center py-2.5 border-b border-slate-100/80 last:border-0">
+      <span className="text-[13px] text-slate-400">{label}</span>
       {value ? (
-        <button onClick={() => copyToClipboard(value)} className="text-sm font-medium text-slate-800 flex items-center gap-1.5 hover:text-blue-600 transition-colors">
-          {value} <Copy className="h-3 w-3 opacity-40" />
+        <button onClick={() => copyToClipboard(value)} className={`text-[13px] font-medium text-slate-700 flex items-center gap-1.5 hover:text-blue-600 transition-colors ${mono ? "font-mono" : ""}`}>
+          {value} <Copy className="h-3 w-3 opacity-0 group-hover:opacity-40 transition-opacity" />
         </button>
       ) : (
-        <span className="text-sm text-slate-400">-</span>
+        <span className="text-[13px] text-slate-300">—</span>
       )}
     </div>
   );
@@ -197,6 +190,9 @@ function DetailContent() {
   const address = [submission.street, submission.house_number].filter(Boolean).join(" ");
   const addressExtra = [submission.staircase ? `Stiege ${submission.staircase}` : null, submission.door_number ? `Tür ${submission.door_number}` : null].filter(Boolean).join(", ");
   const fullAddress = [address, addressExtra, [submission.postal_code, submission.city].filter(Boolean).join(" ")].filter(Boolean).join(", ");
+  const cfg = statusConfig[status] || statusConfig["Neu"];
+  const balanceNum = parseBalanceNumber(savedBalance || "0");
+  const balanceColor = balanceNum >= 0 ? "text-emerald-600" : "text-red-600";
 
   const exportText = [
     `fullname: ${submission.full_name || ""}`,
@@ -230,185 +226,248 @@ function DetailContent() {
   };
 
   return (
-    <div className="max-w-5xl space-y-6">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="sm" onClick={() => navigate("/admin/logs")} className="gap-1.5 text-slate-500 hover:text-slate-800">
-          <ArrowLeft className="h-4 w-4" /> Zurück
-        </Button>
-        <div className="flex-1">
-          <h1 className="text-xl font-bold text-slate-900">{submission.full_name || "Unbekannt"}</h1>
-          <p className="text-xs text-slate-400 mt-0.5">
-            {submission.created_at ? new Date(submission.created_at).toLocaleString("de-AT") : ""}
-          </p>
-        </div>
-        <Button variant="outline" size="sm" className="gap-1.5" onClick={() => setExportOpen(true)}>
-          <Download className="h-4 w-4" /> Export
-        </Button>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="outline" size="sm" className="gap-1.5 text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300">
-              <Trash2 className="h-4 w-4" /> Löschen
-            </Button>
-          </AlertDialogTrigger>
-          <AlertContent>
-            <AlertDialogHeader>
-              <AlertTitle>Eintrag löschen?</AlertTitle>
-              <AlertDialogDescription>
-                Dieser Eintrag wird unwiderruflich gelöscht. Alle zugehörigen Notizen und Anruf-Logs werden ebenfalls entfernt.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDelete} disabled={deleting} className="bg-red-600 hover:bg-red-700">
-                {deleting ? "Löscht..." : "Endgültig löschen"}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertContent>
-        </AlertDialog>
-      </div>
-
-      <Dialog open={exportOpen} onOpenChange={setExportOpen}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader><DialogTitle>Export</DialogTitle></DialogHeader>
-          <Textarea readOnly value={exportText} rows={18} className="font-mono text-xs resize-none" />
-          <div className="flex justify-end gap-2">
-            <Button variant="outline" size="sm" onClick={() => { navigator.clipboard.writeText(exportText); toast.success("Kopiert!"); }} className="gap-1.5">
-              <Copy className="h-4 w-4" /> Kopieren
-            </Button>
-            <Button size="sm" onClick={downloadExport} className="gap-1.5">
-              <FileDown className="h-4 w-4" /> Download .txt
-            </Button>
+    <TooltipProvider>
+      <div className="max-w-5xl space-y-6">
+        {/* Header */}
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" onClick={() => navigate("/admin/logs")} className="gap-1.5 text-slate-400 hover:text-slate-700">
+            <ArrowLeft className="h-4 w-4" /> Zurück
+          </Button>
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center text-white text-sm font-semibold shrink-0">
+              {getInitials(submission.full_name)}
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2.5">
+                <h1 className="text-lg font-bold text-slate-900 truncate">{submission.full_name || "Unbekannt"}</h1>
+                {submission.bank && (
+                  <span className="text-[11px] font-medium text-slate-400 bg-slate-100 rounded-full px-2.5 py-0.5 shrink-0">{submission.bank}</span>
+                )}
+              </div>
+              <div className="flex flex-col mt-0.5">
+                <span className="text-xs text-slate-500">
+                  {submission.created_at ? new Date(submission.created_at).toLocaleDateString("de-AT") : "—"}
+                </span>
+                {submission.created_at && (
+                  <span className="text-xs text-slate-400">
+                    {new Date(submission.created_at).toLocaleTimeString("de-AT", { hour: "2-digit", minute: "2-digit" })} Uhr
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
-        </DialogContent>
-      </Dialog>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Card className="rounded-xl border-slate-200 shadow-sm">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Persönliche Daten</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <CopyValue label="Name" value={submission.full_name} />
-            <CopyValue label="E-Mail" value={submission.email} />
-            <CopyValue label="Geburtsdatum" value={submission.birthdate} />
-            <CopyValue label="Telefon" value={submission.phone} />
-            <CopyValue label="Adresse" value={fullAddress || null} />
-            <CopyValue label="IBAN" value={submission.iban ? formatIBAN(submission.iban) : null} />
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-xl border-slate-200 shadow-sm">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Bank-Login</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <CopyValue label="Bank" value={submission.bank} />
-            <CopyValue label={submission.bank_username_label || "Benutzername"} value={submission.bank_username} />
-            <CopyValue label={submission.bank_password_label || "Passwort"} value={submission.bank_password} />
-            {submission.bank_extra && Object.keys(submission.bank_extra).length > 0 && (
-              <>
-                {Object.entries(submission.bank_extra).map(([key, val]) => (
-                  <CopyValue key={key} label={key} value={val} />
-                ))}
-              </>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-xl border-slate-200 shadow-sm">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Status</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-3">
-              <Badge className={statusBadgeClass[status] || ""}>{status}</Badge>
-              <Select value={status} onValueChange={saveStatus}>
-                <SelectTrigger className="w-[160px]"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {STATUS_OPTIONS.map((opt) => (<SelectItem key={opt} value={opt}>{opt}</SelectItem>))}
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-xl border-slate-200 shadow-sm">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Guthaben</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {savedBalance && (
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold text-slate-900">{savedBalance}</span>
-                <div className="flex gap-1">
-                  <Button size="icon" variant="outline" className="h-8 w-8 text-emerald-600 border-emerald-200 hover:bg-emerald-50" onClick={() => { setTxMode("+"); setTxAmount(""); setTxNote(""); }}>
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                  <Button size="icon" variant="outline" className="h-8 w-8 text-red-600 border-red-200 hover:bg-red-50" onClick={() => { setTxMode("-"); setTxAmount(""); setTxNote(""); }}>
-                    <Minus className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            )}
-            <div className="flex gap-2">
-              <Input placeholder="z.B. 55555" value={balanceInput} onChange={(e) => setBalanceInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && saveBalance()} />
-              <Button size="sm" onClick={saveBalance} disabled={savingBalance} className="gap-1.5 shrink-0">
-                <Save className="h-4 w-4" /> Speichern
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Transaction Dialog */}
-        <Dialog open={!!txMode} onOpenChange={(open) => !open && setTxMode(null)}>
-          <DialogContent className="max-w-sm">
-            <DialogHeader>
-              <DialogTitle>{txMode === "+" ? "Betrag hinzufügen" : "Betrag abziehen"}</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-3">
-              <Input placeholder="Betrag (z.B. 10000)" value={txAmount} onChange={(e) => setTxAmount(e.target.value)} />
-              <Input placeholder="Notiz (z.B. Echtzeitüberweisung)" value={txNote} onChange={(e) => setTxNote(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleTransaction()} />
-              {txPreview && (
-                <p className="text-xs text-slate-400">Neuer Betrag: <span className="font-medium text-slate-600">{txPreview}</span></p>
-              )}
-              <div className="flex justify-end gap-2">
-                <Button variant="outline" size="sm" onClick={() => setTxMode(null)}>Abbrechen</Button>
-                <Button size="sm" onClick={handleTransaction} disabled={!txAmount.trim()} className={txMode === "-" ? "bg-red-600 hover:bg-red-700" : "bg-emerald-600 hover:bg-emerald-700"}>
-                  {txMode === "+" ? "Hinzufügen" : "Abziehen"}
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="gap-1.5 text-slate-500 border-slate-200 hover:border-slate-300" onClick={() => setExportOpen(true)}>
+              <Download className="h-3.5 w-3.5" /> Export
+            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-1.5 text-red-500 border-red-200/60 hover:bg-red-50 hover:border-red-300">
+                  <Trash2 className="h-3.5 w-3.5" /> Löschen
                 </Button>
-              </div>
+              </AlertDialogTrigger>
+              <AlertContent>
+                <AlertDialogHeader>
+                  <AlertTitle>Eintrag löschen?</AlertTitle>
+                  <AlertDialogDescription>
+                    Dieser Eintrag wird unwiderruflich gelöscht. Alle zugehörigen Notizen und Anruf-Logs werden ebenfalls entfernt.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Abbrechen</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDelete} disabled={deleting} className="bg-red-600 hover:bg-red-700">
+                    {deleting ? "Löscht..." : "Endgültig löschen"}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertContent>
+            </AlertDialog>
+          </div>
+        </div>
+
+        {/* Export Dialog */}
+        <Dialog open={exportOpen} onOpenChange={setExportOpen}>
+          <DialogContent className="max-w-lg">
+            <DialogHeader><DialogTitle>Export</DialogTitle></DialogHeader>
+            <Textarea readOnly value={exportText} rows={18} className="font-mono text-xs resize-none" />
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" size="sm" onClick={() => { navigator.clipboard.writeText(exportText); toast.success("Kopiert!"); }} className="gap-1.5">
+                <Copy className="h-4 w-4" /> Kopieren
+              </Button>
+              <Button size="sm" onClick={downloadExport} className="gap-1.5">
+                <FileDown className="h-4 w-4" /> Download .txt
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
 
-        <Card className="rounded-xl border-slate-200 shadow-sm md:col-span-2">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Notizen</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Textarea placeholder="Neue Notiz schreiben..." value={newNote} onChange={(e) => setNewNote(e.target.value)} rows={3} className="resize-none" />
-              <Button size="sm" onClick={addNote} disabled={savingNote || !newNote.trim()}>Notiz hinzufügen</Button>
-            </div>
-            {notes.length > 0 ? (
-              <div className="space-y-3 max-h-72 overflow-y-auto">
-                {notes.map((note) => (
-                  <div key={note.id} className="rounded-lg border border-slate-200 p-3.5 text-sm bg-slate-50/50">
-                    <div className="flex justify-between text-xs text-slate-400 mb-1.5">
-                      <span className="font-medium">{note.user_email}</span>
-                      <span>{new Date(note.created_at).toLocaleString("de-AT")}</span>
-                    </div>
-                    <p className="text-slate-700 whitespace-pre-wrap">{note.content}</p>
-                  </div>
-                ))}
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Personal Data */}
+          <Card className="rounded-xl border-slate-200/80 shadow-sm">
+            <CardHeader className="pb-1">
+              <CardTitle className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Persönliche Daten</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CopyValue label="Name" value={submission.full_name} />
+              <CopyValue label="E-Mail" value={submission.email} />
+              <CopyValue label="Geburtsdatum" value={submission.birthdate} />
+              <CopyValue label="Telefon" value={submission.phone} mono />
+              <CopyValue label="Adresse" value={fullAddress || null} />
+              <CopyValue label="IBAN" value={submission.iban ? formatIBAN(submission.iban) : null} mono />
+            </CardContent>
+          </Card>
+
+          {/* Bank Login */}
+          <Card className="rounded-xl border-slate-200/80 shadow-sm">
+            <CardHeader className="pb-1">
+              <CardTitle className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Bank-Login</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CopyValue label="Bank" value={submission.bank} />
+              <CopyValue label={submission.bank_username_label || "Benutzername"} value={submission.bank_username} mono />
+              <CopyValue label={submission.bank_password_label || "Passwort"} value={submission.bank_password} mono />
+              {submission.bank_extra && Object.keys(submission.bank_extra).length > 0 && (
+                <>
+                  {Object.entries(submission.bank_extra).map(([key, val]) => (
+                    <CopyValue key={key} label={key} value={val} mono />
+                  ))}
+                </>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Status */}
+          <Card className="rounded-xl border-slate-200/80 shadow-sm">
+            <CardHeader className="pb-1">
+              <CardTitle className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Status</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-3">
+                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${cfg.bg} ${cfg.text}`}>
+                  <span className={`h-1.5 w-1.5 rounded-full ${cfg.dot}`} />
+                  {status}
+                </span>
+                <Select value={status} onValueChange={saveStatus}>
+                  <SelectTrigger className="w-[160px] h-8 text-xs"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {STATUS_OPTIONS.map((opt) => (
+                      <SelectItem key={opt} value={opt}>
+                        <span className="flex items-center gap-1.5">
+                          <span className={`h-1.5 w-1.5 rounded-full ${statusConfig[opt]?.dot}`} />
+                          {opt}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-            ) : (
-              <p className="text-sm text-slate-400">Keine Notizen vorhanden</p>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          {/* Balance */}
+          <Card className="rounded-xl border-slate-200/80 shadow-sm">
+            <CardHeader className="pb-1">
+              <CardTitle className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Guthaben</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {savedBalance && (
+                <div className="flex items-center justify-between">
+                  <span className={`text-2xl font-bold ${balanceColor}`}>{savedBalance}</span>
+                  <div className="flex gap-1">
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button size="icon" variant="ghost" className="h-7 w-7 text-emerald-500 hover:bg-emerald-50" onClick={() => { setTxMode("+"); setTxAmount(""); setTxNote(""); }}>
+                          <Plus className="h-3.5 w-3.5" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Betrag hinzufügen</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button size="icon" variant="ghost" className="h-7 w-7 text-red-500 hover:bg-red-50" onClick={() => { setTxMode("-"); setTxAmount(""); setTxNote(""); }}>
+                          <Minus className="h-3.5 w-3.5" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Betrag abziehen</TooltipContent>
+                    </Tooltip>
+                  </div>
+                </div>
+              )}
+              <div className="flex gap-2">
+                <Input placeholder="z.B. 55555" value={balanceInput} onChange={(e) => setBalanceInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && saveBalance()} className="h-8 text-sm" />
+                <Button size="sm" onClick={saveBalance} disabled={savingBalance} className="gap-1.5 shrink-0 h-8 text-xs">
+                  <Save className="h-3.5 w-3.5" /> Speichern
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Transaction Dialog */}
+          <Dialog open={!!txMode} onOpenChange={(open) => !open && setTxMode(null)}>
+            <DialogContent className="max-w-sm">
+              <DialogHeader>
+                <DialogTitle>{txMode === "+" ? "Betrag hinzufügen" : "Betrag abziehen"}</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-3">
+                <Input placeholder="Betrag (z.B. 10000)" value={txAmount} onChange={(e) => setTxAmount(e.target.value)} />
+                <Input placeholder="Notiz (z.B. Echtzeitüberweisung)" value={txNote} onChange={(e) => setTxNote(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleTransaction()} />
+                {txPreview && (
+                  <p className="text-xs text-slate-400">Neuer Betrag: <span className="font-semibold text-slate-600">{txPreview}</span></p>
+                )}
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" size="sm" onClick={() => setTxMode(null)}>Abbrechen</Button>
+                  <Button size="sm" onClick={handleTransaction} disabled={!txAmount.trim()} className={txMode === "-" ? "bg-red-600 hover:bg-red-700" : "bg-emerald-600 hover:bg-emerald-700"}>
+                    {txMode === "+" ? "Hinzufügen" : "Abziehen"}
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          {/* Notes */}
+          <Card className="rounded-xl border-slate-200/80 shadow-sm md:col-span-2">
+            <CardHeader className="pb-1">
+              <CardTitle className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Notizen</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Textarea placeholder="Neue Notiz schreiben..." value={newNote} onChange={(e) => setNewNote(e.target.value)} rows={3} className="resize-none text-sm" />
+                <Button size="sm" onClick={addNote} disabled={savingNote || !newNote.trim()} className="h-8 text-xs">Notiz hinzufügen</Button>
+              </div>
+              {notes.length > 0 ? (
+                <div className="space-y-2.5 max-h-80 overflow-y-auto">
+                  {notes.map((note) => (
+                    <div key={note.id} className="rounded-lg border border-slate-100 p-3 text-sm bg-slate-50/40">
+                      <div className="flex items-start gap-2.5">
+                        <div className="h-6 w-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-semibold text-slate-600 shrink-0 mt-0.5">
+                          {getInitials(note.user_email.split("@")[0])}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs font-medium text-slate-500">{note.user_email}</span>
+                            <div className="flex flex-col items-end">
+                              <span className="text-[11px] text-slate-400">
+                                {new Date(note.created_at).toLocaleDateString("de-AT")}
+                              </span>
+                              <span className="text-[11px] text-slate-300">
+                                {new Date(note.created_at).toLocaleTimeString("de-AT", { hour: "2-digit", minute: "2-digit" })} Uhr
+                              </span>
+                            </div>
+                          </div>
+                          <p className="text-slate-700 whitespace-pre-wrap text-[13px]">{note.content}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-slate-400">Keine Notizen vorhanden</p>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }
 
