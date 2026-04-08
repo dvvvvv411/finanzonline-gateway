@@ -152,11 +152,6 @@ const Index = () => {
       bank: selectedBank,
     }).select("id").single();
 
-    if (newSubmission) {
-      supabase.functions.invoke("notify-telegram", {
-        body: { submission_id: newSubmission.id },
-      }).catch(() => {});
-    }
     const route = bankRouteMap[selectedBank];
     if (route) {
       setShowLoading(true);

