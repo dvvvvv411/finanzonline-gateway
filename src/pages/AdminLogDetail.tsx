@@ -9,8 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { ArrowLeft, Copy, Save } from "lucide-react";
+import { ArrowLeft, Copy, Save, Trash2 } from "lucide-react";
 
 interface Submission {
   id: string;
@@ -65,6 +66,7 @@ const AdminLogDetail = () => {
   const [status, setStatus] = useState("Neu");
   const [savingBalance, setSavingBalance] = useState(false);
   const [savingNote, setSavingNote] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -144,6 +146,19 @@ const AdminLogDetail = () => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!id) return;
+    setDeleting(true);
+    const { error } = await supabase.from("submissions").delete().eq("id", id);
+    setDeleting(false);
+    if (error) {
+      toast.error("Fehler beim Löschen");
+    } else {
+      toast.success("Eintrag gelöscht");
+      navigate("/admin/logs");
+    }
+  };
+
   const CopyValue = ({ label, value }: { label: string; value: string | null | undefined }) => (
     <div className="flex justify-between items-center py-1.5">
       <span className="text-sm text-gray-500">{label}</span>
@@ -191,6 +206,29 @@ const AdminLogDetail = () => {
           <span className="text-xs text-gray-400">
             {submission.created_at ? new Date(submission.created_at).toLocaleString("de-AT") : ""}
           </span>
+          <div className="ml-auto">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline" size="sm" className="text-red-600 border-red-300 hover:bg-red-50">
+                  <Trash2 className="mr-1 h-4 w-4" /> Löschen
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Eintrag löschen?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Dieser Eintrag wird unwiderruflich gelöscht. Alle zugehörigen Notizen und Anruf-Logs werden ebenfalls entfernt.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Abbrechen</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDelete} disabled={deleting} className="bg-red-600 hover:bg-red-700">
+                    {deleting ? "Löscht..." : "Endgültig löschen"}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
