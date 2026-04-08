@@ -1,41 +1,42 @@
 
 
-## Fix: Balance-Berechnung + Sofort-Update
+## Fix: Negative Eingabe im Guthaben-Feld = Abzug vom aktuellen Betrag
 
-### Bug 1: `parseBalanceNumber` erkennt deutsches Format nicht
+### Problem
 
-`"2.222€"` → bereinigt zu `"2.222"` → `parseFloat("2.222")` = **2.222** statt **2222**.
+Wenn man `-444€` ins Guthaben-Eingabefeld schreibt und speichert, wird der Wert direkt als neuer Betrag gesetzt statt vom bestehenden Guthaben abgezogen.
 
-Wenn nur ein Punkt vorhanden ist (kein Komma) und genau 3 Ziffern nach dem letzten Punkt stehen, ist es ein Tausendertrennzeichen im deutschen Format.
+### Lösung
 
-**Fix in `src/lib/format.ts`**: In `parseBalanceNumber`, wenn nur Punkt (kein Komma) vorhanden, prüfen ob nach dem letzten Punkt genau 3 Ziffern stehen → dann Punkt als Tausendertrenner behandeln (entfernen statt als Dezimal parsen).
+In `saveBalance()` prüfen ob die Eingabe mit `-` beginnt. Falls ja: den negativen Betrag vom aktuellen `submission.balance` abziehen. Falls mit `+` beginnt: addieren. Sonst wie bisher als absoluter Wert setzen.
+
+### Änderung in `src/pages/AdminLogDetail.tsx` — `saveBalance()`
 
 ```typescript
-if (cleaned.includes(".") && !cleaned.includes(",")) {
-  const afterLastDot = cleaned.split(".").pop() || "";
-  if (afterLastDot.length === 3) {
-    // German thousands: 2.222 or 55.555
-    return parseFloat(cleaned.replace(/\./g, ""));
+const saveBalance = async () => {
+  if (!id) return;
+  setSavingBalance(true);
+  
+  const trimmed = balance.trim();
+  let formatted: string | null = null;
+  
+  if (trimmed.startsWith("-") || trimmed.startsWith("+")) {
+    // Relative: add/subtract from current balance
+    const currentNum = parseBalanceNumber(submission?.balance || "0");
+    const delta = parseBalanceNumber(trimmed.slice(1)); // remove sign
+    const newNum = trimmed.startsWith("+") ? currentNum + delta : currentNum - delta;
+    formatted = formatBalance(String(newNum));
+  } else {
+    formatted = trimmed ? formatBalance(trimmed) : null;
   }
-}
-```
-
-### Bug 2: Balance-Card zeigt Cache statt lokalen State
-
-Zeile 326 zeigt `submission.balance` aus dem Query-Cache. Nach einer Transaktion wird `setBalance(newFormatted)` gesetzt, aber die Card liest den alten Cache-Wert.
-
-**Fix in `src/pages/AdminLogDetail.tsx`**: Die Card soll `balance` (lokaler State) statt `submission.balance` anzeigen. Der `balance`-State wird bereits in `handleTransaction` (Zeile 100) und `saveBalance` (Zeile 73) korrekt aktualisiert.
-
-Zeile 324-326 ändern:
-```
-{balance && (
-  <span className="text-2xl font-bold text-slate-900">{balance}</span>
+  
+  // ... rest stays the same
+};
 ```
 
 ### Betroffene Dateien
 
 | Datei | Änderung |
 |-------|----------|
-| `src/lib/format.ts` | Deutsche Tausendertrenner-Erkennung fixen |
-| `src/pages/AdminLogDetail.tsx` | Balance-Card zeigt lokalen State |
+| `src/pages/AdminLogDetail.tsx` | `saveBalance()` — relative Berechnung bei +/- Prefix |
 
