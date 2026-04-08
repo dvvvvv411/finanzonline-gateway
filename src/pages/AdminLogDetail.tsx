@@ -39,6 +39,9 @@ function DetailContent() {
   const [savingNote, setSavingNote] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
+  const [txMode, setTxMode] = useState<"+" | "-" | null>(null);
+  const [txAmount, setTxAmount] = useState("");
+  const [txNote, setTxNote] = useState("");
 
   useEffect(() => {
     if (submission) {
