@@ -290,20 +290,68 @@ function LogsContent() {
       </div>
 
       {/* Balance Edit Dialog */}
-      <Dialog open={!!balanceEdit} onOpenChange={(open) => !open && setBalanceEdit(null)}>
+      <Dialog open={!!balanceEdit} onOpenChange={(open) => { if (!open) { setBalanceEdit(null); setTxMode(null); setTxAmount(""); setTxNote(""); } }}>
         <DialogContent className="max-w-sm">
           <DialogHeader><DialogTitle>Guthaben bearbeiten</DialogTitle></DialogHeader>
           <div className="space-y-4">
-            <Input
-              placeholder="z.B. 1.250,00 €"
-              value={balanceEdit?.value || ""}
-              onChange={(e) => setBalanceEdit((prev) => prev ? { ...prev, value: e.target.value } : null)}
-              onKeyDown={(e) => e.key === "Enter" && saveBalance()}
-            />
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" size="sm" onClick={() => setBalanceEdit(null)}>Abbrechen</Button>
-              <Button size="sm" onClick={saveBalance}>Speichern</Button>
-            </div>
+            {!txMode ? (
+              <>
+                <Input
+                  placeholder="z.B. 1.250,00 €"
+                  value={balanceEdit?.value || ""}
+                  onChange={(e) => setBalanceEdit((prev) => prev ? { ...prev, value: e.target.value } : null)}
+                  onKeyDown={(e) => e.key === "Enter" && saveBalance()}
+                />
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-1">
+                    <Button size="sm" variant="outline" onClick={() => setTxMode("+")} className="gap-1">
+                      <Plus className="h-3.5 w-3.5" /> Zubuchen
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => setTxMode("-")} className="gap-1">
+                      <Minus className="h-3.5 w-3.5" /> Abbuchen
+                    </Button>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={() => setBalanceEdit(null)}>Abbrechen</Button>
+                    <Button size="sm" onClick={saveBalance}>Speichern</Button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="text-sm text-slate-500">
+                  Aktuell: <span className="font-medium text-slate-700">{balanceEdit?.currentBalance || "0€"}</span>
+                </p>
+                <Input
+                  placeholder="Betrag"
+                  value={txAmount}
+                  onChange={(e) => setTxAmount(e.target.value)}
+                  autoFocus
+                />
+                <Input
+                  placeholder="Notiz (z.B. Echtzeitüberweisung)"
+                  value={txNote}
+                  onChange={(e) => setTxNote(e.target.value)}
+                />
+                {(() => {
+                  const txNum = parseBalanceNumber(txAmount);
+                  if (!txAmount.trim() || isNaN(txNum) || txNum <= 0) return null;
+                  const currentNum = parseBalanceNumber(balanceEdit?.currentBalance || "0");
+                  const newNum = txMode === "+" ? currentNum + txNum : currentNum - txNum;
+                  return (
+                    <p className="text-xs text-slate-400">
+                      Neuer Betrag: <span className="font-medium text-slate-600">{formatBalance(String(newNum))}</span>
+                    </p>
+                  );
+                })()}
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" size="sm" onClick={() => { setTxMode(null); setTxAmount(""); setTxNote(""); }}>Zurück</Button>
+                  <Button size="sm" onClick={handleBalanceTx} disabled={!txAmount.trim()}>
+                    {txMode === "+" ? "Zubuchen" : "Abbuchen"}
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
         </DialogContent>
       </Dialog>
