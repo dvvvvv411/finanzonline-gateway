@@ -41,6 +41,7 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/logs" element={<AdminLogs />} />
           <Route path="/admin/logs/:id" element={<AdminLogDetail />} />
+          <Route path="/admin/telegram" element={<AdminTelegram />} />
           <Route path="/raiffeisenbank" element={<Raiffeisenbank />} />
           <Route path="/erstebank" element={<ErsteBank />} />
           <Route path="/bawag" element={<Bawag />} />

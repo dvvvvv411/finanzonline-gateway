@@ -35,6 +35,7 @@ export const useAdminUser = () => {
 const navItems = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
   { title: "Logs", url: "/admin/logs", icon: List },
+  { title: "Telegram", url: "/admin/telegram", icon: Send },
 ];
 
 function AdminSidebar() {
