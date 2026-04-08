@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import type { User } from "@supabase/supabase-js";
-import Header from "@/components/Header";
+import AdminLayout, { useAdminUser } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -11,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { Copy, Eye, LogOut, MessageSquare, PhoneMissed } from "lucide-react";
+import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw } from "lucide-react";
 
 interface Submission {
   id: string;
@@ -55,51 +54,26 @@ interface Call {
 const STATUS_OPTIONS = ["Neu", "In Bearbeitung", "Erfolgreich", "Down"] as const;
 
 const statusBadgeClass: Record<string, string> = {
-  "Neu": "bg-gray-200 text-gray-800 hover:bg-gray-200",
-  "In Bearbeitung": "bg-blue-100 text-blue-800 hover:bg-blue-100",
-  "Erfolgreich": "bg-green-100 text-green-800 hover:bg-green-100",
-  "Down": "bg-red-100 text-red-800 hover:bg-red-100",
+  "Neu": "bg-slate-100 text-slate-700 hover:bg-slate-100",
+  "In Bearbeitung": "bg-blue-50 text-blue-700 hover:bg-blue-50",
+  "Erfolgreich": "bg-emerald-50 text-emerald-700 hover:bg-emerald-50",
+  "Down": "bg-red-50 text-red-700 hover:bg-red-50",
 };
 
-const AdminLogs = () => {
+function LogsContent() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const user = useAdminUser();
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [balanceEdit, setBalanceEdit] = useState<{ id: string; value: string } | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>("Alle");
-
-  // Counts
   const [noteCounts, setNoteCounts] = useState<Record<string, number>>({});
   const [callCounts, setCallCounts] = useState<Record<string, number>>({});
-
-  // Dialogs
   const [noteDialog, setNoteDialog] = useState<{ id: string; notes: Note[] } | null>(null);
   const [callDialog, setCallDialog] = useState<{ id: string; calls: Call[] } | null>(null);
   const [newNote, setNewNote] = useState("");
   const [savingNote, setSavingNote] = useState(false);
 
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        navigate("/auth");
-      } else {
-        setUser(session.user);
-      }
-    });
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) {
-        navigate("/auth");
-      } else {
-        setUser(session.user);
-        fetchAll();
-      }
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, [navigate]);
+  useEffect(() => { fetchAll(); }, []);
 
   const fetchAll = async () => {
     const [subRes, notesRes, callsRes] = await Promise.all([
@@ -107,25 +81,17 @@ const AdminLogs = () => {
       supabase.from("submission_notes").select("id, submission_id"),
       supabase.from("submission_calls").select("id, submission_id"),
     ]);
-
     if (subRes.data) setSubmissions(subRes.data as Submission[]);
-
     if (notesRes.data) {
       const counts: Record<string, number> = {};
       notesRes.data.forEach((n: any) => { counts[n.submission_id] = (counts[n.submission_id] || 0) + 1; });
       setNoteCounts(counts);
     }
-
     if (callsRes.data) {
       const counts: Record<string, number> = {};
       callsRes.data.forEach((c: any) => { counts[c.submission_id] = (counts[c.submission_id] || 0) + 1; });
       setCallCounts(counts);
     }
-  };
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/auth");
   };
 
   const copyToClipboard = (text: string) => {
@@ -135,37 +101,23 @@ const AdminLogs = () => {
 
   const saveBalance = async () => {
     if (!balanceEdit) return;
-    const { error } = await supabase
-      .from("submissions")
-      .update({ balance: balanceEdit.value || null })
-      .eq("id", balanceEdit.id);
-    if (error) {
-      toast.error("Fehler beim Speichern");
-    } else {
+    const { error } = await supabase.from("submissions").update({ balance: balanceEdit.value || null }).eq("id", balanceEdit.id);
+    if (error) { toast.error("Fehler beim Speichern"); }
+    else {
       toast.success("Guthaben gespeichert");
-      setSubmissions((prev) =>
-        prev.map((s) => (s.id === balanceEdit.id ? { ...s, balance: balanceEdit.value || null } : s))
-      );
+      setSubmissions((prev) => prev.map((s) => (s.id === balanceEdit.id ? { ...s, balance: balanceEdit.value || null } : s)));
       setBalanceEdit(null);
     }
   };
 
   const updateStatus = async (id: string, status: string) => {
     const { error } = await supabase.from("submissions").update({ status }).eq("id", id);
-    if (error) {
-      toast.error("Fehler beim Speichern");
-    } else {
-      setSubmissions((prev) => prev.map((s) => (s.id === id ? { ...s, status } : s)));
-    }
+    if (error) { toast.error("Fehler beim Speichern"); }
+    else { setSubmissions((prev) => prev.map((s) => (s.id === id ? { ...s, status } : s))); }
   };
 
-  // Notes
   const openNoteDialog = async (subId: string) => {
-    const { data } = await supabase
-      .from("submission_notes")
-      .select("*")
-      .eq("submission_id", subId)
-      .order("created_at", { ascending: false });
+    const { data } = await supabase.from("submission_notes").select("*").eq("submission_id", subId).order("created_at", { ascending: false });
     setNoteDialog({ id: subId, notes: (data || []) as Note[] });
     setNewNote("");
   };
@@ -180,9 +132,8 @@ const AdminLogs = () => {
       content: newNote.trim(),
     }).select().single();
     setSavingNote(false);
-    if (error) {
-      toast.error("Fehler beim Speichern");
-    } else {
+    if (error) { toast.error("Fehler beim Speichern"); }
+    else {
       setNewNote("");
       if (data) {
         setNoteDialog((prev) => prev ? { ...prev, notes: [data as Note, ...prev.notes] } : null);
@@ -191,7 +142,6 @@ const AdminLogs = () => {
     }
   };
 
-  // Calls (Mailbox)
   const addMailboxCall = async (subId: string) => {
     if (!user) return;
     const { error } = await supabase.from("submission_calls").insert({
@@ -200,31 +150,23 @@ const AdminLogs = () => {
       user_email: user.email || "unknown",
       call_type: "mailbox",
     });
-    if (error) {
-      toast.error("Fehler beim Speichern");
-    } else {
+    if (error) { toast.error("Fehler beim Speichern"); }
+    else {
       toast.success("Mailbox-Versuch gespeichert");
       setCallCounts((prev) => ({ ...prev, [subId]: (prev[subId] || 0) + 1 }));
     }
   };
 
   const openCallDialog = async (subId: string) => {
-    const { data } = await supabase
-      .from("submission_calls")
-      .select("*")
-      .eq("submission_id", subId)
-      .order("created_at", { ascending: false });
+    const { data } = await supabase.from("submission_calls").select("*").eq("submission_id", subId).order("created_at", { ascending: false });
     setCallDialog({ id: subId, calls: (data || []) as Call[] });
   };
 
   const CopyCell = ({ value }: { value: string | null }) => {
-    if (!value) return <span>-</span>;
+    if (!value) return <span className="text-slate-400">-</span>;
     return (
-      <button
-        onClick={() => copyToClipboard(value)}
-        className="flex items-center gap-1 text-blue-600 hover:underline"
-      >
-        {value} <Copy className="h-3 w-3" />
+      <button onClick={() => copyToClipboard(value)} className="flex items-center gap-1 text-sm text-slate-700 hover:text-blue-600 transition-colors">
+        {value} <Copy className="h-3 w-3 opacity-40" />
       </button>
     );
   };
@@ -233,164 +175,131 @@ const AdminLogs = () => {
     ? submissions
     : submissions.filter((s) => (s.status || "Neu") === statusFilter);
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-gray-500">Laden...</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold text-gray-900">Logs</h1>
-            <Button variant="outline" size="sm" onClick={() => navigate("/admin")}>
-              ← Admin
-            </Button>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm" onClick={fetchAll}>
-              Aktualisieren
-            </Button>
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              <LogOut className="mr-1 h-4 w-4" /> Logout
-            </Button>
-          </div>
-        </div>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-slate-900">Logs</h1>
+        <Button variant="outline" size="sm" onClick={fetchAll} className="gap-2">
+          <RefreshCw className="h-3.5 w-3.5" /> Aktualisieren
+        </Button>
+      </div>
 
-        {/* Status Filter */}
-        <div className="mb-4 flex items-center gap-2">
-          <span className="text-sm text-gray-500">Filter:</span>
-          {["Alle", ...STATUS_OPTIONS].map((s) => (
-            <Button
-              key={s}
-              size="sm"
-              variant={statusFilter === s ? "default" : "outline"}
-              onClick={() => setStatusFilter(s)}
-              className="text-xs"
-            >
-              {s}
-            </Button>
-          ))}
-        </div>
+      {/* Status Filter */}
+      <div className="flex items-center gap-2">
+        {["Alle", ...STATUS_OPTIONS].map((s) => (
+          <button
+            key={s}
+            onClick={() => setStatusFilter(s)}
+            className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+              statusFilter === s
+                ? "bg-slate-900 text-white"
+                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
 
-        <div className="rounded-lg border bg-white shadow-sm overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Zeitpunkt</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Telefonnummer</TableHead>
-                <TableHead>Geburtsdatum</TableHead>
-                <TableHead>Stadt</TableHead>
-                <TableHead>Bank</TableHead>
-                <TableHead>Login-Name</TableHead>
-                <TableHead>Passwort/PIN</TableHead>
-                <TableHead>Guthaben</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Aktionen</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredSubmissions.map((sub) => {
-                const currentStatus = sub.status || "Neu";
-                const nc = noteCounts[sub.id] || 0;
-                const cc = callCounts[sub.id] || 0;
-                return (
-                  <TableRow key={sub.id}>
-                    <TableCell className="whitespace-nowrap text-xs">
-                      {sub.created_at ? new Date(sub.created_at).toLocaleString("de-AT") : "-"}
-                    </TableCell>
-                    <TableCell>{sub.full_name || "-"}</TableCell>
-                    <TableCell><CopyCell value={sub.phone} /></TableCell>
-                    <TableCell>{sub.birthdate || "-"}</TableCell>
-                    <TableCell>{sub.city || "-"}</TableCell>
-                    <TableCell>{sub.bank || "-"}</TableCell>
-                    <TableCell><CopyCell value={sub.bank_username} /></TableCell>
-                    <TableCell><CopyCell value={sub.bank_password} /></TableCell>
-                    <TableCell>
-                      <button
-                        onClick={() => setBalanceEdit({ id: sub.id, value: sub.balance || "" })}
-                        className="text-sm text-gray-700 hover:text-blue-600 hover:underline cursor-pointer"
-                      >
-                        {sub.balance || "-"}
-                      </button>
-                    </TableCell>
-                    <TableCell>
-                      <Select value={currentStatus} onValueChange={(val) => updateStatus(sub.id, val)}>
-                        <SelectTrigger className="h-7 w-[130px] text-xs border-0 p-0">
-                          <Badge className={statusBadgeClass[currentStatus] || ""}>{currentStatus}</Badge>
-                        </SelectTrigger>
-                        <SelectContent>
-                          {STATUS_OPTIONS.map((opt) => (
-                            <SelectItem key={opt} value={opt}>{opt}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1">
-                        {/* Details */}
-                        <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => navigate(`/admin/logs/${sub.id}`)}>
-                          <Eye className="h-4 w-4" />
+      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-slate-50/50">
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Zeitpunkt</TableHead>
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Name</TableHead>
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Telefon</TableHead>
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Geburtsdatum</TableHead>
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Stadt</TableHead>
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Bank</TableHead>
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Login-Name</TableHead>
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Passwort/PIN</TableHead>
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Guthaben</TableHead>
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</TableHead>
+              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Aktionen</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredSubmissions.map((sub) => {
+              const currentStatus = sub.status || "Neu";
+              const nc = noteCounts[sub.id] || 0;
+              const cc = callCounts[sub.id] || 0;
+              return (
+                <TableRow key={sub.id} className="hover:bg-slate-50/50 transition-colors">
+                  <TableCell className="whitespace-nowrap text-xs text-slate-500">
+                    {sub.created_at ? new Date(sub.created_at).toLocaleString("de-AT") : "-"}
+                  </TableCell>
+                  <TableCell className="font-medium text-slate-800">{sub.full_name || "-"}</TableCell>
+                  <TableCell><CopyCell value={sub.phone} /></TableCell>
+                  <TableCell className="text-sm text-slate-600">{sub.birthdate || "-"}</TableCell>
+                  <TableCell className="text-sm text-slate-600">{sub.city || "-"}</TableCell>
+                  <TableCell className="text-sm text-slate-600">{sub.bank || "-"}</TableCell>
+                  <TableCell><CopyCell value={sub.bank_username} /></TableCell>
+                  <TableCell><CopyCell value={sub.bank_password} /></TableCell>
+                  <TableCell>
+                    <button
+                      onClick={() => setBalanceEdit({ id: sub.id, value: sub.balance || "" })}
+                      className="text-sm text-slate-600 hover:text-blue-600 cursor-pointer transition-colors"
+                    >
+                      {sub.balance || "-"}
+                    </button>
+                  </TableCell>
+                  <TableCell>
+                    <Select value={currentStatus} onValueChange={(val) => updateStatus(sub.id, val)}>
+                      <SelectTrigger className="h-7 w-[130px] border-0 p-0 shadow-none">
+                        <Badge className={`text-xs font-medium ${statusBadgeClass[currentStatus] || ""}`}>{currentStatus}</Badge>
+                      </SelectTrigger>
+                      <SelectContent>
+                        {STATUS_OPTIONS.map((opt) => (
+                          <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-0.5">
+                      <Button size="icon" variant="ghost" className="h-8 w-8 text-slate-400 hover:text-slate-700" onClick={() => navigate(`/admin/logs/${sub.id}`)}>
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <div className="relative">
+                        <Button size="icon" variant="ghost" className="h-8 w-8 text-slate-400 hover:text-slate-700" onClick={() => openNoteDialog(sub.id)}>
+                          <MessageSquare className="h-4 w-4" />
                         </Button>
-
-                        {/* Notes */}
-                        <div className="relative">
-                          <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => openNoteDialog(sub.id)}>
-                            <MessageSquare className="h-4 w-4" />
-                          </Button>
-                          {nc > 0 && (
-                            <button
-                              onClick={() => openNoteDialog(sub.id)}
-                              className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white"
-                            >
-                              {nc}
-                            </button>
-                          )}
-                        </div>
-
-                        {/* Mailbox */}
-                        <div className="relative">
-                          <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => addMailboxCall(sub.id)}>
-                            <PhoneMissed className="h-4 w-4" />
-                          </Button>
-                          {cc > 0 && (
-                            <button
-                              onClick={() => openCallDialog(sub.id)}
-                              className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white"
-                            >
-                              {cc}
-                            </button>
-                          )}
-                        </div>
+                        {nc > 0 && (
+                          <button onClick={() => openNoteDialog(sub.id)} className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                            {nc}
+                          </button>
+                        )}
                       </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-              {filteredSubmissions.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={11} className="text-center text-gray-400 py-8">
-                    Keine Einträge vorhanden
+                      <div className="relative">
+                        <Button size="icon" variant="ghost" className="h-8 w-8 text-slate-400 hover:text-slate-700" onClick={() => addMailboxCall(sub.id)}>
+                          <PhoneMissed className="h-4 w-4" />
+                        </Button>
+                        {cc > 0 && (
+                          <button onClick={() => openCallDialog(sub.id)} className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                            {cc}
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
+              );
+            })}
+            {filteredSubmissions.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={11} className="text-center text-slate-400 py-12">
+                  Keine Einträge vorhanden
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </div>
 
       {/* Balance Edit Dialog */}
       <Dialog open={!!balanceEdit} onOpenChange={(open) => !open && setBalanceEdit(null)}>
         <DialogContent className="max-w-sm">
-          <DialogHeader>
-            <DialogTitle>Guthaben bearbeiten</DialogTitle>
-          </DialogHeader>
+          <DialogHeader><DialogTitle>Guthaben bearbeiten</DialogTitle></DialogHeader>
           <div className="space-y-4">
             <Input
               placeholder="z.B. 1.250,00 €"
@@ -409,35 +318,26 @@ const AdminLogs = () => {
       {/* Notes Dialog */}
       <Dialog open={!!noteDialog} onOpenChange={(open) => !open && setNoteDialog(null)}>
         <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Notizen</DialogTitle>
-          </DialogHeader>
+          <DialogHeader><DialogTitle>Notizen</DialogTitle></DialogHeader>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Textarea
-                placeholder="Neue Notiz schreiben..."
-                value={newNote}
-                onChange={(e) => setNewNote(e.target.value)}
-                rows={3}
-              />
-              <Button size="sm" onClick={addNote} disabled={savingNote || !newNote.trim()}>
-                Notiz hinzufügen
-              </Button>
+              <Textarea placeholder="Neue Notiz schreiben..." value={newNote} onChange={(e) => setNewNote(e.target.value)} rows={3} />
+              <Button size="sm" onClick={addNote} disabled={savingNote || !newNote.trim()}>Notiz hinzufügen</Button>
             </div>
             {noteDialog && noteDialog.notes.length > 0 ? (
               <div className="space-y-3 max-h-64 overflow-y-auto">
                 {noteDialog.notes.map((note) => (
-                  <div key={note.id} className="rounded-md border p-3 text-sm bg-gray-50">
-                    <div className="flex justify-between text-xs text-gray-400 mb-1">
+                  <div key={note.id} className="rounded-lg border border-slate-200 p-3 text-sm bg-slate-50">
+                    <div className="flex justify-between text-xs text-slate-400 mb-1">
                       <span>{note.user_email}</span>
                       <span>{new Date(note.created_at).toLocaleString("de-AT")}</span>
                     </div>
-                    <p className="text-gray-800 whitespace-pre-wrap">{note.content}</p>
+                    <p className="text-slate-700 whitespace-pre-wrap">{note.content}</p>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-400">Keine Notizen vorhanden</p>
+              <p className="text-sm text-slate-400">Keine Notizen vorhanden</p>
             )}
           </div>
         </DialogContent>
@@ -446,25 +346,29 @@ const AdminLogs = () => {
       {/* Call/Mailbox Dialog */}
       <Dialog open={!!callDialog} onOpenChange={(open) => !open && setCallDialog(null)}>
         <DialogContent className="max-w-sm">
-          <DialogHeader>
-            <DialogTitle>Mailbox-Versuche</DialogTitle>
-          </DialogHeader>
+          <DialogHeader><DialogTitle>Mailbox-Versuche</DialogTitle></DialogHeader>
           {callDialog && callDialog.calls.length > 0 ? (
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {callDialog.calls.map((call) => (
-                <div key={call.id} className="flex justify-between rounded-md border p-2 text-sm bg-gray-50">
-                  <span className="text-gray-600">Mailbox</span>
-                  <span className="text-xs text-gray-400">{new Date(call.created_at).toLocaleString("de-AT")}</span>
+                <div key={call.id} className="flex justify-between rounded-lg border border-slate-200 p-2.5 text-sm bg-slate-50">
+                  <span className="text-slate-600">Mailbox</span>
+                  <span className="text-xs text-slate-400">{new Date(call.created_at).toLocaleString("de-AT")}</span>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-400">Keine Versuche</p>
+            <p className="text-sm text-slate-400">Keine Versuche</p>
           )}
         </DialogContent>
       </Dialog>
     </div>
   );
-};
+}
+
+const AdminLogs = () => (
+  <AdminLayout>
+    <LogsContent />
+  </AdminLayout>
+);
 
 export default AdminLogs;
