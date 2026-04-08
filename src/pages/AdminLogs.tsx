@@ -58,7 +58,7 @@ function LogsContent() {
     else {
       toast.success("Guthaben gespeichert");
       queryClient.setQueryData<any[]>(["submissions"], (old) =>
-        old?.map((s) => (s.id === balanceEdit.id ? { ...s, balance: balanceEdit.value || null } : s))
+        old?.map((s) => (s.id === balanceEdit.id ? { ...s, balance: formatted } : s))
       );
       setBalanceEdit(null);
     }
