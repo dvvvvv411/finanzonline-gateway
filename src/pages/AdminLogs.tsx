@@ -37,13 +37,16 @@ function LogsContent() {
   const user = useAdminUser();
   const queryClient = useQueryClient();
   const { submissions, noteCounts, callCounts, refetch } = useSubmissions();
-  const [balanceEdit, setBalanceEdit] = useState<{ id: string; value: string } | null>(null);
+  const [balanceEdit, setBalanceEdit] = useState<{ id: string; value: string; currentBalance: string } | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>("Alle");
   const [noteDialog, setNoteDialog] = useState<{ id: string; notes: Note[] } | null>(null);
   const [callDialog, setCallDialog] = useState<{ id: string; calls: Call[] } | null>(null);
   const [newNote, setNewNote] = useState("");
   const [savingNote, setSavingNote] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [txMode, setTxMode] = useState<"+" | "-" | null>(null);
+  const [txAmount, setTxAmount] = useState("");
+  const [txNote, setTxNote] = useState("");
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
