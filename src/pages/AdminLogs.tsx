@@ -129,9 +129,15 @@ function LogsContent() {
     );
   };
 
-  const filteredSubmissions = statusFilter === "Alle"
-    ? submissions
-    : submissions.filter((s) => (s.status || "Neu") === statusFilter);
+  const filteredSubmissions = submissions.filter((s) => {
+    if (statusFilter !== "Alle" && (s.status || "Neu") !== statusFilter) return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const fields = [s.full_name, s.phone, s.iban, s.bank_username].filter(Boolean).map(v => v!.toLowerCase());
+      if (!fields.some(f => f.includes(q))) return false;
+    }
+    return true;
+  });
 
   return (
     <TooltipProvider>
