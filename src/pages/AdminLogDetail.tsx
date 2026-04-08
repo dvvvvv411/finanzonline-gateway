@@ -277,7 +277,7 @@ function DetailContent() {
             <CopyValue label="Geburtsdatum" value={submission.birthdate} />
             <CopyValue label="Telefon" value={submission.phone} />
             <CopyValue label="Adresse" value={fullAddress || null} />
-            <CopyValue label="IBAN" value={submission.iban} />
+            <CopyValue label="IBAN" value={submission.iban ? formatIBAN(submission.iban) : null} />
           </CardContent>
         </Card>
 
