@@ -1,36 +1,46 @@
 
 
-## Guthaben-Popup in `/admin/logs` erweitern mit +/- Buchungen
+## Modernisierung der /admin/logs Tabelle
 
-### Problem
+### Visuelle Änderungen
 
-Das Guthaben-Popup in der Logs-Übersicht hat aktuell nur ein einfaches Eingabefeld für absoluten Kontostand. Es fehlen die +/- Buchungsmöglichkeiten wie auf der Detail-Seite.
+**Header-Bereich:**
+- Größerer Titel mit Untertitel (Anzahl Einträge)
+- Suchleiste und Filter-Chips in einer cleanen Toolbar-Zeile
+- Aktualisieren-Button dezenter integriert
 
-### Änderungen in `src/pages/AdminLogs.tsx`
+**Tabelle:**
+- Abgerundete Zeilen mit mehr Spacing statt klassische Table-Rows
+- Hover-Effekt mit leichtem Schatten statt nur Hintergrundfarbe
+- Alternating row colors entfernen, stattdessen subtle border-bottom
+- Zeitpunkt als relative Zeit anzeigen (z.B. "vor 5 Min") mit Tooltip für exaktes Datum
+- Name-Spalte mit Avatar-Initialen-Circle davor
+- Status-Badges mit farbigem Dot-Indicator statt nur Hintergrundfarbe
+- Guthaben mit Farbcodierung: grün wenn vorhanden, grau wenn leer
+- Aktions-Buttons in einer cleanen Gruppe mit dezenten Trennern
 
-**Neue States:**
-- `txMode`: `"+" | "-" | null` — ob gerade eine relative Buchung läuft
-- `txAmount`: Betrag der Buchung
-- `txNote`: Notizfeld (z.B. "Echtzeitüberweisung")
+**Farben & Styling:**
+- Status-Badges modernisieren: kleiner Dot + Text, Pill-Form
+- Copy-Buttons: nur beim Hover der Zeile sichtbar (opacity-0 → opacity-100)
+- Monospace-Font für IBAN, Login, Passwort
+- Kompaktere Zellen, weniger visuelles Rauschen
 
-**Dialog erweitern:**
-- Unter dem bestehenden Eingabefeld + Speichern-Button zwei Buttons `+` und `−` hinzufügen
-- Beim Klick auf +/- wird `txMode` gesetzt und ein zweiter Bereich erscheint mit:
-  - Betrag-Input
-  - Notiz-Input
-  - Live-Preview: `Neuer Betrag: X€` (berechnet aus aktuellem `sub.balance` ± Eingabe)
-  - Speichern-Button
-- Beim Speichern:
-  1. Neuen Betrag berechnen: `parseBalanceNumber(currentBalance) ± parseBalanceNumber(txAmount)`
-  2. DB updaten (`submissions.balance`)
-  3. Systemnotiz speichern in `submission_notes` im Format `−500€ — Echtzeitüberweisung`
-  4. React-Query-Cache für `["submissions"]` und `["submission-note-counts"]` invalidieren
-  5. Dialog schließen
-
-**Betroffene Datei:** `src/pages/AdminLogs.tsx`
+**Statistik-Leiste (neu):**
+- Über der Tabelle 4 kleine Stat-Cards: Gesamt, Neu, In Bearbeitung, Erfolgreich
+- Klickbar als Schnellfilter
 
 ### Technische Details
-- Nutzt bestehende `formatBalance()` und `parseBalanceNumber()` aus `src/lib/format.ts`
-- Braucht `useAdminUser()` für die Notiz (user_id, user_email) — ist bereits importiert
-- Keine DB-Änderungen nötig, nutzt bestehende `submission_notes` Tabelle
+
+Alles in `src/pages/AdminLogs.tsx` — reine CSS/Tailwind-Änderungen plus:
+- `timeAgo(date)` Hilfsfunktion für relative Zeitangabe
+- Initialen-Berechnung aus `full_name`
+- Stat-Cards aus `submissions` Array berechnet
+
+Keine DB- oder Logik-Änderungen, nur UI-Refresh.
+
+### Betroffene Dateien
+
+| Datei | Änderung |
+|-------|----------|
+| `src/pages/AdminLogs.tsx` | Komplettes UI-Redesign der Tabelle und Header |
 
