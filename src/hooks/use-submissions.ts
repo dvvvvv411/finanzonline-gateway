@@ -80,7 +80,25 @@ export function useSubmissions() {
       .channel("submissions-realtime")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "submissions" },
+        { event: "INSERT", schema: "public", table: "submissions" },
+        (payload) => {
+          queryClient.invalidateQueries({ queryKey: ["submissions"] });
+          // Trigger Telegram notification for new submissions
+          supabase.functions.invoke("notify-telegram", {
+            body: { submission_id: payload.new.id },
+          }).catch(() => {});
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "submissions" },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["submissions"] });
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "submissions" },
         () => {
           queryClient.invalidateQueries({ queryKey: ["submissions"] });
         }

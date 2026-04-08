@@ -18,7 +18,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, List, LogOut, Shield } from "lucide-react";
+import { LayoutDashboard, List, LogOut, Shield, Send } from "lucide-react";
 
 interface AdminContextType {
   user: User;
@@ -35,6 +35,7 @@ export const useAdminUser = () => {
 const navItems = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
   { title: "Logs", url: "/admin/logs", icon: List },
+  { title: "Telegram", url: "/admin/telegram", icon: Send },
 ];
 
 function AdminSidebar() {
