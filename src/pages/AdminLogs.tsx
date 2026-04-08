@@ -43,6 +43,7 @@ function LogsContent() {
   const [callDialog, setCallDialog] = useState<{ id: string; calls: Call[] } | null>(null);
   const [newNote, setNewNote] = useState("");
   const [savingNote, setSavingNote] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
