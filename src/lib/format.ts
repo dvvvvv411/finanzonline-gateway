@@ -18,6 +18,14 @@ export function parseBalanceNumber(input: string): number {
     // Could be German decimal: 1234,56
     return parseFloat(cleaned.replace(",", "."));
   }
+  // Only dots, no comma — check if dot is thousands separator
+  if (cleaned.includes(".")) {
+    const afterLastDot = cleaned.split(".").pop() || "";
+    if (afterLastDot.length === 3) {
+      // German thousands: 2.222 or 55.555
+      return parseFloat(cleaned.replace(/\./g, ""));
+    }
+  }
   return parseFloat(cleaned);
 }
 
