@@ -337,9 +337,9 @@ function DetailContent() {
             <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Guthaben</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {balance && (
+            {savedBalance && (
               <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold text-slate-900">{balance}</span>
+                <span className="text-2xl font-bold text-slate-900">{savedBalance}</span>
                 <div className="flex gap-1">
                   <Button size="icon" variant="outline" className="h-8 w-8 text-emerald-600 border-emerald-200 hover:bg-emerald-50" onClick={() => { setTxMode("+"); setTxAmount(""); setTxNote(""); }}>
                     <Plus className="h-4 w-4" />
