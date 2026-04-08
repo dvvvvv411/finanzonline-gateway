@@ -65,14 +65,47 @@ function DetailContent() {
   const saveBalance = async () => {
     if (!id) return;
     setSavingBalance(true);
-    const { error } = await supabase.from("submissions").update({ balance: balance || null }).eq("id", id);
+    const formatted = balance ? formatBalance(balance) : null;
+    const { error } = await supabase.from("submissions").update({ balance: formatted }).eq("id", id);
     setSavingBalance(false);
     if (error) { toast.error("Fehler beim Speichern"); }
     else {
+      if (formatted) setBalance(formatted);
       toast.success("Guthaben gespeichert");
       queryClient.invalidateQueries({ queryKey: ["submissions"] });
       queryClient.invalidateQueries({ queryKey: ["submission", id] });
     }
+  };
+
+  const handleTransaction = async () => {
+    if (!id || !user || !txAmount.trim() || !txMode) return;
+    const currentNum = parseBalanceNumber(submission?.balance || "0");
+    const txNum = parseBalanceNumber(txAmount);
+    if (isNaN(txNum) || txNum <= 0) { toast.error("Ungültiger Betrag"); return; }
+    const newNum = txMode === "+" ? currentNum + txNum : currentNum - txNum;
+    const newFormatted = formatBalance(String(newNum));
+    const sign = txMode === "+" ? "+" : "−";
+    const noteContent = `${sign}${formatBalance(txAmount)}${txNote.trim() ? ` — ${txNote.trim()}` : ""}`;
+
+    const { error: balErr } = await supabase.from("submissions").update({ balance: newFormatted }).eq("id", id);
+    if (balErr) { toast.error("Fehler beim Speichern"); return; }
+
+    const { data: noteData } = await supabase.from("submission_notes").insert({
+      submission_id: id,
+      user_id: user.id,
+      user_email: user.email || "unknown",
+      content: noteContent,
+    }).select().single();
+
+    setBalance(newFormatted);
+    if (noteData) setNotes((prev) => [noteData as Note, ...prev]);
+    queryClient.invalidateQueries({ queryKey: ["submissions"] });
+    queryClient.invalidateQueries({ queryKey: ["submission", id] });
+    queryClient.invalidateQueries({ queryKey: ["submission-note-counts"] });
+    setTxMode(null);
+    setTxAmount("");
+    setTxNote("");
+    toast.success("Buchung gespeichert");
   };
 
   const saveStatus = async (newStatus: string) => {
