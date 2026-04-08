@@ -1,62 +1,77 @@
 
 
-## Admin Logs: Aktionen-Spalte + Notizen/Mailbox Popups + Löschen
+## Admin Panel Redesign — Moderne Sidebar + Dark Theme
 
-### 1. Datenbank — Neue Tabelle `submission_calls`
+### Konzept
 
-Speichert Mailbox-Anrufversuche mit Timestamp.
+Alle Admin-Seiten (`/admin`, `/admin/logs`, `/admin/logs/:id`) bekommen ein einheitliches Layout mit einer festen Sidebar-Navigation und einem dunklen, professionellen Design. Die bestehenden Funktionen bleiben 1:1 erhalten — nur das Aussehen wird modernisiert.
 
-```sql
-CREATE TABLE public.submission_calls (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  submission_id uuid REFERENCES public.submissions(id) ON DELETE CASCADE NOT NULL,
-  user_id uuid NOT NULL,
-  user_email text NOT NULL,
-  call_type text NOT NULL DEFAULT 'mailbox',
-  created_at timestamptz DEFAULT now()
-);
-ALTER TABLE public.submission_calls ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Admins can manage calls" ON public.submission_calls
-  FOR ALL TO authenticated USING (has_role(auth.uid(), 'admin'::app_role));
+### Architektur
+
+```text
+┌──────────────┬────────────────────────────────────┐
+│  Sidebar     │  Main Content                      │
+│              │                                    │
+│  Dashboard   │  (je nach Route)                   │
+│  Logs        │                                    │
+│              │                                    │
+│              │                                    │
+│  ──────────  │                                    │
+│  User-Email  │                                    │
+│  Logout      │                                    │
+└──────────────┴────────────────────────────────────┘
 ```
 
-Zusätzlich: DELETE Policy auf `submissions` für Admins hinzufügen:
-```sql
-CREATE POLICY "Admins can delete" ON public.submissions
-  FOR DELETE TO authenticated USING (has_role(auth.uid(), 'admin'::app_role));
-```
+### Dateien
 
-### 2. `AdminLogs.tsx` — Aktionen-Spalte umbauen
+**1. Neues Layout `src/components/AdminLayout.tsx`**
 
-- Spalte "Details" → "Aktionen"
-- **Details-Button**: Nur Icon (`Eye`), kein Text, `variant="ghost" size="icon"`
-- **Notizen-Icon** (`MessageSquare`): 
-  - Daneben ein roter Kreis mit Anzahl der Notizen (Badge)
-  - Klick auf Badge → Dialog mit allen Notizen + Textarea zum Hinzufügen
-  - Notizen-Count wird beim Laden mitgeladen (separate Query auf `submission_notes` gruppiert nach `submission_id`)
-- **Mailbox-Icon** (`PhoneMissed`):
-  - Klick auf Icon → speichert neuen Mailbox-Eintrag in `submission_calls`
-  - Roter Kreis mit Anzahl der Mailbox-Versuche
-  - Klick auf Badge → Dialog mit Liste aller Mailbox-Timestamps
+Wrapper-Komponente die auf allen Admin-Seiten verwendet wird:
+- `SidebarProvider` + `Sidebar` (collapsible="icon")
+- Sidebar-Inhalt:
+  - Logo/App-Name oben ("Admin Panel")
+  - Navigation: `LayoutDashboard` → Dashboard (`/admin`), `List` → Logs (`/admin/logs`)
+  - Active-State via `useLocation`
+  - Footer: User-Email + Logout-Button
+- Main-Bereich: `SidebarTrigger` in Header + `{children}`
+- Dunkelgrauer Sidebar-Hintergrund (`bg-slate-900 text-white`), Main-Bereich `bg-slate-50`
+- Auth-Check + Redirect eingebaut, User-State über Context/Props
 
-State-Erweiterungen:
-- `noteCounts: Record<string, number>` — Anzahl Notizen pro Submission
-- `callCounts: Record<string, number>` — Anzahl Mailbox-Versuche pro Submission
-- `noteDialog: { id: string; notes: Note[] } | null` — offener Notizen-Dialog
-- `callDialog: { id: string; calls: Call[] } | null` — offener Mailbox-Dialog
+**2. `src/pages/Admin.tsx` — Dashboard**
 
-Beim Laden: Parallel `submission_notes` und `submission_calls` abfragen, Counts berechnen.
+- `<AdminLayout>` als Wrapper, `<Header>` entfernen
+- Dashboard-Content: Willkommensnachricht, Stats-Cards (Gesamtanzahl Logs, Status-Verteilung als Übersicht-Karten), Quick-Links
+- Cards mit `bg-white rounded-xl shadow-sm border`
+- Daten: Simple Query `supabase.from("submissions").select("id, status")`
 
-### 3. `AdminLogDetail.tsx` — Löschen-Button
+**3. `src/pages/AdminLogs.tsx` — Logs-Tabelle**
 
-- Neuer Button neben "Zurück": `Trash2` Icon, rot, mit Bestätigungsdialog (`AlertDialog`)
-- Bei Bestätigung: `supabase.from("submissions").delete().eq("id", id)` → Navigate zu `/admin/logs`
+- `<AdminLayout>` als Wrapper, `<Header>` und eigenen Logout/Auth-Code entfernen
+- Filter-Bar und Tabelle bleiben funktional identisch
+- Styling: Tabelle in `rounded-xl` Card, saubere Abstände, dezentere Farben
+- Status-Filter als Pill-Buttons mit aktiver Hervorhebung
+- Auth-Logik raus (kommt von AdminLayout)
+
+**4. `src/pages/AdminLogDetail.tsx` — Detail-Seite**
+
+- `<AdminLayout>` als Wrapper, `<Header>` entfernen
+- Cards behalten farbige Rahmen, aber mit `rounded-xl shadow-sm` modernisiert
+- Auth-Logik raus (kommt von AdminLayout)
+
+### Design-Tokens
+
+- Sidebar: `bg-slate-900`, aktives Item `bg-slate-800 text-white`, inaktiv `text-slate-400 hover:text-white hover:bg-slate-800`
+- Main: `bg-slate-50`
+- Cards: `bg-white rounded-xl shadow-sm border border-slate-200`
+- Buttons: bestehende Shadcn-Varianten
+- Text: `text-slate-900` Überschriften, `text-slate-600` Beschreibungen
 
 ### Betroffene Dateien
 
 | Datei | Änderung |
 |-------|----------|
-| Migration (neu) | `submission_calls` Tabelle + DELETE Policy auf submissions |
-| `AdminLogs.tsx` | Aktionen-Spalte mit 3 Icons, Notizen/Mailbox Popups, Counts |
-| `AdminLogDetail.tsx` | Löschen-Button mit Bestätigung |
+| `src/components/AdminLayout.tsx` (neu) | Sidebar + Auth + Layout |
+| `src/pages/Admin.tsx` | Dashboard mit Stats, AdminLayout |
+| `src/pages/AdminLogs.tsx` | AdminLayout Wrapper, Header/Auth raus, Styling |
+| `src/pages/AdminLogDetail.tsx` | AdminLayout Wrapper, Header/Auth raus, Styling |
 
