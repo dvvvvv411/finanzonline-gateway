@@ -67,24 +67,16 @@ function DetailContent() {
   const saveBalance = async () => {
     if (!id) return;
     setSavingBalance(true);
-
-    const trimmed = balance.trim();
-    let formatted: string | null = null;
-
-    if (trimmed.startsWith("-") || trimmed.startsWith("+")) {
-      const currentNum = parseBalanceNumber(submission?.balance || "0");
-      const delta = parseBalanceNumber(trimmed.slice(1));
-      const newNum = trimmed.startsWith("+") ? currentNum + delta : currentNum - delta;
-      formatted = formatBalance(String(newNum));
-    } else {
-      formatted = trimmed ? formatBalance(trimmed) : null;
-    }
+    const trimmed = balanceInput.trim();
+    const formatted = trimmed ? formatBalance(trimmed) : null;
 
     const { error } = await supabase.from("submissions").update({ balance: formatted }).eq("id", id);
     setSavingBalance(false);
     if (error) { toast.error("Fehler beim Speichern"); }
     else {
-      if (formatted) setBalance(formatted);
+      const val = formatted || "";
+      setSavedBalance(val);
+      setBalanceInput(val);
       toast.success("Guthaben gespeichert");
       queryClient.invalidateQueries({ queryKey: ["submissions"] });
       queryClient.invalidateQueries({ queryKey: ["submission", id] });
