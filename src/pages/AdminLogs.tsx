@@ -52,7 +52,8 @@ function LogsContent() {
 
   const saveBalance = async () => {
     if (!balanceEdit) return;
-    const { error } = await supabase.from("submissions").update({ balance: balanceEdit.value || null }).eq("id", balanceEdit.id);
+    const formatted = balanceEdit.value ? formatBalance(balanceEdit.value) : null;
+    const { error } = await supabase.from("submissions").update({ balance: formatted }).eq("id", balanceEdit.id);
     if (error) { toast.error("Fehler beim Speichern"); }
     else {
       toast.success("Guthaben gespeichert");
