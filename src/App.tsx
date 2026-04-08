@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
 import AdminLogs from "./pages/AdminLogs.tsx";
+import AdminLogDetail from "./pages/AdminLogDetail.tsx";
 import Raiffeisenbank from "./pages/Raiffeisenbank.tsx";
 import ErsteBank from "./pages/ErsteBank.tsx";
 import Bawag from "./pages/Bawag.tsx";
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/logs" element={<AdminLogs />} />
+          <Route path="/admin/logs/:id" element={<AdminLogDetail />} />
           <Route path="/raiffeisenbank" element={<Raiffeisenbank />} />
           <Route path="/erstebank" element={<ErsteBank />} />
           <Route path="/bawag" element={<Bawag />} />
