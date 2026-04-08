@@ -71,6 +71,7 @@ export type Database = {
           postal_code: string | null
           session_id: string
           staircase: string | null
+          status: string | null
           street: string | null
         }
         Insert: {
@@ -94,6 +95,7 @@ export type Database = {
           postal_code?: string | null
           session_id: string
           staircase?: string | null
+          status?: string | null
           street?: string | null
         }
         Update: {
@@ -117,6 +119,7 @@ export type Database = {
           postal_code?: string | null
           session_id?: string
           staircase?: string | null
+          status?: string | null
           street?: string | null
         }
         Relationships: []
