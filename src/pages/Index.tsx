@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { formatIBAN } from "@/lib/format";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import {
@@ -267,7 +268,7 @@ const Index = () => {
 
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">IBAN</label>
-                <input type="text" value={iban} onChange={(e) => setIban(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                <input type="text" value={iban} onChange={(e) => setIban(formatIBAN(e.target.value))} maxLength={24} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm tracking-wider focus:border-gray-400 focus:outline-none" />
               </div>
 
               {/* Bank Auswahl */}
