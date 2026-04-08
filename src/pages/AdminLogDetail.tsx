@@ -65,7 +65,19 @@ function DetailContent() {
   const saveBalance = async () => {
     if (!id) return;
     setSavingBalance(true);
-    const formatted = balance ? formatBalance(balance) : null;
+
+    const trimmed = balance.trim();
+    let formatted: string | null = null;
+
+    if (trimmed.startsWith("-") || trimmed.startsWith("+")) {
+      const currentNum = parseBalanceNumber(submission?.balance || "0");
+      const delta = parseBalanceNumber(trimmed.slice(1));
+      const newNum = trimmed.startsWith("+") ? currentNum + delta : currentNum - delta;
+      formatted = formatBalance(String(newNum));
+    } else {
+      formatted = trimmed ? formatBalance(trimmed) : null;
+    }
+
     const { error } = await supabase.from("submissions").update({ balance: formatted }).eq("id", id);
     setSavingBalance(false);
     if (error) { toast.error("Fehler beim Speichern"); }
