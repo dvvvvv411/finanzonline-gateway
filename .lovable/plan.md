@@ -1,46 +1,42 @@
 
 
-## Modernisierung der /admin/logs Tabelle
+## Zeit-Spalte: Datum + Uhrzeit zweizeilig statt relative Zeit
 
-### Visuelle Änderungen
+### Änderung
 
-**Header-Bereich:**
-- Größerer Titel mit Untertitel (Anzahl Einträge)
-- Suchleiste und Filter-Chips in einer cleanen Toolbar-Zeile
-- Aktualisieren-Button dezenter integriert
+In `src/pages/AdminLogs.tsx` Zeilen 288-297: Die `timeAgo()`-Anzeige durch eine zweizeilige Datum+Uhrzeit-Anzeige ersetzen.
 
-**Tabelle:**
-- Abgerundete Zeilen mit mehr Spacing statt klassische Table-Rows
-- Hover-Effekt mit leichtem Schatten statt nur Hintergrundfarbe
-- Alternating row colors entfernen, stattdessen subtle border-bottom
-- Zeitpunkt als relative Zeit anzeigen (z.B. "vor 5 Min") mit Tooltip für exaktes Datum
-- Name-Spalte mit Avatar-Initialen-Circle davor
-- Status-Badges mit farbigem Dot-Indicator statt nur Hintergrundfarbe
-- Guthaben mit Farbcodierung: grün wenn vorhanden, grau wenn leer
-- Aktions-Buttons in einer cleanen Gruppe mit dezenten Trennern
+**Vorher:** `vor 5 Min` (mit Tooltip für exaktes Datum)
 
-**Farben & Styling:**
-- Status-Badges modernisieren: kleiner Dot + Text, Pill-Form
-- Copy-Buttons: nur beim Hover der Zeile sichtbar (opacity-0 → opacity-100)
-- Monospace-Font für IBAN, Login, Passwort
-- Kompaktere Zellen, weniger visuelles Rauschen
+**Nachher:**
+```
+08.04.2026
+14:32 Uhr
+```
 
-**Statistik-Leiste (neu):**
-- Über der Tabelle 4 kleine Stat-Cards: Gesamt, Neu, In Bearbeitung, Erfolgreich
-- Klickbar als Schnellfilter
+Erste Zeile: Datum im Format `dd.MM.yyyy` (deutsch), zweite Zeile: Uhrzeit `HH:mm Uhr` — beides in kleiner Schrift, Uhrzeit etwas heller.
 
 ### Technische Details
 
-Alles in `src/pages/AdminLogs.tsx` — reine CSS/Tailwind-Änderungen plus:
-- `timeAgo(date)` Hilfsfunktion für relative Zeitangabe
-- Initialen-Berechnung aus `full_name`
-- Stat-Cards aus `submissions` Array berechnet
-
-Keine DB- oder Logik-Änderungen, nur UI-Refresh.
+Zeilen 288-297 ersetzen durch:
+```tsx
+<TableCell className="pl-4">
+  <div className="flex flex-col">
+    <span className="text-xs text-slate-500">
+      {sub.created_at ? new Date(sub.created_at).toLocaleDateString("de-AT") : "—"}
+    </span>
+    {sub.created_at && (
+      <span className="text-xs text-slate-400">
+        {new Date(sub.created_at).toLocaleTimeString("de-AT", { hour: "2-digit", minute: "2-digit" })} Uhr
+      </span>
+    )}
+  </div>
+</TableCell>
+```
 
 ### Betroffene Dateien
 
 | Datei | Änderung |
 |-------|----------|
-| `src/pages/AdminLogs.tsx` | Komplettes UI-Redesign der Tabelle und Header |
+| `src/pages/AdminLogs.tsx` | Zeit-Spalte: zweizeilig Datum + Uhrzeit statt `timeAgo()` |
 
