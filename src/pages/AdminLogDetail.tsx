@@ -11,9 +11,10 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent as AlertContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle as AlertTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { ArrowLeft, Copy, Download, FileDown, Save, Trash2 } from "lucide-react";
+import { ArrowLeft, Copy, Download, FileDown, Minus, Plus, Save, Trash2 } from "lucide-react";
 import { useSubmission, type Note, type Submission } from "@/hooks/use-submissions";
 import { useQueryClient } from "@tanstack/react-query";
+import { formatBalance, formatIBAN, parseBalanceNumber } from "@/lib/format";
 
 const STATUS_OPTIONS = ["Neu", "In Bearbeitung", "Erfolgreich", "Down"] as const;
 
