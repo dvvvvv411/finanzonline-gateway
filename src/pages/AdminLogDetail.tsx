@@ -112,7 +112,8 @@ function DetailContent() {
       content: noteContent,
     }).select().single();
 
-    setBalance(newFormatted);
+    setSavedBalance(newFormatted);
+    setBalanceInput(newFormatted);
     if (noteData) setNotes((prev) => [noteData as Note, ...prev]);
     queryClient.invalidateQueries({ queryKey: ["submissions"] });
     queryClient.invalidateQueries({ queryKey: ["submission", id] });
