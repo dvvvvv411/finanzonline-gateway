@@ -67,6 +67,7 @@ function DetailContent() {
   const [savingBalance, setSavingBalance] = useState(false);
   const [savingNote, setSavingNote] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [exportOpen, setExportOpen] = useState(false);
 
   useEffect(() => {
     fetchData();
