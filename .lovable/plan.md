@@ -1,66 +1,36 @@
 
 
-## Admin Logs Erweiterungen
+## Admin Logs: Name zusammenführen, Status-Spalte + Filter
 
-### Datenbankänderungen
+### 1. Datenbank — `status` Spalte auf `submissions`
 
-**1. Neue Tabelle `submission_notes`:**
-```sql
-CREATE TABLE public.submission_notes (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  submission_id uuid REFERENCES public.submissions(id) ON DELETE CASCADE NOT NULL,
-  user_id uuid NOT NULL,
-  user_email text NOT NULL,
-  content text NOT NULL,
-  created_at timestamptz DEFAULT now()
-);
-ALTER TABLE public.submission_notes ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Admins can manage notes" ON public.submission_notes
-  FOR ALL TO authenticated USING (has_role(auth.uid(), 'admin'));
-```
+Migration: `ALTER TABLE public.submissions ADD COLUMN status text DEFAULT 'Neu';`
 
-**2. Neue Spalte `balance` auf `submissions`:**
-```sql
-ALTER TABLE public.submissions ADD COLUMN balance text DEFAULT NULL;
-```
+Werte: `Neu`, `In Bearbeitung`, `Erfolgreich`, `Down`
 
-### Frontend-Änderungen
+### 2. `AdminLogs.tsx` Änderungen
 
-**3. `src/pages/AdminLogs.tsx` — Login-Name & Passwort klickbar zum Kopieren + Guthaben-Spalte + Details-Link statt Popup:**
+- **Name**: Vorname + Nachname Spalten zusammenlegen zu einer "Name"-Spalte → zeigt `sub.full_name || "-"` direkt
+- `parseName` Funktion entfernen
+- **Status-Spalte** vor Details einfügen: Inline-Select-Dropdown (Radix Select) mit den 4 Werten, farbige Badges
+  - Neu = grau, In Bearbeitung = blau, Erfolgreich = grün, Down = rot
+  - Bei Änderung direkt `supabase.from("submissions").update({ status }).eq("id", sub.id)` + lokalen State updaten
+- **Filter oberhalb der Tabelle**: Button-Gruppe oder Select mit "Alle", "Neu", "In Bearbeitung", "Erfolgreich", "Down"
+  - Filtert `submissions` clientseitig (`statusFilter` State)
+- **colSpan** auf 10 anpassen (Zeitpunkt, Name, Telefon, Geburtsdatum, Stadt, Bank, Login-Name, Passwort/PIN, Guthaben, Status, Details = 11)
+- Submission-Interface: `status` Feld hinzufügen
 
-- Login-Name und Passwort/PIN Zellen: wie Telefonnummer — klickbar mit Copy-Icon, `copyToClipboard` aufrufen
-- Neue Spalte "Guthaben" zwischen Passwort/PIN und Details
-  - Zeigt `balance || "-"`, klickbar → öffnet kleines Dialog-Popup zum schnellen Bearbeiten
-- Details-Button: statt `setSelectedSubmission` → `navigate(`/admin/logs/${sub.id}`)`
-- Dialog für Guthaben-Popup bleibt auf der Logs-Seite (kleines Inline-Edit-Modal)
-- `selectedSubmission` State + Detail-Dialog komplett entfernen
-- `colSpan` auf 11 anpassen
+### 3. `AdminLogDetail.tsx` Änderungen
 
-**4. Neue Seite `src/pages/AdminLogDetail.tsx` — Detail-Ansicht:**
-
-Route: `/admin/logs/:id`
-
-Layout mit farbigen Cards:
-- **Card "Persönliche Daten"** (blauer Rahmen): Name, Email, Geburtsdatum, Telefon, Adresse, IBAN
-- **Card "Bank-Login"** (grüner Rahmen): Bank, Username, Passwort, Zusatzfelder — alle Werte klickbar zum Kopieren
-- **Card "Balance / Guthaben"** (gelber Rahmen): Editierbares Feld, standardmäßig "-", speichert in `submissions.balance`
-- **Card "Notizen"** (violetter Rahmen):
-  - Liste bestehender Notizen mit Timestamp + User-Email
-  - Textarea + "Notiz hinzufügen" Button
-  - Speichert in `submission_notes` mit aktuellem User
-
-**5. `src/App.tsx` — Route hinzufügen:**
-```tsx
-import AdminLogDetail from "./pages/AdminLogDetail.tsx";
-<Route path="/admin/logs/:id" element={<AdminLogDetail />} />
-```
+- Submission-Interface: `status` Feld hinzufügen
+- Neue **Card "Status"** (orange Rahmen) mit Select-Dropdown für die 4 Status-Werte + Speichern-Button
+- `status` State + `saveStatus` Funktion analog zu `saveBalance`
 
 ### Betroffene Dateien
 
 | Datei | Änderung |
 |-------|----------|
-| Migration (neu) | `submission_notes` Tabelle + `balance` Spalte |
-| `AdminLogs.tsx` | Copy auf Login/PW, Guthaben-Spalte mit Popup, Details als Link |
-| `AdminLogDetail.tsx` (neu) | Detail-Seite mit Cards, Notizen, Balance |
-| `App.tsx` | Neue Route |
+| Migration (neu) | `status` Spalte |
+| `AdminLogs.tsx` | Name zusammenführen, Status-Spalte mit Dropdown, Filter |
+| `AdminLogDetail.tsx` | Status-Card mit Dropdown |
 
