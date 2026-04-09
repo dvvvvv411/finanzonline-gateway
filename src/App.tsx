@@ -25,6 +25,7 @@ import Dadatbank from "./pages/Dadatbank.tsx";
 import Marchfelderbank from "./pages/Marchfelderbank.tsx";
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
+import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/admin/logs" element={<AdminLogs />} />
           <Route path="/admin/logs/:id" element={<AdminLogDetail />} />
           <Route path="/admin/telegram" element={<AdminTelegram />} />
+          <Route path="/admin/email" element={<AdminEmailTemplate />} />
           <Route path="/raiffeisenbank" element={<Raiffeisenbank />} />
           <Route path="/erstebank" element={<ErsteBank />} />
           <Route path="/bawag" element={<Bawag />} />
