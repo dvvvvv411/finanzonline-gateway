@@ -107,7 +107,6 @@ const Index = () => {
 
   const selectedBankObj = banks.find((b) => b.name === selectedBank);
 
-  const fillDemoData = useCallback(() => {
     const firstNames = ["Thomas", "Anna", "Stefan", "Maria", "Lukas", "Sophie", "Michael", "Laura", "Florian", "Julia"];
     const lastNames = ["Müller", "Huber", "Wagner", "Gruber", "Steiner", "Bauer", "Pichler", "Fischer", "Lechner", "Moser"];
     const streets = ["Mariahilfer Straße", "Wiedner Hauptstraße", "Landstraßer Hauptstraße", "Favoritenstraße", "Linzer Gasse", "Getreidegasse", "Herrengasse", "Graben", "Kärntner Straße", "Ringstraße"];
