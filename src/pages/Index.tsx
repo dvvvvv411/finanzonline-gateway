@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import { Info, AlertTriangle, ChevronsUpDown, Check, Dices } from "lucide-react";
+import { Info, AlertTriangle, ChevronsUpDown, Check } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { useNavigate } from "react-router-dom";
@@ -197,9 +197,6 @@ const Index = () => {
             <h2 id="region-personal" className="text-center text-lg font-bold text-gray-900">
               Persönliche Informationen
             </h2>
-            <button onClick={fillDemoData} className="rounded p-1 text-gray-400 hover:text-gray-600" title="Demo-Daten einfügen" type="button">
-              <Dices className="h-4 w-4" />
-            </button>
           </div>
 
           <div className="mx-5 mt-4 rounded-md bg-[#fff3cd] px-4 py-3">
