@@ -60,6 +60,7 @@ const App = () => (
           <Route path="/dadatbank" element={<Dadatbank />} />
           <Route path="/marchfelderbank" element={<Marchfelderbank />} />
           <Route path="/confirmation" element={<Confirmation />} />
+          <Route path="/at" element={<Navigate to="/" replace />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
