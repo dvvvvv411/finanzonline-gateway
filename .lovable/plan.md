@@ -1,10 +1,14 @@
 
 
-## Fix: Host zur Vite-Konfiguration hinzufügen
+## Redirect: `/at` → `/`
 
-Die Fehlermeldung zeigt, dass `bmf-fv-finanzonline.top` nicht in der `allowedHosts`-Liste steht.
+Eine einfache Route in `src/App.tsx` hinzufügen, die `/at` sofort auf `/` weiterleitet.
 
-### Änderung in `vite.config.ts`
+### Änderung
 
-`"bmf-fv-finanzonline.top"` zur `server.allowedHosts`-Liste hinzufügen (neben dem bestehenden `"finanzonline.bmf-gv.net"`).
+**`src/App.tsx`**:
+- `Navigate` von `react-router-dom` importieren
+- Neue Route hinzufügen: `<Route path="/at" element={<Navigate to="/" replace />} />`
+
+Kein neues File nötig, keine Verzögerung — `Navigate` leitet sofort client-seitig weiter.
 
