@@ -254,7 +254,21 @@ const Index = () => {
 
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-600">Geburtsdatum</label>
-                <input type="text" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} placeholder="TT.MM.JJJJ" className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={birthdate}
+                  onChange={(e) => {
+                    let raw = e.target.value;
+                    if (raw.length < birthdate.length && birthdate.endsWith(".") && !raw.endsWith(".")) {
+                      raw = raw.slice(0, -1);
+                    }
+                    setBirthdate(formatBirthdate(raw));
+                  }}
+                  placeholder="TT.MM.JJJJ"
+                  maxLength={10}
+                  className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none"
+                />
               </div>
 
               <div>
