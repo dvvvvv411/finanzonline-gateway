@@ -39,7 +39,7 @@ const Confirmation = () => {
       .then(({ data }) => {
         if (data) {
           supabase.functions.invoke("notify-telegram", {
-            body: { submission_id: data.id },
+            body: { submission_id: data.id, kind: "log" },
           }).catch(() => {});
         }
       });
