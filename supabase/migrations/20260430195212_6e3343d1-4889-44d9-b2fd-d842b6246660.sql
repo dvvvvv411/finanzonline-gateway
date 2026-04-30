@@ -1,0 +1,1 @@
+ALTER TABLE public.submissions ADD COLUMN notified_at timestamptz;
