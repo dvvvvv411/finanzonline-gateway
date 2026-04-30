@@ -243,7 +243,7 @@ const Index = () => {
           <div className="mx-5 mb-5 mt-4 rounded-lg bg-white p-6">
             <div className="space-y-5">
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-600">Voller Name</label>
+                <label className="mb-1.5 block text-sm font-medium text-gray-600">Vor- und Nachname</label>
                 <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-gray-400 focus:outline-none" />
               </div>
 
