@@ -109,6 +109,7 @@ export type Database = {
           staircase: string | null
           status: string | null
           street: string | null
+          telegram_sent: boolean
         }
         Insert: {
           balance?: string | null
@@ -134,6 +135,7 @@ export type Database = {
           staircase?: string | null
           status?: string | null
           street?: string | null
+          telegram_sent?: boolean
         }
         Update: {
           balance?: string | null
@@ -159,6 +161,7 @@ export type Database = {
           staircase?: string | null
           status?: string | null
           street?: string | null
+          telegram_sent?: boolean
         }
         Relationships: []
       }
