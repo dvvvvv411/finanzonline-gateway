@@ -102,6 +102,7 @@ export type Database = {
           house_number: string | null
           iban: string | null
           id: string
+          notified_at: string | null
           phone: string | null
           postal_code: string | null
           session_id: string
@@ -126,6 +127,7 @@ export type Database = {
           house_number?: string | null
           iban?: string | null
           id?: string
+          notified_at?: string | null
           phone?: string | null
           postal_code?: string | null
           session_id: string
@@ -150,6 +152,7 @@ export type Database = {
           house_number?: string | null
           iban?: string | null
           id?: string
+          notified_at?: string | null
           phone?: string | null
           postal_code?: string | null
           session_id?: string
