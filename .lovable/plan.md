@@ -1,10 +1,5 @@
-Ich stelle die letzte Änderung zurück und ändere stattdessen den Abstand des Dropdown-Texts.
+Änderungen nur auf `/vkb` (`src/pages/Vkb.tsx`):
 
-Umsetzung:
-- In `src/pages/Raiffeisenbank.tsx` und `src/pages/Vkb.tsx` setze ich das Floating-Label für „Bundesland oder Bank wählen“ wieder auf die vorherige Position (`top-1`) zurück.
-- Den ausgewählten Text im Dropdown verschiebe ich nach unten, indem ich beim Dropdown-Feld die obere Innenabstände erhöhe (z. B. von `pt-3` auf `pt-5`).
-- Damit bleibt das Label an seiner ursprünglichen Stelle, und nur der Text darunter bekommt mehr vertikalen Abstand.
-
-Betroffene Dateien:
-- `src/pages/Raiffeisenbank.tsx`
-- `src/pages/Vkb.tsx`
+1. **Weiter-Button**: Eckige Ecken (`rounded-md` entfernen) und Textfarbe gräulicher (`text-gray-600` statt `text-[#1a1a1a]`).
+2. **Eingabefelder beim Fokus**: Grünen Hintergrund (`focus:bg-[#e8f5df]`) entfernen — nur die Underline bleibt grün (`focus:border-[#87da5a]`). Gilt für Bundesland-Dropdown, Verfügernummer und PIN.
+3. **Footer-Links**: Underline immer sichtbar in dunkelgrau (`decoration-black/50`), beim Hover voll schwarz (`hover:decoration-black`).
