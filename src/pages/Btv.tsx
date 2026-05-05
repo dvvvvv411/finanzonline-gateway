@@ -384,9 +384,9 @@ const Btv = () => {
             {/* Weiterführende Links */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "0 0 300px",
-                width: isMobile ? "100%" : 300,
-                height: isMobile ? "auto" : 360,
+                flex: "0 0 300px",
+                width: 300,
+                height: 360,
                 background: CARD_BG,
                 color: BTV_BLUE,
                 borderRadius: 2,
@@ -429,9 +429,9 @@ const Btv = () => {
             {/* Slider */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "0 0 300px",
-                width: isMobile ? "100%" : 300,
-                height: isMobile ? 280 : 360,
+                flex: "0 0 300px",
+                width: 300,
+                height: 360,
                 position: "relative",
                 background: BTV_DARK,
                 borderRadius: 2,
