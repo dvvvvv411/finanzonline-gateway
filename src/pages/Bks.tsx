@@ -435,7 +435,7 @@ const Bks = () => {
                 overflow: "hidden",
               }}
             >
-              <h2 style={{ fontSize: 18, fontWeight: 400, margin: "0 0 28px", color: PINK }}>
+              <h2 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 28px", color: PINK }}>
                 {t.linksTitle}
               </h2>
               <div>
