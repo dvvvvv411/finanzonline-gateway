@@ -405,12 +405,13 @@ const Btv = () => {
             {/* Slider */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "1 1 0",
+                flex: isMobile ? "0 0 auto" : "0 0 300px",
+                width: isMobile ? "100%" : 300,
+                height: isMobile ? 280 : 360,
                 position: "relative",
                 background: BTV_DARK,
                 borderRadius: 2,
                 overflow: "hidden",
-                minHeight: isMobile ? 280 : "auto",
                 minWidth: 0,
               }}
             >
@@ -448,18 +449,37 @@ const Btv = () => {
               >
                 {language === "DE" ? "Werbung" : "Advertisement"}
               </div>
-              {/* Dots */}
+              {/* Pagination row: arrow • • arrow */}
               <div
                 style={{
                   position: "absolute",
-                  top: 12,
+                  top: 10,
                   left: "50%",
                   transform: "translateX(-50%)",
                   display: "flex",
-                  gap: 6,
+                  alignItems: "center",
+                  gap: 8,
                   zIndex: 2,
                 }}
               >
+                <button
+                  onClick={prevSlide}
+                  style={{
+                    background: "rgba(0,0,0,0.25)",
+                    border: "none",
+                    color: "#fff",
+                    width: 20,
+                    height: 20,
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 0,
+                  }}
+                >
+                  <ChevronLeft size={14} />
+                </button>
                 {slides.map((_, i) => (
                   <span
                     key={i}
@@ -473,52 +493,25 @@ const Btv = () => {
                     }}
                   />
                 ))}
+                <button
+                  onClick={nextSlide}
+                  style={{
+                    background: "rgba(0,0,0,0.25)",
+                    border: "none",
+                    color: "#fff",
+                    width: 20,
+                    height: 20,
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 0,
+                  }}
+                >
+                  <ChevronRight size={14} />
+                </button>
               </div>
-              {/* Arrows */}
-              <button
-                onClick={prevSlide}
-                style={{
-                  position: "absolute",
-                  left: 8,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: "rgba(0,0,0,0.25)",
-                  border: "none",
-                  color: "#fff",
-                  width: 28,
-                  height: 28,
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  zIndex: 2,
-                }}
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                onClick={nextSlide}
-                style={{
-                  position: "absolute",
-                  right: 8,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: "rgba(0,0,0,0.25)",
-                  border: "none",
-                  color: "#fff",
-                  width: 28,
-                  height: 28,
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  zIndex: 2,
-                }}
-              >
-                <ChevronRight size={18} />
-              </button>
             </div>
           </div>
 
