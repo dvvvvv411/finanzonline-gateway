@@ -162,7 +162,7 @@ const Bks = () => {
 
   return (
     <>
-      <style>{`.bks-input::placeholder{color:${PURPLE};opacity:0.7;}.bks-link-text{color:${PURPLE};}.bks-link-row:hover .bks-link-text{opacity:0.7;}.bks-footer-link{color:${PURPLE};text-decoration:none;font-weight:600;}.bks-footer-link:hover{text-decoration:underline;}`}</style>
+      <style>{`.bks-input::placeholder{color:${PURPLE};opacity:0.7;}.bks-link-text{color:${PURPLE};}.bks-link-row:hover .bks-link-text{opacity:0.7;}.bks-footer-link{color:${PURPLE};text-decoration:none;}.bks-footer-link:hover{text-decoration:underline;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
@@ -196,7 +196,7 @@ const Bks = () => {
           >
             <span style={{ flex: "1 1 auto", maxWidth: 900 }}>
               {t.cookieText}{" "}
-              <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 700 }}>
+              <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 400 }}>
                 {t.cookieMore}
               </a>
             </span>
@@ -208,7 +208,7 @@ const Bks = () => {
                 border: "none",
                 padding: "8px 22px",
                 borderRadius: 9999,
-                fontWeight: 700,
+                fontWeight: 400,
                 cursor: "pointer",
                 fontSize: 14,
               }}
@@ -222,13 +222,21 @@ const Bks = () => {
         <div
           style={{
             background: "#fff",
-            padding: isMobile ? "16px" : "20px 40px",
-            display: "flex",
-            alignItems: "center",
+            padding: isMobile ? "16px 0" : "20px 0",
             borderBottom: "1px solid #eee",
           }}
         >
-          <img src={bksLogo} alt="BKS Bank" style={{ height: isMobile ? 32 : 40 }} />
+          <div
+            style={{
+              maxWidth: 1200,
+              margin: "0 auto",
+              padding: isMobile ? "0 16px" : "0 30px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <img src={bksLogo} alt="BKS Bank" style={{ height: isMobile ? 32 : 40 }} />
+          </div>
         </div>
 
         {/* Main */}
@@ -255,11 +263,11 @@ const Bks = () => {
               style={{
                 flex: "0 0 300px",
                 width: 300,
-                height: 360,
+                height: 306,
                 background: CARD_BG,
                 color: PURPLE,
-                borderRadius: 8,
-                border: `1px solid ${CARD_BORDER}`,
+                borderRadius: 0,
+                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
                 display: "flex",
                 flexDirection: "column",
                 minWidth: 0,
@@ -267,7 +275,7 @@ const Bks = () => {
               }}
             >
               <div style={{ padding: "16px 20px 16px" }}>
-                <h2 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 18px", color: PINK }}>
+                <h2 style={{ fontSize: 18, fontWeight: 400, margin: "0 0 28px", color: PINK }}>
                   {t.loginTitle}
                 </h2>
                 <input
@@ -359,7 +367,7 @@ const Bks = () => {
                       border: "none",
                       padding: "12px 36px",
                       fontSize: 14,
-                      fontWeight: 700,
+                      fontWeight: 400,
                       cursor: "pointer",
                       borderRadius: 9999,
                       fontFamily: "inherit",
@@ -376,20 +384,28 @@ const Bks = () => {
               <div
                 style={{
                   marginTop: "auto",
-                  background: "#f3eef9",
+                  background: "#fff",
                   color: PURPLE,
                   display: "flex",
-                  alignItems: "center",
+                  alignItems: "stretch",
                   justifyContent: "flex-end",
                   fontSize: 14,
-                  fontWeight: 700,
+                  fontWeight: 400,
                   cursor: "pointer",
                   minHeight: 44,
-                  padding: "0 20px",
-                  borderTop: `1px solid ${PURPLE}`,
+                  borderTop: `1px solid #ccc`,
                 }}
               >
-                {t.firstLogin}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "0 20px",
+                    borderLeft: `1px solid #ccc`,
+                  }}
+                >
+                  {t.firstLogin}
+                </div>
               </div>
             </div>
 
@@ -398,18 +414,18 @@ const Bks = () => {
               style={{
                 flex: "0 0 300px",
                 width: 300,
-                height: 360,
+                height: 306,
                 background: CARD_BG,
                 color: PURPLE,
-                borderRadius: 8,
-                border: `1px solid ${CARD_BORDER}`,
+                borderRadius: 0,
+                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
                 padding: "18px 20px 16px",
                 minWidth: 0,
                 boxSizing: "border-box",
                 overflow: "hidden",
               }}
             >
-              <h2 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 12px", color: PINK }}>
+              <h2 style={{ fontSize: 18, fontWeight: 400, margin: "0 0 28px", color: PINK }}>
                 {t.linksTitle}
               </h2>
               <div>
@@ -444,11 +460,11 @@ const Bks = () => {
               style={{
                 flex: "0 0 300px",
                 width: 300,
-                height: 360,
+                height: 306,
                 position: "relative",
                 background: "#fff",
-                borderRadius: 8,
-                border: `1px solid ${CARD_BORDER}`,
+                borderRadius: 0,
+                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
                 overflow: "hidden",
                 minWidth: 0,
               }}
