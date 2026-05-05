@@ -227,15 +227,15 @@ const Btv = () => {
               display: "flex",
               flexDirection: isMobile ? "column" : "row",
               gap: 16,
-              alignItems: isMobile ? "stretch" : "flex-start",
+              alignItems: isMobile ? "center" : "flex-start",
             }}
           >
             {/* Login Card */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "0 0 300px",
-                width: isMobile ? "100%" : 300,
-                height: isMobile ? "auto" : 360,
+                flex: "0 0 300px",
+                width: 300,
+                height: 360,
                 background: CARD_BG,
                 color: BTV_BLUE,
                 borderRadius: 2,
