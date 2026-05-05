@@ -95,10 +95,10 @@ const Denizbank = () => {
         <div className="relative min-h-screen flex flex-col">
           {/* Header */}
           <header className="px-6 md:px-10 pt-12 pb-6">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="max-w-7xl mx-auto flex flex-col items-center gap-3 md:flex-row md:items-center md:justify-between">
               <img src={logo} alt="DenizBank" className="h-8 md:h-10" />
-              <div className="flex items-center gap-3 md:gap-4 text-white text-sm">
-                <button className="hidden md:flex items-center gap-2 px-4 py-2 hover:opacity-80">
+              <div className="flex flex-col items-center gap-3 md:flex-row md:gap-4 text-white text-sm">
+                <button className="flex items-center gap-2 px-4 py-2 hover:opacity-80">
                   <img src={barrierefreiIcon} alt="" className="h-4 w-4 brightness-0 invert" />
                   Barrierefrei
                 </button>
@@ -121,11 +121,11 @@ const Denizbank = () => {
           <main className="flex-1 flex items-center px-6 md:px-10 py-10">
             <div className="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
               {/* Linke Seite */}
-              <div className="text-white">
-                <h1 className="text-5xl md:text-7xl font-extrabold leading-tight text-white drop-shadow-lg relative z-10">
+              <div className="text-white order-2 md:order-none">
+                <h1 className="hidden md:block text-5xl md:text-7xl font-extrabold leading-tight text-white drop-shadow-lg relative z-10">
                   Willkommen<br />bei der DenizBank
                 </h1>
-                <div className="mt-12 max-w-md border-l-2 border-white/70 pl-5 py-1">
+                <div className="mt-2 md:mt-12 max-w-md mx-auto md:mx-0 text-center md:text-left bg-white/10 backdrop-blur-md md:bg-transparent md:backdrop-blur-none rounded-md md:rounded-none p-5 md:p-1 md:border-l-2 md:border-white/70 md:pl-5">
                   <div className="text-lg font-semibold mb-1">Hinweis</div>
                   <p className="text-sm leading-relaxed text-white/90">
                     Bitte teilen Sie Ihre persönlichen Anmeldedaten nicht mit anderen.
@@ -134,7 +134,7 @@ const Denizbank = () => {
               </div>
 
               {/* Login Card */}
-              <div className="md:justify-self-end w-full max-w-md">
+              <div className="md:justify-self-end w-full max-w-md order-1 md:order-none">
                 {/* Tabs */}
                 <div className="grid grid-cols-3 text-sm">
                   {(["privat", "gemein", "firma"] as const).map((t) => {
@@ -149,14 +149,14 @@ const Denizbank = () => {
                         className={`flex items-center justify-between px-5 py-4 ${
                           active
                             ? "bg-white rounded-t-md text-[#1874ca] font-semibold text-base"
-                            : "bg-white/10 backdrop-blur-md text-white/90 cursor-default"
+                            : "bg-[#605f60] md:bg-white/10 md:backdrop-blur-md text-white/90 cursor-default"
                         }`}
                       >
                         <span>{label}</span>
                         {active ? (
-                          <ChevronDown className="h-4 w-4 text-[#1874ca]" />
+                          <ChevronDown className="hidden md:inline-block h-4 w-4 text-[#1874ca]" />
                         ) : (
-                          <ChevronRight className="h-4 w-4" />
+                          <ChevronRight className="hidden md:inline-block h-4 w-4" />
                         )}
                       </button>
                     );
@@ -225,12 +225,12 @@ const Denizbank = () => {
                     Weiter
                   </button>
 
-                  <div className="grid grid-cols-2 gap-3 pt-1">
-                    <button className="group flex items-center justify-center gap-2 h-11 rounded border border-[#555] text-sm text-[#555] hover:border-[#e7041f] hover:text-[#e7041f] transition-colors">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                    <button className="group flex items-center justify-center gap-2 h-11 w-full rounded border border-[#555] text-sm text-[#555] hover:border-[#e7041f] hover:text-[#e7041f] transition-colors">
                       <MaskIcon src={sperreIcon} />
                       Sperre aufheben
                     </button>
-                    <button className="group flex items-center justify-center gap-2 h-11 rounded border border-[#555] text-sm text-[#555] hover:border-[#1874ca] hover:text-[#1874ca] transition-colors">
+                    <button className="group flex items-center justify-center gap-2 h-11 w-full rounded border border-[#555] text-sm text-[#555] hover:border-[#1874ca] hover:text-[#1874ca] transition-colors">
                       <MaskIcon src={passwortVergessenIcon} />
                       Passwort vergessen
                     </button>
@@ -242,17 +242,17 @@ const Denizbank = () => {
 
           {/* Footer */}
           <footer className="px-6 md:px-10 py-6">
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div className="bg-white rounded p-1 inline-flex w-fit">
-                <img src={enbdLogo} alt="ENBD" className="h-6" />
-              </div>
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-white text-sm">
+            <div className="max-w-7xl mx-auto flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-white text-sm order-1 md:order-none md:justify-start">
                 {footerLinks.map((l) => (
                   <a key={l.label} href="#" className="flex items-center gap-2 hover:opacity-80">
                     <img src={l.icon} alt="" className="h-4 w-4 brightness-0 invert" />
-                    {l.label}
+                    <span className="hidden md:inline">{l.label}</span>
                   </a>
                 ))}
+              </div>
+              <div className="bg-white rounded p-1 inline-flex w-fit order-2 md:order-none">
+                <img src={enbdLogo} alt="ENBD" className="h-6" />
               </div>
             </div>
           </footer>
