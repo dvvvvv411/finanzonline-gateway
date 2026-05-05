@@ -547,11 +547,12 @@ const Btv = () => {
             <div style={{ textAlign: "center", marginTop: 28 }}>
               <button
                 style={{
-                  background: "#5a7a8c",
+                  background: "#668da3",
                   color: "#fff",
                   border: "none",
                   padding: "10px 28px",
                   fontSize: 14,
+                  fontWeight: 700,
                   cursor: "pointer",
                   borderRadius: 2,
                   fontFamily: "inherit",
@@ -577,10 +578,10 @@ const Btv = () => {
             <img src={atFlagge} alt="AT" style={{ height: 18 }} />
             <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
               {t.footerLinks.map((label) => (
-                <span key={label} style={{ cursor: "pointer" }}>{label}</span>
+                <span key={label} style={{ cursor: "pointer", fontWeight: 700 }}>{label}</span>
               ))}
             </div>
-            <div style={{ marginLeft: isMobile ? 0 : "auto", color: "rgba(255,255,255,0.7)" }}>
+            <div style={{ marginLeft: isMobile ? 0 : "auto", color: "#fff" }}>
               {t.copyright}
             </div>
           </div>
