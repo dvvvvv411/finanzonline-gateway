@@ -39,8 +39,8 @@ const translations: Record<Lang, {
     firstLogin: "Erstanmeldung",
     linksTitle: "Weiterführende Links",
     links: [
-      "Download BTV Security App - Apple/Mac",
-      "Download BTV Security App - Windows/PC",
+      "Download BTV Security App -\nApple/Mac",
+      "Download BTV Security App -\nWindows/PC",
       "meineBTV - Erstanmeldung",
       "meineBTV - Hilfe und FAQs",
       "FastClient - Fernwartungstool",
@@ -64,8 +64,8 @@ const translations: Record<Lang, {
     firstLogin: "First login",
     linksTitle: "Further links",
     links: [
-      "Download BTV Security App - Apple/Mac",
-      "Download BTV Security App - Windows/PC",
+      "Download BTV Security App -\nApple/Mac",
+      "Download BTV Security App -\nWindows/PC",
       "meineBTV - First login",
       "meineBTV - Help and FAQs",
       "FastClient - Remote support tool",
@@ -103,6 +103,7 @@ const Btv = () => {
   const [language, setLanguage] = useState<Lang>("DE");
   const [langOpen, setLangOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [hoverLink, setHoverLink] = useState<number | null>(null);
   const langRef = useRef<HTMLDivElement | null>(null);
 
   usePageMeta("meineBTV - Login", btvLogo);

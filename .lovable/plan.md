@@ -1,34 +1,33 @@
-## /btv – Feinschliff Runde 3
+## /btv – Feinschliff Runde 4
 
 Alle Änderungen in `src/pages/Btv.tsx`.
 
-### 1. Sprach-Selector Pfeil
-- Chevron-Box rechts: aktuell füllt sie die ganze Höhe des Buttons. Stattdessen kleinere `28×28` Box mit weißem Rand drumherum (4px Abstand zum Button-Rand), damit links/rechts/oben/unten der Box noch Weiß sichtbar ist.
-- Button-Padding `0 0 0 12px` → `0 4px 0 12px`.
-- Box-Größe `38×38` → `28×28`, vertikal zentriert via `align-items:center`.
+### 1. PIN + Sprach-Selector: 50/50 Breite & gleiche Höhe
+- Beide Container `flex: 1 1 0` mit `width: 0` damit sie sich exakt 50/50 teilen (aktuell wird Sprach-Button durch inneren Inhalt breiter wirken).
+- Gleiche feste Höhe `38px` für PIN-Input und Sprach-Button.
+- PIN-Input bekommt explizit `height: 38px` (statt nur Padding).
+- Sprach-Button behält `height: 38px`; Chevron-Box bleibt 28×28 zentriert.
 
-### 2. Weiterführende Links – Textfarbe
-- Link-Texte von `#6b7a82` → **schwarz** (`#000`).
+### 2. Weiterführende Links – Zeilenumbruch
+- Bei den ersten beiden Links nach „Download BTV Security App - " ein `<br/>` einfügen:
+  - „Download BTV Security App -\nApple/Mac"
+  - „Download BTV Security App -\nWindows/PC"
+- In `translations` als zwei Strings im Array darstellen mit Trennzeichen `\n`, beim Rendern via `white-space: pre-line` umbrechen.
 
-### 3. Slider Pagination + Pfeile
-- Pfeile (links/rechts) nicht mehr vertikal in der Mitte, sondern oben mittig **neben den Punkten**.
-- Layout: Container oben mittig (`top: 8px`) mit Flex: `[‹] • • [›]`, gap 6.
-- Hintergrund der Pfeile transparent/leicht abgedunkelt, kleine 20×20 Buttons.
-- Alte absolute `left/right` Pfeile entfernen.
+### 3. Weiterführende Links – Hover & Pfeile
+- Hover-State pro Zeile: Textfarbe wechselt auf `#668da3` (gleiche Farbe wie Erstanmeldung-Balken). Umsetzung über lokales `useState` Hover-Index oder über CSS-Klasse mit `:hover`.
+- Pfeile (`ChevronRight`): Farbe `#000` (statt `BTV_BLUE`), Größe `18` (statt 14, etwa Texthöhe bei 12–13px).
 
-### 4. Card-Größe (alle 3 Cards)
-- Feste Größe **300×360 px** für jede Card.
-- Container-Layout: Cards nicht mehr `flex: 1 1 0` sondern `flex: 0 0 300px`, `height: 360px`.
-- Login-Card: innerer Inhalt bleibt; Erstanmeldung-Balken sitzt unten via `marginTop:auto` (bereits vorhanden).
-- Links-Card: bei Überlauf evtl. Inhalt bleibt sichtbar; ggf. Schrift kleiner. Aber 7 Items × ~36px ≈ 252px + Header → passt knapp in 360px. OK lassen.
-- Slider: feste 300×360, `objectFit: cover` bleibt.
-- Layout-Wrapper bleibt flex row mit gap 16, alignItems flex-start.
+### 4. Slider – Cleanup
+- "Werbung"-Badge oben rechts **komplett entfernen**.
+- Aktiver Pagination-Punkt: Farbe `BTV_DARK` (`#062a44`, gleiche Farbe wie Slider-Background) statt `#fff`. Inaktive Punkte bleiben `rgba(255,255,255,0.4)`.
+- Pfeile links/rechts: kein Background mehr (`background: transparent`), Icon-Farbe `BTV_DARK`. Icons: schlanke Chevron-Pfeile (Lucide `ChevronLeft`/`ChevronRight` mit `strokeWidth={2.5}`), passend zum Screenshot-Stil.
 
-### 5. Anmeldung Titel Abstand
-- `<h2>Anmeldung</h2>` margin-bottom `14px` → `22px` (mehr Luft zu den Eingabefeldern).
+### 5. „Weitere Nachrichten anzeigen" Button
+- Höhe vergrößern: Padding `10px 28px` → `14px 32px`.
 
-### 6. SSL-Hinweis Farbe
-- Farbe `#6b7a82` → **schwarz** (`#000`).
+### 6. BTV Logo Header
+- `height: 44` (Desktop) → `36`. Mobile `36` → `30`.
 
 ### Betroffene Dateien
 - `src/pages/Btv.tsx`
