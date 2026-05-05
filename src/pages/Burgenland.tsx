@@ -34,7 +34,7 @@ const Burgenland = () => {
       {/* Header */}
       <header style={{ backgroundColor: "#fff", borderBottom: "1px solid #e0e0e0" }}>
         <div className="max-w-[1200px] mx-auto flex items-center px-4 py-1">
-          <img src={burgenlandLogo} alt="Bank Burgenland" className="h-10 md:h-14" />
+          <img src={burgenlandLogo} alt="Bank Burgenland" className="h-16 md:h-20" />
         </div>
       </header>
 
