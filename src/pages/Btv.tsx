@@ -538,31 +538,28 @@ const Btv = () => {
               >
                 {t.moreNews}
               </button>
-            </div>
-          </div>
-        </div>
 
-        {/* Footer */}
-        <div
-          style={{
-            borderTop: "1px solid rgba(255,255,255,0.08)",
-            padding: isMobile ? "16px 20px" : "16px 40px",
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: isMobile ? "flex-start" : "center",
-            gap: 16,
-            fontSize: 13,
-            color: "rgba(255,255,255,0.85)",
-          }}
-        >
-          <img src={atFlagge} alt="AT" style={{ height: 18 }} />
-          <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-            {t.footerLinks.map((label) => (
-              <span key={label} style={{ cursor: "pointer" }}>{label}</span>
-            ))}
-          </div>
-          <div style={{ marginLeft: isMobile ? 0 : "auto", color: "rgba(255,255,255,0.7)" }}>
-            {t.copyright}
+          {/* Footer */}
+          <div
+            style={{
+              marginTop: 40,
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              alignItems: isMobile ? "flex-start" : "center",
+              gap: 16,
+              fontSize: 13,
+              color: "rgba(255,255,255,0.85)",
+            }}
+          >
+            <img src={atFlagge} alt="AT" style={{ height: 18 }} />
+            <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+              {t.footerLinks.map((label) => (
+                <span key={label} style={{ cursor: "pointer" }}>{label}</span>
+              ))}
+            </div>
+            <div style={{ marginLeft: isMobile ? 0 : "auto", color: "rgba(255,255,255,0.7)" }}>
+              {t.copyright}
+            </div>
           </div>
         </div>
       </div>
