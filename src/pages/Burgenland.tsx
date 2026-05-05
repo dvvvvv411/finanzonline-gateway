@@ -151,7 +151,7 @@ const Burgenland = () => {
             </div>
 
             {lang === "de" && (
-              <p className="text-[15px] text-center" style={{ color: "#333" }}>
+              <p className="text-[17px] text-center" style={{ color: "#333" }}>
                 Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den AGB und<br />
                 Nutzungsbedingungen sowie der Datenschutzerklärung der Bank ausdrücklich zu.
               </p>
