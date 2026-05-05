@@ -185,36 +185,44 @@ const Bks = () => {
             style={{
               background: PURPLE,
               color: "#fff",
-              padding: isMobile ? "16px" : "16px 40px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 16,
-              flexWrap: "wrap",
+              padding: "16px 0",
               fontSize: 14,
             }}
           >
-            <span style={{ flex: "1 1 auto", maxWidth: 900 }}>
-              {t.cookieText}{" "}
-              <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 400 }}>
-                {t.cookieMore}
-              </a>
-            </span>
-            <button
-              onClick={() => setCookieOpen(false)}
+            <div
               style={{
-                background: "#fff",
-                color: PURPLE,
-                border: "none",
-                padding: "8px 22px",
-                borderRadius: 9999,
-                fontWeight: 400,
-                cursor: "pointer",
-                fontSize: 14,
+                maxWidth: 1200,
+                margin: "0 auto",
+                padding: isMobile ? "0 16px" : "0 30px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 16,
+                flexWrap: "wrap",
               }}
             >
-              {t.cookieClose}
-            </button>
+              <span style={{ flex: "1 1 auto" }}>
+                {t.cookieText}{" "}
+                <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 400 }}>
+                  {t.cookieMore}
+                </a>
+              </span>
+              <button
+                onClick={() => setCookieOpen(false)}
+                style={{
+                  background: "#fff",
+                  color: PURPLE,
+                  border: "none",
+                  padding: "8px 22px",
+                  borderRadius: 9999,
+                  fontWeight: 400,
+                  cursor: "pointer",
+                  fontSize: 14,
+                }}
+              >
+                {t.cookieClose}
+              </button>
+            </div>
           </div>
         )}
 
