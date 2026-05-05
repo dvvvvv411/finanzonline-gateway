@@ -228,12 +228,13 @@ const Btv = () => {
                 minWidth: 0,
               }}
             >
-              <div style={{ padding: "24px 24px 20px" }}>
-                <label style={{ display: "block", fontSize: 13, marginBottom: 10, color: BTV_BLUE }}>
-                  {t.step1}
-                </label>
+              <div style={{ padding: "20px 24px 20px" }}>
+                <h2 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 14px", paddingBottom: 10, borderBottom: `1px solid ${CARD_BORDER}`, color: BTV_BLUE }}>
+                  {t.loginTitle}
+                </h2>
                 <input
                   type="text"
+                  placeholder={t.step1}
                   value={verfNr}
                   onChange={(e) => setVerfNr(e.target.value)}
                   style={{ ...inputStyle, marginBottom: 14 }}
