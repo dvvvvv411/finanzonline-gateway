@@ -169,7 +169,7 @@ const Btv = () => {
 
   return (
     <>
-      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-text{color:#292929;}.btv-link-row:hover .btv-link-text{color:#668da3;}.btv-footer-link{color:#fff;text-decoration:none;}.btv-footer-link:hover{text-decoration:underline;}`}</style>
+      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-text{color:#292929;}.btv-link-row:hover .btv-link-text{color:#668da3;}.btv-footer-link{color:#d3e0e6;text-decoration:none;}.btv-footer-link:hover{text-decoration:underline;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
@@ -562,7 +562,7 @@ const Btv = () => {
                   target={item.href.startsWith("http") ? "_blank" : undefined}
                   rel="noopener noreferrer"
                   className="btv-footer-link"
-                  style={{ cursor: "pointer", fontWeight: 700, color: "#fff", textDecoration: "none" }}
+                  style={{ cursor: "pointer", fontWeight: 700 }}
                 >
                   {item.label}
                 </a>
