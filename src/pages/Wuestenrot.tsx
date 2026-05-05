@@ -57,12 +57,12 @@ const Wuestenrot = () => {
         <div className="bg-white flex flex-col min-h-screen">
           {/* Logo oben */}
           <div className="px-6 pt-8 md:px-16 md:pt-10">
-            <img src={wuestenrotLogo} alt="Wüstenrot" className="h-12" />
+            <img src={wuestenrotLogo} alt="Wüstenrot" className="h-9" />
           </div>
 
           {/* Mittiger Content */}
           <div className="flex-1 flex items-center justify-center px-6 md:px-16 py-8">
-            <div className="w-full max-w-[480px]">
+            <div className="w-full">
               {/* Hinweisbox */}
               {showAlert && (
                 <div className="mb-8 flex items-stretch gap-3 px-4 py-3" style={{ backgroundColor: "#f9dd99" }}>
@@ -114,20 +114,19 @@ const Wuestenrot = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-[#f84914]"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
 
-              <a href="#" className="mb-6 inline-block text-sm text-[#1a1a1a] underline w-fit">Passwort vergessen?</a>
+              <a href="#" className="mb-6 inline-block text-sm text-[#1a1a1a] underline w-fit hover:text-[#f84914]">Passwort vergessen?</a>
 
               {/* Anmelden Button */}
               <div>
                 <button
                   onClick={handleSubmit}
-                  className="mb-6 w-fit rounded-md px-8 py-3 text-sm font-bold text-white transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: "#e03700" }}
+                  className="mb-6 w-fit rounded-xl px-8 py-3 text-sm font-bold text-white transition-colors bg-[#f84914] hover:bg-[#e03700]"
                 >
                   Anmelden
                 </button>
@@ -135,7 +134,7 @@ const Wuestenrot = () => {
 
               <p className="text-sm text-[#1a1a1a]">
                 Noch kein Benutzerkonto?{" "}
-                <a href="#" className="font-bold" style={{ color: "#e03700" }}>Hier Registrieren</a>
+                <a href="#" className="font-bold" style={{ color: "#f84914" }}>Hier Registrieren</a>
               </p>
             </div>
           </div>
@@ -144,9 +143,9 @@ const Wuestenrot = () => {
           <div className="w-full">
             <hr className="border-gray-200" />
             <div className="flex flex-wrap gap-6 text-sm text-gray-700 px-6 md:px-16 py-5">
-              <a href="#" className="hover:underline">Impressum</a>
-              <a href="#" className="hover:underline">Datenschutz</a>
-              <a href="#" className="hover:underline">Hilfeseite</a>
+              <a href="https://portale.ww-ag.de/go/impressum_kundenportal" target="_blank" rel="noopener noreferrer" className="no-underline hover:no-underline hover:text-[#f84914]">Impressum</a>
+              <a href="https://portale.ww-ag.de/go/datenschutz_kundenportal" target="_blank" rel="noopener noreferrer" className="no-underline hover:no-underline hover:text-[#f84914]">Datenschutz</a>
+              <a href="https://portale.ww-ag.de/go/mewa_faq" target="_blank" rel="noopener noreferrer" className="no-underline hover:no-underline hover:text-[#f84914]">Hilfeseite</a>
             </div>
           </div>
         </div>
