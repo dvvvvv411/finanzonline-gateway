@@ -21,11 +21,11 @@ const translations: Record<Lang, {
   next: string;
   firstLogin: string;
   linksTitle: string;
-  links: string[];
+  links: { label: string; href: string }[];
   meldungen: string;
   meldungText: string;
   moreNews: string;
-  footerLinks: string[];
+  footerLinks: { label: string; href: string }[];
   languageNames: string[];
   copyright: string;
 }> = {
