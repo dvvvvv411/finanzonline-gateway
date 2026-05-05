@@ -189,11 +189,10 @@ const Btv = () => {
         {/* Main */}
         <div
           style={{
-            flex: 1,
             maxWidth: 1200,
             margin: "0 auto",
             width: "100%",
-            padding: isMobile ? "20px 16px 40px" : "40px 30px 60px",
+            padding: isMobile ? "20px 16px 40px" : "40px 30px 40px",
             boxSizing: "border-box",
           }}
         >
