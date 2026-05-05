@@ -315,7 +315,7 @@ const Btv = () => {
                   </div>
                 </div>
 
-                <p style={{ fontSize: 13, lineHeight: 1.5, margin: "0 0 18px", color: "#6b7a82" }}>
+                <p style={{ fontSize: 13, lineHeight: 1.5, margin: "0 0 18px", color: "#000" }}>
                   {t.sslText}
                 </p>
 
