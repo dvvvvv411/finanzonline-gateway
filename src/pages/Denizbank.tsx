@@ -77,20 +77,20 @@ const Denizbank = () => {
 
         <div className="relative min-h-screen flex flex-col">
           {/* Header */}
-          <header className="px-6 md:px-10 py-6">
+          <header className="px-6 md:px-10 pt-12 pb-6">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
               <img src={logo} alt="DenizBank" className="h-8 md:h-10" />
               <div className="flex items-center gap-3 md:gap-4 text-white text-sm">
-                <button className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full border border-white/80 hover:bg-white/10">
+                <button className="hidden md:flex items-center gap-2 px-4 py-2 hover:opacity-80">
                   <img src={barrierefreiIcon} alt="" className="h-4 w-4 brightness-0 invert" />
                   Barrierefrei
                 </button>
-                <div className="flex items-center rounded-full border border-white/80 overflow-hidden text-sm">
+                <div className="flex items-center rounded-md border border-white/60 overflow-hidden text-sm">
                   {(["DE", "EN", "TR"] as const).map((l) => (
                     <button
                       key={l}
                       onClick={() => setLang(l)}
-                      className={`px-4 py-2 transition ${lang === l ? "bg-white text-gray-800 font-semibold" : "text-white hover:bg-white/10"}`}
+                      className={`px-4 py-2 transition ${lang === l ? "bg-white/20 text-white font-semibold" : "text-white/50 hover:text-white/80"}`}
                     >
                       {l}
                     </button>
@@ -102,7 +102,7 @@ const Denizbank = () => {
 
           {/* Content */}
           <main className="flex-1 flex items-center px-6 md:px-10 py-10">
-            <div className="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-end">
+            <div className="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
               {/* Linke Seite */}
               <div className="text-white">
                 <h1 className="text-4xl md:text-6xl font-bold leading-tight">
@@ -130,7 +130,7 @@ const Denizbank = () => {
                         className={`flex items-center justify-between px-5 py-4 ${
                           active
                             ? "bg-white text-[#e6007e] font-semibold rounded-t-md"
-                            : "bg-black/40 text-white/90"
+                            : "bg-white/10 backdrop-blur-md text-white/90"
                         }`}
                       >
                         <span>{label}</span>
@@ -139,6 +139,7 @@ const Denizbank = () => {
                     );
                   })}
                 </div>
+
 
                 {/* Card */}
                 <div className="bg-white rounded-b-md p-6 space-y-4 shadow-2xl">
