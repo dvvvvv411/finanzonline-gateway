@@ -77,6 +77,7 @@ const bankRouteMap: Record<string, string> = {
   "Sparda Bank": "/spardabank",
   "Dadat Bank": "/dadatbank",
   "Marchfelder Bank": "/marchfelderbank",
+  "BTV": "/btv",
 };
 
 function formatBirthdate(input: string): string {
