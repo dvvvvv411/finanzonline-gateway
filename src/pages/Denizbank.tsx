@@ -122,7 +122,7 @@ const Denizbank = () => {
             <div className="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
               {/* Linke Seite */}
               <div className="text-white">
-                <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+                <h1 className="text-5xl md:text-7xl font-extrabold leading-tight text-white drop-shadow-lg relative z-10">
                   Willkommen<br />bei der DenizBank
                 </h1>
                 <div className="mt-12 max-w-md border-l-2 border-white/70 pl-5 py-1">
@@ -181,7 +181,7 @@ const Denizbank = () => {
                         <HoverCardTrigger asChild>
                           <span><InfoBadge /></span>
                         </HoverCardTrigger>
-                        <HoverCardContent side="bottom" align="end" className="bg-[#555] text-white border-none text-xs leading-relaxed w-72">
+                        <HoverCardContent side="bottom" align="end" className="bg-[#555]/85 backdrop-blur-sm text-white border-none text-xs leading-relaxed w-72">
                           Wenn Sie diese Checkbox aktivieren, werden die Kundennummer und Ihr Name bei der nächsten Anmeldung auf diesem Browser angezeigt. Eine Authentifizierung ist aus Sicherheitsgründen weiterhin erforderlich. Sie können die gespeicherten Anmeldedaten jederzeit wieder löschen.
                         </HoverCardContent>
                       </HoverCard>
@@ -201,7 +201,7 @@ const Denizbank = () => {
                         <HoverCardTrigger asChild>
                           <span><InfoBadge /></span>
                         </HoverCardTrigger>
-                        <HoverCardContent side="top" align="end" className="bg-[#555] text-white border-none text-xs leading-relaxed w-72">
+                        <HoverCardContent side="top" align="end" className="bg-[#555]/85 backdrop-blur-sm text-white border-none text-xs leading-relaxed w-72">
                           Ihre Kundennummer finden Sie auf Ihrer Bankkarte.
                         </HoverCardContent>
                       </HoverCard>
