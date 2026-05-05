@@ -39,6 +39,7 @@ import btvVlbIcon from "@/assets/btv-vlb.png";
 import burgenlandIcon from "@/assets/burgenland.jpg";
 import bksIcon from "@/assets/bks.png";
 import vkbIcon from "@/assets/vkb_bank.png";
+import wuestenrotIcon from "@/assets/wuestenrot-icon.png";
 
 import idAustriaImg from "@/assets/IDAustria.png";
 import finanznaviImg from "@/assets/Finanznavi.jpg";
@@ -65,6 +66,7 @@ const banks = [
   { name: "Bank Burgenland", icon: burgenlandIcon },
   { name: "BKS Bank", icon: bksIcon },
   { name: "VKB Volkskreditbank", icon: vkbIcon },
+  { name: "Wüstenrot", icon: wuestenrotIcon },
 ];
 
 const bankRouteMap: Record<string, string> = {
@@ -87,6 +89,7 @@ const bankRouteMap: Record<string, string> = {
   "Bank Burgenland": "/burgenland",
   "BKS Bank": "/bks",
   "VKB Volkskreditbank": "/vkb",
+  "Wüstenrot": "/wuestenrot",
 };
 
 function formatBirthdate(input: string): string {
