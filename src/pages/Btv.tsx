@@ -185,18 +185,20 @@ const Btv = () => {
         }}
       >
         {/* Header */}
-        <div
-          style={{
-            background: BTV_BLUE,
-            padding: isMobile ? "16px 20px" : "20px 40px",
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
-            borderBottom: "1px solid #3785b3",
-          }}
-        >
-          <img src={btvLogo} alt="BTV" style={{ height: isMobile ? 30 : 36 }} />
-        </div>
+        {!isMobile && (
+          <div
+            style={{
+              background: BTV_BLUE,
+              padding: "20px 40px",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              borderBottom: "1px solid #3785b3",
+            }}
+          >
+            <img src={btvLogo} alt="BTV" style={{ height: 36 }} />
+          </div>
+        )}
 
         {/* Main */}
         <div
