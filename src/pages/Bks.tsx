@@ -488,22 +488,34 @@ const Bks = () => {
               }}
             >
               {slides.map((src, i) => (
-                <img
+                <a
                   key={i}
-                  src={src}
-                  alt={`Werbung ${i + 1}`}
+                  href={slideLinks[i]}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     position: i === 0 ? "relative" : "absolute",
                     top: 0,
                     left: 0,
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover",
+                    display: "block",
                     opacity: currentSlide === i ? 1 : 0,
                     transition: "opacity 0.6s ease",
-                    display: "block",
+                    pointerEvents: currentSlide === i ? "auto" : "none",
                   }}
-                />
+                >
+                  <img
+                    src={src}
+                    alt={`Werbung ${i + 1}`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+                </a>
               ))}
               {/* Pagination row */}
               <div
