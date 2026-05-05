@@ -170,9 +170,6 @@ const Btv = () => {
           background: BTV_BLUE,
           fontFamily: "Helvetica, Arial, sans-serif",
           color: "#fff",
-          display: "flex",
-          flexDirection: "column",
-        }}
       >
         {/* Header */}
         <div
