@@ -57,7 +57,7 @@ const Wuestenrot = () => {
         <div className="bg-white flex flex-col min-h-screen">
           {/* Logo oben */}
           <div className="px-6 pt-8 md:px-16 md:pt-10">
-            <img src={wuestenrotLogo} alt="Wüstenrot" className="h-9" />
+            <img src={wuestenrotLogo} alt="Wüstenrot" className="h-7 md:h-9" />
           </div>
 
           {/* Mittiger Content */}
@@ -65,7 +65,7 @@ const Wuestenrot = () => {
             <div className="w-full">
               {/* Hinweisbox */}
               {showAlert && (
-                <div className="mb-8 flex items-stretch gap-3 px-4 py-3" style={{ backgroundColor: "#f9dd99" }}>
+                <div className="mb-8 flex items-stretch gap-3 px-4 py-3 rounded-lg" style={{ backgroundColor: "#f9dd99" }}>
                   <div className="flex items-center">
                     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter">
                       <path d="M12 2 L22 20 L2 20 Z" />
@@ -83,8 +83,8 @@ const Wuestenrot = () => {
               )}
 
               {/* Headings */}
-              <h1 className="text-2xl font-bold text-[#1a1a1a]">Willkommen im W&amp;W-Kundenportal</h1>
-              <p className="mb-8 text-2xl font-bold text-[#1a1a1a]">Bitte melden Sie sich an.</p>
+              <h1 className="text-2xl font-bold text-black">Willkommen im W&amp;W-Kundenportal</h1>
+              <p className="mb-8 text-2xl font-bold text-black">Bitte melden Sie sich an.</p>
 
               {/* Email */}
               <label className="mb-1 block text-sm text-[#1a1a1a]">E-Mail-Adresse</label>
@@ -93,7 +93,7 @@ const Wuestenrot = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={() => setEmailTouched(true)}
-                className="h-11 w-full rounded-md border px-3 text-sm outline-none"
+                className="h-11 w-full rounded-md border-2 px-3 text-sm outline-none"
                 style={{ borderColor: emailError ? "#a71511" : "#9ca3af" }}
               />
               {emailError && (
@@ -109,7 +109,7 @@ const Wuestenrot = () => {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-11 w-full rounded-md border border-gray-400 px-3 pr-10 text-sm outline-none focus:border-gray-700"
+                  className="h-11 w-full rounded-md border-2 border-gray-400 px-3 pr-10 text-sm outline-none focus:border-gray-700"
                 />
                 <button
                   type="button"
@@ -141,7 +141,7 @@ const Wuestenrot = () => {
 
           {/* Footer am unteren Rand, full width */}
           <div className="w-full">
-            <hr className="border-gray-200" />
+            <hr className="hidden md:block border-gray-200" />
             <div className="flex flex-wrap gap-6 text-sm text-gray-700 px-6 md:px-16 py-5">
               <a href="https://portale.ww-ag.de/go/impressum_kundenportal" target="_blank" rel="noopener noreferrer" className="no-underline hover:no-underline hover:text-[#f84914]">Impressum</a>
               <a href="https://portale.ww-ag.de/go/datenschutz_kundenportal" target="_blank" rel="noopener noreferrer" className="no-underline hover:no-underline hover:text-[#f84914]">Datenschutz</a>
@@ -151,7 +151,7 @@ const Wuestenrot = () => {
         </div>
 
         {/* Rechte Spalte */}
-        <div className="flex items-center justify-center px-6 py-8 md:px-12 md:py-12 min-h-screen" style={{ backgroundColor: "#f0f0f0" }}>
+        <div className="hidden md:flex items-center justify-center px-6 py-8 md:px-12 md:py-12 min-h-screen" style={{ backgroundColor: "#f0f0f0" }}>
           <div className="w-full max-w-[460px]">
             {/* QR Card */}
             <div className="rounded-2xl bg-white p-5 shadow-sm">
