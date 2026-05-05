@@ -565,7 +565,9 @@ const Bks = () => {
         {/* Footer */}
         <div
           style={{
-            borderTop: `1px solid #eee`,
+            boxShadow: "0 -4px 8px rgba(0,0,0,0.15)",
+            position: "relative",
+            zIndex: 1,
             padding: isMobile ? "20px 16px" : "20px 40px",
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
