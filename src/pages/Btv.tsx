@@ -206,7 +206,7 @@ const Btv = () => {
             maxWidth: 1200,
             margin: "0 auto",
             width: "100%",
-            padding: isMobile ? "20px 16px 40px" : "40px 30px 40px",
+            padding: isMobile ? "80px 16px 40px" : "40px 30px 40px",
             boxSizing: "border-box",
           }}
         >
@@ -335,7 +335,7 @@ const Btv = () => {
                   {t.sslText}
                 </p>
 
-                <div style={{ textAlign: "right" }}>
+                <div style={{ textAlign: isMobile ? "center" : "right" }}>
                   <button
                     onClick={handleSubmit}
                     onMouseEnter={(e) => (e.currentTarget.style.background = "#2f7299")}
@@ -351,6 +351,7 @@ const Btv = () => {
                       borderRadius: 2,
                       fontFamily: "inherit",
                       transition: "background 0.15s ease",
+                      width: isMobile ? "100%" : undefined,
                     }}
                   >
                     {t.next}
