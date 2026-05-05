@@ -414,18 +414,18 @@ const Bks = () => {
               style={{
                 flex: "0 0 300px",
                 width: 300,
-                height: 360,
+                height: 306,
                 background: CARD_BG,
                 color: PURPLE,
-                borderRadius: 8,
-                border: `1px solid ${CARD_BORDER}`,
+                borderRadius: 0,
+                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
                 padding: "18px 20px 16px",
                 minWidth: 0,
                 boxSizing: "border-box",
                 overflow: "hidden",
               }}
             >
-              <h2 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 12px", color: PINK }}>
+              <h2 style={{ fontSize: 18, fontWeight: 400, margin: "0 0 28px", color: PINK }}>
                 {t.linksTitle}
               </h2>
               <div>
