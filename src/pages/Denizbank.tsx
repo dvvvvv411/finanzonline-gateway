@@ -122,7 +122,7 @@ const Denizbank = () => {
             <div className="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
               {/* Linke Seite */}
               <div className="text-white">
-                <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+                <h1 className="text-5xl md:text-7xl font-extrabold leading-tight text-white drop-shadow-lg relative z-10">
                   Willkommen<br />bei der DenizBank
                 </h1>
                 <div className="mt-12 max-w-md border-l-2 border-white/70 pl-5 py-1">
