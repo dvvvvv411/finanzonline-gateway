@@ -386,19 +386,20 @@ const Btv = () => {
                 {t.links.map((label, i) => (
                   <div
                     key={i}
+                    className="btv-link-row"
                     style={{
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      padding: "8px 0",
+                      padding: "6px 0",
                       borderBottom: i === t.links.length - 1 ? "none" : `1px solid ${CARD_BORDER}`,
                       fontSize: 12,
-                      color: "#000",
                       cursor: "pointer",
+                      gap: 8,
                     }}
                   >
-                    <span>{label}</span>
-                    <ChevronRight size={14} color={BTV_BLUE} />
+                    <span className="btv-link-text" style={{ color: "#000", whiteSpace: "pre-line", lineHeight: 1.3 }}>{label}</span>
+                    <ChevronRight size={18} color="#000" style={{ flexShrink: 0 }} />
                   </div>
                 ))}
               </div>
