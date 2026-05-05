@@ -370,7 +370,7 @@ const Bks = () => {
                   </div>
                 </div>
 
-                <p style={{ fontSize: 12, lineHeight: 1.5, margin: "0 0 16px", color: PURPLE }}>
+                <p style={{ fontSize: 12, lineHeight: 1.5, margin: "0 0 8px", color: PURPLE }}>
                   {t.sslText}
                 </p>
 
@@ -383,7 +383,7 @@ const Bks = () => {
                       background: PURPLE,
                       color: "#fff",
                       border: "none",
-                      padding: "8px 28px",
+                      padding: "12px 36px",
                       fontSize: 14,
                       fontWeight: 400,
                       cursor: "pointer",
