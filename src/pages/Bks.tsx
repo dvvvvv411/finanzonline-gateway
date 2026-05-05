@@ -300,10 +300,10 @@ const Bks = () => {
                   onChange={(e) => setVerfNr(e.target.value)}
                   onFocus={(e) => (e.currentTarget.placeholder = "")}
                   onBlur={(e) => (e.currentTarget.placeholder = t.step1)}
-                  style={{ ...inputStyle, marginBottom: 12, height: 44, padding: "0 12px" }}
+                  style={{ ...inputStyle, marginBottom: 10, height: 36, padding: "0 12px" }}
                 />
 
-                <div style={{ display: "flex", gap: 10, marginBottom: 14 }}>
+                <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
                   <input
                     type="password"
                     className="bks-input"
@@ -312,7 +312,7 @@ const Bks = () => {
                     onChange={(e) => setPin(e.target.value)}
                     onFocus={(e) => (e.currentTarget.placeholder = "")}
                     onBlur={(e) => (e.currentTarget.placeholder = t.pinPlaceholder)}
-                    style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 44, padding: "0 12px" }}
+                    style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 36, padding: "0 12px" }}
                   />
                   <div ref={langRef} style={{ position: "relative", flex: "1 1 0", width: 0, minWidth: 0 }}>
                     <button
@@ -326,7 +326,7 @@ const Bks = () => {
                         alignItems: "center",
                         justifyContent: "space-between",
                         textAlign: "left",
-                        height: 44,
+                        height: 36,
                         width: "100%",
                       }}
                     >
@@ -383,8 +383,9 @@ const Bks = () => {
                       background: PURPLE,
                       color: "#fff",
                       border: "none",
-                      padding: "12px 36px",
+                      padding: "5px 36px",
                       fontSize: 14,
+                      lineHeight: 1.2,
                       fontWeight: 400,
                       cursor: "pointer",
                       borderRadius: 9999,
@@ -407,10 +408,10 @@ const Bks = () => {
                   display: "flex",
                   alignItems: "stretch",
                   justifyContent: "flex-end",
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: 400,
                   cursor: "pointer",
-                  minHeight: 44,
+                  minHeight: 36,
                   borderTop: `1px solid #ccc`,
                 }}
               >
@@ -588,28 +589,33 @@ const Bks = () => {
             boxShadow: "0 -4px 8px rgba(0,0,0,0.15)",
             position: "relative",
             zIndex: 1,
-            padding: isMobile ? "20px 16px" : "20px 40px",
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: isMobile ? "flex-start" : "center",
-            gap: 16,
+            padding: "20px 0",
             fontSize: 13,
             color: PURPLE,
           }}
         >
-          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 8 : 24, flexWrap: "wrap", alignItems: "flex-start" }}>
-            {t.footerLinks.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bks-footer-link"
-                style={{ cursor: "pointer" }}
-              >
-                {item.label}
-              </a>
-            ))}
+          <div
+            style={{
+              maxWidth: 1200,
+              margin: "0 auto",
+              padding: isMobile ? "0 16px" : "0 30px",
+              boxSizing: "border-box",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 8 : 24, flexWrap: "wrap", alignItems: "flex-start" }}>
+              {t.footerLinks.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bks-footer-link"
+                  style={{ cursor: "pointer" }}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
