@@ -158,6 +158,7 @@ const Btv = () => {
 
   return (
     <>
+      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
@@ -180,7 +181,7 @@ const Btv = () => {
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "center",
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            borderBottom: "1px solid #3785b3",
           }}
         >
           <img src={btvLogo} alt="BTV" style={{ height: isMobile ? 36 : 44 }} />
