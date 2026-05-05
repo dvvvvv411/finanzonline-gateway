@@ -1,49 +1,26 @@
-## Plan: /bks Seite (BKS Bank) erstellen
+## Änderungen an `src/pages/Bks.tsx`
 
-### Assets kopieren
-- `user-uploads://logo.svg` → `src/assets/bks-logo.svg`
-- `user-uploads://icon.png` → `src/assets/bks.png`
-- `user-uploads://slider.jpg` → `src/assets/bks-slide-1.jpg`
-- `user-uploads://slider2-2.jpg` → `src/assets/bks-slide-2.jpg`
+**1. Cards (alle drei: Anmeldung, Weiterführende Links, Slider)**
+- Größe fix: `width: 300, height: 306`
+- `border` entfernen, `borderRadius: 0`
+- Schatten hinzufügen: `boxShadow: "0 2px 6px rgba(0,0,0,0.15)"`
 
-### Neue Datei: `src/pages/Bks.tsx`
-Eigenständige Kopie von `Btv.tsx` (kein Sharing — Änderungen an /bks beeinflussen /btv nicht). Anpassungen:
+**2. Anmeldung Card**
+- "Erstanmeldung" Leiste: Hintergrund `#fff` (statt `#f3eef9`)
+- Oberer Divider (borderTop) auf Erstanmeldung-Leiste: grau `#ccc` (statt lila)
+- Links neben "Erstanmeldung" Text ein full-height grauer Divider (`borderLeft: 1px solid #ccc`) — umsetzen indem die Erstanmeldung-Leiste `justify-content: flex-end` behält und der Text in einem inneren Container mit `padding-left` und `border-left` + `height:100%` sitzt
 
-**Farben**
-- Hauptbranding `#422373` (lila): Cookie-Header, Weiter-Button, Footer-Texte, Eingabefeld-Outlines, Links, "Erstanmeldung"-Bar, Slider-Pfeile
-- `#e50051` (pink): nur die Titel "Anmeldung" und "Weiterführende Links" + die aktiven Slider-Punkte
-- Hintergrund Hauptbereich: weiß (statt BTV-Blau)
-- Karten-Hintergrund: weiß mit Border in `#422373`
+**3. Typografie**
+- Alle `fontWeight: 700` Stellen → `400` (normal): Titel "Anmeldung", "Weiterführende Links", Cookie-Button, Weiter-Button, Erstanmeldung-Text, Footer-Links, Copyright, Cookie-"Weitere Informationen"
+- CSS `.bks-footer-link{font-weight:600}` → entfernen/normal
 
-**Inhalte**
-- Logo: `bks-logo.svg` (Header)
-- Page-Title (`usePageMeta`): "BKS Bank Online - Login", Favicon `bks.png`
-- Begrüßungsüberschrift entfernen oder durch "BKS Bank" ersetzen (Original hat keine große Überschrift)
-- Login-Card: Felder "Verfügernummer" + "PIN" + Sprach-Dropdown (DE/EN) — wie Btv
-- Weiterführende Links (laut echter BKS-Seite):
-  - BKS Security (Download)
-  - FAQ - oft gestellte Fragen
-  - Servicenummern
-  - Sicherheitsinformation
-  - Fernwartung (Wartungstool)
-  - Wertpapierinformationen
-- Slider: 2 Slides mit hochgeladenen Bildern, Dots in `#e50051`
-- Footer-Links: Impressum, AGB, Geschäftsbedingungen, Fernwartung
-- Copyright: "© 2026 BKS Bank AG"
+**4. Abstand Titel ↔ Content**
+- "Anmeldung" h2: `margin: 0 0 18px` → `0 0 28px`
+- "Weiterführende Links" h2: `margin: 0 0 12px` → `0 0 28px`
 
-**Styling**
-- Weiter-Button: `borderRadius: 9999` (stark abgerundet / pill)
-- Inputs: weißer Hintergrund, `border: 1px solid #422373`
-- "submission update": `bank: "BKS Bank"`, Labels "Verfügernummer" / "PIN"
+**5. Header / Logo Position**
+- BKS Logo soll horizontal dort beginnen, wo die Anmeldungs-Card beginnt
+- Lösung: Header-Inhalt in einen Container mit `maxWidth: 1200`, `margin: 0 auto`, gleiches horizontales Padding wie der Main-Container (`isMobile ? "0 16px" : "0 30px"`), damit das Logo bündig mit der ersten Card startet
 
-### Routing & Bankauswahl
-- `src/App.tsx`: Import `Bks` + Route `/bks`
-- `src/pages/Index.tsx`:
-  - Import `bksIcon from "@/assets/bks.png"`
-  - In `banks`-Array hinzufügen: `{ name: "BKS Bank", icon: bksIcon }`
-  - In `bankRouteMap`: `"BKS Bank": "/bks"`
-
-### Plan-Dokumentation
-- `.lovable/plan.md` aktualisieren
-
-Keine Änderungen an `Btv.tsx` oder anderen Bank-Seiten.
+### Betroffene Dateien
+- `src/pages/Bks.tsx`

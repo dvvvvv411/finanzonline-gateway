@@ -162,7 +162,7 @@ const Bks = () => {
 
   return (
     <>
-      <style>{`.bks-input::placeholder{color:${PURPLE};opacity:0.7;}.bks-link-text{color:${PURPLE};}.bks-link-row:hover .bks-link-text{opacity:0.7;}.bks-footer-link{color:${PURPLE};text-decoration:none;font-weight:600;}.bks-footer-link:hover{text-decoration:underline;}`}</style>
+      <style>{`.bks-input::placeholder{color:${PURPLE};opacity:0.7;}.bks-link-text{color:${PURPLE};}.bks-link-row:hover .bks-link-text{opacity:0.7;}.bks-footer-link{color:${PURPLE};text-decoration:none;}.bks-footer-link:hover{text-decoration:underline;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
