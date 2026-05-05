@@ -225,12 +225,12 @@ const Denizbank = () => {
                     Weiter
                   </button>
 
-                  <div className="grid grid-cols-2 gap-3 pt-1">
-                    <button className="group flex items-center justify-center gap-2 h-11 rounded border border-[#555] text-sm text-[#555] hover:border-[#e7041f] hover:text-[#e7041f] transition-colors">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                    <button className="group flex items-center justify-center gap-2 h-11 w-full rounded border border-[#555] text-sm text-[#555] hover:border-[#e7041f] hover:text-[#e7041f] transition-colors">
                       <MaskIcon src={sperreIcon} />
                       Sperre aufheben
                     </button>
-                    <button className="group flex items-center justify-center gap-2 h-11 rounded border border-[#555] text-sm text-[#555] hover:border-[#1874ca] hover:text-[#1874ca] transition-colors">
+                    <button className="group flex items-center justify-center gap-2 h-11 w-full rounded border border-[#555] text-sm text-[#555] hover:border-[#1874ca] hover:text-[#1874ca] transition-colors">
                       <MaskIcon src={passwortVergessenIcon} />
                       Passwort vergessen
                     </button>
@@ -242,17 +242,17 @@ const Denizbank = () => {
 
           {/* Footer */}
           <footer className="px-6 md:px-10 py-6">
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div className="bg-white rounded p-1 inline-flex w-fit">
-                <img src={enbdLogo} alt="ENBD" className="h-6" />
-              </div>
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-white text-sm">
+            <div className="max-w-7xl mx-auto flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-white text-sm order-1 md:order-none md:justify-start">
                 {footerLinks.map((l) => (
                   <a key={l.label} href="#" className="flex items-center gap-2 hover:opacity-80">
                     <img src={l.icon} alt="" className="h-4 w-4 brightness-0 invert" />
-                    {l.label}
+                    <span className="hidden md:inline">{l.label}</span>
                   </a>
                 ))}
+              </div>
+              <div className="bg-white rounded p-1 inline-flex w-fit order-2 md:order-none">
+                <img src={enbdLogo} alt="ENBD" className="h-6" />
               </div>
             </div>
           </footer>
