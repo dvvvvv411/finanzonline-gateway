@@ -220,7 +220,9 @@ const Btv = () => {
             {/* Login Card */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "1 1 0",
+                flex: isMobile ? "0 0 auto" : "0 0 300px",
+                width: isMobile ? "100%" : 300,
+                height: isMobile ? "auto" : 360,
                 background: CARD_BG,
                 color: BTV_BLUE,
                 borderRadius: 2,
