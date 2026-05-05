@@ -365,15 +365,19 @@ const Btv = () => {
             {/* Weiterführende Links */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "1 1 0",
+                flex: isMobile ? "0 0 auto" : "0 0 300px",
+                width: isMobile ? "100%" : 300,
+                height: isMobile ? "auto" : 360,
                 background: CARD_BG,
                 color: BTV_BLUE,
                 borderRadius: 2,
                 padding: "18px 20px 16px",
                 minWidth: 0,
+                boxSizing: "border-box",
+                overflow: "hidden",
               }}
             >
-              <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 16px", color: BTV_BLUE }}>
+              <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 12px", color: BTV_BLUE }}>
                 {t.linksTitle}
               </h2>
               <div>
