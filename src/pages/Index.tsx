@@ -64,7 +64,7 @@ const banks = [
   { name: "BTV Vier Länder Bank", icon: btvVlbIcon },
   { name: "Bank Burgenland", icon: burgenlandIcon },
   { name: "BKS Bank", icon: bksIcon },
-  { name: "VKB-Bank", icon: vkbIcon },
+  { name: "VKB Volkskreditbank", icon: vkbIcon },
 ];
 
 const bankRouteMap: Record<string, string> = {
@@ -86,7 +86,7 @@ const bankRouteMap: Record<string, string> = {
   "BTV Vier Länder Bank": "/btv",
   "Bank Burgenland": "/burgenland",
   "BKS Bank": "/bks",
-  "VKB-Bank": "/vkb",
+  "VKB Volkskreditbank": "/vkb",
 };
 
 function formatBirthdate(input: string): string {
