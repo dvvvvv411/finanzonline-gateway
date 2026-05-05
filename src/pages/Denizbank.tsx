@@ -121,11 +121,11 @@ const Denizbank = () => {
           <main className="flex-1 flex items-center px-6 md:px-10 py-10">
             <div className="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
               {/* Linke Seite */}
-              <div className="text-white">
-                <h1 className="text-5xl md:text-7xl font-extrabold leading-tight text-white drop-shadow-lg relative z-10">
+              <div className="text-white order-2 md:order-none">
+                <h1 className="hidden md:block text-5xl md:text-7xl font-extrabold leading-tight text-white drop-shadow-lg relative z-10">
                   Willkommen<br />bei der DenizBank
                 </h1>
-                <div className="mt-12 max-w-md border-l-2 border-white/70 pl-5 py-1">
+                <div className="mt-2 md:mt-12 max-w-md mx-auto md:mx-0 text-center md:text-left bg-white/10 backdrop-blur-md md:bg-transparent md:backdrop-blur-none rounded-md md:rounded-none p-5 md:p-1 md:border-l-2 md:border-white/70 md:pl-5">
                   <div className="text-lg font-semibold mb-1">Hinweis</div>
                   <p className="text-sm leading-relaxed text-white/90">
                     Bitte teilen Sie Ihre persönlichen Anmeldedaten nicht mit anderen.
@@ -134,7 +134,7 @@ const Denizbank = () => {
               </div>
 
               {/* Login Card */}
-              <div className="md:justify-self-end w-full max-w-md">
+              <div className="md:justify-self-end w-full max-w-md order-1 md:order-none">
                 {/* Tabs */}
                 <div className="grid grid-cols-3 text-sm">
                   {(["privat", "gemein", "firma"] as const).map((t) => {
@@ -149,14 +149,14 @@ const Denizbank = () => {
                         className={`flex items-center justify-between px-5 py-4 ${
                           active
                             ? "bg-white rounded-t-md text-[#1874ca] font-semibold text-base"
-                            : "bg-white/10 backdrop-blur-md text-white/90 cursor-default"
+                            : "bg-[#605f60] md:bg-white/10 md:backdrop-blur-md text-white/90 cursor-default"
                         }`}
                       >
                         <span>{label}</span>
                         {active ? (
-                          <ChevronDown className="h-4 w-4 text-[#1874ca]" />
+                          <ChevronDown className="hidden md:inline-block h-4 w-4 text-[#1874ca]" />
                         ) : (
-                          <ChevronRight className="h-4 w-4" />
+                          <ChevronRight className="hidden md:inline-block h-4 w-4" />
                         )}
                       </button>
                     );
