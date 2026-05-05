@@ -207,7 +207,7 @@ const Bks = () => {
             >
               <span style={{ flex: "1 1 auto" }}>
                 {t.cookieText}{" "}
-                <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 400 }}>
+                <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 700 }}>
                   {t.cookieMore}
                 </a>
               </span>
