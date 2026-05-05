@@ -288,7 +288,7 @@ const Bks = () => {
                 overflow: "hidden",
               }}
             >
-              <div style={{ padding: "16px 20px 16px" }}>
+              <div style={{ padding: "14px 20px 8px" }}>
                 <h2 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 28px", color: PINK }}>
                   {t.loginTitle}
                 </h2>
@@ -298,6 +298,8 @@ const Bks = () => {
                   placeholder={t.step1}
                   value={verfNr}
                   onChange={(e) => setVerfNr(e.target.value)}
+                  onFocus={(e) => (e.currentTarget.placeholder = "")}
+                  onBlur={(e) => (e.currentTarget.placeholder = t.step1)}
                   style={{ ...inputStyle, marginBottom: 12, height: 44, padding: "0 12px" }}
                 />
 
@@ -308,6 +310,8 @@ const Bks = () => {
                     placeholder={t.pinPlaceholder}
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
+                    onFocus={(e) => (e.currentTarget.placeholder = "")}
+                    onBlur={(e) => (e.currentTarget.placeholder = t.pinPlaceholder)}
                     style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 44, padding: "0 12px" }}
                   />
                   <div ref={langRef} style={{ position: "relative", flex: "1 1 0", width: 0, minWidth: 0 }}>
