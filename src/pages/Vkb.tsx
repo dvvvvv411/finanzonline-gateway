@@ -146,7 +146,7 @@ const Vkb = () => {
           <label
             className={`pointer-events-none absolute left-3 z-10 transition-all duration-200 ${
               selectLabelFloated
-                ? `top-1 text-xs ${bundeslandTouched && !bundesland && !selectOpen ? "text-red-600" : "text-gray-500"}`
+                ? `top-0 text-xs ${bundeslandTouched && !bundesland && !selectOpen ? "text-red-600" : "text-gray-500"}`
                 : `top-3 text-sm ${bundeslandTouched && !bundesland ? "text-red-600" : "text-gray-500"}`
             }`}
           >
