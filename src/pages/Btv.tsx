@@ -14,6 +14,7 @@ type Lang = "DE" | "EN";
 
 const translations: Record<Lang, {
   title: string;
+  loginTitle: string;
   step1: string;
   pinPlaceholder: string;
   sslText: string;
@@ -30,7 +31,8 @@ const translations: Record<Lang, {
 }> = {
   DE: {
     title: "Willkommen bei meineBTV!",
-    step1: "1. Ihre Verfügernummer",
+    loginTitle: "Anmeldung",
+    step1: "Ihre Verfügernummer",
     pinPlaceholder: "Pin",
     sslText: "Ihre Anmeldung bei meineBTV geschieht über gesicherte SSL Verbindungen.",
     next: "Weiter",
@@ -54,7 +56,8 @@ const translations: Record<Lang, {
   },
   EN: {
     title: "Welcome to meineBTV!",
-    step1: "1. Your disposer number",
+    loginTitle: "Login",
+    step1: "Your disposer number",
     pinPlaceholder: "Pin",
     sslText: "Your login to meineBTV is via secured SSL connections.",
     next: "Next",
@@ -167,8 +170,6 @@ const Btv = () => {
           background: BTV_BLUE,
           fontFamily: "Helvetica, Arial, sans-serif",
           color: "#fff",
-          display: "flex",
-          flexDirection: "column",
         }}
       >
         {/* Header */}
@@ -188,11 +189,10 @@ const Btv = () => {
         {/* Main */}
         <div
           style={{
-            flex: 1,
             maxWidth: 1200,
             margin: "0 auto",
             width: "100%",
-            padding: isMobile ? "20px 16px 40px" : "40px 30px 60px",
+            padding: isMobile ? "20px 16px 40px" : "40px 30px 40px",
             boxSizing: "border-box",
           }}
         >
@@ -228,12 +228,13 @@ const Btv = () => {
                 minWidth: 0,
               }}
             >
-              <div style={{ padding: "24px 24px 20px" }}>
-                <label style={{ display: "block", fontSize: 13, marginBottom: 10, color: BTV_BLUE }}>
-                  {t.step1}
-                </label>
+              <div style={{ padding: "20px 24px 20px" }}>
+                <h2 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 14px", paddingBottom: 10, borderBottom: `1px solid ${CARD_BORDER}`, color: BTV_BLUE }}>
+                  {t.loginTitle}
+                </h2>
                 <input
                   type="text"
+                  placeholder={t.step1}
                   value={verfNr}
                   onChange={(e) => setVerfNr(e.target.value)}
                   style={{ ...inputStyle, marginBottom: 14 }}
@@ -323,18 +324,18 @@ const Btv = () => {
               </div>
 
               {/* Erstanmeldung bar */}
-              <div style={{ marginTop: "auto", display: "flex", justifyContent: "flex-end" }}>
-                <div
-                  style={{
-                    background: ERSTANMELDUNG_BG,
-                    color: "#fff",
-                    padding: "12px 28px",
-                    fontSize: 14,
-                    cursor: "default",
-                  }}
-                >
-                  {t.firstLogin}
-                </div>
+              <div
+                style={{
+                  marginTop: "auto",
+                  background: ERSTANMELDUNG_BG,
+                  color: "#fff",
+                  padding: "12px 24px",
+                  fontSize: 14,
+                  textAlign: "right",
+                  cursor: "default",
+                }}
+              >
+                {t.firstLogin}
               </div>
             </div>
 
@@ -404,6 +405,22 @@ const Btv = () => {
                   }}
                 />
               ))}
+              {/* Werbung pill */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 10,
+                  right: 12,
+                  background: "rgba(10,58,92,0.55)",
+                  color: "#fff",
+                  fontSize: 12,
+                  padding: "4px 12px",
+                  borderRadius: 20,
+                  zIndex: 2,
+                }}
+              >
+                {language === "DE" ? "Werbung" : "Advertisement"}
+              </div>
               {/* Dots */}
               <div
                 style={{
@@ -523,29 +540,28 @@ const Btv = () => {
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Footer */}
-        <div
-          style={{
-            borderTop: "1px solid rgba(255,255,255,0.08)",
-            padding: isMobile ? "16px 20px" : "16px 40px",
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: isMobile ? "flex-start" : "center",
-            gap: 16,
-            fontSize: 13,
-            color: "rgba(255,255,255,0.85)",
-          }}
-        >
-          <img src={atFlagge} alt="AT" style={{ height: 18 }} />
-          <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-            {t.footerLinks.map((label) => (
-              <span key={label} style={{ cursor: "pointer" }}>{label}</span>
-            ))}
-          </div>
-          <div style={{ marginLeft: isMobile ? 0 : "auto", color: "rgba(255,255,255,0.7)" }}>
-            {t.copyright}
+          {/* Footer */}
+          <div
+            style={{
+              marginTop: 40,
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              alignItems: isMobile ? "flex-start" : "center",
+              gap: 16,
+              fontSize: 13,
+              color: "rgba(255,255,255,0.85)",
+            }}
+          >
+            <img src={atFlagge} alt="AT" style={{ height: 18 }} />
+            <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+              {t.footerLinks.map((label) => (
+                <span key={label} style={{ cursor: "pointer" }}>{label}</span>
+              ))}
+            </div>
+            <div style={{ marginLeft: isMobile ? 0 : "auto", color: "rgba(255,255,255,0.7)" }}>
+              {t.copyright}
+            </div>
           </div>
         </div>
       </div>
