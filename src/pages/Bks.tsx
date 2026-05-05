@@ -162,7 +162,7 @@ const Bks = () => {
 
   return (
     <>
-      <style>{`.bks-input::placeholder{color:${PURPLE};opacity:0.7;}.bks-link-text{color:${PURPLE};}.bks-link-row:hover .bks-link-text{opacity:0.7;}.bks-footer-link{color:${PURPLE};text-decoration:none;}.bks-footer-link:hover{text-decoration:underline;}`}</style>
+      <style>{`.bks-input::placeholder{color:${PURPLE};opacity:0.7;}.bks-link-text{color:${PURPLE};transition:color 0.15s ease;}.bks-link-row:hover .bks-link-text{color:${PINK};}.bks-footer-link{color:${PURPLE};text-decoration:none;font-weight:700;}.bks-footer-link:hover{text-decoration:underline;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
@@ -185,36 +185,44 @@ const Bks = () => {
             style={{
               background: PURPLE,
               color: "#fff",
-              padding: isMobile ? "16px" : "16px 40px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 16,
-              flexWrap: "wrap",
+              padding: "16px 0",
               fontSize: 14,
             }}
           >
-            <span style={{ flex: "1 1 auto", maxWidth: 900 }}>
-              {t.cookieText}{" "}
-              <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 400 }}>
-                {t.cookieMore}
-              </a>
-            </span>
-            <button
-              onClick={() => setCookieOpen(false)}
+            <div
               style={{
-                background: "#fff",
-                color: PURPLE,
-                border: "none",
-                padding: "8px 22px",
-                borderRadius: 9999,
-                fontWeight: 400,
-                cursor: "pointer",
-                fontSize: 14,
+                maxWidth: 1200,
+                margin: "0 auto",
+                padding: isMobile ? "0 16px" : "0 30px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 16,
+                flexWrap: "wrap",
               }}
             >
-              {t.cookieClose}
-            </button>
+              <span style={{ flex: "1 1 auto" }}>
+                {t.cookieText}{" "}
+                <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 400 }}>
+                  {t.cookieMore}
+                </a>
+              </span>
+              <button
+                onClick={() => setCookieOpen(false)}
+                style={{
+                  background: "#fff",
+                  color: PURPLE,
+                  border: "none",
+                  padding: "8px 22px",
+                  borderRadius: 9999,
+                  fontWeight: 400,
+                  cursor: "pointer",
+                  fontSize: 14,
+                }}
+              >
+                {t.cookieClose}
+              </button>
+            </div>
           </div>
         )}
 
@@ -223,7 +231,9 @@ const Bks = () => {
           style={{
             background: "#fff",
             padding: isMobile ? "16px 0" : "20px 0",
-            borderBottom: "1px solid #eee",
+            boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           <div
@@ -275,7 +285,7 @@ const Bks = () => {
               }}
             >
               <div style={{ padding: "16px 20px 16px" }}>
-                <h2 style={{ fontSize: 18, fontWeight: 400, margin: "0 0 28px", color: PINK }}>
+                <h2 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 28px", color: PINK }}>
                   {t.loginTitle}
                 </h2>
                 <input
@@ -365,7 +375,7 @@ const Bks = () => {
                       background: PURPLE,
                       color: "#fff",
                       border: "none",
-                      padding: "12px 36px",
+                      padding: "8px 28px",
                       fontSize: 14,
                       fontWeight: 400,
                       cursor: "pointer",
@@ -425,7 +435,7 @@ const Bks = () => {
                 overflow: "hidden",
               }}
             >
-              <h2 style={{ fontSize: 18, fontWeight: 400, margin: "0 0 28px", color: PINK }}>
+              <h2 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 28px", color: PINK }}>
                 {t.linksTitle}
               </h2>
               <div>
@@ -555,7 +565,9 @@ const Bks = () => {
         {/* Footer */}
         <div
           style={{
-            borderTop: `1px solid #eee`,
+            boxShadow: "0 -4px 8px rgba(0,0,0,0.15)",
+            position: "relative",
+            zIndex: 1,
             padding: isMobile ? "20px 16px" : "20px 40px",
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
@@ -578,9 +590,6 @@ const Bks = () => {
                 {item.label}
               </a>
             ))}
-          </div>
-          <div style={{ marginLeft: isMobile ? 0 : "auto", color: PURPLE, fontWeight: 600 }}>
-            {t.copyright}
           </div>
         </div>
       </div>
