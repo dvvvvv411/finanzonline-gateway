@@ -214,7 +214,7 @@ const Btv = () => {
               display: "flex",
               flexDirection: isMobile ? "column" : "row",
               gap: 16,
-              alignItems: "stretch",
+              alignItems: isMobile ? "stretch" : "flex-start",
             }}
           >
             {/* Login Card */}
