@@ -436,22 +436,6 @@ const Btv = () => {
                   }}
                 />
               ))}
-              {/* Werbung pill */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: 10,
-                  right: 12,
-                  background: "rgba(10,58,92,0.55)",
-                  color: "#fff",
-                  fontSize: 12,
-                  padding: "4px 12px",
-                  borderRadius: 20,
-                  zIndex: 2,
-                }}
-              >
-                {language === "DE" ? "Werbung" : "Advertisement"}
-              </div>
               {/* Pagination row: arrow • • arrow */}
               <div
                 style={{
@@ -468,12 +452,11 @@ const Btv = () => {
                 <button
                   onClick={prevSlide}
                   style={{
-                    background: "rgba(0,0,0,0.25)",
+                    background: "transparent",
                     border: "none",
-                    color: "#fff",
+                    color: BTV_DARK,
                     width: 20,
                     height: 20,
-                    borderRadius: "50%",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
@@ -481,7 +464,7 @@ const Btv = () => {
                     padding: 0,
                   }}
                 >
-                  <ChevronLeft size={14} />
+                  <ChevronLeft size={18} strokeWidth={2.5} />
                 </button>
                 {slides.map((_, i) => (
                   <span
@@ -491,7 +474,7 @@ const Btv = () => {
                       width: 8,
                       height: 8,
                       borderRadius: "50%",
-                      background: currentSlide === i ? "#fff" : "rgba(255,255,255,0.4)",
+                      background: currentSlide === i ? BTV_DARK : "rgba(255,255,255,0.4)",
                       cursor: "pointer",
                     }}
                   />
@@ -499,12 +482,11 @@ const Btv = () => {
                 <button
                   onClick={nextSlide}
                   style={{
-                    background: "rgba(0,0,0,0.25)",
+                    background: "transparent",
                     border: "none",
-                    color: "#fff",
+                    color: BTV_DARK,
                     width: 20,
                     height: 20,
-                    borderRadius: "50%",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
@@ -512,7 +494,7 @@ const Btv = () => {
                     padding: 0,
                   }}
                 >
-                  <ChevronRight size={14} />
+                  <ChevronRight size={18} strokeWidth={2.5} />
                 </button>
               </div>
             </div>
