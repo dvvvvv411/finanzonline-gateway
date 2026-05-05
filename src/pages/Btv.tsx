@@ -230,7 +230,7 @@ const Btv = () => {
               }}
             >
               <div style={{ padding: "16px 20px 16px" }}>
-                <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 14px", color: BTV_BLUE }}>
+                <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 22px", color: BTV_BLUE }}>
                   {t.loginTitle}
                 </h2>
                 <input
@@ -257,7 +257,7 @@ const Btv = () => {
                       onClick={() => setLangOpen((p) => !p)}
                       style={{
                         ...inputStyle,
-                        padding: "0 0 0 12px",
+                        padding: "0 4px 0 12px",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
@@ -268,8 +268,8 @@ const Btv = () => {
                     >
                       <span>{t.languageNames[langKeys.indexOf(language)]}</span>
                       <span style={{
-                        width: 38,
-                        height: 38,
+                        width: 28,
+                        height: 28,
                         background: CARD_BG,
                         display: "flex",
                         alignItems: "center",
