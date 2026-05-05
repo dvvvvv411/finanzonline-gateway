@@ -383,7 +383,7 @@ const Bks = () => {
                       background: PURPLE,
                       color: "#fff",
                       border: "none",
-                      padding: "5px 36px",
+                      padding: "9px 36px",
                       fontSize: 14,
                       lineHeight: 1.2,
                       fontWeight: 400,
