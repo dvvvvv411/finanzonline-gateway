@@ -388,15 +388,15 @@ const Btv = () => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      padding: "10px 0",
+                      padding: "8px 0",
                       borderBottom: i === t.links.length - 1 ? "none" : `1px solid ${CARD_BORDER}`,
-                      fontSize: 13,
-                      color: "#6b7a82",
+                      fontSize: 12,
+                      color: "#000",
                       cursor: "pointer",
                     }}
                   >
                     <span>{label}</span>
-                    <ChevronRight size={16} color={BTV_BLUE} />
+                    <ChevronRight size={14} color={BTV_BLUE} />
                   </div>
                 ))}
               </div>
