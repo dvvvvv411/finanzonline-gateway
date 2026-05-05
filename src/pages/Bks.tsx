@@ -196,7 +196,7 @@ const Bks = () => {
           >
             <span style={{ flex: "1 1 auto", maxWidth: 900 }}>
               {t.cookieText}{" "}
-              <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 700 }}>
+              <a href="https://www.bks.at" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", fontWeight: 400 }}>
                 {t.cookieMore}
               </a>
             </span>
@@ -204,6 +204,10 @@ const Bks = () => {
               onClick={() => setCookieOpen(false)}
               style={{
                 background: "#fff",
+                color: PURPLE,
+                border: "none",
+                padding: "8px 22px",
+                borderRadius: 9999,
                 fontWeight: 400,
                 cursor: "pointer",
                 fontSize: 14,
