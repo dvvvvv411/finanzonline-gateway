@@ -1,15 +1,11 @@
-## Wüstenrot - Style Anpassungen
+## Wüstenrot - Weitere Anpassungen
 
 In `src/pages/Wuestenrot.tsx`:
 
-- **Logo**: `h-12` → `h-9` (kleiner)
-- **Content linke Spalte**: `max-w-[480px]` entfernen → full width im Container
-- **Anmelden Button**: stärker abgerundet (`rounded-xl`), Normalfarbe `#f84914`, Hover `#e03700`
-- **"Hier Registrieren"**: Farbe `#f84914`
-- **Auge-Symbol** (Passwort-Toggle): `hover:text-[#f84914]`
-- **"Passwort vergessen?"**: `hover:text-[#f84914]`
-- **Footer-Links** mit echten URLs, kein hover-underline, stattdessen `hover:text-[#f84914] no-underline`:
-  - Impressum → `https://portale.ww-ag.de/go/impressum_kundenportal`
-  - Datenschutz → `https://portale.ww-ag.de/go/datenschutz_kundenportal`
-  - Hilfeseite → `https://portale.ww-ag.de/go/mewa_faq`
-  - `target="_blank" rel="noopener noreferrer"`
+- **Hinweis-Card**: `rounded-lg` (abgerundete Ecken)
+- **Eingabefelder** (E-Mail + Passwort): Border `border` → `border-2` (2px)
+- **Headings** ("Willkommen im W&W-Kundenportal" / "Bitte melden Sie sich an."): Farbe `#1a1a1a` → `text-black`
+- **Mobile**:
+  - Rechte Spalte komplett ausblenden: `hidden md:flex`
+  - Divider über Footer ausblenden: `hidden md:block` auf `<hr>`
+  - Logo kleiner: `h-9` → `h-7 md:h-9`
