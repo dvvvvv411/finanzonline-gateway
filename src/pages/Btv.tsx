@@ -360,17 +360,19 @@ const Btv = () => {
                   background: "#668da3",
                   color: "#fff",
                   display: "flex",
-                  alignItems: "stretch",
+                  alignItems: "center",
                   justifyContent: "flex-end",
                   fontSize: 14,
                   fontWeight: 700,
                   cursor: "default",
                   minHeight: 44,
+                  paddingRight: 60,
+                  gap: 8,
                 }}
               >
-                <div style={{ width: 1, background: "#fff" }} />
-                <div style={{ padding: "12px 12px" }}>{t.firstLogin}</div>
-                <div style={{ width: 1, background: "#fff" }} />
+                <div style={{ width: 1, height: 16, background: "#fff" }} />
+                <div>{t.firstLogin}</div>
+                <div style={{ width: 1, height: 16, background: "#fff" }} />
               </div>
             </div>
 
