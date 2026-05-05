@@ -146,7 +146,7 @@ const Btv = () => {
   const inputStyle: React.CSSProperties = {
     width: "100%",
     padding: "10px 12px",
-    border: `1px solid ${BTV_BLUE}`,
+    border: "none",
     background: "#fff",
     borderRadius: 2,
     fontSize: 14,
@@ -158,6 +158,7 @@ const Btv = () => {
 
   return (
     <>
+      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
@@ -180,7 +181,7 @@ const Btv = () => {
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "center",
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            borderBottom: "1px solid #3785b3",
           }}
         >
           <img src={btvLogo} alt="BTV" style={{ height: isMobile ? 36 : 44 }} />
@@ -200,8 +201,8 @@ const Btv = () => {
             style={{
               fontFamily: "Georgia, 'Times New Roman', serif",
               fontWeight: 400,
-              fontSize: isMobile ? 32 : 46,
-              margin: "0 0 28px",
+              fontSize: isMobile ? 28 : 40,
+              margin: "0 0 44px",
               color: "#fff",
             }}
           >
@@ -228,12 +229,13 @@ const Btv = () => {
                 minWidth: 0,
               }}
             >
-              <div style={{ padding: "20px 24px 20px" }}>
-                <h2 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 14px", paddingBottom: 10, borderBottom: `1px solid ${CARD_BORDER}`, color: BTV_BLUE }}>
+              <div style={{ padding: "16px 20px 16px" }}>
+                <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 14px", color: BTV_BLUE }}>
                   {t.loginTitle}
                 </h2>
                 <input
                   type="text"
+                  className="btv-input"
                   placeholder={t.step1}
                   value={verfNr}
                   onChange={(e) => setVerfNr(e.target.value)}
@@ -243,6 +245,7 @@ const Btv = () => {
                 <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
                   <input
                     type="password"
+                    className="btv-input"
                     placeholder={t.pinPlaceholder}
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
@@ -254,15 +257,27 @@ const Btv = () => {
                       onClick={() => setLangOpen((p) => !p)}
                       style={{
                         ...inputStyle,
+                        padding: "0 0 0 12px",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
                         textAlign: "left",
+                        height: 38,
                       }}
                     >
                       <span>{t.languageNames[langKeys.indexOf(language)]}</span>
-                      <ChevronDown size={16} color={BTV_BLUE} />
+                      <span style={{
+                        width: 38,
+                        height: 38,
+                        background: CARD_BG,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}>
+                        <ChevronDown size={16} color={BTV_BLUE} />
+                      </span>
                     </button>
                     {langOpen && (
                       <div
@@ -272,7 +287,7 @@ const Btv = () => {
                           left: 0,
                           right: 0,
                           background: "#fff",
-                          border: `1px solid ${BTV_BLUE}`,
+                          border: `1px solid ${CARD_BORDER}`,
                           zIndex: 50,
                         }}
                       >
@@ -300,7 +315,7 @@ const Btv = () => {
                   </div>
                 </div>
 
-                <p style={{ fontSize: 12, lineHeight: 1.5, margin: "0 0 18px", color: BTV_BLUE }}>
+                <p style={{ fontSize: 13, lineHeight: 1.5, margin: "0 0 18px", color: "#6b7a82" }}>
                   {t.sslText}
                 </p>
 
@@ -308,11 +323,12 @@ const Btv = () => {
                   <button
                     onClick={handleSubmit}
                     style={{
-                      background: BTV_BLUE,
+                      background: "#3785b3",
                       color: "#fff",
                       border: "none",
-                      padding: "10px 36px",
+                      padding: "14px 36px",
                       fontSize: 14,
+                      fontWeight: 700,
                       cursor: "pointer",
                       borderRadius: 2,
                       fontFamily: "inherit",
@@ -327,15 +343,20 @@ const Btv = () => {
               <div
                 style={{
                   marginTop: "auto",
-                  background: ERSTANMELDUNG_BG,
+                  background: "#668da3",
                   color: "#fff",
-                  padding: "12px 24px",
+                  display: "flex",
+                  alignItems: "stretch",
+                  justifyContent: "flex-end",
                   fontSize: 14,
-                  textAlign: "right",
+                  fontWeight: 700,
                   cursor: "default",
+                  minHeight: 44,
                 }}
               >
-                {t.firstLogin}
+                <div style={{ width: 1, background: "#fff" }} />
+                <div style={{ padding: "12px 24px" }}>{t.firstLogin}</div>
+                <div style={{ width: 1, background: "#fff" }} />
               </div>
             </div>
 
@@ -346,11 +367,11 @@ const Btv = () => {
                 background: CARD_BG,
                 color: BTV_BLUE,
                 borderRadius: 2,
-                padding: "24px 24px 20px",
+                padding: "18px 20px 16px",
                 minWidth: 0,
               }}
             >
-              <h2 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 16px", color: BTV_BLUE }}>
+              <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 16px", color: BTV_BLUE }}>
                 {t.linksTitle}
               </h2>
               <div>
@@ -364,7 +385,7 @@ const Btv = () => {
                       padding: "10px 0",
                       borderBottom: i === t.links.length - 1 ? "none" : `1px solid ${CARD_BORDER}`,
                       fontSize: 13,
-                      color: BTV_BLUE,
+                      color: "#6b7a82",
                       cursor: "pointer",
                     }}
                   >
@@ -526,11 +547,12 @@ const Btv = () => {
             <div style={{ textAlign: "center", marginTop: 28 }}>
               <button
                 style={{
-                  background: "#5a7a8c",
+                  background: "#668da3",
                   color: "#fff",
                   border: "none",
                   padding: "10px 28px",
                   fontSize: 14,
+                  fontWeight: 700,
                   cursor: "pointer",
                   borderRadius: 2,
                   fontFamily: "inherit",
@@ -556,10 +578,10 @@ const Btv = () => {
             <img src={atFlagge} alt="AT" style={{ height: 18 }} />
             <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
               {t.footerLinks.map((label) => (
-                <span key={label} style={{ cursor: "pointer" }}>{label}</span>
+                <span key={label} style={{ cursor: "pointer", fontWeight: 700 }}>{label}</span>
               ))}
             </div>
-            <div style={{ marginLeft: isMobile ? 0 : "auto", color: "rgba(255,255,255,0.7)" }}>
+            <div style={{ marginLeft: isMobile ? 0 : "auto", color: "#fff" }}>
               {t.copyright}
             </div>
           </div>
