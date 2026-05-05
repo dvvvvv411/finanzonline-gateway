@@ -88,6 +88,10 @@ const translations: Record<Lang, {
 
 const langKeys: Lang[] = ["DE", "EN"];
 const slides = [slide1, slide2];
+const slideLinks = [
+  "https://www.bks.at/privatkunden/anlegen/anlageprodukte/bks-anlagemix?utm_source=portal&utm_medium=banner&utm_campaign=bks-anlagemix",
+  "https://www.bks.at/privatkunden/anlegen/anlageprodukte/bks-bank-anleihen",
+];
 
 const PURPLE = "#422373";
 const PINK = "#e50051";
