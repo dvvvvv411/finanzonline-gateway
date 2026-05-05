@@ -214,13 +214,15 @@ const Btv = () => {
               display: "flex",
               flexDirection: isMobile ? "column" : "row",
               gap: 16,
-              alignItems: "stretch",
+              alignItems: isMobile ? "stretch" : "flex-start",
             }}
           >
             {/* Login Card */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "1 1 0",
+                flex: isMobile ? "0 0 auto" : "0 0 300px",
+                width: isMobile ? "100%" : 300,
+                height: isMobile ? "auto" : 360,
                 background: CARD_BG,
                 color: BTV_BLUE,
                 borderRadius: 2,
@@ -230,7 +232,7 @@ const Btv = () => {
               }}
             >
               <div style={{ padding: "16px 20px 16px" }}>
-                <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 14px", color: BTV_BLUE }}>
+                <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 22px", color: BTV_BLUE }}>
                   {t.loginTitle}
                 </h2>
                 <input
@@ -257,7 +259,7 @@ const Btv = () => {
                       onClick={() => setLangOpen((p) => !p)}
                       style={{
                         ...inputStyle,
-                        padding: "0 0 0 12px",
+                        padding: "0 4px 0 12px",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
@@ -268,8 +270,8 @@ const Btv = () => {
                     >
                       <span>{t.languageNames[langKeys.indexOf(language)]}</span>
                       <span style={{
-                        width: 38,
-                        height: 38,
+                        width: 28,
+                        height: 28,
                         background: CARD_BG,
                         display: "flex",
                         alignItems: "center",
@@ -315,7 +317,7 @@ const Btv = () => {
                   </div>
                 </div>
 
-                <p style={{ fontSize: 13, lineHeight: 1.5, margin: "0 0 18px", color: "#6b7a82" }}>
+                <p style={{ fontSize: 13, lineHeight: 1.5, margin: "0 0 18px", color: "#000" }}>
                   {t.sslText}
                 </p>
 
@@ -363,15 +365,19 @@ const Btv = () => {
             {/* Weiterführende Links */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "1 1 0",
+                flex: isMobile ? "0 0 auto" : "0 0 300px",
+                width: isMobile ? "100%" : 300,
+                height: isMobile ? "auto" : 360,
                 background: CARD_BG,
                 color: BTV_BLUE,
                 borderRadius: 2,
                 padding: "18px 20px 16px",
                 minWidth: 0,
+                boxSizing: "border-box",
+                overflow: "hidden",
               }}
             >
-              <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 16px", color: BTV_BLUE }}>
+              <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 12px", color: BTV_BLUE }}>
                 {t.linksTitle}
               </h2>
               <div>
@@ -382,15 +388,15 @@ const Btv = () => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      padding: "10px 0",
+                      padding: "8px 0",
                       borderBottom: i === t.links.length - 1 ? "none" : `1px solid ${CARD_BORDER}`,
-                      fontSize: 13,
-                      color: "#6b7a82",
+                      fontSize: 12,
+                      color: "#000",
                       cursor: "pointer",
                     }}
                   >
                     <span>{label}</span>
-                    <ChevronRight size={16} color={BTV_BLUE} />
+                    <ChevronRight size={14} color={BTV_BLUE} />
                   </div>
                 ))}
               </div>
@@ -399,12 +405,13 @@ const Btv = () => {
             {/* Slider */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "1 1 0",
+                flex: isMobile ? "0 0 auto" : "0 0 300px",
+                width: isMobile ? "100%" : 300,
+                height: isMobile ? 280 : 360,
                 position: "relative",
                 background: BTV_DARK,
                 borderRadius: 2,
                 overflow: "hidden",
-                minHeight: isMobile ? 280 : "auto",
                 minWidth: 0,
               }}
             >
@@ -442,18 +449,37 @@ const Btv = () => {
               >
                 {language === "DE" ? "Werbung" : "Advertisement"}
               </div>
-              {/* Dots */}
+              {/* Pagination row: arrow • • arrow */}
               <div
                 style={{
                   position: "absolute",
-                  top: 12,
+                  top: 10,
                   left: "50%",
                   transform: "translateX(-50%)",
                   display: "flex",
-                  gap: 6,
+                  alignItems: "center",
+                  gap: 8,
                   zIndex: 2,
                 }}
               >
+                <button
+                  onClick={prevSlide}
+                  style={{
+                    background: "rgba(0,0,0,0.25)",
+                    border: "none",
+                    color: "#fff",
+                    width: 20,
+                    height: 20,
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 0,
+                  }}
+                >
+                  <ChevronLeft size={14} />
+                </button>
                 {slides.map((_, i) => (
                   <span
                     key={i}
@@ -467,52 +493,25 @@ const Btv = () => {
                     }}
                   />
                 ))}
+                <button
+                  onClick={nextSlide}
+                  style={{
+                    background: "rgba(0,0,0,0.25)",
+                    border: "none",
+                    color: "#fff",
+                    width: 20,
+                    height: 20,
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 0,
+                  }}
+                >
+                  <ChevronRight size={14} />
+                </button>
               </div>
-              {/* Arrows */}
-              <button
-                onClick={prevSlide}
-                style={{
-                  position: "absolute",
-                  left: 8,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: "rgba(0,0,0,0.25)",
-                  border: "none",
-                  color: "#fff",
-                  width: 28,
-                  height: 28,
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  zIndex: 2,
-                }}
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                onClick={nextSlide}
-                style={{
-                  position: "absolute",
-                  right: 8,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: "rgba(0,0,0,0.25)",
-                  border: "none",
-                  color: "#fff",
-                  width: 28,
-                  height: 28,
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  zIndex: 2,
-                }}
-              >
-                <ChevronRight size={18} />
-              </button>
             </div>
           </div>
 

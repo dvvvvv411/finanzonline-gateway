@@ -1,48 +1,34 @@
-## /btv – Feinschliff Runde 2
+## /btv – Feinschliff Runde 3
 
-Alle Änderungen ausschließlich in `src/pages/Btv.tsx`. Keine neuen Assets, keine DB-/Edge-Changes.
+Alle Änderungen in `src/pages/Btv.tsx`.
 
-### 1. Hero-Titel
-- `Willkommen bei meineBTV!` von `46px` → `40px` (Desktop), `32px` → `28px` (Mobile).
-- Margin-bottom von `28px` → `44px` (mehr Abstand zum Content).
+### 1. Sprach-Selector Pfeil
+- Chevron-Box rechts: aktuell füllt sie die ganze Höhe des Buttons. Stattdessen kleinere `28×28` Box mit weißem Rand drumherum (4px Abstand zum Button-Rand), damit links/rechts/oben/unten der Box noch Weiß sichtbar ist.
+- Button-Padding `0 0 0 12px` → `0 4px 0 12px`.
+- Box-Größe `38×38` → `28×28`, vertikal zentriert via `align-items:center`.
 
-### 2. Header-Divider
-- `borderBottom` der Header-Leiste von `rgba(255,255,255,0.08)` → **`#3785b3`** (1px solid).
+### 2. Weiterführende Links – Textfarbe
+- Link-Texte von `#6b7a82` → **schwarz** (`#000`).
 
-### 3. Login-Karte
-- **Divider unter „Anmeldung" entfernen** (`borderBottom` und `paddingBottom` am `<h2>` weg).
-- **Inputs (Verfügernummer, PIN, Sprache):** `border: 1px solid #0a3a5c` → **`border: none`** (keine Outline). Hintergrund bleibt weiß.
-- **Placeholder-Farbe** für „Ihre Verfügernummer" und „Pin" → BTV_BLUE (`#0a3a5c`), gleicher Ton wie der „Deutsch"-Text. Umsetzung via inline `<style>`-Block mit `::placeholder { color: #0a3a5c; opacity: 1; }` scoped auf die BTV-Inputs (eigene Klasse `btv-input`).
-- **Sprach-Dropdown Chevron:** ChevronDown-Icon bekommt einen quadratischen Hintergrund in **CARD_BG** (`#e8eef2`), z. B. `28×28` Box rechts im Button.
-- **„Weiter"-Button:**
-  - Background **`#3785b3`** (statt BTV_BLUE).
-  - Text **bold** (`fontWeight: 700`).
-  - Vertikales Padding größer: `padding: 14px 36px` (vorher `10px 36px`) → Button sichtbar höher.
-- **SSL-Hinweistext:**
-  - Farbe → grau (`#6b7a82`).
-  - Schriftgröße `12px` → `13px`.
-- **Erstanmeldung-Balken:**
-  - Background **`#668da3`** (statt `#7a8a96`).
-  - Text **„Erstanmeldung" bold** (`fontWeight: 700`).
-  - Links und rechts vom Text je ein **vertikaler weißer Divider** (1px breit), der von oben bis unten durch den Balken geht. Umsetzung: Balken als Flex-Container, Text rechts, davor/danach `<div style={{ width:1, alignSelf:'stretch', background:'#fff' }} />`.
+### 3. Slider Pagination + Pfeile
+- Pfeile (links/rechts) nicht mehr vertikal in der Mitte, sondern oben mittig **neben den Punkten**.
+- Layout: Container oben mittig (`top: 8px`) mit Flex: `[‹] • • [›]`, gap 6.
+- Hintergrund der Pfeile transparent/leicht abgedunkelt, kleine 20×20 Buttons.
+- Alte absolute `left/right` Pfeile entfernen.
 
-### 4. Weiterführende Links Karte
-- Link-Texte (`t.links[i]`) Farbe von BTV_BLUE → **grau** (`#6b7a82`). Chevron bleibt BTV_BLUE.
+### 4. Card-Größe (alle 3 Cards)
+- Feste Größe **300×360 px** für jede Card.
+- Container-Layout: Cards nicht mehr `flex: 1 1 0` sondern `flex: 0 0 300px`, `height: 360px`.
+- Login-Card: innerer Inhalt bleibt; Erstanmeldung-Balken sitzt unten via `marginTop:auto` (bereits vorhanden).
+- Links-Card: bei Überlauf evtl. Inhalt bleibt sichtbar; ggf. Schrift kleiner. Aber 7 Items × ~36px ≈ 252px + Header → passt knapp in 360px. OK lassen.
+- Slider: feste 300×360, `objectFit: cover` bleibt.
+- Layout-Wrapper bleibt flex row mit gap 16, alignItems flex-start.
 
-### 5. Karten-Größe (alle 3 Cards)
-- Padding leicht reduzieren, um die Cards optisch kleiner zu machen:
-  - Login-Card innerer Padding `20px 24px` → `16px 20px`.
-  - Links-Card `24px 24px 20px` → `18px 20px 16px`.
-  - Slider behält Layout, aber Container-Höhe folgt automatisch durch flex-stretch — kleinere Nachbarn = kleinerer Slider.
-- Schriftgrößen der Card-Titel `18px` → `16px`.
+### 5. Anmeldung Titel Abstand
+- `<h2>Anmeldung</h2>` margin-bottom `14px` → `22px` (mehr Luft zu den Eingabefeldern).
 
-### 6. „Weitere Nachrichten anzeigen"-Button
-- Background **`#668da3`** (statt `#5a7a8c`).
-- Text **bold** (`fontWeight: 700`).
-
-### 7. Footer
-- Footer-Links (`Impressum`, `Rechtliche Hinweise`, `Standorte`, `Support`) **bold** (`fontWeight: 700`).
-- `© 2026 BTV AG` Farbe **`#fff`** (statt `rgba(255,255,255,0.7)`).
+### 6. SSL-Hinweis Farbe
+- Farbe `#6b7a82` → **schwarz** (`#000`).
 
 ### Betroffene Dateien
 - `src/pages/Btv.tsx`
