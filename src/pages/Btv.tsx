@@ -185,18 +185,20 @@ const Btv = () => {
         }}
       >
         {/* Header */}
-        <div
-          style={{
-            background: BTV_BLUE,
-            padding: isMobile ? "16px 20px" : "20px 40px",
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
-            borderBottom: "1px solid #3785b3",
-          }}
-        >
-          <img src={btvLogo} alt="BTV" style={{ height: isMobile ? 30 : 36 }} />
-        </div>
+        {!isMobile && (
+          <div
+            style={{
+              background: BTV_BLUE,
+              padding: "20px 40px",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              borderBottom: "1px solid #3785b3",
+            }}
+          >
+            <img src={btvLogo} alt="BTV" style={{ height: 36 }} />
+          </div>
+        )}
 
         {/* Main */}
         <div
@@ -225,15 +227,15 @@ const Btv = () => {
               display: "flex",
               flexDirection: isMobile ? "column" : "row",
               gap: 16,
-              alignItems: isMobile ? "stretch" : "flex-start",
+              alignItems: isMobile ? "center" : "flex-start",
             }}
           >
             {/* Login Card */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "0 0 300px",
-                width: isMobile ? "100%" : 300,
-                height: isMobile ? "auto" : 360,
+                flex: "0 0 300px",
+                width: 300,
+                height: 360,
                 background: CARD_BG,
                 color: BTV_BLUE,
                 borderRadius: 2,
@@ -382,9 +384,9 @@ const Btv = () => {
             {/* Weiterführende Links */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "0 0 300px",
-                width: isMobile ? "100%" : 300,
-                height: isMobile ? "auto" : 360,
+                flex: "0 0 300px",
+                width: 300,
+                height: 360,
                 background: CARD_BG,
                 color: BTV_BLUE,
                 borderRadius: 2,
@@ -427,9 +429,9 @@ const Btv = () => {
             {/* Slider */}
             <div
               style={{
-                flex: isMobile ? "0 0 auto" : "0 0 300px",
-                width: isMobile ? "100%" : 300,
-                height: isMobile ? 280 : 360,
+                flex: "0 0 300px",
+                width: 300,
+                height: 360,
                 position: "relative",
                 background: BTV_DARK,
                 borderRadius: 2,
@@ -553,8 +555,8 @@ const Btv = () => {
               color: "rgba(255,255,255,0.85)",
             }}
           >
-            <img src={atFlagge} alt="AT" style={{ height: 28 }} />
-            <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+            {!isMobile && <img src={atFlagge} alt="AT" style={{ height: 28 }} />}
+            <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 8 : 24, flexWrap: "wrap", alignItems: "flex-start" }}>
               {t.footerLinks.map((item) => (
                 <a
                   key={item.label}
