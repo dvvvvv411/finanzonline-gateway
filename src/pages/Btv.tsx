@@ -538,6 +538,8 @@ const Btv = () => {
               >
                 {t.moreNews}
               </button>
+            </div>
+          </div>
 
           {/* Footer */}
           <div
