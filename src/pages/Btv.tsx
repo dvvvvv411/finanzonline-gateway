@@ -393,9 +393,12 @@ const Btv = () => {
                 {t.linksTitle}
               </h2>
               <div>
-                {t.links.map((label, i) => (
-                  <div
+                {t.links.map((item, i) => (
+                  <a
                     key={i}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btv-link-row"
                     style={{
                       display: "flex",
@@ -406,11 +409,12 @@ const Btv = () => {
                       fontSize: 12,
                       cursor: "pointer",
                       gap: 8,
+                      textDecoration: "none",
                     }}
                   >
-                    <span className="btv-link-text" style={{ whiteSpace: "pre-line", lineHeight: 1.3 }}>{label}</span>
+                    <span className="btv-link-text" style={{ whiteSpace: "pre-line", lineHeight: 1.3 }}>{item.label}</span>
                     <ChevronRight size={18} color="#000" style={{ flexShrink: 0 }} />
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
