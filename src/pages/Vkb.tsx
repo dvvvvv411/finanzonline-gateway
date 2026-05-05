@@ -146,7 +146,7 @@ const Vkb = () => {
           <label
             className={`pointer-events-none absolute left-3 z-10 transition-all duration-200 ${
               selectLabelFloated
-                ? `top-0 text-xs ${bundeslandTouched && !bundesland && !selectOpen ? "text-red-600" : "text-gray-500"}`
+                ? `top-1 text-xs ${bundeslandTouched && !bundesland && !selectOpen ? "text-red-600" : "text-gray-500"}`
                 : `top-3 text-sm ${bundeslandTouched && !bundesland ? "text-red-600" : "text-gray-500"}`
             }`}
           >
@@ -155,7 +155,7 @@ const Vkb = () => {
           <div
             onClick={() => setSelectOpen(!selectOpen)}
             onBlur={() => setBundeslandTouched(true)}
-            className={`w-full cursor-pointer border-b-2 px-3 pb-3 pt-3 text-base text-[#1a1a1a] outline-none ${
+            className={`w-full cursor-pointer border-b-2 px-3 pb-3 pt-5 text-base text-[#1a1a1a] outline-none ${
               selectOpen ? "border-[#87da5a] bg-[#e8f5df]" : bundeslandTouched && !bundesland ? "border-red-600 bg-[#f4f4f4]" : "border-[#1a1a1a] bg-[#f4f4f4]"
             }`}
           >
