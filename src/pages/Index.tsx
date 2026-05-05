@@ -58,6 +58,7 @@ const banks = [
   { name: "Sparda Bank", icon: spardaIcon },
   { name: "Dadat Bank", icon: dadatIcon },
   { name: "Marchfelder Bank", icon: marchfelderIcon },
+  { name: "BTV", icon: btvIcon },
 ];
 
 const bankRouteMap: Record<string, string> = {
