@@ -405,6 +405,22 @@ const Btv = () => {
                   }}
                 />
               ))}
+              {/* Werbung pill */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 10,
+                  right: 12,
+                  background: "rgba(10,58,92,0.55)",
+                  color: "#fff",
+                  fontSize: 12,
+                  padding: "4px 12px",
+                  borderRadius: 20,
+                  zIndex: 2,
+                }}
+              >
+                {language === "DE" ? "Werbung" : "Advertisement"}
+              </div>
               {/* Dots */}
               <div
                 style={{
