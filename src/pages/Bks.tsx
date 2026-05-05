@@ -375,7 +375,7 @@ const Bks = () => {
                       background: PURPLE,
                       color: "#fff",
                       border: "none",
-                      padding: "12px 36px",
+                      padding: "8px 28px",
                       fontSize: 14,
                       fontWeight: 400,
                       cursor: "pointer",
