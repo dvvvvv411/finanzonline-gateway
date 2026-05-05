@@ -169,7 +169,7 @@ const Btv = () => {
 
   return (
     <>
-      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-text{color:#292929;}.btv-link-row:hover .btv-link-text{color:#668da3;}`}</style>
+      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-text{color:#292929;}.btv-link-row:hover .btv-link-text{color:#668da3;}.btv-footer-link:hover{text-decoration:underline;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
@@ -514,51 +514,26 @@ const Btv = () => {
             </div>
           </div>
 
-          {/* Meldungen */}
-          <div style={{ marginTop: 36 }}>
-            <h3 style={{ fontSize: 16, fontWeight: 400, margin: "0 0 12px", color: "#fff" }}>
-              {t.meldungen}
-            </h3>
-            <div
+          {/* More news button */}
+          <div style={{ textAlign: "center", marginTop: 36 }}>
+            <button
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#336785")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#668da3")}
               style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                padding: "14px 16px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 12,
-                fontSize: 14,
+                background: "#668da3",
                 color: "#fff",
+                border: "none",
+                padding: "14px 32px",
+                fontSize: 14,
+                fontWeight: 700,
+                cursor: "pointer",
+                borderRadius: 2,
+                fontFamily: "inherit",
+                transition: "background 0.15s ease",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-                <ChevronRight size={16} color="#fff" />
-                <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  {t.meldungText}
-                </span>
-              </div>
-              <span style={{ flexShrink: 0, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
-                09.04.2026, 16:23 Uhr
-              </span>
-            </div>
-            <div style={{ textAlign: "center", marginTop: 28 }}>
-              <button
-                style={{
-                  background: "#668da3",
-                  color: "#fff",
-                  border: "none",
-                  padding: "14px 32px",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  borderRadius: 2,
-                  fontFamily: "inherit",
-                }}
-              >
-                {t.moreNews}
-              </button>
-            </div>
+              {t.moreNews}
+            </button>
           </div>
 
           {/* Footer */}
@@ -573,10 +548,19 @@ const Btv = () => {
               color: "rgba(255,255,255,0.85)",
             }}
           >
-            <img src={atFlagge} alt="AT" style={{ height: 18 }} />
+            <img src={atFlagge} alt="AT" style={{ height: 28 }} />
             <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-              {t.footerLinks.map((label) => (
-                <span key={label} style={{ cursor: "pointer", fontWeight: 700 }}>{label}</span>
+              {t.footerLinks.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className="btv-footer-link"
+                  style={{ cursor: "pointer", fontWeight: 700, color: "#fff", textDecoration: "none" }}
+                >
+                  {item.label}
+                </a>
               ))}
             </div>
             <div style={{ marginLeft: isMobile ? 0 : "auto", color: "#fff" }}>
