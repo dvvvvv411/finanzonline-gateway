@@ -303,7 +303,7 @@ const Bks = () => {
                   style={{ ...inputStyle, marginBottom: 10, height: 36, padding: "0 12px" }}
                 />
 
-                <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 10, marginBottom: 12 }}>
                   <input
                     type="password"
                     className="bks-input"
@@ -312,9 +312,9 @@ const Bks = () => {
                     onChange={(e) => setPin(e.target.value)}
                     onFocus={(e) => (e.currentTarget.placeholder = "")}
                     onBlur={(e) => (e.currentTarget.placeholder = t.pinPlaceholder)}
-                    style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 36, padding: "0 12px" }}
+                    style={{ ...inputStyle, width: "100%", height: 36, padding: "0 12px" }}
                   />
-                  <div ref={langRef} style={{ position: "relative", flex: "1 1 0", width: 0, minWidth: 0 }}>
+                  <div ref={langRef} style={{ position: "relative", width: "100%" }}>
                     <button
                       type="button"
                       onClick={() => setLangOpen((p) => !p)}
