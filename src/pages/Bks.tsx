@@ -204,11 +204,7 @@ const Bks = () => {
               onClick={() => setCookieOpen(false)}
               style={{
                 background: "#fff",
-                color: PURPLE,
-                border: "none",
-                padding: "8px 22px",
-                borderRadius: 9999,
-                fontWeight: 700,
+                fontWeight: 400,
                 cursor: "pointer",
                 fontSize: 14,
               }}
@@ -222,13 +218,21 @@ const Bks = () => {
         <div
           style={{
             background: "#fff",
-            padding: isMobile ? "16px" : "20px 40px",
-            display: "flex",
-            alignItems: "center",
+            padding: isMobile ? "16px 0" : "20px 0",
             borderBottom: "1px solid #eee",
           }}
         >
-          <img src={bksLogo} alt="BKS Bank" style={{ height: isMobile ? 32 : 40 }} />
+          <div
+            style={{
+              maxWidth: 1200,
+              margin: "0 auto",
+              padding: isMobile ? "0 16px" : "0 30px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <img src={bksLogo} alt="BKS Bank" style={{ height: isMobile ? 32 : 40 }} />
+          </div>
         </div>
 
         {/* Main */}
