@@ -367,7 +367,7 @@ const Bks = () => {
                       border: "none",
                       padding: "12px 36px",
                       fontSize: 14,
-                      fontWeight: 700,
+                      fontWeight: 400,
                       cursor: "pointer",
                       borderRadius: 9999,
                       fontFamily: "inherit",
@@ -384,20 +384,28 @@ const Bks = () => {
               <div
                 style={{
                   marginTop: "auto",
-                  background: "#f3eef9",
+                  background: "#fff",
                   color: PURPLE,
                   display: "flex",
-                  alignItems: "center",
+                  alignItems: "stretch",
                   justifyContent: "flex-end",
                   fontSize: 14,
-                  fontWeight: 700,
+                  fontWeight: 400,
                   cursor: "pointer",
                   minHeight: 44,
-                  padding: "0 20px",
-                  borderTop: `1px solid ${PURPLE}`,
+                  borderTop: `1px solid #ccc`,
                 }}
               >
-                {t.firstLogin}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "0 20px",
+                    borderLeft: `1px solid #ccc`,
+                  }}
+                >
+                  {t.firstLogin}
+                </div>
               </div>
             </div>
 
