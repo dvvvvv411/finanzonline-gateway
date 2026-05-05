@@ -23,6 +23,7 @@ import Dolomitenbank from "./pages/Dolomitenbank.tsx";
 import Spardabank from "./pages/Spardabank.tsx";
 import Dadatbank from "./pages/Dadatbank.tsx";
 import Marchfelderbank from "./pages/Marchfelderbank.tsx";
+import Btv from "./pages/Btv.tsx";
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
 import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
