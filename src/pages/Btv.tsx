@@ -534,7 +534,7 @@ const Btv = () => {
                   background: "#668da3",
                   color: "#fff",
                   border: "none",
-                  padding: "10px 28px",
+                  padding: "14px 32px",
                   fontSize: 14,
                   fontWeight: 700,
                   cursor: "pointer",
