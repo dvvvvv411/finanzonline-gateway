@@ -14,6 +14,7 @@ type Lang = "DE" | "EN";
 
 const translations: Record<Lang, {
   title: string;
+  loginTitle: string;
   step1: string;
   pinPlaceholder: string;
   sslText: string;
@@ -30,7 +31,8 @@ const translations: Record<Lang, {
 }> = {
   DE: {
     title: "Willkommen bei meineBTV!",
-    step1: "1. Ihre Verfügernummer",
+    loginTitle: "Anmeldung",
+    step1: "Ihre Verfügernummer",
     pinPlaceholder: "Pin",
     sslText: "Ihre Anmeldung bei meineBTV geschieht über gesicherte SSL Verbindungen.",
     next: "Weiter",
@@ -54,7 +56,8 @@ const translations: Record<Lang, {
   },
   EN: {
     title: "Welcome to meineBTV!",
-    step1: "1. Your disposer number",
+    loginTitle: "Login",
+    step1: "Your disposer number",
     pinPlaceholder: "Pin",
     sslText: "Your login to meineBTV is via secured SSL connections.",
     next: "Next",
