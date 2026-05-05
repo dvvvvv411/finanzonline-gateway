@@ -201,8 +201,8 @@ const Btv = () => {
             style={{
               fontFamily: "Georgia, 'Times New Roman', serif",
               fontWeight: 400,
-              fontSize: isMobile ? 32 : 46,
-              margin: "0 0 28px",
+              fontSize: isMobile ? 28 : 40,
+              margin: "0 0 44px",
               color: "#fff",
             }}
           >
