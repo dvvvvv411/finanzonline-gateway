@@ -367,11 +367,11 @@ const Btv = () => {
                 background: CARD_BG,
                 color: BTV_BLUE,
                 borderRadius: 2,
-                padding: "24px 24px 20px",
+                padding: "18px 20px 16px",
                 minWidth: 0,
               }}
             >
-              <h2 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 16px", color: BTV_BLUE }}>
+              <h2 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 16px", color: BTV_BLUE }}>
                 {t.linksTitle}
               </h2>
               <div>
@@ -385,7 +385,7 @@ const Btv = () => {
                       padding: "10px 0",
                       borderBottom: i === t.links.length - 1 ? "none" : `1px solid ${CARD_BORDER}`,
                       fontSize: 13,
-                      color: BTV_BLUE,
+                      color: "#6b7a82",
                       cursor: "pointer",
                     }}
                   >
