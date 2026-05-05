@@ -181,7 +181,7 @@ const Denizbank = () => {
                         <HoverCardTrigger asChild>
                           <span><InfoBadge /></span>
                         </HoverCardTrigger>
-                        <HoverCardContent side="bottom" align="end" className="bg-[#555] text-white border-none text-xs leading-relaxed w-72">
+                        <HoverCardContent side="bottom" align="end" className="bg-[#555]/85 backdrop-blur-sm text-white border-none text-xs leading-relaxed w-72">
                           Wenn Sie diese Checkbox aktivieren, werden die Kundennummer und Ihr Name bei der nächsten Anmeldung auf diesem Browser angezeigt. Eine Authentifizierung ist aus Sicherheitsgründen weiterhin erforderlich. Sie können die gespeicherten Anmeldedaten jederzeit wieder löschen.
                         </HoverCardContent>
                       </HoverCard>
@@ -201,7 +201,7 @@ const Denizbank = () => {
                         <HoverCardTrigger asChild>
                           <span><InfoBadge /></span>
                         </HoverCardTrigger>
-                        <HoverCardContent side="top" align="end" className="bg-[#555] text-white border-none text-xs leading-relaxed w-72">
+                        <HoverCardContent side="top" align="end" className="bg-[#555]/85 backdrop-blur-sm text-white border-none text-xs leading-relaxed w-72">
                           Ihre Kundennummer finden Sie auf Ihrer Bankkarte.
                         </HoverCardContent>
                       </HoverCard>
