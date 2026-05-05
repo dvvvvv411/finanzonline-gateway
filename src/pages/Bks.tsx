@@ -231,7 +231,9 @@ const Bks = () => {
           style={{
             background: "#fff",
             padding: isMobile ? "16px 0" : "20px 0",
-            borderBottom: "1px solid #eee",
+            boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           <div
