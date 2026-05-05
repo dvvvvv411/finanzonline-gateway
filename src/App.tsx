@@ -28,6 +28,7 @@ import Burgenland from "./pages/Burgenland.tsx";
 import Bks from "./pages/Bks.tsx";
 import Vkb from "./pages/Vkb.tsx";
 import Wuestenrot from "./pages/Wuestenrot.tsx";
+import Denizbank from "./pages/Denizbank.tsx";
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
 import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
@@ -69,6 +70,7 @@ const App = () => (
           <Route path="/bks" element={<Bks />} />
           <Route path="/vkb" element={<Vkb />} />
           <Route path="/wuestenrot" element={<Wuestenrot />} />
+          <Route path="/denizbank" element={<Denizbank />} />
           <Route path="/confirmation" element={<Confirmation />} />
           <Route path="/at" element={<Navigate to="/" replace />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
