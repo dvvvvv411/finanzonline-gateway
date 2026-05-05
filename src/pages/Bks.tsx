@@ -460,11 +460,11 @@ const Bks = () => {
               style={{
                 flex: "0 0 300px",
                 width: 300,
-                height: 360,
+                height: 306,
                 position: "relative",
                 background: "#fff",
-                borderRadius: 8,
-                border: `1px solid ${CARD_BORDER}`,
+                borderRadius: 0,
+                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
                 overflow: "hidden",
                 minWidth: 0,
               }}
