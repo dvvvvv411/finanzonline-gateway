@@ -252,9 +252,9 @@ const Btv = () => {
                     placeholder={t.pinPlaceholder}
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
-                    style={{ ...inputStyle, flex: 1, minWidth: 0 }}
+                    style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 38, padding: "0 12px" }}
                   />
-                  <div ref={langRef} style={{ position: "relative", flex: 1, minWidth: 0 }}>
+                  <div ref={langRef} style={{ position: "relative", flex: "1 1 0", width: 0, minWidth: 0 }}>
                     <button
                       type="button"
                       onClick={() => setLangOpen((p) => !p)}
@@ -267,6 +267,7 @@ const Btv = () => {
                         justifyContent: "space-between",
                         textAlign: "left",
                         height: 38,
+                        width: "100%",
                       }}
                     >
                       <span>{t.languageNames[langKeys.indexOf(language)]}</span>
