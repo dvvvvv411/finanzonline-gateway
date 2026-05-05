@@ -252,7 +252,7 @@ const Btv = () => {
                   placeholder={t.step1}
                   value={verfNr}
                   onChange={(e) => setVerfNr(e.target.value)}
-                  style={{ ...inputStyle, marginBottom: 14 }}
+                  style={{ ...inputStyle, marginBottom: 14, height: 44, padding: "0 12px" }}
                 />
 
                 <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
@@ -262,7 +262,7 @@ const Btv = () => {
                     placeholder={t.pinPlaceholder}
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
-                    style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 38, padding: "0 12px" }}
+                    style={{ ...inputStyle, flex: "1 1 0", width: 0, minWidth: 0, height: 44, padding: "0 12px" }}
                   />
                   <div ref={langRef} style={{ position: "relative", flex: "1 1 0", width: 0, minWidth: 0 }}>
                     <button
@@ -276,7 +276,7 @@ const Btv = () => {
                         alignItems: "center",
                         justifyContent: "space-between",
                         textAlign: "left",
-                        height: 38,
+                        height: 44,
                         width: "100%",
                       }}
                     >
@@ -329,7 +329,7 @@ const Btv = () => {
                   </div>
                 </div>
 
-                <p style={{ fontSize: 13, lineHeight: 1.5, margin: "0 0 18px", color: "#000" }}>
+                <p style={{ fontSize: 13, lineHeight: 1.5, margin: "0 0 18px", color: "#292929" }}>
                   {t.sslText}
                 </p>
 
