@@ -591,9 +591,6 @@ const Bks = () => {
               </a>
             ))}
           </div>
-          <div style={{ marginLeft: isMobile ? 0 : "auto", color: PURPLE, fontWeight: 600 }}>
-            {t.copyright}
-          </div>
         </div>
       </div>
     </>
