@@ -555,8 +555,8 @@ const Btv = () => {
               color: "rgba(255,255,255,0.85)",
             }}
           >
-            <img src={atFlagge} alt="AT" style={{ height: 28 }} />
-            <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+            {!isMobile && <img src={atFlagge} alt="AT" style={{ height: 28 }} />}
+            <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 8 : 24, flexWrap: "wrap", alignItems: "flex-start" }}>
               {t.footerLinks.map((item) => (
                 <a
                   key={item.label}
