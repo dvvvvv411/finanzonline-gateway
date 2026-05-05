@@ -90,7 +90,7 @@ const Denizbank = () => {
                     <button
                       key={l}
                       onClick={() => setLang(l)}
-                      className={`px-4 py-2 transition ${lang === l ? "bg-white/20 text-white font-semibold" : "text-white/50 hover:text-white/80"}`}
+                      className={`px-4 py-2 transition ${lang === l ? "text-white font-semibold" : "text-white/50 hover:text-white/80"}`}
                     >
                       {l}
                     </button>
@@ -204,8 +204,8 @@ const Denizbank = () => {
           {/* Footer */}
           <footer className="px-6 md:px-10 py-6">
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div className="bg-white rounded p-2 inline-flex w-fit">
-                <img src={enbdLogo} alt="ENBD" className="h-10" />
+              <div className="bg-white rounded p-1 inline-flex w-fit">
+                <img src={enbdLogo} alt="ENBD" className="h-6" />
               </div>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-white text-sm">
                 {footerLinks.map((l) => (
