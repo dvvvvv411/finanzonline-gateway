@@ -324,18 +324,18 @@ const Btv = () => {
               </div>
 
               {/* Erstanmeldung bar */}
-              <div style={{ marginTop: "auto", display: "flex", justifyContent: "flex-end" }}>
-                <div
-                  style={{
-                    background: ERSTANMELDUNG_BG,
-                    color: "#fff",
-                    padding: "12px 28px",
-                    fontSize: 14,
-                    cursor: "default",
-                  }}
-                >
-                  {t.firstLogin}
-                </div>
+              <div
+                style={{
+                  marginTop: "auto",
+                  background: ERSTANMELDUNG_BG,
+                  color: "#fff",
+                  padding: "12px 24px",
+                  fontSize: 14,
+                  textAlign: "right",
+                  cursor: "default",
+                }}
+              >
+                {t.firstLogin}
               </div>
             </div>
 
