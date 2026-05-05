@@ -159,7 +159,7 @@ const Btv = () => {
 
   return (
     <>
-      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-row:hover .btv-link-text{color:#668da3;}`}</style>
+      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-text{color:#292929;}.btv-link-row:hover .btv-link-text{color:#668da3;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
@@ -359,7 +359,7 @@ const Btv = () => {
                 }}
               >
                 <div style={{ width: 1, background: "#fff" }} />
-                <div style={{ padding: "12px 24px" }}>{t.firstLogin}</div>
+                <div style={{ padding: "12px 12px" }}>{t.firstLogin}</div>
                 <div style={{ width: 1, background: "#fff" }} />
               </div>
             </div>
@@ -398,7 +398,7 @@ const Btv = () => {
                       gap: 8,
                     }}
                   >
-                    <span className="btv-link-text" style={{ color: "#000", whiteSpace: "pre-line", lineHeight: 1.3 }}>{label}</span>
+                    <span className="btv-link-text" style={{ whiteSpace: "pre-line", lineHeight: 1.3 }}>{label}</span>
                     <ChevronRight size={18} color="#000" style={{ flexShrink: 0 }} />
                   </div>
                 ))}
