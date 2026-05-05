@@ -95,10 +95,10 @@ const Denizbank = () => {
         <div className="relative min-h-screen flex flex-col">
           {/* Header */}
           <header className="px-6 md:px-10 pt-12 pb-6">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="max-w-7xl mx-auto flex flex-col items-center gap-3 md:flex-row md:items-center md:justify-between">
               <img src={logo} alt="DenizBank" className="h-8 md:h-10" />
-              <div className="flex items-center gap-3 md:gap-4 text-white text-sm">
-                <button className="hidden md:flex items-center gap-2 px-4 py-2 hover:opacity-80">
+              <div className="flex flex-col items-center gap-3 md:flex-row md:gap-4 text-white text-sm">
+                <button className="flex items-center gap-2 px-4 py-2 hover:opacity-80">
                   <img src={barrierefreiIcon} alt="" className="h-4 w-4 brightness-0 invert" />
                   Barrierefrei
                 </button>
