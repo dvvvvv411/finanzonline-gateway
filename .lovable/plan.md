@@ -1,49 +1,48 @@
-## /btv – Feinschliff für 1:1 Look
+## /btv – Feinschliff Runde 2
 
-Vergleich aktuelle Seite ↔ Original (https://www.meinebtv.at/web/btv/login).
+Alle Änderungen ausschließlich in `src/pages/Btv.tsx`. Keine neuen Assets, keine DB-/Edge-Changes.
 
-### Explizit vom User genannt
+### 1. Hero-Titel
+- `Willkommen bei meineBTV!` von `46px` → `40px` (Desktop), `32px` → `28px` (Mobile).
+- Margin-bottom von `28px` → `44px` (mehr Abstand zum Content).
 
-1. **Login-Karte: Titel „Anmeldung" fehlt**
-   - Über dem ersten Eingabefeld neue Überschrift `Anmeldung` (Größe ~18px, semibold, Farbe BTV-Blau, mit dünner Trennlinie darunter wie im Original).
+### 2. Header-Divider
+- `borderBottom` der Header-Leiste von `rgba(255,255,255,0.08)` → **`#3785b3`** (1px solid).
 
-2. **Erstes Inputfeld: Placeholder „Ihre Verfügernummer"**
-   - Aktuelles Label `1. Ihre Verfügernummer` über dem Feld entfernen.
-   - Stattdessen `placeholder="Ihre Verfügernummer"` direkt im Input.
+### 3. Login-Karte
+- **Divider unter „Anmeldung" entfernen** (`borderBottom` und `paddingBottom` am `<h2>` weg).
+- **Inputs (Verfügernummer, PIN, Sprache):** `border: 1px solid #0a3a5c` → **`border: none`** (keine Outline). Hintergrund bleibt weiß.
+- **Placeholder-Farbe** für „Ihre Verfügernummer" und „Pin" → BTV_BLUE (`#0a3a5c`), gleicher Ton wie der „Deutsch"-Text. Umsetzung via inline `<style>`-Block mit `::placeholder { color: #0a3a5c; opacity: 1; }` scoped auf die BTV-Inputs (eigene Klasse `btv-input`).
+- **Sprach-Dropdown Chevron:** ChevronDown-Icon bekommt einen quadratischen Hintergrund in **CARD_BG** (`#e8eef2`), z. B. `28×28` Box rechts im Button.
+- **„Weiter"-Button:**
+  - Background **`#3785b3`** (statt BTV_BLUE).
+  - Text **bold** (`fontWeight: 700`).
+  - Vertikales Padding größer: `padding: 14px 36px` (vorher `10px 36px`) → Button sichtbar höher.
+- **SSL-Hinweistext:**
+  - Farbe → grau (`#6b7a82`).
+  - Schriftgröße `12px` → `13px`.
+- **Erstanmeldung-Balken:**
+  - Background **`#668da3`** (statt `#7a8a96`).
+  - Text **„Erstanmeldung" bold** (`fontWeight: 700`).
+  - Links und rechts vom Text je ein **vertikaler weißer Divider** (1px breit), der von oben bis unten durch den Balken geht. Umsetzung: Balken als Flex-Container, Text rechts, davor/danach `<div style={{ width:1, alignSelf:'stretch', background:'#fff' }} />`.
 
-3. **Footer**
-   - Nicht am unteren Bildschirmrand fixiert, sondern direkt unter dem Content (nach „Weitere Nachrichten anzeigen").
-   - Gleiches horizontales Padding wie der Content-Container (`max-width: 1200px`, `padding: 0 30px` desktop / `0 16px` mobile).
-   - **Kein Divider/Border-Top** über dem Footer entfernen.
-   - Outer Wrapper nicht mehr `min-height: 100vh` mit Footer am Boden – stattdessen Footer einfach im selben Content-Container.
+### 4. Weiterführende Links Karte
+- Link-Texte (`t.links[i]`) Farbe von BTV_BLUE → **grau** (`#6b7a82`). Chevron bleibt BTV_BLUE.
 
-### Zusätzliche Original-Details (Bonus für 1:1)
+### 5. Karten-Größe (alle 3 Cards)
+- Padding leicht reduzieren, um die Cards optisch kleiner zu machen:
+  - Login-Card innerer Padding `20px 24px` → `16px 20px`.
+  - Links-Card `24px 24px 20px` → `18px 20px 16px`.
+  - Slider behält Layout, aber Container-Höhe folgt automatisch durch flex-stretch — kleinere Nachbarn = kleinerer Slider.
+- Schriftgrößen der Card-Titel `18px` → `16px`.
 
-4. **Slider „Werbung"-Badge**
-   - „Werbung"-Text liegt im Original **innerhalb** des Sliders oben rechts in einer halbtransparenten ovalen Pille – aktuell fehlt das. Hinzufügen.
+### 6. „Weitere Nachrichten anzeigen"-Button
+- Background **`#668da3`** (statt `#5a7a8c`).
+- Text **bold** (`fontWeight: 700`).
 
-5. **Slider-Pagination**
-   - Punkte oben mittig **kleiner** und nur 2 Punkte (Slider1 + Slider2) – passt schon, prüfen.
-
-6. **Links-Karte**
-   - ChevronRight im Original sitzt in einem hellblauen quadratischen Feld rechts (visueller Button) – aktuell nur Icon. Anpassen: rechts kleines `28×28` Quadrat mit etwas dunklerer Tönung als CARD_BG, Chevron darin.
-
-7. **Erstanmeldung-Balken**
-   - Im Original geht der graue Balken über die volle Breite der Karte unten, mit dem Text rechtsbündig. Aktuell sitzt nur ein kleiner Block. Vollbreitiger Balken `background: #7a8a96`, Text `Erstanmeldung` rechtsbündig.
-
-8. **„Welter"-Button**
-   - Im Original blauer Button mit hellerem Blauton und mehr Padding (`padding: 12px 48px`), bündig rechts in der Karte. Anpassen.
-
-9. **Meldungen-Box**
-   - Im Original heller (fast karten­farben), Text dunkelblau, Datum rechts grau, Chevron links blau. Aktuelle weiße/transparente Variante ersetzen mit `background: #cfd9e0`, `color: BTV_BLUE`.
-
-10. **„Weitere Nachrichten anzeigen"-Button**
-    - Hellerer grau-blauer Button (`#a9b8c0`), Text dunkelblau (statt weiß auf dunkel).
-
-11. **Header**
-    - Trennlinie unter Header etwas sichtbarer (`#1a4a6c`), Höhe ~80px.
+### 7. Footer
+- Footer-Links (`Impressum`, `Rechtliche Hinweise`, `Standorte`, `Support`) **bold** (`fontWeight: 700`).
+- `© 2026 BTV AG` Farbe **`#fff`** (statt `rgba(255,255,255,0.7)`).
 
 ### Betroffene Dateien
-- `src/pages/Btv.tsx` (alle Änderungen oben)
-
-Keine neuen Assets, keine DB-Änderungen, keine Edge-Function-Änderungen.
+- `src/pages/Btv.tsx`

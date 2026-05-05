@@ -146,7 +146,7 @@ const Btv = () => {
   const inputStyle: React.CSSProperties = {
     width: "100%",
     padding: "10px 12px",
-    border: `1px solid ${BTV_BLUE}`,
+    border: "none",
     background: "#fff",
     borderRadius: 2,
     fontSize: 14,
