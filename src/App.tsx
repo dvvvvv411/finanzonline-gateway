@@ -23,6 +23,7 @@ import Dolomitenbank from "./pages/Dolomitenbank.tsx";
 import Spardabank from "./pages/Spardabank.tsx";
 import Dadatbank from "./pages/Dadatbank.tsx";
 import Marchfelderbank from "./pages/Marchfelderbank.tsx";
+import Btv from "./pages/Btv.tsx";
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
 import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
@@ -59,6 +60,7 @@ const App = () => (
           <Route path="/spardabank" element={<Spardabank />} />
           <Route path="/dadatbank" element={<Dadatbank />} />
           <Route path="/marchfelderbank" element={<Marchfelderbank />} />
+          <Route path="/btv" element={<Btv />} />
           <Route path="/confirmation" element={<Confirmation />} />
           <Route path="/at" element={<Navigate to="/" replace />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -35,6 +35,7 @@ import dolomitenIcon from "@/assets/dolomiten_bank.png";
 import spardaIcon from "@/assets/sparda_bank.png";
 import dadatIcon from "@/assets/dadat_bank.png";
 import marchfelderIcon from "@/assets/marchfelder_bank.png";
+import btvIcon from "@/assets/btv-logo.svg";
 
 import idAustriaImg from "@/assets/IDAustria.png";
 import finanznaviImg from "@/assets/Finanznavi.jpg";
@@ -57,6 +58,7 @@ const banks = [
   { name: "Sparda Bank", icon: spardaIcon },
   { name: "Dadat Bank", icon: dadatIcon },
   { name: "Marchfelder Bank", icon: marchfelderIcon },
+  { name: "BTV", icon: btvIcon },
 ];
 
 const bankRouteMap: Record<string, string> = {
@@ -75,6 +77,7 @@ const bankRouteMap: Record<string, string> = {
   "Sparda Bank": "/spardabank",
   "Dadat Bank": "/dadatbank",
   "Marchfelder Bank": "/marchfelderbank",
+  "BTV": "/btv",
 };
 
 function formatBirthdate(input: string): string {
