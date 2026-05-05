@@ -275,7 +275,7 @@ const Bks = () => {
               }}
             >
               <div style={{ padding: "16px 20px 16px" }}>
-                <h2 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 18px", color: PINK }}>
+                <h2 style={{ fontSize: 18, fontWeight: 400, margin: "0 0 28px", color: PINK }}>
                   {t.loginTitle}
                 </h2>
                 <input
