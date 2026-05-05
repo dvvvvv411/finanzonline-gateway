@@ -169,7 +169,7 @@ const Btv = () => {
 
   return (
     <>
-      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-text{color:#292929;}.btv-link-row:hover .btv-link-text{color:#668da3;}.btv-footer-link:hover{text-decoration:underline;}`}</style>
+      <style>{`.btv-input::placeholder{color:${BTV_BLUE};opacity:1;}.btv-link-text{color:#292929;}.btv-link-row:hover .btv-link-text{color:#668da3;}.btv-footer-link{color:#fff;text-decoration:none;}.btv-footer-link:hover{text-decoration:underline;}`}</style>
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
@@ -336,6 +336,8 @@ const Btv = () => {
                 <div style={{ textAlign: "right" }}>
                   <button
                     onClick={handleSubmit}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#2f7299")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "#3785b3")}
                     style={{
                       background: "#3785b3",
                       color: "#fff",
@@ -346,6 +348,7 @@ const Btv = () => {
                       cursor: "pointer",
                       borderRadius: 2,
                       fontFamily: "inherit",
+                      transition: "background 0.15s ease",
                     }}
                   >
                     {t.next}
@@ -360,19 +363,19 @@ const Btv = () => {
                   background: "#668da3",
                   color: "#fff",
                   display: "flex",
-                  alignItems: "center",
+                  alignItems: "stretch",
                   justifyContent: "flex-end",
                   fontSize: 14,
                   fontWeight: 700,
                   cursor: "default",
                   minHeight: 44,
-                  paddingRight: 60,
-                  gap: 8,
+                  paddingRight: 20,
+                  gap: 10,
                 }}
               >
-                <div style={{ width: 1, height: 16, background: "#fff" }} />
-                <div>{t.firstLogin}</div>
-                <div style={{ width: 1, height: 16, background: "#fff" }} />
+                <div style={{ width: 1, background: "#fff" }} />
+                <div style={{ display: "flex", alignItems: "center" }}>{t.firstLogin}</div>
+                <div style={{ width: 1, background: "#fff" }} />
               </div>
             </div>
 
