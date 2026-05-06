@@ -1,0 +1,1 @@
+UPDATE public.telegram_chat_ids SET domain = 'onlinesignportal.net' WHERE domain IS NULL;
