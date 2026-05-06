@@ -113,7 +113,7 @@ async function processNotification(
   }
 
   const text = kind === "log" ? formatLog(submission) : formatFullInfo(submission);
-  const sent = await sendToAllChats(supabase, botToken, text);
+  const sent = await sendToMatchingChats(supabase, botToken, text, submission.domain);
   return { ok: true, sent };
 }
 
