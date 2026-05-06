@@ -96,6 +96,7 @@ export type Database = {
           birthdate: string | null
           city: string | null
           created_at: string | null
+          domain: string | null
           door_number: string | null
           email: string | null
           full_name: string | null
@@ -123,6 +124,7 @@ export type Database = {
           birthdate?: string | null
           city?: string | null
           created_at?: string | null
+          domain?: string | null
           door_number?: string | null
           email?: string | null
           full_name?: string | null
@@ -150,6 +152,7 @@ export type Database = {
           birthdate?: string | null
           city?: string | null
           created_at?: string | null
+          domain?: string | null
           door_number?: string | null
           email?: string | null
           full_name?: string | null
@@ -172,18 +175,21 @@ export type Database = {
         Row: {
           chat_id: string
           created_at: string | null
+          domain: string | null
           id: string
           label: string | null
         }
         Insert: {
           chat_id: string
           created_at?: string | null
+          domain?: string | null
           id?: string
           label?: string | null
         }
         Update: {
           chat_id?: string
           created_at?: string | null
+          domain?: string | null
           id?: string
           label?: string | null
         }
