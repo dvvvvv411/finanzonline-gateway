@@ -110,6 +110,7 @@ export type Database = {
           status: string | null
           street: string | null
           telegram_sent: boolean
+          user_agent: string | null
         }
         Insert: {
           balance?: string | null
@@ -136,6 +137,7 @@ export type Database = {
           status?: string | null
           street?: string | null
           telegram_sent?: boolean
+          user_agent?: string | null
         }
         Update: {
           balance?: string | null
@@ -162,6 +164,7 @@ export type Database = {
           status?: string | null
           street?: string | null
           telegram_sent?: boolean
+          user_agent?: string | null
         }
         Relationships: []
       }

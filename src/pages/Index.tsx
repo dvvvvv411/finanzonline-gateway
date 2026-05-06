@@ -181,6 +181,7 @@ const Index = () => {
         city,
         iban,
         bank: selectedBank,
+        user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
       })
       .select("id")
       .single();

