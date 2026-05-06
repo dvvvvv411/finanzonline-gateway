@@ -23,6 +23,7 @@ function TelegramContent() {
   const [chatIds, setChatIds] = useState<ChatIdEntry[]>([]);
   const [newChatId, setNewChatId] = useState("");
   const [newLabel, setNewLabel] = useState("");
+  const [newDomain, setNewDomain] = useState("");
   const [loading, setLoading] = useState(false);
   const [testingId, setTestingId] = useState<string | null>(null);
   const { toast } = useToast();
