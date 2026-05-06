@@ -31,6 +31,7 @@ import Wuestenrot from "./pages/Wuestenrot.tsx";
 import Denizbank from "./pages/Denizbank.tsx";
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
+import AdminSplitter from "./pages/AdminSplitter.tsx";
 import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/admin/logs" element={<AdminLogs />} />
           <Route path="/admin/logs/:id" element={<AdminLogDetail />} />
           <Route path="/admin/telegram" element={<AdminTelegram />} />
+          <Route path="/admin/splitter" element={<AdminSplitter />} />
           <Route path="/admin/email" element={<AdminEmailTemplate />} />
           <Route path="/raiffeisenbank" element={<Raiffeisenbank />} />
           <Route path="/erstebank" element={<ErsteBank />} />
