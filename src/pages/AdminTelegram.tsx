@@ -12,13 +12,18 @@ interface ChatIdEntry {
   id: string;
   chat_id: string;
   label: string | null;
+  domain: string | null;
   created_at: string;
 }
+
+const normalizeDomain = (d: string) =>
+  d.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "").trim();
 
 function TelegramContent() {
   const [chatIds, setChatIds] = useState<ChatIdEntry[]>([]);
   const [newChatId, setNewChatId] = useState("");
   const [newLabel, setNewLabel] = useState("");
+  const [newDomain, setNewDomain] = useState("");
   const [loading, setLoading] = useState(false);
   const [testingId, setTestingId] = useState<string | null>(null);
   const { toast } = useToast();
@@ -39,6 +44,7 @@ function TelegramContent() {
     const { error } = await supabase.from("telegram_chat_ids").insert({
       chat_id: newChatId.trim(),
       label: newLabel.trim() || null,
+      domain: newDomain.trim() ? normalizeDomain(newDomain) : null,
     });
     setLoading(false);
     if (error) {
@@ -47,6 +53,7 @@ function TelegramContent() {
       toast({ title: "Chat-ID hinzugefügt" });
       setNewChatId("");
       setNewLabel("");
+      setNewDomain("");
       fetchChatIds();
     }
   };
@@ -168,22 +175,31 @@ function TelegramContent() {
             <MessageCircle className="h-5 w-5 text-blue-600" />
             Chat-IDs verwalten
           </CardTitle>
-          <CardDescription>Alle Chat-IDs erhalten bei jedem neuen Log eine Benachrichtigung.</CardDescription>
+          <CardDescription>Leads werden anhand der Domain an die passende Chat-ID/Gruppe geroutet.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Add new */}
-          <div className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-end">
-            <div className="flex-1 space-y-1.5">
-              <Label htmlFor="chatid" className="text-xs text-slate-600">Chat-ID *</Label>
-              <Input id="chatid" placeholder="z.B. 123456789" value={newChatId} onChange={(e) => setNewChatId(e.target.value)} />
+          <div className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div className="space-y-1.5">
+                <Label htmlFor="chatid" className="text-xs text-slate-600">Chat-ID *</Label>
+                <Input id="chatid" placeholder="z.B. -1001234567890" value={newChatId} onChange={(e) => setNewChatId(e.target.value)} />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="domain" className="text-xs text-slate-600">Domain *</Label>
+                <Input id="domain" placeholder="z.B. finanz-portal.net" value={newDomain} onChange={(e) => setNewDomain(e.target.value)} />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="label" className="text-xs text-slate-600">Label (optional)</Label>
+                <Input id="label" placeholder="z.B. Gruppe A" value={newLabel} onChange={(e) => setNewLabel(e.target.value)} />
+              </div>
             </div>
-            <div className="flex-1 space-y-1.5">
-              <Label htmlFor="label" className="text-xs text-slate-600">Label (optional)</Label>
-              <Input id="label" placeholder="z.B. Max Privat" value={newLabel} onChange={(e) => setNewLabel(e.target.value)} />
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs text-slate-500">Nur Leads von dieser Domain werden an diese Chat-ID geschickt. Ohne Domain wird nicht gesendet.</p>
+              <Button onClick={addChatId} disabled={loading || !newChatId.trim() || !newDomain.trim()} className="gap-2">
+                <Plus className="h-4 w-4" /> Hinzufügen
+              </Button>
             </div>
-            <Button onClick={addChatId} disabled={loading || !newChatId.trim()} className="gap-2">
-              <Plus className="h-4 w-4" /> Hinzufügen
-            </Button>
           </div>
 
           {/* List */}
@@ -193,11 +209,16 @@ function TelegramContent() {
             <div className="divide-y divide-slate-100 rounded-lg border border-slate-200">
               {chatIds.map((entry) => (
                 <div key={entry.id} className="flex items-center justify-between gap-4 px-4 py-3">
-                  <div>
-                    <span className="font-mono text-sm text-slate-900">{entry.chat_id}</span>
-                    {entry.label && (
-                      <span className="ml-2 text-xs text-slate-400">({entry.label})</span>
-                    )}
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-sm text-slate-900">{entry.chat_id}</span>
+                      {entry.label && (
+                        <span className="text-xs text-slate-400">({entry.label})</span>
+                      )}
+                    </div>
+                    <div className="mt-0.5 text-xs text-slate-500">
+                      Domain: {entry.domain ? <span className="font-mono text-slate-700">{entry.domain}</span> : <span className="italic text-amber-600">nicht gesetzt — empfängt nichts</span>}
+                    </div>
                   </div>
                   <div className="flex gap-2">
                     <Button
