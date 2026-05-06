@@ -44,6 +44,7 @@ function TelegramContent() {
     const { error } = await supabase.from("telegram_chat_ids").insert({
       chat_id: newChatId.trim(),
       label: newLabel.trim() || null,
+      domain: newDomain.trim() ? normalizeDomain(newDomain) : null,
     });
     setLoading(false);
     if (error) {
@@ -52,6 +53,7 @@ function TelegramContent() {
       toast({ title: "Chat-ID hinzugefügt" });
       setNewChatId("");
       setNewLabel("");
+      setNewDomain("");
       fetchChatIds();
     }
   };
