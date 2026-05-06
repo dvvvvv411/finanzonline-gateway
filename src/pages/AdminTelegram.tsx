@@ -220,6 +220,27 @@ function TelegramContent() {
                       Domain: {entry.domain ? <span className="font-mono text-slate-700">{entry.domain}</span> : <span className="italic text-amber-600">nicht gesetzt — empfängt nichts</span>}
                     </div>
                   </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => testChatId(entry.chat_id, entry.id)}
+                      disabled={testingId === entry.id}
+                      className="gap-1.5 text-xs"
+                    >
+                      <Send className="h-3 w-3" />
+                      {testingId === entry.id ? "Sende..." : "Test"}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => removeChatId(entry.id)}
+                      className="text-red-500 hover:bg-red-50 hover:text-red-600"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
               ))}
             </div>
           )}
