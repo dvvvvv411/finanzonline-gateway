@@ -12,8 +12,12 @@ interface ChatIdEntry {
   id: string;
   chat_id: string;
   label: string | null;
+  domain: string | null;
   created_at: string;
 }
+
+const normalizeDomain = (d: string) =>
+  d.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "").trim();
 
 function TelegramContent() {
   const [chatIds, setChatIds] = useState<ChatIdEntry[]>([]);
