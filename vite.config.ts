@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    allowedHosts: ["finanzonline.bmf-gv.net", "bmf-fv-finanzonline.top", "finanzonlineportal.co", "onlinesignportal.net", "finanz-portal.net"],
+    allowedHosts: true,
     hmr: {
       overlay: false,
     },
