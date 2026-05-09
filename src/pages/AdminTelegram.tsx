@@ -66,6 +66,31 @@ function TelegramContent() {
     fetchChatIds();
   };
 
+  const startEdit = (entry: ChatIdEntry) => {
+    setEditingId(entry.id);
+    setEditingDomain(entry.domain ?? "");
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditingDomain("");
+  };
+
+  const saveEdit = async (id: string) => {
+    const newDomain = editingDomain.trim() ? normalizeDomain(editingDomain) : null;
+    const { error } = await supabase
+      .from("telegram_chat_ids")
+      .update({ domain: newDomain })
+      .eq("id", id);
+    if (error) {
+      toast({ title: "Fehler", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "Domain aktualisiert" });
+    cancelEdit();
+    fetchChatIds();
+  };
+
   const testChatId = async (chatId: string, entryId: string) => {
     setTestingId(entryId);
     try {
