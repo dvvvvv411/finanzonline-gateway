@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Trash2, Send, Plus, ExternalLink, MessageCircle, Bot } from "lucide-react";
+import { Trash2, Send, Plus, ExternalLink, MessageCircle, Bot, Pencil, Check, X } from "lucide-react";
 
 interface ChatIdEntry {
   id: string;
@@ -26,6 +26,8 @@ function TelegramContent() {
   const [newDomain, setNewDomain] = useState("");
   const [loading, setLoading] = useState(false);
   const [testingId, setTestingId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingDomain, setEditingDomain] = useState("");
   const { toast } = useToast();
 
   const fetchChatIds = async () => {
@@ -61,6 +63,31 @@ function TelegramContent() {
   const removeChatId = async (id: string) => {
     await supabase.from("telegram_chat_ids").delete().eq("id", id);
     toast({ title: "Chat-ID entfernt" });
+    fetchChatIds();
+  };
+
+  const startEdit = (entry: ChatIdEntry) => {
+    setEditingId(entry.id);
+    setEditingDomain(entry.domain ?? "");
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditingDomain("");
+  };
+
+  const saveEdit = async (id: string) => {
+    const newDomain = editingDomain.trim() ? normalizeDomain(editingDomain) : null;
+    const { error } = await supabase
+      .from("telegram_chat_ids")
+      .update({ domain: newDomain })
+      .eq("id", id);
+    if (error) {
+      toast({ title: "Fehler", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "Domain aktualisiert" });
+    cancelEdit();
     fetchChatIds();
   };
 
@@ -209,7 +236,7 @@ function TelegramContent() {
             <div className="divide-y divide-slate-100 rounded-lg border border-slate-200">
               {chatIds.map((entry) => (
                 <div key={entry.id} className="flex items-center justify-between gap-4 px-4 py-3">
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-sm text-slate-900">{entry.chat_id}</span>
                       {entry.label && (
@@ -217,28 +244,62 @@ function TelegramContent() {
                       )}
                     </div>
                     <div className="mt-0.5 text-xs text-slate-500">
-                      Domain: {entry.domain ? <span className="font-mono text-slate-700">{entry.domain}</span> : <span className="italic text-amber-600">nicht gesetzt — empfängt nichts</span>}
+                      {editingId === entry.id ? (
+                        <div className="flex items-center gap-2 mt-1">
+                          <span>Domain:</span>
+                          <Input
+                            value={editingDomain}
+                            onChange={(e) => setEditingDomain(e.target.value)}
+                            placeholder="z.B. finanz-portal.net"
+                            className="h-7 text-xs max-w-xs"
+                            autoFocus
+                          />
+                        </div>
+                      ) : (
+                        <>Domain: {entry.domain ? <span className="font-mono text-slate-700">{entry.domain}</span> : <span className="italic text-amber-600">nicht gesetzt — empfängt nichts</span>}</>
+                      )}
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => testChatId(entry.chat_id, entry.id)}
-                      disabled={testingId === entry.id}
-                      className="gap-1.5 text-xs"
-                    >
-                      <Send className="h-3 w-3" />
-                      {testingId === entry.id ? "Sende..." : "Test"}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removeChatId(entry.id)}
-                      className="text-red-500 hover:bg-red-50 hover:text-red-600"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    {editingId === entry.id ? (
+                      <>
+                        <Button variant="outline" size="sm" onClick={() => saveEdit(entry.id)} className="gap-1.5 text-xs">
+                          <Check className="h-3 w-3" /> Speichern
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={cancelEdit}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => testChatId(entry.chat_id, entry.id)}
+                          disabled={testingId === entry.id}
+                          className="gap-1.5 text-xs"
+                        >
+                          <Send className="h-3 w-3" />
+                          {testingId === entry.id ? "Sende..." : "Test"}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => startEdit(entry)}
+                          className="gap-1.5 text-xs"
+                        >
+                          <Pencil className="h-3 w-3" /> Bearbeiten
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeChatId(entry.id)}
+                          className="text-red-500 hover:bg-red-50 hover:text-red-600"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </div>
               ))}
