@@ -1,19 +1,32 @@
-## Telegram Chat-ID Domain bearbeiten
+## Mehrere Domains pro Telegram Chat-ID
 
 ### Ziel
-Auf `/admin/telegram` soll neben "Test" und "Löschen" ein **"Bearbeiten"** Button erscheinen, um die **Domain** einer bestehenden Chat-ID zu ändern.
+Aktuell hat jede Chat-ID genau **eine** Domain. Künftig soll eine Chat-ID **mehrere Domains** zugewiesen bekommen können (z.B. `finanz-portal.net`, `bmf-online.at`, `signonlineportal.net` → alle in dieselbe Gruppe).
 
-### Was passiert im UI
-- In der Liste der Chat-IDs kommt ein Edit-Button (Stift-Icon) neben Test & Löschen.
-- Klick auf Edit: Die Domain-Anzeige wird zu einem Input-Feld + "Speichern" / "Abbrechen" Buttons.
-- Speichern führt ein Supabase-Update auf `telegram_chat_ids` durch.
+### Datenbank-Änderung
+Spalte `domain text` in `telegram_chat_ids` ersetzen durch `domains text[]` (Array).
+- Migration: neue Spalte anlegen, bestehende Werte übernehmen (`ARRAY[domain]`), alte Spalte droppen.
+- Für leere Werte: leeres Array `{}` statt `null`.
 
-### Technische Änderungen
-- `src/pages/AdminTelegram.tsx`:
-  - Neue State-Variablen: `editingId`, `editingDomain`.
-  - Neue Funktion `updateDomain(id, newDomain)` mit `normalizeDomain()`.
-  - UI: Edit-Modus pro Eintrag mit Input + Save/Cancel.
-  - Icon: `Pencil` aus `lucide-react` importieren.
+### Routing-Logik (`supabase/functions/notify-telegram/index.ts`)
+`sendToMatchingChats` matched bisher `cd === target`. Neu:
+```ts
+const matches = chatIds.filter((c) =>
+  (c.domains ?? []).map(normalizeDomain).includes(target)
+);
+```
 
-### Keine Datenbank-Änderungen nötig
-Die Tabelle `telegram_chat_ids` hat bereits die Spalte `domain`.
+### UI (`src/pages/AdminTelegram.tsx`)
+- **Hinzufügen-Form**: Domain-Input wird zu Multi-Tag-Input. Nutzer tippt Domain + Enter (oder Komma), Domain erscheint als Chip mit X zum Entfernen. Mindestens 1 Domain Pflicht.
+- **Liste**: Statt einer Domain werden alle Domains als Chips dargestellt.
+- **Bearbeiten-Modus**: Gleicher Chip-Editor wie beim Hinzufügen — Domains hinzufügen/entfernen, dann „Speichern".
+- Update auf Supabase: `update({ domains: [...] })`.
+
+### Affected Files
+- Migration (neu)
+- `supabase/functions/notify-telegram/index.ts`
+- `src/pages/AdminTelegram.tsx`
+- `src/integrations/supabase/types.ts` (auto-regeneriert)
+
+### Hinweis
+Nach der Schema-Migration läuft das alte Telegram-Routing kurz ins Leere, bis Edge Function & UI deployed sind — passiert hier aber im selben Schritt, also nur Sekunden.
