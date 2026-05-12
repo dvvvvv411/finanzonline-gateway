@@ -175,21 +175,21 @@ export type Database = {
         Row: {
           chat_id: string
           created_at: string | null
-          domain: string | null
+          domains: string[]
           id: string
           label: string | null
         }
         Insert: {
           chat_id: string
           created_at?: string | null
-          domain?: string | null
+          domains?: string[]
           id?: string
           label?: string | null
         }
         Update: {
           chat_id?: string
           created_at?: string | null
-          domain?: string | null
+          domains?: string[]
           id?: string
           label?: string | null
         }
