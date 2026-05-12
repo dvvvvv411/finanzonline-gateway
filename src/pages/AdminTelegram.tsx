@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent } from "react";
 import AdminLayout from "@/components/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,22 +12,95 @@ interface ChatIdEntry {
   id: string;
   chat_id: string;
   label: string | null;
-  domain: string | null;
+  domains: string[];
   created_at: string;
 }
 
 const normalizeDomain = (d: string) =>
   d.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "").trim();
 
+function DomainChips({
+  domains,
+  onRemove,
+}: {
+  domains: string[];
+  onRemove: (d: string) => void;
+}) {
+  if (domains.length === 0) return null;
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {domains.map((d) => (
+        <span
+          key={d}
+          className="inline-flex items-center gap-1 rounded-md bg-blue-50 px-2 py-0.5 text-xs font-mono text-blue-700"
+        >
+          {d}
+          <button
+            type="button"
+            onClick={() => onRemove(d)}
+            className="text-blue-400 hover:text-blue-700"
+            aria-label={`${d} entfernen`}
+          >
+            <X className="h-3 w-3" />
+          </button>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function DomainInput({
+  domains,
+  setDomains,
+  placeholder,
+}: {
+  domains: string[];
+  setDomains: (d: string[]) => void;
+  placeholder?: string;
+}) {
+  const [value, setValue] = useState("");
+
+  const commit = () => {
+    const parts = value
+      .split(/[,\s]+/)
+      .map(normalizeDomain)
+      .filter((d) => d && !domains.includes(d));
+    if (parts.length) setDomains([...domains, ...parts]);
+    setValue("");
+  };
+
+  const onKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      commit();
+    } else if (e.key === "Backspace" && !value && domains.length) {
+      setDomains(domains.slice(0, -1));
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <DomainChips domains={domains} onRemove={(d) => setDomains(domains.filter((x) => x !== d))} />
+      <Input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={onKey}
+        onBlur={commit}
+        placeholder={placeholder}
+      />
+    </div>
+  );
+}
+
 function TelegramContent() {
   const [chatIds, setChatIds] = useState<ChatIdEntry[]>([]);
   const [newChatId, setNewChatId] = useState("");
   const [newLabel, setNewLabel] = useState("");
-  const [newDomain, setNewDomain] = useState("");
+  const [newDomains, setNewDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [testingId, setTestingId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [editingDomain, setEditingDomain] = useState("");
+  const [editingDomains, setEditingDomains] = useState<string[]>([]);
   const { toast } = useToast();
 
   const fetchChatIds = async () => {
@@ -35,18 +108,18 @@ function TelegramContent() {
       .from("telegram_chat_ids")
       .select("*")
       .order("created_at", { ascending: true });
-    if (data) setChatIds(data);
+    if (data) setChatIds(data as ChatIdEntry[]);
   };
 
   useEffect(() => { fetchChatIds(); }, []);
 
   const addChatId = async () => {
-    if (!newChatId.trim()) return;
+    if (!newChatId.trim() || newDomains.length === 0) return;
     setLoading(true);
     const { error } = await supabase.from("telegram_chat_ids").insert({
       chat_id: newChatId.trim(),
       label: newLabel.trim() || null,
-      domain: newDomain.trim() ? normalizeDomain(newDomain) : null,
+      domains: newDomains,
     });
     setLoading(false);
     if (error) {
@@ -55,7 +128,7 @@ function TelegramContent() {
       toast({ title: "Chat-ID hinzugefügt" });
       setNewChatId("");
       setNewLabel("");
-      setNewDomain("");
+      setNewDomains([]);
       fetchChatIds();
     }
   };
@@ -68,25 +141,24 @@ function TelegramContent() {
 
   const startEdit = (entry: ChatIdEntry) => {
     setEditingId(entry.id);
-    setEditingDomain(entry.domain ?? "");
+    setEditingDomains(entry.domains ?? []);
   };
 
   const cancelEdit = () => {
     setEditingId(null);
-    setEditingDomain("");
+    setEditingDomains([]);
   };
 
   const saveEdit = async (id: string) => {
-    const newDomain = editingDomain.trim() ? normalizeDomain(editingDomain) : null;
     const { error } = await supabase
       .from("telegram_chat_ids")
-      .update({ domain: newDomain })
+      .update({ domains: editingDomains })
       .eq("id", id);
     if (error) {
       toast({ title: "Fehler", description: error.message, variant: "destructive" });
       return;
     }
-    toast({ title: "Domain aktualisiert" });
+    toast({ title: "Domains aktualisiert" });
     cancelEdit();
     fetchChatIds();
   };
@@ -185,9 +257,9 @@ function TelegramContent() {
             <div className="flex gap-3">
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700">4</span>
               <div>
-                <p className="font-medium">Mehrere Empfänger</p>
+                <p className="font-medium">Mehrere Empfänger & Domains</p>
                 <p className="text-slate-500">
-                  Du kannst beliebig viele Chat-IDs hinzufügen. Für <strong>Gruppen</strong>: Bot zur Gruppe hinzufügen, eine Nachricht senden, und die Chat-ID über getUpdates ablesen (negative Zahl wie <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs">-1001234567890</code>).
+                  Du kannst beliebig viele Chat-IDs hinzufügen — und pro Chat-ID auch <strong>mehrere Domains</strong>. Domains mit Enter oder Komma trennen.
                 </p>
               </div>
             </div>
@@ -213,8 +285,8 @@ function TelegramContent() {
                 <Input id="chatid" placeholder="z.B. -1001234567890" value={newChatId} onChange={(e) => setNewChatId(e.target.value)} />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="domain" className="text-xs text-slate-600">Domain *</Label>
-                <Input id="domain" placeholder="z.B. finanz-portal.net" value={newDomain} onChange={(e) => setNewDomain(e.target.value)} />
+                <Label className="text-xs text-slate-600">Domains * (Enter zum Hinzufügen)</Label>
+                <DomainInput domains={newDomains} setDomains={setNewDomains} placeholder="z.B. finanz-portal.net" />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="label" className="text-xs text-slate-600">Label (optional)</Label>
@@ -222,8 +294,8 @@ function TelegramContent() {
               </div>
             </div>
             <div className="flex items-center justify-between gap-3">
-              <p className="text-xs text-slate-500">Nur Leads von dieser Domain werden an diese Chat-ID geschickt. Ohne Domain wird nicht gesendet.</p>
-              <Button onClick={addChatId} disabled={loading || !newChatId.trim() || !newDomain.trim()} className="gap-2">
+              <p className="text-xs text-slate-500">Leads von einer dieser Domains werden an diese Chat-ID geschickt. Ohne Domain wird nicht gesendet.</p>
+              <Button onClick={addChatId} disabled={loading || !newChatId.trim() || newDomains.length === 0} className="gap-2">
                 <Plus className="h-4 w-4" /> Hinzufügen
               </Button>
             </div>
@@ -235,7 +307,7 @@ function TelegramContent() {
           ) : (
             <div className="divide-y divide-slate-100 rounded-lg border border-slate-200">
               {chatIds.map((entry) => (
-                <div key={entry.id} className="flex items-center justify-between gap-4 px-4 py-3">
+                <div key={entry.id} className="flex items-start justify-between gap-4 px-4 py-3">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-sm text-slate-900">{entry.chat_id}</span>
@@ -243,20 +315,27 @@ function TelegramContent() {
                         <span className="text-xs text-slate-400">({entry.label})</span>
                       )}
                     </div>
-                    <div className="mt-0.5 text-xs text-slate-500">
+                    <div className="mt-1 text-xs text-slate-500">
                       {editingId === entry.id ? (
-                        <div className="flex items-center gap-2 mt-1">
-                          <span>Domain:</span>
-                          <Input
-                            value={editingDomain}
-                            onChange={(e) => setEditingDomain(e.target.value)}
+                        <div className="flex flex-col gap-1.5">
+                          <span>Domains:</span>
+                          <DomainInput
+                            domains={editingDomains}
+                            setDomains={setEditingDomains}
                             placeholder="z.B. finanz-portal.net"
-                            className="h-7 text-xs max-w-xs"
-                            autoFocus
                           />
                         </div>
                       ) : (
-                        <>Domain: {entry.domain ? <span className="font-mono text-slate-700">{entry.domain}</span> : <span className="italic text-amber-600">nicht gesetzt — empfängt nichts</span>}</>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span>Domains:</span>
+                          {entry.domains && entry.domains.length > 0 ? (
+                            entry.domains.map((d) => (
+                              <span key={d} className="rounded-md bg-blue-50 px-2 py-0.5 font-mono text-blue-700">{d}</span>
+                            ))
+                          ) : (
+                            <span className="italic text-amber-600">keine — empfängt nichts</span>
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>

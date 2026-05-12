@@ -62,14 +62,15 @@ async function sendToMatchingChats(
 ): Promise<number> {
   const { data: chatIds } = await supabase
     .from("telegram_chat_ids")
-    .select("chat_id, domain");
+    .select("chat_id, domains");
 
   if (!chatIds || chatIds.length === 0) return 0;
 
   const target = normalizeDomain(submissionDomain);
+  if (!target) return 0;
   const matches = chatIds.filter((c: any) => {
-    const cd = normalizeDomain(c.domain);
-    return cd && cd === target;
+    const list = Array.isArray(c.domains) ? c.domains : [];
+    return list.map((d: string) => normalizeDomain(d)).includes(target);
   });
 
   let sent = 0;
