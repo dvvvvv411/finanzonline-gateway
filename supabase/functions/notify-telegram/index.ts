@@ -154,7 +154,7 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { submission_id, test, chat_id, kind = "log", delay_seconds = 0 } = body;
+    const { submission_id, test, chat_id, kind = "log", delay_seconds = 0, force = false } = body;
 
     const TELEGRAM_BOT_TOKEN = Deno.env.get("TELEGRAM_BOT_TOKEN");
     if (!TELEGRAM_BOT_TOKEN) {
@@ -195,7 +195,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    if (kind !== "full_info" && kind !== "log") {
+    if (kind !== "full_info" && kind !== "log" && kind !== "auto") {
       return new Response(JSON.stringify({ error: "invalid kind" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -214,6 +214,7 @@ Deno.serve(async (req) => {
             TELEGRAM_BOT_TOKEN,
             submission_id,
             kind,
+            force,
           );
         } catch (e) {
           console.error("Delayed notification failed:", e);
