@@ -22,7 +22,6 @@ const confirmationItems = [
 const Confirmation = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("s");
-  const notified = useRef(false);
 
   usePageMeta("FinanzOnline Login", "/favicon.png");
   useEffect(() => { window.scrollTo(0, 0); }, []);
