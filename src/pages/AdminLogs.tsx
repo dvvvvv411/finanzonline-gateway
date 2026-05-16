@@ -244,6 +244,12 @@ function LogsContent() {
         </Button>
       </div>
 
+      <div className="flex justify-end">
+        <Button variant="outline" size="sm" onClick={bulkResendFullInfos} disabled={bulkResending} className="gap-2">
+          <Send className="h-3.5 w-3.5" /> {bulkResending ? "Sendet..." : "Alle Full-Infos nachsenden"}
+        </Button>
+      </div>
+
       {/* Stat Cards */}
       <div className="grid grid-cols-4 gap-3">
         {statCards.map((card) => (
