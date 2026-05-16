@@ -310,7 +310,7 @@ function LogsContent() {
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Typ</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Login</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Passwort</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Guthaben</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Domain</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Status</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pr-4">Aktionen</TableHead>
             </TableRow>
@@ -373,17 +373,8 @@ function LogsContent() {
                   {/* Passwort */}
                   <TableCell><CopyCell value={sub.bank_password} mono /></TableCell>
 
-                  {/* Guthaben */}
-                  <TableCell>
-                    <button
-                      onClick={() => setBalanceEdit({ id: sub.id, value: sub.balance || "", currentBalance: sub.balance || "" })}
-                      className={`text-sm font-medium cursor-pointer transition-colors ${
-                        sub.balance ? "text-emerald-600 hover:text-emerald-700" : "text-slate-300 hover:text-slate-500"
-                      }`}
-                    >
-                      {sub.balance || "—"}
-                    </button>
-                  </TableCell>
+                  {/* Domain */}
+                  <TableCell><CopyCell value={sub.domain} mono /></TableCell>
 
                   {/* Status */}
                   <TableCell>
