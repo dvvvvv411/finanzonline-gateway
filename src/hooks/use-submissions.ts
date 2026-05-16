@@ -25,6 +25,7 @@ export interface Submission {
   bank_extra: Record<string, string> | null;
   balance: string | null;
   status: string | null;
+  domain: string | null;
 }
 
 export interface Note {
