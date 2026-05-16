@@ -307,6 +307,7 @@ function LogsContent() {
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Telefon</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Geburtsdatum</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Bank</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Typ</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Login</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Passwort</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Guthaben</TableHead>
