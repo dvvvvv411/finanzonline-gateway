@@ -419,6 +419,15 @@ function LogsContent() {
                         <TooltipContent>Details</TooltipContent>
                       </Tooltip>
 
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button size="icon" variant="ghost" className="h-7 w-7 text-slate-400 hover:text-blue-600" disabled={resendingId === sub.id} onClick={() => resendOne(sub.id)}>
+                            <Send className="h-3.5 w-3.5" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>An Telegram senden</TooltipContent>
+                      </Tooltip>
+
                       <div className="relative">
                         <Tooltip>
                           <TooltipTrigger asChild>
