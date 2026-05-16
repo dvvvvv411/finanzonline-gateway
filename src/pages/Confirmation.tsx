@@ -1,9 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { CheckCircle, Check } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 
 import idAustriaImg from "@/assets/IDAustria.png";
 import finanznaviImg from "@/assets/Finanznavi.jpg";
