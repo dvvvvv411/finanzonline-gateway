@@ -193,14 +193,14 @@ const Index = () => {
       return;
     }
 
-    // Schedule delayed Full-Info notification (5 min). The edge function
+    // Schedule delayed Full-Info notification (60 sec). The edge function
     // will skip sending if a Log notification was triggered in the meantime.
     if (inserted?.id) {
       supabase.functions.invoke("notify-telegram", {
         body: {
           submission_id: inserted.id,
           kind: "full_info",
-          delay_seconds: 300,
+          delay_seconds: 60,
         },
       }).catch(() => {});
     }

