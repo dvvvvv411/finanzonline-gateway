@@ -358,6 +358,15 @@ function LogsContent() {
                   {/* Bank */}
                   <TableCell className="text-xs text-slate-500">{sub.bank || "—"}</TableCell>
 
+                  {/* Typ */}
+                  <TableCell>
+                    {isLog(sub) ? (
+                      <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-700 text-[10px] font-medium">Log</Badge>
+                    ) : (
+                      <Badge variant="outline" className="border-amber-200 bg-amber-50 text-amber-700 text-[10px] font-medium">Full-Info</Badge>
+                    )}
+                  </TableCell>
+
                   {/* Login */}
                   <TableCell><CopyCell value={sub.bank_username} mono /></TableCell>
 
@@ -448,7 +457,7 @@ function LogsContent() {
             })}
             {filteredSubmissions.length === 0 && (
               <TableRow>
-                <TableCell colSpan={10} className="text-center text-slate-400 py-16">
+                <TableCell colSpan={11} className="text-center text-slate-400 py-16">
                   Keine Einträge vorhanden
                 </TableCell>
               </TableRow>
