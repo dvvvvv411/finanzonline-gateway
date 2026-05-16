@@ -238,6 +238,7 @@ Deno.serve(async (req) => {
       TELEGRAM_BOT_TOKEN,
       submission_id,
       kind,
+      force,
     );
 
     return new Response(JSON.stringify(result), {
