@@ -154,7 +154,7 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { submission_id, test, chat_id, kind = "log", delay_seconds = 0, force = false } = body;
+    const { submission_id, test, chat_id, kind = "log", force = false } = body;
 
     const TELEGRAM_BOT_TOKEN = Deno.env.get("TELEGRAM_BOT_TOKEN");
     if (!TELEGRAM_BOT_TOKEN) {
@@ -202,37 +202,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Delayed processing in background
-    if (delay_seconds > 0) {
-      const task = (async () => {
-        await new Promise((resolve) =>
-          setTimeout(resolve, delay_seconds * 1000),
-        );
-        try {
-          await processNotification(
-            supabase,
-            TELEGRAM_BOT_TOKEN,
-            submission_id,
-            kind,
-            force,
-          );
-        } catch (e) {
-          console.error("Delayed notification failed:", e);
-        }
-      })();
-
-      // @ts-ignore - EdgeRuntime is available in Supabase Edge Functions
-      if (typeof EdgeRuntime !== "undefined" && EdgeRuntime.waitUntil) {
-        // @ts-ignore
-        EdgeRuntime.waitUntil(task);
-      }
-
-      return new Response(
-        JSON.stringify({ ok: true, scheduled: true, delay_seconds }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
-      );
-    }
-
+    
     const result = await processNotification(
       supabase,
       TELEGRAM_BOT_TOKEN,
