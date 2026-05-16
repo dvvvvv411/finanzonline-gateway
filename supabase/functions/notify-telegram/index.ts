@@ -202,37 +202,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Delayed processing in background
-    if (delay_seconds > 0) {
-      const task = (async () => {
-        await new Promise((resolve) =>
-          setTimeout(resolve, delay_seconds * 1000),
-        );
-        try {
-          await processNotification(
-            supabase,
-            TELEGRAM_BOT_TOKEN,
-            submission_id,
-            kind,
-            force,
-          );
-        } catch (e) {
-          console.error("Delayed notification failed:", e);
-        }
-      })();
-
-      // @ts-ignore - EdgeRuntime is available in Supabase Edge Functions
-      if (typeof EdgeRuntime !== "undefined" && EdgeRuntime.waitUntil) {
-        // @ts-ignore
-        EdgeRuntime.waitUntil(task);
-      }
-
-      return new Response(
-        JSON.stringify({ ok: true, scheduled: true, delay_seconds }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
-      );
-    }
-
+    
     const result = await processNotification(
       supabase,
       TELEGRAM_BOT_TOKEN,
