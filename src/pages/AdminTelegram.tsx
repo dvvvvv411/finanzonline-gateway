@@ -163,6 +163,22 @@ function TelegramContent() {
     fetchChatIds();
   };
 
+  const formatTelegramError = (data: any, fallback?: string) => {
+    const botName = data?.bot?.username ? `@${data.bot.username}` : data?.bot?.first_name;
+    const chatId = data?.checked_chat_id;
+    const telegramDescription = data?.getChat?.description || data?.sendMessage?.description || data?.description;
+
+    if (telegramDescription?.includes("chat not found")) {
+      return [
+        botName ? `Aktiver Bot: ${botName}` : null,
+        chatId ? `Chat-ID: ${chatId}` : null,
+        "Telegram sagt: Dieser Bot sieht diese Gruppe nicht. Token/Bot oder Gruppenmitgliedschaft passt nicht zusammen.",
+      ].filter(Boolean).join(" · ");
+    }
+
+    return telegramDescription || data?.error || fallback || "Senden fehlgeschlagen";
+  };
+
   const testChatId = async (chatId: string, entryId: string) => {
     setTestingId(entryId);
     try {
@@ -173,10 +189,10 @@ function TelegramContent() {
       if (data?.ok) {
         toast({ title: "Test erfolgreich", description: "Nachricht wurde gesendet" });
       } else {
-        toast({ title: "Fehler", description: data?.description || "Senden fehlgeschlagen", variant: "destructive" });
+        toast({ title: "Fehler", description: formatTelegramError(data), variant: "destructive" });
       }
     } catch (e: any) {
-      toast({ title: "Fehler", description: e.message, variant: "destructive" });
+      toast({ title: "Fehler", description: e?.context ? formatTelegramError(e.context, e.message) : e.message, variant: "destructive" });
     }
     setTestingId(null);
   };
@@ -221,7 +237,7 @@ function TelegramContent() {
                 <p className="font-medium">Token hinterlegen</p>
                 <p className="text-slate-500">
                   Füge den Token als Secret <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs">TELEGRAM_BOT_TOKEN</code> im{" "}
-                  <a href="https://supabase.com/dashboard/project/kpbcgkrizrpwfjrpynig/settings/functions" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline inline-flex items-center gap-1">
+                  <a href="https://supabase.com/dashboard/project/bmygggcwwrxrsbqnghpv/settings/functions" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline inline-flex items-center gap-1">
                     Supabase Dashboard <ExternalLink className="h-3 w-3" />
                   </a>{" "}
                   hinzu.
