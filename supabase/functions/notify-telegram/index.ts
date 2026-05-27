@@ -54,6 +54,26 @@ user-agent: ${s.user_agent || ""}
 domain: ${s.domain || ""}`;
 }
 
+async function callTelegram(botToken: string, method: string, payload?: Record<string, unknown>) {
+  const res = await fetch(`https://api.telegram.org/bot${botToken}/${method}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload ?? {}),
+  });
+  const data = await res.json();
+  return { res, data };
+}
+
+function publicBotInfo(getMeData: any) {
+  const bot = getMeData?.result;
+  if (!bot) return null;
+  return {
+    id: bot.id,
+    username: bot.username,
+    first_name: bot.first_name,
+  };
+}
+
 async function sendToMatchingChats(
   supabase: any,
   botToken: string,
@@ -148,27 +168,73 @@ Deno.serve(async (req) => {
       });
     }
 
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!supabaseUrl || !supabaseKey) {
+      return new Response(JSON.stringify({
+        ok: false,
+        error: "Server configuration error",
+        diagnostics: {
+          has_supabase_url: Boolean(supabaseUrl),
+          has_service_role_key: Boolean(supabaseKey),
+        },
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Test mode
     if (test && chat_id) {
-      const res = await fetch(
-        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            chat_id,
-            text: "✅ Telegram Bot verbunden! Benachrichtigungen sind aktiv.",
-          }),
-        },
-      );
-      const data = await res.json();
-      return new Response(JSON.stringify(data), {
+      const getMe = await callTelegram(TELEGRAM_BOT_TOKEN, "getMe");
+      const bot = publicBotInfo(getMe.data);
+
+      if (!getMe.res.ok || !getMe.data?.ok) {
+        return new Response(JSON.stringify({
+          ok: false,
+          checked_chat_id: chat_id,
+          bot,
+          getMe: getMe.data,
+          error: "Telegram bot token check failed",
+        }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 500,
+        });
+      }
+
+      const getChat = await callTelegram(TELEGRAM_BOT_TOKEN, "getChat", { chat_id });
+      if (!getChat.res.ok || !getChat.data?.ok) {
+        return new Response(JSON.stringify({
+          ok: false,
+          checked_chat_id: chat_id,
+          bot,
+          getMe: { ok: getMe.data.ok, result: bot },
+          getChat: getChat.data,
+          sendMessage: null,
+          error: "Telegram bot cannot access this chat",
+        }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400,
+        });
+      }
+
+      const sendMessage = await callTelegram(TELEGRAM_BOT_TOKEN, "sendMessage", {
+        chat_id,
+        text: "✅ Telegram Bot verbunden! Benachrichtigungen sind aktiv.",
+      });
+      return new Response(JSON.stringify({
+        ok: Boolean(sendMessage.data?.ok),
+        checked_chat_id: chat_id,
+        bot,
+        getMe: { ok: getMe.data.ok, result: bot },
+        getChat: getChat.data,
+        sendMessage: sendMessage.data,
+        error_code: sendMessage.data?.error_code,
+        description: sendMessage.data?.description,
+      }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: res.ok ? 200 : 400,
+        status: sendMessage.res.ok ? 200 : 400,
       });
     }
 
