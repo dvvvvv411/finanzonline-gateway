@@ -1,15 +1,17 @@
-## Icons in Hero-Cards (Bonusbetrag & Gültig bis)
+## Plan: Klimabonus-Footer an Landingpage angleichen
 
-In `src/pages/Klimabonus.tsx` (Zeilen 148–155) jeweils ein Icon links neben dem Text-Content einfügen:
+### Änderungen in `src/pages/Klimabonus.tsx`
 
-- **Bonusbetrag**: `Wallet`-Icon (lucide-react)
-- **Gültig bis**: `CalendarClock`-Icon (lucide-react)
+1. **Copyright-Zeile anpassen**
+   - `"Republik Österreich"` aus der Footer-Copyright-Zeile entfernen.
+   - Ergebnis: `© {JAHR} Bundesministerium für Finanzen`
 
-### Umsetzung
-- Imports erweitern: `Wallet, CalendarClock` aus `lucide-react`
-- Beide Card-`<div>`s in Flex-Layout umwandeln (`flex items-center gap-3`)
-- Icons links platziert, Größe ca. `w-10 h-10` (umfasst Titel + Wert vertikal)
-- Farbe: `BMF_RED` (`#E6320F`, das vorhandene Orange-Rot)
-- Text-Block (Titel + Wert) rechts daneben unverändert
+2. **Footer-Links verlinken**
+   - Alle 4 Links von `#` auf die echten BMF-URLs umstellen (wie auf der Landingpage `/index`):
+     - **Impressum** → `https://www.bmf.gv.at/public/impressum.html`
+     - **Datenschutz** → `https://www.bmf.gv.at/public/datenschutz.html`
+     - **Barrierefreiheitserklärung** → `https://www.bmf.gv.at/public/barrierefreiheitserklaerung.html`
+     - **Kontakt** → `https://service.bmf.gv.at/Service/Allg/Feedback/_start.asp?FTyp=KONTAKT`
+   - Attribute ergänzen: `target="_blank"`, `rel="noopener noreferrer"`, `hover:underline` (wie auf der Landingpage).
 
-Keine weiteren Sektionen oder Logik betroffen.
+### Keine weiteren Dateien betroffen.
