@@ -96,7 +96,7 @@ const Klimabonus = () => {
   const CtaButton = () => (
     <button
       type="button"
-      className="inline-flex items-center gap-2 bg-[#E6320F] hover:bg-[#c42a0d] text-white font-semibold text-sm px-7 py-3 rounded-md transition-colors"
+      className="inline-flex items-center gap-2 bg-[#E6320F] hover:bg-[#c42a0d] text-white font-bold text-sm px-7 py-3 rounded-md transition-colors"
     >
       Jetzt voranmelden
       <ArrowRight className="w-4 h-4" />
@@ -146,12 +146,12 @@ const Klimabonus = () => {
 
           <div className="grid grid-cols-2 gap-3 max-w-md mx-auto mb-8">
             <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-left shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-gray-300">
-              <div className="text-[10.5px] text-gray-500 uppercase tracking-wider mb-0.5">Bonusbetrag</div>
-              <div className="text-xl font-semibold" style={{ color: BMF_RED }}>400 €</div>
+              <div className="text-[10.5px] font-bold uppercase tracking-wider mb-0.5" style={{ color: BMF_RED }}>Bonusbetrag</div>
+              <div className="text-xl font-bold text-gray-900">400 €</div>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-left shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-gray-300">
-              <div className="text-[10.5px] text-gray-500 uppercase tracking-wider mb-0.5">Gültig bis</div>
-              <div className="text-xl font-semibold" style={{ color: BMF_RED }}>{naechsterMonat} {JAHR}</div>
+              <div className="text-[10.5px] font-bold uppercase tracking-wider mb-0.5" style={{ color: BMF_RED }}>Gültig bis</div>
+              <div className="text-xl font-bold text-gray-900">{naechsterMonat} {JAHR}</div>
             </div>
           </div>
 
@@ -193,8 +193,8 @@ const Klimabonus = () => {
                 className="bg-white border border-gray-200 rounded-xl p-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300"
               >
                 <span
-                  className="mx-auto mb-3 w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold text-white"
-                  style={{ backgroundColor: BMF_RED }}
+                  className="mx-auto mb-3 w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-bold bg-white border-2"
+                  style={{ borderColor: BMF_RED, color: BMF_RED }}
                 >
                   {i + 1}
                 </span>
