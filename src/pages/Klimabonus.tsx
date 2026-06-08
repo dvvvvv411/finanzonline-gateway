@@ -15,7 +15,7 @@ const MONATE = [
 const JAHR = "2026";
 const BMF_RED = "#E6320F";
 
-type IconType = React.ComponentType<{ className?: string; strokeWidth?: number }>;
+type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
 const SectionHeading = ({ children }: { children: React.ReactNode }) => (
   <div className="text-center mb-10">
