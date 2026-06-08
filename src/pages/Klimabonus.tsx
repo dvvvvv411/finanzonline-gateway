@@ -6,7 +6,7 @@ import {
   ArrowRight, Lock, Info,
 } from "lucide-react";
 import bmfLogo from "@/assets/bmf_logo.svg";
-import heroAsset from "@/assets/klimabonus-hero.png.asset.json";
+import heroAsset from "@/assets/klimabonus-hero-v2.png.asset.json";
 
 const MONATE = [
   "Jänner", "Februar", "März", "April", "Mai", "Juni",
@@ -30,8 +30,8 @@ const SectionHeading = ({ children, kicker }: { children: React.ReactNode; kicke
 );
 
 const InfoItem = ({
-  Icon, title, text,
-}: { Icon: IconType; title: string; text: string }) => (
+  Icon, title, text, titleRed,
+}: { Icon: IconType; title: string; text: string; titleRed?: boolean }) => (
   <div className="bg-white border border-gray-200 rounded-md p-5 text-left flex gap-4 items-start">
     <div
       className="shrink-0 w-9 h-9 rounded-md flex items-center justify-center border"
@@ -40,7 +40,12 @@ const InfoItem = ({
       <Icon className="w-[18px] h-[18px]" style={{ color: BMF_RED }} strokeWidth={2} />
     </div>
     <div className="min-w-0">
-      <h3 className="text-[15px] font-semibold text-gray-900 mb-1 leading-tight">{title}</h3>
+      <h3
+        className="text-[15px] font-semibold mb-1 leading-tight"
+        style={{ color: titleRed ? BMF_RED : undefined }}
+      >
+        {title}
+      </h3>
       <p className="text-[13.5px] text-gray-600 leading-relaxed">{text}</p>
     </div>
   </div>
@@ -122,10 +127,10 @@ const Klimabonus = () => {
       <section className="relative overflow-hidden border-b border-gray-200 bg-white">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroAsset.url})`, opacity: 0.08 }}
+          style={{ backgroundImage: `url(${heroAsset.url})`, opacity: 0.45 }}
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/60 to-gray-50" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/70 to-gray-50" aria-hidden="true" />
         <div className="relative container mx-auto px-4 py-14 md:py-16 text-center max-w-3xl">
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#E6320F] mb-4">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#E6320F]" />
