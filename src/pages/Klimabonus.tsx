@@ -96,10 +96,9 @@ const Klimabonus = () => {
   const CtaButton = () => (
     <button
       type="button"
-      className="inline-flex items-center gap-2 bg-[#E6320F] hover:bg-[#c42a0d] text-white font-bold text-sm px-7 py-3 rounded-md transition-colors"
-      style={{ fontWeight: 800 }}
+      className="inline-flex items-center gap-2 bg-[#E6320F] hover:bg-[#c42a0d] text-white font-semibold text-sm px-7 py-3 rounded-md transition-colors"
     >
-      <span className="font-bold" style={{ fontWeight: 800 }}>Jetzt voranmelden</span>
+      <span>Jetzt voranmelden</span>
       <ArrowRight className="w-4 h-4" />
     </button>
   );
@@ -148,11 +147,11 @@ const Klimabonus = () => {
           <div className="grid grid-cols-2 gap-3 max-w-md mx-auto mb-8">
             <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-left shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-gray-300">
               <div className="text-[10.5px] font-bold uppercase tracking-wider mb-0.5" style={{ color: BMF_RED }}>Bonusbetrag</div>
-              <div className="text-xl font-bold text-gray-900" style={{ fontWeight: 800 }}>400 €</div>
+              <div className="text-xl font-semibold text-gray-900">400 €</div>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-left shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-gray-300">
               <div className="text-[10.5px] font-bold uppercase tracking-wider mb-0.5" style={{ color: BMF_RED }}>Gültig bis</div>
-              <div className="text-xl font-bold text-gray-900" style={{ fontWeight: 800 }}>{naechsterMonat} {JAHR}</div>
+              <div className="text-xl font-semibold text-gray-900">{naechsterMonat} {JAHR}</div>
             </div>
           </div>
 
