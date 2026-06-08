@@ -165,12 +165,23 @@ const Klimabonus = () => {
 
       <main className="py-12 md:py-14 space-y-14">
         {/* Was ist der Klimabonus */}
-        <section className="container mx-auto px-4 max-w-2xl text-center">
-          <SectionHeading kicker="Information">Was ist der Klimabonus?</SectionHeading>
-          <p className="text-gray-600 text-[15px] leading-relaxed">
-            Der Klimabonus ist eine finanzielle Unterstützung der österreichischen Bundesregierung,
-            die im Rahmen der ökologischen Steuerreform an alle Bürgerinnen und Bürger ausgezahlt wird.
-          </p>
+        <section className="container mx-auto px-4 max-w-5xl">
+          <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-gray-300">
+            <div className="h-1" style={{ backgroundColor: BMF_RED }} />
+            <div className="p-8 md:p-10 text-center">
+              <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#E6320F] mb-3">
+                <Info className="w-3.5 h-3.5" />
+                Information
+              </div>
+              <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-3">
+                Was ist der Klimabonus?
+              </h2>
+              <p className="text-gray-600 text-[14.5px] max-w-md mx-auto leading-relaxed">
+                Der Klimabonus ist eine finanzielle Unterstützung der österreichischen Bundesregierung,
+                die im Rahmen der ökologischen Steuerreform an alle Bürgerinnen und Bürger ausgezahlt wird.
+              </p>
+            </div>
+          </div>
         </section>
 
         {/* Voraussetzungen - 2x2 */}

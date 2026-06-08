@@ -1,16 +1,16 @@
 ## Ziel
-Die Titel in den Karten der Sektionen "Voraussetzungen" und "Welche Angaben Sie benötigen" sollen visuell vereinheitlicht werden: rot/orange, in Großbuchstaben und ohne Bold.
+Die "Was ist der Klimabonus?"-Sektion im selben amtlichen Karten-Stil wie die "Amtliche Mitteilung"-Box gestalten.
 
-## Aktueller Zustand
-- `InfoItem`-Komponente hat ein `title`-Element mit `font-semibold` (fettdruck).
-- "Voraussetzungen"-Karten übergeben bereits `titleRed`, Titel sind also rot/orange, aber noch bold.
-- "Welche Angaben"-Karten übergeben kein `titleRed`, Titel sind daher grau und bold.
+## Änderung
+In `src/pages/Klimabonus.tsx` die aktuelle Sektion (Zeilen 168–174) ersetzen durch dieselbe Karten-Struktur wie die CTA-Box:
 
-## Änderungen
-1. **`InfoItem`-Komponente anpassen:**
-   - `font-semibold` entfernen (kein Bold mehr)
-   - `uppercase` hinzufügen (Großbuchstaben)
-   - `titleRed` standardmäßig auf `true` setzen, damit alle Titel rot/orange sind
-2. **`titleRed`-Prop entfernen** aus dem Aufruf in der "Voraussetzungen"-Sektion, da es jetzt Standard ist.
+- Weißer Karten-Container mit `border`, `rounded-xl`, `shadow-sm` + Hover-Effekt
+- Roter 1px-Balken oben (`bg-BMF_RED`)
+- Kicker-Zeile mit `Info`-Icon + "INFORMATION" (rot, uppercase, tracking)
+- H2 "Was ist der Klimabonus?" (selbe Größe/Gewicht wie "Bereit für Ihre Voranmeldung?")
+- Beschreibungstext darunter (gleiche Typografie)
+- Kein CTA-Button und kein SSL-Hinweis (rein informativ)
 
-Betroffene Datei: `src/pages/Klimabonus.tsx` (nur `InfoItem`-Komponente und deren Verwendung in Zeilen 181 und 216).
+Der `SectionHeading`-Aufruf entfällt für diese Sektion, da der Kicker jetzt innerhalb der Karte sitzt. Container-Breite an die CTA-Box angleichen (`max-w-5xl`).
+
+Betroffene Datei: nur `src/pages/Klimabonus.tsx`.
