@@ -186,7 +186,7 @@ const Klimabonus = () => {
 
         {/* Voraussetzungen - 2x2 */}
         <section className="container mx-auto px-4 max-w-5xl">
-          <SectionHeading kicker="§ Anspruch">Voraussetzungen</SectionHeading>
+          <SectionHeading kicker="Anspruch">Voraussetzungen</SectionHeading>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {voraussetzungen.map((v) => (
               <InfoItem key={v.title} Icon={v.Icon} title={v.title} text={v.text} />
