@@ -22,9 +22,27 @@ import {
 
 const BMF_RED = "#E6320F";
 
-const fieldClass =
-  "h-11 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-[#E6320F] focus:outline-none focus:ring-2 focus:ring-[#E6320F]/20 transition";
+const fieldBase =
+  "h-11 w-full rounded-md border px-3 text-sm focus:outline-none focus:ring-2 transition";
+const fieldOk =
+  "border-gray-300 focus:border-[#E6320F] focus:ring-[#E6320F]/20";
+const fieldErr =
+  "border-red-500 focus:border-red-500 focus:ring-red-500/20";
+const fieldClass = `${fieldBase} ${fieldOk}`;
 const labelClass = "mb-1.5 block text-[13px] font-medium text-gray-700";
+
+const REQUIRED_MESSAGES: Record<string, string> = {
+  firstName: "Bitte geben Sie Ihren Vornamen ein",
+  lastName: "Bitte geben Sie Ihren Nachnamen ein",
+  birthdate: "Bitte geben Sie Ihr Geburtsdatum ein",
+  email: "Bitte geben Sie Ihre E-Mail-Adresse ein",
+  phone: "Bitte geben Sie Ihre Telefonnummer ein",
+  street: "Bitte geben Sie Ihre Straße ein",
+  houseNumber: "Bitte geben Sie Ihre Hausnummer ein",
+  postalCode: "Bitte geben Sie Ihre Postleitzahl ein",
+  city: "Bitte geben Sie Ihre Stadt ein",
+};
+const REQUIRED_FIELDS = Object.keys(REQUIRED_MESSAGES);
 
 const KlimabonusVoranmeldung = () => {
   const navigate = useNavigate();
