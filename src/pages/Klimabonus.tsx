@@ -193,8 +193,8 @@ const Klimabonus = () => {
                 className="bg-white border border-gray-200 rounded-xl p-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300"
               >
                 <span
-                  className="mx-auto mb-3 w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-bold bg-white border-2"
-                  style={{ borderColor: BMF_RED, color: BMF_RED }}
+                  className="mx-auto mb-3 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold bg-white"
+                  style={{ border: `1px solid ${BMF_RED}`, color: BMF_RED }}
                 >
                   {i + 1}
                 </span>
