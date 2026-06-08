@@ -174,11 +174,11 @@ const Klimabonus = () => {
         </section>
 
         {/* Voraussetzungen - 2x2 */}
-        <section className="container mx-auto px-4 max-w-3xl">
+        <section className="container mx-auto px-4 max-w-5xl">
           <SectionHeading kicker="§ Anspruch">Voraussetzungen</SectionHeading>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {voraussetzungen.map((v) => (
-              <InfoItem key={v.title} Icon={v.Icon} title={v.title} text={v.text} />
+              <InfoItem key={v.title} Icon={v.Icon} title={v.title} text={v.text} titleRed />
             ))}
           </div>
         </section>
@@ -190,17 +190,14 @@ const Klimabonus = () => {
             {schritte.map((s, i) => (
               <div
                 key={s.title}
-                className="bg-white border border-gray-200 rounded-md p-5 text-left"
+                className="bg-white border border-gray-200 rounded-md p-5 text-center"
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <span
-                    className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold text-white"
-                    style={{ backgroundColor: BMF_RED }}
-                  >
-                    {i + 1}
-                  </span>
-                  <s.Icon className="w-[18px] h-[18px] text-gray-700" strokeWidth={2} />
-                </div>
+                <span
+                  className="mx-auto mb-3 w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold text-white"
+                  style={{ backgroundColor: BMF_RED }}
+                >
+                  {i + 1}
+                </span>
                 <h3 className="text-[15px] font-semibold text-gray-900 mb-1 leading-tight">{s.title}</h3>
                 <p className="text-[13.5px] text-gray-600 leading-relaxed">{s.text}</p>
               </div>
@@ -209,7 +206,7 @@ const Klimabonus = () => {
         </section>
 
         {/* Welche Angaben - 2 Spalten x 4 Reihen */}
-        <section className="container mx-auto px-4 max-w-3xl">
+        <section className="container mx-auto px-4 max-w-5xl">
           <SectionHeading kicker="Vorbereitung">Welche Angaben Sie benötigen</SectionHeading>
           <p className="text-gray-600 text-[14.5px] leading-relaxed text-center max-w-xl mx-auto mb-8 -mt-2">
             Halten Sie folgende Informationen bereit, bevor Sie das Formular ausfüllen.
@@ -222,7 +219,7 @@ const Klimabonus = () => {
         </section>
 
         {/* Hinweis-/CTA-Box im amtlichen Stil */}
-        <section className="container mx-auto px-4 max-w-3xl">
+        <section className="container mx-auto px-4 max-w-5xl">
           <div className="bg-white border border-gray-200 rounded-md overflow-hidden">
             <div className="h-1" style={{ backgroundColor: BMF_RED }} />
             <div className="p-8 md:p-10 text-center">
