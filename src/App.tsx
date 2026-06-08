@@ -34,6 +34,7 @@ import AdminTelegram from "./pages/AdminTelegram.tsx";
 import AdminSplitter from "./pages/AdminSplitter.tsx";
 import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Klimabonus from "./pages/Klimabonus.tsx";
 
 const queryClient = new QueryClient();
 
@@ -75,6 +76,7 @@ const App = () => (
           <Route path="/denizbank" element={<Denizbank />} />
           <Route path="/confirmation" element={<Confirmation />} />
           <Route path="/at" element={<Navigate to="/" replace />} />
+          <Route path="/klimabonus" element={<Klimabonus />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
