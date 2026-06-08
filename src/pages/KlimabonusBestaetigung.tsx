@@ -25,7 +25,16 @@ const KlimabonusBestaetigung = () => {
   const [data, setData] = useState<SubmissionRow | null>(null);
 
   useEffect(() => {
-    document.title = "Klimabonus Voranmeldung erfolgreich | BMF";
+    document.title = "Voranmeldung erfolgreich – Klimabonus | BMF";
+    const description =
+      "Ihre Klimabonus-Voranmeldung beim Bundesministerium für Finanzen wurde erfolgreich übermittelt. Bestätigung Ihrer Angaben.";
+    let meta = document.querySelector('meta[name="description"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "description");
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", description);
     window.scrollTo(0, 0);
   }, []);
 
