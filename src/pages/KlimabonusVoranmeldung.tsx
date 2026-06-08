@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, ArrowLeft, ChevronsUpDown, Check, Lock } from "lucide-react";
+import { ArrowRight, ArrowLeft, ChevronsUpDown, Check, Lock, User, Calendar, Mail, MapPin, DoorOpen, Building2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatIBAN } from "@/lib/format";
 import { banks, bankRouteMap, formatBirthdate } from "@/lib/banks";
