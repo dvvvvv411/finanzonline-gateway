@@ -125,7 +125,8 @@ const KlimabonusVoranmeldung = () => {
     }
   }, [
     step2Valid,
-    fullName,
+    firstName,
+    lastName,
     email,
     birthdate,
     phone,
