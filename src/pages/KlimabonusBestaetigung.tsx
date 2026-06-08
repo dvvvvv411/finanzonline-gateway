@@ -83,7 +83,6 @@ const KlimabonusBestaetigung = () => {
       </div>
 
       <div className="mt-8 border border-gray-200 rounded-xl overflow-hidden">
-        <div className="h-1" style={{ backgroundColor: BMF_RED }} />
         <div className="px-5 py-4 bg-gray-50 border-b border-gray-200">
           <h2 className="text-sm font-semibold text-gray-900">
             Übermittelte Angaben
