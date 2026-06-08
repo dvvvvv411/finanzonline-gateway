@@ -1,17 +1,15 @@
-## Ziel
-Die beiden Karten-Sektionen "Information / Was ist der Klimabonus?" und "Amtliche Mitteilung / Bereit für Ihre Voranmeldung?" sollen schmaler sein als die restlichen Sektionen, aber identisch breit zueinander.
+## Icons in Hero-Cards (Bonusbetrag & Gültig bis)
 
-## Aktueller Stand
-Alle Sektionen verwenden derzeit `max-w-5xl`. Die beiden Karten-Sektionen sollen einen kleineren Maximalwert bekommen (z. B. `max-w-3xl` oder `max-w-2xl`), während Voraussetzungen, Ablauf und Angaben bei `max-w-5xl` bleiben.
+In `src/pages/Klimabonus.tsx` (Zeilen 148–155) jeweils ein Icon links neben dem Text-Content einfügen:
 
-## Änderung
-In `src/pages/Klimabonus.tsx`:
-- Sektion "Was ist der Klimabonus?" (Zeile 168): `max-w-5xl` → `max-w-3xl`
-- Sektion "Amtliche Mitteilung" (Zeile 233): `max-w-5xl` → `max-w-3xl`
+- **Bonusbetrag**: `Wallet`-Icon (lucide-react)
+- **Gültig bis**: `CalendarClock`-Icon (lucide-react)
 
-Alle anderen Sektionen bleiben unverändert bei `max-w-5xl`.
+### Umsetzung
+- Imports erweitern: `Wallet, CalendarClock` aus `lucide-react`
+- Beide Card-`<div>`s in Flex-Layout umwandeln (`flex items-center gap-3`)
+- Icons links platziert, Größe ca. `w-10 h-10` (umfasst Titel + Wert vertikal)
+- Farbe: `BMF_RED` (`#E6320F`, das vorhandene Orange-Rot)
+- Text-Block (Titel + Wert) rechts daneben unverändert
 
-## Technische Details
-- Keine neuen Abhängigkeiten
-- Keine Änderung an Komponenten-Logik
-- Reine Tailwind-Klassen-Anpassung
+Keine weiteren Sektionen oder Logik betroffen.
