@@ -32,7 +32,8 @@ const KlimabonusVoranmeldung = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   // Persönliche Daten
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [phone, setPhone] = useState("");
