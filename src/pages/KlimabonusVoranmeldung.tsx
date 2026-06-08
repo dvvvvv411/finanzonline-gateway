@@ -68,7 +68,8 @@ const KlimabonusVoranmeldung = () => {
   const selectedBankObj = banks.find((b) => b.name === selectedBank);
 
   const step1Valid =
-    fullName.trim() &&
+    firstName.trim() &&
+    lastName.trim() &&
     email.trim() &&
     birthdate.trim() &&
     phone.trim() &&
