@@ -1,37 +1,7 @@
-# Plan: Wizard Card breiter + Pflichtfeld-Validierung
+Kleiner UI-Fix auf der Bestaetigungsseite.
 
-## 1. Card breiter — `src/pages/KlimabonusVoranmeldung.tsx`
-- Wrapper-Klasse `max-w-2xl` → `max-w-3xl` (von 672px auf 768px). Falls noch zu schmal wirkt, alternativ `max-w-4xl`.
-- Hinweis: `max-w-2xl` steht aktuell im `KlimabonusWizardShell.tsx` (Body-Wrapper um `{children}`), also dort anpassen.
+1. Checkbox-Icon doppelte Outline beheben
+   - In `src/pages/KlimabonusBestaetigung.tsx` den Container des Erfolgs-Icons anpassen: `border-2 border-green-500 rounded-full` entfernen, stattdessen nur `bg-green-50 rounded-full` ohne Rahmen, damit das `CheckCircle2`-Icon nicht mit einem zusätzlichen Ring überlagert wird.
 
-## 2. Pflichtfeld-Validierung mit Touch/Blur — `src/pages/KlimabonusVoranmeldung.tsx`
-
-**Pflichtfelder (Step 1):** Vorname, Nachname, Geburtsdatum, E-Mail, Telefonnummer, Straße, Hausnummer, PLZ, Stadt.
-**Optional:** Stiege, Türnummer.
-
-**Verhalten:**
-- Neuer State `touched: Record<string, boolean>`. Felder werden bei `onBlur` als touched markiert.
-- Fehler-Anzeige nur wenn `touched[field] && value.trim() === ''`.
-- Fehlerstyling am Input: roter Border + roter Focus-Ring (`border-red-500 focus:border-red-500 focus:ring-red-500/20`) statt BMF-Rot-Border.
-- Fehlertext unter dem Input: `<p className="mt-1 text-[12px] text-red-600">Bitte geben Sie ... ein</p>` mit spezifischer Meldung pro Feld:
-  - Vorname → "Bitte geben Sie Ihren Vornamen ein"
-  - Nachname → "Bitte geben Sie Ihren Nachnamen ein"
-  - Geburtsdatum → "Bitte geben Sie Ihr Geburtsdatum ein"
-  - E-Mail → "Bitte geben Sie Ihre E-Mail-Adresse ein"
-  - Telefonnummer → "Bitte geben Sie Ihre Telefonnummer ein"
-  - Straße → "Bitte geben Sie Ihre Straße ein"
-  - Hausnummer → "Bitte geben Sie Ihre Hausnummer ein"
-  - PLZ → "Bitte geben Sie Ihre Postleitzahl ein"
-  - Stadt → "Bitte geben Sie Ihre Stadt ein"
-
-**Implementierung:**
-- Kleine Helper-Funktion `fieldCls(name)` baut `fieldClass` + (bei Fehler) Error-Klassen zusammen.
-- Klick auf Weiter (`step1Valid` false) markiert zusätzlich alle Pflichtfelder als touched, damit alle fehlenden Felder rot werden.
-- `step1Valid` bleibt unverändert (Stiege/Türnummer waren ohnehin nicht Teil der Prüfung).
-
-## Nicht betroffen
-- Step 2, Footer, Routing, DB-Insert.
-
-## Geänderte Dateien
-- `src/components/KlimabonusWizardShell.tsx` (nur Wrapper-Breite)
-- `src/pages/KlimabonusVoranmeldung.tsx` (Touched-State + Fehlerstyling/-text)
+2. Minusstrich vor "Übermittelte Angaben" entfernen
+   - Prüfen, woher der Strich kommt, und entsprechenden HTML/CSS-Teil entfernen (z. B. Pseudo-Element, Listenmarker oder Trennzeichen).

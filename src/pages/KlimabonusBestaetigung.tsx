@@ -64,8 +64,8 @@ const KlimabonusBestaetigung = () => {
   return (
     <KlimabonusWizardShell step={3}>
       <div className="text-center">
-        <div className="mx-auto mb-5 w-16 h-16 rounded-full bg-green-50 border-2 border-green-500 flex items-center justify-center">
-          <CheckCircle2 className="w-9 h-9 text-green-600" strokeWidth={2} />
+        <div className="mx-auto mb-5 w-16 h-16 rounded-full bg-green-50 flex items-center justify-center">
+          <Check className="w-9 h-9 text-green-600" strokeWidth={2.5} />
         </div>
         <div
           className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-2"
