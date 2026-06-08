@@ -1,11 +1,6 @@
-Korrekturen Klimabonus-Seite:
+"So funktioniert's" Schritt-Kreise verfeinern:
 
-1. **Bonusbetrag/Gültig-bis-Cards** (Hero):
-   - Label "Bonusbetrag" und "Gültig bis" → Rot/Orange (`#E6320F`), bold
-   - Werte "400 €" und "Juli 2026" → schwarz (`text-gray-900`), bold
-
-2. **CTA-Button "Jetzt voranmelden"**:
-   - `font-semibold` → `font-bold`
-
-3. **Schritt-Zahlen in "So funktioniert's"**:
-   - Kreis: weißer Hintergrund, Border in Rot/Orange (`#E6320F`), Zahl in Rot/Orange — statt aktuell roter Hintergrund mit weißer Zahl
+- Border auf `1px solid #E6320F` reduzieren (von border-2)
+- Kreis-Größe bleibt `w-8 h-8`
+- Zahl: `font-bold` bleibt, leicht größer (`text-sm`)
+- Farbe Zahl: `#E6320F`, Hintergrund weiß
