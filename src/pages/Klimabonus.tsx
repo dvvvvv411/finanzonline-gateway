@@ -153,7 +153,7 @@ const Klimabonus = () => {
               </div>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-left shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-gray-300 flex items-center gap-3">
-              <CalendarClock className="w-10 h-10 shrink-0" style={{ color: BMF_RED }} aria-hidden="true" />
+              <CalendarClock className="w-8 h-8 shrink-0" style={{ color: BMF_RED }} strokeWidth={1.5} aria-hidden="true" />
               <div>
                 <div className="text-[10.5px] font-bold uppercase tracking-wider mb-0.5" style={{ color: BMF_RED }}>Gültig bis</div>
                 <div className="text-xl font-semibold text-gray-900">{naechsterMonat} {JAHR}</div>
