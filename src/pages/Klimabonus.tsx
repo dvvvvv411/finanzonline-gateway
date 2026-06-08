@@ -32,7 +32,7 @@ const SectionHeading = ({ children, kicker }: { children: React.ReactNode; kicke
 const InfoItem = ({
   Icon, title, text, titleRed,
 }: { Icon: IconType; title: string; text: string; titleRed?: boolean }) => (
-  <div className="bg-white border border-gray-200 rounded-md p-5 text-left flex gap-4 items-start">
+  <div className="bg-white border border-gray-200 rounded-xl p-5 text-left flex gap-4 items-start shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300">
     <div
       className="shrink-0 w-9 h-9 rounded-md flex items-center justify-center border"
       style={{ backgroundColor: "rgba(230,50,15,0.06)", borderColor: "rgba(230,50,15,0.2)" }}
@@ -127,10 +127,10 @@ const Klimabonus = () => {
       <section className="relative overflow-hidden border-b border-gray-200 bg-white">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroAsset.url})`, opacity: 0.45 }}
+          style={{ backgroundImage: `url(${heroAsset.url})`, opacity: 0.7 }}
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/70 to-gray-50" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/40 to-gray-50/80" aria-hidden="true" />
         <div className="relative container mx-auto px-4 py-14 md:py-16 text-center max-w-3xl">
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#E6320F] mb-4">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#E6320F]" />
@@ -145,13 +145,13 @@ const Klimabonus = () => {
           </p>
 
           <div className="grid grid-cols-2 gap-3 max-w-md mx-auto mb-8">
-            <div className="bg-white border border-gray-200 rounded-md px-4 py-3 text-left">
+            <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-left shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-gray-300">
               <div className="text-[10.5px] text-gray-500 uppercase tracking-wider mb-0.5">Bonusbetrag</div>
-              <div className="text-xl font-semibold text-gray-900">bis zu 400 €</div>
+              <div className="text-xl font-semibold" style={{ color: BMF_RED }}>400 €</div>
             </div>
-            <div className="bg-white border border-gray-200 rounded-md px-4 py-3 text-left">
+            <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-left shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-gray-300">
               <div className="text-[10.5px] text-gray-500 uppercase tracking-wider mb-0.5">Gültig bis</div>
-              <div className="text-xl font-semibold text-gray-900">{naechsterMonat} {JAHR}</div>
+              <div className="text-xl font-semibold" style={{ color: BMF_RED }}>{naechsterMonat} {JAHR}</div>
             </div>
           </div>
 
@@ -190,7 +190,7 @@ const Klimabonus = () => {
             {schritte.map((s, i) => (
               <div
                 key={s.title}
-                className="bg-white border border-gray-200 rounded-md p-5 text-center"
+                className="bg-white border border-gray-200 rounded-xl p-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300"
               >
                 <span
                   className="mx-auto mb-3 w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold text-white"
@@ -220,7 +220,7 @@ const Klimabonus = () => {
 
         {/* Hinweis-/CTA-Box im amtlichen Stil */}
         <section className="container mx-auto px-4 max-w-5xl">
-          <div className="bg-white border border-gray-200 rounded-md overflow-hidden">
+          <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-gray-300">
             <div className="h-1" style={{ backgroundColor: BMF_RED }} />
             <div className="p-8 md:p-10 text-center">
               <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#E6320F] mb-3">
