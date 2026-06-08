@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import bmfLogo from "@/assets/bmf_logo.svg";
-import heroAsset from "@/assets/klimabonus-hero-v2.png.asset.json";
+import heroImage from "@/assets/klimabonus-hero-v2.png";
 
 const BMF_RED = "#E6320F";
 const JAHR = "2026";
