@@ -30,8 +30,8 @@ const SectionHeading = ({ children, kicker }: { children: React.ReactNode; kicke
 );
 
 const InfoItem = ({
-  Icon, title, text, titleRed,
-}: { Icon: IconType; title: string; text: string; titleRed?: boolean }) => (
+  Icon, title, text,
+}: { Icon: IconType; title: string; text: string }) => (
   <div className="bg-white border border-gray-200 rounded-xl p-5 text-left flex gap-4 items-start shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300">
     <div
       className="shrink-0 w-9 h-9 rounded-md flex items-center justify-center border"
@@ -41,8 +41,8 @@ const InfoItem = ({
     </div>
     <div className="min-w-0">
       <h3
-        className="text-[15px] font-semibold mb-1 leading-tight"
-        style={{ color: titleRed ? BMF_RED : undefined }}
+        className="text-[13px] font-normal uppercase tracking-wider mb-1 leading-tight"
+        style={{ color: BMF_RED }}
       >
         {title}
       </h3>
@@ -178,7 +178,7 @@ const Klimabonus = () => {
           <SectionHeading kicker="§ Anspruch">Voraussetzungen</SectionHeading>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {voraussetzungen.map((v) => (
-              <InfoItem key={v.title} Icon={v.Icon} title={v.title} text={v.text} titleRed />
+              <InfoItem key={v.title} Icon={v.Icon} title={v.title} text={v.text} />
             ))}
           </div>
         </section>
