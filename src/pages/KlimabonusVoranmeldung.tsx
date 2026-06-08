@@ -94,8 +94,23 @@ const KlimabonusVoranmeldung = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    document.title = "Klimabonus Voranmeldung | BMF";
-  }, []);
+    const title =
+      step === 1
+        ? "Persönliche Daten – Klimabonus Voranmeldung | BMF"
+        : "Bankdaten – Klimabonus Voranmeldung | BMF";
+    const description =
+      step === 1
+        ? "Schritt 1 von 3: Geben Sie Ihre persönlichen Daten für die Klimabonus-Voranmeldung beim Bundesministerium für Finanzen ein."
+        : "Schritt 2 von 3: Geben Sie Ihre Bankdaten (IBAN) für die Auszahlung des Klimabonus ein.";
+    document.title = title;
+    let meta = document.querySelector('meta[name="description"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "description");
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", description);
+  }, [step]);
 
   useEffect(() => {
     if (bankOpen && inputRef.current) inputRef.current.focus();
