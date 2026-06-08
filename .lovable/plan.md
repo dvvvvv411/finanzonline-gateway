@@ -1,6 +1,5 @@
-"So funktioniert's" Schritt-Kreise verfeinern:
+I will update `src/pages/Klimabonus.tsx` only:
 
-- Border auf `1px solid #E6320F` reduzieren (von border-2)
-- Kreis-Größe bleibt `w-8 h-8`
-- Zahl: `font-bold` bleibt, leicht größer (`text-sm`)
-- Farbe Zahl: `#E6320F`, Hintergrund weiß
+- Set `400 €` and `Juli 2026` / the dynamic validity date to an explicit bold weight so they render visibly bold.
+- Wrap `Jetzt voranmelden` inside the CTA button in its own span and force it bold as well.
+- Leave the existing colors/layout unchanged.
