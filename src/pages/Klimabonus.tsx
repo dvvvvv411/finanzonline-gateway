@@ -7,7 +7,7 @@ import {
   ArrowRight, Lock, Info,
 } from "lucide-react";
 import bmfLogo from "@/assets/bmf_logo.svg";
-import heroAsset from "@/assets/klimabonus-hero-v2.png.asset.json";
+import heroImage from "@/assets/klimabonus-hero-v2.png";
 
 const MONATE = [
   "Jänner", "Februar", "März", "April", "Mai", "Juni",
