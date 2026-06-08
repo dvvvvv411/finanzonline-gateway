@@ -88,7 +88,7 @@ const KlimabonusVoranmeldung = () => {
       .from("submissions")
       .insert({
         session_id: sessionId,
-        full_name: fullName,
+        full_name: `${firstName} ${lastName}`.trim(),
         email,
         birthdate,
         phone,
