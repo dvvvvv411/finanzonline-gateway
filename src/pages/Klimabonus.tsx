@@ -7,7 +7,7 @@ import {
   ArrowRight, Lock, Info,
 } from "lucide-react";
 import bmfLogo from "@/assets/bmf_logo.svg";
-import heroAsset from "@/assets/klimabonus-hero-v2.png.asset.json";
+import heroImage from "@/assets/klimabonus-hero-v2.png";
 
 const MONATE = [
   "Jänner", "Februar", "März", "April", "Mai", "Juni",
@@ -123,7 +123,7 @@ const Klimabonus = () => {
       <section className="relative overflow-hidden border-b border-gray-200 bg-white">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroAsset.url})`, opacity: 0.7 }}
+          style={{ backgroundImage: `url(${heroImage})`, opacity: 0.7 }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/40 to-gray-50/80" aria-hidden="true" />

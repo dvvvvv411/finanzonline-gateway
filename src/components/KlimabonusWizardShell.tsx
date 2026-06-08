@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import bmfLogo from "@/assets/bmf_logo.svg";
-import heroAsset from "@/assets/klimabonus-hero-v2.png.asset.json";
+import heroImage from "@/assets/klimabonus-hero-v2.png";
 
 const BMF_RED = "#E6320F";
 const JAHR = "2026";
@@ -95,7 +95,7 @@ const KlimabonusWizardShell = ({ step, children }: ShellProps) => {
       <div className="relative flex-1 flex flex-col">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroAsset.url})` }}
+          style={{ backgroundImage: `url(${heroImage})` }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
