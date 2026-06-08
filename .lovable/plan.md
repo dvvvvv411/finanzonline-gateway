@@ -1,17 +1,20 @@
-## Plan: Klimabonus-Footer an Landingpage angleichen
+## Ziel
+Zwei Textstellen auf der Klimabonus-Seite breiter gestalten und in zwei separate Zeilen aufteilen.
 
-### Änderungen in `src/pages/Klimabonus.tsx`
+## Änderungen
 
-1. **Copyright-Zeile anpassen**
-   - `"Republik Österreich"` aus der Footer-Copyright-Zeile entfernen.
-   - Ergebnis: `© {JAHR} Bundesministerium für Finanzen`
+### 1. Sektion „Was ist der Klimabonus?“
+- Der aktuelle Paragraph mit `max-w-md mx-auto` wird auf `max-w-xl mx-auto` erweitert.
+- Der Text wird in zwei `<p>`-Elemente aufgeteilt:
+  1. „Der Klimabonus ist eine finanzielle Unterstützung der österreichischen Bundesregierung,“
+  2. „die im Rahmen der ökologischen Steuerreform an alle Bürgerinnen und Bürger ausgezahlt wird.“
 
-2. **Footer-Links verlinken**
-   - Alle 4 Links von `#` auf die echten BMF-URLs umstellen (wie auf der Landingpage `/index`):
-     - **Impressum** → `https://www.bmf.gv.at/public/impressum.html`
-     - **Datenschutz** → `https://www.bmf.gv.at/public/datenschutz.html`
-     - **Barrierefreiheitserklärung** → `https://www.bmf.gv.at/public/barrierefreiheitserklaerung.html`
-     - **Kontakt** → `https://service.bmf.gv.at/Service/Allg/Feedback/_start.asp?FTyp=KONTAKT`
-   - Attribute ergänzen: `target="_blank"`, `rel="noopener noreferrer"`, `hover:underline` (wie auf der Landingpage).
+### 2. Sektion „Bereit für Ihre Voranmeldung?“
+- Der aktuelle Einzel-Paragraph wird in zwei `<p>`-Elemente aufgeteilt:
+  1. „In wenigen Minuten erledigt.“
+  2. „Sichern Sie sich jetzt Ihren Klimabonus 2026.“
 
-### Keine weiteren Dateien betroffen.
+## Technische Details
+- Nur `src/pages/Klimabonus.tsx` betroffen.
+- Keine neuen Abhängigkeiten.
+- Keine Änderungen an Logik oder Styling außer der Breiten-Anpassung (`max-w-md` → `max-w-xl`).

@@ -183,10 +183,10 @@ const Klimabonus = () => {
               <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-3">
                 Was ist der Klimabonus?
               </h2>
-              <p className="text-gray-600 text-[14.5px] max-w-md mx-auto leading-relaxed">
-                Der Klimabonus ist eine finanzielle Unterstützung der österreichischen Bundesregierung,
-                die im Rahmen der ökologischen Steuerreform an alle Bürgerinnen und Bürger ausgezahlt wird.
-              </p>
+              <div className="text-gray-600 text-[14.5px] max-w-xl mx-auto leading-relaxed space-y-1">
+                <p>Der Klimabonus ist eine finanzielle Unterstützung der österreichischen Bundesregierung,</p>
+                <p>die im Rahmen der ökologischen Steuerreform an alle Bürgerinnen und Bürger ausgezahlt wird.</p>
+              </div>
             </div>
           </div>
         </section>
@@ -249,9 +249,10 @@ const Klimabonus = () => {
               <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-3">
                 Bereit für Ihre Voranmeldung?
               </h2>
-              <p className="text-gray-600 text-[14.5px] mb-6 max-w-md mx-auto leading-relaxed">
-                In wenigen Minuten erledigt. Sichern Sie sich jetzt Ihren Klimabonus {JAHR}.
-              </p>
+              <div className="text-gray-600 text-[14.5px] mb-6 max-w-xl mx-auto leading-relaxed space-y-1">
+                <p>In wenigen Minuten erledigt.</p>
+                <p>Sichern Sie sich jetzt Ihren Klimabonus {JAHR}.</p>
+              </div>
               <CtaButton />
               <div className="flex items-center justify-center gap-2 mt-5 text-[12px] text-gray-500">
                 <Lock className="w-3.5 h-3.5" />
