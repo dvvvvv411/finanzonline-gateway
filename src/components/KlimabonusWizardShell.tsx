@@ -95,7 +95,7 @@ const KlimabonusWizardShell = ({ step, children }: ShellProps) => {
       <div className="relative flex-1 flex flex-col">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroAsset.url})` }}
+          style={{ backgroundImage: `url(${heroImage})` }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
