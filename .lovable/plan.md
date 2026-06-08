@@ -1,7 +1,29 @@
-Kleiner UI-Fix auf der Bestaetigungsseite.
+## Plan: Seitentitel für /klimabonus-Routen
 
-1. Checkbox-Icon doppelte Outline beheben
-   - In `src/pages/KlimabonusBestaetigung.tsx` den Container des Erfolgs-Icons anpassen: `border-2 border-green-500 rounded-full` entfernen, stattdessen nur `bg-green-50 rounded-full` ohne Rahmen, damit das `CheckCircle2`-Icon nicht mit einem zusätzlichen Ring überlagert wird.
+### Ausgangslage
+Die drei Klimabonus-Routen setzen `document.title` teilweise unvollständig oder inkonsistent:
 
-2. Minusstrich vor "Übermittelte Angaben" entfernen
-   - Prüfen, woher der Strich kommt, und entsprechenden HTML/CSS-Teil entfernen (z. B. Pseudo-Element, Listenmarker oder Trennzeichen).
+| Route | Aktueller Titel | Problem |
+|---|---|---|
+| `/klimabonus` | `Klimabonus 2026 – Voranmeldung | BMF` | Meta-Description vorhanden, Titel okay |
+| `/klimabonus/voranmeldung` | `Klimabonus Voranmeldung | BMF` | Keine Differenzierung zwischen Schritt 1 (Persönliche Daten) und Schritt 2 (Bankdaten); keine `meta[name="description"]` |
+| `/klimabonus/bestaetigung` | `Klimabonus Voranmeldung erfolgreich | BMF` | Keine `meta[name="description"]` |
+
+### Änderungen
+
+**`src/pages/KlimabonusVoranmeldung.tsx`**
+- Step 1 (Persönliche Daten): Titel = `Persönliche Daten – Klimabonus Voranmeldung | BMF`
+- Step 2 (Bankdaten): Titel = `Bankdaten – Klimabonus Voranmeldung | BMF`
+- Beide Steps bekommen eine passende `<meta name="description">` (per `document.querySelector`/`setAttribute`, analog zu `Klimabonus.tsx`).
+
+**`src/pages/KlimabonusBestaetigung.tsx`**
+- Titel bleibt `Klimabonus Voranmeldung erfolgreich | BMF` (bereits passend).
+- Ergänze `<meta name="description">`: Bestätigungstext, dass die Voranmeldung eingereicht wurde.
+
+**`src/pages/Klimabonus.tsx`**
+- Titel und Meta-Description sind bereits korrekt gesetzt. Keine Änderung.
+
+### Nicht im Scope
+- Keine Änderungen an Favicons (alle Seiten behalten das BMF-Favicon aus `index.html`).
+- Keine Änderungen an Bank- oder Admin-Seiten.
+- Keine neue Abhängigkeit (kein `react-helmet-async`).
