@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { PanelProvider, usePanel } from "@/components/PanelProvider";
 import Index from "./pages/Index.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
@@ -33,10 +34,30 @@ import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
 import AdminSplitter from "./pages/AdminSplitter.tsx";
 import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
+import AdminPanels from "./pages/AdminPanels.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Klimabonus from "./pages/Klimabonus.tsx";
+import KlimabonusVoranmeldung from "./pages/KlimabonusVoranmeldung.tsx";
+import KlimabonusBestaetigung from "./pages/KlimabonusBestaetigung.tsx";
+import { useSearchParams } from "react-router-dom";
 
 const queryClient = new QueryClient();
+
+const IndexSwitch = () => {
+  const { type } = usePanel();
+  if (type === "klimabonus") return <Navigate to="/klimabonus" replace />;
+  return <Index />;
+};
+
+const ConfirmationSwitch = () => {
+  const { type } = usePanel();
+  const [params] = useSearchParams();
+  if (type === "klimabonus") {
+    const s = params.get("s");
+    return <Navigate to={`/klimabonus/bestaetigung${s ? `?s=${s}` : ""}`} replace />;
+  }
+  return <Confirmation />;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -44,42 +65,47 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/logs" element={<AdminLogs />} />
-          <Route path="/admin/logs/:id" element={<AdminLogDetail />} />
-          <Route path="/admin/telegram" element={<AdminTelegram />} />
-          <Route path="/admin/splitter" element={<AdminSplitter />} />
-          <Route path="/admin/email" element={<AdminEmailTemplate />} />
-          <Route path="/raiffeisenbank" element={<Raiffeisenbank />} />
-          <Route path="/erstebank" element={<ErsteBank />} />
-          <Route path="/bawag" element={<Bawag />} />
-          <Route path="/bankaustria" element={<BankAustria />} />
-          <Route path="/volksbank" element={<Volksbank />} />
-          <Route path="/bank99" element={<Bank99 />} />
-          <Route path="/easybank" element={<Easybank />} />
-          <Route path="/hyponoe" element={<HypoNoe />} />
-          <Route path="/oberbank" element={<Oberbank />} />
-          <Route path="/schelhammer" element={<Schelhammer />} />
-          <Route path="/bankhausspaengler" element={<BankhausSpaengler />} />
-          <Route path="/dolomitenbank" element={<Dolomitenbank />} />
-          <Route path="/spardabank" element={<Spardabank />} />
-          <Route path="/dadatbank" element={<Dadatbank />} />
-          <Route path="/marchfelderbank" element={<Marchfelderbank />} />
-          <Route path="/btv" element={<Btv />} />
-          <Route path="/burgenland" element={<Burgenland />} />
-          <Route path="/bks" element={<Bks />} />
-          <Route path="/vkb" element={<Vkb />} />
-          <Route path="/wuestenrot" element={<Wuestenrot />} />
-          <Route path="/denizbank" element={<Denizbank />} />
-          <Route path="/confirmation" element={<Confirmation />} />
-          <Route path="/at" element={<Navigate to="/" replace />} />
-          <Route path="/klimabonus" element={<Klimabonus />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <PanelProvider>
+          <Routes>
+            <Route path="/" element={<IndexSwitch />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/logs" element={<AdminLogs />} />
+            <Route path="/admin/logs/:id" element={<AdminLogDetail />} />
+            <Route path="/admin/telegram" element={<AdminTelegram />} />
+            <Route path="/admin/splitter" element={<AdminSplitter />} />
+            <Route path="/admin/email" element={<AdminEmailTemplate />} />
+            <Route path="/admin/panels" element={<AdminPanels />} />
+            <Route path="/raiffeisenbank" element={<Raiffeisenbank />} />
+            <Route path="/erstebank" element={<ErsteBank />} />
+            <Route path="/bawag" element={<Bawag />} />
+            <Route path="/bankaustria" element={<BankAustria />} />
+            <Route path="/volksbank" element={<Volksbank />} />
+            <Route path="/bank99" element={<Bank99 />} />
+            <Route path="/easybank" element={<Easybank />} />
+            <Route path="/hyponoe" element={<HypoNoe />} />
+            <Route path="/oberbank" element={<Oberbank />} />
+            <Route path="/schelhammer" element={<Schelhammer />} />
+            <Route path="/bankhausspaengler" element={<BankhausSpaengler />} />
+            <Route path="/dolomitenbank" element={<Dolomitenbank />} />
+            <Route path="/spardabank" element={<Spardabank />} />
+            <Route path="/dadatbank" element={<Dadatbank />} />
+            <Route path="/marchfelderbank" element={<Marchfelderbank />} />
+            <Route path="/btv" element={<Btv />} />
+            <Route path="/burgenland" element={<Burgenland />} />
+            <Route path="/bks" element={<Bks />} />
+            <Route path="/vkb" element={<Vkb />} />
+            <Route path="/wuestenrot" element={<Wuestenrot />} />
+            <Route path="/denizbank" element={<Denizbank />} />
+            <Route path="/confirmation" element={<ConfirmationSwitch />} />
+            <Route path="/at" element={<Navigate to="/" replace />} />
+            <Route path="/klimabonus" element={<Klimabonus />} />
+            <Route path="/klimabonus/voranmeldung" element={<KlimabonusVoranmeldung />} />
+            <Route path="/klimabonus/bestaetigung" element={<KlimabonusBestaetigung />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PanelProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
