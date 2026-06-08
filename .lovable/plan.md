@@ -1,53 +1,20 @@
-Ich werde die `/klimabonus` Seite gezielt überarbeiten, damit sie kompakter, seriöser und stärker nach offizieller österreichischer Regierungs-/BMF-Seite wirkt.
+## Änderungen an `src/pages/Klimabonus.tsx`
 
-## Änderungen am Design
+1. **Hero-Background ersetzen**
+   - Neues Bild (`bank99bg.png`) via `lovable-assets` als neues Asset hochladen → `src/assets/klimabonus-hero-v2.png.asset.json`.
+   - Im Hero-Bereich als Background statt des bisherigen Bildes einbinden, sichtbarer als bisher (Opacity ~0.35) mit weißem Verlauf nach unten, damit Text gut lesbar bleibt.
+   - Altes Asset `klimabonus-hero.png.asset.json` löschen (nicht mehr referenziert).
 
-- **Weg vom generischen SaaS-Look**
-  - Weniger große Schatten, weniger runde Marketing-Cards, keine übertriebenen Badge-/Pill-Elemente.
-  - Mehr Behörden-/FinanzOnline-Anmutung: klare Linien, ruhige Grauflächen, dünne Rahmen, kompakte Informationsblöcke.
-  - BMF-Rot nur gezielt für Akzente, Trennlinien, CTA und kleine Statusmarkierungen.
+2. **Voraussetzungen-Titel einfärben**
+   - In `InfoItem` werden die Titel der Voraussetzungs-Cards (Wohnsitz, Bankkonto, SVNR, Frist) in BMF-Rot `#E6320F` dargestellt. Andere `InfoItem`-Nutzungen (Welche Angaben) behalten ihren dunklen Titel — über ein optionales `titleColor`-Prop gesteuert.
 
-- **Cards deutlich kleiner machen**
-  - Voraussetzungen-, Schritte- und Angaben-Cards bekommen weniger Padding, kleinere Icons und eine festere, sachlichere Typohierarchie.
-  - Keine riesigen Icon-Kreise mehr; stattdessen kompakte Icon-Marker mit Titel und Beschreibung darunter.
-  - Geringere Abstände zwischen Sections und Cards, damit die Seite professioneller und dichter wirkt.
+3. **„So funktioniert's" Cards anpassen**
+   - Icons aus den Step-Cards entfernen.
+   - Card-Inhalt (Step-Nummer, Titel, Text) zentriert ausrichten.
+   - Step-Nummer-Badge bleibt, wandert mittig über den Titel.
 
-- **Alles weiterhin mittig zentriert**
-  - Hero, Headlines, Texte, CTA und Card-Grids bleiben zentriert.
-  - Inhalte bekommen engere Maximalbreiten, damit es nicht wie eine breite Template-Landingpage wirkt.
+4. **Einheitliche Sektionsbreite**
+   - „Voraussetzungen", „Welche Angaben Sie benötigen" und „Bereit für Ihre Voranmeldung" bekommen dieselbe `max-w-5xl` wie „So funktioniert's".
+   - Grids bleiben: Voraussetzungen 2×2, Angaben 2×4, So funktioniert's 4 Spalten.
 
-## Konkrete Layout-Anpassungen
-
-- **Hero**
-  - Kompakterer Hero mit offiziellerem Kopfbereich.
-  - BMF-Logo oben mittig bleibt.
-  - Hintergrundbild nur sehr dezent, nicht als generische große Marketing-Fläche.
-  - Bonusbetrag/Gültig-bis Boxen werden kleiner und amtlicher dargestellt.
-
-- **Voraussetzungen**
-  - Bleibt als **2x2 Card-Grid**.
-  - Cards werden kompakter.
-  - Icons bleiben passend: Haus, Bank/Gebäude, Ausweis, Kalender/Frist.
-  - Titel und Beschreibung werden klar getrennt:
-    - Titel oben: z.B. `Wohnsitz`
-    - darunter: `Hauptwohnsitz in Österreich zum Stichtag`
-
-- **Welche Angaben Sie benötigen**
-  - Wird auf Desktop explizit als **2 Spalten x 4 Reihen** umgesetzt, nicht 4 Spalten x 2 Reihen.
-  - Cards werden schmaler, sachlicher und übersichtlicher.
-  - Mobile bleibt einspaltig, Tablet zweispaltig.
-
-- **So funktioniert's**
-  - Weniger große Step-Cards.
-  - Kompakte Behördenprozess-Optik statt großer Marketing-Kacheln.
-
-- **CTA/Footer**
-  - CTA-Box wird weniger werblich und mehr wie ein offizieller Hinweis-/Aktionsbereich.
-  - Footer bleibt schlicht und behördlich.
-
-## Technische Umsetzung
-
-- Ich ändere nur `src/pages/Klimabonus.tsx`.
-- Keine Formularlogik, keine Telegram-/Backend-Änderungen.
-- Bestehende Inhalte, Monatslogik, Logo und Route bleiben erhalten.
-- Fokus liegt ausschließlich auf Layout, Größen, Abständen, Cards und offizieller visueller Wirkung.
+Keine weiteren Sektionen, keine Logikänderungen, keine Backend-Änderungen.
