@@ -1,16 +1,17 @@
 ## Ziel
-Die "Was ist der Klimabonus?"-Sektion im selben amtlichen Karten-Stil wie die "Amtliche Mitteilung"-Box gestalten.
+Die beiden Karten-Sektionen "Information / Was ist der Klimabonus?" und "Amtliche Mitteilung / Bereit für Ihre Voranmeldung?" sollen schmaler sein als die restlichen Sektionen, aber identisch breit zueinander.
+
+## Aktueller Stand
+Alle Sektionen verwenden derzeit `max-w-5xl`. Die beiden Karten-Sektionen sollen einen kleineren Maximalwert bekommen (z. B. `max-w-3xl` oder `max-w-2xl`), während Voraussetzungen, Ablauf und Angaben bei `max-w-5xl` bleiben.
 
 ## Änderung
-In `src/pages/Klimabonus.tsx` die aktuelle Sektion (Zeilen 168–174) ersetzen durch dieselbe Karten-Struktur wie die CTA-Box:
+In `src/pages/Klimabonus.tsx`:
+- Sektion "Was ist der Klimabonus?" (Zeile 168): `max-w-5xl` → `max-w-3xl`
+- Sektion "Amtliche Mitteilung" (Zeile 233): `max-w-5xl` → `max-w-3xl`
 
-- Weißer Karten-Container mit `border`, `rounded-xl`, `shadow-sm` + Hover-Effekt
-- Roter 1px-Balken oben (`bg-BMF_RED`)
-- Kicker-Zeile mit `Info`-Icon + "INFORMATION" (rot, uppercase, tracking)
-- H2 "Was ist der Klimabonus?" (selbe Größe/Gewicht wie "Bereit für Ihre Voranmeldung?")
-- Beschreibungstext darunter (gleiche Typografie)
-- Kein CTA-Button und kein SSL-Hinweis (rein informativ)
+Alle anderen Sektionen bleiben unverändert bei `max-w-5xl`.
 
-Der `SectionHeading`-Aufruf entfällt für diese Sektion, da der Kicker jetzt innerhalb der Karte sitzt. Container-Breite an die CTA-Box angleichen (`max-w-5xl`).
-
-Betroffene Datei: nur `src/pages/Klimabonus.tsx`.
+## Technische Details
+- Keine neuen Abhängigkeiten
+- Keine Änderung an Komponenten-Logik
+- Reine Tailwind-Klassen-Anpassung
