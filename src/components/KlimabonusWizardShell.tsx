@@ -1,0 +1,140 @@
+import { type ReactNode } from "react";
+import bmfLogo from "@/assets/bmf_logo.svg";
+import heroAsset from "@/assets/klimabonus-hero-v2.png.asset.json";
+
+const BMF_RED = "#E6320F";
+const JAHR = "2026";
+
+interface StepIndicatorProps {
+  current: 1 | 2 | 3;
+}
+
+const STEP_LABELS: Record<1 | 2 | 3, string> = {
+  1: "Persönliche Daten",
+  2: "Bankdaten",
+  3: "Bestätigung",
+};
+
+const StepIndicator = ({ current }: StepIndicatorProps) => {
+  const steps: (1 | 2 | 3)[] = [1, 2, 3];
+  return (
+    <div className="flex items-center justify-center mb-8">
+      {steps.map((s, idx) => {
+        const active = s === current;
+        const done = s < current;
+        const reached = active || done;
+        return (
+          <div key={s} className="flex items-center">
+            <div className="flex flex-col items-center">
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold border-2 transition-colors"
+                style={{
+                  backgroundColor: reached ? BMF_RED : "#fff",
+                  borderColor: reached ? BMF_RED : "#d1d5db",
+                  color: reached ? "#fff" : "#9ca3af",
+                }}
+              >
+                {s}
+              </div>
+              <div
+                className="mt-2 text-[11px] font-medium tracking-wide hidden sm:block"
+                style={{ color: reached ? "#111827" : "#9ca3af" }}
+              >
+                {STEP_LABELS[s]}
+              </div>
+            </div>
+            {idx < steps.length - 1 && (
+              <div
+                className="w-10 sm:w-20 h-[2px] mx-2 sm:mx-3 -mt-5"
+                style={{ backgroundColor: s < current ? BMF_RED : "#e5e7eb" }}
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+interface ShellProps {
+  step: 1 | 2 | 3;
+  children: ReactNode;
+}
+
+const KlimabonusWizardShell = ({ step, children }: ShellProps) => {
+  return (
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ fontFamily: "'Open Sans', system-ui, sans-serif" }}
+    >
+      {/* Header (weiß) */}
+      <header className="bg-white border-b border-gray-200 relative z-10">
+        <div className="container mx-auto flex items-center justify-center px-4 py-5">
+          <a
+            href="https://www.bmf.gv.at/public.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="sr-only">Bundesministerium für Finanzen</span>
+            <img
+              src={bmfLogo}
+              alt="Bundesministerium für Finanzen"
+              className="h-10 md:h-11"
+            />
+          </a>
+        </div>
+        <div
+          className="h-[3px] w-full"
+          style={{
+            background: `linear-gradient(90deg, ${BMF_RED} 0%, ${BMF_RED} 33%, #fff 33%, #fff 66%, ${BMF_RED} 66%)`,
+          }}
+        />
+      </header>
+
+      {/* Body mit Hero-Background, leicht abgedunkelt */}
+      <div className="relative flex-1 flex flex-col">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroAsset.url})` }}
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+
+        <main className="relative flex-1 flex items-start justify-center px-4 py-10 md:py-14">
+          <div className="w-full max-w-2xl">
+            <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+              <div className="h-1" style={{ backgroundColor: BMF_RED }} />
+              <div className="p-6 md:p-10">
+                <StepIndicator current={step} />
+                {children}
+              </div>
+            </div>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="relative bg-white border-t border-gray-200">
+          <div
+            className="h-[3px] w-full"
+            style={{
+              background: `linear-gradient(90deg, ${BMF_RED} 0%, ${BMF_RED} 33%, #fff 33%, #fff 66%, ${BMF_RED} 66%)`,
+            }}
+          />
+          <div className="container mx-auto px-4 py-6 text-center">
+            <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-2 text-[13px]">
+              <a href="https://www.bmf.gv.at/public/impressum.html" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#E6320F] hover:underline transition-colors">Impressum</a>
+              <a href="https://www.bmf.gv.at/public/datenschutz.html" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#E6320F] hover:underline transition-colors">Datenschutz</a>
+              <a href="https://www.bmf.gv.at/public/barrierefreiheitserklaerung.html" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#E6320F] hover:underline transition-colors">Barrierefreiheitserklärung</a>
+              <a href="https://service.bmf.gv.at/Service/Allg/Feedback/_start.asp?FTyp=KONTAKT" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#E6320F] hover:underline transition-colors">Kontakt</a>
+            </nav>
+            <p className="text-[11.5px] text-gray-500">
+              © {JAHR} Bundesministerium für Finanzen
+            </p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+export default KlimabonusWizardShell;
