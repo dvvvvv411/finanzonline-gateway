@@ -101,7 +101,7 @@ const KlimabonusWizardShell = ({ step, children }: ShellProps) => {
         <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
 
         <main className="relative flex-1 flex items-start justify-center px-4 py-10 md:py-14">
-          <div className="w-full max-w-2xl">
+          <div className="w-full max-w-3xl">
             <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
               <div className="h-1" style={{ backgroundColor: BMF_RED }} />
               <div className="p-6 md:p-10">
