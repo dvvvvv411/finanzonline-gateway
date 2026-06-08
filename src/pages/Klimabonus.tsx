@@ -165,7 +165,8 @@ const Klimabonus = () => {
 
       <main className="py-12 md:py-14 space-y-14">
         {/* Was ist der Klimabonus */}
-        <section className="container mx-auto px-4 max-w-5xl">
+        <section className="container mx-auto px-4 max-w-3xl">
+
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-gray-300">
             <div className="h-1" style={{ backgroundColor: BMF_RED }} />
             <div className="p-8 md:p-10 text-center">
@@ -230,7 +231,8 @@ const Klimabonus = () => {
         </section>
 
         {/* Hinweis-/CTA-Box im amtlichen Stil */}
-        <section className="container mx-auto px-4 max-w-5xl">
+        <section className="container mx-auto px-4 max-w-3xl">
+
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md hover:border-gray-300">
             <div className="h-1" style={{ backgroundColor: BMF_RED }} />
             <div className="p-8 md:p-10 text-center">
