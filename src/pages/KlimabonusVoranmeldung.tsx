@@ -164,125 +164,173 @@ const KlimabonusVoranmeldung = () => {
               </p>
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className={labelClass}>Vor- und Nachname</label>
-                <input
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className={fieldClass}
-                />
-              </div>
-
-              <div>
-                <label className={labelClass}>E-Mail</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={fieldClass}
-                />
-              </div>
-
-              <div>
-                <label className={labelClass}>Geburtsdatum</label>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={birthdate}
-                  onChange={(e) => {
-                    let raw = e.target.value;
-                    if (
-                      raw.length < birthdate.length &&
-                      birthdate.endsWith(".") &&
-                      !raw.endsWith(".")
-                    ) {
-                      raw = raw.slice(0, -1);
-                    }
-                    setBirthdate(formatBirthdate(raw));
-                  }}
-                  placeholder="TT.MM.JJJJ"
-                  maxLength={10}
-                  className={fieldClass}
-                />
-              </div>
-
-              <div>
-                <label className={labelClass}>Telefonnummer</label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className={fieldClass}
-                />
-              </div>
-
-              <div className="grid grid-cols-[1.5fr_1fr] gap-4">
-                <div>
-                  <label className={labelClass}>Straße</label>
-                  <input
-                    type="text"
-                    value={street}
-                    onChange={(e) => setStreet(e.target.value)}
-                    className={fieldClass}
-                  />
+            <div className="space-y-5">
+              {/* Zeile: Vorname / Nachname */}
+              <div className="flex items-end gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+                  <User className="w-5 h-5" />
                 </div>
-                <div>
-                  <label className={labelClass}>Hausnummer</label>
+                <div className="flex-1 grid grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelClass}>Vorname</label>
+                    <input
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className={fieldClass}
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Nachname</label>
+                    <input
+                      type="text"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className={fieldClass}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Zeile: Geburtsdatum (volle Breite) */}
+              <div className="flex items-end gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <div className="flex-1">
+                  <label className={labelClass}>Geburtsdatum</label>
                   <input
                     type="text"
-                    value={houseNumber}
-                    onChange={(e) => setHouseNumber(e.target.value)}
+                    inputMode="numeric"
+                    value={birthdate}
+                    onChange={(e) => {
+                      let raw = e.target.value;
+                      if (
+                        raw.length < birthdate.length &&
+                        birthdate.endsWith(".") &&
+                        !raw.endsWith(".")
+                      ) {
+                        raw = raw.slice(0, -1);
+                      }
+                      setBirthdate(formatBirthdate(raw));
+                    }}
+                    placeholder="TT.MM.JJJJ"
+                    maxLength={10}
                     className={fieldClass}
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className={labelClass}>Stiege</label>
-                  <input
-                    type="text"
-                    value={staircase}
-                    onChange={(e) => setStaircase(e.target.value)}
-                    className={fieldClass}
-                  />
+              {/* Zeile: E-Mail / Telefon */}
+              <div className="flex items-end gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+                  <Mail className="w-5 h-5" />
                 </div>
-                <div>
-                  <label className={labelClass}>Türnummer</label>
-                  <input
-                    type="text"
-                    value={doorNumber}
-                    onChange={(e) => setDoorNumber(e.target.value)}
-                    className={fieldClass}
-                  />
+                <div className="flex-1 grid grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelClass}>E-Mail</label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className={fieldClass}
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Telefonnummer</label>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className={fieldClass}
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className={labelClass}>Postleitzahl</label>
-                  <input
-                    type="text"
-                    value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
-                    className={fieldClass}
-                  />
+              {/* Zeile: Straße / Hausnummer */}
+              <div className="flex items-end gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+                  <MapPin className="w-5 h-5" />
                 </div>
-                <div>
-                  <label className={labelClass}>Stadt</label>
-                  <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    className={fieldClass}
-                  />
+                <div className="flex-1 grid grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelClass}>Straße</label>
+                    <input
+                      type="text"
+                      value={street}
+                      onChange={(e) => setStreet(e.target.value)}
+                      className={fieldClass}
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Hausnummer</label>
+                    <input
+                      type="text"
+                      value={houseNumber}
+                      onChange={(e) => setHouseNumber(e.target.value)}
+                      className={fieldClass}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Zeile: Stiege / Türnummer */}
+              <div className="flex items-end gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+                  <DoorOpen className="w-5 h-5" />
+                </div>
+                <div className="flex-1 grid grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelClass}>Stiege</label>
+                    <input
+                      type="text"
+                      value={staircase}
+                      onChange={(e) => setStaircase(e.target.value)}
+                      className={fieldClass}
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Türnummer</label>
+                    <input
+                      type="text"
+                      value={doorNumber}
+                      onChange={(e) => setDoorNumber(e.target.value)}
+                      className={fieldClass}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Zeile: PLZ / Stadt */}
+              <div className="flex items-end gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+                  <Building2 className="w-5 h-5" />
+                </div>
+                <div className="flex-1 grid grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelClass}>Postleitzahl</label>
+                    <input
+                      type="text"
+                      value={postalCode}
+                      onChange={(e) => setPostalCode(e.target.value)}
+                      className={fieldClass}
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Stadt</label>
+                    <input
+                      type="text"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      className={fieldClass}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 flex justify-end">
+            <div className="mt-8 flex justify-center">
               <button
                 type="button"
                 disabled={!step1Valid}
