@@ -61,6 +61,30 @@ const KlimabonusVoranmeldung = () => {
   const [doorNumber, setDoorNumber] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const values: Record<string, string> = {
+    firstName, lastName, birthdate, email, phone, street, houseNumber, postalCode, city,
+  };
+  const hasError = (name: string) =>
+    !!touched[name] && !values[name]?.trim();
+  const inputCls = (name: string) =>
+    `${fieldBase} ${hasError(name) ? fieldErr : fieldOk}`;
+  const onBlur = (name: string) => () =>
+    setTouched((t) => ({ ...t, [name]: true }));
+  const ErrMsg = ({ name }: { name: string }) =>
+    hasError(name) ? (
+      <p className="mt-1 text-[12px] text-red-600">{REQUIRED_MESSAGES[name]}</p>
+    ) : null;
+  const handleNext = () => {
+    if (step1Valid) {
+      setStep(2);
+    } else {
+      setTouched(
+        REQUIRED_FIELDS.reduce((acc, f) => ({ ...acc, [f]: true }), {})
+      );
+    }
+  };
 
   // Bankdaten
   const [iban, setIban] = useState("");
