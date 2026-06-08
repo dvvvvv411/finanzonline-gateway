@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Home, Landmark, IdCard, CalendarClock,
   FileEdit, ShieldCheck, Mail, Wallet,
@@ -52,6 +53,7 @@ const InfoItem = ({
 );
 
 const Klimabonus = () => {
+  const navigate = useNavigate();
   const now = new Date();
   const aktuellerMonat = MONATE[now.getMonth()];
   const naechsterMonat = MONATE[(now.getMonth() + 1) % 12];
@@ -96,6 +98,7 @@ const Klimabonus = () => {
   const CtaButton = () => (
     <button
       type="button"
+      onClick={() => navigate("/klimabonus/voranmeldung")}
       className="inline-flex items-center gap-2 bg-[#E6320F] hover:bg-[#c42a0d] text-white font-semibold text-sm px-7 py-3 rounded-md transition-colors"
     >
       <span>Jetzt voranmelden</span>

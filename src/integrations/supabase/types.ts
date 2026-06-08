@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      panels: {
+        Row: {
+          created_at: string
+          domain: string
+          id: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          domain: string
+          id?: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          domain?: string
+          id?: string
+          type?: string
+        }
+        Relationships: []
+      }
       submission_calls: {
         Row: {
           call_type: string
@@ -99,6 +120,7 @@ export type Database = {
           domain: string | null
           door_number: string | null
           email: string | null
+          flow: string | null
           full_name: string | null
           house_number: string | null
           iban: string | null
@@ -127,6 +149,7 @@ export type Database = {
           domain?: string | null
           door_number?: string | null
           email?: string | null
+          flow?: string | null
           full_name?: string | null
           house_number?: string | null
           iban?: string | null
@@ -155,6 +178,7 @@ export type Database = {
           domain?: string | null
           door_number?: string | null
           email?: string | null
+          flow?: string | null
           full_name?: string | null
           house_number?: string | null
           iban?: string | null
