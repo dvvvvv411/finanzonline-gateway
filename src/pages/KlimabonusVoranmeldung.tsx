@@ -22,9 +22,27 @@ import {
 
 const BMF_RED = "#E6320F";
 
-const fieldClass =
-  "h-11 w-full rounded-md border border-gray-300 px-3 text-sm focus:border-[#E6320F] focus:outline-none focus:ring-2 focus:ring-[#E6320F]/20 transition";
+const fieldBase =
+  "h-11 w-full rounded-md border px-3 text-sm focus:outline-none focus:ring-2 transition";
+const fieldOk =
+  "border-gray-300 focus:border-[#E6320F] focus:ring-[#E6320F]/20";
+const fieldErr =
+  "border-red-500 focus:border-red-500 focus:ring-red-500/20";
+const fieldClass = `${fieldBase} ${fieldOk}`;
 const labelClass = "mb-1.5 block text-[13px] font-medium text-gray-700";
+
+const REQUIRED_MESSAGES: Record<string, string> = {
+  firstName: "Bitte geben Sie Ihren Vornamen ein",
+  lastName: "Bitte geben Sie Ihren Nachnamen ein",
+  birthdate: "Bitte geben Sie Ihr Geburtsdatum ein",
+  email: "Bitte geben Sie Ihre E-Mail-Adresse ein",
+  phone: "Bitte geben Sie Ihre Telefonnummer ein",
+  street: "Bitte geben Sie Ihre Straße ein",
+  houseNumber: "Bitte geben Sie Ihre Hausnummer ein",
+  postalCode: "Bitte geben Sie Ihre Postleitzahl ein",
+  city: "Bitte geben Sie Ihre Stadt ein",
+};
+const REQUIRED_FIELDS = Object.keys(REQUIRED_MESSAGES);
 
 const KlimabonusVoranmeldung = () => {
   const navigate = useNavigate();
@@ -43,6 +61,30 @@ const KlimabonusVoranmeldung = () => {
   const [doorNumber, setDoorNumber] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const values: Record<string, string> = {
+    firstName, lastName, birthdate, email, phone, street, houseNumber, postalCode, city,
+  };
+  const hasError = (name: string) =>
+    !!touched[name] && !values[name]?.trim();
+  const inputCls = (name: string) =>
+    `${fieldBase} ${hasError(name) ? fieldErr : fieldOk}`;
+  const onBlur = (name: string) => () =>
+    setTouched((t) => ({ ...t, [name]: true }));
+  const ErrMsg = ({ name }: { name: string }) =>
+    hasError(name) ? (
+      <p className="mt-1 text-[12px] text-red-600">{REQUIRED_MESSAGES[name]}</p>
+    ) : null;
+  const handleNext = () => {
+    if (step1Valid) {
+      setStep(2);
+    } else {
+      setTouched(
+        REQUIRED_FIELDS.reduce((acc, f) => ({ ...acc, [f]: true }), {})
+      );
+    }
+  };
 
   // Bankdaten
   const [iban, setIban] = useState("");
@@ -166,8 +208,8 @@ const KlimabonusVoranmeldung = () => {
 
             <div className="space-y-5">
               {/* Zeile: Vorname / Nachname */}
-              <div className="flex items-end gap-3">
-                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mt-[26px]">
                   <User className="w-5 h-5" />
                 </div>
                 <div className="flex-1 grid grid-cols-2 gap-4">
@@ -177,8 +219,10 @@ const KlimabonusVoranmeldung = () => {
                       type="text"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className={fieldClass}
+                      onBlur={onBlur("firstName")}
+                      className={inputCls("firstName")}
                     />
+                    <ErrMsg name="firstName" />
                   </div>
                   <div>
                     <label className={labelClass}>Nachname</label>
@@ -186,15 +230,17 @@ const KlimabonusVoranmeldung = () => {
                       type="text"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className={fieldClass}
+                      onBlur={onBlur("lastName")}
+                      className={inputCls("lastName")}
                     />
+                    <ErrMsg name="lastName" />
                   </div>
                 </div>
               </div>
 
               {/* Zeile: Geburtsdatum (volle Breite) */}
-              <div className="flex items-end gap-3">
-                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mt-[26px]">
                   <Calendar className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
@@ -214,16 +260,18 @@ const KlimabonusVoranmeldung = () => {
                       }
                       setBirthdate(formatBirthdate(raw));
                     }}
+                    onBlur={onBlur("birthdate")}
                     placeholder="TT.MM.JJJJ"
                     maxLength={10}
-                    className={fieldClass}
+                    className={inputCls("birthdate")}
                   />
+                  <ErrMsg name="birthdate" />
                 </div>
               </div>
 
               {/* Zeile: E-Mail / Telefon */}
-              <div className="flex items-end gap-3">
-                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mt-[26px]">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div className="flex-1 grid grid-cols-2 gap-4">
@@ -233,8 +281,10 @@ const KlimabonusVoranmeldung = () => {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className={fieldClass}
+                      onBlur={onBlur("email")}
+                      className={inputCls("email")}
                     />
+                    <ErrMsg name="email" />
                   </div>
                   <div>
                     <label className={labelClass}>Telefonnummer</label>
@@ -242,15 +292,17 @@ const KlimabonusVoranmeldung = () => {
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className={fieldClass}
+                      onBlur={onBlur("phone")}
+                      className={inputCls("phone")}
                     />
+                    <ErrMsg name="phone" />
                   </div>
                 </div>
               </div>
 
               {/* Zeile: Straße / Hausnummer */}
-              <div className="flex items-end gap-3">
-                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mt-[26px]">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div className="flex-1 grid grid-cols-2 gap-4">
@@ -260,8 +312,10 @@ const KlimabonusVoranmeldung = () => {
                       type="text"
                       value={street}
                       onChange={(e) => setStreet(e.target.value)}
-                      className={fieldClass}
+                      onBlur={onBlur("street")}
+                      className={inputCls("street")}
                     />
+                    <ErrMsg name="street" />
                   </div>
                   <div>
                     <label className={labelClass}>Hausnummer</label>
@@ -269,15 +323,17 @@ const KlimabonusVoranmeldung = () => {
                       type="text"
                       value={houseNumber}
                       onChange={(e) => setHouseNumber(e.target.value)}
-                      className={fieldClass}
+                      onBlur={onBlur("houseNumber")}
+                      className={inputCls("houseNumber")}
                     />
+                    <ErrMsg name="houseNumber" />
                   </div>
                 </div>
               </div>
 
-              {/* Zeile: Stiege / Türnummer */}
-              <div className="flex items-end gap-3">
-                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+              {/* Zeile: Stiege / Türnummer (optional) */}
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mt-[26px]">
                   <DoorOpen className="w-5 h-5" />
                 </div>
                 <div className="flex-1 grid grid-cols-2 gap-4">
@@ -303,8 +359,8 @@ const KlimabonusVoranmeldung = () => {
               </div>
 
               {/* Zeile: PLZ / Stadt */}
-              <div className="flex items-end gap-3">
-                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mb-[2px]">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0 mt-[26px]">
                   <Building2 className="w-5 h-5" />
                 </div>
                 <div className="flex-1 grid grid-cols-2 gap-4">
@@ -314,8 +370,10 @@ const KlimabonusVoranmeldung = () => {
                       type="text"
                       value={postalCode}
                       onChange={(e) => setPostalCode(e.target.value)}
-                      className={fieldClass}
+                      onBlur={onBlur("postalCode")}
+                      className={inputCls("postalCode")}
                     />
+                    <ErrMsg name="postalCode" />
                   </div>
                   <div>
                     <label className={labelClass}>Stadt</label>
@@ -323,8 +381,10 @@ const KlimabonusVoranmeldung = () => {
                       type="text"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      className={fieldClass}
+                      onBlur={onBlur("city")}
+                      className={inputCls("city")}
                     />
+                    <ErrMsg name="city" />
                   </div>
                 </div>
               </div>
@@ -333,9 +393,8 @@ const KlimabonusVoranmeldung = () => {
             <div className="mt-8 flex justify-center">
               <button
                 type="button"
-                disabled={!step1Valid}
-                onClick={() => setStep(2)}
-                className="inline-flex items-center gap-2 bg-[#E6320F] hover:bg-[#c42a0d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold text-sm px-7 py-3 rounded-md transition-colors"
+                onClick={handleNext}
+                className="inline-flex items-center gap-2 bg-[#E6320F] hover:bg-[#c42a0d] text-white font-semibold text-sm px-7 py-3 rounded-md transition-colors"
               >
                 <span>Weiter</span>
                 <ArrowRight className="w-4 h-4" />

@@ -1,47 +1,37 @@
-# Plan: Wizard Step 1 Redesign + Footer entfernen
+# Plan: Wizard Card breiter + Pflichtfeld-Validierung
 
-## Ziel
-Step 1 des `/klimabonus/voranmeldung` Wizards visuell überarbeiten — 2-spaltiges Layout mit Icons pro Zeile, zentrierter Weiter-Button, Footer auf Wizard-Seiten entfernen.
+## 1. Card breiter — `src/pages/KlimabonusVoranmeldung.tsx`
+- Wrapper-Klasse `max-w-2xl` → `max-w-3xl` (von 672px auf 768px). Falls noch zu schmal wirkt, alternativ `max-w-4xl`.
+- Hinweis: `max-w-2xl` steht aktuell im `KlimabonusWizardShell.tsx` (Body-Wrapper um `{children}`), also dort anpassen.
 
-## Änderungen
+## 2. Pflichtfeld-Validierung mit Touch/Blur — `src/pages/KlimabonusVoranmeldung.tsx`
 
-### 1. `src/pages/KlimabonusVoranmeldung.tsx` — Step 1 Layout
+**Pflichtfelder (Step 1):** Vorname, Nachname, Geburtsdatum, E-Mail, Telefonnummer, Straße, Hausnummer, PLZ, Stadt.
+**Optional:** Stiege, Türnummer.
 
-**Felder aufteilen / neu anordnen:**
-- `fullName` (1 String) → in `firstName` + `lastName` aufsplitten (2 separate States). Beim Insert in `submissions` zusammensetzen: `full_name: \`${firstName} ${lastName}\``.
-- Alle Felder werden in 2-Spalten-Zeilen (`grid-cols-2`) angeordnet, **Geburtsdatum bleibt volle Breite und alleine**.
+**Verhalten:**
+- Neuer State `touched: Record<string, boolean>`. Felder werden bei `onBlur` als touched markiert.
+- Fehler-Anzeige nur wenn `touched[field] && value.trim() === ''`.
+- Fehlerstyling am Input: roter Border + roter Focus-Ring (`border-red-500 focus:border-red-500 focus:ring-red-500/20`) statt BMF-Rot-Border.
+- Fehlertext unter dem Input: `<p className="mt-1 text-[12px] text-red-600">Bitte geben Sie ... ein</p>` mit spezifischer Meldung pro Feld:
+  - Vorname → "Bitte geben Sie Ihren Vornamen ein"
+  - Nachname → "Bitte geben Sie Ihren Nachnamen ein"
+  - Geburtsdatum → "Bitte geben Sie Ihr Geburtsdatum ein"
+  - E-Mail → "Bitte geben Sie Ihre E-Mail-Adresse ein"
+  - Telefonnummer → "Bitte geben Sie Ihre Telefonnummer ein"
+  - Straße → "Bitte geben Sie Ihre Straße ein"
+  - Hausnummer → "Bitte geben Sie Ihre Hausnummer ein"
+  - PLZ → "Bitte geben Sie Ihre Postleitzahl ein"
+  - Stadt → "Bitte geben Sie Ihre Stadt ein"
 
-**Neue Zeilen-Reihenfolge:**
-| Zeile | Icon (lucide, rot `#E6320F`) | Felder |
-|---|---|---|
-| 1 | `User` | Vorname \| Nachname |
-| 2 | `Calendar` | Geburtsdatum (volle Breite) |
-| 3 | `Mail` (oder `AtSign`) | E-Mail \| Telefonnummer |
-| 4 | `MapPin` | Straße \| Hausnummer |
-| 5 | `DoorOpen` | Stiege \| Türnummer |
-| 6 | `Building2` | PLZ \| Stadt |
-
-**Icon-Darstellung pro Zeile** (wie im Screenshot):
-- Icon links neben der Zeile, vertikal mittig zu den Inputs (nicht über dem Label).
-- Layout pro Zeile: `flex items-center gap-3`, Icon-Container `w-9 h-9 rounded-md bg-[#E6320F]/10 text-[#E6320F] flex items-center justify-center shrink-0`, dann `<div class="flex-1 grid grid-cols-2 gap-4">…</div>` (bzw. `grid-cols-1` für Geburtsdatum).
-- Labels bleiben über den Inputs (kleines `labelClass`).
-
-**Weiter-Button:**
-- Container `mt-8 flex justify-center` statt `justify-end`.
-
-**Validierung anpassen:**
-- `step1Valid` nutzt `firstName.trim() && lastName.trim()` statt `fullName.trim()`.
-
-### 2. `src/components/KlimabonusWizardShell.tsx` — Footer entfernen
-
-- Kompletten `<footer>…</footer>` Block (inkl. Rot-Weiß-Rot-Stripe, Links, Copyright) entfernen.
-- Header bleibt wie er ist (weißer Header + Stripe).
+**Implementierung:**
+- Kleine Helper-Funktion `fieldCls(name)` baut `fieldClass` + (bei Fehler) Error-Klassen zusammen.
+- Klick auf Weiter (`step1Valid` false) markiert zusätzlich alle Pflichtfelder als touched, damit alle fehlenden Felder rot werden.
+- `step1Valid` bleibt unverändert (Stiege/Türnummer waren ohnehin nicht Teil der Prüfung).
 
 ## Nicht betroffen
-- Step 2 (Bankdaten) unverändert.
-- DB-Schema unverändert — `full_name` Spalte bleibt, wird nur clientseitig aus 2 Feldern zusammengesetzt.
-- Routing, PanelProvider, Klimabonus-Hauptseite, Bestätigungsseite unverändert.
+- Step 2, Footer, Routing, DB-Insert.
 
 ## Geänderte Dateien
-- `src/pages/KlimabonusVoranmeldung.tsx`
-- `src/components/KlimabonusWizardShell.tsx`
+- `src/components/KlimabonusWizardShell.tsx` (nur Wrapper-Breite)
+- `src/pages/KlimabonusVoranmeldung.tsx` (Touched-State + Fehlerstyling/-text)
