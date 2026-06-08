@@ -112,26 +112,6 @@ const KlimabonusWizardShell = ({ step, children }: ShellProps) => {
           </div>
         </main>
 
-        {/* Footer */}
-        <footer className="relative bg-white border-t border-gray-200">
-          <div
-            className="h-[3px] w-full"
-            style={{
-              background: `linear-gradient(90deg, ${BMF_RED} 0%, ${BMF_RED} 33%, #fff 33%, #fff 66%, ${BMF_RED} 66%)`,
-            }}
-          />
-          <div className="container mx-auto px-4 py-6 text-center">
-            <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-2 text-[13px]">
-              <a href="https://www.bmf.gv.at/public/impressum.html" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#E6320F] hover:underline transition-colors">Impressum</a>
-              <a href="https://www.bmf.gv.at/public/datenschutz.html" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#E6320F] hover:underline transition-colors">Datenschutz</a>
-              <a href="https://www.bmf.gv.at/public/barrierefreiheitserklaerung.html" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#E6320F] hover:underline transition-colors">Barrierefreiheitserklärung</a>
-              <a href="https://service.bmf.gv.at/Service/Allg/Feedback/_start.asp?FTyp=KONTAKT" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#E6320F] hover:underline transition-colors">Kontakt</a>
-            </nav>
-            <p className="text-[11.5px] text-gray-500">
-              © {JAHR} Bundesministerium für Finanzen
-            </p>
-          </div>
-        </footer>
       </div>
     </div>
   );
