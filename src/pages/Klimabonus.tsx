@@ -105,13 +105,6 @@ const Klimabonus = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900" style={{ fontFamily: "'Open Sans', system-ui, sans-serif" }}>
-      {/* Amtliche Top-Leiste */}
-      <div className="bg-gray-900 text-gray-200 text-[11px]">
-        <div className="container mx-auto px-4 py-1.5 text-center tracking-wide">
-          Eine Information der Republik Österreich · Bundesministerium für Finanzen
-        </div>
-      </div>
-
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="container mx-auto flex items-center justify-center px-4 py-5">
