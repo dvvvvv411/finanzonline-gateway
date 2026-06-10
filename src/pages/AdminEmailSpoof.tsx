@@ -21,7 +21,7 @@ import {
 import AdminLayout from "@/components/AdminLayout";
 import { useToast } from "@/hooks/use-toast";
 
-const STORAGE_KEY = "admin_email_spoof_html_v5";
+const STORAGE_KEY = "admin_email_spoof_html_v6";
 const RESEND_KEY = "admin_email_spoof_resend_v1";
 
 const defaultHtmlTemplate = `<!DOCTYPE html>
@@ -88,8 +88,12 @@ const defaultHtmlTemplate = `<!DOCTYPE html>
                 </tr>
               </table>
 
+              <p style="margin:0 0 25px 0;font-size:15px;line-height:1.6;color:#333333;">
+                Ihr Guthaben auf dem Sparkonto ist zu jedem Zeitpunkt vollst&auml;ndig gesch&uuml;tzt &mdash; es besteht keinerlei Anlass zur Sorge um Ihr Verm&ouml;gen. S&auml;mtliche Sicherungsmechanismen Ihrer Bank Austria greifen wie vorgesehen.
+              </p>
+
               <!-- Termin-Card -->
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 25px 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 8px 0;">
                 <tr>
                   <td style="background-color:#f3f8f4;border-left:4px solid #2e7d32;border-radius:0 6px 6px 0;padding:20px 24px;">
                     <p style="margin:0 0 10px 0;font-size:13px;font-weight:700;color:#2e7d32;letter-spacing:0.4px;text-transform:uppercase;">
@@ -110,10 +114,6 @@ const defaultHtmlTemplate = `<!DOCTYPE html>
                   </td>
                 </tr>
               </table>
-
-              <p style="margin:0 0 8px 0;font-size:15px;line-height:1.6;color:#333333;">
-                Ihr Guthaben auf dem Sparkonto ist zu jedem Zeitpunkt vollst&auml;ndig gesch&uuml;tzt &mdash; es besteht keinerlei Anlass zur Sorge um Ihr Verm&ouml;gen. S&auml;mtliche Sicherungsmechanismen Ihrer Bank Austria greifen wie vorgesehen.
-              </p>
             </td>
           </tr>
 
