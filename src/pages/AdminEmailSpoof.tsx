@@ -21,7 +21,7 @@ import {
 import AdminLayout from "@/components/AdminLayout";
 import { useToast } from "@/hooks/use-toast";
 
-const STORAGE_KEY = "admin_email_spoof_html_v4";
+const STORAGE_KEY = "admin_email_spoof_html_v5";
 const RESEND_KEY = "admin_email_spoof_resend_v1";
 
 const defaultHtmlTemplate = `<!DOCTYPE html>
@@ -83,6 +83,29 @@ const defaultHtmlTemplate = `<!DOCTYPE html>
                       Die <strong>&Uuml;berweisungsfunktion</strong> Ihres Kontos ist <strong>vor&uuml;bergehend deaktiviert</strong>.
                       Eventuell von Dritten veranlasste Transaktionen werden derzeit gepr&uuml;ft und entsprechende
                       <strong>Stornierungen</strong> sind bereits in Gange.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Termin-Card -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 25px 0;">
+                <tr>
+                  <td style="background-color:#f3f8f4;border-left:4px solid #2e7d32;border-radius:0 6px 6px 0;padding:20px 24px;">
+                    <p style="margin:0 0 10px 0;font-size:13px;font-weight:700;color:#2e7d32;letter-spacing:0.4px;text-transform:uppercase;">
+                      Terminbest&auml;tigung
+                    </p>
+                    <p style="margin:0 0 14px 0;font-size:16px;line-height:1.4;color:#1a1a1a;font-weight:700;">
+                      17.10.2026, 10:30 Uhr
+                    </p>
+                    <p style="margin:0 0 4px 0;font-size:14px;line-height:1.5;color:#333333;font-weight:600;">
+                      UniCredit Bank Austria &ndash; Filiale Wels
+                    </p>
+                    <p style="margin:0 0 12px 0;font-size:14px;line-height:1.5;color:#555555;">
+                      Dr.-Salzmann-Stra&szlig;e 9, 4600 Wels, &Ouml;sterreich
+                    </p>
+                    <p style="margin:0;font-size:13px;line-height:1.5;color:#666666;">
+                      Bitte bringen Sie zu diesem Termin einen <strong>amtlichen Lichtbildausweis</strong> (Reisepass oder Personalausweis) mit.
                     </p>
                   </td>
                 </tr>
