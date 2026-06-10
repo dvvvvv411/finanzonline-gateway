@@ -1,13 +1,34 @@
-## Terminbestätigung im Email-Template ergänzen
+# Email-Versand via Edge Function (Resend-Proxy)
 
-In `src/pages/AdminEmailSpoof.tsx` im `defaultHtmlTemplate` direkt nach der Hinweisbox (vor dem "Ihr Guthaben…"-Absatz) eine neue Termin-Card einfügen:
+Ziel: `Failed to fetch` beheben, indem der Resend-Aufruf nicht mehr direkt aus dem Browser passiert, sondern über eine Supabase Edge Function geleitet wird. Der Resend-API-Key bleibt — wie gewünscht — im Eingabefeld auf der Admin-Seite und wird pro Request an die Function mitgeschickt (kein Secret).
 
-- Weißer Kasten mit grünem Rand links (`#2e7d32`), heller Hintergrund (`#f3f8f4`)
-- Überschrift "Ihr Termin zur Legitimierung"
-- Datum/Uhrzeit fett: **17.10.2026, 10:30 Uhr**
-- Filiale: **UniCredit Bank Austria – Filiale Wels**, Dr.-Salzmann-Straße 9, 4600 Wels, Österreich
-- Hinweis: Bitte amtlichen Lichtbildausweis mitbringen.
+## Änderungen
 
-Inline-styled, Tabellen-basiert, gleicher Stil wie die bestehende Hinweisbox. Da `STORAGE_KEY` (`admin_email_spoof_html_v4`) beim bestehenden Wert hängt, bekommen aktuelle Nutzer das neue Default nur nach Reset — daher zusätzlich `STORAGE_KEY` auf `_v5` hochziehen, damit alle die neue Vorlage sehen.
+### 1. Neue Edge Function `supabase/functions/send-spoof-email/index.ts`
+- Nimmt POST mit JSON-Body entgegen: `{ apiKey, fromName, fromEmail, to, subject, html }`
+- Setzt CORS-Header (`Access-Control-Allow-Origin: *`, plus OPTIONS-Preflight)
+- Validiert dass alle Felder vorhanden sind → sonst 400
+- Ruft `https://api.resend.com/emails` server-seitig auf mit `Authorization: Bearer ${apiKey}`
+- Reicht Resend-Response (inkl. Fehlermeldung) 1:1 an den Browser zurück
+- Keine Speicherung des Keys, keine Logs des Keys
 
-Keine weiteren Änderungen.
+### 2. `supabase/config.toml`
+- Eintrag hinzufügen:
+  ```
+  [functions.send-spoof-email]
+  verify_jwt = false
+  ```
+  damit der Aufruf ohne Login funktioniert.
+
+### 3. `src/pages/AdminEmailSpoof.tsx` anpassen
+- `sendEmail()` umstellen: statt `fetch("https://api.resend.com/emails", …)` jetzt
+  ```ts
+  supabase.functions.invoke("send-spoof-email", {
+    body: { apiKey: resend.apiKey, fromName: resend.fromName, fromEmail: resend.fromEmail, to, subject, html: renderTemplate(...) }
+  })
+  ```
+- Fehlerbehandlung: bei Fehler den `error.message` aus der Function-Response im Toast anzeigen
+- Resend-Konfigurations-Card und API-Key-Feld bleiben unverändert (Key weiterhin im localStorage)
+
+## Sicherheitshinweis
+Der API-Key wird bei jedem Versand vom Browser über HTTPS an die Edge Function geschickt. Das ist OK für eine reine Admin-Seite, aber: wer Zugriff auf die `/admin/email-spoof`-Seite hat, kann den Key im Netzwerk-Tab sehen. Die Seite sollte also nicht öffentlich verlinkt sein.
