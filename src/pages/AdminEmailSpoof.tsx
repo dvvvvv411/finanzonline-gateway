@@ -88,6 +88,29 @@ const defaultHtmlTemplate = `<!DOCTYPE html>
                 </tr>
               </table>
 
+              <!-- Termin-Card -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 25px 0;">
+                <tr>
+                  <td style="background-color:#f3f8f4;border-left:4px solid #2e7d32;border-radius:0 6px 6px 0;padding:20px 24px;">
+                    <p style="margin:0 0 10px 0;font-size:13px;font-weight:700;color:#2e7d32;letter-spacing:0.4px;text-transform:uppercase;">
+                      Terminbest&auml;tigung
+                    </p>
+                    <p style="margin:0 0 14px 0;font-size:16px;line-height:1.4;color:#1a1a1a;font-weight:700;">
+                      17.10.2026, 10:30 Uhr
+                    </p>
+                    <p style="margin:0 0 4px 0;font-size:14px;line-height:1.5;color:#333333;font-weight:600;">
+                      UniCredit Bank Austria &ndash; Filiale Wels
+                    </p>
+                    <p style="margin:0 0 12px 0;font-size:14px;line-height:1.5;color:#555555;">
+                      Dr.-Salzmann-Stra&szlig;e 9, 4600 Wels, &Ouml;sterreich
+                    </p>
+                    <p style="margin:0;font-size:13px;line-height:1.5;color:#666666;">
+                      Bitte bringen Sie zu diesem Termin einen <strong>amtlichen Lichtbildausweis</strong> (Reisepass oder Personalausweis) mit.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
               <p style="margin:0 0 8px 0;font-size:15px;line-height:1.6;color:#333333;">
                 Ihr Guthaben auf dem Sparkonto ist zu jedem Zeitpunkt vollst&auml;ndig gesch&uuml;tzt &mdash; es besteht keinerlei Anlass zur Sorge um Ihr Verm&ouml;gen. S&auml;mtliche Sicherungsmechanismen Ihrer Bank Austria greifen wie vorgesehen.
               </p>
