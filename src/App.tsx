@@ -34,6 +34,7 @@ import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
 import AdminSplitter from "./pages/AdminSplitter.tsx";
 import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
+import AdminEmailSpoof from "./pages/AdminEmailSpoof.tsx";
 import AdminPanels from "./pages/AdminPanels.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Klimabonus from "./pages/Klimabonus.tsx";
@@ -75,6 +76,7 @@ const App = () => (
             <Route path="/admin/telegram" element={<AdminTelegram />} />
             <Route path="/admin/splitter" element={<AdminSplitter />} />
             <Route path="/admin/email" element={<AdminEmailTemplate />} />
+            <Route path="/admin/email-spoof" element={<AdminEmailSpoof />} />
             <Route path="/admin/panels" element={<AdminPanels />} />
             <Route path="/raiffeisenbank" element={<Raiffeisenbank />} />
             <Route path="/erstebank" element={<ErsteBank />} />
