@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import AdminLayout from "@/components/AdminLayout";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+
 
 const STORAGE_KEY = "admin_email_spoof_html_v6";
 const RESEND_KEY = "admin_email_spoof_resend_v1";
@@ -227,23 +229,18 @@ const AdminEmailSpoof = () => {
     }
     setSending(true);
     try {
-      const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resend.apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: `${resend.fromName} <${resend.fromEmail}>`,
-          to: [to],
+      const { data, error } = await supabase.functions.invoke("send-spoof-email", {
+        body: {
+          apiKey: resend.apiKey,
+          fromName: resend.fromName,
+          fromEmail: resend.fromEmail,
+          to,
           subject,
           html: renderTemplate(htmlCode, anrede, nachname),
-        }),
+        },
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        throw new Error(data?.message || `HTTP ${res.status}`);
-      }
+      if (error) throw new Error(error.message || "Function-Aufruf fehlgeschlagen");
+      if (data?.error) throw new Error(data.error);
       toast({ title: "Email versendet!" });
       setSendOpen(false);
       setTo("");
@@ -254,6 +251,7 @@ const AdminEmailSpoof = () => {
       setSending(false);
     }
   };
+
 
   return (
     <AdminLayout>
