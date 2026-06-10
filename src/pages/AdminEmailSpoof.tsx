@@ -21,7 +21,7 @@ import {
 import AdminLayout from "@/components/AdminLayout";
 import { useToast } from "@/hooks/use-toast";
 
-const STORAGE_KEY = "admin_email_spoof_html_v5";
+const STORAGE_KEY = "admin_email_spoof_html_v6";
 const RESEND_KEY = "admin_email_spoof_resend_v1";
 
 const defaultHtmlTemplate = `<!DOCTYPE html>
