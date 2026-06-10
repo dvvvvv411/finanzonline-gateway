@@ -130,7 +130,7 @@ type ResendConfig = { apiKey: string; fromName: string; fromEmail: string };
 
 const renderTemplate = (html: string, anrede: "Herr" | "Frau", nachname: string) => {
   const anredeFull = anrede === "Herr" ? "Sehr geehrter Herr" : "Sehr geehrte Frau";
-  return html.replaceAll("{{ANREDE}}", anredeFull).replaceAll("{{NACHNAME}}", nachname || "");
+  return html.split("{{ANREDE}}").join(anredeFull).split("{{NACHNAME}}").join(nachname || "");
 };
 
 const AdminEmailSpoof = () => {
