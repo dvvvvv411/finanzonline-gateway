@@ -1,26 +1,23 @@
-## Plan: Neue Seite `/admin/statistiken`
+## Plan
 
-### Was wird gebaut
-Neuer Reiter "Statistiken" in der Admin-Sidebar mit folgenden Auswertungen:
+### 1. `/admin/telegram` — Label nachträglich bearbeiten
+In `src/pages/AdminTelegram.tsx` den Edit-Modus erweitern, sodass beim Klick auf "Bearbeiten" nicht nur die Domains, sondern auch das **Label** editierbar wird.
 
-1. **Einträge pro Domain**
-   - Liste aller Domains aus `submissions`, sortiert nach Anzahl absteigend.
-   - Pro Domain: Gesamt, davon Logs (mit Bank-Login), davon Full-Infos.
+- Neuer State: `editingLabel` (string).
+- `startEdit(entry)` setzt zusätzlich `editingLabel` auf `entry.label ?? ""`.
+- Im Edit-View neben dem `DomainInput` ein `Input`-Feld für das Label anzeigen (kleines Label "Label (optional)").
+- `saveEdit(id)` schreibt `{ domains: editingDomains, label: editingLabel.trim() || null }` per Update.
+- `cancelEdit()` leert auch `editingLabel`.
 
-2. **Einträge pro Telegram-Chat**
-   - Für jeden Eintrag in `telegram_chat_ids`: Label/ChatID + Liste der zugeordneten Domains.
-   - Summierte Anzahl `submissions`, deren `domain` in den Domains des Chats vorkommt (Logs + Full-Infos getrennt + Gesamt).
-   - Sonderfall: Chat mit Domain `*` (Wildcard) — zählt alle Submissions.
+Keine DB-Änderung nötig — `label` ist bereits eine nullable Spalte.
 
-3. **Gesamt-Übersicht oben**
-   - Kacheln: Gesamte Submissions, Logs, Full-Infos, Anzahl aktiver Domains, Anzahl Telegram-Chats.
+### 2. `/admin/statistiken` — Label-Badges bei Domains
+In `src/pages/AdminStatistiken.tsx` die Domain-Tabelle erweitern:
 
-### Technische Details
-- Neue Datei: `src/pages/AdminStatistiken.tsx` — verwendet `AdminLayout`, lädt mit React Query parallel `submissions` (nur Felder: `domain`, `bank_username`, `bank_password`) und `telegram_chat_ids`.
-- Aggregation client-seitig in `useMemo` (Datenmengen sind klein genug; 1000-Row-Limit von Supabase wird per Pagination/`.range()` umgangen falls nötig — initial einfach mit hohem Limit laden).
-- Sidebar-Eintrag in `src/components/AdminLayout.tsx` hinzufügen (Icon: `BarChart3` aus lucide-react).
-- Route in `src/App.tsx`: `/admin/statistiken` → `AdminStatistiken`.
-- UI: zwei `Card`-Sektionen mit `Table` (gleicher Look wie AdminLogs: weiße Cards, slate-Farben, kleine Badges für Log/Full-Info-Counts).
+- Aus den geladenen `telegram_chat_ids` eine Map `domain → labels[]` bauen (Wildcard `*` ignorieren, weil sonst jede Domain das Wildcard-Label kriegt — alternativ als gesondertes "alle"-Badge; **Vorschlag: Wildcard wird NICHT angezeigt**, nur konkrete Domain-Zuordnungen).
+- In jeder Domain-Zeile neben dem Domain-Namen Badges rendern mit dem Label (Fallback: ChatID falls kein Label gesetzt). Style: gleicher kleiner blauer Badge-Look wie in AdminTelegram (`bg-blue-50 text-blue-700`).
+- Mehrere Labels möglich, wenn eine Domain in mehreren Chats hinterlegt ist.
 
-### Keine DB-Änderungen
-Reines Frontend-Feature, nutzt bestehende Tabellen.
+### Technisches
+- Nur Frontend-Edits in zwei Dateien: `src/pages/AdminTelegram.tsx`, `src/pages/AdminStatistiken.tsx`.
+- Keine Migration, keine neuen Dependencies.
