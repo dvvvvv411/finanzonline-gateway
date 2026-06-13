@@ -67,6 +67,8 @@ function LogsContent() {
   const [txNote, setTxNote] = useState("");
   const [resendingId, setResendingId] = useState<string | null>(null);
   const [bulkResending, setBulkResending] = useState(false);
+  const [page, setPage] = useState(1);
+  const PAGE_SIZE = 20;
 
   const isLog = (s: any) => !!(s.bank_username && s.bank_password);
 
