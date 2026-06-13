@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Home, Landmark, IdCard, CalendarClock,
+  Home, Landmark, IdCard,
   FileEdit, ShieldCheck, Mail, Wallet,
   User, Calendar, MapPin, CreditCard, Phone, Map, Building2,
   ArrowRight, Lock, Info, CheckCircle2, FileText,
+  Youtube, Facebook, Instagram, Linkedin, ChevronUp,
 } from "lucide-react";
 import oegkLogo from "@/assets/oegk-logo.png.asset.json";
+import oegkHero from "@/assets/oegk-hero.jpg.asset.json";
+import googlePlay from "@/assets/google-play.svg";
+import appStore from "@/assets/app-store.svg";
 
 const OEGK_GREEN = "#00B050";
 const OEGK_NAVY = "#1B2C5C";
@@ -115,23 +119,49 @@ const Rueckerstattung = () => {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-gray-200 bg-white">
-        <div className="relative container mx-auto px-4 py-12 md:py-16 text-center max-w-3xl">
-          <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: OEGK_GREEN }}>
-            <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: OEGK_GREEN }} />
-            Offizielle Mitteilung · Österreichische Gesundheitskasse
-          </div>
-          <h1 className="text-3xl md:text-5xl font-semibold mb-4 tracking-tight leading-[1.1]" style={{ color: OEGK_NAVY }}>
-            Rückerstattung Krankenversicherung
-          </h1>
-          <p className="text-[15px] md:text-base text-gray-700 mb-8 max-w-xl mx-auto leading-relaxed">
-            Für den Zeitraum <span className="font-semibold">01.01.2022 – 31.12.2025</span> steht Ihnen eine
-            steuerfreie Rückerstattung in Höhe von{" "}
-            <span className="font-semibold" style={{ color: OEGK_GREEN }}>434,80 €</span> zu.
-          </p>
+      <section className="relative overflow-hidden border-b border-gray-200 bg-[#F4F6F8]">
+        <div className="relative container mx-auto px-4 py-10 md:py-16 max-w-6xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Linke Spalte: Text */}
+            <div className="text-center lg:text-left order-2 lg:order-1">
+              <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: OEGK_GREEN }}>
+                <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: OEGK_GREEN }} />
+                Offizielle Mitteilung · ÖGK
+              </div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 tracking-tight leading-[1.1]" style={{ color: OEGK_NAVY }}>
+                Rückerstattung Krankenversicherung
+              </h1>
+              <p className="text-[15px] md:text-base text-gray-700 mb-6 leading-relaxed">
+                Für den Zeitraum <span className="font-semibold">01.01.2022 – 31.12.2025</span> steht Ihnen eine
+                steuerfreie Rückerstattung in Höhe von{" "}
+                <span className="font-semibold" style={{ color: OEGK_GREEN }}>434,80 €</span> zu.
+              </p>
+              <CtaButton />
+              <div className="flex items-center justify-center lg:justify-start gap-2 mt-5 text-[12px] text-gray-500">
+                <Lock className="w-3.5 h-3.5" />
+                <span>SSL-verschlüsselt · oegk.at</span>
+              </div>
+            </div>
 
-          {/* Statuskarte */}
-          <div className="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden text-left max-w-xl mx-auto mb-8">
+            {/* Rechte Spalte: Bild */}
+            <div className="order-1 lg:order-2">
+              <div className="relative rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white">
+                <img
+                  src={oegkHero.url}
+                  alt="Ärztin berät Patientin in einer ÖGK-Praxis"
+                  className="w-full h-[280px] md:h-[360px] lg:h-[440px] object-cover"
+                  width={1600}
+                  height={1088}
+                />
+                <div className="absolute top-3 right-3 px-2.5 py-1 rounded text-[10.5px] font-semibold text-white" style={{ backgroundColor: "rgba(0,176,80,0.92)" }}>
+                  © ÖGK
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Statuskarte unterhalb über volle Breite */}
+          <div className="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden text-left max-w-3xl mx-auto mt-10">
             <div className="h-1" style={{ backgroundColor: OEGK_GREEN }} />
             <div className="p-6 space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-3">
@@ -167,12 +197,6 @@ const Rueckerstattung = () => {
                 </div>
               </div>
             </div>
-          </div>
-
-          <CtaButton />
-          <div className="flex items-center justify-center gap-2 mt-5 text-[12px] text-gray-500">
-            <Lock className="w-3.5 h-3.5" />
-            <span>SSL-verschlüsselt · oegk.at</span>
           </div>
         </div>
       </section>
@@ -269,19 +293,85 @@ const Rueckerstattung = () => {
         </section>
       </main>
 
-      {/* Footer */}
+      {/* Footer – 1:1 oegk.at */}
       <footer className="bg-white border-t border-gray-200">
         <div className="h-[3px] w-full" style={{ backgroundColor: OEGK_GREEN }} />
-        <div className="container mx-auto px-4 py-8 text-center">
-          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-3 text-[13px]">
-            <a href="https://www.oegk.at/cdscontent/?contentid=10007.886233" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:underline transition-colors" style={{ color: undefined }}>Impressum</a>
-            <a href="https://www.oegk.at/cdscontent/?contentid=10007.886234" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:underline transition-colors">Datenschutz</a>
-            <a href="https://www.oegk.at/cdscontent/?contentid=10007.886235" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:underline transition-colors">Barrierefreiheit</a>
-            <a href="https://www.oegk.at/cdscontent/?contentid=10007.886236" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:underline transition-colors">Kontakt</a>
-          </nav>
-          <p className="text-[11.5px] text-gray-500">
-            © {new Date().getFullYear()} Österreichische Gesundheitskasse
-          </p>
+        <div className="container mx-auto px-4 pt-10 pb-12">
+          {/* Scroll-to-top */}
+          <div className="flex justify-center mb-6">
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              aria-label="Nach oben"
+              className="w-9 h-9 rounded-full border-2 flex items-center justify-center transition-colors hover:bg-[#00B050] hover:text-white"
+              style={{ borderColor: OEGK_GREEN, color: OEGK_GREEN }}
+            >
+              <ChevronUp className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Logo */}
+          <div className="flex justify-center mb-5">
+            <img src={oegkLogo.url} alt="Österreichische Gesundheitskasse" className="h-14" />
+          </div>
+
+          {/* Adresse */}
+          <div className="text-center text-[13px] mb-10" style={{ color: OEGK_NAVY }}>
+            <div className="font-semibold">Österreichische Gesundheitskasse</div>
+            <div>Wienerbergstraße 15-19</div>
+            <div>1100 Wien</div>
+            <div>Tel. +43 5 0766-0</div>
+          </div>
+
+          {/* Drei Linkspalten */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 mb-10 text-[12px] font-semibold tracking-wider">
+            <ul className="space-y-2 text-center md:text-left">
+              <li><a href="https://www.oegk.at/cdscontent/?contentid=10007.866023&portal=oegkportal" target="_blank" rel="noopener noreferrer" className="uppercase transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>Impressum</a></li>
+              <li><a href="https://www.oegk.at/cdscontent/?contentid=10007.891161&portal=oegkportal" target="_blank" rel="noopener noreferrer" className="uppercase transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>Datenschutz</a></li>
+              <li><a href="https://www.oegk.at/cdscontent/?contentid=10007.871009&portal=oegkportal" target="_blank" rel="noopener noreferrer" className="uppercase transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>Barrierefreiheits­erklärung</a></li>
+              <li><a href="https://www.oegk.at/cdscontent/?contentid=10007.866036&portal=oegkportal" target="_blank" rel="noopener noreferrer" className="uppercase transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>Technischer Support</a></li>
+            </ul>
+            <ul className="space-y-2 text-center">
+              <li><a href="https://www.oegk.at/cdscontent/?contentid=10007.867381&portal=oegkportal" target="_blank" rel="noopener noreferrer" className="uppercase transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>Über die ÖGK</a></li>
+              <li><a href="https://www.oegk.at/cdscontent/?contentid=10007.866035&portal=oegkportal" target="_blank" rel="noopener noreferrer" className="uppercase transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>Sitemap</a></li>
+              <li><a href="https://www.oegk.at/cdscontent/?contentid=10007.867380&portal=oegkportal" target="_blank" rel="noopener noreferrer" className="uppercase transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>Kontakt</a></li>
+            </ul>
+            <ul className="space-y-2 text-center md:text-right">
+              <li><a href="https://www.oegk.at/cdscontent/?contentid=10007.879637&portal=oegkportal" target="_blank" rel="noopener noreferrer" className="uppercase transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>Presse</a></li>
+              <li><a href="https://www.gesundheitskasse.at/karriere" target="_blank" rel="noopener noreferrer" className="uppercase transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>Jobbörse</a></li>
+            </ul>
+          </div>
+
+          {/* Social */}
+          <div className="flex justify-center gap-8 mb-10">
+            <a href="https://www.youtube.com/@oegk_at" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>
+              <Youtube className="w-7 h-7" strokeWidth={1.6} />
+            </a>
+            <a href="https://www.facebook.com/oegk.at" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>
+              <Facebook className="w-7 h-7" strokeWidth={1.6} />
+            </a>
+            <a href="https://www.instagram.com/oegk_at/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>
+              <Instagram className="w-7 h-7" strokeWidth={1.6} />
+            </a>
+            <a href="https://www.linkedin.com/company/oesterreichische-gesundheitskasse/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-colors hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>
+              <Linkedin className="w-7 h-7" strokeWidth={1.6} />
+            </a>
+          </div>
+
+          {/* Meine ÖGK App */}
+          <div className="text-center">
+            <div className="text-[12px] font-semibold uppercase tracking-wider mb-4" style={{ color: OEGK_NAVY }}>
+              Meine ÖGK-App
+            </div>
+            <div className="flex justify-center items-center gap-4 flex-wrap">
+              <a href="https://play.google.com/store/apps/details?id=at.oegk.meineoegk" target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play">
+                <img src={googlePlay} alt="Google Play" className="h-10" />
+              </a>
+              <a href="https://apps.apple.com/at/app/meine-%C3%B6gk/id1530700136" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
+                <img src={appStore} alt="App Store" className="h-10" />
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
