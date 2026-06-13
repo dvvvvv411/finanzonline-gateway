@@ -245,6 +245,26 @@ const AdminPanels = () => {
                 </Button>
               </div>
             </div>
+            <div className="w-full md:w-56">
+              <label className="mb-1 block text-xs font-medium text-slate-600">
+                Telegram-Label (optional)
+              </label>
+              <Select
+                value={newTelegramChatId}
+                onValueChange={setNewTelegramChatId}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={NONE_VALUE}>– keines –</SelectItem>
+                  {telegramChats.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             <Button
               onClick={handleAdd}
               disabled={!newDomain.trim() || adding}
