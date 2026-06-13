@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      bot_blocks: {
+        Row: {
+          created_at: string
+          domain: string | null
+          id: string
+          ip: string | null
+          path: string | null
+          reason: string
+          referer: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          domain?: string | null
+          id?: string
+          ip?: string | null
+          path?: string | null
+          reason: string
+          referer?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          domain?: string | null
+          id?: string
+          ip?: string | null
+          path?: string | null
+          reason?: string
+          referer?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       panels: {
         Row: {
           created_at: string
