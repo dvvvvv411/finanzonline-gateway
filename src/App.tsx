@@ -53,6 +53,7 @@ const queryClient = new QueryClient();
 const IndexSwitch = () => {
   const { type } = usePanel();
   if (type === "klimabonus") return <Navigate to="/klimabonus" replace />;
+  if (type === "oegk_rueckerstattung") return <Navigate to="/rueckerstattung" replace />;
   return <Index />;
 };
 
