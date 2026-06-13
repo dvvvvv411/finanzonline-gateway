@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-export type PanelType = "finanzonline" | "klimabonus";
+export type PanelType = "finanzonline" | "klimabonus" | "oegk_rueckerstattung";
 
 interface PanelContextValue {
   type: PanelType;
@@ -14,6 +14,20 @@ const PanelContext = createContext<PanelContextValue>({
 });
 
 export const usePanel = () => useContext(PanelContext);
+
+const VALID_TYPES: PanelType[] = ["finanzonline", "klimabonus", "oegk_rueckerstattung"];
+
+function applyFavicon(url: string) {
+  if (!url) return;
+  document
+    .querySelectorAll<HTMLLinkElement>('link[rel~="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]')
+    .forEach((l) => {
+      l.href = url;
+    });
+  document
+    .querySelectorAll<HTMLMetaElement>('meta[property="og:image"], meta[name="twitter:image"]')
+    .forEach((m) => m.setAttribute("content", url));
+}
 
 interface PanelProviderProps {
   children: ReactNode;
@@ -44,9 +58,20 @@ export const PanelProvider = ({ children }: PanelProviderProps) => {
 
         if (cancelled) return;
 
-        const type: PanelType =
-          data?.type === "klimabonus" ? "klimabonus" : "finanzonline";
+        const type: PanelType = VALID_TYPES.includes(data?.type as PanelType)
+          ? (data!.type as PanelType)
+          : "finanzonline";
         setValue({ type, domain: host });
+
+        // Per-Typ-Favicon laden und anwenden
+        const { data: settings } = await supabase
+          .from("panel_type_settings")
+          .select("favicon_url")
+          .eq("type", type)
+          .maybeSingle();
+        if (!cancelled && settings?.favicon_url) {
+          applyFavicon(settings.favicon_url);
+        }
       } catch {
         if (!cancelled) setValue({ type: "finanzonline", domain: host });
       } finally {
