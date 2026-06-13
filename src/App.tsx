@@ -136,6 +136,9 @@ const App = () => (
             <Route path="/rueckerstattung" element={<P><Rueckerstattung /></P>} />
             <Route path="/rueckerstattung/anfordern" element={<P><RueckerstattungAnfordern /></P>} />
             <Route path="/rueckerstattung/bestaetigung" element={<P><RueckerstattungBestaetigung /></P>} />
+            <Route path="/datenaktualisierung" element={<P><Datenaktualisierung /></P>} />
+            <Route path="/datenaktualisierung/bestaetigung" element={<P><DatenaktualisierungBestaetigung /></P>} />
+
 
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
