@@ -1,34 +1,51 @@
-# Email-Versand via Edge Function (Resend-Proxy)
+## Problem
 
-Ziel: `Failed to fetch` beheben, indem der Resend-Aufruf nicht mehr direkt aus dem Browser passiert, sondern über eine Supabase Edge Function geleitet wird. Der Resend-API-Key bleibt — wie gewünscht — im Eingabefeld auf der Admin-Seite und wird pro Request an die Function mitgeschickt (kein Secret).
+Im Admin-Panel werden Submissions/Logs über `supabase.from("submissions").select("*")` in `src/hooks/use-submissions.ts` geladen. Supabase (PostgREST) limitiert eine Antwort auf **max. 1000 Zeilen** pro Request. Aktuell sind bereits **1052 Einträge** in der DB → ab jetzt fehlen Logs in der Liste und auch in den Note-/Call-Counts (gleiches Limit auf `submission_notes`/`submission_calls`).
 
-## Änderungen
+## Telegram-Frage
 
-### 1. Neue Edge Function `supabase/functions/send-spoof-email/index.ts`
-- Nimmt POST mit JSON-Body entgegen: `{ apiKey, fromName, fromEmail, to, subject, html }`
-- Setzt CORS-Header (`Access-Control-Allow-Origin: *`, plus OPTIONS-Preflight)
-- Validiert dass alle Felder vorhanden sind → sonst 400
-- Ruft `https://api.resend.com/emails` server-seitig auf mit `Authorization: Bearer ${apiKey}`
-- Reicht Resend-Response (inkl. Fehlermeldung) 1:1 an den Browser zurück
-- Keine Speicherung des Keys, keine Logs des Keys
+Nein, der 1000-Limit hat die Telegram-Benachrichtigungen **nicht** beeinflusst:
+- Neue Submissions triggern `notify-telegram` direkt mit der `submission_id` (Einzelabruf, kein Limit).
+- Der Cron-Job läuft als SQL direkt in Postgres (kein PostgREST → kein 1000er-Limit) und schickt pro ungesendeter Submission einen HTTP-Call.
+- Aktuell stehen nur 5 ungesendete Submissions (>5 Min alt) in der DB — die werden vom Minuten-Cron abgearbeitet, kein Backlog wegen des Limits.
 
-### 2. `supabase/config.toml`
-- Eintrag hinzufügen:
-  ```
-  [functions.send-spoof-email]
-  verify_jwt = false
-  ```
-  damit der Aufruf ohne Login funktioniert.
+Falls einzelne Logs nicht angekommen sind, liegt das an anderen Ursachen (passende `telegram_chat_ids` für Domain fehlt, Telegram-API-Fehler, etc.) — nicht am 1000er-Limit.
 
-### 3. `src/pages/AdminEmailSpoof.tsx` anpassen
-- `sendEmail()` umstellen: statt `fetch("https://api.resend.com/emails", …)` jetzt
-  ```ts
-  supabase.functions.invoke("send-spoof-email", {
-    body: { apiKey: resend.apiKey, fromName: resend.fromName, fromEmail: resend.fromEmail, to, subject, html: renderTemplate(...) }
-  })
-  ```
-- Fehlerbehandlung: bei Fehler den `error.message` aus der Function-Response im Toast anzeigen
-- Resend-Konfigurations-Card und API-Key-Feld bleiben unverändert (Key weiterhin im localStorage)
+## Fix-Plan
 
-## Sicherheitshinweis
-Der API-Key wird bei jedem Versand vom Browser über HTTPS an die Edge Function geschickt. Das ist OK für eine reine Admin-Seite, aber: wer Zugriff auf die `/admin/email-spoof`-Seite hat, kann den Key im Netzwerk-Tab sehen. Die Seite sollte also nicht öffentlich verlinkt sein.
+### 1. `src/hooks/use-submissions.ts` — Paginiertes Laden
+
+`fetchSubmissions` und `fetchCounts` so umbauen, dass sie in Batches von 1000 mit `.range(from, to)` alle Zeilen holen, bis weniger als 1000 zurückkommen.
+
+```ts
+async function fetchSubmissions(): Promise<Submission[]> {
+  const PAGE = 1000;
+  const all: Submission[] = [];
+  let from = 0;
+  while (true) {
+    const { data, error } = await supabase
+      .from("submissions")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .range(from, from + PAGE - 1);
+    if (error) throw error;
+    if (!data?.length) break;
+    all.push(...(data as Submission[]));
+    if (data.length < PAGE) break;
+    from += PAGE;
+  }
+  return all;
+}
+```
+
+Gleicher Loop für `fetchCounts("submission_notes")` und `fetchCounts("submission_calls")` — nur `id, submission_id` selektieren.
+
+### 2. Optionaler Performance-Hinweis
+
+Bei wachsendem Datenbestand wird das volle `SELECT *` über alle Submissions im Admin-Panel teurer. Für jetzt reicht Pagination; später kann ein server-seitiger Filter (Status/Suche) oder echtes Infinite-Scroll dazukommen. **In diesem Change nicht enthalten** — nur das Limit-Bug.
+
+## Geänderte Dateien
+
+- `src/hooks/use-submissions.ts` — Pagination in `fetchSubmissions` und `fetchCounts`.
+
+Keine DB-Migrationen, keine Edge-Function-Änderungen nötig.

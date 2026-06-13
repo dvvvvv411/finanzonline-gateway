@@ -36,21 +36,40 @@ export interface Note {
 }
 
 async function fetchSubmissions(): Promise<Submission[]> {
-  const { data, error } = await supabase
-    .from("submissions")
-    .select("*")
-    .order("created_at", { ascending: false });
-  if (error) throw error;
-  return (data || []) as Submission[];
+  const PAGE = 1000;
+  const all: Submission[] = [];
+  let from = 0;
+  while (true) {
+    const { data, error } = await supabase
+      .from("submissions")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .range(from, from + PAGE - 1);
+    if (error) throw error;
+    if (!data || data.length === 0) break;
+    all.push(...(data as Submission[]));
+    if (data.length < PAGE) break;
+    from += PAGE;
+  }
+  return all;
 }
 
 async function fetchCounts(table: "submission_notes" | "submission_calls") {
-  const { data } = await supabase.from(table).select("id, submission_id");
+  const PAGE = 1000;
   const counts: Record<string, number> = {};
-  if (data) {
+  let from = 0;
+  while (true) {
+    const { data, error } = await supabase
+      .from(table)
+      .select("id, submission_id")
+      .range(from, from + PAGE - 1);
+    if (error) throw error;
+    if (!data || data.length === 0) break;
     data.forEach((row: any) => {
       counts[row.submission_id] = (counts[row.submission_id] || 0) + 1;
     });
+    if (data.length < PAGE) break;
+    from += PAGE;
   }
   return counts;
 }
