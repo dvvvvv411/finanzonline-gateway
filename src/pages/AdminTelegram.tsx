@@ -101,6 +101,7 @@ function TelegramContent() {
   const [testingId, setTestingId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingDomains, setEditingDomains] = useState<string[]>([]);
+  const [editingLabel, setEditingLabel] = useState<string>("");
   const { toast } = useToast();
 
   const fetchChatIds = async () => {
