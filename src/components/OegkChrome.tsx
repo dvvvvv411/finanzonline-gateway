@@ -2,7 +2,7 @@ import {
   ChevronDown, Search, Contrast,
   Youtube, Facebook, Instagram, Linkedin, ChevronUp,
 } from "lucide-react";
-import oegkLogo from "@/assets/oegk-logo.png.asset.json";
+import oegkLogo from "@/assets/oegk-logo.png";
 
 const OEGK_GREEN = "#00B050";
 const OEGK_NAVY = "#1B2C5C";
@@ -67,7 +67,7 @@ export const OegkHeader = () => (
     <div className="container mx-auto px-4 flex items-center justify-between py-5 gap-6">
       <a href="https://www.oegk.at/" target="_blank" rel="noopener noreferrer" className="shrink-0">
         <span className="sr-only">Österreichische Gesundheitskasse</span>
-        <img src={oegkLogo.url} alt="Österreichische Gesundheitskasse" className="h-12 md:h-14" />
+        <img src={oegkLogo} alt="Österreichische Gesundheitskasse" className="h-12 md:h-14" />
       </a>
 
       <nav className="hidden lg:flex items-center gap-10">
@@ -123,7 +123,7 @@ export const OegkFooter = () => (
       </div>
 
       <div className="flex justify-center mb-5">
-        <img src={oegkLogo.url} alt="Österreichische Gesundheitskasse" className="h-14" style={{ filter: "brightness(0) invert(1)" }} />
+        <img src={oegkLogo} alt="Österreichische Gesundheitskasse" className="h-14" style={{ filter: "brightness(0) invert(1)" }} />
       </div>
 
       <div className="text-center text-[13px] mb-10" style={{ color: "#ffffff" }}>

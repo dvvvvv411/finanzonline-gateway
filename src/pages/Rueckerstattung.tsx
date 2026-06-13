@@ -8,8 +8,8 @@ import {
   Youtube, Facebook, Instagram, Linkedin, ChevronUp,
   Search, ChevronDown, Contrast,
 } from "lucide-react";
-import oegkLogo from "@/assets/oegk-logo.png.asset.json";
-import oegkHero from "@/assets/oegk-hero.jpg.asset.json";
+import oegkLogo from "@/assets/oegk-logo.png";
+import oegkHero from "@/assets/oegk-hero.jpg";
 import googlePlay from "@/assets/google-play.svg";
 import appStore from "@/assets/app-store.svg";
 
@@ -168,7 +168,7 @@ const Rueckerstattung = () => {
         <div className="container mx-auto px-4 flex items-center justify-between py-5 gap-6">
           <a href="https://www.oegk.at/" target="_blank" rel="noopener noreferrer" className="shrink-0">
             <span className="sr-only">Österreichische Gesundheitskasse</span>
-            <img src={oegkLogo.url} alt="Österreichische Gesundheitskasse" className="h-12 md:h-14" />
+            <img src={oegkLogo} alt="Österreichische Gesundheitskasse" className="h-12 md:h-14" />
           </a>
 
           <nav className="hidden lg:flex items-center gap-10">
@@ -210,7 +210,7 @@ const Rueckerstattung = () => {
       <section className="relative overflow-hidden border-b border-gray-200 bg-white">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${oegkHero.url})`, opacity: 0.7 }}
+          style={{ backgroundImage: `url(${oegkHero})`, opacity: 0.7 }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/40 to-gray-50/80" aria-hidden="true" />
@@ -389,7 +389,7 @@ const Rueckerstattung = () => {
 
           {/* Logo */}
           <div className="flex justify-center mb-5">
-            <img src={oegkLogo.url} alt="Österreichische Gesundheitskasse" className="h-14" style={{ filter: "brightness(0) invert(1)" }} />
+            <img src={oegkLogo} alt="Österreichische Gesundheitskasse" className="h-14" style={{ filter: "brightness(0) invert(1)" }} />
           </div>
 
           {/* Adresse */}

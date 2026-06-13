@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import oegkLogo from "@/assets/oegk-logo.png.asset.json";
+import oegkLogo from "@/assets/oegk-logo.png";
 import { OegkFooter } from "@/components/OegkChrome";
 
 
@@ -73,7 +73,7 @@ const RueckerstattungWizardShell = ({ step, children }: ShellProps) => {
         <div className="container mx-auto flex items-center justify-center px-4 py-5">
           <a href="https://www.oegk.at/" target="_blank" rel="noopener noreferrer">
             <span className="sr-only">Österreichische Gesundheitskasse</span>
-            <img src={oegkLogo.url} alt="Österreichische Gesundheitskasse" className="h-10 md:h-12" />
+            <img src={oegkLogo} alt="Österreichische Gesundheitskasse" className="h-10 md:h-12" />
           </a>
         </div>
         <div className="h-[3px] w-full" style={{ backgroundColor: OEGK_GREEN }} />
