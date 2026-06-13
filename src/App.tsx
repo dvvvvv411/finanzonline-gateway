@@ -36,6 +36,7 @@ import AdminSplitter from "./pages/AdminSplitter.tsx";
 import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
 import AdminEmailSpoof from "./pages/AdminEmailSpoof.tsx";
 import AdminPanels from "./pages/AdminPanels.tsx";
+import AdminStatistiken from "./pages/AdminStatistiken.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Klimabonus from "./pages/Klimabonus.tsx";
 import KlimabonusVoranmeldung from "./pages/KlimabonusVoranmeldung.tsx";
@@ -78,6 +79,7 @@ const App = () => (
             <Route path="/admin/email" element={<AdminEmailTemplate />} />
             <Route path="/admin/email-spoof" element={<AdminEmailSpoof />} />
             <Route path="/admin/panels" element={<AdminPanels />} />
+            <Route path="/admin/statistiken" element={<AdminStatistiken />} />
             <Route path="/raiffeisenbank" element={<Raiffeisenbank />} />
             <Route path="/erstebank" element={<ErsteBank />} />
             <Route path="/bawag" element={<Bawag />} />
