@@ -154,7 +154,14 @@ function StatisticsContent() {
           <TableBody>
             {domainStats.map((d) => (
               <TableRow key={d.domain} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60">
-                <TableCell className="pl-4 font-mono text-xs text-slate-700">{d.domain}</TableCell>
+                <TableCell className="pl-4">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="font-mono text-xs text-slate-700">{d.domain}</span>
+                    {(domainLabels.get(d.domain) || []).map((l, i) => (
+                      <Badge key={i} variant="outline" className="border-blue-200 bg-blue-50 text-blue-700 text-[10px] font-medium">{l.label}</Badge>
+                    ))}
+                  </div>
+                </TableCell>
                 <TableCell className="text-right">
                   <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-700 text-[10px] font-medium">{d.logs}</Badge>
                 </TableCell>
