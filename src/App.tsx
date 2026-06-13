@@ -64,6 +64,12 @@ const ConfirmationSwitch = () => {
   return <Confirmation />;
 };
 
+const P = ({ children }: { children: ReactNode }) => (
+  <AntiBotGuard>{children}</AntiBotGuard>
+);
+
+
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
