@@ -106,6 +106,7 @@ const AdminPanels = () => {
   useEffect(() => {
     load();
     loadTelegramChats();
+    loadTypeFavicons();
   }, []);
 
   const handleAdd = async () => {
