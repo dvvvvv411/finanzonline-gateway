@@ -18,7 +18,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, List, LogOut, Shield, Send, Mail, MailWarning, Scissors, Globe, BarChart3 } from "lucide-react";
+import { LayoutDashboard, List, LogOut, Shield, ShieldOff, Send, Mail, MailWarning, Scissors, Globe, BarChart3 } from "lucide-react";
 
 interface AdminContextType {
   user: User;
