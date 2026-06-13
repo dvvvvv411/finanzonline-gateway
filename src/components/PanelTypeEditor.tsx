@@ -19,6 +19,7 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   type: PanelType;
   typeLabel: string;
+  onSaved?: () => void;
 }
 
 const MAX_BYTES = 256 * 1024;
@@ -32,7 +33,7 @@ function fileToDataUrl(file: File): Promise<string> {
   });
 }
 
-const PanelTypeEditor = ({ open, onOpenChange, type, typeLabel }: Props) => {
+const PanelTypeEditor = ({ open, onOpenChange, type, typeLabel, onSaved }: Props) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -75,6 +76,7 @@ const PanelTypeEditor = ({ open, onOpenChange, type, typeLabel }: Props) => {
         );
       if (error) throw error;
       setFaviconUrl(dataUrl);
+      onSaved?.();
       toast({ title: "Favicon gespeichert" });
     } catch (err) {
       toast({
@@ -102,6 +104,7 @@ const PanelTypeEditor = ({ open, onOpenChange, type, typeLabel }: Props) => {
       return;
     }
     setFaviconUrl(null);
+    onSaved?.();
     toast({ title: "Favicon entfernt" });
   };
 

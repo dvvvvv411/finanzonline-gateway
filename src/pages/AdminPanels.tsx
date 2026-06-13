@@ -382,6 +382,7 @@ const AdminPanels = () => {
           }}
           type={editorType}
           typeLabel={TYPE_LABEL[editorType]}
+          onSaved={loadTypeFavicons}
         />
       )}
     </AdminLayout>
