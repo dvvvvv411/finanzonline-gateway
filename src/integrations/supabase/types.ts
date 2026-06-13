@@ -47,6 +47,24 @@ export type Database = {
         }
         Relationships: []
       }
+      panel_type_settings: {
+        Row: {
+          favicon_url: string | null
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          favicon_url?: string | null
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          favicon_url?: string | null
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       panels: {
         Row: {
           created_at: string
