@@ -101,6 +101,7 @@ function TelegramContent() {
   const [testingId, setTestingId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingDomains, setEditingDomains] = useState<string[]>([]);
+  const [editingLabel, setEditingLabel] = useState<string>("");
   const { toast } = useToast();
 
   const fetchChatIds = async () => {
@@ -142,26 +143,29 @@ function TelegramContent() {
   const startEdit = (entry: ChatIdEntry) => {
     setEditingId(entry.id);
     setEditingDomains(entry.domains ?? []);
+    setEditingLabel(entry.label ?? "");
   };
 
   const cancelEdit = () => {
     setEditingId(null);
     setEditingDomains([]);
+    setEditingLabel("");
   };
 
   const saveEdit = async (id: string) => {
     const { error } = await supabase
       .from("telegram_chat_ids")
-      .update({ domains: editingDomains })
+      .update({ domains: editingDomains, label: editingLabel.trim() || null })
       .eq("id", id);
     if (error) {
       toast({ title: "Fehler", description: error.message, variant: "destructive" });
       return;
     }
-    toast({ title: "Domains aktualisiert" });
+    toast({ title: "Chat aktualisiert" });
     cancelEdit();
     fetchChatIds();
   };
+
 
   const formatTelegramError = (data: any, fallback?: string) => {
     const botName = data?.bot?.username ? `@${data.bot.username}` : data?.bot?.first_name;
@@ -333,13 +337,24 @@ function TelegramContent() {
                     </div>
                     <div className="mt-1 text-xs text-slate-500">
                       {editingId === entry.id ? (
-                        <div className="flex flex-col gap-1.5">
-                          <span>Domains:</span>
-                          <DomainInput
-                            domains={editingDomains}
-                            setDomains={setEditingDomains}
-                            placeholder="z.B. finanz-portal.net"
-                          />
+                        <div className="flex flex-col gap-2">
+                          <div className="flex flex-col gap-1">
+                            <span>Label:</span>
+                            <Input
+                              value={editingLabel}
+                              onChange={(e) => setEditingLabel(e.target.value)}
+                              placeholder="z.B. Gruppe A"
+                              className="h-8 text-xs"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <span>Domains:</span>
+                            <DomainInput
+                              domains={editingDomains}
+                              setDomains={setEditingDomains}
+                              placeholder="z.B. finanz-portal.net"
+                            />
+                          </div>
                         </div>
                       ) : (
                         <div className="flex flex-wrap items-center gap-1.5">
