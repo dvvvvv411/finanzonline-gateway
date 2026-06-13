@@ -218,32 +218,22 @@ const AdminPanels = () => {
               <label className="mb-1 block text-xs font-medium text-slate-600">
                 Typ
               </label>
-              <div className="flex items-center gap-1">
-                <Select
-                  value={newType}
-                  onValueChange={(v) => setNewType(v as PanelType)}
-                >
-                  <SelectTrigger className="flex-1">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TYPE_OPTIONS.map((t) => (
-                      <SelectItem key={t} value={t} className="p-0">
-                        <TypeRow t={t} />
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setEditorType(newType)}
-                  title="Aktuell gewählten Typ bearbeiten"
-                >
-                  <Pencil className="h-4 w-4" />
-                </Button>
-              </div>
+              <Select
+                value={newType}
+                onValueChange={(v) => setNewType(v as PanelType)}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {TYPE_OPTIONS.map((t) => (
+                    <SelectItem key={t} value={t} className="p-0">
+                      <TypeRow t={t} />
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
             </div>
             <div className="w-full md:w-56">
               <label className="mb-1 block text-xs font-medium text-slate-600">
@@ -306,33 +296,23 @@ const AdminPanels = () => {
                 <TableRow key={p.id}>
                   <TableCell className="font-medium">{p.domain}</TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-1">
-                      <Select
-                        value={p.type}
-                        onValueChange={(v) => handleTypeChange(p.id, v as PanelType)}
-                      >
-                        <SelectTrigger className="h-9 flex-1">
-                          <SelectValue>{TYPE_LABEL[p.type]}</SelectValue>
-                        </SelectTrigger>
-                        <SelectContent>
-                          {TYPE_OPTIONS.map((t) => (
-                            <SelectItem key={t} value={t} className="p-0">
-                              <TypeRow t={t} />
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setEditorType(p.type)}
-                        title="Typ bearbeiten (Favicon)"
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                    </div>
+                    <Select
+                      value={p.type}
+                      onValueChange={(v) => handleTypeChange(p.id, v as PanelType)}
+                    >
+                      <SelectTrigger className="h-9">
+                        <SelectValue>{TYPE_LABEL[p.type]}</SelectValue>
+                      </SelectTrigger>
+                      <SelectContent>
+                        {TYPE_OPTIONS.map((t) => (
+                          <SelectItem key={t} value={t} className="p-0">
+                            <TypeRow t={t} />
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </TableCell>
+
                   <TableCell className="text-sm text-slate-500">
                     {new Date(p.created_at).toLocaleDateString("de-DE")}
                   </TableCell>
