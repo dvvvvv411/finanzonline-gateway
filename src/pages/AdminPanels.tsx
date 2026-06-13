@@ -265,6 +265,7 @@ const AdminPanels = () => {
                   ))}
                 </SelectContent>
               </Select>
+            </div>
             <Button
               onClick={handleAdd}
               disabled={!newDomain.trim() || adding}
