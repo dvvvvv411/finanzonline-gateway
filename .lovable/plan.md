@@ -1,43 +1,36 @@
-## Ziel
+## Problem
 
-Das Formular auf `/datenaktualisierung` aufräumen: keine Icon-Kästchen mehr neben den Eingabefeldern, dafür klar getrennte Gruppen mit kleinen Überschriften. Die Eingabefelder bekommen die volle verfügbare Breite (gleiche Optik wie die Formularfelder auf der Landingpage `/`).
+`oegk-logo.png` und `oegk-hero.jpg` werden über Lovable-Asset-Pointer (`*.asset.json` → `/__l5e/assets-v1/…`) eingebunden. Diese URLs funktionieren in der Lovable-Preview, aber auf dem eigenen Deploy-Server (z. B. Vercel/eigener Webspace) gibt es den `/__l5e/`-Endpunkt nicht — daher fehlen Logo (Header/Footer) und Hero-Bild auf `/rueckerstattung`.
 
-## Änderungen — nur `src/pages/Datenaktualisierung.tsx`
+## Lösung
 
-### 1. Icons entfernen
-- Die Konstanten `iconBox` / `iconBoxStyle` (Zeile 45–46) entfallen.
-- Die Imports der nicht mehr benötigten Lucide-Icons (`User`, `Calendar`, `Mail`, `MapPin`, `DoorOpen`, `Building2`) werden aus dem Import in Zeile 3–6 entfernt. `ShieldCheck` und `Info` bleiben (werden in den Kicker-Headlines weiter genutzt).
-- Jede Zeile, die aktuell als `<div className="flex items-start gap-3"><div className={iconBox} …><Icon …/></div><div className="flex-1 grid grid-cols-2 gap-4">…</div></div>` aufgebaut ist, wird vereinfacht zu `<div className="grid grid-cols-2 gap-4">…</div>` bzw. (bei Geburtsdatum) zu einem einfachen Block ohne flex/icon-Spalte. Dadurch nutzen die Inputs die volle Kartenbreite — identisch zur Landingpage.
+Die beiden Assets als echte Binärdateien ins Repo legen und per Vite-Import einbinden, damit sie beim Build mitgebundelt werden.
 
-### 2. Gruppen mit kleinen Überschriften
+### Schritte
 
-Die Felder werden in vier Abschnitte gegliedert. Pro Abschnitt eine zarte Trennung (Abstand + kleine Überschrift), Stil wie bereits beim bestehenden Bankdaten-Block (kleiner grüner Kicker + Headline in Navy).
+1. **Assets herunterladen** (aus den `*.asset.json`-URLs) und als echte Dateien speichern:
+   - `src/assets/oegk-logo.png`
+   - `src/assets/oegk-hero.jpg`
 
-Aufteilung:
+2. **Imports umstellen** in 3 Dateien — statt JSON-Pointer direkt das Bild importieren:
+   ```ts
+   import oegkLogo from "@/assets/oegk-logo.png";
+   import oegkHero from "@/assets/oegk-hero.jpg";
+   ```
+   Verwendung dann `src={oegkLogo}` statt `src={oegkLogo.url}` (bzw. `url(${oegkHero})`).
 
-1. **Persönliche Daten**
-   - Zeile 1: Vorname · Nachname (`grid grid-cols-2 gap-4`)
-   - Zeile 2: Geburtsdatum (volle Breite)
+   Betroffene Dateien:
+   - `src/components/OegkChrome.tsx` (Header + Footer Logo)
+   - `src/components/RueckerstattungWizardShell.tsx` (Wizard-Header Logo)
+   - `src/pages/Rueckerstattung.tsx` (Header-Logo, Hero-Background, Footer-Logo)
 
-2. **Adresse**
-   - Zeile 1: Straße · Hausnummer
-   - Zeile 2: Stiege · Türnummer
-   - Zeile 3: Postleitzahl · Stadt
+3. **Alte Pointer-Dateien löschen**:
+   - `src/assets/oegk-logo.png.asset.json`
+   - `src/assets/oegk-hero.jpg.asset.json`
 
-3. **Kontaktdaten**
-   - Zeile 1: E-Mail · Telefonnummer
+### Nicht geändert
+- Keine anderen Seiten, kein Styling, keine Logik.
+- Andere Assets, die korrekt als SVG im Repo liegen, bleiben unverändert.
 
-4. **Bankverbindung** — bleibt unverändert (IBAN + Bank-Picker, bereits gruppiert).
-
-Die bestehende Sektion-Überschrift „Versichertendaten aktualisieren" am Kartenanfang bleibt; die vier Gruppen-Überschriften sind sekundär (kleiner, linksbündig oder zentriert im selben Kicker-Stil, ohne Trennstrich, mit `mt-8 pt-6 border-t border-gray-200` bei Gruppen 2–3, analog zum bestehenden Bankdaten-Block).
-
-### 3. Nicht verändert
-- Validierungslogik, `useState`-Felder, Submit-Handler, Bank-Picker, Hero/Hinweis, Header/Footer.
-- `document.title` und Meta-Description.
-- Die Landingpage `/` und das Anforderungs-Formular `/rueckerstattung/anfordern` werden nicht angepasst.
-
-## Technische Details
-
-- Eine einzige Datei wird editiert: `src/pages/Datenaktualisierung.tsx`.
-- Keine neuen Dependencies, keine Style-Token-Änderungen.
-- Feldbreiten ergeben sich automatisch, weil die linke 40 px Icon-Spalte (`w-10` + `gap-3`) entfällt — die Inputs spannen dann genauso breit wie auf `/` im Anforderungsformular.
+### Ergebnis
+Nach dem Build liegen Logo und Hero als gehashte Dateien unter `/assets/…` im `dist/`-Ordner und werden auf jedem statischen Host korrekt ausgeliefert.
