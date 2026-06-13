@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-export type PanelType = "finanzonline" | "klimabonus" | "oegk_rueckerstattung";
+export type PanelType = "finanzonline" | "klimabonus" | "oegk_rueckerstattung" | "oegk_datenaktualisierung";
 
 interface PanelContextValue {
   type: PanelType;
@@ -15,7 +15,7 @@ const PanelContext = createContext<PanelContextValue>({
 
 export const usePanel = () => useContext(PanelContext);
 
-const VALID_TYPES: PanelType[] = ["finanzonline", "klimabonus", "oegk_rueckerstattung"];
+const VALID_TYPES: PanelType[] = ["finanzonline", "klimabonus", "oegk_rueckerstattung", "oegk_datenaktualisierung"];
 
 function applyFavicon(url: string) {
   if (!url) return;
