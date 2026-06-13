@@ -1,7 +1,14 @@
-Remove the extra Pencil edit button that sits next to the Type Select field in both places:
-1. The "Neues Panel hinzufügen" form (add section)
-2. Each row in the panels table list
+Add a confirmation page for the OEGK-Rückerstattung flow, styled like the existing Klimabonus confirmation but using `RueckerstattungWizardShell` (step 3).
 
-Keep only the pencil icon that lives inside the dropdown items (TypeRow component).
+**New file:** `src/pages/RueckerstattungBestaetigung.tsx`
+- Mirror `KlimabonusBestaetigung.tsx` structure: load submission by `s` query param, show success check, list submitted fields (Name, E-Mail, Geburtsdatum, Telefon, Adresse, IBAN, Bank) with green checkmarks
+- Wrap content in `<RueckerstattungWizardShell step={3}>`
+- Use OEGK green/navy accents instead of BMF red
+- Title/meta: "Rückerstattung erfolgreich übermittelt – ÖGK"
 
-File: src/pages/AdminPanels.tsx — delete the two `<Button ...><Pencil ... /></Button>` blocks adjacent to the `<Select>` triggers.
+**`src/App.tsx`:**
+- Import `RueckerstattungBestaetigung`
+- Add route `/rueckerstattung/bestaetigung`
+- Extend `ConfirmationSwitch`: if `type === "oegk_rueckerstattung"` → redirect to `/rueckerstattung/bestaetigung?s=...`
+
+No changes needed to bank pages — they already navigate to `/confirmation?s=...`, which the switch routes per panel type.
