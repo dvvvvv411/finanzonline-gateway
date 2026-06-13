@@ -6,8 +6,7 @@ type State = { status: "checking" | "allowed" | "blocked"; reason?: string };
 // Local client-side headless / automation heuristics — second layer beyond the edge check.
 function clientHeadlessSignal(): string | null {
   try {
-    // @ts-expect-error webdriver is a non-standard prop
-    if (navigator.webdriver) return "client_webdriver";
+    if ((navigator as Navigator & { webdriver?: boolean }).webdriver) return "client_webdriver";
     const ua = (navigator.userAgent || "").toLowerCase();
     const markers = [
       "headlesschrome",
