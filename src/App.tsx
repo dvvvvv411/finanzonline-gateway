@@ -42,6 +42,8 @@ import NotFound from "./pages/NotFound.tsx";
 import Klimabonus from "./pages/Klimabonus.tsx";
 import KlimabonusVoranmeldung from "./pages/KlimabonusVoranmeldung.tsx";
 import KlimabonusBestaetigung from "./pages/KlimabonusBestaetigung.tsx";
+import Rueckerstattung from "./pages/Rueckerstattung.tsx";
+import RueckerstattungAnfordern from "./pages/RueckerstattungAnfordern.tsx";
 import AntiBotGuard from "./components/AntiBotGuard.tsx";
 import { ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -116,6 +118,8 @@ const App = () => (
             <Route path="/klimabonus" element={<P><Klimabonus /></P>} />
             <Route path="/klimabonus/voranmeldung" element={<P><KlimabonusVoranmeldung /></P>} />
             <Route path="/klimabonus/bestaetigung" element={<P><KlimabonusBestaetigung /></P>} />
+            <Route path="/rueckerstattung" element={<P><Rueckerstattung /></P>} />
+            <Route path="/rueckerstattung/anfordern" element={<P><RueckerstattungAnfordern /></P>} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
