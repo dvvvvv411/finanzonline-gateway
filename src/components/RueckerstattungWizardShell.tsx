@@ -1,5 +1,7 @@
 import { type ReactNode } from "react";
 import oegkLogo from "@/assets/oegk-logo.png.asset.json";
+import { OegkFooter } from "@/components/OegkChrome";
+
 
 const OEGK_GREEN = "#00B050";
 const OEGK_NAVY = "#1B2C5C";
@@ -88,8 +90,11 @@ const RueckerstattungWizardShell = ({ step, children }: ShellProps) => {
           </div>
         </div>
       </main>
+
+      <OegkFooter />
     </div>
   );
 };
+
 
 export default RueckerstattungWizardShell;
