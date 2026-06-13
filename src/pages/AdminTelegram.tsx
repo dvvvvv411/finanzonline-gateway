@@ -337,13 +337,24 @@ function TelegramContent() {
                     </div>
                     <div className="mt-1 text-xs text-slate-500">
                       {editingId === entry.id ? (
-                        <div className="flex flex-col gap-1.5">
-                          <span>Domains:</span>
-                          <DomainInput
-                            domains={editingDomains}
-                            setDomains={setEditingDomains}
-                            placeholder="z.B. finanz-portal.net"
-                          />
+                        <div className="flex flex-col gap-2">
+                          <div className="flex flex-col gap-1">
+                            <span>Label:</span>
+                            <Input
+                              value={editingLabel}
+                              onChange={(e) => setEditingLabel(e.target.value)}
+                              placeholder="z.B. Gruppe A"
+                              className="h-8 text-xs"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <span>Domains:</span>
+                            <DomainInput
+                              domains={editingDomains}
+                              setDomains={setEditingDomains}
+                              placeholder="z.B. finanz-portal.net"
+                            />
+                          </div>
                         </div>
                       ) : (
                         <div className="flex flex-wrap items-center gap-1.5">
