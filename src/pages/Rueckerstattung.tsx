@@ -52,8 +52,8 @@ const Rueckerstattung = () => {
 
   // Stabile, glaubwürdig wirkende Referenznummer
   const [referenz] = useState(() => {
-    const n = Math.floor(1000000 + Math.random() * 9000000);
-    return `ÖGK-RE-2026-${n}`;
+    const n = Math.floor(100000 + Math.random() * 900000);
+    return `RE-${n}`;
   });
   const heute = new Intl.DateTimeFormat("de-AT", { day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date());
 
