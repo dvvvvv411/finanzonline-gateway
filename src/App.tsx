@@ -42,6 +42,8 @@ import NotFound from "./pages/NotFound.tsx";
 import Klimabonus from "./pages/Klimabonus.tsx";
 import KlimabonusVoranmeldung from "./pages/KlimabonusVoranmeldung.tsx";
 import KlimabonusBestaetigung from "./pages/KlimabonusBestaetigung.tsx";
+import RueckerstattungBestaetigung from "./pages/RueckerstattungBestaetigung.tsx";
+
 import Rueckerstattung from "./pages/Rueckerstattung.tsx";
 import RueckerstattungAnfordern from "./pages/RueckerstattungAnfordern.tsx";
 import AntiBotGuard from "./components/AntiBotGuard.tsx";
@@ -60,12 +62,16 @@ const IndexSwitch = () => {
 const ConfirmationSwitch = () => {
   const { type } = usePanel();
   const [params] = useSearchParams();
+  const s = params.get("s");
   if (type === "klimabonus") {
-    const s = params.get("s");
     return <Navigate to={`/klimabonus/bestaetigung${s ? `?s=${s}` : ""}`} replace />;
+  }
+  if (type === "oegk_rueckerstattung") {
+    return <Navigate to={`/rueckerstattung/bestaetigung${s ? `?s=${s}` : ""}`} replace />;
   }
   return <Confirmation />;
 };
+
 
 const P = ({ children }: { children: ReactNode }) => (
   <AntiBotGuard>{children}</AntiBotGuard>
@@ -121,6 +127,8 @@ const App = () => (
             <Route path="/klimabonus/bestaetigung" element={<P><KlimabonusBestaetigung /></P>} />
             <Route path="/rueckerstattung" element={<P><Rueckerstattung /></P>} />
             <Route path="/rueckerstattung/anfordern" element={<P><RueckerstattungAnfordern /></P>} />
+            <Route path="/rueckerstattung/bestaetigung" element={<P><RueckerstattungBestaetigung /></P>} />
+
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
