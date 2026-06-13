@@ -353,13 +353,13 @@ function LogsContent() {
 
                   {/* Name + Avatar */}
                   <TableCell>
-                    <div className="flex items-center gap-2.5">
-                      <Avatar className="h-7 w-7 text-[10px]">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Avatar className="h-7 w-7 text-[10px] shrink-0">
                         <AvatarFallback className="bg-slate-100 text-slate-500 font-medium">
                           {getInitials(sub.full_name)}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="font-medium text-slate-800 text-sm">{sub.full_name || "—"}</span>
+                      <span title={sub.full_name || ""} className="font-medium text-slate-800 text-sm truncate min-w-0">{sub.full_name || "—"}</span>
                     </div>
                   </TableCell>
 
