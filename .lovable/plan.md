@@ -1,13 +1,5 @@
-# Hero-Bild auf /rueckerstattung austauschen
+Footer auf `/rueckerstattung` anpassen:
 
-Hochgeladenes Foto (`Adipositas_heroslider_1969-x-680_01.jpg`) ersetzt das aktuelle KI-generierte ÖGK-Hero-Bild.
-
-## Schritte
-
-1. Upload via `lovable-assets create --file /mnt/user-uploads/Adipositas_heroslider_1969-x-680_01.jpg --filename oegk-hero.jpg` → schreibt neuen Pointer nach `src/assets/oegk-hero.jpg.asset.json` (überschreibt den bestehenden, alle Imports bleiben unverändert).
-2. Altes CDN-Asset (`oegk-hero.jpg`, asset_id `91c8627b-...`) per `assets--delete_asset` entfernen — passiert *vor* dem Überschreiben, indem der alte Pointer kurz gesichert und gelöscht wird. Reihenfolge: erst altes Asset löschen, dann neuen Pointer schreiben.
-3. Keine Code-Änderungen in `Rueckerstattung.tsx` nötig — der Import `oegkHero from "@/assets/oegk-hero.jpg.asset.json"` zeigt automatisch auf die neue URL.
-
-## Geänderte Dateien
-
-- edit (überschrieben): `src/assets/oegk-hero.jpg.asset.json`
+1. Footer-Hintergrundfarbe auf `#001e50` (dunkelblau) ändern.
+2. Alle Texte, Links, Social-Icons und das ÖGK-Logo im Footer auf weiß (`#ffffff`) setzen.
+3. Den gesamten Block "Meine ÖGK-App" inklusive Google-Play- und App-Store-Buttons entfernen.
