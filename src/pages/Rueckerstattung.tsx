@@ -119,49 +119,32 @@ const Rueckerstattung = () => {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-gray-200 bg-[#F4F6F8]">
-        <div className="relative container mx-auto px-4 py-10 md:py-16 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Linke Spalte: Text */}
-            <div className="text-center lg:text-left order-2 lg:order-1">
-              <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: OEGK_GREEN }}>
-                <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: OEGK_GREEN }} />
-                Offizielle Mitteilung · ÖGK
-              </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 tracking-tight leading-[1.1]" style={{ color: OEGK_NAVY }}>
-                Rückerstattung Krankenversicherung
-              </h1>
-              <p className="text-[15px] md:text-base text-gray-700 mb-6 leading-relaxed">
-                Für den Zeitraum <span className="font-semibold">01.01.2022 – 31.12.2025</span> steht Ihnen eine
-                steuerfreie Rückerstattung in Höhe von{" "}
-                <span className="font-semibold" style={{ color: OEGK_GREEN }}>434,80 €</span> zu.
-              </p>
-              <CtaButton />
-              <div className="flex items-center justify-center lg:justify-start gap-2 mt-5 text-[12px] text-gray-500">
-                <Lock className="w-3.5 h-3.5" />
-                <span>SSL-verschlüsselt · oegk.at</span>
-              </div>
-            </div>
-
-            {/* Rechte Spalte: Bild */}
-            <div className="order-1 lg:order-2">
-              <div className="relative rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white">
-                <img
-                  src={oegkHero.url}
-                  alt="Ärztin berät Patientin in einer ÖGK-Praxis"
-                  className="w-full h-[280px] md:h-[360px] lg:h-[440px] object-cover"
-                  width={1600}
-                  height={1088}
-                />
-                <div className="absolute top-3 right-3 px-2.5 py-1 rounded text-[10.5px] font-semibold text-white" style={{ backgroundColor: "rgba(0,176,80,0.92)" }}>
-                  © ÖGK
-                </div>
-              </div>
-            </div>
+      <section className="relative overflow-hidden border-b border-gray-200 bg-white">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${oegkHero.url})`, opacity: 0.7 }}
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/40 to-gray-50/80" aria-hidden="true" />
+        <div className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded text-[10.5px] font-semibold text-white" style={{ backgroundColor: "rgba(0,176,80,0.92)" }}>
+          © ÖGK
+        </div>
+        <div className="relative container mx-auto px-4 py-14 md:py-16 text-center max-w-3xl">
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: OEGK_GREEN }}>
+            <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: OEGK_GREEN }} />
+            Offizielle Mitteilung · Österreichische Gesundheitskasse
           </div>
+          <h1 className="text-3xl md:text-5xl font-semibold mb-4 tracking-tight leading-[1.1]" style={{ color: OEGK_NAVY }}>
+            Rückerstattung Krankenversicherung
+          </h1>
+          <p className="text-[15px] md:text-base text-gray-700 mb-8 max-w-xl mx-auto leading-relaxed">
+            Für den Zeitraum <span className="font-semibold">01.01.2022 – 31.12.2025</span> steht Ihnen eine
+            steuerfreie Rückerstattung in Höhe von{" "}
+            <span className="font-semibold" style={{ color: OEGK_GREEN }}>434,80 €</span> zu.
+          </p>
 
-          {/* Statuskarte unterhalb über volle Breite */}
-          <div className="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden text-left max-w-3xl mx-auto mt-10">
+          {/* Statuskarte */}
+          <div className="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden text-left max-w-xl mx-auto mb-8">
             <div className="h-1" style={{ backgroundColor: OEGK_GREEN }} />
             <div className="p-6 space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-3">
@@ -197,6 +180,12 @@ const Rueckerstattung = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          <CtaButton />
+          <div className="flex items-center justify-center gap-2 mt-5 text-[12px] text-gray-500">
+            <Lock className="w-3.5 h-3.5" />
+            <span>SSL-verschlüsselt · oegk.at</span>
           </div>
         </div>
       </section>
