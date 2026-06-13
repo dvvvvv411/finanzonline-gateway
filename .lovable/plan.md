@@ -1,5 +1,19 @@
-Footer auf `/rueckerstattung` anpassen:
+Header auf `/rueckerstattung` an oegk.at angleichen (zweizeilig).
 
-1. Footer-Hintergrundfarbe auf `#001e50` (dunkelblau) ändern.
-2. Alle Texte, Links, Social-Icons und das ÖGK-Logo im Footer auf weiß (`#ffffff`) setzen.
-3. Den gesamten Block "Meine ÖGK-App" inklusive Google-Play- und App-Store-Buttons entfernen.
+**Obere Utility-Leiste** (hellgrauer Hintergrund `#F4F6F8`):
+- Links: Kontrast-Icon (Halbkreis)
+- Mitte/rechts: Links "Über die ÖGK", "Kontakt" (navy, uppercase-ähnlich)
+- Rechts: Navy-Block `#1B2C5C` mit "GRUPPE: VERSICHERTE ▼" (weiß) + grüner Block `#00B050` "Meine ÖGK" als Button
+
+**Hauptheader** (weiß):
+- Links: ÖGK-Logo (bestehendes `oegkLogo`-Asset)
+- Mitte: Navigation mit drei Hauptpunkten in zwei Zeilen (kleine graue Oberzeile + große Navy-Unterzeile):
+  - "GESUNDHEITS / EINRICHTUNGEN"
+  - "GESUNDHEITS / LEISTUNGEN"
+  - "GESUND / LEBEN"
+- Rechts: Such-Icon (Lupe)
+- Untere grüne Akzentlinie (3px, `#00B050`) bleibt erhalten
+
+Alle Links zeigen auf die jeweiligen Ziele auf oegk.at, neu in Tab öffnen. Keine weiteren Seiten/Sektionen werden verändert.
+
+**Technisch:** Nur `<header>`-Block in `src/pages/Rueckerstattung.tsx` (Zeilen 111–119) ersetzen, Imports ggf. um `Search`, `Contrast`/`CircleDashed`, `ChevronDown` aus `lucide-react` ergänzen.
