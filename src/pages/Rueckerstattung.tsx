@@ -6,6 +6,7 @@ import {
   User, Calendar, MapPin, CreditCard, Phone, Map, Building2,
   ArrowRight, Lock, Info, CheckCircle2, FileText,
   Youtube, Facebook, Instagram, Linkedin, ChevronUp,
+  Search, ChevronDown, Contrast,
 } from "lucide-react";
 import oegkLogo from "@/assets/oegk-logo.png.asset.json";
 import oegkHero from "@/assets/oegk-hero.jpg.asset.json";
@@ -107,13 +108,100 @@ const Rueckerstattung = () => {
 
   return (
     <div className="min-h-screen bg-[#F4F6F8] text-gray-900" style={{ fontFamily: "'Open Sans', system-ui, sans-serif" }}>
-      {/* Header */}
+      {/* Header – 1:1 oegk.at */}
       <header className="bg-white border-b border-gray-200">
-        <div className="container mx-auto flex items-center justify-center px-4 py-5">
-          <a href="https://www.oegk.at/" target="_blank" rel="noopener noreferrer">
+        {/* Utility-Leiste */}
+        <div className="bg-[#F4F6F8] border-b border-gray-200">
+          <div className="container mx-auto px-4 flex items-stretch justify-between h-11 text-[12px]">
+            <div className="flex items-center">
+              <button
+                type="button"
+                aria-label="Kontrast"
+                className="w-8 h-8 rounded-full flex items-center justify-center transition-colors hover:bg-gray-200"
+                style={{ color: OEGK_NAVY }}
+              >
+                <Contrast className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="flex items-stretch">
+              <a
+                href="https://www.oegk.at/cdscontent/?contentid=10007.867381&portal=oegkportal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:flex items-center px-4 font-semibold transition-colors hover:text-[#00B050]"
+                style={{ color: OEGK_NAVY }}
+              >
+                Über die ÖGK
+              </a>
+              <a
+                href="https://www.oegk.at/cdscontent/?contentid=10007.867380&portal=oegkportal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:flex items-center px-4 font-semibold transition-colors hover:text-[#00B050]"
+                style={{ color: OEGK_NAVY }}
+              >
+                Kontakt
+              </a>
+              <button
+                type="button"
+                className="hidden md:inline-flex items-center gap-2 px-4 font-semibold text-white"
+                style={{ backgroundColor: OEGK_NAVY }}
+              >
+                <span className="opacity-80">GRUPPE:</span>
+                <span>VERSICHERTE</span>
+                <ChevronDown className="w-3.5 h-3.5" />
+              </button>
+              <a
+                href="https://www.meineoegk.at"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-4 sm:px-6 font-semibold text-white transition-opacity hover:opacity-90"
+                style={{ backgroundColor: OEGK_GREEN }}
+              >
+                Meine ÖGK
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Hauptheader */}
+        <div className="container mx-auto px-4 flex items-center justify-between py-5 gap-6">
+          <a href="https://www.oegk.at/" target="_blank" rel="noopener noreferrer" className="shrink-0">
             <span className="sr-only">Österreichische Gesundheitskasse</span>
-            <img src={oegkLogo.url} alt="Österreichische Gesundheitskasse" className="h-10 md:h-12" />
+            <img src={oegkLogo.url} alt="Österreichische Gesundheitskasse" className="h-12 md:h-14" />
           </a>
+
+          <nav className="hidden lg:flex items-center gap-10">
+            {[
+              { top: "GESUNDHEITS", bottom: "EINRICHTUNGEN", href: "https://www.oegk.at/cdscontent/?contentid=10007.823526&portal=oegkportal" },
+              { top: "GESUNDHEITS", bottom: "LEISTUNGEN", href: "https://www.oegk.at/cdscontent/?contentid=10007.823522&portal=oegkportal" },
+              { top: "GESUND", bottom: "LEBEN", href: "https://www.oegk.at/cdscontent/?contentid=10007.823527&portal=oegkportal" },
+            ].map((item) => (
+              <a
+                key={item.bottom}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-center leading-tight group"
+              >
+                <div className="text-[11px] font-semibold tracking-wider text-gray-500 group-hover:text-[#00B050] transition-colors">
+                  {item.top}
+                </div>
+                <div className="text-[15px] font-bold tracking-wide transition-colors group-hover:text-[#00B050]" style={{ color: OEGK_NAVY }}>
+                  {item.bottom}
+                </div>
+              </a>
+            ))}
+          </nav>
+
+          <button
+            type="button"
+            aria-label="Suche"
+            className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:bg-gray-100"
+            style={{ color: OEGK_NAVY }}
+          >
+            <Search className="w-5 h-5" />
+          </button>
         </div>
         <div className="h-[3px] w-full" style={{ backgroundColor: OEGK_GREEN }} />
       </header>
