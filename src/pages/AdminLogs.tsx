@@ -228,6 +228,15 @@ function LogsContent() {
     return true;
   });
 
+  const totalPages = Math.max(1, Math.ceil(filteredSubmissions.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const pageStart = (currentPage - 1) * PAGE_SIZE;
+  const paginated = filteredSubmissions.slice(pageStart, pageStart + PAGE_SIZE);
+
+  useEffect(() => {
+    setPage(1);
+  }, [statusFilter, searchQuery, submissions.length]);
+
   const statCards = [
     { label: "Gesamt", value: stats.total, icon: Users, filter: "Alle", color: "text-slate-600 bg-slate-50 border-slate-200" },
     { label: "Neu", value: stats.neu, icon: Clock, filter: "Neu", color: "text-slate-600 bg-slate-50 border-slate-200" },
