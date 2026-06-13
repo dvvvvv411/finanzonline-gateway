@@ -47,6 +47,8 @@ interface TelegramChat {
 
 const NONE_VALUE = "__none__";
 
+const DEFAULT_FAVICON = "/favicon.png";
+
 const AdminPanels = () => {
   const { toast } = useToast();
   const [panels, setPanels] = useState<Panel[]>([]);
@@ -57,6 +59,18 @@ const AdminPanels = () => {
   const [editorType, setEditorType] = useState<PanelType | null>(null);
   const [telegramChats, setTelegramChats] = useState<TelegramChat[]>([]);
   const [newTelegramChatId, setNewTelegramChatId] = useState<string>(NONE_VALUE);
+  const [typeFavicons, setTypeFavicons] = useState<Record<string, string | null>>({});
+
+  const loadTypeFavicons = async () => {
+    const { data } = await supabase
+      .from("panel_type_settings")
+      .select("type, favicon_url");
+    const map: Record<string, string | null> = {};
+    (data || []).forEach((row: { type: string; favicon_url: string | null }) => {
+      map[row.type] = row.favicon_url;
+    });
+    setTypeFavicons(map);
+  };
 
   const load = async () => {
     setLoading(true);
@@ -92,6 +106,7 @@ const AdminPanels = () => {
   useEffect(() => {
     load();
     loadTelegramChats();
+    loadTypeFavicons();
   }, []);
 
   const handleAdd = async () => {
@@ -167,22 +182,7 @@ const AdminPanels = () => {
   };
 
   const TypeRow = ({ t }: { t: PanelType }) => (
-    <div className="flex items-center justify-between gap-2 px-2 py-1.5">
-      <span>{TYPE_LABEL[t]}</span>
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          setEditorType(t);
-        }}
-        className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-        aria-label={`${TYPE_LABEL[t]} bearbeiten`}
-        title="Typ bearbeiten (Favicon)"
-      >
-        <Pencil className="h-3.5 w-3.5" />
-      </button>
-    </div>
+    <span className="px-2 py-1.5 block">{TYPE_LABEL[t]}</span>
   );
 
   return (
@@ -268,6 +268,46 @@ const AdminPanels = () => {
           </div>
         </div>
 
+        {/* Panel Types / Favicons */}
+        <div className="mb-6 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 className="mb-4 text-sm font-semibold text-slate-700">
+            Panel-Typen / Favicons
+          </h2>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            {TYPE_OPTIONS.map((t) => {
+              const fav = typeFavicons[t];
+              return (
+                <div
+                  key={t}
+                  className="flex flex-col items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 p-4 text-center"
+                >
+                  <img
+                    src={fav ?? DEFAULT_FAVICON}
+                    alt=""
+                    className="h-10 w-10 rounded border border-slate-200 bg-white object-contain"
+                  />
+                  <div className="text-sm font-medium text-slate-800">
+                    {TYPE_LABEL[t]}
+                  </div>
+                  <div className="text-[11px] text-slate-500">
+                    {fav ? "Eigenes Favicon" : "Standard-Favicon"}
+                  </div>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setEditorType(t)}
+                    className="mt-1"
+                  >
+                    <Pencil className="mr-1 h-3.5 w-3.5" />
+                    Bearbeiten
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
         {/* List */}
         <div className="rounded-lg border border-slate-200 bg-white shadow-sm">
           <Table>
@@ -342,6 +382,7 @@ const AdminPanels = () => {
           }}
           type={editorType}
           typeLabel={TYPE_LABEL[editorType]}
+          onSaved={loadTypeFavicons}
         />
       )}
     </AdminLayout>
