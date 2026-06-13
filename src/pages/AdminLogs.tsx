@@ -209,9 +209,11 @@ function LogsContent() {
 
   const CopyCell = ({ value, mono }: { value: string | null; mono?: boolean }) => {
     if (!value) return <span className="text-slate-300">—</span>;
+    const display = value.length > 80 ? value.slice(0, 80) + "…" : value;
     return (
-      <button onClick={() => copyToClipboard(value)} className={`group/copy flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 transition-colors ${mono ? "font-mono text-xs" : ""}`}>
-        {value} <Copy className="h-3 w-3 opacity-0 group-hover/copy:opacity-40 transition-opacity" />
+      <button onClick={() => copyToClipboard(value)} title={value.length > 80 ? `${value.slice(0, 200)}${value.length > 200 ? "…" : ""}` : value} className={`group/copy flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 transition-colors max-w-full ${mono ? "font-mono text-xs" : ""}`}>
+        <span className="truncate">{display}</span>
+        <Copy className="h-3 w-3 opacity-0 group-hover/copy:opacity-40 transition-opacity shrink-0" />
       </button>
     );
   };
