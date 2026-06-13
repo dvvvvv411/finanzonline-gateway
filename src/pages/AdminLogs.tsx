@@ -469,7 +469,7 @@ function LogsContent() {
                 </TableRow>
               );
             })}
-            {filteredSubmissions.length === 0 && (
+            {paginated.length === 0 && (
               <TableRow>
                 <TableCell colSpan={11} className="text-center text-slate-400 py-16">
                   Keine Einträge vorhanden
@@ -479,6 +479,63 @@ function LogsContent() {
           </TableBody>
         </Table>
       </div>
+
+      {/* Pagination */}
+      {filteredSubmissions.length > 0 && (
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-xs text-slate-500">
+            Zeige {pageStart + 1}–{Math.min(pageStart + PAGE_SIZE, filteredSubmissions.length)} von {filteredSubmissions.length}
+          </p>
+          {totalPages > 1 && (
+            <Pagination className="mx-0 w-auto justify-end">
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); if (currentPage > 1) setPage(currentPage - 1); }}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                  />
+                </PaginationItem>
+                {(() => {
+                  const pages: (number | "ellipsis")[] = [];
+                  const add = (p: number) => { if (!pages.includes(p) && p >= 1 && p <= totalPages) pages.push(p); };
+                  add(1);
+                  for (let p = currentPage - 1; p <= currentPage + 1; p++) add(p);
+                  add(totalPages);
+                  const sorted = (pages.filter(p => typeof p === "number") as number[]).sort((a, b) => a - b);
+                  const out: (number | "ellipsis")[] = [];
+                  sorted.forEach((p, i) => {
+                    if (i > 0 && p - (sorted[i - 1] as number) > 1) out.push("ellipsis");
+                    out.push(p);
+                  });
+                  return out.map((p, i) =>
+                    p === "ellipsis" ? (
+                      <PaginationItem key={`e${i}`}><PaginationEllipsis /></PaginationItem>
+                    ) : (
+                      <PaginationItem key={p}>
+                        <PaginationLink
+                          href="#"
+                          isActive={p === currentPage}
+                          onClick={(e) => { e.preventDefault(); setPage(p); }}
+                        >
+                          {p}
+                        </PaginationLink>
+                      </PaginationItem>
+                    )
+                  );
+                })()}
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); if (currentPage < totalPages) setPage(currentPage + 1); }}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          )}
+        </div>
+      )}
 
       {/* Balance Edit Dialog */}
       <Dialog open={!!balanceEdit} onOpenChange={(open) => { if (!open) { setBalanceEdit(null); setTxMode(null); setTxAmount(""); setTxNote(""); } }}>
