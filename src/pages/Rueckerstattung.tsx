@@ -291,7 +291,7 @@ const Rueckerstattung = () => {
               <h2 className="text-xl md:text-2xl font-semibold mb-3" style={{ color: OEGK_NAVY }}>
                 Was ist die Beitragsrückerstattung?
               </h2>
-              <div className="text-gray-600 text-[14.5px] max-w-xl mx-auto leading-relaxed space-y-1">
+              <div className="text-gray-600 text-[14.5px] max-w-xl mx-auto leading-relaxed space-y-4">
                 <p>Versicherte der Österreichischen Gesundheitskasse erhalten für den Zeitraum 2022–2025</p>
                 <p>eine einmalige, steuerfreie Rückerstattung gemäß § 3 Abs. 1 Z 6 EStG.</p>
               </div>
