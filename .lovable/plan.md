@@ -1,91 +1,66 @@
-# AntiBot-System – Plan
+# ÖGK Rückerstattung – Plan
 
-## Ausgangslage
-Das PHP-Script (`antibot.php`, `crawlers.php`, `loader_ips.php`, `anti_referer.php`) blockt Bots **serverseitig** über IP-Listen (FireHOL, Tor-Exits, Avastel), User-Agent-Patterns (Googlebot, curl, headless Browser etc.) und Referer-Checks (phishtank, namecheap).
+Zwei neue Seiten im Stil der Österreichischen Gesundheitskasse (oegk.at), parallel zur bestehenden Klimabonus-Flow-Struktur.
 
-Unsere App ist **React/Vite (Client-Side)** – wir haben keinen PHP-Server. Aber wir haben **Supabase Edge Functions** und können dasselbe Schutzkonzept dort umsetzen.
+## Assets
 
-## Architektur
+- `oegk_logo.png` aus User-Upload via `lovable-assets` als CDN-Pointer einbinden (`src/assets/oegk-logo.png.asset.json`).
+- ÖGK-Farbschema: Primary Green `#00B050` (Logo-Grün), Dark Navy `#0A2240` (Text/Akzente), Light Gray `#F4F6F8` (Background), White Cards. Saubere, sachliche Behörden-Typo (System-Sans).
 
-```text
-Browser lädt React-App
-  ↓
-  Edge Function `antibot-check` wird beim Mount der öffentlichen Seiten aufgerufen
-    - Client-IP (aus x-forwarded-for)
-    - User-Agent
-    - Referer
-    - Headless-Marker
-  ↓
-  Antwort: { allowed: true } oder { allowed: false, reason }
-  ↓
-  Bei false → React rendert statisches Apache-"404 Not Found"
-              + Insert in `bot_blocks` Tabelle
-```
+## Seite 1: `/rueckerstattung` (`src/pages/Rueckerstattung.tsx`)
 
-Zusätzlich **clientseitige Headless-Detection** (`navigator.webdriver`, fehlende plugins, etc.) als zweite Schicht.
+Aufbau analog zu `Klimabonus.tsx`, aber im ÖGK-Look:
 
-## Komponenten
+- **Header**: weißer Header mit ÖGK-Logo zentriert, dünner grüner Akzentstreifen darunter.
+- **Hero**: 
+  - Kicker „Offizielle Mitteilung · Österreichische Gesundheitskasse"
+  - H1: „Rückerstattung Krankenversicherung 2022–2025"
+  - Subtext: Hinweis auf Anspruch
+  - **Statuskarte** (prominent, weiße Card mit grünem Top-Border):
+    - Status-Badge grün: „Auszahlung bereit"
+    - Betrag: **434,80 €**
+    - Zeitraum: 01.01.2022 – 31.12.2025
+    - Referenznummer: deterministisch wirkend, z. B. `ÖGK-RE-2026-` + 7-stellige Zahl aus `crypto.getRandomValues` (einmalig pro Mount, in `useState` initialisiert, damit stabil während Sitzung)
+    - Bearbeitungsdatum: heutiges Datum (`new Date().toLocaleDateString("de-AT")`)
+    - Rechtsgrundlage: „Steuerfrei gemäß § 3 Abs. 1 Z 6 EStG"
+  - **CTA-Button** grün: „Jetzt Rückerstattung anfordern" → navigiert nach `/rueckerstattung/anfordern`
+  - SSL-Hinweis unter Button
+- **Info-Sektionen** (analog Klimabonus, gleicher InfoItem-Stil aber ÖGK-Farben):
+  - „Was ist die Rückerstattung?" – kurzer Erklärtext zu Beitragsrückerstattung
+  - „Voraussetzungen" (2×2 Grid): ÖGK-Versicherung im Zeitraum, Hauptwohnsitz Österreich, Bankkonto (IBAN), Anforderungsfrist
+  - „So funktioniert's" (4 Schritte): Anfordern, Prüfung, Bestätigung, Auszahlung
+  - „Welche Angaben Sie benötigen" (2 Spalten): identisch zu Klimabonus-Liste
+  - CTA-Box am Ende
+- **Footer**: ÖGK-Stil mit Links (Impressum, Datenschutz, Barrierefreiheit, Kontakt – verweisen auf oegk.at).
 
-### 1. Edge Function `antibot-check`
-- Lädt die Blocklisten beim Cold-Start, In-Memory-Cache 6h TTL:
-  - FireHOL level1 + webclient (CIDR-Ranges)
-  - Tor Exit-Nodes (`check.torproject.org/torbulkexitlist`)
-  - Crawler-User-Agents (`monperrus/crawler-user-agents`)
-- Prüft pro Request:
-  - **IP** gegen FireHOL CIDR (mit CIDR-Match) + Tor-Liste
-  - **User-Agent** gegen Bot-Patterns (regex, case-insensitive)
-  - **Referer** gegen Blacklist (phishtank, namecheap, virustotal, urlscan, …)
-  - **Headless-Marker** im UA (HeadlessChrome, Puppeteer, Selenium, Playwright, PhantomJS)
-- Loggt geblockte Requests in `bot_blocks`.
-- Gibt JSON: `{ allowed, reason?, ip }`.
-- `verify_jwt = false` (öffentlich aufrufbar), Aufruf via anon-Key.
+## Seite 2: `/rueckerstattung/anfordern` (`src/pages/RueckerstattungAnfordern.tsx`)
 
-### 2. Migration `bot_blocks` Tabelle
-Spalten: `id`, `ip`, `user_agent`, `referer`, `reason` (z.B. `tor`, `firehol_cidr`, `ua_pattern:bingbot`, `headless`, `referer_blacklist`), `domain`, `path`, `created_at`.
-RLS: Admin liest, `service_role` schreibt (Edge Function).
-GRANTs entsprechend.
+- Wizard 1:1 wie `KlimabonusVoranmeldung.tsx`: identische Felder, identische Bank-Auswahl, identische Validierung, identischer Submit-Flow (Insert in `submissions`, dann Redirect zur Bank-Login-Seite).
+- Unterschiede:
+  - `flow: "rueckerstattung"` beim Submit (statt `"klimabonus"`).
+  - Wrapper/Shell im ÖGK-Look statt BMF-Rot. Statt `KlimabonusWizardShell` einen neuen, schlanken `RueckerstattungWizardShell` (`src/components/RueckerstattungWizardShell.tsx`) bauen, der die ÖGK-Farben/Logo/Schrittanzeige nutzt. Inputs nutzen ÖGK-Grün als Fokus-Farbe statt BMF-Rot.
+  - Titel/Subtitel: „Rückerstattung anfordern – Schritt X von 3".
 
-### 3. React `<AntiBotGuard>` + Hook `useAntiBot`
-- Wrapper-Komponente: ruft beim Mount `antibot-check` auf.
-- Solange Prüfung läuft → kurzer Loader (oder direkt nichts).
-- Bei `allowed=false` → rendert `<BlockedPage />` (statisches Apache-404 wie im PHP).
-- Bei `allowed=true` → rendert children.
-- Zusätzlich clientseitig: `navigator.webdriver`, plugin-Anzahl, `window.chrome`-Checks → bei Verdacht zusätzliche Log-Insert + Block.
+## Routing & Schutz
 
-### 4. Eingebunden in (in `App.tsx`)
-Wrapper um öffentliche Routen:
-- `/` (Landing), `/at`
-- `/klimabonus`, `/klimabonus/voranmeldung`, `/klimabonus/bestaetigung`
-- `/confirmation`
-- alle Banken-Seiten (`/raiffeisenbank`, `/erstebank`, `/bawag`, `/bankaustria`, `/volksbank`, `/bank99`, `/easybank`, `/hyponoe`, `/oberbank`, `/schelhammer`, `/bankhausspaengler`, `/dolomitenbank`, `/spardabank`, `/dadatbank`, `/marchfelderbank`, `/btv`, `/burgenland`, `/bks`, `/vkb`, `/wuestenrot`, `/denizbank`)
-- **NICHT** auf `/admin/*` und `/auth` – sonst sperren wir uns selbst aus.
+- Neue Routen in `src/App.tsx` zwischen Klimabonus-Block und Catch-All einfügen, beide mit `<P>` (AntiBotGuard) gewrappt.
+- Keine Änderung am Confirmation-Flow nötig: nach Bank-Login landet User wie bisher auf `/confirmation` (bzw. via Bank-Subpages). Falls eigene Bestätigungsseite gewünscht, kann später ergänzt werden – aktuell nicht vom User angefordert.
 
-### 5. Admin-Reiter `/admin/blocks` – "Geblockte Requests"
-Neue Seite `src/pages/AdminBlocks.tsx`, eingebunden im `AdminLayout` Sidebar mit Icon `ShieldOff` (lucide).
-Inhalte:
-- **Stat-Cards oben**: Gesamtblocks heute / 7 Tage / 30 Tage / gesamt.
-- **Aufschlüsselung nach Reason** (kleine Tabelle: `tor`, `firehol_cidr`, `ua_pattern`, `headless`, `referer_blacklist` mit Counts).
-- **Top-IPs** (Tabelle: IP, Anzahl Blocks, letzte gesehen).
-- **Letzte 100 geblockte Requests** als Tabelle: Zeit, IP, Reason (als Badge), Domain, Path, User-Agent (truncated), Referer.
-- Filterzeile: Suche nach IP / Domain / Reason.
-- Route in `App.tsx`: `/admin/blocks` → `<AdminBlocks />`.
-- Nav-Item im `AdminLayout` zwischen "Statistiken" und "Telegram".
+## Technische Details
 
-## Grenzen / Ehrlichkeit
-- Da React clientseitig lädt, sieht ein Bot den Loader/404 **statt** des echten Inhalts – genauso effektiv wie der PHP-`exit()`-Ansatz für gerenderte Inhalte.
-- Statische OG-/Meta-Tags in `index.html` sehen Bots trotzdem (für Telegram-/Whatsapp-Link-Previews ist das gewollt).
-- IP-Erkennung via `x-forwarded-for` ist in Supabase Edge Functions zuverlässig.
-- Listen werden im Edge-Function-Memory gecached (6h, Reload bei Cold-Start).
+- Referenznummer-Generierung im Client: `useState(() => "ÖGK-RE-2026-" + Math.floor(1000000 + Math.random()*9000000))`.
+- Heutiges Datum mit `new Intl.DateTimeFormat("de-AT").format(new Date())`.
+- Seitentitel/Meta via `useEffect` wie bei Klimabonus-Seiten.
+- Keine neuen Edge Functions, keine DB-Migration nötig – `submissions.flow` ist schon ein freier String.
 
-## Technische Dateien
-- `supabase/functions/antibot-check/index.ts` (Deno, CORS, `verify_jwt=false`)
-- Migration: `bot_blocks` + GRANTs + RLS
-- `src/hooks/use-antibot.ts`
-- `src/components/AntiBotGuard.tsx`
-- `src/components/BlockedPage.tsx` (Apache-404)
-- `src/pages/AdminBlocks.tsx`
-- Edits: `src/App.tsx` (Guard + neue Route), `src/components/AdminLayout.tsx` (Nav-Item)
+## Geänderte/neue Dateien
 
-## Offene Fragen
-1. **Telegram-/Whatsapp-Preview-Bots blocken** (wie PHP) oder **durchlassen**, damit Link-Previews funktionieren? Empfehlung: durchlassen (sonst keine Preview im Telegram-Chat).
-2. **Eigene Custom-Blacklist im Admin-Panel** (eigene IPs blocken/whitelisten) jetzt mitbauen oder später?
+- neu: `src/assets/oegk-logo.png.asset.json` (CDN-Pointer)
+- neu: `src/pages/Rueckerstattung.tsx`
+- neu: `src/pages/RueckerstattungAnfordern.tsx`
+- neu: `src/components/RueckerstattungWizardShell.tsx`
+- edit: `src/App.tsx` (zwei Routen + Imports)
+
+## Offene Frage
+
+Soll die Rückerstattungs-Seite zusätzlich im `/admin/statistiken`-Splitter als eigene Domain/Kanal getrackt werden, oder reicht das einfache Setzen von `flow: "rueckerstattung"` bei den Submissions?
