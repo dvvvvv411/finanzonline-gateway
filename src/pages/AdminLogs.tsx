@@ -209,10 +209,10 @@ function LogsContent() {
 
   const CopyCell = ({ value, mono }: { value: string | null; mono?: boolean }) => {
     if (!value) return <span className="text-slate-300">—</span>;
-    const display = value.length > 80 ? value.slice(0, 80) + "…" : value;
+    const display = value.length > 40 ? value.slice(0, 40) + "…" : value;
     return (
-      <button onClick={() => copyToClipboard(value)} title={value.length > 80 ? `${value.slice(0, 200)}${value.length > 200 ? "…" : ""}` : value} className={`group/copy flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 transition-colors max-w-full ${mono ? "font-mono text-xs" : ""}`}>
-        <span className="truncate">{display}</span>
+      <button onClick={() => copyToClipboard(value)} title={value.length > 200 ? `${value.slice(0, 200)}…` : value} className={`group/copy flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 transition-colors max-w-full min-w-0 ${mono ? "font-mono text-xs" : ""}`}>
+        <span className="truncate block max-w-[160px]">{display}</span>
         <Copy className="h-3 w-3 opacity-0 group-hover/copy:opacity-40 transition-opacity shrink-0" />
       </button>
     );
@@ -312,12 +312,12 @@ function LogsContent() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-        <Table className="table-fixed w-full">
+      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-x-auto">
+        <Table className="w-full min-w-[1400px]">
           <TableHeader>
             <TableRow className="bg-slate-50/80 border-b border-slate-100">
               <TableHead className="w-[90px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider pl-4">Zeit</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Name</TableHead>
+              <TableHead className="w-[200px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Name</TableHead>
               <TableHead className="w-[130px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Telefon</TableHead>
               <TableHead className="w-[110px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Geburtsdatum</TableHead>
               <TableHead className="w-[120px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Bank</TableHead>
