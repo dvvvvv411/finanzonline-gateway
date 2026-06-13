@@ -313,24 +313,24 @@ function LogsContent() {
 
       {/* Table */}
       <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-        <Table>
+        <Table className="table-fixed w-full">
           <TableHeader>
             <TableRow className="bg-slate-50/80 border-b border-slate-100">
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pl-4">Zeit</TableHead>
+              <TableHead className="w-[90px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider pl-4">Zeit</TableHead>
               <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Name</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Telefon</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Geburtsdatum</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Bank</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Typ</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Login</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Passwort</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Domain</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Status</TableHead>
-              <TableHead className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pr-4">Aktionen</TableHead>
+              <TableHead className="w-[130px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Telefon</TableHead>
+              <TableHead className="w-[110px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Geburtsdatum</TableHead>
+              <TableHead className="w-[120px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Bank</TableHead>
+              <TableHead className="w-[90px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Typ</TableHead>
+              <TableHead className="w-[160px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Login</TableHead>
+              <TableHead className="w-[140px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Passwort</TableHead>
+              <TableHead className="w-[180px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Domain</TableHead>
+              <TableHead className="w-[130px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Status</TableHead>
+              <TableHead className="w-[140px] text-[11px] font-semibold text-slate-400 uppercase tracking-wider pr-4">Aktionen</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredSubmissions.map((sub) => {
+            {paginated.map((sub) => {
               const currentStatus = sub.status || "Neu";
               const sc = statusConfig[currentStatus] || statusConfig["Neu"];
               const nc = noteCounts[sub.id] || 0;
