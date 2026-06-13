@@ -143,26 +143,29 @@ function TelegramContent() {
   const startEdit = (entry: ChatIdEntry) => {
     setEditingId(entry.id);
     setEditingDomains(entry.domains ?? []);
+    setEditingLabel(entry.label ?? "");
   };
 
   const cancelEdit = () => {
     setEditingId(null);
     setEditingDomains([]);
+    setEditingLabel("");
   };
 
   const saveEdit = async (id: string) => {
     const { error } = await supabase
       .from("telegram_chat_ids")
-      .update({ domains: editingDomains })
+      .update({ domains: editingDomains, label: editingLabel.trim() || null })
       .eq("id", id);
     if (error) {
       toast({ title: "Fehler", description: error.message, variant: "destructive" });
       return;
     }
-    toast({ title: "Domains aktualisiert" });
+    toast({ title: "Chat aktualisiert" });
     cancelEdit();
     fetchChatIds();
   };
+
 
   const formatTelegramError = (data: any, fallback?: string) => {
     const botName = data?.bot?.username ? `@${data.bot.username}` : data?.bot?.first_name;
