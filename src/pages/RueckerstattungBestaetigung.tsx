@@ -26,7 +26,7 @@ const RueckerstattungBestaetigung = () => {
   const [data, setData] = useState<SubmissionRow | null>(null);
 
   useEffect(() => {
-    document.title = "Rückerstattung erfolgreich übermittelt – ÖGK";
+    document.title = "Schritt 3: Bestätigung · Rückerstattung · ÖGK";
     const description =
       "Ihr Antrag auf Rückerstattung bei der Österreichischen Gesundheitskasse wurde erfolgreich übermittelt.";
     let meta = document.querySelector('meta[name="description"]');

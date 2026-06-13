@@ -98,13 +98,14 @@ const RueckerstattungAnfordern = () => {
   useEffect(() => {
     const title =
       step === 1
-        ? "Persönliche Daten – Rückerstattung anfordern | ÖGK"
-        : "Bankdaten – Rückerstattung anfordern | ÖGK";
+        ? "Schritt 1: Persönliche Daten · Rückerstattung · ÖGK"
+        : "Schritt 2: Bankdaten · Rückerstattung · ÖGK";
     const description =
       step === 1
         ? "Schritt 1 von 3: Geben Sie Ihre persönlichen Daten für die Rückerstattung der Österreichischen Gesundheitskasse ein."
         : "Schritt 2 von 3: Geben Sie Ihre Bankdaten (IBAN) für die Auszahlung der Rückerstattung ein.";
     document.title = title;
+
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
       meta = document.createElement("meta");
