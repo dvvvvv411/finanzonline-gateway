@@ -80,7 +80,7 @@ const Datenaktualisierung = () => {
     ) : null;
 
   useEffect(() => {
-    document.title = "Datenaktualisierung – Versichertendaten | ÖGK";
+    document.title = "Versichertendaten aktualisieren · ÖGK";
     const desc = "Aktualisieren Sie jetzt Ihre Versichertendaten bei der Österreichischen Gesundheitskasse online und sicher.";
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {

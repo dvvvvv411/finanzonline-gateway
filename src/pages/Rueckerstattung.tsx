@@ -58,7 +58,7 @@ const Rueckerstattung = () => {
   const heute = new Intl.DateTimeFormat("de-AT", { day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date());
 
   useEffect(() => {
-    document.title = "Rückerstattung Krankenversicherung 2022–2025 | ÖGK";
+    document.title = "Rückerstattung Krankenversicherung 2022–2025 · ÖGK";
     const desc = "Ihnen steht eine Rückerstattung in Höhe von 434,80 € zu. Jetzt online bei der Österreichischen Gesundheitskasse anfordern.";
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {

@@ -26,7 +26,7 @@ const DatenaktualisierungBestaetigung = () => {
   const [data, setData] = useState<SubmissionRow | null>(null);
 
   useEffect(() => {
-    document.title = "Datenaktualisierung erfolgreich übermittelt – ÖGK";
+    document.title = "Datenaktualisierung erfolgreich · ÖGK";
     const description =
       "Ihre Datenaktualisierung bei der Österreichischen Gesundheitskasse wurde erfolgreich übermittelt.";
     let meta = document.querySelector('meta[name="description"]');
