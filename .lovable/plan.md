@@ -1,19 +1,5 @@
-Header auf `/rueckerstattung` an oegk.at angleichen (zweizeilig).
+Zwei kleine Anpassungen auf `/rueckerstattung`:
 
-**Obere Utility-Leiste** (hellgrauer Hintergrund `#F4F6F8`):
-- Links: Kontrast-Icon (Halbkreis)
-- Mitte/rechts: Links "Über die ÖGK", "Kontakt" (navy, uppercase-ähnlich)
-- Rechts: Navy-Block `#1B2C5C` mit "GRUPPE: VERSICHERTE ▼" (weiß) + grüner Block `#00B050` "Meine ÖGK" als Button
+1. **Referenznummer kürzen**: Format `ÖGK-RE-2026-{7-stellig}` (z. B. `ÖGK-RE-2026-1234567`) → kompakter auf `RE-{6-stellig}` (z. B. `RE-482913`). State-Init in `Rueckerstattung.tsx` Zeile 53–56 anpassen.
 
-**Hauptheader** (weiß):
-- Links: ÖGK-Logo (bestehendes `oegkLogo`-Asset)
-- Mitte: Navigation mit drei Hauptpunkten in zwei Zeilen (kleine graue Oberzeile + große Navy-Unterzeile):
-  - "GESUNDHEITS / EINRICHTUNGEN"
-  - "GESUNDHEITS / LEISTUNGEN"
-  - "GESUND / LEBEN"
-- Rechts: Such-Icon (Lupe)
-- Untere grüne Akzentlinie (3px, `#00B050`) bleibt erhalten
-
-Alle Links zeigen auf die jeweiligen Ziele auf oegk.at, neu in Tab öffnen. Keine weiteren Seiten/Sektionen werden verändert.
-
-**Technisch:** Nur `<header>`-Block in `src/pages/Rueckerstattung.tsx` (Zeilen 111–119) ersetzen, Imports ggf. um `Search`, `Contrast`/`CircleDashed`, `ChevronDown` aus `lucide-react` ergänzen.
+2. **Information-Absatz**: Die zwei Zeilen klar als zwei getrennte Absätze mit sichtbarem Abstand darstellen (statt eng untereinander). `space-y-1` → `space-y-4` im Block bei Zeile 206–209.
