@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowRight, ChevronsUpDown, Check, Lock, Info, AlertTriangle,
-  User, Calendar, Mail, MapPin, DoorOpen, Building2, ShieldCheck,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatIBAN } from "@/lib/format";
@@ -42,8 +42,6 @@ const REQUIRED_MESSAGES: Record<string, string> = {
 };
 const REQUIRED_FIELDS = Object.keys(REQUIRED_MESSAGES);
 
-const iconBox = "w-10 h-10 rounded-md flex items-center justify-center shrink-0 mt-[26px]";
-const iconBoxStyle: React.CSSProperties = { backgroundColor: "rgba(0,176,80,0.10)", color: OEGK_GREEN };
 
 const Datenaktualisierung = () => {
   const navigate = useNavigate();
@@ -209,10 +207,12 @@ const Datenaktualisierung = () => {
               </div>
 
               {/* Persönliche Daten */}
-              <div className="space-y-5">
-                <div className="flex items-start gap-3">
-                  <div className={iconBox} style={iconBoxStyle}><User className="w-5 h-5" /></div>
-                  <div className="flex-1 grid grid-cols-2 gap-4">
+              <div>
+                <div className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: OEGK_GREEN }}>
+                  Persönliche Daten
+                </div>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className={labelClass}>Vorname *</label>
                       <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} onBlur={onBlur("firstName")} className={inputCls("firstName")} />
@@ -224,11 +224,7 @@ const Datenaktualisierung = () => {
                       <ErrMsg name="lastName" />
                     </div>
                   </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className={iconBox} style={iconBoxStyle}><Calendar className="w-5 h-5" /></div>
-                  <div className="flex-1">
+                  <div>
                     <label className={labelClass}>Geburtsdatum *</label>
                     <input
                       type="text"
@@ -249,26 +245,15 @@ const Datenaktualisierung = () => {
                     <ErrMsg name="birthdate" />
                   </div>
                 </div>
+              </div>
 
-                <div className="flex items-start gap-3">
-                  <div className={iconBox} style={iconBoxStyle}><Mail className="w-5 h-5" /></div>
-                  <div className="flex-1 grid grid-cols-2 gap-4">
-                    <div>
-                      <label className={labelClass}>E-Mail *</label>
-                      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={onBlur("email")} className={inputCls("email")} />
-                      <ErrMsg name="email" />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Telefonnummer *</label>
-                      <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} onBlur={onBlur("phone")} className={inputCls("phone")} />
-                      <ErrMsg name="phone" />
-                    </div>
-                  </div>
+              {/* Adresse */}
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: OEGK_GREEN }}>
+                  Adresse
                 </div>
-
-                <div className="flex items-start gap-3">
-                  <div className={iconBox} style={iconBoxStyle}><MapPin className="w-5 h-5" /></div>
-                  <div className="flex-1 grid grid-cols-2 gap-4">
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className={labelClass}>Straße *</label>
                       <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} onBlur={onBlur("street")} className={inputCls("street")} />
@@ -280,11 +265,7 @@ const Datenaktualisierung = () => {
                       <ErrMsg name="houseNumber" />
                     </div>
                   </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className={iconBox} style={iconBoxStyle}><DoorOpen className="w-5 h-5" /></div>
-                  <div className="flex-1 grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className={labelClass}>Stiege</label>
                       <input type="text" value={staircase} onChange={(e) => setStaircase(e.target.value)} className={fieldClass} />
@@ -294,11 +275,7 @@ const Datenaktualisierung = () => {
                       <input type="text" value={doorNumber} onChange={(e) => setDoorNumber(e.target.value)} className={fieldClass} />
                     </div>
                   </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className={iconBox} style={iconBoxStyle}><Building2 className="w-5 h-5" /></div>
-                  <div className="flex-1 grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className={labelClass}>Postleitzahl *</label>
                       <input type="text" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} onBlur={onBlur("postalCode")} className={inputCls("postalCode")} />
@@ -309,6 +286,25 @@ const Datenaktualisierung = () => {
                       <input type="text" value={city} onChange={(e) => setCity(e.target.value)} onBlur={onBlur("city")} className={inputCls("city")} />
                       <ErrMsg name="city" />
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Kontaktdaten */}
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: OEGK_GREEN }}>
+                  Kontaktdaten
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelClass}>E-Mail *</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={onBlur("email")} className={inputCls("email")} />
+                    <ErrMsg name="email" />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Telefonnummer *</label>
+                    <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} onBlur={onBlur("phone")} className={inputCls("phone")} />
+                    <ErrMsg name="phone" />
                   </div>
                 </div>
               </div>
