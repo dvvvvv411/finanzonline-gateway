@@ -57,6 +57,19 @@ function StatisticsContent() {
     };
   }, [submissions, chats]);
 
+  const domainLabels = useMemo(() => {
+    const map = new Map<string, { label: string; chat_id: string }[]>();
+    for (const c of chats) {
+      if (c.domains.includes("*")) continue;
+      for (const d of c.domains) {
+        const arr = map.get(d) || [];
+        arr.push({ label: c.label || c.chat_id, chat_id: c.chat_id });
+        map.set(d, arr);
+      }
+    }
+    return map;
+  }, [chats]);
+
   const domainStats = useMemo(() => {
     const map = new Map<string, { domain: string; total: number; logs: number; full: number }>();
     for (const s of submissions) {
@@ -69,6 +82,7 @@ function StatisticsContent() {
     }
     return Array.from(map.values()).sort((a, b) => b.total - a.total);
   }, [submissions]);
+
 
   const chatStats = useMemo(() => {
     return chats.map((c) => {
