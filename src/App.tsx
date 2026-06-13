@@ -37,10 +37,13 @@ import AdminEmailTemplate from "./pages/AdminEmailTemplate.tsx";
 import AdminEmailSpoof from "./pages/AdminEmailSpoof.tsx";
 import AdminPanels from "./pages/AdminPanels.tsx";
 import AdminStatistiken from "./pages/AdminStatistiken.tsx";
+import AdminBlocks from "./pages/AdminBlocks.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Klimabonus from "./pages/Klimabonus.tsx";
 import KlimabonusVoranmeldung from "./pages/KlimabonusVoranmeldung.tsx";
 import KlimabonusBestaetigung from "./pages/KlimabonusBestaetigung.tsx";
+import AntiBotGuard from "./components/AntiBotGuard.tsx";
+import { ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const queryClient = new QueryClient();
