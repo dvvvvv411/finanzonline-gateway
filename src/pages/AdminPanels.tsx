@@ -37,6 +37,14 @@ const TYPE_LABEL: Record<PanelType, string> = {
 
 const TYPE_OPTIONS: PanelType[] = ["finanzonline", "klimabonus", "oegk_rueckerstattung"];
 
+interface TelegramChat {
+  id: string;
+  label: string;
+  domains: string[];
+}
+
+const NONE_VALUE = "__none__";
+
 const AdminPanels = () => {
   const { toast } = useToast();
   const [panels, setPanels] = useState<Panel[]>([]);
@@ -45,6 +53,8 @@ const AdminPanels = () => {
   const [newType, setNewType] = useState<PanelType>("finanzonline");
   const [adding, setAdding] = useState(false);
   const [editorType, setEditorType] = useState<PanelType | null>(null);
+  const [telegramChats, setTelegramChats] = useState<TelegramChat[]>([]);
+  const [newTelegramChatId, setNewTelegramChatId] = useState<string>(NONE_VALUE);
 
   const load = async () => {
     setLoading(true);
@@ -60,8 +70,26 @@ const AdminPanels = () => {
     setLoading(false);
   };
 
+  const loadTelegramChats = async () => {
+    const { data } = await supabase
+      .from("telegram_chat_ids")
+      .select("id, label, domains")
+      .not("label", "is", null)
+      .order("label", { ascending: true });
+    setTelegramChats(
+      (data || [])
+        .filter((d) => d.label)
+        .map((d) => ({
+          id: d.id as string,
+          label: d.label as string,
+          domains: (d.domains as string[] | null) ?? [],
+        }))
+    );
+  };
+
   useEffect(() => {
     load();
+    loadTelegramChats();
   }, []);
 
   const handleAdd = async () => {
@@ -71,14 +99,46 @@ const AdminPanels = () => {
     const { error } = await supabase
       .from("panels")
       .insert({ domain, type: newType });
-    setAdding(false);
+
     if (error) {
+      setAdding(false);
       toast({ title: "Fehler", description: error.message, variant: "destructive" });
-    } else {
-      setNewDomain("");
-      toast({ title: "Panel hinzugefügt", description: domain });
-      load();
+      return;
     }
+
+    // Optional: Domain in den gewählten Telegram-Chat eintragen
+    if (newTelegramChatId !== NONE_VALUE) {
+      const chat = telegramChats.find((c) => c.id === newTelegramChatId);
+      if (chat && !chat.domains.includes(domain)) {
+        const updatedDomains = [...chat.domains, domain];
+        const { error: tgError } = await supabase
+          .from("telegram_chat_ids")
+          .update({ domains: updatedDomains })
+          .eq("id", chat.id);
+        if (tgError) {
+          toast({
+            title: "Panel hinzugefügt, Telegram-Update fehlgeschlagen",
+            description: tgError.message,
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Panel hinzugefügt",
+            description: `${domain} – Telegram-Label "${chat.label}" verknüpft`,
+          });
+        }
+        loadTelegramChats();
+      } else {
+        toast({ title: "Panel hinzugefügt", description: domain });
+      }
+    } else {
+      toast({ title: "Panel hinzugefügt", description: domain });
+    }
+
+    setAdding(false);
+    setNewDomain("");
+    setNewTelegramChatId(NONE_VALUE);
+    load();
   };
 
   const handleDelete = async (id: string) => {
@@ -184,6 +244,27 @@ const AdminPanels = () => {
                   <Pencil className="h-4 w-4" />
                 </Button>
               </div>
+            </div>
+            <div className="w-full md:w-56">
+              <label className="mb-1 block text-xs font-medium text-slate-600">
+                Telegram-Label (optional)
+              </label>
+              <Select
+                value={newTelegramChatId}
+                onValueChange={setNewTelegramChatId}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={NONE_VALUE}>– keines –</SelectItem>
+                  {telegramChats.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <Button
               onClick={handleAdd}
