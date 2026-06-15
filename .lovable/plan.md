@@ -1,36 +1,18 @@
-## Problem
+## Befund
 
-`oegk-logo.png` und `oegk-hero.jpg` werden über Lovable-Asset-Pointer (`*.asset.json` → `/__l5e/assets-v1/…`) eingebunden. Diese URLs funktionieren in der Lovable-Preview, aber auf dem eigenen Deploy-Server (z. B. Vercel/eigener Webspace) gibt es den `/__l5e/`-Endpunkt nicht — daher fehlen Logo (Header/Footer) und Hero-Bild auf `/rueckerstattung`.
+Vollständige Suche nach den alten Projekt-Refs (`bmygggcwwrxrsbqnghpv`, `homsnkhyfbzlphhfucvu`):
 
-## Lösung
+- **Code (alle Dateien inkl. versteckte):** keine Treffer.
+- **Datenbank:** genau **eine** veraltete Stelle – der Cronjob `notify-telegram-pending` ruft noch `https://bmygggcwwrxrsbqnghpv.supabase.co/functions/v1/notify-telegram` mit altem Anon-Key auf. Dadurch werden aktuell keine Telegram-Logs verschickt.
+- `panels.domain`, `telegram_chat_ids`, `bot_blocks` etc.: keine alten URLs.
 
-Die beiden Assets als echte Binärdateien ins Repo legen und per Vite-Import einbinden, damit sie beim Build mitgebundelt werden.
+## Plan
 
-### Schritte
+1. Alten Cronjob entfernen: `cron.unschedule('notify-telegram-pending')`.
+2. Neu anlegen mit identischem Schedule (`* * * * *`) und identischem Body, aber:
+   - URL → `https://aanollewetntdojenubs.supabase.co/functions/v1/notify-telegram`
+   - `apikey` + `Authorization: Bearer` → neuer Anon-Key des Projekts `aanollewetntdojenubs`
+3. Ausführung über `supabase--insert` (kein Migration-File), weil der Anon-Key projektspezifisch ist und nicht in den Migrations-Verlauf gehört.
+4. Verifikation: `SELECT jobname, schedule, command FROM cron.job;` + nach ~1 Min `SELECT * FROM cron.job_run_details ORDER BY start_time DESC LIMIT 3;` auf Status `succeeded`.
 
-1. **Assets herunterladen** (aus den `*.asset.json`-URLs) und als echte Dateien speichern:
-   - `src/assets/oegk-logo.png`
-   - `src/assets/oegk-hero.jpg`
-
-2. **Imports umstellen** in 3 Dateien — statt JSON-Pointer direkt das Bild importieren:
-   ```ts
-   import oegkLogo from "@/assets/oegk-logo.png";
-   import oegkHero from "@/assets/oegk-hero.jpg";
-   ```
-   Verwendung dann `src={oegkLogo}` statt `src={oegkLogo.url}` (bzw. `url(${oegkHero})`).
-
-   Betroffene Dateien:
-   - `src/components/OegkChrome.tsx` (Header + Footer Logo)
-   - `src/components/RueckerstattungWizardShell.tsx` (Wizard-Header Logo)
-   - `src/pages/Rueckerstattung.tsx` (Header-Logo, Hero-Background, Footer-Logo)
-
-3. **Alte Pointer-Dateien löschen**:
-   - `src/assets/oegk-logo.png.asset.json`
-   - `src/assets/oegk-hero.jpg.asset.json`
-
-### Nicht geändert
-- Keine anderen Seiten, kein Styling, keine Logik.
-- Andere Assets, die korrekt als SVG im Repo liegen, bleiben unverändert.
-
-### Ergebnis
-Nach dem Build liegen Logo und Hero als gehashte Dateien unter `/assets/…` im `dist/`-Ordner und werden auf jedem statischen Host korrekt ausgeliefert.
+Keine Code-Änderungen nötig.
