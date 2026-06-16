@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import JSZip from "jszip";
 import AdminLayout from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
@@ -197,6 +197,7 @@ const EmailSorter = () => {
   const [rawText, setRawText] = useState<string>("");
   const [removeDuplicates, setRemoveDuplicates] = useState(true);
   const [lowercase, setLowercase] = useState(true);
+  const [selectedDomains, setSelectedDomains] = useState<Set<string>>(new Set());
 
   const groups = useMemo<EmailGroup[]>(() => {
     if (!rawText) return [];
@@ -218,7 +219,35 @@ const EmailSorter = () => {
     return result;
   }, [rawText, removeDuplicates, lowercase]);
 
+  // Beim Wechsel der Gruppen alle Provider standardmäßig auswählen
+  useEffect(() => {
+    setSelectedDomains(new Set(groups.map((g) => g.domain)));
+  }, [groups]);
+
   const totalEmails = useMemo(() => groups.reduce((s, g) => s + g.emails.length, 0), [groups]);
+  const selectedGroups = useMemo(
+    () => groups.filter((g) => selectedDomains.has(g.domain)),
+    [groups, selectedDomains],
+  );
+  const selectedEmails = useMemo(
+    () => selectedGroups.reduce((s, g) => s + g.emails.length, 0),
+    [selectedGroups],
+  );
+  const allSelected = groups.length > 0 && selectedDomains.size === groups.length;
+
+  const toggleDomain = (domain: string, checked: boolean) => {
+    setSelectedDomains((prev) => {
+      const next = new Set(prev);
+      if (checked) next.add(domain);
+      else next.delete(domain);
+      return next;
+    });
+  };
+
+  const toggleAll = () => {
+    if (allSelected) setSelectedDomains(new Set());
+    else setSelectedDomains(new Set(groups.map((g) => g.domain)));
+  };
 
   const handleFile = async (file: File | undefined) => {
     if (!file) return;
@@ -228,21 +257,22 @@ const EmailSorter = () => {
   };
 
   const handleZip = async () => {
-    if (groups.length === 0) {
-      toast({ title: "Keine Emails", description: "Bitte eine Datei mit Emails hochladen.", variant: "destructive" });
+    if (selectedGroups.length === 0) {
+      toast({ title: "Keine Provider ausgewählt", description: "Bitte mindestens einen Provider auswählen.", variant: "destructive" });
       return;
     }
     const zip = new JSZip();
-    groups.forEach((g) => zip.file(`${g.domain}.txt`, g.emails.join("\n")));
+    selectedGroups.forEach((g) => zip.file(`${g.domain}.txt`, g.emails.join("\n")));
     const blob = await zip.generateAsync({ type: "blob" });
     const ts = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
     downloadBlob(blob, `email-sortiert-${ts}.zip`);
-    toast({ title: "ZIP erstellt", description: `${groups.length} Provider, ${totalEmails} Emails.` });
+    toast({ title: "ZIP erstellt", description: `${selectedGroups.length} Provider, ${selectedEmails} Emails.` });
   };
 
   const handleReset = () => {
     setFileName("");
     setRawText("");
+    setSelectedDomains(new Set());
   };
 
   return (
@@ -277,17 +307,45 @@ const EmailSorter = () => {
             </div>
             <p className="text-sm text-slate-500">
               {totalEmails.toLocaleString("de-AT")} Email(s) in {groups.length} Provider(n) erkannt
+              {groups.length > 0 && (
+                <> · {selectedEmails.toLocaleString("de-AT")} ausgewählt</>
+              )}
             </p>
 
             {groups.length > 0 && (
               <div className="rounded-md border border-slate-200">
+                <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-3 py-2">
+                  <span className="text-xs font-medium text-slate-600">
+                    Provider auswählen
+                  </span>
+                  <button
+                    type="button"
+                    onClick={toggleAll}
+                    className="text-xs font-medium text-slate-700 underline-offset-2 hover:underline"
+                  >
+                    {allSelected ? "Alle abwählen" : "Alle auswählen"}
+                  </button>
+                </div>
                 <ul className="max-h-[400px] divide-y divide-slate-100 overflow-y-auto text-sm">
-                  {groups.map((g) => (
-                    <li key={g.domain} className="flex justify-between px-3 py-2">
-                      <span className="font-mono text-slate-700">{g.domain}.txt</span>
-                      <span className="text-slate-500">{g.emails.length.toLocaleString("de-AT")}</span>
-                    </li>
-                  ))}
+                  {groups.map((g) => {
+                    const checked = selectedDomains.has(g.domain);
+                    return (
+                      <li key={g.domain} className="flex items-center justify-between px-3 py-2">
+                        <Label
+                          htmlFor={`dom-${g.domain}`}
+                          className="flex flex-1 cursor-pointer items-center gap-3"
+                        >
+                          <Checkbox
+                            id={`dom-${g.domain}`}
+                            checked={checked}
+                            onCheckedChange={(v) => toggleDomain(g.domain, !!v)}
+                          />
+                          <span className="font-mono text-slate-700">{g.domain}.txt</span>
+                        </Label>
+                        <span className="text-slate-500">{g.emails.length.toLocaleString("de-AT")}</span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             )}
