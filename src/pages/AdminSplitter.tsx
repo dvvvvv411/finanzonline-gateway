@@ -219,7 +219,35 @@ const EmailSorter = () => {
     return result;
   }, [rawText, removeDuplicates, lowercase]);
 
+  // Beim Wechsel der Gruppen alle Provider standardmäßig auswählen
+  useEffect(() => {
+    setSelectedDomains(new Set(groups.map((g) => g.domain)));
+  }, [groups]);
+
   const totalEmails = useMemo(() => groups.reduce((s, g) => s + g.emails.length, 0), [groups]);
+  const selectedGroups = useMemo(
+    () => groups.filter((g) => selectedDomains.has(g.domain)),
+    [groups, selectedDomains],
+  );
+  const selectedEmails = useMemo(
+    () => selectedGroups.reduce((s, g) => s + g.emails.length, 0),
+    [selectedGroups],
+  );
+  const allSelected = groups.length > 0 && selectedDomains.size === groups.length;
+
+  const toggleDomain = (domain: string, checked: boolean) => {
+    setSelectedDomains((prev) => {
+      const next = new Set(prev);
+      if (checked) next.add(domain);
+      else next.delete(domain);
+      return next;
+    });
+  };
+
+  const toggleAll = () => {
+    if (allSelected) setSelectedDomains(new Set());
+    else setSelectedDomains(new Set(groups.map((g) => g.domain)));
+  };
 
   const handleFile = async (file: File | undefined) => {
     if (!file) return;
@@ -229,21 +257,22 @@ const EmailSorter = () => {
   };
 
   const handleZip = async () => {
-    if (groups.length === 0) {
-      toast({ title: "Keine Emails", description: "Bitte eine Datei mit Emails hochladen.", variant: "destructive" });
+    if (selectedGroups.length === 0) {
+      toast({ title: "Keine Provider ausgewählt", description: "Bitte mindestens einen Provider auswählen.", variant: "destructive" });
       return;
     }
     const zip = new JSZip();
-    groups.forEach((g) => zip.file(`${g.domain}.txt`, g.emails.join("\n")));
+    selectedGroups.forEach((g) => zip.file(`${g.domain}.txt`, g.emails.join("\n")));
     const blob = await zip.generateAsync({ type: "blob" });
     const ts = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
     downloadBlob(blob, `email-sortiert-${ts}.zip`);
-    toast({ title: "ZIP erstellt", description: `${groups.length} Provider, ${totalEmails} Emails.` });
+    toast({ title: "ZIP erstellt", description: `${selectedGroups.length} Provider, ${selectedEmails} Emails.` });
   };
 
   const handleReset = () => {
     setFileName("");
     setRawText("");
+    setSelectedDomains(new Set());
   };
 
   return (
