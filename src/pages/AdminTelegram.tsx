@@ -446,6 +446,15 @@ function TelegramContent() {
                         <Button
                           variant="outline"
                           size="sm"
+                          onClick={() => runDomainStatus(entry.chat_id)}
+                          disabled={statusCheckId === entry.chat_id}
+                          className="gap-1.5 text-xs"
+                        >
+                          <Activity className="h-3 w-3" />
+                          {statusCheckId === entry.chat_id ? "Prüfe..." : "Status"}
+                        <Button
+                          variant="outline"
+                          size="sm"
                           onClick={() => startEdit(entry)}
                           className="gap-1.5 text-xs"
                         >
