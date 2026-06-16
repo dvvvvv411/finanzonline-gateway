@@ -147,28 +147,28 @@ const oegkTemplate = `<!DOCTYPE html>
                 Sehr geehrte Versicherte, sehr geehrter Versicherter,
               </p>
               <p style="margin:0 0 20px 0;font-size:15px;line-height:1.6;color:#333333;">
-                Ihre bei der Österreichischen Gesundheitskasse hinterlegten Daten müssen überprüft und aktualisiert werden, damit Leistungen weiterhin korrekt abgerechnet werden können.
+                Ihre bei der Österreichischen Gesundheitskasse hinterlegten Versichertendaten <strong>müssen bis spätestens Mittwoch, 17. Juni, überprüft und aktualisiert werden.</strong>
               </p>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 25px 0;">
                 <tr>
-                  <td style="background-color:#f1f7f1;border-left:4px solid #00B050;border-radius:0 6px 6px 0;padding:20px 24px;">
+                  <td style="background-color:#fdecec;border-left:4px solid #c0392b;border-radius:0 6px 6px 0;padding:20px 24px;">
                     <p style="margin:0 0 12px 0;font-size:14px;line-height:1.6;color:#333333;">
-                      <strong style="color:#1B2C5C;">Wichtig:</strong> Ohne aktuelle Adress-, Kontakt- und Kontodaten kann es zu Verzögerungen bei der Bearbeitung Ihrer Leistungen kommen. Die Aktualisierung dauert nur wenige Minuten.
+                      <strong style="color:#c0392b;">Achtung:</strong> <strong>Ab dem 18. Juni stehen Ihnen ohne abgeschlossene Datenverifizierung keine Leistungen der ÖGK mehr zur Verfügung.</strong>
                     </p>
                     <p style="margin:0;font-size:14px;line-height:1.6;color:#333333;">
-                      Sollte die Aktualisierung nicht zeitnah erfolgen, kann es zu Einschränkungen bei der Auszahlung von Kostenerstattungen sowie bei der Zusendung wichtiger Dokumente kommen.
+                      Bereits beantragte Leistungen – darunter <strong>Rezepte, Heilbehelfe und Kostenrückerstattungen</strong> – werden bis zum Abschluss der Datenverifizierung <strong>ausgesetzt</strong>.
                     </p>
                   </td>
                 </tr>
               </table>
               <p style="margin:0 0 30px 0;font-size:15px;line-height:1.6;color:#333333;">
-                Bitte überprüfen und aktualisieren Sie Ihre Versichertendaten umgehend über unser Online-Formular.
+                Vermeiden Sie eine Unterbrechung Ihrer Versorgung und schließen Sie die Aktualisierung jetzt ab.
               </p>
               <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 30px auto;">
                 <tr>
                   <td align="center" style="background-color:#00B050;border-radius:6px;">
-                    <a href="https://www.gesundheitskasse.at" target="_blank" style="display:inline-block;padding:14px 36px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.3px;">
-                      Jetzt Versichertendaten aktualisieren
+                    <a href="https://www.gesundheitskasse.at" target="_blank" style="display:inline-block;padding:14px 28px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.3px;">
+                      Jetzt Daten aktualisieren
                     </a>
                   </td>
                 </tr>
@@ -183,16 +183,10 @@ const oegkTemplate = `<!DOCTYPE html>
               <p style="margin:0 0 6px 0;font-size:12px;color:#999999;">
                 Österreichische Gesundheitskasse
               </p>
-              <p style="margin:0 0 12px 0;font-size:12px;color:#999999;">
+              <p style="margin:0;font-size:12px;color:#999999;">
                 Wienerbergstraße 15-19, 1100 Wien | Service-Hotline: +43 50 766-0
               </p>
-              <p style="margin:0;font-size:11px;color:#bbbbbb;">
-                <a href="https://www.gesundheitskasse.at" style="color:#999999;text-decoration:underline;">Impressum</a>
-                &nbsp;&middot;&nbsp;
-                <a href="https://www.gesundheitskasse.at" style="color:#999999;text-decoration:underline;">Datenschutz</a>
-                &nbsp;&middot;&nbsp;
-                <a href="https://www.gesundheitskasse.at" style="color:#999999;text-decoration:underline;">gesundheitskasse.at</a>
-              </p>
+
             </td>
           </tr>
         </table>
