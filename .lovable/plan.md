@@ -1,53 +1,23 @@
-# Domain Status Monitor für Telegram Chats
+# Robusterer Domain-Status-Check
 
-Stündlicher Job, der alle in `telegram_chat_ids` hinterlegten Domains via DNS prüft und an die jeweilige Chat-ID eine Übersicht schickt.
+## Problem
+`oegk-aktualisierung.co` wurde als ❌ down markiert, obwohl die Domain aktiv ist. Grund: Google DoH lieferte `Status: 2` (SERVFAIL — Nameserver haben nicht geantwortet). Unser Code behandelt jedes `Status !== 0` als down und ruft den Cloudflare-Fallback nur bei einem fetch-Exception auf — bei SERVFAIL also nie.
 
-## API-Wahl (kostenlos, kein Key, keine Registrierung)
+## Fix in `supabase/functions/domain-status-check/index.ts`
 
-**Google DNS-over-HTTPS**: `https://dns.google/resolve?name=<domain>&type=A`
-- Kostenlos, kein API-Key, kein Rate-Limit für normale Nutzung
-- Antwortet mit JSON: `Status: 0` + `Answer[]` = Domain hat IPs (aktiv)
-- Kein `Answer` oder `Status != 0` = Domain down/ohne DNS-Eintrag
-- Zuverlässiger als check-host.net (das ist eher für HTTP-Pings gedacht und hat Rate-Limits)
+`checkDomain()` umbauen zu einem mehrstufigen Resolver-Check:
 
-Fallback: Cloudflare DoH (`https://cloudflare-dns.com/dns-query?name=...&type=A` mit `accept: application/dns-json`), falls Google mal nicht antwortet.
+1. **Google DoH** (`dns.google/resolve`) abfragen.
+   - `Status === 0` mit A-Record → ✅ up, fertig.
+   - `Status === 3` (NXDOMAIN) → ❌ down, fertig (Domain existiert wirklich nicht).
+   - Alles andere (SERVFAIL, Timeout, HTTP-Fehler) → weiter zu Schritt 2.
+2. **Cloudflare DoH** (`cloudflare-dns.com/dns-query`) abfragen — gleiche Auswertung wie oben.
+3. **Quad9 DoH** (`dns.quad9.net:5053/dns-query`) als dritter unabhängiger Resolver — gleiche Auswertung.
+4. Wenn alle drei kein A-Record und kein NXDOMAIN liefern: zusätzlich **NS-Record** prüfen (Typ 2) bei Google + Cloudflare. Wenn NS existiert, gilt die Domain als ✅ up (sie ist registriert und delegiert, nur A-Resolution gerade gestört) — sonst ❌ down.
 
-## Neue Edge Function: `domain-status-check`
+Jeder Request behält das 5s-Timeout. Resolver werden seriell durchlaufen, sobald einer ein eindeutiges Ergebnis liefert (up oder NXDOMAIN), wird abgebrochen.
 
-`supabase/functions/domain-status-check/index.ts`
-- Lädt alle Einträge aus `telegram_chat_ids`
-- Sammelt alle unique Domains, prüft jede parallel via Google DoH (mit 5s Timeout)
-- Status pro Domain: `up` (≥1 A-Record) oder `down` (kein Answer / Fehler / Timeout)
-- Pro Chat-ID wird **eine** Nachricht zusammengebaut:
-  ```
-  🔔 Domain Status (16.06.2026 14:00)
-  ✅ finanz-portal.net
-  ✅ bank-login.at
-  ❌ alte-domain.com
-  ```
-- Sendet via `TELEGRAM_BOT_TOKEN` an `https://api.telegram.org/bot<TOKEN>/sendMessage`
-- `verify_jwt = false` in `supabase/config.toml`, damit pg_cron sie aufrufen kann
-- Akzeptiert optional `{ chat_id }` im Body → dann nur dieser eine Chat (für manuellen Test-Button)
+## Optional zusätzlich
+- Im Telegram-Output bei „ungewissen" Domains (kein A, aber NS vorhanden) ein ⚠️ statt ❌ anzeigen, damit man sieht: registriert aber DNS-instabil.
 
-## Cron Job (pg_cron + pg_net)
-
-Per `supabase--insert`:
-- `pg_cron` + `pg_net` Extensions aktivieren (falls noch nicht)
-- `cron.schedule('domain-status-hourly', '0 * * * *', ...)` → ruft die Edge Function jede volle Stunde mit Anon-Key auf
-
-## UI-Erweiterung in `src/pages/AdminTelegram.tsx`
-
-Eine neue Card "Domain Status Monitor" oberhalb der Chat-ID-Liste:
-- Kurze Erklärung (stündlich, DNS-basiert)
-- Button **"Jetzt prüfen & senden"** → ruft `domain-status-check` ohne Body auf
-- Optional pro Chat-Eintrag ein kleiner Status-Button (testet nur dessen Domains)
-
-Keine Datenbank-Schema-Änderungen, kein Persistieren von History (kann später nachgereicht werden).
-
-## Technische Details
-
-- Parallele DNS-Lookups via `Promise.all` mit `AbortController` (5s Timeout pro Domain)
-- Domains werden normalisiert (lowercase, kein `www.`, kein Protokoll) — bereits durch `normalizeDomain` in der DB sichergestellt
-- Telegram-Nachricht mit `parse_mode: HTML`, Domains in `<code>` für Monospace
-- Bei Telegram-Fehler pro Chat: weitermachen mit den nächsten, Fehler loggen
-- Return: `{ ok, checked: N, sent: M, results: [...] }`
+Sag Bescheid, ob das ⚠️-Verhalten gewünscht ist oder ob NS-vorhanden einfach als ✅ zählen soll.

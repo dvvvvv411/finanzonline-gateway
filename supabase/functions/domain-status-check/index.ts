@@ -4,37 +4,55 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-async function checkDomain(domain: string): Promise<boolean> {
+type DohOutcome = "up" | "nxdomain" | "unknown";
+
+async function dohQuery(url: string): Promise<{ status: number; hasAnswer: (type: number) => boolean } | null> {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), 5000);
   try {
-    const r = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=A`, {
-      signal: ctrl.signal,
-      headers: { accept: "application/dns-json" },
-    });
-    if (!r.ok) return false;
-    const j = await r.json();
-    if (j.Status !== 0) return false;
-    return Array.isArray(j.Answer) && j.Answer.some((a: any) => a.type === 1);
+    const r = await fetch(url, { signal: ctrl.signal, headers: { accept: "application/dns-json" } });
+    if (!r.ok) return null;
+    const j: any = await r.json();
+    return {
+      status: typeof j.Status === "number" ? j.Status : -1,
+      hasAnswer: (type: number) => Array.isArray(j.Answer) && j.Answer.some((a: any) => a.type === type),
+    };
   } catch {
-    // Fallback: Cloudflare
-    try {
-      const ctrl2 = new AbortController();
-      const t2 = setTimeout(() => ctrl2.abort(), 5000);
-      const r = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=A`, {
-        signal: ctrl2.signal,
-        headers: { accept: "application/dns-json" },
-      });
-      clearTimeout(t2);
-      if (!r.ok) return false;
-      const j = await r.json();
-      return j.Status === 0 && Array.isArray(j.Answer) && j.Answer.some((a: any) => a.type === 1);
-    } catch {
-      return false;
-    }
+    return null;
   } finally {
     clearTimeout(t);
   }
+}
+
+async function resolveA(resolverBase: string, domain: string): Promise<DohOutcome> {
+  const res = await dohQuery(`${resolverBase}?name=${encodeURIComponent(domain)}&type=A`);
+  if (!res) return "unknown";
+  if (res.status === 0 && res.hasAnswer(1)) return "up";
+  if (res.status === 3) return "nxdomain";
+  return "unknown";
+}
+
+async function resolveNS(resolverBase: string, domain: string): Promise<boolean> {
+  const res = await dohQuery(`${resolverBase}?name=${encodeURIComponent(domain)}&type=NS`);
+  return !!res && res.status === 0 && res.hasAnswer(2);
+}
+
+async function checkDomain(domain: string): Promise<boolean> {
+  const resolvers = [
+    "https://dns.google/resolve",
+    "https://cloudflare-dns.com/dns-query",
+    "https://dns.quad9.net:5053/dns-query",
+  ];
+  for (const r of resolvers) {
+    const o = await resolveA(r, domain);
+    if (o === "up") return true;
+    if (o === "nxdomain") return false;
+  }
+  // A-record unsicher bei allen Resolvern — NS prüfen als Existenznachweis
+  for (const r of resolvers.slice(0, 2)) {
+    if (await resolveNS(r, domain)) return true;
+  }
+  return false;
 }
 
 async function sendTelegram(botToken: string, chatId: string, text: string) {
