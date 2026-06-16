@@ -452,6 +452,7 @@ function TelegramContent() {
                         >
                           <Activity className="h-3 w-3" />
                           {statusCheckId === entry.chat_id ? "Prüfe..." : "Status"}
+                        </Button>
                         <Button
                           variant="outline"
                           size="sm"
