@@ -1,18 +1,23 @@
-## Befund
 
-Vollständige Suche nach den alten Projekt-Refs (`bmygggcwwrxrsbqnghpv`, `homsnkhyfbzlphhfucvu`):
+## Email Sorter auf /admin/splitter
 
-- **Code (alle Dateien inkl. versteckte):** keine Treffer.
-- **Datenbank:** genau **eine** veraltete Stelle – der Cronjob `notify-telegram-pending` ruft noch `https://bmygggcwwrxrsbqnghpv.supabase.co/functions/v1/notify-telegram` mit altem Anon-Key auf. Dadurch werden aktuell keine Telegram-Logs verschickt.
-- `panels.domain`, `telegram_chat_ids`, `bot_blocks` etc.: keine alten URLs.
+Neue Sektion unterhalb des bestehenden Nummern-Splitters in `src/pages/AdminSplitter.tsx`.
 
-## Plan
+### UI
+- Card "Email Sorter" mit:
+  - File-Input (`accept=".txt"`) zum Hochladen einer `.txt` mit Emails (eine pro Zeile, auch Mischformate wie `name;email` werden via Regex extrahiert)
+  - Anzeige: Anzahl gefundener Emails + Liste der erkannten Provider-Domains mit Counts
+  - Optionen: Duplikate entfernen (default an), Leerzeilen überspringen (default an), Lowercase normalisieren (default an)
+  - Buttons: "ZIP herunterladen" und "Zurücksetzen"
 
-1. Alten Cronjob entfernen: `cron.unschedule('notify-telegram-pending')`.
-2. Neu anlegen mit identischem Schedule (`* * * * *`) und identischem Body, aber:
-   - URL → `https://aanollewetntdojenubs.supabase.co/functions/v1/notify-telegram`
-   - `apikey` + `Authorization: Bearer` → neuer Anon-Key des Projekts `aanollewetntdojenubs`
-3. Ausführung über `supabase--insert` (kein Migration-File), weil der Anon-Key projektspezifisch ist und nicht in den Migrations-Verlauf gehört.
-4. Verifikation: `SELECT jobname, schedule, command FROM cron.job;` + nach ~1 Min `SELECT * FROM cron.job_run_details ORDER BY start_time DESC LIMIT 3;` auf Status `succeeded`.
+### Logik
+- Datei mit `FileReader` als Text lesen
+- Emails per Regex extrahieren (`/[\w.+-]+@[\w-]+\.[\w.-]+/g`)
+- Nach Domain (Teil nach `@`, lowercase) gruppieren
+- Pro Domain eine `.txt` mit allen zugehörigen Emails (eine pro Zeile)
+- Alle Dateien via JSZip (bereits im Projekt verwendet) in ein Archiv packen
+- Dateiname: `email-sortiert-YYYY-MM-DD HH-mm-ss.zip`, einzelne Dateien `<domain>.txt` (z.B. `gmx.at.txt`, `outlook.com.txt`)
 
-Keine Code-Änderungen nötig.
+### Sonstiges
+- Keine Backend-Änderungen, rein clientseitig
+- Bestehende `downloadBlob` Helper-Funktion und Toast-Pattern wiederverwenden
