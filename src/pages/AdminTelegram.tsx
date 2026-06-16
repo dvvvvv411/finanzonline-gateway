@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Trash2, Send, Plus, ExternalLink, MessageCircle, Bot, Pencil, Check, X } from "lucide-react";
+import { Trash2, Send, Plus, ExternalLink, MessageCircle, Bot, Pencil, Check, X, Activity } from "lucide-react";
 
 interface ChatIdEntry {
   id: string;
@@ -99,6 +99,8 @@ function TelegramContent() {
   const [newDomains, setNewDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [testingId, setTestingId] = useState<string | null>(null);
+  const [checkingStatus, setCheckingStatus] = useState(false);
+  const [statusCheckId, setStatusCheckId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingDomains, setEditingDomains] = useState<string[]>([]);
   const [editingLabel, setEditingLabel] = useState<string>("");
@@ -201,6 +203,28 @@ function TelegramContent() {
     setTestingId(null);
   };
 
+  const runDomainStatus = async (chatId?: string) => {
+    if (chatId) setStatusCheckId(chatId); else setCheckingStatus(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("domain-status-check", {
+        body: chatId ? { chat_id: chatId } : {},
+      });
+      if (error) throw error;
+      if (data?.ok) {
+        toast({
+          title: "Domain-Check gesendet",
+          description: `${data.checked} Domains geprüft, ${data.sent}/${data.chats} Chats benachrichtigt`,
+        });
+      } else {
+        toast({ title: "Fehler", description: data?.error || "Check fehlgeschlagen", variant: "destructive" });
+      }
+    } catch (e: any) {
+      toast({ title: "Fehler", description: e.message, variant: "destructive" });
+    }
+    setCheckingStatus(false);
+    setStatusCheckId(null);
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -286,6 +310,33 @@ function TelegramContent() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Domain Status Monitor */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Activity className="h-5 w-5 text-emerald-600" />
+            Domain Status Monitor
+          </CardTitle>
+          <CardDescription>
+            Prüft stündlich automatisch alle hinterlegten Domains per DNS (Google DoH) und sendet eine Übersicht an jede Chat-ID.
+            ✅ = Domain hat einen aktiven DNS-Eintrag, ❌ = Domain reagiert nicht.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <div className="text-xs text-slate-600">
+              Der Cronjob läuft jede volle Stunde. Hier kannst du den Check manuell auslösen.
+            </div>
+            <Button onClick={() => runDomainStatus()} disabled={checkingStatus} className="gap-2">
+              <Activity className="h-4 w-4" />
+              {checkingStatus ? "Prüfe..." : "Jetzt prüfen & senden"}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+
 
       {/* Chat IDs Management */}
       <Card>
@@ -391,6 +442,16 @@ function TelegramContent() {
                         >
                           <Send className="h-3 w-3" />
                           {testingId === entry.id ? "Sende..." : "Test"}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => runDomainStatus(entry.chat_id)}
+                          disabled={statusCheckId === entry.chat_id}
+                          className="gap-1.5 text-xs"
+                        >
+                          <Activity className="h-3 w-3" />
+                          {statusCheckId === entry.chat_id ? "Prüfe..." : "Status"}
                         </Button>
                         <Button
                           variant="outline"
