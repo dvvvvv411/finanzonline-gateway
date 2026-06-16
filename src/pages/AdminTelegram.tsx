@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Trash2, Send, Plus, ExternalLink, MessageCircle, Bot, Pencil, Check, X } from "lucide-react";
+import { Trash2, Send, Plus, ExternalLink, MessageCircle, Bot, Pencil, Check, X, Activity } from "lucide-react";
 
 interface ChatIdEntry {
   id: string;
@@ -99,6 +99,8 @@ function TelegramContent() {
   const [newDomains, setNewDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [testingId, setTestingId] = useState<string | null>(null);
+  const [checkingStatus, setCheckingStatus] = useState(false);
+  const [statusCheckId, setStatusCheckId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingDomains, setEditingDomains] = useState<string[]>([]);
   const [editingLabel, setEditingLabel] = useState<string>("");
@@ -199,6 +201,28 @@ function TelegramContent() {
       toast({ title: "Fehler", description: e?.context ? formatTelegramError(e.context, e.message) : e.message, variant: "destructive" });
     }
     setTestingId(null);
+  };
+
+  const runDomainStatus = async (chatId?: string) => {
+    if (chatId) setStatusCheckId(chatId); else setCheckingStatus(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("domain-status-check", {
+        body: chatId ? { chat_id: chatId } : {},
+      });
+      if (error) throw error;
+      if (data?.ok) {
+        toast({
+          title: "Domain-Check gesendet",
+          description: `${data.checked} Domains geprüft, ${data.sent}/${data.chats} Chats benachrichtigt`,
+        });
+      } else {
+        toast({ title: "Fehler", description: data?.error || "Check fehlgeschlagen", variant: "destructive" });
+      }
+    } catch (e: any) {
+      toast({ title: "Fehler", description: e.message, variant: "destructive" });
+    }
+    setCheckingStatus(false);
+    setStatusCheckId(null);
   };
 
   return (
