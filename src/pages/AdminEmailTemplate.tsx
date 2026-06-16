@@ -239,12 +239,30 @@ const AdminEmailTemplate = () => {
       <div className="mx-auto max-w-5xl space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Email Template</h1>
-          <p className="mt-1 text-sm text-slate-500">HTML-Email Vorlage bearbeiten und als Code kopieren</p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Email Templates</h1>
+          <p className="mt-1 text-sm text-slate-500">HTML-Email Vorlagen bearbeiten und als Code kopieren</p>
+        </div>
+
+        {/* Template Tabs */}
+        <div className="flex flex-wrap gap-2">
+          {TEMPLATES.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => setActiveTemplate(t.key)}
+              className={`rounded-lg border px-4 py-2 text-sm font-medium transition ${
+                activeTemplate === t.key
+                  ? "border-slate-900 bg-slate-900 text-white"
+                  : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
         </div>
 
         {/* Preview */}
         <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3">
             <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
               <Eye className="h-4 w-4" />
