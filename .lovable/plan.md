@@ -1,23 +1,45 @@
-# Robusterer Domain-Status-Check
+## Ziel
 
-## Problem
-`oegk-aktualisierung.co` wurde als ❌ down markiert, obwohl die Domain aktiv ist. Grund: Google DoH lieferte `Status: 2` (SERVFAIL — Nameserver haben nicht geantwortet). Unser Code behandelt jedes `Status !== 0` als down und ruft den Cloudflare-Fallback nur bei einem fetch-Exception auf — bei SERVFAIL also nie.
+Auf `/admin/email` ein zweites HTML-Email-Template ergänzen: **ÖGK Versichertendaten-Aktualisierung** im Stil des bestehenden FinanzOnline-Templates, mit Inhalten passend zur Seite `Datenaktualisierung.tsx`.
 
-## Fix in `supabase/functions/domain-status-check/index.ts`
+## Änderungen in `src/pages/AdminEmailTemplate.tsx`
 
-`checkDomain()` umbauen zu einem mehrstufigen Resolver-Check:
+1. **Template-Konstanten umstrukturieren**
+   - `defaultHtmlTemplate` bleibt als `finanzonlineTemplate`.
+   - Neue Konstante `oegkTemplate` (vollständiges HTML) hinzufügen.
+   - Beide in einem Array/Map mit Key, Label und HTML organisieren:
+     - `finanzonline` → "FinanzOnline"
+     - `oegk` → "ÖGK Datenaktualisierung"
 
-1. **Google DoH** (`dns.google/resolve`) abfragen.
-   - `Status === 0` mit A-Record → ✅ up, fertig.
-   - `Status === 3` (NXDOMAIN) → ❌ down, fertig (Domain existiert wirklich nicht).
-   - Alles andere (SERVFAIL, Timeout, HTTP-Fehler) → weiter zu Schritt 2.
-2. **Cloudflare DoH** (`cloudflare-dns.com/dns-query`) abfragen — gleiche Auswertung wie oben.
-3. **Quad9 DoH** (`dns.quad9.net:5053/dns-query`) als dritter unabhängiger Resolver — gleiche Auswertung.
-4. Wenn alle drei kein A-Record und kein NXDOMAIN liefern: zusätzlich **NS-Record** prüfen (Typ 2) bei Google + Cloudflare. Wenn NS existiert, gilt die Domain als ✅ up (sie ist registriert und delegiert, nur A-Resolution gerade gestört) — sonst ❌ down.
+2. **State erweitern**
+   - Neuer State `activeTemplate: "finanzonline" | "oegk"` (default `finanzonline`).
+   - `htmlCode` pro Template separat halten (Map `Record<key, string>`), damit Edits beim Tab-Wechsel erhalten bleiben.
+   - Bei Tab-Wechsel `showCode` zurücksetzen ist nicht nötig; aktueller Code wird aus Map gelesen.
 
-Jeder Request behält das 5s-Timeout. Resolver werden seriell durchlaufen, sobald einer ein eindeutiges Ergebnis liefert (up oder NXDOMAIN), wird abgebrochen.
+3. **UI**
+   - Über der Vorschau-Karte eine Tab-Leiste (zwei Buttons im bestehenden Stil, kein neues shadcn-Tabs nötig) zum Umschalten zwischen den beiden Templates.
+   - Aktiver Tab visuell hervorheben (analog zum bestehenden Slate/Border-Look).
+   - Rest der UI (Vorschau, HTML-Code-Toggle, Copy) bleibt unverändert und arbeitet auf dem aktuell ausgewählten Template.
 
-## Optional zusätzlich
-- Im Telegram-Output bei „ungewissen" Domains (kein A, aber NS vorhanden) ein ⚠️ statt ❌ anzeigen, damit man sieht: registriert aber DNS-instabil.
+## Neues Template: `oegkTemplate`
 
-Sag Bescheid, ob das ⚠️-Verhalten gewünscht ist oder ob NS-vorhanden einfach als ✅ zählen soll.
+Gleiche Tabellen-/Inline-Style-Struktur wie das FinanzOnline-Template (E-Mail-kompatibles HTML, 600px Container, Header/Body/CTA/Footer), aber mit ÖGK-Branding und Inhalten:
+
+- **Branding**
+  - Akzentfarbe: `#00B050` (ÖGK-Grün) für Header-Border, CTA-Button, Hinweisbox-Border.
+  - Sekundärfarbe: `#1B2C5C` (ÖGK-Navy) für Überschriften.
+  - Header zeigt textbasiertes "ÖGK"-Wortlogo + Schriftzug "Österreichische Gesundheitskasse" (kein externes Bild nötig, reine HTML/CSS-Lösung mit `font-weight:700`, `color:#00B050`/Navy). Falls später ein Logo gewünscht ist, kann es leicht ausgetauscht werden.
+
+- **Inhalte (an `Datenaktualisierung.tsx` angelehnt)**
+  - Betreff/Titel: "Wichtiger Hinweis: Aktualisierung Ihrer Versichertendaten"
+  - Anrede: "Sehr geehrte Versicherte, sehr geehrter Versicherter,"
+  - Hinweisbox: "Ihre bei der Österreichischen Gesundheitskasse hinterlegten Daten müssen überprüft und aktualisiert werden. Ohne aktuelle Adress-, Kontakt- und Kontodaten kann es zu Verzögerungen bei der Bearbeitung Ihrer Leistungen kommen."
+  - Hinweis auf mögliche Einschränkungen bei nicht erfolgter Aktualisierung.
+  - CTA-Button: "Jetzt Versichertendaten aktualisieren" (Link `https://www.gesundheitskasse.at`).
+  - Disclaimer: "Falls Sie die Aktualisierung bereits vorgenommen haben, können Sie diese E-Mail ignorieren."
+  - Footer: "Österreichische Gesundheitskasse · Wienerbergstraße 15-19, 1100 Wien · Service-Hotline: +43 50 766-0" + Impressum/Datenschutz/gesundheitskasse.at-Links.
+
+## Keine weiteren Änderungen
+
+- Keine neuen Routen, keine Backend-Änderungen.
+- Bestehendes FinanzOnline-Template bleibt unverändert.
