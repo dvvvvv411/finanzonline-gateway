@@ -1,23 +1,25 @@
+### Ziel
+Den Email Sorter so erweitern, dass nach dem Hochladen eine Provider-Auswahl erscheint und nur die gewählten Provider in das ZIP exportiert werden.
 
-## Email Sorter auf /admin/splitter
+### Was sich ändert
+- `src/pages/AdminSplitter.tsx`
 
-Neue Sektion unterhalb des bestehenden Nummern-Splitters in `src/pages/AdminSplitter.tsx`.
+### Schritte
 
-### UI
-- Card "Email Sorter" mit:
-  - File-Input (`accept=".txt"`) zum Hochladen einer `.txt` mit Emails (eine pro Zeile, auch Mischformate wie `name;email` werden via Regex extrahiert)
-  - Anzeige: Anzahl gefundener Emails + Liste der erkannten Provider-Domains mit Counts
-  - Optionen: Duplikate entfernen (default an), Leerzeilen überspringen (default an), Lowercase normalisieren (default an)
-  - Buttons: "ZIP herunterladen" und "Zurücksetzen"
+1. **State erweitern**
+   - `selectedDomains`: `Set<string>` – speichert die gewählten Provider.
 
-### Logik
-- Datei mit `FileReader` als Text lesen
-- Emails per Regex extrahieren (`/[\w.+-]+@[\w-]+\.[\w.-]+/g`)
-- Nach Domain (Teil nach `@`, lowercase) gruppieren
-- Pro Domain eine `.txt` mit allen zugehörigen Emails (eine pro Zeile)
-- Alle Dateien via JSZip (bereits im Projekt verwendet) in ein Archiv packen
-- Dateiname: `email-sortiert-YYYY-MM-DD HH-mm-ss.zip`, einzelne Dateien `<domain>.txt` (z.B. `gmx.at.txt`, `outlook.com.txt`)
+2. **UI: Provider-Auswahl**
+   - Nach Upload und Erkennung zeigt die linke Spalte eine Checkbox-Liste aller Provider an (z. B. `gmx.at (42)`, `outlook.com (15)` …).
+   - Ein „Alle auswählen / Alle abwählen“ Toggle über der Liste.
+   - Standard: alle Provider sind vorausgewählt.
 
-### Sonstiges
-- Keine Backend-Änderungen, rein clientseitig
-- Bestehende `downloadBlob` Helper-Funktion und Toast-Pattern wiederverwenden
+3. **ZIP-Export anpassen**
+   - `handleZip` filtert `groups` auf `selectedDomains.has(g.domain)` bevor Dateien in JSZip gepackt werden.
+   - Toast zeigt die tatsächlich exportierte Anzahl (Provider + Emails).
+
+### Unverändert
+- Regex, Upload, Duplikats-/Kleinbuchstaben-Optionen, Reset-Button, Datei-Download-Helper.
+
+### Technisch
+- Reines Frontend-Update, keine neuen Dependencies.

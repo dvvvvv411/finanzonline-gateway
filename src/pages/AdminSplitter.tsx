@@ -197,6 +197,7 @@ const EmailSorter = () => {
   const [rawText, setRawText] = useState<string>("");
   const [removeDuplicates, setRemoveDuplicates] = useState(true);
   const [lowercase, setLowercase] = useState(true);
+  const [selectedDomains, setSelectedDomains] = useState<Set<string>>(new Set());
 
   const groups = useMemo<EmailGroup[]>(() => {
     if (!rawText) return [];
