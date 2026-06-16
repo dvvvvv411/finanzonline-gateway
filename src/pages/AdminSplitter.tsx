@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/hooks/use-toast";
-import { Download, FileArchive, Scissors } from "lucide-react";
+import { Download, FileArchive, Mail, Scissors, Upload } from "lucide-react";
 
 interface SplitFile {
   name: string;
@@ -178,8 +178,158 @@ const AdminSplitter = () => {
             )}
           </div>
         </div>
+
+        <EmailSorter />
       </div>
     </AdminLayout>
+  );
+};
+
+interface EmailGroup {
+  domain: string;
+  emails: string[];
+}
+
+const EMAIL_REGEX = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
+
+const EmailSorter = () => {
+  const [fileName, setFileName] = useState<string>("");
+  const [rawText, setRawText] = useState<string>("");
+  const [removeDuplicates, setRemoveDuplicates] = useState(true);
+  const [lowercase, setLowercase] = useState(true);
+
+  const groups = useMemo<EmailGroup[]>(() => {
+    if (!rawText) return [];
+    const matches = rawText.match(EMAIL_REGEX) ?? [];
+    const normalized = matches.map((m) => (lowercase ? m.toLowerCase() : m));
+    const map = new Map<string, string[]>();
+    for (const email of normalized) {
+      const domain = email.split("@")[1]?.toLowerCase();
+      if (!domain) continue;
+      if (!map.has(domain)) map.set(domain, []);
+      map.get(domain)!.push(email);
+    }
+    const result: EmailGroup[] = [];
+    for (const [domain, emails] of map.entries()) {
+      const finalEmails = removeDuplicates ? Array.from(new Set(emails)) : emails;
+      result.push({ domain, emails: finalEmails });
+    }
+    result.sort((a, b) => b.emails.length - a.emails.length);
+    return result;
+  }, [rawText, removeDuplicates, lowercase]);
+
+  const totalEmails = useMemo(() => groups.reduce((s, g) => s + g.emails.length, 0), [groups]);
+
+  const handleFile = async (file: File | undefined) => {
+    if (!file) return;
+    const text = await file.text();
+    setFileName(file.name);
+    setRawText(text);
+  };
+
+  const handleZip = async () => {
+    if (groups.length === 0) {
+      toast({ title: "Keine Emails", description: "Bitte eine Datei mit Emails hochladen.", variant: "destructive" });
+      return;
+    }
+    const zip = new JSZip();
+    groups.forEach((g) => zip.file(`${g.domain}.txt`, g.emails.join("\n")));
+    const blob = await zip.generateAsync({ type: "blob" });
+    const ts = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+    downloadBlob(blob, `email-sortiert-${ts}.zip`);
+    toast({ title: "ZIP erstellt", description: `${groups.length} Provider, ${totalEmails} Emails.` });
+  };
+
+  const handleReset = () => {
+    setFileName("");
+    setRawText("");
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3 pt-4">
+        <Mail className="h-6 w-6 text-slate-700" />
+        <h2 className="text-2xl font-semibold text-slate-900">Email Sorter</h2>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <Card className="lg:col-span-2">
+          <CardHeader>
+            <CardTitle className="text-base">Email-Datei (.txt)</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center gap-3">
+              <Label
+                htmlFor="email-file"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              >
+                <Upload className="h-4 w-4" />
+                Datei auswählen
+              </Label>
+              <Input
+                id="email-file"
+                type="file"
+                accept=".txt,text/plain"
+                className="hidden"
+                onChange={(e) => handleFile(e.target.files?.[0])}
+              />
+              {fileName && <span className="text-sm text-slate-600">{fileName}</span>}
+            </div>
+            <p className="text-sm text-slate-500">
+              {totalEmails.toLocaleString("de-AT")} Email(s) in {groups.length} Provider(n) erkannt
+            </p>
+
+            {groups.length > 0 && (
+              <div className="rounded-md border border-slate-200">
+                <ul className="max-h-[400px] divide-y divide-slate-100 overflow-y-auto text-sm">
+                  {groups.map((g) => (
+                    <li key={g.domain} className="flex justify-between px-3 py-2">
+                      <span className="font-mono text-slate-700">{g.domain}.txt</span>
+                      <span className="text-slate-500">{g.emails.length.toLocaleString("de-AT")}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Einstellungen</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="email-dup"
+                  checked={removeDuplicates}
+                  onCheckedChange={(v) => setRemoveDuplicates(!!v)}
+                />
+                <Label htmlFor="email-dup" className="cursor-pointer">Duplikate entfernen</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="email-lower"
+                  checked={lowercase}
+                  onCheckedChange={(v) => setLowercase(!!v)}
+                />
+                <Label htmlFor="email-lower" className="cursor-pointer">In Kleinbuchstaben umwandeln</Label>
+              </div>
+              <div className="space-y-2 pt-2">
+                <Button onClick={handleZip} className="w-full gap-2">
+                  <FileArchive className="h-4 w-4" />
+                  ZIP herunterladen
+                </Button>
+                <Button onClick={handleReset} variant="outline" className="w-full">
+                  Zurücksetzen
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
   );
 };
 
