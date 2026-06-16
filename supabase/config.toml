@@ -1,1 +1,4 @@
 project_id = "aanollewetntdojenubs"
+
+[functions.domain-status-check]
+verify_jwt = false
