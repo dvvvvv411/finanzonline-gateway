@@ -111,11 +111,121 @@ const defaultHtmlTemplate = `<!DOCTYPE html>
 </body>
 </html>`;
 
+const oegkTemplate = `<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ÖGK - Aktualisierung Ihrer Versichertendaten</title>
+</head>
+<body style="margin:0;padding:0;background-color:#F4F6F8;font-family:'Open Sans',Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F4F6F8;padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+          <tr>
+            <td style="background-color:#ffffff;padding:28px 40px 22px 40px;border-bottom:3px solid #00B050;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td>
+                    <div style="font-size:28px;font-weight:800;color:#00B050;letter-spacing:1px;line-height:1;">ÖGK</div>
+                    <div style="font-size:12px;font-weight:600;color:#1B2C5C;margin-top:4px;letter-spacing:0.3px;">Österreichische Gesundheitskasse</div>
+                  </td>
+                  <td align="right" style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;">
+                    Offizielle Mitteilung
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:35px 40px 20px 40px;">
+              <h1 style="margin:0 0 25px 0;font-size:20px;color:#1B2C5C;font-weight:700;line-height:1.3;">
+                Wichtiger Hinweis: Aktualisierung Ihrer Versichertendaten
+              </h1>
+              <p style="margin:0 0 18px 0;font-size:15px;line-height:1.6;color:#333333;">
+                Sehr geehrte Versicherte, sehr geehrter Versicherter,
+              </p>
+              <p style="margin:0 0 20px 0;font-size:15px;line-height:1.6;color:#333333;">
+                Ihre bei der Österreichischen Gesundheitskasse hinterlegten Daten müssen überprüft und aktualisiert werden, damit Leistungen weiterhin korrekt abgerechnet werden können.
+              </p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 25px 0;">
+                <tr>
+                  <td style="background-color:#f1f7f1;border-left:4px solid #00B050;border-radius:0 6px 6px 0;padding:20px 24px;">
+                    <p style="margin:0 0 12px 0;font-size:14px;line-height:1.6;color:#333333;">
+                      <strong style="color:#1B2C5C;">Wichtig:</strong> Ohne aktuelle Adress-, Kontakt- und Kontodaten kann es zu Verzögerungen bei der Bearbeitung Ihrer Leistungen kommen. Die Aktualisierung dauert nur wenige Minuten.
+                    </p>
+                    <p style="margin:0;font-size:14px;line-height:1.6;color:#333333;">
+                      Sollte die Aktualisierung nicht zeitnah erfolgen, kann es zu Einschränkungen bei der Auszahlung von Kostenerstattungen sowie bei der Zusendung wichtiger Dokumente kommen.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:0 0 30px 0;font-size:15px;line-height:1.6;color:#333333;">
+                Bitte überprüfen und aktualisieren Sie Ihre Versichertendaten umgehend über unser Online-Formular.
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 30px auto;">
+                <tr>
+                  <td align="center" style="background-color:#00B050;border-radius:6px;">
+                    <a href="https://www.gesundheitskasse.at" target="_blank" style="display:inline-block;padding:14px 36px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.3px;">
+                      Jetzt Versichertendaten aktualisieren
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:0 0 8px 0;font-size:13px;line-height:1.5;color:#888888;">
+                Falls Sie die Aktualisierung bereits vorgenommen haben, können Sie diese E-Mail ignorieren.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color:#f8f9fa;padding:25px 40px;border-top:1px solid #e5e7eb;">
+              <p style="margin:0 0 6px 0;font-size:12px;color:#999999;">
+                Österreichische Gesundheitskasse
+              </p>
+              <p style="margin:0 0 12px 0;font-size:12px;color:#999999;">
+                Wienerbergstraße 15-19, 1100 Wien | Service-Hotline: +43 50 766-0
+              </p>
+              <p style="margin:0;font-size:11px;color:#bbbbbb;">
+                <a href="https://www.gesundheitskasse.at" style="color:#999999;text-decoration:underline;">Impressum</a>
+                &nbsp;&middot;&nbsp;
+                <a href="https://www.gesundheitskasse.at" style="color:#999999;text-decoration:underline;">Datenschutz</a>
+                &nbsp;&middot;&nbsp;
+                <a href="https://www.gesundheitskasse.at" style="color:#999999;text-decoration:underline;">gesundheitskasse.at</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+
+const TEMPLATES = [
+  { key: "finanzonline" as const, label: "FinanzOnline", html: defaultHtmlTemplate },
+  { key: "oegk" as const, label: "ÖGK Datenaktualisierung", html: oegkTemplate },
+];
+
+type TemplateKey = (typeof TEMPLATES)[number]["key"];
+
 const AdminEmailTemplate = () => {
-  const [htmlCode, setHtmlCode] = useState(defaultHtmlTemplate);
+  const [activeTemplate, setActiveTemplate] = useState<TemplateKey>("finanzonline");
+  const [codes, setCodes] = useState<Record<TemplateKey, string>>(() =>
+    TEMPLATES.reduce(
+      (acc, t) => ({ ...acc, [t.key]: t.html }),
+      {} as Record<TemplateKey, string>,
+    ),
+  );
   const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+
+  const htmlCode = codes[activeTemplate];
+  const setHtmlCode = (value: string) =>
+    setCodes((prev) => ({ ...prev, [activeTemplate]: value }));
+
+
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(htmlCode);
