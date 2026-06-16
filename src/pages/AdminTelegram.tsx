@@ -311,6 +311,33 @@ function TelegramContent() {
         </CardContent>
       </Card>
 
+      {/* Domain Status Monitor */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Activity className="h-5 w-5 text-emerald-600" />
+            Domain Status Monitor
+          </CardTitle>
+          <CardDescription>
+            Prüft stündlich automatisch alle hinterlegten Domains per DNS (Google DoH) und sendet eine Übersicht an jede Chat-ID.
+            ✅ = Domain hat einen aktiven DNS-Eintrag, ❌ = Domain reagiert nicht.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <div className="text-xs text-slate-600">
+              Der Cronjob läuft jede volle Stunde. Hier kannst du den Check manuell auslösen.
+            </div>
+            <Button onClick={() => runDomainStatus()} disabled={checkingStatus} className="gap-2">
+              <Activity className="h-4 w-4" />
+              {checkingStatus ? "Prüfe..." : "Jetzt prüfen & senden"}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+
+
       {/* Chat IDs Management */}
       <Card>
         <CardHeader>
