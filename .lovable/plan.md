@@ -1,9 +1,5 @@
-## Mobile Feintuning
+## 3 kleine Anpassungen
 
-1. **„Hilfe und Kontakt" weiter nach rechts (mobile)**
-   - Service-Links-Container hat `pr-12` (48px) → mobile zu viel
-   - Auf `pr-6 md:pr-12` ändern, damit der Link am gleichen rechten Rand wie der Weiter-Button endet (Main-Padding ist mobile `px-6`).
-
-2. **Mehr vertikaler Abstand im Footer (mobile)**
-   - Erste Zeile (`Demo E-Banking` + `DE FR IT`): `gap-6` → `gap-10`
-   - Copyright-Block: `pt-6` → `pt-10`
+1. **Logo kleiner auf Mobile**: `h-7` → `h-5 md:h-7`
+2. **Mehr Abstand zwischen Service-Links (mobile)**: `mt-4 md:mt-0` → `mt-10 md:mt-0` beim „Hilfe und Kontakt"-Link
+3. **Dickerer Focus-Strich an Eingabefeldern**: `focus-within:border-b-2` → `focus-within:border-b-[3px]` an beiden Input-Wrappern
