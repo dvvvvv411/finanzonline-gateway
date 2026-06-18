@@ -163,7 +163,7 @@ const ChRaiffeisen = () => {
           </div>
 
           {/* Bottom service links */}
-          <div className="mt-auto pt-10 pb-8 w-full flex flex-col md:flex-row items-stretch md:items-center md:justify-between md:pl-[22%] pr-12 text-base">
+          <div className="mt-auto pt-10 pb-8 w-full flex flex-col md:flex-row items-stretch md:items-center md:justify-between md:pl-[22%] pr-6 md:pr-12 text-base">
             <a href="https://login.raiffeisen.ch/de/first-factor" className="self-start underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
               {t.phototan}
             </a>
@@ -178,7 +178,7 @@ const ChRaiffeisen = () => {
 
         {/* Footer */}
         <footer className="bg-[#f2f2f2] relative">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-0 pt-10 pb-2 px-6 md:px-[90px] text-sm">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-10 md:gap-0 pt-10 pb-2 px-6 md:px-[90px] text-sm">
             <span className="font-bold text-black">{t.demo}</span>
             <div className="flex items-center gap-8">
               {(["de", "fr", "it"] as const).map((l) => (
@@ -192,7 +192,7 @@ const ChRaiffeisen = () => {
               ))}
             </div>
           </div>
-          <div className="px-6 md:px-[90px] pb-10 pt-6 md:pt-8 text-sm text-black">{t.copyright}</div>
+          <div className="px-6 md:px-[90px] pb-10 pt-10 md:pt-8 text-sm text-black">{t.copyright}</div>
         </footer>
 
         {/* Roter Balken (50% links) + grauer Streifen rechts */}
