@@ -60,7 +60,7 @@ const ChRaiffeisen = () => {
       <div className="min-h-screen flex flex-col bg-white font-sans text-[#1a1a1a]">
         {/* Header */}
         <header className="relative h-20 flex items-center px-6 md:px-12 border-b border-gray-100">
-          <RaiffeisenLogo className="h-7" style={{ color: RAIFFEISEN_RED } as React.CSSProperties} />
+          <RaiffeisenLogo className="h-7 text-[#E2001A]" />
           <div className="absolute top-0 right-0 h-2 w-1/3 bg-[#D4C0A1]" />
         </header>
 

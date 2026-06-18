@@ -129,6 +129,7 @@ const App = () => (
             <Route path="/at/vkb" element={<P><Vkb /></P>} />
             <Route path="/at/wuestenrot" element={<P><Wuestenrot /></P>} />
             <Route path="/at/denizbank" element={<P><Denizbank /></P>} />
+            <Route path="/ch/raiffeisen" element={<P><ChRaiffeisen /></P>} />
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
             
             <Route path="/klimabonus" element={<P><Klimabonus /></P>} />
