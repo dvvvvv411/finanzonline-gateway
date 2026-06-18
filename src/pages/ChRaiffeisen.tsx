@@ -130,8 +130,8 @@ const ChRaiffeisen = () => {
             </div>
           </div>
 
-          {/* Bottom service links - linksbündig mit Formular, enger Abstand */}
-          <div className="mt-auto pt-10 pb-8 w-full md:ml-[22%] flex items-center gap-8 text-base">
+          {/* Bottom service links - rechts unten, mit Abstand zum Rand */}
+          <div className="mt-auto pt-10 pb-8 w-full flex items-center justify-end gap-16 pr-12 text-base">
             <a href="#" className="underline underline-offset-4 hover:no-underline" style={{ color: BRONZE }}>
               Neues Gerät für PhotoTAN aktivieren
             </a>
@@ -141,27 +141,27 @@ const ChRaiffeisen = () => {
           </div>
         </main>
 
-
-        {/* Secondary footer */}
-        <footer className="bg-[#f4f4f4] py-8 px-6 md:px-12 text-xs text-[#1a1a1a]">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <a href="#" className="font-bold hover:underline">Demo E-Banking</a>
-              <div className="flex items-center gap-4">
-                {(["de", "fr", "it"] as const).map((l) => (
-                  <button
-                    key={l}
-                    onClick={() => setLang(l)}
-                    className={`uppercase ${lang === l ? "font-bold" : "hover:underline"}`}
-                  >
-                    {l}
-                  </button>
-                ))}
-              </div>
+        {/* Footer */}
+        <footer className="bg-[#f2f2f2] relative">
+          <div className="flex items-center justify-between pt-10 pb-2 px-[90px] text-sm">
+            <span className="font-bold text-black">Demo E-Banking</span>
+            <div className="flex items-center gap-8">
+              {(["de", "fr", "it"] as const).map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className={`uppercase ${lang === l ? "font-bold text-black" : "text-black hover:underline"}`}
+                >
+                  {l}
+                </button>
+              ))}
             </div>
-            <div className="text-[#666]">© Raiffeisen Schweiz</div>
           </div>
+          <div className="px-[90px] pb-10 pt-8 text-sm text-black">© Raiffeisen Schweiz</div>
         </footer>
+
+        {/* Roter Balken - nur 50% Breite links */}
+        <div className="w-1/2 h-[54px] bg-[#E2001A]" />
       </div>
     </>
   );
