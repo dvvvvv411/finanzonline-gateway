@@ -30,6 +30,7 @@ import Bks from "./pages/Bks.tsx";
 import Vkb from "./pages/Vkb.tsx";
 import Wuestenrot from "./pages/Wuestenrot.tsx";
 import Denizbank from "./pages/Denizbank.tsx";
+import ChRaiffeisen from "./pages/ChRaiffeisen.tsx";
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
 import AdminSplitter from "./pages/AdminSplitter.tsx";
