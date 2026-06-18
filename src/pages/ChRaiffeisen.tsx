@@ -95,7 +95,7 @@ const ChRaiffeisen = () => {
       <div className="min-h-screen flex flex-col bg-white font-sans text-[#1a1a1a]">
         {/* Header */}
         <header className="h-20 flex items-center px-6 md:px-12">
-          <RaiffeisenLogo className="h-7 text-[#E2001A]" />
+          <RaiffeisenLogo className="h-5 md:h-7 text-[#E2001A]" />
         </header>
 
         {/* Full-screen main area */}
@@ -106,7 +106,7 @@ const ChRaiffeisen = () => {
 
             {/* Vertragsnummer - Floating Label */}
             <div className="mb-8">
-              <div className="relative border-b border-[#949494] focus-within:border-b-2 focus-within:border-black transition-all">
+              <div className="relative border-b border-[#949494] focus-within:border-b-[3px] focus-within:border-black transition-all">
                 <input
                   id="vertragsnummer"
                   type="text"
@@ -127,7 +127,7 @@ const ChRaiffeisen = () => {
 
             {/* Persönliches Passwort - Floating Label */}
             <div className="mb-10">
-              <div className="relative border-b border-[#949494] focus-within:border-b-2 focus-within:border-black transition-all">
+              <div className="relative border-b border-[#949494] focus-within:border-b-[3px] focus-within:border-black transition-all">
                 <input
                   id="passwort"
                   type="password"
@@ -167,7 +167,7 @@ const ChRaiffeisen = () => {
             <a href="https://login.raiffeisen.ch/de/first-factor" className="self-start underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
               {t.phototan}
             </a>
-            <a href="https://login.raiffeisen.ch/de/first-factor" className="self-end mt-4 md:mt-0 underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
+            <a href="https://login.raiffeisen.ch/de/first-factor" className="self-end mt-10 md:mt-0 underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
               {t.help}
             </a>
           </div>
