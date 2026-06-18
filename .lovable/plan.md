@@ -1,14 +1,8 @@
 ## Änderungen in `src/pages/ChRaiffeisen.tsx`
 
-1. **Header bleibt weiß**, Content darunter wird leicht grau:
-   - `<header>` behält weißen Hintergrund (`bg-white`)
-   - `<main>` bekommt `bg-[#f5f5f5]` (leicht gräulich)
-   - Footer bleibt wie er ist (eigenes Grau)
-   - Wrapper-`bg-white` bleibt, damit Header weiß ist
+1. **Main wieder weiß**: `bg-[#f5f5f5]` von `<main>` entfernen.
 
-2. **„Passwort vergessen?"** Unterstrich-Abstand erhöhen: `underline-offset-4` → `underline-offset-[6px]`
-
-3. **Links auf `https://login.raiffeisen.ch/de/first-factor`** setzen für:
-   - „Passwort vergessen?"
-   - „Neues Gerät für PhotoTAN aktivieren"
-   - „Hilfe und Kontakt"
+2. **Hover-Verhalten der 3 Links** (Passwort vergessen?, Neues Gerät…, Hilfe und Kontakt):
+   - `hover:no-underline` entfernen
+   - Stattdessen: `decoration-1 hover:decoration-2 hover:decoration-black hover:text-black transition-all`
+   - Unterstrich bleibt sichtbar, wird beim Hover dicker und schwarz, Text wird ebenfalls schwarz.
