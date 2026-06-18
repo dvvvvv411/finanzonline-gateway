@@ -15,6 +15,42 @@ const RaiffeisenLogo = ({ className = "" }: { className?: string }) => (
 
 const BRONZE = "#9B8666";
 
+const TRANSLATIONS = {
+  de: {
+    title: "Login für E-Banking",
+    contract: "Vertragsnummer",
+    password: "Persönliches Passwort",
+    submit: "Weiter",
+    forgot: "Passwort vergessen?",
+    phototan: "Neues Gerät für PhotoTAN aktivieren",
+    help: "Hilfe und Kontakt",
+    demo: "Demo E-Banking",
+    copyright: "© Raiffeisen Schweiz",
+  },
+  fr: {
+    title: "Login pour e-banking",
+    contract: "Numéro de contrat",
+    password: "Mot de passe personnel",
+    submit: "Suivant",
+    forgot: "Mot de passe oublié?",
+    phototan: "Activer un nouvel appareil pour PhotoTAN",
+    help: "Aide et contact",
+    demo: "Démo e-banking",
+    copyright: "© Raiffeisen Suisse",
+  },
+  it: {
+    title: "Login per e-banking",
+    contract: "Numero di contratto",
+    password: "Parola chiave personale",
+    submit: "Avanti",
+    forgot: "Password dimenticata?",
+    phototan: "Attivare nuovo dispositivo per PhotoTAN",
+    help: "Aiuto e contatto",
+    demo: "Demo e-banking",
+    copyright: "© Raiffeisen Svizzera",
+  },
+} as const;
+
 const ChRaiffeisen = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
