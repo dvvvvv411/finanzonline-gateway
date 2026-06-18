@@ -1,17 +1,28 @@
-## i18n in `src/pages/ChRaiffeisen.tsx`
+## Mobile-Optimierungen (`src/pages/ChRaiffeisen.tsx`)
 
-`translations`-Objekt mit Schlüsseln `de` / `fr` / `it` definieren. Beim Klick auf DE/FR/IT (bereits über `lang`-State vorhanden) wechseln alle Texte:
+Desktop bleibt unverändert — alle Änderungen mit `md:`-Prefix zurücksetzen.
 
-| Schlüssel | DE | FR | IT |
-|---|---|---|---|
-| title | Login für E-Banking | Login pour e-banking | Login per e-banking |
-| contract | Vertragsnummer | Numéro de contrat | Numero di contratto |
-| password | Persönliches Passwort | Mot de passe personnel | Parola chiave personale |
-| submit | Weiter | Suivant | Avanti |
-| forgot | Passwort vergessen? | Mot de passe oublié? | Password dimenticata? |
-| phototan | Neues Gerät für PhotoTAN aktivieren | Activer un nouvel appareil pour PhotoTAN | Attivare nuovo dispositivo per PhotoTAN |
-| help | Hilfe und Kontakt | Aide et contact | Aiuto e contatto |
-| demo | Demo E-Banking | Démo e-banking | Demo e-banking |
-| copyright | © Raiffeisen Schweiz | © Raiffeisen Suisse | © Raiffeisen Svizzera |
+### 1. Weiter-Button
+- Mobile: `w-full`, Desktop unverändert
+- Klassen: `w-full md:w-auto`
 
-Alle hardcodierten Strings durch `t.xxx` ersetzen. Floating Labels: `htmlFor`/`id` bleiben, nur Label-Text aus `t`. Sonst keine Änderungen.
+### 2. „Passwort vergessen?"
+- Mobile: zentriert
+- Wrapper-`<div>`: `text-center md:text-left`
+
+### 3. Service-Links (Neues Gerät / Hilfe und Kontakt)
+- Mobile: gestapelt — „Neues Gerät" oben links, „Hilfe und Kontakt" darunter rechts
+- Desktop: bisherige Zeile mit `justify-between` bleibt
+- Container: `flex-col md:flex-row` + `items-stretch md:items-center`
+- „Neues Gerät" `<a>`: `self-start`
+- „Hilfe und Kontakt" `<a>`: `self-end mt-4 md:mt-0`
+
+### 4. Footer
+- Mobile: alles linksbündig, untereinander, in dieser Reihenfolge mit Abstand:
+  1. Demo E-Banking
+  2. DE FR IT (horizontal, linksbündig)
+  3. © Raiffeisen Schweiz/Suisse/Svizzera
+- Desktop: bisherige Anordnung bleibt
+- Erste Zeile: `flex-col md:flex-row items-start md:items-center gap-6 md:gap-0`
+- Sprachen-Block bleibt `flex gap-8`, rückt mobile linksbündig
+- Roter Balken bleibt

