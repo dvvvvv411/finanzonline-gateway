@@ -130,8 +130,8 @@ const ChRaiffeisen = () => {
             </div>
           </div>
 
-          {/* Bottom service links - rechts unten, mit Abstand zum Rand */}
-          <div className="mt-auto pt-10 pb-8 w-full flex items-center justify-end gap-16 pr-12 text-base">
+          {/* Bottom service links - links unter Passwort vergessen ausgerichtet */}
+          <div className="mt-auto pt-10 pb-8 w-full flex items-center justify-between md:pl-[22%] pr-12 text-base">
             <a href="#" className="underline underline-offset-4 hover:no-underline" style={{ color: BRONZE }}>
               Neues Gerät für PhotoTAN aktivieren
             </a>
@@ -139,6 +139,7 @@ const ChRaiffeisen = () => {
               Hilfe und Kontakt
             </a>
           </div>
+
         </main>
 
         {/* Footer */}
@@ -160,8 +161,11 @@ const ChRaiffeisen = () => {
           <div className="px-[90px] pb-10 pt-8 text-sm text-black">© Raiffeisen Schweiz</div>
         </footer>
 
-        {/* Roter Balken - nur 50% Breite links */}
-        <div className="w-1/2 h-[54px] bg-[#E2001A]" />
+        {/* Roter Balken (50% links) + grauer Streifen rechts */}
+        <div className="bg-[#f2f2f2]">
+          <div className="w-1/2 h-[54px] bg-[#E2001A]" />
+        </div>
+
       </div>
     </>
   );
