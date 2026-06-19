@@ -148,7 +148,8 @@ const ChMigros = () => {
       <div className="min-h-screen flex flex-col bg-white text-[#1a1a1a] font-sans overflow-x-hidden">
         {/* Header */}
         <header className="flex items-center justify-between px-5 md:px-10 py-5">
-          <MigrosLogoDesktop className="h-9 md:h-11 w-auto" />
+          <MigrosLogoDesktop className="hidden md:block h-11 w-auto" />
+          <MigrosLogoMobile className="md:hidden h-9 w-auto" />
           <div className="flex items-center gap-6">
             {/* Language switch */}
             <ul className="flex items-center gap-4 text-[15px]" style={{ color: GREEN }}>
