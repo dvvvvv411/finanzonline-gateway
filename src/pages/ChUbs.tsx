@@ -193,7 +193,7 @@ const ChUbs = () => {
         <header className="h-[72px] flex items-center justify-between px-4 md:px-10 border-b border-[#eee] bg-white relative z-20">
           <div className="flex items-center gap-3 md:gap-5">
             <UbsLogo className="h-6 md:h-7" />
-            <span className="text-base md:text-lg font-normal text-[#1a1a1a]">{t.ebanking}</span>
+            <span className="text-base md:text-lg font-bold text-[#1a1a1a]">{t.ebanking}</span>
           </div>
           <div className="flex items-center gap-4 md:gap-8 text-sm">
             <span className="hidden sm:inline text-[#666]">{t.country}</span>
