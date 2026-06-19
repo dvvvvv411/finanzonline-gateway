@@ -407,22 +407,22 @@ const ChPostfinance = () => {
               zu postfinance.ch
               <ChevronRight className="w-4 h-4" strokeWidth={2} />
             </a>
-            <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-8">
+            <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
               <button
                 type="button"
-                className="inline-flex items-center gap-1 font-medium"
-                style={{ color: PF_PETROL }}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-white"
+                style={{ border: `1px solid ${PF_PETROL}`, color: "#374151" }}
               >
                 Automatisch
-                <ChevronDown className="w-4 h-4" strokeWidth={2} />
+                <ChevronDown className="w-4 h-4" strokeWidth={2} style={{ color: "#9ca3af" }} />
               </button>
               <button
                 type="button"
-                className="inline-flex items-center gap-1 font-medium"
-                style={{ color: PF_PETROL }}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-white"
+                style={{ border: `1px solid ${PF_PETROL}`, color: "#374151" }}
               >
                 Deutsch
-                <ChevronDown className="w-4 h-4" strokeWidth={2} />
+                <ChevronDown className="w-4 h-4" strokeWidth={2} style={{ color: "#9ca3af" }} />
               </button>
               <a
                 href="https://www.postfinance.ch/de/footer/rechtliches.html"
