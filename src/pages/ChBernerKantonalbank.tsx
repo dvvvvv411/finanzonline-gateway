@@ -254,7 +254,7 @@ const ChBernerKantonalbank = () => {
         <div className="min-h-screen flex flex-col">
         {/* Header */}
         <header className="relative">
-          <div className="max-w-[1200px] mx-auto px-6 md:px-20">
+          <div className="max-w-[1200px] mx-auto px-3 md:px-20">
             <div className="h-1.5" style={{ backgroundColor: RED }} />
             <div className="flex pt-8">
               <img src={logoAsset.url} alt="BEKB | BCBE" className="h-7 md:h-8" />
