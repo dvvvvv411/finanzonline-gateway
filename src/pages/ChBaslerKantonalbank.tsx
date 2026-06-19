@@ -345,7 +345,7 @@ const ChBaslerKantonalbank = () => {
 
         {/* Footer */}
         <footer className="border-t border-gray-300 mt-16">
-          <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-8 text-[14px]">
+          <div className="max-w-[1280px] mx-auto px-6 md:px-20 py-8 text-[14px]">
             <div className="flex flex-col md:flex-row md:gap-10 gap-3 mb-4">
               <a href="#" className="no-underline text-black">{t.f1}</a>
               <a href="#" className="no-underline text-black">{t.f2}</a>
