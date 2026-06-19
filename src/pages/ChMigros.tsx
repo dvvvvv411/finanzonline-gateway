@@ -245,7 +245,7 @@ const ChMigros = () => {
               </button>
             </form>
 
-            <div className="flex flex-row items-center justify-between gap-4 mt-20 text-[14px]">
+            <div className="flex flex-col-reverse items-center gap-4 mt-20 text-[14px] md:flex-row md:justify-between md:gap-4">
               <a
                 href="https://www.migrosbank.ch/hilfe/neues-ebanking/wo-finde-ich-meine-vertragsnummer"
                 target="_blank"
@@ -262,7 +262,7 @@ const ChMigros = () => {
                 className="flex items-center gap-2 font-semibold"
                 style={{ color: GREEN }}
               >
-                <HelpCircle className="w-5 h-5" strokeWidth={1.6} />
+                <HelpCircle className="w-[14px] h-[14px]" strokeWidth={1.8} />
                 <span className="underline underline-offset-4">{t.problems}</span>
               </a>
             </div>
