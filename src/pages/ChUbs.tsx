@@ -314,7 +314,7 @@ const ChUbs = () => {
           </main>
 
           {/* Divider between body and footer */}
-          <div className="border-t border-[#d8b4b4]" />
+          <div className="border-t border-[#d8b4b4] mx-[10px]" />
 
           {/* Footer */}
           <footer className="px-4 md:px-10 py-6 md:py-8">
