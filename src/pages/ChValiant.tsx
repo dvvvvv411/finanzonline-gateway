@@ -117,64 +117,52 @@ const ChValiant = () => {
       >
         {/* Header */}
         <header className="w-full bg-white">
-          <div className="relative w-full px-4 py-5" style={{ minHeight: 72 }}>
-            {/* Centered track matching the card width; logo ends at the card's left edge */}
-            <div className="mx-auto relative" style={{ maxWidth: CARD_MAX }}>
-              <a
-                href="https://www.valiant.ch"
-                aria-label="Valiant"
-                className="absolute right-full top-1/2 -translate-y-1/2 pr-4 inline-block"
-              >
-                <img src={valiantLogo} alt="Valiant" className="h-9 md:h-10 w-auto" />
-              </a>
-            </div>
+          <div className="w-full px-6 md:px-10 py-5 flex items-center justify-between">
+            <a href="https://www.valiant.ch" aria-label="Valiant" className="inline-block">
+              <img src={valiantLogo} alt="Valiant" className="h-9 md:h-10 w-auto" />
+            </a>
 
-            {/* Language selector pinned to the right of the header */}
-            <div
-              className="absolute top-1/2 -translate-y-1/2 right-6 md:right-10"
-              ref={langRef}
-            >
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setLangOpen((v) => !v)}
-                  className="inline-flex items-center gap-1.5 px-2 py-1 text-[18px] font-normal transition-colors"
-                  style={{ color: PURPLE }}
-                  aria-haspopup="listbox"
-                  aria-expanded={langOpen}
+            <div className="relative" ref={langRef}>
+              <button
+                type="button"
+                onClick={() => setLangOpen((v) => !v)}
+                className="inline-flex items-center gap-1.5 px-2 py-1 text-[18px] font-normal transition-colors"
+                style={{ color: PURPLE }}
+                aria-haspopup="listbox"
+                aria-expanded={langOpen}
+              >
+                {lang.toUpperCase()}
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${langOpen ? "rotate-180" : ""}`}
+                  strokeWidth={2.5}
+                />
+              </button>
+              {langOpen && (
+                <ul
+                  className="absolute right-0 top-full mt-1 z-30 bg-white border border-gray-200 shadow-md min-w-[80px]"
+                  role="listbox"
                 >
-                  {lang.toUpperCase()}
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform ${langOpen ? "rotate-180" : ""}`}
-                    strokeWidth={2.5}
-                  />
-                </button>
-                {langOpen && (
-                  <ul
-                    className="absolute right-0 top-full mt-1 z-30 bg-white border border-gray-200 shadow-md min-w-[80px]"
-                    role="listbox"
-                  >
-                    {LANG_OPTIONS.map((opt) => (
-                      <li key={opt.code}>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setLang(opt.code);
-                            setLangOpen(false);
-                          }}
-                          className="block w-full text-left px-4 py-2 text-[15px] font-normal hover:bg-gray-50 transition-colors"
-                          style={{ color: PURPLE }}
-                        >
-                          {opt.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+                  {LANG_OPTIONS.map((opt) => (
+                    <li key={opt.code}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setLang(opt.code);
+                          setLangOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-[15px] font-normal hover:bg-gray-50 transition-colors"
+                        style={{ color: PURPLE }}
+                      >
+                        {opt.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         </header>
+
 
         {/* Body with background image */}
         <main

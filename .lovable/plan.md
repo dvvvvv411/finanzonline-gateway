@@ -1,15 +1,12 @@
-## Valiant: Logo in Header verschieben
+## Valiant: Logo oben links im Header
 
-**Aktuell:** Valiant-Logo steht im Body links über der Anmeldung-Card.
+Logo ist aktuell `absolute right-full` an der linken Card-Kante positioniert — bei schmalen Viewports wird es außerhalb des sichtbaren Bereichs geschoben und ist deshalb unsichtbar.
 
-**Änderung in `src/pages/ChValiant.tsx`:**
+**Fix in `src/pages/ChValiant.tsx`:**
 
-1. Logo aus dem Body entfernen.
-2. Logo in den weißen Header einsetzen (links), Sprachumschalter (DE/FR) bleibt rechts.
-3. Header-Container so layouten, dass das Logo **auf derselben X-Achse endet, wo die Anmeldung-Card beginnt** (linke Kante der zentrierten 460px-Card).
-   - Umsetzung: Header bekommt `max-w-[1280px] mx-auto` (gleiche Breite wie Body-Container) und nutzt `flex justify-between`. Das Logo wird mit `paddingLeft: calc(50% - 230px - <logoWidth>)` positioniert — also: der rechte Rand des Logos liegt exakt am linken Rand der Card (Card-Mitte = Container-Mitte, Card-Halbbreite = 230px).
-   - Praktischer Ansatz ohne calc: Header als Grid/Flex mit einem inneren Wrapper `max-w-[460px] mx-auto relative`, in dem das Logo `absolute right-full mr-0` an der linken Kante der Card-Spur sitzt. Sprachumschalter bleibt absolut rechts im Header.
-4. Logo-Höhe bleibt ~44px.
-5. Keine weiteren Änderungen (Card, Inputs, Focus-Ring, Forgot-Password-Link, Submit-Flow bleiben unverändert).
+- Header umbauen zu `flex items-center justify-between` mit `px-6 md:px-10 py-5`.
+- Valiant-Logo links als normales Flex-Child (kein `absolute`), `h-9 md:h-10`.
+- Sprachumschalter (DE/FR) rechts als zweites Flex-Child.
+- `minHeight`, absolutes Track-Wrapper und `right-full`-Trick entfernen.
 
-Keine anderen Dateien werden angefasst.
+Keine anderen Änderungen.
