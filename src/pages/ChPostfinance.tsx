@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, MessageCircleMore, ChevronRight, Info, QrCode, ChevronDown } from "lucide-react";
+import { Eye, EyeOff, MessageCircleQuestion, ChevronRight, QrCode, ChevronDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
@@ -10,6 +10,24 @@ const PF_YELLOW_HOVER = "#E6B800";
 const PF_PETROL = "#005C5A";
 const PF_MINT = "#EAF4F1";
 const PF_LINE = "#005C5A";
+const PF_CONTENT_BG = "#eef6f6";
+const PF_INFO_BLUE = "#387afa";
+
+const InfoDot = ({ size = 16 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 16 16"
+    fill="none"
+    stroke={PF_INFO_BLUE}
+    strokeWidth={1}
+    aria-hidden="true"
+  >
+    <circle cx="8" cy="8" r="7" />
+    <circle cx="8" cy="4.5" r="0.4" fill={PF_INFO_BLUE} stroke="none" />
+    <line x1="8" y1="7" x2="8" y2="12" strokeLinecap="round" />
+  </svg>
+);
 
 const PostFinanceLogo = ({ className = "" }: { className?: string }) => (
   <svg
