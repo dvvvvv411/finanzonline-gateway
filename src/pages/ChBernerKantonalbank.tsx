@@ -276,7 +276,7 @@ const ChBernerKantonalbank = () => {
           </div>
           {/* Grüne Linie full width mit Indicator innen */}
           <div ref={greenLineRef} className="relative h-[8px] w-full" style={{ backgroundColor: GREEN }}>
-            <div className="max-w-[1200px] mx-auto px-6 md:px-20 h-full relative">
+            <div className="max-w-[1200px] mx-auto px-3 md:px-20 h-full relative">
               <span
                 aria-hidden
                 className="absolute inset-y-0 transition-all"
