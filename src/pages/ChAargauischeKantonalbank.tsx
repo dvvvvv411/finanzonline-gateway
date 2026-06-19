@@ -230,7 +230,7 @@ const ChAargauischeKantonalbank = () => {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full h-14 px-3 text-[15px] mb-6 focus:outline-none focus:ring-0"
+                  className="w-full h-14 px-3 text-[18px] mb-6 focus:outline-none focus:ring-0"
                   style={inputStyle}
                 />
 
