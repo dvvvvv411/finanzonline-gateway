@@ -251,15 +251,15 @@ const ChGlarnerKantonalbank = () => {
         {/* Footer */}
         <footer className="mt-0 md:mt-12 bg-white">
           <div
-            className="max-w-[1100px] mx-auto px-8 py-4 text-[13px] flex flex-col items-center gap-2 md:flex-row md:justify-between"
+            className="max-w-[1100px] mx-auto px-4 md:px-8 py-4 text-[13px] flex flex-col-reverse items-center gap-2 md:flex-row md:justify-between"
             style={{ color: "#666" }}
           >
             <span>© Glarner Kantonalbank 2026</span>
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              <a href="#" style={{ color: RED }} className="hover:underline">Rechtliches</a>
-              <a href="#" style={{ color: RED }} className="hover:underline">Datenschutz</a>
-              <a href="#" style={{ color: RED }} className="hover:underline">Cookie Policy</a>
-              <a href="#" style={{ color: RED }} className="hover:underline">Impressum</a>
+            <div className="flex flex-nowrap items-center justify-center gap-x-3 md:gap-x-6 whitespace-nowrap text-[11px] md:text-[13px]">
+              <a href="https://glkb.ch/rechtliches" style={{ color: RED }} className="hover:!text-black">Rechtliches</a>
+              <a href="https://glkb.ch/verlinkung-rechtliches-datenschutz" style={{ color: RED }} className="hover:!text-black">Datenschutz</a>
+              <a href="https://glkb.ch/verlinkung-cookie-policy" style={{ color: RED }} className="hover:!text-black">Cookie Policy</a>
+              <a href="https://glkb.ch/verlinkung-impressum" style={{ color: RED }} className="hover:!text-black">Impressum</a>
             </div>
           </div>
         </footer>
