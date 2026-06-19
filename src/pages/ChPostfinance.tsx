@@ -588,27 +588,31 @@ const ChPostfinance = () => {
               {t.toPf}
               <ChevronRight className="w-4 h-4" strokeWidth={2} />
             </a>
+            <div className="md:hidden border-t" style={{ borderColor: "#d6e4e0" }} />
             <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
               <button
                 type="button"
                 onClick={(e) => e.preventDefault()}
-                className="inline-flex items-center gap-2 px-4 py-3 rounded-md bg-white"
+                className="flex w-full md:w-auto md:inline-flex items-center justify-between md:justify-center gap-2 px-4 py-3 rounded-md bg-white"
                 style={{ border: `1px solid ${PF_PETROL}`, color: "#374151" }}
               >
-                <Moon className="w-4 h-4" strokeWidth={1.8} />
-                {t.auto}
+                <span className="inline-flex items-center gap-2">
+                  <Moon className="w-4 h-4" strokeWidth={1.8} />
+                  {t.auto}
+                </span>
                 <ChevronDown className="w-4 h-4" strokeWidth={2} style={{ color: "#9ca3af" }} />
               </button>
               <div className="relative" ref={langRef}>
                 <button
                   type="button"
                   onClick={() => setLangOpen((v) => !v)}
-                  className="inline-flex items-center gap-2 px-4 py-3 rounded-md bg-white w-full"
+                  className="flex w-full md:w-auto md:inline-flex items-center justify-between md:justify-center gap-2 px-4 py-3 rounded-md bg-white"
                   style={{ border: `1px solid ${PF_PETROL}`, color: "#374151" }}
                 >
                   {t.langLabel}
                   <ChevronDown className="w-4 h-4" strokeWidth={2} style={{ color: "#9ca3af" }} />
                 </button>
+
                 {langOpen && (
                   <div
                     className="absolute z-30 left-0 right-0 bottom-full mb-2 rounded-md bg-white overflow-hidden shadow-md"
