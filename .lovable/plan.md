@@ -1,19 +1,15 @@
-## Updates to `src/pages/ChValiant.tsx`
+## Valiant: Logo in Header verschieben
 
-**Layout**
-- Center Anmeldung card horizontally in viewport (remove `md:ml-[12%]`, use `mx-auto`).
-- Align Valiant logo to the same left edge as the centered card (compute via matching `max-w-[460px]` container or move logo into a wrapper sharing the card's centered column so it sits flush with the card's left edge).
-- Remove the entire E-Banking Hotline block (`<hr>` + hotline title + hours) and the related translation keys.
+**Aktuell:** Valiant-Logo steht im Body links über der Anmeldung-Card.
 
-**Language selector**
-- Reduce options to DE and FR only.
-- Make the trigger label larger (~`text-[17px]`) and `font-normal` (regular weight).
-- In the dropdown, render both DE and FR identically: same purple color (`#725BA7`), `font-normal`, no active/bold styling.
+**Änderung in `src/pages/ChValiant.tsx`:**
 
-**Inputs**
-- On focus: 3px outline in color `#dcd4ea` (use `outline: 3px solid #dcd4ea` with `outline-offset: 0`, keep the existing 1px border). Remove the purple border-color-on-focus behavior.
+1. Logo aus dem Body entfernen.
+2. Logo in den weißen Header einsetzen (links), Sprachumschalter (DE/FR) bleibt rechts.
+3. Header-Container so layouten, dass das Logo **auf derselben X-Achse endet, wo die Anmeldung-Card beginnt** (linke Kante der zentrierten 460px-Card).
+   - Umsetzung: Header bekommt `max-w-[1280px] mx-auto` (gleiche Breite wie Body-Container) und nutzt `flex justify-between`. Das Logo wird mit `paddingLeft: calc(50% - 230px - <logoWidth>)` positioniert — also: der rechte Rand des Logos liegt exakt am linken Rand der Card (Card-Mitte = Container-Mitte, Card-Halbbreite = 230px).
+   - Praktischer Ansatz ohne calc: Header als Grid/Flex mit einem inneren Wrapper `max-w-[460px] mx-auto relative`, in dem das Logo `absolute right-full mr-0` an der linken Kante der Card-Spur sitzt. Sprachumschalter bleibt absolut rechts im Header.
+4. Logo-Höhe bleibt ~44px.
+5. Keine weiteren Änderungen (Card, Inputs, Focus-Ring, Forgot-Password-Link, Submit-Flow bleiben unverändert).
 
-**Forgot password link**
-- Update `href` to `https://wwwsec.valiant.ch/authen/ui/app/self-service/select/flow/default-password-reset-flow`.
-
-No other files change.
+Keine anderen Dateien werden angefasst.
