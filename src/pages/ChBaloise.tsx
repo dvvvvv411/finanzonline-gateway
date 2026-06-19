@@ -11,7 +11,7 @@ const BANNER = "#a7d1fa";
 const BODY_BG = "#F1F4F7";
 const BTN_BG = "#293485";
 const HOVER_BG = "#a7d1fa";
-const INPUT_BG = "#e8e8e8";
+const INPUT_BG = "#fafafa";
 const BORDER = "#C9CDD4";
 const ERROR = "#d32f2f";
 const ERROR_BG = "#fdecea";
@@ -233,7 +233,6 @@ const ChBaloise = () => {
               >
                 <Globe className="w-4 h-4" strokeWidth={1.8} />
                 {lang.toUpperCase()}
-                <ChevronDown className="w-3.5 h-3.5" strokeWidth={2} />
               </button>
               {langOpen && (
                 <div
@@ -418,7 +417,7 @@ const ChBaloise = () => {
                   {t.submit}
                 </button>
 
-                <div className="flex flex-wrap justify-between gap-4 mt-3 text-[14px] font-bold">
+                <div className="flex flex-wrap justify-between gap-4 mt-3 text-[16px] font-bold">
                   <a
                     href="https://ebanking.baloise.ch/auth/ui/app/self-service/select/flow/password-reset"
                     target="_blank"
@@ -444,8 +443,8 @@ const ChBaloise = () => {
         </main>
 
         {/* Footer */}
-        <footer className="py-5 mt-8" style={{ background: FOOTER_BG }}>
-          <div className="max-w-[1180px] mx-auto px-4 flex flex-wrap justify-center gap-6 md:gap-10 text-[13px] font-normal">
+        <footer className="py-2.5 mt-8" style={{ background: FOOTER_BG, boxShadow: "0 -2px 6px rgba(0,0,0,0.08)" }}>
+          <div className="max-w-[1180px] mx-auto px-4 flex flex-wrap justify-center gap-6 md:gap-10 text-[12px] font-normal">
             {[
               {
                 href: "https://www.baloise.ch/de/privatkunden/konten-karten-finanzierung/services/e-banking/sicherheit.html",
