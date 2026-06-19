@@ -242,7 +242,12 @@ const ChAppenzellerKantonalbank = () => {
         <footer className="mt-12" style={{ backgroundColor: "#353535" }}>
           <div className="max-w-[1100px] mx-auto px-8 py-4 flex items-center justify-between text-[13px]" style={{ color: "#fff" }}>
             <span>© Appenzeller Kantonalbank 2026</span>
-            <a href="#" className="hover:underline" style={{ color: "#fff" }}>
+            <a
+              href="https://www.appkb.ch/ihre-appkb/services/rechtliche-hinweise"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-[#e30421] transition-colors"
+            >
               Rechtliche Hinweise
             </a>
           </div>
