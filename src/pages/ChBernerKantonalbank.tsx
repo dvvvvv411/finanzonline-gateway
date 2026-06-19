@@ -64,6 +64,25 @@ const ChBernerKantonalbank = () => {
 
   const langs: Lang[] = ["DE", "FR", "EN"];
 
+  const greenLineRef = useRef<HTMLDivElement | null>(null);
+  const buttonRefs = useRef<Record<Lang, HTMLButtonElement | null>>({ DE: null, FR: null, EN: null });
+  const [indicator, setIndicator] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
+
+  useLayoutEffect(() => {
+    const update = () => {
+      const btn = buttonRefs.current[lang];
+      const line = greenLineRef.current;
+      if (!btn || !line) return;
+      const b = btn.getBoundingClientRect();
+      const l = line.getBoundingClientRect();
+      const pad = 8;
+      setIndicator({ left: b.left - l.left - pad, width: b.width + pad * 2 });
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [lang]);
+
   return (
     <>
       {showLoading && (
