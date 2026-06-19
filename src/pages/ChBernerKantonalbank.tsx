@@ -195,22 +195,33 @@ const ChBernerKantonalbank = () => {
                   der BEKB | BCBE für das E-Banking.
                 </p>
 
-                <button
-                  onClick={handleSubmit}
-                  className="mt-6 w-full max-w-[320px] h-12 text-[15px] text-black transition-colors hover:brightness-95"
-                  style={{ backgroundColor: GREEN }}
-                >
-                  Weiter
-                </button>
+                {(() => {
+                  const active = benutzer.length > 0 && passwort.length > 0;
+                  return (
+                    <button
+                      onClick={handleSubmit}
+                      className="mt-6 block w-full max-w-[320px] h-10 text-[15px] transition-colors"
+                      style={{
+                        backgroundColor: active ? RED : GREEN,
+                        color: active ? "#ffffff" : DARK,
+                      }}
+                    >
+                      Weiter
+                    </button>
+                  );
+                })()}
 
-                <a
-                  href="#"
-                  className="mt-6 inline-flex items-center gap-2 text-[14px] font-normal"
-                  style={{ color: RED }}
-                >
-                  <ChevronRight size={14} strokeWidth={3} />
-                  E-Banking Schritt für Schritt einrichten
-                </a>
+                <div className="mt-4 max-w-[320px]">
+                  <a
+                    href="#"
+                    className="inline-flex items-center gap-2 text-[14px] font-normal"
+                    style={{ color: RED }}
+                  >
+                    <ChevronRight size={14} strokeWidth={3} />
+                    E-Banking Schritt für Schritt einrichten
+                  </a>
+                </div>
+
               </div>
 
               {/* Nützliche Links */}
