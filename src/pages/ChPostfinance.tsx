@@ -160,7 +160,7 @@ const ChPostfinance = () => {
       <div
         className="min-h-screen flex flex-col"
         style={{
-          background: PF_MINT,
+          background: PF_CONTENT_BG,
           color: PF_PETROL,
           fontFamily:
             "'PostFinance Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
