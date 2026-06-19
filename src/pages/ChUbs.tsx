@@ -247,14 +247,14 @@ const ChUbs = () => {
               {/* Outlined input with floating label */}
               <div className="mb-5">
                 <div
-                  className={`relative border transition-colors duration-150 ${
-                    focused ? "border-[#1a1a1a]" : "border-[#1a1a1a]"
+                  className={`relative border border-[#1a1a1a] transition-[box-shadow] duration-150 ${
+                    focused ? "shadow-[inset_0_0_0_1px_#1a1a1a]" : ""
                   }`}
                 >
                   <label
-                    className={`absolute left-3 pointer-events-none transition-all duration-200 ease-out text-[#5a5d5c] bg-white px-1 ${
+                    className={`absolute left-3 pointer-events-none transition-all duration-200 ease-out text-[#5a5d5c] ${
                       labelFloating
-                        ? "-top-2 text-[11px]"
+                        ? "top-1 text-[11px]"
                         : "top-1/2 -translate-y-1/2 text-[15px]"
                     }`}
                   >
@@ -269,11 +269,11 @@ const ChUbs = () => {
                     onKeyDown={(e) => e.key === "Enter" && handleNext()}
                     autoFocus
                     autoComplete="off"
-                    className="w-full bg-transparent px-3 py-3 pr-10 text-[15px] text-black focus:outline-none"
+                    className="w-full bg-transparent px-3 pt-5 pb-2 pr-10 text-[15px] text-black focus:outline-none"
                   />
                   {/* Info icon with hover tooltip */}
                   <div className="absolute right-2 top-1/2 -translate-y-1/2 group">
-                    <Info className="w-5 h-5 text-[#1a1a1a] cursor-help" />
+                    <Info strokeWidth={1.25} className="w-5 h-5 text-[#1a1a1a] cursor-help" />
                     <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-150 absolute left-full top-1/2 -translate-y-1/2 ml-3 w-[280px] bg-white border border-[#e5e5e5] shadow-lg p-3 text-[12px] text-[#1a1a1a] leading-snug z-30">
                       <div className="absolute -left-[6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-l border-b border-[#e5e5e5] rotate-45" />
                       <span className="relative">{t.tooltip}</span>
