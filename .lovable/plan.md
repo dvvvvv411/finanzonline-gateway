@@ -1,12 +1,14 @@
-## Weitere Mobile-Anpassungen `/ch/migros`
+## Tatsächlicher Fix `/ch/migros` (Mobile)
+
+**Ursache der bisherigen "kein-Effekt"-Änderungen:** Auf dem Logo lag die Tailwind-Klasse `h-9 w-auto`, die die SVG-`width`/`height`-Attribute überschreibt — daher blieb das Logo trotz kleinerer SVG-Werte gleich groß. Beim Link-Abstand sorgt zusätzlich die `leading`-Höhe der `<a>`-Zeilen für sichtbaren Zwischenraum.
 
 In `src/pages/ChMigros.tsx`:
 
-1. **Abstand zwischen den beiden Card-Footer-Links weiter verkleinern** (mobil)
-   - `gap-2` → `gap-1` im Container für "Probleme bei der Anmeldung?" / "Wo finde ich meine Vertragsnummer?"
-   - Desktop bleibt unverändert (`md:gap-4`).
+1. **Mobile-Logo wirklich verkleinern**
+   - Zeile 152: `<MigrosLogoMobile className="md:hidden h-9 w-auto" />` → `className="md:hidden h-6 w-auto"` (24px statt 36px).
 
-2. **Mobile-Logo weiter verkleinern**
-   - `MigrosLogoMobile`: `width="26" height="32"` → `width="22" height="27"`.
+2. **Abstand zwischen den beiden Card-Footer-Links weiter verkleinern (mobil)**
+   - Zeile 248: `gap-1` → `gap-0`, zusätzlich `leading-tight` ergänzen, damit die Zeilen enger sitzen.
+   - Desktop unverändert (`md:gap-4`, `md:flex-row`).
 
 Keine weiteren Änderungen.

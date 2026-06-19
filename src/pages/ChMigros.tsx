@@ -149,7 +149,7 @@ const ChMigros = () => {
         {/* Header */}
         <header className="flex items-center justify-between px-5 md:px-10 py-5">
           <MigrosLogoDesktop className="hidden md:block h-11 w-auto" />
-          <MigrosLogoMobile className="md:hidden h-9 w-auto" />
+          <MigrosLogoMobile className="md:hidden h-6 w-auto" />
           <div className="flex items-center gap-6">
             {/* Language switch */}
             <ul className="flex items-center gap-4 text-[15px]" style={{ color: GREEN }}>
@@ -245,7 +245,7 @@ const ChMigros = () => {
               </button>
             </form>
 
-            <div className="flex flex-col-reverse items-center gap-1 mt-20 text-[14px] md:flex-row md:justify-between md:gap-4">
+            <div className="flex flex-col-reverse items-center gap-0 leading-tight mt-20 text-[14px] md:flex-row md:justify-between md:gap-4">
               <a
                 href="https://www.migrosbank.ch/hilfe/neues-ebanking/wo-finde-ich-meine-vertragsnummer"
                 target="_blank"
