@@ -417,7 +417,7 @@ const ChBaloise = () => {
                   {t.submit}
                 </button>
 
-                <div className="flex flex-wrap justify-between gap-4 mt-3 text-[16px] font-bold">
+                <div className="flex flex-wrap justify-center sm:justify-between gap-4 mt-3 text-[16px] font-bold">
                   <a
                     href="https://ebanking.baloise.ch/auth/ui/app/self-service/select/flow/password-reset"
                     target="_blank"

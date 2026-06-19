@@ -1,18 +1,5 @@
-Änderungen an `src/pages/ChBaloise.tsx`:
+In `src/pages/ChBaloise.tsx` den Links-Container (Zeile 421) so anpassen, dass die Links "Passwort vergessen" und "Neues Gerät aktivieren" in der Mobile-View mittig zentriert untereinander/nebeneinander stehen, ab `sm:` wieder `justify-between`.
 
-**Footer**
-- Vertikales Padding reduzieren (z.B. `py-4` → `py-2.5`), Schriftgröße leicht verkleinern.
-- Schatten oberhalb des Footers als Divider: `box-shadow: 0 -2px 6px rgba(0,0,0,0.08)` (statt/zusätzlich zum bestehenden Border-Top).
-
-**Login-Links**
-- "Passwort vergessen?" und "Neues Gerät aktivieren" von aktueller Größe auf `text-base` (16px) erhöhen.
-
-**Eingabefelder**
-- Hover-Hintergrund: von `#e8e8e8` → `#fafafa`.
-- Focus-Hintergrund: von `#e8e8e8` → `#fafafa`.
-- `inputStyle`-Helper entsprechend anpassen.
-
-**Language Selector**
-- ChevronDown-Icon aus dem Sprach-Button entfernen (Import ggf. bereinigen).
-
-Keine weiteren Dateien betroffen.
+Änderung:
+- `justify-between` → `justify-center sm:justify-between`
+- Gap bleibt; auf Mobile stapeln/zentrieren die Links automatisch dank `flex-wrap`.
