@@ -355,7 +355,7 @@ const ChPostfinance = () => {
                   >
                     Benötigen Sie Hilfe?
                   </h3>
-                  <ul className="flex flex-col gap-3 text-[14px]">
+                  <ul className="flex flex-col gap-1 text-[14px]">
                     {[
                       {
                         label: "Support zum Login",
@@ -383,7 +383,7 @@ const ChPostfinance = () => {
                           style={{ color: PF_PETROL }}
                         >
                           {l.label}
-                          <ChevronRight className="w-4 h-4" strokeWidth={2} />
+                          <ChevronRight className="w-4 h-4" strokeWidth={1.25} style={{ color: "#9ca3af" }} />
                         </a>
                       </li>
                     ))}
