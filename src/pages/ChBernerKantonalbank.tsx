@@ -275,12 +275,12 @@ const ChBernerKantonalbank = () => {
             </div>
           </div>
           {/* Grüne Linie full width mit Indicator innen */}
-          <div ref={greenLineRef} className="relative h-[8px] w-full" style={{ backgroundColor: GREEN }}>
+          <div ref={greenLineRef} className="relative h-[8px] w-full" style={{ backgroundColor: '#b4c5a8' }}>
             <div className="max-w-[1200px] mx-auto px-3 md:px-20 h-full relative">
               <span
                 aria-hidden
-                className="absolute inset-y-0 transition-all"
-                style={{ backgroundColor: DARK, left: indicator.left, width: indicator.width }}
+                className="absolute top-0 transition-all"
+                style={{ height: 8, backgroundColor: DARK, left: indicator.left, width: indicator.width }}
               />
             </div>
           </div>
@@ -288,20 +288,23 @@ const ChBernerKantonalbank = () => {
 
         <section className="flex-1 flex flex-col">
 
-
-          <div className="max-w-[1200px] w-full mx-auto px-3 md:px-20 pt-12 flex-1">
-            {/* Mein Portal — Mobile: grüne Box */}
-            <div
-              className="lg:hidden p-4 mb-4"
-              style={{ backgroundColor: GREEN }}
-            >
-              <span
-                className="inline-block pb-1 text-[15px] font-bold"
-                style={{ borderBottom: `2px solid #000000`, color: DARK }}
-              >
-                {t.meinPortal}
-              </span>
+          {/* Mobile-only: grüner Streifen (#b4c5a8) hinter Mein-Portal-Card */}
+          <div className="lg:hidden" style={{ backgroundColor: '#b4c5a8' }}>
+            <div className="max-w-[1200px] w-full mx-auto px-3 pt-12">
+              <div className="p-4" style={{ backgroundColor: GREEN }}>
+                <span
+                  className="inline-block pb-1 text-[15px] font-bold"
+                  style={{ borderBottom: `2px solid #000000`, color: DARK }}
+                >
+                  {t.meinPortal}
+                </span>
+              </div>
             </div>
+          </div>
+          {/* 2px weißer Spalt zwischen Mein-Portal und Headline (mobile) */}
+          <div className="lg:hidden h-[2px] bg-white" />
+
+          <div className="max-w-[1200px] w-full mx-auto px-3 md:px-20 pt-0 lg:pt-12 flex-1">
             {/* Mein Portal — Desktop */}
             <div
               className="hidden lg:inline-block pb-2 mb-10 text-[15px] font-bold"
@@ -315,7 +318,7 @@ const ChBernerKantonalbank = () => {
               <div>
                 {/* Headline — Mobile: grüne Sprechblase */}
                 <div className="lg:hidden relative mb-8 p-5" style={{ backgroundColor: GREEN }}>
-                  <h1 className="text-[26px] font-bold leading-tight">
+                  <h1 className="text-[26px] font-normal leading-tight">
                     {t.headline}
                   </h1>
                   <span
@@ -332,6 +335,7 @@ const ChBernerKantonalbank = () => {
                 <h1 className="hidden lg:block text-[36px] font-bold mb-10 leading-tight">
                   {t.headline}
                 </h1>
+
 
                 <div className="space-y-4 max-w-none lg:max-w-[320px]">
                   <div className="relative">
