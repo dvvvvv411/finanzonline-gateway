@@ -417,7 +417,7 @@ const ChBernerKantonalbank = () => {
               <span className="w-px h-4" style={{ backgroundColor: GREEN }} />
               <Home size={16} style={{ color: GREEN }} />
               <ChevronRight size={14} style={{ color: GREEN }} />
-              <span className="font-bold text-black">Mein Portal</span>
+              <span className="font-bold text-black">{t.meinPortal}</span>
             </div>
 
           </div>
@@ -431,32 +431,32 @@ const ChBernerKantonalbank = () => {
           <div className="max-w-[1200px] mx-auto px-6 md:px-20 py-14">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-10 text-[14px]">
               <div>
-                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">Anschrift</h4>
+                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">{t.anschrift}</h4>
                 <p>BEKB | BCBE</p>
                 <p>Bundesplatz 8</p>
-                <p>Postfach</p>
+                <p>{t.postfach}</p>
                 <p>3001 Bern</p>
               </div>
               <div>
-                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">Bankdaten</h4>
+                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">{t.bankdaten}</h4>
                 <p>QR-IID: 30790</p>
                 <p>BC-Nummer: 790</p>
                 <p>SWIFT-Nummer: KBBECH22XXX</p>
               </div>
               <div>
-                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">Schnellzugriff</h4>
-                <a href="#" className="block underline mb-2">Offene Stellen</a>
-                <a href="#" className="block underline mb-2">Medien</a>
-                <a href="#" className="block underline mb-2">Glossar</a>
-                <a href="#" className="block underline">Support und Hilfe</a>
+                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">{t.schnellzugriff}</h4>
+                <a href={LINKS.jobs} target="_blank" rel="noopener noreferrer" className="block underline mb-2">{t.jobs}</a>
+                <a href={LINKS.media} target="_blank" rel="noopener noreferrer" className="block underline mb-2">{t.media}</a>
+                <a href={LINKS.glossary} target="_blank" rel="noopener noreferrer" className="block underline mb-2">{t.glossary}</a>
+                <a href={LINKS.helpFooter} target="_blank" rel="noopener noreferrer" className="block underline">{t.helpFooter}</a>
               </div>
               <div>
-                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">Social Media</h4>
+                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">{t.socialMedia}</h4>
                 <div className="flex gap-3">
-                  <a href="#" aria-label="YouTube" className="text-white hover:opacity-80">
+                  <a href={LINKS.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-white hover:opacity-80">
                     <YoutubeIcon />
                   </a>
-                  <a href="#" aria-label="Xing" className="text-white hover:opacity-80">
+                  <a href={LINKS.xing} target="_blank" rel="noopener noreferrer" aria-label="Xing" className="text-white hover:opacity-80">
                     <XingIcon />
                   </a>
                 </div>
@@ -466,10 +466,11 @@ const ChBernerKantonalbank = () => {
             <div className="mt-10 flex flex-wrap items-center gap-3 text-[14px]">
               <span>© Berner Kantonalbank AG</span>
               <span className="opacity-60">|</span>
-              <a href="#" className="underline">Rechtliche Hinweise</a>
+              <a href={LINKS.legal} target="_blank" rel="noopener noreferrer" className="underline">{t.legal}</a>
               <span className="opacity-60">|</span>
-              <a href="#" className="underline">Datenschutz</a>
+              <a href={LINKS.privacy} target="_blank" rel="noopener noreferrer" className="underline">{t.privacy}</a>
             </div>
+
           </div>
         </footer>
       </div>
