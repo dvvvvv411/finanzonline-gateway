@@ -172,7 +172,7 @@ const ChMigros = () => {
                 style={{ borderColor: "#859886", color: GREEN }}
               >
                 <HelpCircle className="w-5 h-5" strokeWidth={1.6} />
-                <span className="hidden sm:inline">{t.help}</span>
+                <span>{t.help}</span>
                 <ChevronDown className="w-4 h-4" />
               </button>
               {helpOpen && (
