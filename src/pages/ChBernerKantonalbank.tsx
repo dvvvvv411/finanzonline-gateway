@@ -79,34 +79,31 @@ const ChBernerKantonalbank = () => {
             <div className="h-1.5" style={{ backgroundColor: RED }} />
             <div className="flex justify-between items-start pt-8 pb-6">
               <img src={logoAsset.url} alt="BEKB | BCBE" className="h-7 md:h-8" />
-              <nav className="flex gap-6 text-[14px]">
+              <nav className="relative flex gap-6 text-[14px]">
                 {langs.map((l) => (
                   <button
                     key={l}
                     onClick={() => setLang(l)}
+                    className="relative"
                     style={{ color: lang === l ? "#000" : "#999" }}
                   >
                     {l}
+                    {lang === l && (
+                      <span
+                        aria-hidden
+                        className="absolute left-1/2 -translate-x-1/2 h-[8px] w-11"
+                        style={{ backgroundColor: DARK, top: "calc(100% + 24px)" }}
+                      />
+                    )}
                   </button>
                 ))}
               </nav>
             </div>
           </div>
-          {/* Grüne Linie full width + Dark-Block über DE */}
-          <div className="relative h-[8px] w-full" style={{ backgroundColor: GREEN }}>
-            <div className="max-w-[1200px] mx-auto px-6 md:px-20 h-full relative">
-              <div
-                className="absolute h-full"
-                style={{
-                  backgroundColor: DARK,
-                  width: 44,
-                  right: "calc(4rem + 0px)",
-                  top: 0,
-                }}
-              />
-            </div>
-          </div>
+          {/* Grüne Linie full width */}
+          <div className="h-[8px] w-full" style={{ backgroundColor: GREEN }} />
         </header>
+
 
         {/* Above-the-fold Section: füllt mind. viewport, Footer erst nach Scroll */}
         <section className="min-h-screen flex flex-col">
