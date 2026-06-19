@@ -119,13 +119,13 @@ const ChGraubuendnerKantonalbank = () => {
           {/* Login Card */}
           <div
             className="w-full max-w-[980px] mx-auto bg-white overflow-hidden rounded-[6px]"
-            style={{ boxShadow: "0 14px 30px -10px rgba(0,0,0,0.18)" }}
+            style={{ boxShadow: "0 2px 8px -2px rgba(0,0,0,0.08)" }}
           >
-            <div className="flex flex-col md:flex-row md:min-h-[520px]">
+            <div className="flex flex-col md:flex-row md:h-[715px]">
               {/* Login (60%) */}
               <div className="md:w-3/5 flex flex-col px-8 md:px-12 py-10">
                 <h1
-                  className="text-[28px] md:text-[32px] font-bold mb-3"
+                  className="text-[22px] md:text-[26px] font-semibold mb-3"
                   style={{ color: TITLE_BLUE }}
                 >
                   GKB Login.
@@ -142,7 +142,7 @@ const ChGraubuendnerKantonalbank = () => {
                     type="text"
                     value={vertragsnummer}
                     onChange={(e) => setVertragsnummer(e.target.value)}
-                    className="w-full px-3 py-2.5 border outline-none text-[15px] rounded-[4px] border-[#cfd4dc] focus:border-[#025dad] focus:shadow-[0_0_0_3px_rgba(2,93,173,0.18)] transition-all"
+                    className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] rounded-[4px] outline-none focus:outline focus:outline-2 focus:outline-black hover:outline hover:outline-1 hover:outline-black"
                   />
                 </div>
 
@@ -155,7 +155,7 @@ const ChGraubuendnerKantonalbank = () => {
                       type={showPassword ? "text" : "password"}
                       value={passwort}
                       onChange={(e) => setPasswort(e.target.value)}
-                      className="w-full px-3 py-2.5 border outline-none text-[15px] pr-10 rounded-[4px] border-[#cfd4dc] focus:border-[#025dad] focus:shadow-[0_0_0_3px_rgba(2,93,173,0.18)] transition-all"
+                      className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] pr-10 rounded-[4px] outline-none focus:outline focus:outline-2 focus:outline-black hover:outline hover:outline-1 hover:outline-black"
                     />
                     <button
                       type="button"
@@ -163,7 +163,7 @@ const ChGraubuendnerKantonalbank = () => {
                       className="absolute right-2 top-1/2 -translate-y-1/2"
                       aria-label="Passwort anzeigen"
                     >
-                      {showPassword ? <EyeOff size={18} color="#666" /> : <Eye size={18} color="#666" />}
+                      {showPassword ? <EyeOff size={18} color={BLUE} /> : <Eye size={18} color={BLUE} />}
                     </button>
                   </div>
                 </div>
@@ -181,7 +181,7 @@ const ChGraubuendnerKantonalbank = () => {
 
               {/* Carousel (40%) */}
               <div
-                className="md:w-2/5 flex flex-col relative"
+                className="md:w-2/5 relative overflow-hidden h-[420px] md:h-auto"
                 style={{ backgroundColor: "#eaf1f8" }}
                 onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
                 onTouchEnd={(e) => {
@@ -190,24 +190,22 @@ const ChGraubuendnerKantonalbank = () => {
                   else if (dx < -40) nextSlide();
                 }}
               >
-                {/* Image area */}
-                <div className="relative h-[240px] md:h-[55%] overflow-hidden">
-                  {slides.map((s, i) => (
-                    <img
-                      key={i}
-                      src={s.image}
-                      alt={s.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                      style={{ opacity: i === activeSlide ? 1 : 0 }}
-                    />
-                  ))}
-                </div>
+                {/* Images fill the full carousel column */}
+                {slides.map((s, i) => (
+                  <img
+                    key={i}
+                    src={s.image}
+                    alt={s.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                    style={{ opacity: i === activeSlide ? 1 : 0 }}
+                  />
+                ))}
 
-                {/* Arrows - square, blue */}
+                {/* Arrows - square, blue, vertically centered */}
                 <button
                   onClick={prevSlide}
                   aria-label="Vorheriges"
-                  className="absolute left-3 top-[120px] md:top-[27%] w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition z-10"
                   style={{ backgroundColor: BLUE }}
                 >
                   <ChevronLeft size={20} color="#fff" />
@@ -215,21 +213,21 @@ const ChGraubuendnerKantonalbank = () => {
                 <button
                   onClick={nextSlide}
                   aria-label="Nächstes"
-                  className="absolute right-3 top-[120px] md:top-[27%] w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition z-10"
                   style={{ backgroundColor: BLUE }}
                 >
                   <ChevronRight size={20} color="#fff" />
                 </button>
 
-                {/* Text card */}
-                <div className="flex-1 flex items-end p-4">
-                  <div className="w-full bg-white rounded-[4px] p-5 shadow-sm">
-                    <h3 className="font-bold text-[15px] mb-2 text-black leading-snug">
+                {/* Glass text card */}
+                <div className="absolute bottom-4 left-4 right-4 z-10">
+                  <div className="w-full rounded-[6px] p-4 bg-white/40 backdrop-blur-md border border-white/40 shadow-sm">
+                    <h3 className="font-semibold text-[15px] mb-2 text-black leading-snug">
                       {slides[activeSlide].title}
                     </h3>
-                    <p className="text-[13px] leading-relaxed mb-2" style={{ color: "#333" }}>
+                    <p className="text-[13px] leading-relaxed mb-2 text-black/80">
                       {slides[activeSlide].text}{" "}
-                      <a href="#" style={{ color: BLUE }} className="underline-offset-2 hover:underline">
+                      <a href="#" style={{ color: BLUE }} className="underline-offset-2 hover:underline font-medium">
                         {slides[activeSlide].linkText}
                       </a>
                     </p>
@@ -243,7 +241,7 @@ const ChGraubuendnerKantonalbank = () => {
                           style={{
                             height: 7,
                             width: 7,
-                            backgroundColor: i === activeSlide ? BLUE : "#cbd5e0",
+                            backgroundColor: i === activeSlide ? BLUE : "rgba(255,255,255,0.7)",
                           }}
                         />
                       ))}
@@ -257,9 +255,9 @@ const ChGraubuendnerKantonalbank = () => {
           {/* Hilfe Card */}
           <div
             className="w-full max-w-[980px] mx-auto bg-white rounded-[6px] mt-6 px-8 md:px-12 py-8"
-            style={{ boxShadow: "0 14px 30px -10px rgba(0,0,0,0.18)" }}
+            style={{ boxShadow: "0 2px 8px -2px rgba(0,0,0,0.08)" }}
           >
-            <h2 className="text-[18px] font-bold text-black mb-5">Sie brauchen Hilfe?</h2>
+            <h2 className="text-[18px] font-semibold text-black mb-5">Sie brauchen Hilfe?</h2>
             <ul className="space-y-4">
               {helpLinks.map((t, i) => (
                 <li key={i} className="flex items-center gap-3">
