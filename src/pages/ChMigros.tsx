@@ -13,6 +13,12 @@ const MigrosLogoDesktop = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
+const MigrosLogoMobile = ({ className = "" }: { className?: string }) => (
+  <svg width="32" height="40" viewBox="0 0 20 25" fill={GREEN} xmlns="http://www.w3.org/2000/svg" className={className} aria-label="Migros Bank">
+    <path d="M20 0V17.2092H15.5136V7.27579L11.1706 17.2092H8.7594L4.48994 7.27579V17.2092H0V0H6.00875L10.1347 9.72051L14.4532 0H20ZM0 25H20V20.5981H0V25Z" />
+  </svg>
+);
+
 const LANGS = [
   { code: "de", label: "De" },
   { code: "fr", label: "Fr" },
@@ -142,7 +148,8 @@ const ChMigros = () => {
       <div className="min-h-screen flex flex-col bg-white text-[#1a1a1a] font-sans overflow-x-hidden">
         {/* Header */}
         <header className="flex items-center justify-between px-5 md:px-10 py-5">
-          <MigrosLogoDesktop className="h-9 md:h-11 w-auto" />
+          <MigrosLogoDesktop className="hidden md:block h-11 w-auto" />
+          <MigrosLogoMobile className="md:hidden h-9 w-auto" />
           <div className="flex items-center gap-6">
             {/* Language switch */}
             <ul className="flex items-center gap-4 text-[15px]" style={{ color: GREEN }}>
@@ -165,7 +172,7 @@ const ChMigros = () => {
                 style={{ borderColor: "#859886", color: GREEN }}
               >
                 <HelpCircle className="w-5 h-5" strokeWidth={1.6} />
-                <span className="hidden sm:inline">{t.help}</span>
+                <span>{t.help}</span>
                 <ChevronDown className="w-4 h-4" />
               </button>
               {helpOpen && (
@@ -238,7 +245,7 @@ const ChMigros = () => {
               </button>
             </form>
 
-            <div className="flex flex-row items-center justify-between gap-4 mt-20 text-[14px]">
+            <div className="flex flex-col-reverse items-center gap-4 mt-20 text-[14px] md:flex-row md:justify-between md:gap-4">
               <a
                 href="https://www.migrosbank.ch/hilfe/neues-ebanking/wo-finde-ich-meine-vertragsnummer"
                 target="_blank"
@@ -255,7 +262,7 @@ const ChMigros = () => {
                 className="flex items-center gap-2 font-semibold"
                 style={{ color: GREEN }}
               >
-                <HelpCircle className="w-5 h-5" strokeWidth={1.6} />
+                <HelpCircle className="w-[14px] h-[14px]" strokeWidth={1.8} />
                 <span className="underline underline-offset-4">{t.problems}</span>
               </a>
             </div>
@@ -264,7 +271,7 @@ const ChMigros = () => {
 
         {/* Footer */}
         <footer className="px-5 md:px-10 py-5">
-          <ul className="flex flex-row flex-wrap items-center gap-12 text-[13px] font-semibold" style={{ color: GREEN }}>
+          <ul className="flex flex-col items-start gap-3 text-[13px] font-semibold md:flex-row md:items-center md:gap-12" style={{ color: GREEN }}>
             <li>
               <span>{t.copyright}</span>
             </li>
