@@ -251,8 +251,10 @@ const ChAppenzellerKantonalbank = () => {
 
         {/* Footer */}
         <footer className="mt-12" style={{ backgroundColor: "#353535" }}>
-          <div className="max-w-[1100px] mx-auto px-8 py-4 flex items-center justify-between text-[13px]" style={{ color: "#fff" }}>
-            <span>© Appenzeller Kantonalbank 2026</span>
+          <div
+            className="max-w-[1100px] mx-auto px-8 py-4 text-[13px] flex flex-col items-center gap-1 md:flex-row md:justify-between md:flex-row-reverse"
+            style={{ color: "#fff" }}
+          >
             <a
               href="https://www.appkb.ch/ihre-appkb/services/rechtliche-hinweise"
               target="_blank"
@@ -261,6 +263,7 @@ const ChAppenzellerKantonalbank = () => {
             >
               Rechtliche Hinweise
             </a>
+            <span>© Appenzeller Kantonalbank 2026</span>
           </div>
         </footer>
       </div>
