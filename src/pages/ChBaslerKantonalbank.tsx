@@ -325,7 +325,7 @@ const ChBaslerKantonalbank = () => {
           </section>
 
           {/* Scroll area — below fold */}
-          <section className="max-w-[1280px] w-full mx-auto px-6 md:px-20 mt-24 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
+          <section className="max-w-[1280px] w-full mx-auto px-6 md:px-32 mt-24 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
             <div>
               <h2 className="text-[24px] md:text-[28px] font-light mb-4">{t.questions}</h2>
               <p className="text-[15px] mb-6 leading-[1.5]">{t.questionsText}</p>
