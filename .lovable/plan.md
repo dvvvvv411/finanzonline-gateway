@@ -1,12 +1,12 @@
-## Mobile-View Anpassungen `/ch/migros`
+## Weitere Mobile-Anpassungen `/ch/migros`
 
 In `src/pages/ChMigros.tsx`:
 
-1. **Abstand zwischen den Card-Footer-Links verkleinern** (mobil)
-   - `gap-4` → `gap-2` im Container für "Probleme bei der Anmeldung?" und "Wo finde ich meine Vertragsnummer?"
+1. **Abstand zwischen den beiden Card-Footer-Links weiter verkleinern** (mobil)
+   - `gap-2` → `gap-1` im Container für "Probleme bei der Anmeldung?" / "Wo finde ich meine Vertragsnummer?"
    - Desktop bleibt unverändert (`md:gap-4`).
 
-2. **Mobile-Logo verkleinern**
-   - `MigrosLogoMobile`: `width="32" height="40"` → `width="26" height="32"`.
+2. **Mobile-Logo weiter verkleinern**
+   - `MigrosLogoMobile`: `width="26" height="32"` → `width="22" height="27"`.
 
 Keine weiteren Änderungen.
