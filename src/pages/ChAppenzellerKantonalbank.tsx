@@ -88,9 +88,9 @@ const ChAppenzellerKantonalbank = () => {
                 {/* Header */}
                 <div
                   className="flex items-center"
-                  style={{ height: 25, paddingLeft: 24, paddingRight: 24, borderBottom: `3px solid ${RED}` }}
+                  style={{ height: 40, paddingLeft: 24, paddingRight: 24, borderBottom: `3px solid ${RED}` }}
                 >
-                  <img src={logoAsset.url} alt="Appenzeller Kantonalbank" className="h-[18px]" />
+                  <img src={logoAsset.url} alt="Appenzeller Kantonalbank" className="h-[30px]" />
                 </div>
 
                 {/* Form */}
@@ -173,7 +173,7 @@ const ChAppenzellerKantonalbank = () => {
                 {/* top divider matching header height */}
                 <div
                   className="hidden md:block"
-                  style={{ height: 25, borderBottom: "2px solid #ddd" }}
+                  style={{ height: 40, borderBottom: "2px solid #ddd" }}
                 />
 
 
