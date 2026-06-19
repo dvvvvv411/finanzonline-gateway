@@ -351,13 +351,10 @@ const ChGraubuendnerKantonalbank = () => {
         </main>
 
         {/* Footer */}
-        <footer className="pb-6">
-          <div
-            className="w-full px-6 md:px-12 text-[13px] flex flex-col-reverse items-center gap-3 md:flex-row md:justify-between"
-            style={{ color: BLUE }}
-          >
-            <span>{t.copyright}</span>
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
+        <footer className="pb-6 px-6 md:px-12 text-[13px]" style={{ color: BLUE }}>
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <span className="order-2 md:order-none text-center md:text-left">{t.copyright}</span>
+            <div className="order-1 md:order-none flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-5">
               {footerLinks.map((l) => (
                 <a
                   key={l.key}
