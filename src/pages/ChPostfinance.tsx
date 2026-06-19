@@ -460,23 +460,26 @@ const ChPostfinance = () => {
                       </h2>
                       <label
                         htmlFor="pf-bid"
-                        className="flex items-center gap-2 text-[12px] mb-2"
-                        style={{ color: "#000", fontWeight: 800 }}
+                        className="flex items-center gap-2 text-[12px] mb-2 font-semibold md:font-extrabold"
+                        style={{ color: "#000" }}
                       >
                         {t.bid}
-                        <button
-                          type="button"
-                          aria-label="Info"
-                          className="inline-flex items-center justify-center"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setOpenInfo((v) => (v === "b" ? null : "b"));
-                          }}
-                        >
-                          <InfoDot size={32} />
-                        </button>
+                        <span className="relative inline-flex">
+                          <button
+                            type="button"
+                            aria-label="Info"
+                            className="inline-flex items-center justify-center"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setOpenInfo((v) => (v === "b" ? null : "b"));
+                            }}
+                          >
+                            <InfoDot size={24} />
+                          </button>
+                          {openInfo === "b" && <InfoPopover text={t.infoBid} />}
+                        </span>
                       </label>
-                      {openInfo === "b" && <InfoPopover text={t.infoBid} />}
+
                       <input
                         id="pf-bid"
                         type="text"
