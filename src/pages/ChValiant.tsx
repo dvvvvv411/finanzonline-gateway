@@ -117,7 +117,7 @@ const ChValiant = () => {
       >
         {/* Header */}
         <header className="w-full bg-white">
-          <div className="relative w-full px-4 py-5">
+          <div className="relative w-full px-4 py-5" style={{ minHeight: 72 }}>
             {/* Centered track matching the card width; logo ends at the card's left edge */}
             <div className="mx-auto relative" style={{ maxWidth: CARD_MAX }}>
               <a
