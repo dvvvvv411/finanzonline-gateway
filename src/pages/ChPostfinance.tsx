@@ -256,12 +256,13 @@ const FieldUnderline = () => (
 const InfoPopover = ({ text }: { text: string }) => (
   <div
     role="tooltip"
-    className="absolute z-20 left-0 bottom-full mb-2 max-w-[340px] w-[min(340px,90vw)] rounded-md px-3 py-2 text-[13px] leading-relaxed whitespace-pre-line bg-white shadow-sm"
+    className="absolute z-20 left-1/2 -translate-x-1/2 bottom-full mb-1 max-w-[340px] w-[min(340px,90vw)] rounded-md px-3 py-2 text-[13px] leading-relaxed whitespace-pre-line bg-white shadow-sm"
     style={{ border: `1px solid ${PF_INFO_BLUE}`, color: PF_INFO_BLUE }}
   >
     {text}
   </div>
 );
+
 
 const ChPostfinance = () => {
   const [searchParams] = useSearchParams();
