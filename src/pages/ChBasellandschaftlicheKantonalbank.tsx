@@ -6,8 +6,9 @@ import { usePageMeta } from "@/hooks/use-page-meta";
 import { Eye, EyeOff } from "lucide-react";
 import logoAsset from "@/assets/blkb-logo.svg.asset.json";
 
-const RED = "#ba0a12";
+const RED = "#FD000D";
 const LINK_RED = "#FD000D";
+const HOVER_RED = "#ba0a12";
 
 type FieldProps = {
   id: string;
@@ -136,7 +137,7 @@ const ChBasellandschaftlicheKantonalbank = () => {
 
         {/* Main Card */}
         <main className="flex-1 flex flex-col items-center px-4 md:px-6" style={{ backgroundColor: "#fafafa" }}>
-          <div className="w-full max-w-[580px] mt-16 md:mt-10 bg-white shadow-lg rounded-sm p-6 md:p-12">
+          <div className="w-full max-w-[580px] mt-16 md:mt-10 bg-white shadow-[0_0_20px_rgba(0,0,0,0.12)] rounded-sm p-6 md:p-12">
             <h1 className="text-[22px] md:text-[24px] font-bold text-black mb-8">
               Login E-Banking
             </h1>
