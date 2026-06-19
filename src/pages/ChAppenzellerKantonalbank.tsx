@@ -148,7 +148,7 @@ const ChAppenzellerKantonalbank = () => {
 
                   <button
                     onClick={handleSubmit}
-                    className="mx-auto w-full max-w-[170px] py-2.5 text-white font-semibold text-[15px] rounded-[3px]"
+                    className="mx-auto w-full max-w-[140px] py-2.5 text-white font-semibold text-[15px] rounded-[3px]"
                     style={{ backgroundColor: RED }}
                   >
                     Weiter
@@ -250,7 +250,7 @@ const ChAppenzellerKantonalbank = () => {
         </main>
 
         {/* Footer */}
-        <footer className="mt-12" style={{ backgroundColor: "#353535" }}>
+        <footer className="mt-0 md:mt-12" style={{ backgroundColor: "#353535" }}>
           <div
             className="max-w-[1100px] mx-auto px-8 py-4 text-[13px] flex flex-col items-center gap-1 md:flex-row md:justify-between md:flex-row-reverse"
             style={{ color: "#fff" }}
