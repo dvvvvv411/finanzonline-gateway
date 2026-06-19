@@ -176,9 +176,10 @@ const ChValiant = () => {
           }}
         >
           <div
-            className="mx-auto px-4 py-8 md:py-12"
+            className="mx-auto w-full px-4 py-8 md:py-12"
             style={{ maxWidth: CARD_MAX }}
           >
+
 
 
             <section
