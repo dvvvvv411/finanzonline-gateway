@@ -184,7 +184,15 @@ const ChAppenzellerKantonalbank = () => {
                 />
 
 
-                <div className="relative group flex-1 min-h-[360px] overflow-hidden">
+                <div
+                  className="relative group flex-1 min-h-[360px] overflow-hidden"
+                  onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+                  onTouchEnd={(e) => {
+                    const dx = e.changedTouches[0].clientX - touchStartX.current;
+                    if (dx > 40) prevSlide();
+                    else if (dx < -40) nextSlide();
+                  }}
+                >
                   {slides.map((s, i) => (
                     <img
                       key={i}
@@ -195,11 +203,11 @@ const ChAppenzellerKantonalbank = () => {
                     />
                   ))}
 
-                  {/* Hover arrows */}
+                  {/* Hover arrows (desktop only) */}
                   <button
                     onClick={prevSlide}
                     aria-label="Vorheriges Bild"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
                     style={{ backgroundColor: RED }}
                   >
                     <ChevronLeft size={22} color="#fff" />
@@ -207,11 +215,12 @@ const ChAppenzellerKantonalbank = () => {
                   <button
                     onClick={nextSlide}
                     aria-label="Nächstes Bild"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
                     style={{ backgroundColor: RED }}
                   >
                     <ChevronRight size={22} color="#fff" />
                   </button>
+
 
                   {/* Blur overlay with margin */}
                   <div
