@@ -115,7 +115,7 @@ const ChBernerKantonalbank = () => {
               Mein Portal
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-12">
               {/* Login */}
               <div>
                 <h1 className="text-[26px] md:text-[36px] font-bold mb-10 leading-tight">
@@ -130,10 +130,21 @@ const ChBernerKantonalbank = () => {
                       value={benutzer}
                       onChange={(e) => setBenutzer(e.target.value)}
                       placeholder="Benutzeridentifikation"
-                      className="w-full bg-transparent outline-none text-[15px] text-black h-12 px-3 placeholder:text-[#545b68]"
+                      className="w-full bg-transparent outline-none text-[15px] text-black h-12 pl-3 pr-10 placeholder:text-[#545b68]"
                       style={{ borderLeft: `1px solid ${GREEN}`, borderBottom: `1px solid ${GREEN}` }}
                     />
+                    {benutzer.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setBenutzer("")}
+                        aria-label="Eingabe löschen"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-black"
+                      >
+                        <X size={18} />
+                      </button>
+                    )}
                   </div>
+
                   <div className="relative">
                     <input
                       id="bekb-pass"
