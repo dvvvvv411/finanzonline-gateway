@@ -139,7 +139,7 @@ const ChAppenzellerKantonalbank = () => {
 
                   <button
                     onClick={handleSubmit}
-                    className="mx-auto w-full max-w-[200px] py-2.5 text-white font-semibold text-[15px] rounded-[3px]"
+                    className="mx-auto w-full max-w-[170px] py-2.5 text-white font-semibold text-[15px] rounded-[3px]"
                     style={{ backgroundColor: RED }}
                   >
                     Weiter
@@ -147,7 +147,7 @@ const ChAppenzellerKantonalbank = () => {
 
                   <a
                     href="#"
-                    className="mt-4 text-center text-[14px] hover:underline"
+                    className="mt-4 text-center text-[14px]"
                     style={{ color: RED }}
                   >
                     E-Banking und TWINT sperren
@@ -157,7 +157,7 @@ const ChAppenzellerKantonalbank = () => {
 
                   <a
                     href="#"
-                    className="mt-10 text-center text-[14px] hover:underline"
+                    className="mt-10 text-center text-[14px]"
                     style={{ color: RED }}
                   >
                     Brauchen Sie Hilfe?
