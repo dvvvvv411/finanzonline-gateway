@@ -13,6 +13,12 @@ const MigrosLogoDesktop = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
+const MigrosLogoMobile = ({ className = "" }: { className?: string }) => (
+  <svg width="32" height="40" viewBox="0 0 20 25" fill={GREEN} xmlns="http://www.w3.org/2000/svg" className={className} aria-label="Migros Bank">
+    <path d="M20 0V17.2092H15.5136V7.27579L11.1706 17.2092H8.7594L4.48994 7.27579V17.2092H0V0H6.00875L10.1347 9.72051L14.4532 0H20ZM0 25H20V20.5981H0V25Z" />
+  </svg>
+);
+
 const LANGS = [
   { code: "de", label: "De" },
   { code: "fr", label: "Fr" },
