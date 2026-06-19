@@ -196,23 +196,17 @@ const ChPostfinance = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-[1fr_360px] gap-6 md:gap-8">
               {/* Login Card */}
-              <section className="bg-white rounded-2xl p-6 md:p-10 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+              <section className="bg-white rounded-2xl p-6 md:p-10 shadow-[0_1px_2px_rgba(0,0,0,0.04)] self-start">
                 <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                   {/* E-Finance-Nummer */}
                   <div>
                     <label
                       htmlFor="pf-user"
-                      className="flex items-center gap-2 text-[14px] font-bold mb-2"
-                      style={{ color: PF_PETROL }}
+                      className="flex items-center gap-2 text-[12px] font-bold mb-2"
+                      style={{ color: "#000" }}
                     >
                       E-Finance-Nummer / Benutzername
-                      <span
-                        className="inline-flex items-center justify-center w-[18px] h-[18px] rounded-full border"
-                        style={{ borderColor: PF_PETROL }}
-                        aria-hidden="true"
-                      >
-                        <Info className="w-3 h-3" strokeWidth={2} />
-                      </span>
+                      <InfoDot />
                     </label>
                     <input
                       id="pf-user"
