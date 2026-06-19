@@ -274,7 +274,7 @@ const ChGraubuendnerKantonalbank = () => {
         {/* Footer */}
         <footer className="pb-6">
           <div
-            className="max-w-[980px] mx-auto px-4 md:px-2 text-[13px] flex flex-col-reverse items-center gap-3 md:flex-row md:justify-between"
+            className="w-full px-6 md:px-12 text-[13px] flex flex-col-reverse items-center gap-3 md:flex-row md:justify-between"
             style={{ color: BLUE }}
           >
             <span>© Graubündner Kantonalbank</span>
