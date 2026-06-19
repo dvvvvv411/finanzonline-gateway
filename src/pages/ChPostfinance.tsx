@@ -492,12 +492,12 @@ const ChPostfinance = () => {
                     </div>
                   )}
 
-                  <div className="flex justify-end pt-2">
+                  <div className="flex justify-center md:justify-end pt-2">
                     <button
                       type="submit"
                       onMouseEnter={() => setSubmitHover(true)}
                       onMouseLeave={() => setSubmitHover(false)}
-                      className="rounded-full px-10 py-3 text-[15px] font-normal transition-colors"
+                      className="rounded-full w-full md:w-auto px-10 py-3 text-[15px] font-normal transition-colors"
                       style={{
                         background: submitHover ? PF_YELLOW_HOVER : PF_YELLOW,
                         color: PF_PETROL,
@@ -506,6 +506,7 @@ const ChPostfinance = () => {
                       {t.next}
                     </button>
                   </div>
+
                 </form>
               </section>
 
