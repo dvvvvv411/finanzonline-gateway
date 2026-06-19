@@ -251,6 +251,8 @@ const ChBernerKantonalbank = () => {
           </div>
 
         </section>
+        </div>
+
 
         {/* Footer */}
         <footer className="text-white" style={{ backgroundColor: FOOTER_BG }}>
