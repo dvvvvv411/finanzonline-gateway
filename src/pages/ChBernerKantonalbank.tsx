@@ -458,7 +458,7 @@ const ChBernerKantonalbank = () => {
 
         {/* Footer */}
         <footer className="text-white" style={{ backgroundColor: FOOTER_BG }}>
-          <div className="max-w-[1200px] mx-auto px-6 md:px-20 py-14">
+          <div className="max-w-[1200px] mx-auto px-3 md:px-20 py-14">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-10 text-[14px]">
               <div>
                 <h4 className="font-bold pb-2 mb-4 border-b border-white/40">{t.anschrift}</h4>
