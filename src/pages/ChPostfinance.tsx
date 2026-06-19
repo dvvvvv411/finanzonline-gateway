@@ -304,7 +304,7 @@ const ChPostfinance = () => {
                       type="submit"
                       onMouseEnter={() => setSubmitHover(true)}
                       onMouseLeave={() => setSubmitHover(false)}
-                      className="rounded-full px-10 py-3 text-[15px] font-semibold transition-colors"
+                      className="rounded-full px-10 py-3 text-[15px] font-normal transition-colors"
                       style={{
                         background: submitHover ? PF_YELLOW_HOVER : PF_YELLOW,
                         color: PF_PETROL,
