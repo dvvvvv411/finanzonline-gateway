@@ -133,7 +133,7 @@ const LANG_OPTIONS: { code: Lang; label: string }[] = [
   { code: "en", label: "English" },
 ];
 
-const InfoDot = ({ size = 32 }: { size?: number }) => (
+const InfoDot = ({ size = 24 }: { size?: number }) => (
   <svg
     width={size}
     height={size}
@@ -148,6 +148,7 @@ const InfoDot = ({ size = 32 }: { size?: number }) => (
     <line x1="8" y1="7" x2="8" y2="12" strokeLinecap="round" />
   </svg>
 );
+
 
 const PostFinanceLogo = ({ className = "" }: { className?: string }) => (
   <svg
