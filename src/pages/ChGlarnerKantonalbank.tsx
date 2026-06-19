@@ -169,6 +169,9 @@ const ChGlarnerKantonalbank = () => {
                 </div>
               </div>
 
+              {/* Mobile separator */}
+              <div className="md:hidden h-[15px] w-full" style={{ backgroundColor: "#f5f5f5" }} />
+
               {/* Right column: carousel */}
               <div className="md:w-1/2 flex flex-col">
                 <div
