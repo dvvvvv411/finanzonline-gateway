@@ -511,7 +511,7 @@ const ChPostfinance = () => {
               </section>
 
               {/* Right column */}
-              <aside className="flex flex-col gap-6">
+              <aside className="hidden md:flex flex-col gap-6">
                 {/* Schnelles Login */}
                 <div className="bg-white rounded-2xl p-6">
                   <h3
