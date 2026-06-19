@@ -35,6 +35,7 @@ const ChAppenzellerKantonalbank = () => {
   const [passwort, setPasswort] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
+  const touchStartX = useRef(0);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
   usePageMeta("Appenzeller Kantonalbank – E-Banking", logoAsset.url);
