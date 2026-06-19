@@ -1,39 +1,17 @@
 ## Änderungen `src/pages/ChBernerKantonalbank.tsx`
 
-### Header
-- Grüne Full-Width-Linie: `h-[8px]` statt `h-[3px]`.
-- Aktiv-Markierung unter "DE" entfernen (kein Strich mehr unter dem Sprach-Button).
-- Stattdessen: in der grünen Linie (full width) ein Block in `#545b68`, etwas breiter als das DE-Label, horizontal an der DE-Position ausgerichtet. Realisierung: Header bekommt `relative`; grüne Leiste enthält absolut positionierten `<div className="h-[8px] bg-[#545b68]" style={{width: 40px, right-offset entsprechend Sprachblock}}>`. Position wird via Container (`max-w-[1200px] mx-auto`) berechnet — rechts-bündig ungefähr über dem "DE"-Button mit `w-12` und passendem `right`-Offset.
+### Grid
+- `lg:grid-cols-[3fr_1fr]` (75/25).
 
-### "Mein Portal" oben
-- Text `text-[#545b68]`, Underline (`border-b`) in `#000000`, Gewicht regular bold (also `font-bold` bleibt).
+### Language-Selector Indicator
+- Dark-Block (`#545b68`) muss unter der aktiven Sprache liegen (DE). Aktuell ist er rechts (über EN), weil `right`-Offset auf rechte Container-Kante referenziert.
+- Lösung: Den Indicator innerhalb der `<nav>` rendern. `<nav>` bekommt `relative`; jeder Sprach-Button bekommt `ref` (oder feste Breite). Einfacher: Indicator absolut zur Nav, links-Offset über Index der aktiven Sprache berechnet — `langs.indexOf(lang) * (button-Breite + gap)`. Bequemer: Buttons mit `relative`, jeder Button rendert bei Aktiv-Status einen `<span>` der per `position: absolute` an der grünen Linie sitzt (`top: calc(100% + padding)`, also unten am Header). 
+- Konkret: Indicator wandert vom grünen-Linien-Container in die `<nav>`. Jeder Button: `relative`, `pb-[...]`. Aktiver Button enthält `<span className="absolute left-1/2 -translate-x-1/2 h-[8px] w-11" style={{ backgroundColor: DARK, top: 'calc(100% + Xpx)' }} />` — wobei top so kalibriert wird, dass der Block exakt auf der 8px grünen Linie sitzt. Da die grüne Linie direkt unter dem Header-Container kommt: Header bleibt `relative`, Nav-Button nutzt `top: calc(100% + py-6-padding)` — präzise: wir messen den Abstand von Button-Unterkante zur grünen Linie. Header hat `pb-6` (24px) + grüne Linie ist `h-[8px]`, also Indicator soll genau diese 8px füllen → `top: 24px` (also `top-6`), `height: 8px`.
 
-### Login-Grid
-- Verhältnis ändern: `lg:grid-cols-[3fr_2fr]` (60/40).
+### Breadcrumb (unteres "Mein Portal")
+- Im Viewport bleiben (nicht zum Footer scrollen). Section ist `min-h-screen` — Breadcrumb sitzt am Ende der Section, also bereits oberhalb des Footers. Section behält `min-h-screen`. Sicherstellen, dass Breadcrumb mit `mt-auto` am unteren Rand sitzt (so dass es noch im initialen Viewport sichtbar ist — Header + Content + Breadcrumb füllen genau 100vh).
+- **Divider:** Vertikale Striche (`|`) zwischen den Elementen, NICHT horizontal. Layout (laut Referenz prnt.sc/dZarCJvbo6kZ): `🏠 | › | Mein Portal`. Vertikale Divider via `<span className="w-px h-4 bg-[#e4ead6]" />` zwischen Home-Icon, Chevron und Text. Kein horizontaler Strich davor.
+- Home-Icon und Chevron in `#e4ead6`, "Mein Portal" schwarz bold.
 
-### Eingabefelder
-- Echte HTML-`placeholder` statt floating label — Platzhalter bleibt sichtbar bei Fokus, verschwindet beim Tippen, verschiebt sich nicht.
-- Border: links + unten in `#e4ead6` (`border-l border-b`), oben/rechts ohne Rahmen.
-- Placeholder-Farbe `#545b68` (via inline style oder Tailwind `placeholder:text-[#545b68]`).
-- Eingabe-Container und Weiter-Button: Breite halbieren → `max-w-[320px]` statt `max-w-[640px]`.
-- Eye-Icon-Position passt zur neuen Breite.
-
-### Weiter-Button
-- `max-w-[320px]`.
-
-### "E-Banking Schritt für Schritt einrichten"
-- Nicht mehr `font-bold`, sondern regular.
-
-### Breadcrumb (Mein Portal unten)
-- Divider-Strich darüber entfernen.
-- Davor (links vor dem Home-Icon) neuer horizontaler Divider in `#e4ead6` (z.B. `<div className="h-px flex-1 bg-[#e4ead6]" />` neben den Icons — der Strich läuft also bis zum Haus-Icon).
-- Home-Icon + ChevronRight in `#e4ead6` (Farbe `text-[#e4ead6]`).
-- "Mein Portal"-Text bleibt schwarz, `font-bold`.
-
-### Viewport / Footer
-- Above-the-fold-Section auf `min-h-screen` (statt `flex-1`), so dass Footer erst nach Scroll sichtbar wird. Header bereits Teil der Seite — Lösung: Section bekommt `min-h-[calc(100vh-Headerhöhe)]` bzw. einfach `min-h-screen` und Footer nach Section.
-
-### Footer
-- Social-Media-Icons: SVG aus User-Vorgabe übernehmen. Zwei `<a>`-Tags mit inline SVG (YouTube + Xing) wie geliefert, weiß auf transparent (CSS `fill: currentColor`, `text-white`). Bestehende Lucide-Youtube + eigene XingIcon-Komponente ersetzen.
-- Divider über Copyright (`border-t border-white/30`) entfernen.
-- Zwischen "© Berner Kantonalbank AG", "Rechtliche Hinweise" und "Datenschutz" jeweils `|` Divider einfügen (vertikale Striche bzw. `<span>|</span>`).
+### Benutzeridentifikation-Input
+- Clear-Button (X) rechts im Eingabefeld, nur sichtbar wenn `benutzer.length > 0`. `onClick={() => setBenutzer("")}`. Lucide `X`-Icon, gleiche Position wie Eye-Icon im Passwort-Feld.

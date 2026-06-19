@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { Eye, EyeOff, Home, ChevronRight } from "lucide-react";
+import { Eye, EyeOff, Home, ChevronRight, X } from "lucide-react";
 import logoAsset from "@/assets/bekb-bcbe-logo.svg.asset.json";
 
 const RED = "#d00035";
@@ -79,34 +79,31 @@ const ChBernerKantonalbank = () => {
             <div className="h-1.5" style={{ backgroundColor: RED }} />
             <div className="flex justify-between items-start pt-8 pb-6">
               <img src={logoAsset.url} alt="BEKB | BCBE" className="h-7 md:h-8" />
-              <nav className="flex gap-6 text-[14px]">
+              <nav className="relative flex gap-6 text-[14px]">
                 {langs.map((l) => (
                   <button
                     key={l}
                     onClick={() => setLang(l)}
+                    className="relative"
                     style={{ color: lang === l ? "#000" : "#999" }}
                   >
                     {l}
+                    {lang === l && (
+                      <span
+                        aria-hidden
+                        className="absolute left-1/2 -translate-x-1/2 h-[8px] w-11"
+                        style={{ backgroundColor: DARK, top: "calc(100% + 24px)" }}
+                      />
+                    )}
                   </button>
                 ))}
               </nav>
             </div>
           </div>
-          {/* Grüne Linie full width + Dark-Block über DE */}
-          <div className="relative h-[8px] w-full" style={{ backgroundColor: GREEN }}>
-            <div className="max-w-[1200px] mx-auto px-6 md:px-20 h-full relative">
-              <div
-                className="absolute h-full"
-                style={{
-                  backgroundColor: DARK,
-                  width: 44,
-                  right: "calc(4rem + 0px)",
-                  top: 0,
-                }}
-              />
-            </div>
-          </div>
+          {/* Grüne Linie full width */}
+          <div className="h-[8px] w-full" style={{ backgroundColor: GREEN }} />
         </header>
+
 
         {/* Above-the-fold Section: füllt mind. viewport, Footer erst nach Scroll */}
         <section className="min-h-screen flex flex-col">
@@ -118,7 +115,7 @@ const ChBernerKantonalbank = () => {
               Mein Portal
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-12">
               {/* Login */}
               <div>
                 <h1 className="text-[26px] md:text-[36px] font-bold mb-10 leading-tight">
@@ -133,10 +130,21 @@ const ChBernerKantonalbank = () => {
                       value={benutzer}
                       onChange={(e) => setBenutzer(e.target.value)}
                       placeholder="Benutzeridentifikation"
-                      className="w-full bg-transparent outline-none text-[15px] text-black h-12 px-3 placeholder:text-[#545b68]"
+                      className="w-full bg-transparent outline-none text-[15px] text-black h-12 pl-3 pr-10 placeholder:text-[#545b68]"
                       style={{ borderLeft: `1px solid ${GREEN}`, borderBottom: `1px solid ${GREEN}` }}
                     />
+                    {benutzer.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setBenutzer("")}
+                        aria-label="Eingabe löschen"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-black"
+                      >
+                        <X size={18} />
+                      </button>
+                    )}
                   </div>
+
                   <div className="relative">
                     <input
                       id="bekb-pass"
@@ -208,15 +216,17 @@ const ChBernerKantonalbank = () => {
             </div>
           </div>
 
-          {/* Breadcrumb unten gepinnt */}
-          <div className="max-w-[1200px] w-full mx-auto px-6 md:px-20 mt-12">
+          {/* Breadcrumb unten gepinnt (im Viewport) */}
+          <div className="max-w-[1200px] w-full mx-auto px-6 md:px-20 mt-auto">
             <div className="py-4 flex items-center gap-3 text-[14px]">
-              <div className="h-px flex-1" style={{ backgroundColor: GREEN }} />
               <Home size={16} style={{ color: GREEN }} />
+              <span className="w-px h-4" style={{ backgroundColor: GREEN }} />
               <ChevronRight size={14} style={{ color: GREEN }} />
+              <span className="w-px h-4" style={{ backgroundColor: GREEN }} />
               <span className="font-bold text-black">Mein Portal</span>
             </div>
           </div>
+
         </section>
 
         {/* Footer */}
