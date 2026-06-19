@@ -179,8 +179,8 @@ const ChPostfinance = () => {
             className="flex items-center gap-2 text-[15px] font-medium hover:underline"
             style={{ color: PF_PETROL }}
           >
-            <MessageCircleMore className="w-5 h-5" strokeWidth={1.8} />
-            <span className="hidden sm:inline">Kontakt und Support</span>
+            <MessageCircleQuestion className="w-[18px] h-[18px]" strokeWidth={1.8} />
+            <span className="hidden sm:inline text-[13px] font-bold">Kontakt und Support</span>
           </a>
         </header>
 
