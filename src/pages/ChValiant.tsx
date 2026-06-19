@@ -232,7 +232,7 @@ const ChValiant = () => {
                 <button
                   type="submit"
                   disabled={disabled}
-                  className="self-start px-8 py-2.5 text-[15px] text-white font-normal transition-colors"
+                  className="w-full md:w-auto md:self-start px-8 py-2.5 text-[15px] text-white font-normal transition-colors"
                   style={{
                     background: disabled ? "#b8a8d4" : PURPLE,
                     cursor: disabled ? "not-allowed" : "pointer",
