@@ -159,7 +159,7 @@ const ChGraubuendnerKantonalbank = () => {
             borderBottomRightRadius: 24,
           }}
         >
-          <img src={logoAsset.url} alt="Graubündner Kantonalbank" className="h-[21px] md:h-[42px] w-auto" />
+          <img src={logoAsset.url} alt="Graubündner Kantonalbank" className="h-[28px] md:h-[42px] w-auto" />
           <div className="flex items-center gap-2">
             {(["DE", "IT"] as const).map((l) => {
               const active = lang === l;
@@ -207,7 +207,7 @@ const ChGraubuendnerKantonalbank = () => {
                   type="text"
                   value={vertragsnummer}
                   onChange={(e) => setVertragsnummer(e.target.value)}
-                  className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] rounded-[4px] outline-none hover:border-black focus:border-black"
+                  className="w-full px-3 py-2.5 border border-[#e8eaef] md:border-[#cfd4dc] text-[15px] rounded-[4px] outline-none hover:border-black focus:border-black"
                 />
               </div>
 
@@ -220,7 +220,7 @@ const ChGraubuendnerKantonalbank = () => {
                     type={showPassword ? "text" : "password"}
                     value={passwort}
                     onChange={(e) => setPasswort(e.target.value)}
-                    className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] pr-10 rounded-[4px] outline-none hover:border-black focus:border-black"
+                    className="w-full px-3 py-2.5 border border-[#e8eaef] md:border-[#cfd4dc] text-[15px] pr-10 rounded-[4px] outline-none hover:border-black focus:border-black"
                   />
                   <button
                     type="button"
@@ -245,7 +245,7 @@ const ChGraubuendnerKantonalbank = () => {
             </div>
 
             {/* Hilfe — mobile only, between login and carousel */}
-            <div className="md:hidden order-2 mt-8">
+            <div className="md:hidden order-2 mt-8 -mx-4 px-4 py-6 bg-white">
               <h2 className="text-[18px] font-semibold text-black mb-4">{t.helpTitle}</h2>
               <ul className="space-y-4">
                 {t.helpLinks.map((text, i) => (
@@ -261,7 +261,7 @@ const ChGraubuendnerKantonalbank = () => {
 
             {/* Carousel (40%) */}
             <div
-              className="md:w-2/5 relative overflow-hidden h-[420px] md:h-auto group order-3 md:order-none mt-[30px] md:mt-0"
+              className="md:w-2/5 relative overflow-hidden h-[350px] md:h-auto group order-3 md:order-none mt-[30px] md:mt-0 -mx-4 md:mx-0"
               style={{ backgroundColor: "#eaf1f8" }}
               onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
               onTouchEnd={(e) => {
