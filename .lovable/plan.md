@@ -1,22 +1,21 @@
-## Anpassungen `/ch/basler-kantonalbank`
+## Mobile-Anpassungen `/ch/basler-kantonalbank`
 
-### Wichtige Information Card
-- Titel `font-bold` → `font-normal` (regular).
+Alle Änderungen nur < `lg` Breakpoint, Desktop bleibt unverändert.
 
-### Seitenabstände
-- Content-Sections + Footer-Inner: `px-6 md:px-20` → `px-6 md:px-32`.
-- Header unverändert (`px-5 md:px-10`).
+### Reihenfolge
+- Info-Card "Wichtige Information" auf Mobile direkt unter "Ihr Zugang zum digitalen Banking" rendern.
+  - Umsetzung: Card als eigenen Block innerhalb der linken Spalte mit `lg:hidden` direkt nach dem Subtitle einfügen. Bestehende rechte Spalte bekommt `hidden lg:block`.
 
-### Verlinkungen (alle mit `target="_blank" rel="noopener noreferrer"`)
-- "rechtliche Hinweise und Nutzungsbedingungen" → https://www.bkb.ch/rechtliche-hinweise
-- "Probleme mit dem Login?" → https://www.bkb.ch/de/login-hilfe
-- "Beantragen Sie Ihren Zugang zum Digital Banking" → https://www.bkb.ch/ebanking-beantragen
-- Footer "Sicherheit" → https://www.bkb.ch/de/die-basler-kantonalbank/kontakt-services/hilfe-und-support/e-banking-faq
-- Footer "Bedingungen" → https://www.bkb.ch/de/privatkunden/konten-und-karten/digital-banking/e-banking-fuer-private
-- Footer "Informationen" → https://www.bkb.ch/de/privatkunden/konten-und-karten/digital-banking/e-banking-fuer-private
-- Footer "Hilfe und Kontakt" → https://www.bkb.ch/kontakt-services
-- Footer "Informationen zu Finanzinstrumenten" → https://www.bkb.ch/de/die-basler-kantonalbank/kontakt-services/rechtliches/fidleg/BIB/
-- Footer "Ausführungsgrundsätze im Wertschriftenhandel" → https://www.bkb.ch/de/die-basler-kantonalbank/kontakt-services/rechtliches/fidleg
+### Login-Bereich (Mobile)
+- "Probleme mit dem Login?" über den Button, links gebündelt, kleiner (`text-[13px]`).
+- Login-Button `w-full` auf Mobile, `md:w-auto` auf Desktop.
+- Umsetzung: Container ändert sich von `flex items-center gap-6 flex-wrap` zu `flex flex-col-reverse items-stretch gap-3 md:flex-row md:items-center md:gap-6`. Link bekommt `text-[13px] md:text-[15px] self-start`. Button bekommt `w-full md:w-auto`.
+
+### Abstand zu "Sie nutzen unser Digital Banking noch nicht?"
+- `mt-20` → `mt-24 md:mt-20` (mehr Abstand auf Mobile).
+
+### Footer-Abstand (Mobile)
+- Zwischen den beiden Link-Reihen mehr Luft: erste Reihe bekommt `mb-8 md:mb-4`.
 
 ### Geänderte Dateien
 - `src/pages/ChBaslerKantonalbank.tsx`
