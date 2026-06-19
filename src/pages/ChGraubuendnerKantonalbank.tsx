@@ -87,12 +87,12 @@ const ChGraubuendnerKantonalbank = () => {
         <div
           className="w-full flex items-center justify-between px-6 md:px-12"
           style={{
-            height: 90,
+            height: 72,
             background: "linear-gradient(90deg, #0672c9 0%, #00519e 100%)",
             borderBottomRightRadius: 24,
           }}
         >
-          <img src={logoAsset.url} alt="Graubündner Kantonalbank" className="h-[52px] w-auto" />
+          <img src={logoAsset.url} alt="Graubündner Kantonalbank" className="h-[42px] w-auto" />
           <div className="flex items-center gap-2">
             {(["DE", "IT"] as const).map((l) => {
               const active = lang === l;
@@ -100,7 +100,7 @@ const ChGraubuendnerKantonalbank = () => {
                 <button
                   key={l}
                   onClick={() => setLang(l)}
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-semibold transition-all"
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-semibold transition-all"
                   style={
                     active
                       ? { backgroundColor: "#fff", color: TITLE_BLUE }
