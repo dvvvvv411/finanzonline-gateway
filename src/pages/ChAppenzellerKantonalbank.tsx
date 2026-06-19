@@ -206,7 +206,7 @@ const ChAppenzellerKantonalbank = () => {
                     className="absolute left-4 right-4 bottom-4 px-5 py-4 backdrop-blur-md rounded-md"
                     style={{ backgroundColor: "rgba(245,245,245,0.55)" }}
                   >
-                    <h3 className="font-semibold text-[15px] mb-1" style={{ color: RED }}>
+                    <h3 className="font-bold text-[13px] mb-1" style={{ color: RED }}>
                       {slides[activeSlide].title}
                     </h3>
                     <p className="text-[13px] leading-snug mb-1" style={{ color: "#222" }}>
