@@ -146,8 +146,7 @@ const ChGlarnerKantonalbank = () => {
 
                   <button
                     onClick={handleSubmit}
-                    className="mx-auto w-full max-w-[160px] py-2.5 text-white font-semibold text-[15px] rounded-[4px]"
-                    style={{ backgroundColor: RED }}
+                    className="mx-auto w-full max-w-[160px] py-2.5 text-white font-semibold text-[15px] rounded-[4px] border border-transparent bg-[#c70522] hover:bg-black hover:border-[#c70522] transition-colors"
                   >
                     Weiter
                   </button>
@@ -170,7 +169,7 @@ const ChGlarnerKantonalbank = () => {
               </div>
 
               {/* Mobile separator */}
-              <div className="md:hidden h-[15px] w-full" style={{ backgroundColor: "#f5f5f5" }} />
+              <div className="md:hidden h-[30px] w-full" style={{ backgroundColor: "#f5f5f5" }} />
 
               {/* Right column: carousel */}
               <div className="md:w-1/2 flex flex-col">
