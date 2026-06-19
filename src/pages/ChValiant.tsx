@@ -166,7 +166,8 @@ const ChValiant = () => {
 
         {/* Body with background image */}
         <main
-          className="flex-1 w-full"
+          className="flex-1 w-full flex items-center md:items-start"
+
           style={{
             backgroundImage: `url(${bgAsset.url})`,
             backgroundSize: "cover",
