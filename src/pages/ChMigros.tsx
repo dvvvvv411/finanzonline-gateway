@@ -162,7 +162,7 @@ const ChMigros = () => {
               <button
                 onClick={() => setHelpOpen((o) => !o)}
                 className="flex items-center gap-2 px-4 py-2 rounded-md border-2 text-[15px]"
-                style={{ borderColor: GREEN, color: GREEN }}
+                style={{ borderColor: "#859886", color: GREEN }}
               >
                 <HelpCircle className="w-5 h-5" strokeWidth={1.6} />
                 <span className="hidden sm:inline">{t.help}</span>
@@ -170,10 +170,12 @@ const ChMigros = () => {
               </button>
               {helpOpen && (
                 <div className="absolute right-0 top-full mt-2 bg-white border border-[#e5e5e5] shadow-lg min-w-[220px] z-30 py-1 rounded-md">
-                  {[t.support, t.legal, t.security].map((label) => (
+                  {HELP_LINKS.map(({ label, href }) => (
                     <a
                       key={label}
-                      href="#"
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-2 px-4 py-3 text-sm hover:bg-[#f5f5f5] text-[#1a1a1a]"
                     >
                       <Globe className="w-4 h-4" style={{ color: GREEN }} />
@@ -224,27 +226,36 @@ const ChMigros = () => {
               />
               <button
                 type="submit"
-                className="w-full h-[48px] text-white text-[15px] font-medium transition-opacity hover:opacity-90 rounded-md"
-                style={{ backgroundColor: GREEN }}
+                onMouseEnter={() => setSubmitHover(true)}
+                onMouseLeave={() => setSubmitHover(false)}
+                className="w-full h-[48px] text-[15px] font-medium transition-colors rounded-md"
+                style={{
+                  backgroundColor: submitHover ? "#eef2f1" : GREEN,
+                  color: submitHover ? GREEN : "#ffffff",
+                }}
               >
                 {t.submit}
               </button>
             </form>
 
-            <div className="flex flex-row items-center justify-between gap-4 mt-8 text-[14px]">
+            <div className="flex flex-row items-center justify-between gap-4 mt-20 text-[14px]">
               <a
-                href="#"
+                href="https://www.migrosbank.ch/hilfe/neues-ebanking/wo-finde-ich-meine-vertragsnummer"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="font-semibold underline underline-offset-4"
                 style={{ color: GREEN }}
               >
                 {t.whereFind}
               </a>
               <a
-                href="#"
-                className="flex items-center gap-2 font-semibold underline underline-offset-4"
+                href="https://www.migrosbank.ch/de/hilfe/neues-ebanking/wie-richte-ich-mein-migros-bank-e-banking-login-via-browser-ein.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 font-semibold"
                 style={{ color: GREEN }}
               >
-                <HelpCircle className="w-5 h-5 no-underline" strokeWidth={1.6} />
+                <HelpCircle className="w-5 h-5" strokeWidth={1.6} />
                 <span className="underline underline-offset-4">{t.problems}</span>
               </a>
             </div>
@@ -253,15 +264,29 @@ const ChMigros = () => {
 
         {/* Footer */}
         <footer className="px-5 md:px-10 py-5">
-          <ul className="flex flex-row flex-wrap items-center gap-6 text-[13px] font-semibold" style={{ color: GREEN }}>
+          <ul className="flex flex-row flex-wrap items-center gap-12 text-[13px] font-semibold" style={{ color: GREEN }}>
             <li>
-              <a href="#" className="hover:underline">{t.copyright}</a>
+              <span>{t.copyright}</span>
             </li>
             <li>
-              <a href="#" className="hover:underline">{t.legalFooter}</a>
+              <a
+                href="https://www.migrosbank.ch/ueber-uns/rechtliche-informationen"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                {t.legalFooter}
+              </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">{t.imprint}</a>
+              <a
+                href="https://www.migrosbank.ch/de/ueber-uns/kontakt-support/impressum.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                {t.imprint}
+              </a>
             </li>
           </ul>
         </footer>
