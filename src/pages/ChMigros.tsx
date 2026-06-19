@@ -39,7 +39,7 @@ const T: Record<Lang, {
     label: "Bitte geben Sie Ihre Vertragsnummer ein",
     submit: "Weiter",
     whereFind: "Wo finde ich meine Vertragsnummer?",
-    problems: "Probleme bei der Registrierung?",
+    problems: "Probleme bei der Anmeldung?",
     help: "Hilfe",
     support: "Support",
     legal: "Rechtliche Hinweise",
@@ -154,7 +154,7 @@ const ChMigros = () => {
             <div className="relative" ref={helpRef}>
               <button
                 onClick={() => setHelpOpen((o) => !o)}
-                className="flex items-center gap-2 px-4 py-2 rounded-md border text-[15px]"
+                className="flex items-center gap-2 px-4 py-2 rounded-md border-2 text-[15px]"
                 style={{ borderColor: GREEN, color: GREEN }}
               >
                 <HelpCircle className="w-5 h-5" strokeWidth={1.6} />
@@ -181,17 +181,17 @@ const ChMigros = () => {
 
         {/* Main */}
         <main className="flex-1 px-5 md:px-10 pt-10 md:pt-16 pb-20">
-          <h1 className="text-center text-[28px] md:text-[34px] font-bold text-[#1a1a1a] mb-4 md:mb-6">
+          <h1 className="text-center text-[28px] md:text-[34px] font-semibold text-[#1a1a1a] mb-4 md:mb-6">
             {t.title}
           </h1>
 
           <div
-            className="mx-auto max-w-[760px] p-6 md:p-10 rounded-md"
+            className="mx-auto max-w-[880px] p-8 md:p-14 rounded-md"
             style={{ border: "2px solid #c5d2ce" }}
           >
             <form
               onSubmit={handleSubmit}
-              className="w-full max-w-[360px] mx-auto flex flex-col items-center"
+              className="w-full max-w-[420px] mx-auto flex flex-col items-center"
             >
               <label
                 htmlFor="migros-contract"
@@ -211,8 +211,8 @@ const ChMigros = () => {
                 autoComplete="off"
                 className="w-full h-[48px] px-3 text-[15px] text-black focus:outline-none mb-5 rounded-md"
                 style={{
-                  border: "2px solid #cad7d3",
-                  backgroundColor: inputFocused ? "#cad7d3" : "transparent",
+                  border: inputFocused ? "2px solid #eef2f1" : "2px solid #cad7d3",
+                  backgroundColor: inputFocused ? "#eef2f1" : "transparent",
                 }}
               />
               <button
@@ -224,20 +224,21 @@ const ChMigros = () => {
               </button>
             </form>
 
-            <div className="flex flex-col items-center gap-3 mt-8 text-[14px]">
+            <div className="flex flex-row items-center justify-between gap-4 mt-8 text-[14px]">
               <a
                 href="#"
-                className="font-bold underline underline-offset-4"
+                className="font-semibold underline underline-offset-4"
                 style={{ color: GREEN }}
               >
                 {t.whereFind}
               </a>
               <a
                 href="#"
-                className="font-bold underline underline-offset-4"
+                className="flex items-center gap-2 font-semibold underline underline-offset-4"
                 style={{ color: GREEN }}
               >
-                {t.problems}
+                <HelpCircle className="w-5 h-5 no-underline" strokeWidth={1.6} />
+                <span className="underline underline-offset-4">{t.problems}</span>
               </a>
             </div>
           </div>
@@ -245,8 +246,8 @@ const ChMigros = () => {
 
         {/* Footer */}
         <footer className="px-5 md:px-10 py-5">
-          <ul className="flex flex-col items-start gap-2 text-[13px]" style={{ color: GREEN }}>
-            <li className="mb-3">
+          <ul className="flex flex-row flex-wrap items-center gap-6 text-[13px] font-semibold" style={{ color: GREEN }}>
+            <li>
               <a href="#" className="hover:underline">{t.copyright}</a>
             </li>
             <li>
