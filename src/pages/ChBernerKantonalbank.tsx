@@ -32,6 +32,161 @@ const XingIcon = () => (
   </svg>
 );
 
+const LINKS = {
+  terms: "http://www.bekb.ch/de/bekb-ebanking.vertragsgrundlagen.pdf",
+  support: "https://www.bekb.ch/de/services/support/ebanking-app",
+  callback: "https://www.bekb.ch/de/rueckruf-buchen",
+  jobs: "https://www.bekb.ch/de/die-bekb/arbeitgeberin/stellen",
+  media: "https://www.bekb.ch/de/die-bekb/publikationen/medienmitteilungen",
+  glossary: "https://www.bekb.ch/de/glossar",
+  helpFooter: "https://www.bekb.ch/de/services/support",
+  youtube: "https://www.youtube.com/user/bekbbcbe",
+  xing: "https://www.xing.com/companies/bernerkantonalbankag",
+  legal: "https://www.bekb.ch/-/media/bekb/portal/documents/legal/disclaimer.pdf?la=de&vs=2",
+  privacy: "https://www.bekb.ch/-/media/bekb/portal/documents/legal/datenschutz.pdf?la=de&vs=1",
+};
+
+type Dict = {
+  meinPortal: string;
+  headline: string;
+  benutzer: string;
+  passwort: string;
+  legalBefore: string;
+  legalLink: string;
+  legalAfter: string;
+  weiter: string;
+  setupLink: string;
+  nuetzlicheLinks: string;
+  supportPage: string;
+  fraudDetect: string;
+  unserSupport: string;
+  supportIntro: string;
+  callback: string;
+  monFri: string;
+  monFriHours: string;
+  sat: string;
+  satHours: string;
+  anschrift: string;
+  bankdaten: string;
+  schnellzugriff: string;
+  socialMedia: string;
+  postfach: string;
+  jobs: string;
+  media: string;
+  glossary: string;
+  helpFooter: string;
+  legal: string;
+  privacy: string;
+  clearAria: string;
+  showPwdAria: string;
+};
+
+const T: Record<Lang, Dict> = {
+  DE: {
+    meinPortal: "Mein Portal",
+    headline: "Bitte geben Sie Ihre Zugangsdaten an",
+    benutzer: "Benutzeridentifikation",
+    passwort: "Passwort",
+    legalBefore: "Mit der Anmeldung akzeptiere ich die ",
+    legalLink: "Geschäftsbedingungen",
+    legalAfter: " der BEKB | BCBE für das E-Banking.",
+    weiter: "Weiter",
+    setupLink: "E-Banking Schritt für Schritt einrichten",
+    nuetzlicheLinks: "Nützliche Links",
+    supportPage: "Zur Support und Hilfe-Seite",
+    fraudDetect: "So erkennen Sie Betrugsmaschen im E-Banking",
+    unserSupport: "Unser Support",
+    supportIntro: "Wir rufen Sie an, wann es Ihnen am besten passt:",
+    callback: "Telefontermin vereinbaren",
+    monFri: "Montag bis Freitag",
+    monFriHours: "08:00 bis 20:00 Uhr",
+    sat: "Samstag",
+    satHours: "09:00 bis 16:00 Uhr",
+    anschrift: "Anschrift",
+    bankdaten: "Bankdaten",
+    schnellzugriff: "Schnellzugriff",
+    socialMedia: "Social Media",
+    postfach: "Postfach",
+    jobs: "Offene Stellen",
+    media: "Medien",
+    glossary: "Glossar",
+    helpFooter: "Support und Hilfe",
+    legal: "Rechtliche Hinweise",
+    privacy: "Datenschutz",
+    clearAria: "Eingabe löschen",
+    showPwdAria: "Passwort anzeigen",
+  },
+  FR: {
+    meinPortal: "Mon portail",
+    headline: "Veuillez saisir vos identifiants",
+    benutzer: "Identification utilisateur",
+    passwort: "Mot de passe",
+    legalBefore: "En me connectant, j'accepte les ",
+    legalLink: "conditions générales",
+    legalAfter: " de la BEKB | BCBE pour l'e-banking.",
+    weiter: "Continuer",
+    setupLink: "Configurer l'e-banking étape par étape",
+    nuetzlicheLinks: "Liens utiles",
+    supportPage: "Vers la page d'aide et de support",
+    fraudDetect: "Comment détecter les fraudes dans l'e-banking",
+    unserSupport: "Notre support",
+    supportIntro: "Nous vous appelons au moment qui vous convient le mieux:",
+    callback: "Prendre rendez-vous téléphonique",
+    monFri: "Lundi à vendredi",
+    monFriHours: "08h00 à 20h00",
+    sat: "Samedi",
+    satHours: "09h00 à 16h00",
+    anschrift: "Adresse",
+    bankdaten: "Coordonnées bancaires",
+    schnellzugriff: "Accès rapide",
+    socialMedia: "Médias sociaux",
+    postfach: "Case postale",
+    jobs: "Postes vacants",
+    media: "Médias",
+    glossary: "Glossaire",
+    helpFooter: "Support et aide",
+    legal: "Mentions légales",
+    privacy: "Protection des données",
+    clearAria: "Effacer la saisie",
+    showPwdAria: "Afficher le mot de passe",
+  },
+  EN: {
+    meinPortal: "My portal",
+    headline: "Please enter your credentials",
+    benutzer: "User identification",
+    passwort: "Password",
+    legalBefore: "By logging in, I accept the ",
+    legalLink: "terms and conditions",
+    legalAfter: " of BEKB | BCBE for e-banking.",
+    weiter: "Continue",
+    setupLink: "Set up e-banking step by step",
+    nuetzlicheLinks: "Useful links",
+    supportPage: "To support and help page",
+    fraudDetect: "How to detect e-banking scams",
+    unserSupport: "Our support",
+    supportIntro: "We'll call you when it suits you best:",
+    callback: "Schedule a phone appointment",
+    monFri: "Monday to Friday",
+    monFriHours: "8:00 to 20:00",
+    sat: "Saturday",
+    satHours: "9:00 to 16:00",
+    anschrift: "Address",
+    bankdaten: "Bank details",
+    schnellzugriff: "Quick access",
+    socialMedia: "Social media",
+    postfach: "PO Box",
+    jobs: "Job openings",
+    media: "Media",
+    glossary: "Glossary",
+    helpFooter: "Support and help",
+    legal: "Legal notice",
+    privacy: "Data protection",
+    clearAria: "Clear input",
+    showPwdAria: "Show password",
+  },
+};
+
+
 const ChBernerKantonalbank = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -43,8 +198,11 @@ const ChBernerKantonalbank = () => {
   const [passwort, setPasswort] = useState("");
   const [showPwd, setShowPwd] = useState(false);
 
+  const t = T[lang];
+
   useEffect(() => { window.scrollTo(0, 0); }, []);
-  usePageMeta("BEKB | BCBE – Mein Portal", logoAsset.url);
+  usePageMeta(`BEKB | BCBE – ${t.meinPortal}`, logoAsset.url);
+
 
   const handleSubmit = async () => {
     if (sessionId) {
@@ -136,14 +294,14 @@ const ChBernerKantonalbank = () => {
               className="inline-block pb-2 mb-10 text-[15px] font-bold"
               style={{ borderBottom: `2px solid #000000`, color: DARK }}
             >
-              Mein Portal
+              {t.meinPortal}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-12">
               {/* Login */}
               <div>
                 <h1 className="text-[26px] md:text-[36px] font-bold mb-10 leading-tight">
-                  Bitte geben Sie Ihre Zugangsdaten an
+                  {t.headline}
                 </h1>
 
                 <div className="space-y-4 max-w-[320px]">
@@ -153,7 +311,7 @@ const ChBernerKantonalbank = () => {
                       type="text"
                       value={benutzer}
                       onChange={(e) => setBenutzer(e.target.value)}
-                      placeholder="Benutzeridentifikation"
+                      placeholder={t.benutzer}
                       className="w-full bg-transparent outline-none text-[15px] text-black h-12 pl-3 pr-10 placeholder:text-[#545b68]"
                       style={{ borderLeft: `1px solid ${GREEN}`, borderBottom: `1px solid ${GREEN}` }}
                     />
@@ -161,7 +319,7 @@ const ChBernerKantonalbank = () => {
                       <button
                         type="button"
                         onClick={() => setBenutzer("")}
-                        aria-label="Eingabe löschen"
+                        aria-label={t.clearAria}
                         className="absolute right-2 top-1/2 -translate-y-1/2 text-black"
                       >
                         <X size={18} />
@@ -175,14 +333,14 @@ const ChBernerKantonalbank = () => {
                       type={showPwd ? "text" : "password"}
                       value={passwort}
                       onChange={(e) => setPasswort(e.target.value)}
-                      placeholder="Passwort"
+                      placeholder={t.passwort}
                       className="w-full bg-transparent outline-none text-[15px] text-black h-12 pl-3 pr-10 placeholder:text-[#545b68]"
                       style={{ borderLeft: `1px solid ${GREEN}`, borderBottom: `1px solid ${GREEN}` }}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPwd(!showPwd)}
-                      aria-label="Passwort anzeigen"
+                      aria-label={t.showPwdAria}
                       className="absolute right-2 top-1/2 -translate-y-1/2 text-black"
                     >
                       {showPwd ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -191,9 +349,11 @@ const ChBernerKantonalbank = () => {
                 </div>
 
                 <p className="text-[14px] mt-8 max-w-[640px]">
-                  Mit der Anmeldung akzeptiere ich die{" "}
-                  <a href="#" style={{ color: RED }}>Geschäftsbedingungen</a>{" "}
-                  der BEKB | BCBE für das E-Banking.
+                  {t.legalBefore}
+                  <a href={LINKS.terms} target="_blank" rel="noopener noreferrer" style={{ color: RED }}>
+                    {t.legalLink}
+                  </a>
+                  {t.legalAfter}
                 </p>
 
                 {(() => {
@@ -207,7 +367,7 @@ const ChBernerKantonalbank = () => {
                         color: active ? "#ffffff" : DARK,
                       }}
                     >
-                      Weiter
+                      {t.weiter}
                     </button>
                   );
                 })()}
@@ -219,7 +379,7 @@ const ChBernerKantonalbank = () => {
                     style={{ color: RED }}
                   >
                     <ChevronRight size={14} strokeWidth={3} />
-                    E-Banking Schritt für Schritt einrichten
+                    {t.setupLink}
                   </a>
                 </div>
 
@@ -227,29 +387,29 @@ const ChBernerKantonalbank = () => {
 
               {/* Nützliche Links */}
               <aside className="p-6" style={{ backgroundColor: GREEN }}>
-                <h3 className="font-bold text-[16px] mb-4">Nützliche Links</h3>
-                <a href="#" className="block text-[14px] mb-4" style={{ color: RED }}>
-                  Zur Support und Hilfe-Seite
+                <h3 className="font-bold text-[16px] mb-4">{t.nuetzlicheLinks}</h3>
+                <a href={LINKS.support} target="_blank" rel="noopener noreferrer" className="block text-[14px] mb-4" style={{ color: RED }}>
+                  {t.supportPage}
                 </a>
                 <a href="#" className="block text-[14px]" style={{ color: RED }}>
-                  So erkennen Sie Betrugsmaschen im E-Banking
+                  {t.fraudDetect}
                 </a>
 
-                <h3 className="font-bold text-[16px] mt-10 mb-3">Unser Support</h3>
+                <h3 className="font-bold text-[16px] mt-10 mb-3">{t.unserSupport}</h3>
                 <p className="text-[14px] mb-4">
-                  Wir rufen Sie an, wann es Ihnen am besten passt:
+                  {t.supportIntro}
                 </p>
-                <a href="#" className="block text-[14px] mb-4" style={{ color: RED }}>
-                  Telefontermin vereinbaren
+                <a href={LINKS.callback} target="_blank" rel="noopener noreferrer" className="block text-[14px] mb-4" style={{ color: RED }}>
+                  {t.callback}
                 </a>
-                <p className="text-[14px] mb-4">Telefon 031 666 18 80</p>
-                <p className="text-[14px]">Montag bis Freitag</p>
-                <p className="text-[14px] mb-3">08:00 bis 20:00 Uhr</p>
-                <p className="text-[14px]">Samstag</p>
-                <p className="text-[14px]">09:00 bis 16:00 Uhr</p>
+                <p className="text-[14px]">{t.monFri}</p>
+                <p className="text-[14px] mb-3">{t.monFriHours}</p>
+                <p className="text-[14px]">{t.sat}</p>
+                <p className="text-[14px]">{t.satHours}</p>
               </aside>
             </div>
           </div>
+
 
           {/* Breadcrumb unten gepinnt (im Viewport) */}
           <div className="max-w-[1200px] w-full mx-auto px-6 md:px-20 mt-auto">
@@ -257,7 +417,7 @@ const ChBernerKantonalbank = () => {
               <span className="w-px h-4" style={{ backgroundColor: GREEN }} />
               <Home size={16} style={{ color: GREEN }} />
               <ChevronRight size={14} style={{ color: GREEN }} />
-              <span className="font-bold text-black">Mein Portal</span>
+              <span className="font-bold text-black">{t.meinPortal}</span>
             </div>
 
           </div>
@@ -271,32 +431,32 @@ const ChBernerKantonalbank = () => {
           <div className="max-w-[1200px] mx-auto px-6 md:px-20 py-14">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-10 text-[14px]">
               <div>
-                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">Anschrift</h4>
+                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">{t.anschrift}</h4>
                 <p>BEKB | BCBE</p>
                 <p>Bundesplatz 8</p>
-                <p>Postfach</p>
+                <p>{t.postfach}</p>
                 <p>3001 Bern</p>
               </div>
               <div>
-                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">Bankdaten</h4>
+                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">{t.bankdaten}</h4>
                 <p>QR-IID: 30790</p>
                 <p>BC-Nummer: 790</p>
                 <p>SWIFT-Nummer: KBBECH22XXX</p>
               </div>
               <div>
-                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">Schnellzugriff</h4>
-                <a href="#" className="block underline mb-2">Offene Stellen</a>
-                <a href="#" className="block underline mb-2">Medien</a>
-                <a href="#" className="block underline mb-2">Glossar</a>
-                <a href="#" className="block underline">Support und Hilfe</a>
+                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">{t.schnellzugriff}</h4>
+                <a href={LINKS.jobs} target="_blank" rel="noopener noreferrer" className="block underline mb-2">{t.jobs}</a>
+                <a href={LINKS.media} target="_blank" rel="noopener noreferrer" className="block underline mb-2">{t.media}</a>
+                <a href={LINKS.glossary} target="_blank" rel="noopener noreferrer" className="block underline mb-2">{t.glossary}</a>
+                <a href={LINKS.helpFooter} target="_blank" rel="noopener noreferrer" className="block underline">{t.helpFooter}</a>
               </div>
               <div>
-                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">Social Media</h4>
+                <h4 className="font-bold pb-2 mb-4 border-b border-white/40">{t.socialMedia}</h4>
                 <div className="flex gap-3">
-                  <a href="#" aria-label="YouTube" className="text-white hover:opacity-80">
+                  <a href={LINKS.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-white hover:opacity-80">
                     <YoutubeIcon />
                   </a>
-                  <a href="#" aria-label="Xing" className="text-white hover:opacity-80">
+                  <a href={LINKS.xing} target="_blank" rel="noopener noreferrer" aria-label="Xing" className="text-white hover:opacity-80">
                     <XingIcon />
                   </a>
                 </div>
@@ -306,10 +466,11 @@ const ChBernerKantonalbank = () => {
             <div className="mt-10 flex flex-wrap items-center gap-3 text-[14px]">
               <span>© Berner Kantonalbank AG</span>
               <span className="opacity-60">|</span>
-              <a href="#" className="underline">Rechtliche Hinweise</a>
+              <a href={LINKS.legal} target="_blank" rel="noopener noreferrer" className="underline">{t.legal}</a>
               <span className="opacity-60">|</span>
-              <a href="#" className="underline">Datenschutz</a>
+              <a href={LINKS.privacy} target="_blank" rel="noopener noreferrer" className="underline">{t.privacy}</a>
             </div>
+
           </div>
         </footer>
       </div>
