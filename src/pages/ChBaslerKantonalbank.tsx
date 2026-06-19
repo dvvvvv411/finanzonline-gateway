@@ -357,7 +357,7 @@ const ChBaslerKantonalbank = () => {
         {/* Footer */}
         <footer className="border-t border-gray-300 mt-16">
           <div className="max-w-[1280px] mx-auto px-6 md:px-32 py-8 text-[14px]">
-            <div className="flex flex-col md:flex-row md:gap-10 gap-3 mb-4">
+            <div className="flex flex-col md:flex-row md:gap-10 gap-3 mb-8 md:mb-4">
               <a href="https://www.bkb.ch/de/die-basler-kantonalbank/kontakt-services/hilfe-und-support/e-banking-faq" target="_blank" rel="noopener noreferrer" className="no-underline text-black">{t.f1}</a>
               <a href="https://www.bkb.ch/de/privatkunden/konten-und-karten/digital-banking/e-banking-fuer-private" target="_blank" rel="noopener noreferrer" className="no-underline text-black">{t.f2}</a>
               <a href="https://www.bkb.ch/de/privatkunden/konten-und-karten/digital-banking/e-banking-fuer-private" target="_blank" rel="noopener noreferrer" className="no-underline text-black">{t.f3}</a>
