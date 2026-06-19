@@ -6,8 +6,9 @@ import { usePageMeta } from "@/hooks/use-page-meta";
 import { Eye, EyeOff } from "lucide-react";
 import logoAsset from "@/assets/blkb-logo.svg.asset.json";
 
-const RED = "#ba0a12";
+const RED = "#FD000D";
 const LINK_RED = "#FD000D";
+const HOVER_RED = "#ba0a12";
 
 type FieldProps = {
   id: string;
