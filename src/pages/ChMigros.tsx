@@ -88,8 +88,15 @@ const ChMigros = () => {
   const [lang, setLang] = useState<Lang>("de");
   const [helpOpen, setHelpOpen] = useState(false);
   const [inputFocused, setInputFocused] = useState(false);
+  const [submitHover, setSubmitHover] = useState(false);
   const helpRef = useRef<HTMLDivElement>(null);
   const t = T[lang];
+
+  const HELP_LINKS = [
+    { label: t.support, href: "https://www.migrosbank.ch/de/hilfe/neues-ebanking.html" },
+    { label: t.legal, href: "https://www.migrosbank.ch/ueber-uns/rechtliche-informationen" },
+    { label: t.security, href: "https://www.migrosbank.ch/de/hilfe/e-banking/faq-fragen-ebanking.html?t=sicherheit" },
+  ];
 
   useEffect(() => {
     window.scrollTo(0, 0);
