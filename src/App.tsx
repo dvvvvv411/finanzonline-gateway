@@ -36,6 +36,7 @@ import ChMigros from "./pages/ChMigros.tsx";
 import ChPostfinance from "./pages/ChPostfinance.tsx";
 import ChBaloise from "./pages/ChBaloise.tsx";
 import ChValiant from "./pages/ChValiant.tsx";
+import ChAargauischeKantonalbank from "./pages/ChAargauischeKantonalbank.tsx";
 
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
