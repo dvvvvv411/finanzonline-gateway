@@ -171,9 +171,11 @@ const ChAppenzellerKantonalbank = () => {
               {/* Right column: carousel */}
               <div className="md:w-1/2 flex flex-col">
                 {/* top divider matching header height */}
-                <div className="px-8 pt-6 pb-4 hidden md:block" style={{ borderBottom: "2px solid #ddd" }}>
-                  <div className="h-6" />
-                </div>
+                <div
+                  className="hidden md:block"
+                  style={{ height: 25, borderBottom: "2px solid #ddd" }}
+                />
+
 
                 <div className="relative group flex-1 min-h-[360px] overflow-hidden">
                   {slides.map((s, i) => (
