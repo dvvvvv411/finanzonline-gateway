@@ -166,7 +166,8 @@ const ChValiant = () => {
 
         {/* Body with background image */}
         <main
-          className="flex-1 w-full"
+          className="flex-1 w-full flex items-center md:items-start"
+
           style={{
             backgroundImage: `url(${bgAsset.url})`,
             backgroundSize: "cover",
@@ -175,9 +176,10 @@ const ChValiant = () => {
           }}
         >
           <div
-            className="mx-auto px-4 py-8 md:py-12"
+            className="mx-auto w-full px-4 py-8 md:py-12"
             style={{ maxWidth: CARD_MAX }}
           >
+
 
 
             <section
@@ -230,7 +232,7 @@ const ChValiant = () => {
                 <button
                   type="submit"
                   disabled={disabled}
-                  className="self-start px-8 py-2.5 text-[15px] text-white font-normal transition-colors"
+                  className="w-full md:w-auto md:self-start px-8 py-2.5 text-[15px] text-white font-normal transition-colors"
                   style={{
                     background: disabled ? "#b8a8d4" : PURPLE,
                     cursor: disabled ? "not-allowed" : "pointer",
