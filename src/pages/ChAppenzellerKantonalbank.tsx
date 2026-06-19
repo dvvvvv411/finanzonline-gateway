@@ -119,8 +119,8 @@ const ChAppenzellerKantonalbank = () => {
                         type={showPassword ? "text" : "password"}
                         value={passwort}
                         onChange={(e) => setPasswort(e.target.value)}
-                        className="w-full px-3 py-2 border outline-none text-[15px] pr-10 rounded-[3px]"
-                        style={{ borderColor: "#cccccc", backgroundColor: "#fff" }}
+                        className="w-full px-3 py-2 border outline-none text-[15px] pr-10 rounded-[5px] border-[#cccccc] hover:border-black focus:border-black transition-colors"
+                        style={{ backgroundColor: "#fff" }}
                       />
                       <button
                         type="button"
