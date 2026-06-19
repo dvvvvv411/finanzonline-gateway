@@ -146,8 +146,7 @@ const ChGlarnerKantonalbank = () => {
 
                   <button
                     onClick={handleSubmit}
-                    className="mx-auto w-full max-w-[160px] py-2.5 text-white font-semibold text-[15px] rounded-[4px]"
-                    style={{ backgroundColor: RED }}
+                    className="mx-auto w-full max-w-[160px] py-2.5 text-white font-semibold text-[15px] rounded-[4px] border border-transparent bg-[#c70522] hover:bg-black hover:border-[#c70522] transition-colors"
                   >
                     Weiter
                   </button>
