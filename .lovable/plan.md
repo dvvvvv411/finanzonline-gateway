@@ -1,20 +1,29 @@
 Update `src/pages/ChMigros.tsx`:
 
-**Header**
-- Help button: outline `border-2` (2px).
+**Spacing**
+- Login card: much larger gap between "Weiter" button and the footer links row (`mt-8` → `mt-16` on the links row).
+- Footer: larger gap between items (`gap-6` → `gap-10`).
 
-**Hero**
-- "Anmeldung im E-Banking": `font-semibold` (instead of bold).
+**Help button**
+- Border color `#859886` (instead of green).
 
-**Login card**
-- Increase size: wider (`max-w-md` → `max-w-lg`) and more vertical padding (`p-8` → `p-10` or similar).
-- Input on focus: background and outline `#eef2f1` (update `focus:bg-[#eef2f1]` and `focus:border-[#eef2f1]` / focus ring).
-- Card footer links back to one row (flex row, `justify-between`):
-  - Left: "Wo finde ich meine Vertragsnummer?"
-  - Right: "Probleme bei der Anmeldung?" (renamed from "Probleme bei der Registrierung?") with the same `?` help icon used in the header Help button, placed before the text.
-  - Both links: `font-semibold` (instead of bold).
+**Weiter button hover**
+- Default: bg `#144B3C`, text white.
+- Hover: bg `#eef2f1`, text `#144B3C`. Use a small state/class toggle.
 
-**Footer**
-- `© 2026 Migros Bank AG`, `Rechtliche Informationen`, `Impressum` all on one row (flex, gap), all `font-semibold`, still in green `#144B3C`.
+**Links (open in new tab, `target="_blank" rel="noopener noreferrer"`)**
+- Header help dropdown:
+  - Support → https://www.migrosbank.ch/de/hilfe/neues-ebanking.html
+  - Rechtliche Hinweise → https://www.migrosbank.ch/ueber-uns/rechtliche-informationen
+  - Sicherheit → https://www.migrosbank.ch/de/hilfe/e-banking/faq-fragen-ebanking.html?t=sicherheit
+- Card footer links:
+  - Wo finde ich meine Vertragsnummer? → https://www.migrosbank.ch/hilfe/neues-ebanking/wo-finde-ich-meine-vertragsnummer
+  - Probleme mit der Anmeldung? → https://www.migrosbank.ch/de/hilfe/neues-ebanking/wie-richte-ich-mein-migros-bank-e-banking-login-via-browser-ein.html
+- Page footer:
+  - Rechtliche Informationen → https://www.migrosbank.ch/ueber-uns/rechtliche-informationen
+  - Impressum → https://www.migrosbank.ch/de/ueber-uns/kontakt-support/impressum.html
+  - Copyright stays a non-link span.
+
+Refactor the dropdown items to map over `{label, href}` objects to attach the correct URL per item.
 
 No other files touched.
