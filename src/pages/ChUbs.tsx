@@ -17,9 +17,19 @@ const LANGS = [
   { code: "fr", label: "Français" },
   { code: "it", label: "Italiano" },
   { code: "en", label: "English" },
+  { code: "es", label: "Español" },
+  { code: "pt", label: "Português" },
 ] as const;
 
 type Lang = (typeof LANGS)[number]["code"];
+
+const FOOTER_LINKS_HREFS = [
+  "https://secure.ubs.com/__digitalbanking/ubs-information",
+  "https://secure.ubs.com/__digitalbanking/terms-of-use",
+  "https://secure.ubs.com/__digitalbanking/privacy-statement",
+  "https://secure.ubs.com/__digitalbanking/report-fraudulent-mail",
+];
+const HOWTO_HREF = "https://secure.ubs.com/__digitalbanking-CH/login-problem";
 
 const T: Record<Lang, {
   ebanking: string;
@@ -99,6 +109,38 @@ const T: Record<Lang, {
       "The products, services, information and/or materials offered on this website may not be available for residents of certain jurisdictions.",
     copyright: "© UBS 1998 - 2026. All rights reserved.",
   },
+  es: {
+    ebanking: "E-Banking",
+    country: "Suiza",
+    greeting: "Buenos días",
+    subtitle: "Login UBS E-Banking",
+    contract: "Número de contrato",
+    remember: "Guardar el número de contrato",
+    next: "Continuar",
+    howto: "Cómo iniciar sesión",
+    tooltip:
+      "Encontrará su número de contrato en su Access App, su Mobile Banking App o en la carta con el PIN de activación.",
+    footerLinks: ["Información sobre UBS", "Condiciones de uso", "Declaración de privacidad", "Notificar correos fraudulentos"],
+    disclaimer:
+      "Los productos, servicios, información y/o materiales ofrecidos en este sitio web pueden no estar disponibles para residentes de determinadas jurisdicciones.",
+    copyright: "© UBS 1998 - 2026. Todos los derechos reservados.",
+  },
+  pt: {
+    ebanking: "E-Banking",
+    country: "Suíça",
+    greeting: "Bom dia",
+    subtitle: "Login UBS E-Banking",
+    contract: "Número de contrato",
+    remember: "Guardar o número de contrato",
+    next: "Continuar",
+    howto: "Como iniciar sessão",
+    tooltip:
+      "O seu número de contrato encontra-se na Access App, na Mobile Banking App ou na carta com o PIN de ativação.",
+    footerLinks: ["Informações sobre o UBS", "Condições de utilização", "Declaração de privacidade", "Comunicar e-mails fraudulentos"],
+    disclaimer:
+      "Os produtos, serviços, informações e/ou materiais oferecidos neste site podem não estar disponíveis para residentes em determinadas jurisdições.",
+    copyright: "© UBS 1998 - 2026. Todos os direitos reservados.",
+  },
 };
 
 const ChUbs = () => {
@@ -151,21 +193,23 @@ const ChUbs = () => {
         <header className="h-[72px] flex items-center justify-between px-4 md:px-10 border-b border-[#eee] bg-white relative z-20">
           <div className="flex items-center gap-3 md:gap-5">
             <UbsLogo className="h-6 md:h-7" />
-            <span className="text-base md:text-lg font-light text-[#1a1a1a]">{t.ebanking}</span>
+            <span className="text-base md:text-lg font-normal text-[#1a1a1a]">{t.ebanking}</span>
           </div>
           <div className="flex items-center gap-4 md:gap-8 text-sm">
             <span className="hidden sm:inline text-[#666]">{t.country}</span>
             <div className="relative">
               <button
                 onClick={() => setLangOpen((o) => !o)}
-                className="flex items-center gap-2 text-[#1a1a1a] hover:text-black"
+                className={`flex items-center gap-2 px-3 py-2 transition-colors ${
+                  langOpen ? "bg-black text-white" : "text-[#1a1a1a] hover:text-black"
+                }`}
               >
                 <Globe className="w-4 h-4" />
                 <span>{LANGS.find((l) => l.code === lang)?.label}</span>
                 <ChevronDown className="w-3 h-3" />
               </button>
               {langOpen && (
-                <div className="absolute right-0 top-full mt-2 bg-white border border-[#e5e5e5] shadow-md min-w-[160px] z-30">
+                <div className="absolute right-0 top-full mt-1 bg-white border border-[#e5e5e5] shadow-md min-w-[240px] z-30 py-1">
                   {LANGS.map((l) => (
                     <button
                       key={l.code}
@@ -173,8 +217,8 @@ const ChUbs = () => {
                         setLang(l.code);
                         setLangOpen(false);
                       }}
-                      className={`block w-full text-left px-4 py-2 text-sm hover:bg-[#f5f5f5] ${
-                        lang === l.code ? "font-bold" : ""
+                      className={`block w-full text-left px-5 py-3 text-sm hover:bg-[#f5f5f5] ${
+                        lang === l.code ? "bg-[#ececec]" : ""
                       }`}
                     >
                       {l.label}
@@ -194,22 +238,24 @@ const ChUbs = () => {
           }}
         >
           <main className="flex-1 flex items-start justify-center px-4 py-12 md:py-20">
-            <div className="w-full max-w-[420px] bg-white shadow-sm rounded-sm px-6 py-10 md:px-10 md:py-12">
-              <h1 className="text-[34px] md:text-[40px] font-light text-center text-[#1a1a1a] leading-tight">
+            <div className="w-full max-w-[380px] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)] rounded-sm px-6 py-8 md:px-8 md:py-10">
+              <h1 className="text-[32px] md:text-[36px] font-normal text-center text-[#1a1a1a] leading-tight">
                 {t.greeting}
               </h1>
               <p className="text-center text-[15px] text-[#5a5d5c] mt-2 mb-8">{t.subtitle}</p>
 
-              {/* Floating-label input */}
+              {/* Outlined input with floating label */}
               <div className="mb-5">
                 <div
-                  className={`relative border-b transition-[border-width,border-color] duration-150 ${
-                    focused ? "border-b-2 border-[#1a1a1a]" : "border-b border-[#1a1a1a]"
+                  className={`relative border transition-colors duration-150 ${
+                    focused ? "border-[#1a1a1a]" : "border-[#1a1a1a]"
                   }`}
                 >
                   <label
-                    className={`absolute left-0 pointer-events-none transition-all duration-200 ease-out text-[#5a5d5c] ${
-                      labelFloating ? "top-1 text-[11px]" : "top-1/2 -translate-y-1/2 text-[15px]"
+                    className={`absolute left-3 pointer-events-none transition-all duration-200 ease-out text-[#5a5d5c] bg-white px-1 ${
+                      labelFloating
+                        ? "-top-2 text-[11px]"
+                        : "top-1/2 -translate-y-1/2 text-[15px]"
                     }`}
                   >
                     {t.contract}
@@ -223,10 +269,10 @@ const ChUbs = () => {
                     onKeyDown={(e) => e.key === "Enter" && handleNext()}
                     autoFocus
                     autoComplete="off"
-                    className="w-full bg-transparent pt-5 pb-2 pr-10 text-[15px] text-black focus:outline-none"
+                    className="w-full bg-transparent px-3 py-3 pr-10 text-[15px] text-black focus:outline-none"
                   />
                   {/* Info icon with hover tooltip */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 group">
+                  <div className="absolute right-2 top-1/2 -translate-y-1/2 group">
                     <Info className="w-5 h-5 text-[#1a1a1a] cursor-help" />
                     <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-150 absolute left-full top-1/2 -translate-y-1/2 ml-3 w-[280px] bg-white border border-[#e5e5e5] shadow-lg p-3 text-[12px] text-[#1a1a1a] leading-snug z-30">
                       <div className="absolute -left-[6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-l border-b border-[#e5e5e5] rotate-45" />
@@ -252,32 +298,41 @@ const ChUbs = () => {
 
               <button
                 onClick={handleNext}
-                className="w-full bg-[#2b2b2b] hover:bg-[#1a1a1a] text-white py-3 text-[15px] font-normal transition-colors"
+                className="w-full bg-[#444] hover:bg-[#1a1a1a] text-white py-3 text-[15px] font-normal transition-colors"
               >
                 {t.next}
               </button>
 
-              <button className="flex items-center justify-center gap-1 w-full mt-6 text-[14px] font-bold text-[#1c1c1c] hover:underline">
+              <a
+                href={HOWTO_HREF}
+                className="flex items-center justify-center gap-1 w-full mt-6 text-[14px] font-bold text-[#1c1c1c] hover:underline"
+              >
                 <ChevronRight className="w-4 h-4 text-[#da0000]" />
                 {t.howto}
-              </button>
+              </a>
             </div>
           </main>
 
+          {/* Divider between body and footer */}
+          <div className="border-t border-[#d8b4b4]" />
+
           {/* Footer */}
           <footer className="px-4 md:px-10 py-6 md:py-8">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-[13px] text-[#1a1a1a]">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-[14px] text-black">
               {t.footerLinks.map((l, i) => (
                 <span key={l} className="flex items-center gap-2">
-                  <a href="#" className="underline hover:no-underline">
+                  <a
+                    href={FOOTER_LINKS_HREFS[i]}
+                    className="underline hover:no-underline text-black"
+                  >
                     {l}
                   </a>
-                  {i < t.footerLinks.length - 1 && <span className="text-[#888]">|</span>}
+                  {i < t.footerLinks.length - 1 && <span className="text-black">|</span>}
                 </span>
               ))}
             </div>
-            <p className="text-[12px] text-[#444] mt-4 leading-relaxed max-w-5xl">{t.disclaimer}</p>
-            <p className="text-[12px] text-[#666] mt-3">{t.copyright}</p>
+            <p className="text-[13px] text-black mt-4 leading-relaxed max-w-5xl">{t.disclaimer}</p>
+            <p className="text-[13px] text-black mt-3">{t.copyright}</p>
           </footer>
         </div>
       </div>
