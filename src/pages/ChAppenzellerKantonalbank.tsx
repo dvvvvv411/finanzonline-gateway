@@ -86,8 +86,8 @@ const ChAppenzellerKantonalbank = () => {
               {/* Left column: header + form */}
               <div className="md:w-1/2 flex flex-col">
                 {/* Header */}
-                <div className="px-8 pt-6 pb-4" style={{ borderBottom: `3px solid ${RED}` }}>
-                  <img src={logoAsset.url} alt="Appenzeller Kantonalbank" className="h-6" />
+                <div className="px-6 pt-2 pb-2" style={{ borderBottom: `3px solid ${RED}` }}>
+                  <img src={logoAsset.url} alt="Appenzeller Kantonalbank" className="h-9" />
                 </div>
 
                 {/* Form */}

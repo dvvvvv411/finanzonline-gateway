@@ -1,31 +1,27 @@
-# Anpassungen `/ch/appenzeller-kantonalbank`
+Apply refinements to `src/pages/ChAppenzellerKantonalbank.tsx`:
 
-Alle Änderungen in `src/pages/ChAppenzellerKantonalbank.tsx`.
+**Carousel titles**
+- `text-[15px]` → `text-[14px]`, keep `font-semibold` (already bold)
 
-## Card-Container
-- Outer card umschließt Logo-Header + Login + Carousel
-- `max-w-[988px]`, `aspect-[988/700]` (responsiv, nicht fix), `border border-[#d9d9d9]`, `rounded-lg`, `overflow-hidden`, `shadow-sm`
-- Karten-Margin mt ~60px
+**Weiter button**
+- `max-w-[200px]` → `max-w-[170px]`
 
-## Header / Logo
-- Logo `h-12` → `h-6` (50% kleiner)
-- Rote Linie unter Logo: 2px → 3px
-- Graue Linie rechts: 1px → 2px (`#ddd`)
+**Logo in card header**
+- Reduce header padding: `px-8 pt-6 pb-4` → `px-6 pt-3 pb-2` so kaum Abstand zur roten Linie
+- Logo `h-6` → `h-8` (etwas größer)
+- Logo nach links: header padding-left reduziert (px-6)
 
-## Inputs
-- `border-color: #cccccc`
-- `rounded-[3px]` (leicht abgerundet)
+**Eingabefelder**
+- `rounded-[3px]` → `rounded-[5px]`
+- Add `hover:border-black focus:border-black` (via Tailwind classes, ersetzen inline borderColor mit class `border-[#cccccc] hover:border-black focus:border-black`)
 
-## Weiter-Button
-- `max-w-[280px]` → `max-w-[200px]`
-- `rounded-[3px]`
+**Links – hover underline entfernen**
+- "E-Banking und TWINT sperren": remove `hover:underline`, set `href="#"`
+- "Brauchen Sie Hilfe?": remove `hover:underline`, set `href="#"`
 
-## Carousel
-- Blur-Box: Abstand zu links/rechts/unten → `left-4 right-4 bottom-4`, leicht abgerundet (`rounded-md`)
-- Auto-Advance: `useEffect` mit `setInterval(nextSlide, 5000)`, cleanup; smooth opacity-Crossfade zwischen Slides (`transition-opacity duration-700`, beide Slides absolut gestackt, aktiver opacity-100)
-- Dots: aktiv/inaktiv beide weiß (`#fff` aktiv, `rgba(255,255,255,0.6)` inaktiv)
-- Pfeile: Kreis-bg `#e30421` (statt weiß), Chevron-Icons weiß (`color="#fff"`), hover bleibt rot
+**Footer "Rechtliche Hinweise"**
+- `href="https://www.appkb.ch/ihre-appkb/services/rechtliche-hinweise"`, `target="_blank" rel="noopener noreferrer"`
+- Hover: text wird rot (`hover:text-[#e30421]`), underline behalten oder entfernen? Anweisung sagt nur "in rot färben" → keep hover:underline removed, add hover:text red
 
-## Footer
-- `backgroundColor: #353535`
-- Copyright-Text und „Rechtliche Hinweise" beide weiß (`#fff`)
+**Carousel "mehr erfahren" Links**
+- Beide `href="#"` (bereits so), keine Änderung am Verhalten nötig
