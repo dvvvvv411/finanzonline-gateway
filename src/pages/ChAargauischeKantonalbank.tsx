@@ -188,7 +188,7 @@ const ChAargauischeKantonalbank = () => {
         </div>
 
         {/* Main */}
-        <main className="flex-1 w-full">
+        <main className="flex-1 w-full min-h-screen">
           <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-10 md:py-14">
             <h1
               className="font-bold leading-tight mb-10 md:mb-14"
@@ -404,8 +404,8 @@ const ChAargauischeKantonalbank = () => {
                 Rechtliches
               </a>
             </div>
-            <div className="text-[18px] font-semibold italic" style={{ color: "#0069a7" }}>
-              Am richtigen Ort.
+            <div className="text-[18px] font-semibold" style={{ color: "#001a41" }}>
+              Am richtigen Ort
             </div>
           </div>
         </div>
