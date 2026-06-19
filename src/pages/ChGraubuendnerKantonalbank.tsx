@@ -190,7 +190,7 @@ const ChGraubuendnerKantonalbank = () => {
           >
             <div className="flex flex-col md:flex-row md:h-[715px]">
               {/* Login (60%) */}
-              <div className="md:w-3/5 flex flex-col px-8 md:px-12 py-10 pb-16">
+              <div className="md:w-3/5 flex flex-col px-8 md:px-12 pt-20 pb-16">
                 <h1
                   className="text-[22px] md:text-[26px] font-semibold mb-3"
                   style={{ color: TITLE_BLUE }}
