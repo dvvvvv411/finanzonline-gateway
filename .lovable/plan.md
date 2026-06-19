@@ -1,11 +1,9 @@
-Two changes in `src/pages/ChAargauischeKantonalbank.tsx`:
+Zwei Fixes in `src/pages/ChAargauischeKantonalbank.tsx`:
 
-**1. Inputs — größere Schrift**
-- Beide Inputs (`akb-id`, `akb-pw`): `text-[15px]` → `text-[18px]`, damit auch die Passwort-Punkte deutlich größer dargestellt werden.
+**1. Footer erst beim Scrollen sichtbar**
+- `<main>` bekommt `min-h-[100vh]`, damit Header + Main allein den ersten Viewport komplett füllen. Dunkler Footer und heller Sub-Footer rutschen damit unter den Fold und erscheinen erst beim aktiven Runterscrollen.
 
-**2. Zweiter Footer (unterhalb des dunklen Footers)**
-- Neuer `<div>` direkt nach dem bestehenden `<footer>`, sodass er erst beim Runterscrollen sichtbar wird (Seite bleibt sonst unverändert).
-- Styling: `background: #c8c8c8`, `color: #333`, `py-4`, `max-w-[1200px] mx-auto px-4 md:px-6 flex items-center justify-between`.
-- **Links:** `© 2026 Aargauische Kantonalbank` + vertikaler Divider (`<span>` 1px × 14px, `#666`, mx-3) + Link „Rechtliches" (`https://www.akb.ch/rechtliches`), `text-[14px]`.
-- **Rechts:** „Am richtigen Ort." in größer (`text-[18px]`, leichte Kursiv/Bold optional — gehe mit `font-semibold italic` als Markenclaim).
-- Mobile: bleibt `flex` mit Wrap (`flex-wrap gap-3`).
+**2. Slogan im Sub-Footer**
+- Text: „Am richtigen Ort" (ohne Punkt).
+- Klassen: `font-semibold italic` → `font-semibold` (kein Italic).
+- Farbe: `#0069a7` → `#001a41` (gleiches Dunkelblau wie der Footer darüber).
