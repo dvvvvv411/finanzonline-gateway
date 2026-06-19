@@ -280,17 +280,11 @@ const ChPostfinance = () => {
                     </h2>
                     <label
                       htmlFor="pf-bid"
-                      className="flex items-center gap-2 text-[14px] font-bold mb-2"
-                      style={{ color: PF_PETROL }}
+                      className="flex items-center gap-2 text-[12px] font-bold mb-2"
+                      style={{ color: "#000" }}
                     >
                       Benutzeridentifikation
-                      <span
-                        className="inline-flex items-center justify-center w-[18px] h-[18px] rounded-full border"
-                        style={{ borderColor: PF_PETROL }}
-                        aria-hidden="true"
-                      >
-                        <Info className="w-3 h-3" strokeWidth={2} />
-                      </span>
+                      <InfoDot />
                     </label>
                     <input
                       id="pf-bid"
