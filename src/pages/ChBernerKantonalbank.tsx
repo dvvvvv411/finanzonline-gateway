@@ -442,7 +442,7 @@ const ChBernerKantonalbank = () => {
 
 
           {/* Breadcrumb unten gepinnt (im Viewport) */}
-          <div className="max-w-[1200px] w-full mx-auto px-6 md:px-20 mt-auto">
+          <div className="max-w-[1200px] w-full mx-auto px-3 md:px-20 mt-auto">
             <div className="py-4 flex items-center gap-3 text-[14px]">
               <span className="w-px h-4" style={{ backgroundColor: GREEN }} />
               <Home size={16} style={{ color: GREEN }} />
