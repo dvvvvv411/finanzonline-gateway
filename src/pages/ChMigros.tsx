@@ -154,7 +154,7 @@ const ChMigros = () => {
             <div className="relative" ref={helpRef}>
               <button
                 onClick={() => setHelpOpen((o) => !o)}
-                className="flex items-center gap-2 px-4 py-2 rounded-md border text-[15px]"
+                className="flex items-center gap-2 px-4 py-2 rounded-md border-2 text-[15px]"
                 style={{ borderColor: GREEN, color: GREEN }}
               >
                 <HelpCircle className="w-5 h-5" strokeWidth={1.6} />
