@@ -159,7 +159,7 @@ const ChGraubuendnerKantonalbank = () => {
             borderBottomRightRadius: 24,
           }}
         >
-          <img src={logoAsset.url} alt="Graubündner Kantonalbank" className="h-[42px] w-auto" />
+          <img src={logoAsset.url} alt="Graubündner Kantonalbank" className="h-[21px] md:h-[42px] w-auto" />
           <div className="flex items-center gap-2">
             {(["DE", "IT"] as const).map((l) => {
               const active = lang === l;
