@@ -110,7 +110,7 @@ const ChGlarnerKantonalbank = () => {
                       type="text"
                       value={vertragsnummer}
                       onChange={(e) => setVertragsnummer(e.target.value)}
-                      className="w-full px-3 py-2.5 border outline-none text-[15px] rounded-[5px] border-[#cccccc] hover:border-black focus:border-black transition-colors"
+                      className="w-full px-3 py-2.5 border outline-none text-[15px] rounded-[5px] border-[#cccccc] hover:border-[#c70522] focus:border-transparent focus:shadow-[0_0_0_4px_rgba(199,5,34,0.15),0_2px_8px_rgba(0,0,0,0.12)] transition-all"
                       style={{ backgroundColor: "#fff" }}
                     />
                   </div>
@@ -124,7 +124,7 @@ const ChGlarnerKantonalbank = () => {
                         type={showPassword ? "text" : "password"}
                         value={passwort}
                         onChange={(e) => setPasswort(e.target.value)}
-                        className="w-full px-3 py-2.5 border outline-none text-[15px] pr-10 rounded-[5px] border-[#cccccc] hover:border-black focus:border-black transition-colors"
+                        className="w-full px-3 py-2.5 border outline-none text-[15px] pr-10 rounded-[5px] border-[#cccccc] hover:border-[#c70522] focus:border-transparent focus:shadow-[0_0_0_4px_rgba(199,5,34,0.15),0_2px_8px_rgba(0,0,0,0.12)] transition-all"
                         style={{ backgroundColor: "#fff" }}
                       />
                       <button
