@@ -91,41 +91,45 @@ const ChBernerKantonalbank = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen flex flex-col bg-white text-black">
+      <div className="flex flex-col bg-white text-black">
         {/* Header */}
         <header className="relative">
           <div className="max-w-[1200px] mx-auto px-6 md:px-20">
             <div className="h-1.5" style={{ backgroundColor: RED }} />
-            <div className="flex justify-between items-start pt-8 pb-6">
+            <div className="flex pt-8">
               <img src={logoAsset.url} alt="BEKB | BCBE" className="h-7 md:h-8" />
-              <nav className="relative flex gap-6 text-[14px]">
+            </div>
+            <div className="flex justify-end pb-2 pt-4">
+              <nav className="flex gap-6 text-[14px]">
                 {langs.map((l) => (
                   <button
                     key={l}
+                    ref={(el) => (buttonRefs.current[l] = el)}
                     onClick={() => setLang(l)}
-                    className="relative"
                     style={{ color: lang === l ? "#000" : "#999" }}
                   >
                     {l}
-                    {lang === l && (
-                      <span
-                        aria-hidden
-                        className="absolute left-1/2 -translate-x-1/2 h-[8px] w-11"
-                        style={{ backgroundColor: DARK, top: "calc(100% + 24px)" }}
-                      />
-                    )}
                   </button>
                 ))}
               </nav>
             </div>
           </div>
-          {/* Grüne Linie full width */}
-          <div className="h-[8px] w-full" style={{ backgroundColor: GREEN }} />
+          {/* Grüne Linie full width mit Indicator innen */}
+          <div ref={greenLineRef} className="relative h-[8px] w-full" style={{ backgroundColor: GREEN }}>
+            <div className="max-w-[1200px] mx-auto px-6 md:px-20 h-full relative">
+              <span
+                aria-hidden
+                className="absolute inset-y-0 transition-all"
+                style={{ backgroundColor: DARK, left: indicator.left, width: indicator.width }}
+              />
+            </div>
+          </div>
         </header>
 
+        {/* Wrapper für initialen Viewport — Footer erst nach Scroll */}
+        <div className="min-h-screen flex flex-col">
+        <section className="flex-1 flex flex-col">
 
-        {/* Above-the-fold Section: füllt mind. viewport, Footer erst nach Scroll */}
-        <section className="min-h-screen flex flex-col">
           <div className="max-w-[1200px] w-full mx-auto px-6 md:px-20 pt-12 flex-1">
             <div
               className="inline-block pb-2 mb-10 text-[15px] font-bold"
