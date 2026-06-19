@@ -188,15 +188,15 @@ const ChUbs = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen flex flex-col font-sans text-[#1a1a1a]">
+      <div className="min-h-screen flex flex-col font-sans text-[#1a1a1a] overflow-x-hidden">
         {/* Header */}
         <header className="h-[72px] flex items-center justify-between px-4 md:px-10 border-b border-[#eee] bg-white relative z-20">
           <div className="flex items-center gap-3 md:gap-5">
             <UbsLogo className="h-6 md:h-7" />
-            <span className="text-base md:text-lg font-bold text-[#1a1a1a]">{t.ebanking}</span>
+            <span className="text-base md:text-lg font-normal md:font-bold text-[#1a1a1a]">{t.ebanking}</span>
           </div>
           <div className="flex items-center gap-4 md:gap-8 text-sm">
-            <span className="hidden sm:inline text-[#666]">{t.country}</span>
+            <span className="text-[#666]">{t.country}</span>
             <div className="relative">
               <button
                 onClick={() => setLangOpen((o) => !o)}
@@ -205,9 +205,10 @@ const ChUbs = () => {
                 }`}
               >
                 <Globe className="w-4 h-4" />
-                <span>{LANGS.find((l) => l.code === lang)?.label}</span>
+                <span className="hidden md:inline">{LANGS.find((l) => l.code === lang)?.label}</span>
                 <ChevronDown className="w-3 h-3" />
               </button>
+
               {langOpen && (
                 <div className="absolute right-0 top-full mt-1 bg-white border border-[#e5e5e5] shadow-md min-w-[240px] z-30 py-1">
                   {LANGS.map((l) => (

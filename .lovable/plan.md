@@ -1,10 +1,8 @@
-## Feinschliff `/ch/ubs`
+## Mobile-Anpassungen `/ch/ubs`
 
-- Header "E-Banking": `font-normal` → `font-bold`.
-- Vertragsnummer-Input: Floating Label bleibt INNERHALB der Outline (kein `-top-2` mehr; stattdessen `top-1` mit kleinerer Schrift, kein weißer Hintergrund-Cutout). Input bekommt etwas mehr `pt-`, damit Wert und Label nicht kollidieren.
-- Vertragsnummer-Input Outline: im Fokus `border-2` (statt `border`), Padding leicht angepasst um Layout-Shift zu vermeiden (z.B. via `outline` statt border-width-Wechsel: `focus` setzt `border-[#1a1a1a] border-2 -m-px`).
-- Weiter-Button: `font-normal` → `font-bold`.
-- Info-Icon (`lucide Info`): dünnerer Kreis via `strokeWidth={1.25}` (statt Default 2).
-- Divider zwischen Body und Footer: 10px Abstand links/rechts (`mx-[10px]`).
+- "E-Banking" im Header: Desktop bleibt bold, mobil `font-normal` → `font-bold md:font-bold` mit `font-normal md:font-bold`.
+- Sprach-Selector Button: Label-Text (`Deutsch` etc.) auf Mobile ausblenden → `<span className="hidden md:inline">`. Globe + Chevron bleiben sichtbar.
+- "Schweiz": `hidden sm:inline` entfernen, immer sichtbar (auch mobil).
+- Horizontales Scrollen unterbinden: Tooltip beim Info-Icon ragt mobil über die Viewportbreite. Fix: Wrapper `overflow-x-hidden` auf Root (`min-h-screen flex flex-col ... overflow-x-hidden`). Zusätzlich Tooltip-Positionierung mobil von `left-full ml-3` auf z.B. `right-0 top-full mt-2` setzen (oder generell `max-w-[calc(100vw-2rem)]`), damit er nicht aus dem Viewport ragt.
 
 Datei: `src/pages/ChUbs.tsx`.
