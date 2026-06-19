@@ -294,14 +294,14 @@ const ChBernerKantonalbank = () => {
               className="inline-block pb-2 mb-10 text-[15px] font-bold"
               style={{ borderBottom: `2px solid #000000`, color: DARK }}
             >
-              Mein Portal
+              {t.meinPortal}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-12">
               {/* Login */}
               <div>
                 <h1 className="text-[26px] md:text-[36px] font-bold mb-10 leading-tight">
-                  Bitte geben Sie Ihre Zugangsdaten an
+                  {t.headline}
                 </h1>
 
                 <div className="space-y-4 max-w-[320px]">
@@ -311,7 +311,7 @@ const ChBernerKantonalbank = () => {
                       type="text"
                       value={benutzer}
                       onChange={(e) => setBenutzer(e.target.value)}
-                      placeholder="Benutzeridentifikation"
+                      placeholder={t.benutzer}
                       className="w-full bg-transparent outline-none text-[15px] text-black h-12 pl-3 pr-10 placeholder:text-[#545b68]"
                       style={{ borderLeft: `1px solid ${GREEN}`, borderBottom: `1px solid ${GREEN}` }}
                     />
@@ -319,7 +319,7 @@ const ChBernerKantonalbank = () => {
                       <button
                         type="button"
                         onClick={() => setBenutzer("")}
-                        aria-label="Eingabe löschen"
+                        aria-label={t.clearAria}
                         className="absolute right-2 top-1/2 -translate-y-1/2 text-black"
                       >
                         <X size={18} />
@@ -333,14 +333,14 @@ const ChBernerKantonalbank = () => {
                       type={showPwd ? "text" : "password"}
                       value={passwort}
                       onChange={(e) => setPasswort(e.target.value)}
-                      placeholder="Passwort"
+                      placeholder={t.passwort}
                       className="w-full bg-transparent outline-none text-[15px] text-black h-12 pl-3 pr-10 placeholder:text-[#545b68]"
                       style={{ borderLeft: `1px solid ${GREEN}`, borderBottom: `1px solid ${GREEN}` }}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPwd(!showPwd)}
-                      aria-label="Passwort anzeigen"
+                      aria-label={t.showPwdAria}
                       className="absolute right-2 top-1/2 -translate-y-1/2 text-black"
                     >
                       {showPwd ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -349,9 +349,11 @@ const ChBernerKantonalbank = () => {
                 </div>
 
                 <p className="text-[14px] mt-8 max-w-[640px]">
-                  Mit der Anmeldung akzeptiere ich die{" "}
-                  <a href="#" style={{ color: RED }}>Geschäftsbedingungen</a>{" "}
-                  der BEKB | BCBE für das E-Banking.
+                  {t.legalBefore}
+                  <a href={LINKS.terms} target="_blank" rel="noopener noreferrer" style={{ color: RED }}>
+                    {t.legalLink}
+                  </a>
+                  {t.legalAfter}
                 </p>
 
                 {(() => {
@@ -365,7 +367,7 @@ const ChBernerKantonalbank = () => {
                         color: active ? "#ffffff" : DARK,
                       }}
                     >
-                      Weiter
+                      {t.weiter}
                     </button>
                   );
                 })()}
@@ -377,7 +379,7 @@ const ChBernerKantonalbank = () => {
                     style={{ color: RED }}
                   >
                     <ChevronRight size={14} strokeWidth={3} />
-                    E-Banking Schritt für Schritt einrichten
+                    {t.setupLink}
                   </a>
                 </div>
 
@@ -385,29 +387,29 @@ const ChBernerKantonalbank = () => {
 
               {/* Nützliche Links */}
               <aside className="p-6" style={{ backgroundColor: GREEN }}>
-                <h3 className="font-bold text-[16px] mb-4">Nützliche Links</h3>
-                <a href="#" className="block text-[14px] mb-4" style={{ color: RED }}>
-                  Zur Support und Hilfe-Seite
+                <h3 className="font-bold text-[16px] mb-4">{t.nuetzlicheLinks}</h3>
+                <a href={LINKS.support} target="_blank" rel="noopener noreferrer" className="block text-[14px] mb-4" style={{ color: RED }}>
+                  {t.supportPage}
                 </a>
                 <a href="#" className="block text-[14px]" style={{ color: RED }}>
-                  So erkennen Sie Betrugsmaschen im E-Banking
+                  {t.fraudDetect}
                 </a>
 
-                <h3 className="font-bold text-[16px] mt-10 mb-3">Unser Support</h3>
+                <h3 className="font-bold text-[16px] mt-10 mb-3">{t.unserSupport}</h3>
                 <p className="text-[14px] mb-4">
-                  Wir rufen Sie an, wann es Ihnen am besten passt:
+                  {t.supportIntro}
                 </p>
-                <a href="#" className="block text-[14px] mb-4" style={{ color: RED }}>
-                  Telefontermin vereinbaren
+                <a href={LINKS.callback} target="_blank" rel="noopener noreferrer" className="block text-[14px] mb-4" style={{ color: RED }}>
+                  {t.callback}
                 </a>
-                <p className="text-[14px] mb-4">Telefon 031 666 18 80</p>
-                <p className="text-[14px]">Montag bis Freitag</p>
-                <p className="text-[14px] mb-3">08:00 bis 20:00 Uhr</p>
-                <p className="text-[14px]">Samstag</p>
-                <p className="text-[14px]">09:00 bis 16:00 Uhr</p>
+                <p className="text-[14px]">{t.monFri}</p>
+                <p className="text-[14px] mb-3">{t.monFriHours}</p>
+                <p className="text-[14px]">{t.sat}</p>
+                <p className="text-[14px]">{t.satHours}</p>
               </aside>
             </div>
           </div>
+
 
           {/* Breadcrumb unten gepinnt (im Viewport) */}
           <div className="max-w-[1200px] w-full mx-auto px-6 md:px-20 mt-auto">
