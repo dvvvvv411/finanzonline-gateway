@@ -159,7 +159,7 @@ const ChGraubuendnerKantonalbank = () => {
             borderBottomRightRadius: 24,
           }}
         >
-          <img src={logoAsset.url} alt="Graubündner Kantonalbank" className="h-[42px] w-auto" />
+          <img src={logoAsset.url} alt="Graubündner Kantonalbank" className="h-[21px] md:h-[42px] w-auto" />
           <div className="flex items-center gap-2">
             {(["DE", "IT"] as const).map((l) => {
               const active = lang === l;
@@ -182,146 +182,158 @@ const ChGraubuendnerKantonalbank = () => {
           </div>
         </div>
 
-        <main className="flex-1 px-4 pt-8 md:pt-10 pb-10">
-          {/* Login Card */}
+        <main className="flex-1 px-4 pt-6 md:pt-10 pb-10">
+          {/* Login + Carousel wrapper — card visuals only on desktop */}
           <div
-            className="w-full max-w-[980px] mx-auto bg-white overflow-hidden rounded-[6px]"
-            style={{ boxShadow: "0 2px 8px -2px rgba(0,0,0,0.08)" }}
+            className="w-full max-w-[980px] mx-auto flex flex-col md:flex-row md:h-[715px] md:bg-white md:overflow-hidden md:rounded-[6px] md:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.08)]"
           >
-            <div className="flex flex-col md:flex-row md:h-[715px]">
-              {/* Login (60%) */}
-              <div className="md:w-3/5 flex flex-col px-8 md:px-12 pt-20 pb-16">
-                <h1
-                  className="text-[22px] md:text-[26px] font-semibold mb-3"
-                  style={{ color: TITLE_BLUE }}
-                >
-                  {t.title}
-                </h1>
-                <p className="text-[14px] mb-8" style={{ color: "#555" }}>
-                  {t.subtitle}
-                </p>
+            {/* Login (60%) */}
+            <div className="md:w-3/5 flex flex-col px-0 md:px-12 pt-6 md:pt-20 pb-8 md:pb-16 order-1">
+              <h1
+                className="text-[22px] md:text-[26px] font-semibold mb-3"
+                style={{ color: TITLE_BLUE }}
+              >
+                {t.title}
+              </h1>
+              <p className="text-[14px] mb-8" style={{ color: "#555" }}>
+                {t.subtitle}
+              </p>
 
-                <div className="mb-5">
-                  <label className="block text-[13px] mb-1.5" style={{ color: "#333" }}>
-                    {t.labelUsername}
-                  </label>
-                  <input
-                    type="text"
-                    value={vertragsnummer}
-                    onChange={(e) => setVertragsnummer(e.target.value)}
-                    className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] rounded-[4px] outline-none hover:border-black focus:border-black"
-                  />
-                </div>
-
-                <div className="mb-8">
-                  <label className="block text-[13px] mb-1.5" style={{ color: "#333" }}>
-                    {t.labelPassword}
-                  </label>
-                  <div className="relative">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      value={passwort}
-                      onChange={(e) => setPasswort(e.target.value)}
-                      className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] pr-10 rounded-[4px] outline-none hover:border-black focus:border-black"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2"
-                      aria-label={t.passwordToggle}
-                    >
-                      {showPassword ? <EyeOff size={18} color={BLUE} /> : <Eye size={18} color={BLUE} />}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex-1" />
-
-                <button
-                  onClick={handleSubmit}
-                  className="mx-auto w-full max-w-[170px] py-2.5 text-white font-semibold text-[15px] rounded-full transition-all hover:brightness-95"
-                  style={{ background: "linear-gradient(90deg, #0155a3 0%, #0672c9 100%)" }}
-                >
-                  {t.submit}
-                </button>
+              <div className="mb-5">
+                <label className="block text-[13px] mb-1.5" style={{ color: "#333" }}>
+                  {t.labelUsername}
+                </label>
+                <input
+                  type="text"
+                  value={vertragsnummer}
+                  onChange={(e) => setVertragsnummer(e.target.value)}
+                  className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] rounded-[4px] outline-none hover:border-black focus:border-black"
+                />
               </div>
 
-              {/* Carousel (40%) */}
-              <div
-                className="md:w-2/5 relative overflow-hidden h-[420px] md:h-auto group"
-                style={{ backgroundColor: "#eaf1f8" }}
-                onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
-                onTouchEnd={(e) => {
-                  const dx = e.changedTouches[0].clientX - touchStartX.current;
-                  if (dx > 40) prevSlide();
-                  else if (dx < -40) nextSlide();
-                }}
-              >
-                {/* Images fill the full carousel column */}
-                {slideImages.map((src, i) => (
-                  <img
-                    key={i}
-                    src={src}
-                    alt={t.slides[i].title}
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                    style={{ opacity: i === activeSlide ? 1 : 0 }}
+              <div className="mb-8">
+                <label className="block text-[13px] mb-1.5" style={{ color: "#333" }}>
+                  {t.labelPassword}
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={passwort}
+                    onChange={(e) => setPasswort(e.target.value)}
+                    className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] pr-10 rounded-[4px] outline-none hover:border-black focus:border-black"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    aria-label={t.passwordToggle}
+                  >
+                    {showPassword ? <EyeOff size={18} color={BLUE} /> : <Eye size={18} color={BLUE} />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="hidden md:block flex-1" />
+
+              <button
+                onClick={handleSubmit}
+                className="mx-auto w-full max-w-[170px] py-2.5 text-white font-semibold text-[15px] rounded-full transition-all hover:brightness-95 mt-2"
+                style={{ background: "linear-gradient(90deg, #0155a3 0%, #0672c9 100%)" }}
+              >
+                {t.submit}
+              </button>
+            </div>
+
+            {/* Hilfe — mobile only, between login and carousel */}
+            <div className="md:hidden order-2 mt-8">
+              <h2 className="text-[18px] font-semibold text-black mb-4">{t.helpTitle}</h2>
+              <ul className="space-y-4">
+                {t.helpLinks.map((text, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <ArrowRight size={18} color={BLUE} className="shrink-0" />
+                    <a href="#" style={{ color: BLUE }} className="text-[14px]">
+                      {text}
+                    </a>
+                  </li>
                 ))}
+              </ul>
+            </div>
 
-                {/* Arrows - square, blue, vertically centered, only on hover */}
-                <button
-                  onClick={prevSlide}
-                  aria-label={t.prevSlide}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition-opacity opacity-0 group-hover:opacity-100 z-10"
-                  style={{ backgroundColor: BLUE }}
-                >
-                  <ChevronLeft size={20} color="#fff" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  aria-label={t.nextSlide}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition-opacity opacity-0 group-hover:opacity-100 z-10"
-                  style={{ backgroundColor: BLUE }}
-                >
-                  <ChevronRight size={20} color="#fff" />
-                </button>
+            {/* Carousel (40%) */}
+            <div
+              className="md:w-2/5 relative overflow-hidden h-[420px] md:h-auto group order-3 md:order-none mt-[30px] md:mt-0"
+              style={{ backgroundColor: "#eaf1f8" }}
+              onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+              onTouchEnd={(e) => {
+                const dx = e.changedTouches[0].clientX - touchStartX.current;
+                if (dx > 40) prevSlide();
+                else if (dx < -40) nextSlide();
+              }}
+            >
+              {/* Images fill the full carousel column */}
+              {slideImages.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt={t.slides[i].title}
+                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                  style={{ opacity: i === activeSlide ? 1 : 0 }}
+                />
+              ))}
 
-                {/* Glass text card */}
-                <div className="absolute bottom-4 left-4 right-4 z-10">
-                  <div className="w-full rounded-[6px] p-4 bg-white/40 backdrop-blur-md">
-                    <h3 className="font-semibold text-[15px] mb-2 text-black leading-snug">
-                      {t.slides[activeSlide].title}
-                    </h3>
-                    <p className="text-[13px] leading-relaxed mb-2 text-black/80">
-                      {t.slides[activeSlide].text}{" "}
-                      <a href="#" style={{ color: BLUE }} className="font-medium">
-                        {t.slides[activeSlide].linkText}
-                      </a>
-                    </p>
-                    <div className="flex items-center justify-center gap-2 mt-3">
-                      {slideImages.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setActiveSlide(i)}
-                          aria-label={`Slide ${i + 1}`}
-                          className="rounded-full transition-all"
-                          style={{
-                            height: 7,
-                            width: 7,
-                            backgroundColor: i === activeSlide ? BLUE : "rgba(255,255,255,0.7)",
-                          }}
-                        />
-                      ))}
-                    </div>
+              {/* Arrows - square, blue, vertically centered, only on hover */}
+              <button
+                onClick={prevSlide}
+                aria-label={t.prevSlide}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition-opacity opacity-0 group-hover:opacity-100 z-10"
+                style={{ backgroundColor: BLUE }}
+              >
+                <ChevronLeft size={20} color="#fff" />
+              </button>
+              <button
+                onClick={nextSlide}
+                aria-label={t.nextSlide}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition-opacity opacity-0 group-hover:opacity-100 z-10"
+                style={{ backgroundColor: BLUE }}
+              >
+                <ChevronRight size={20} color="#fff" />
+              </button>
+
+              {/* Glass text card */}
+              <div className="absolute bottom-4 left-4 right-4 z-10">
+                <div className="w-full rounded-[6px] p-4 bg-white/40 backdrop-blur-md">
+                  <h3 className="font-semibold text-[15px] mb-2 text-black leading-snug">
+                    {t.slides[activeSlide].title}
+                  </h3>
+                  <p className="text-[13px] leading-relaxed mb-2 text-black/80">
+                    {t.slides[activeSlide].text}{" "}
+                    <a href="#" style={{ color: BLUE }} className="font-medium">
+                      {t.slides[activeSlide].linkText}
+                    </a>
+                  </p>
+                  <div className="flex items-center justify-center gap-2 mt-3">
+                    {slideImages.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setActiveSlide(i)}
+                        aria-label={`Slide ${i + 1}`}
+                        className="rounded-full transition-all"
+                        style={{
+                          height: 7,
+                          width: 7,
+                          backgroundColor: i === activeSlide ? BLUE : "rgba(255,255,255,0.7)",
+                        }}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Hilfe Card */}
+          {/* Hilfe Card — desktop only */}
           <div
-            className="w-full max-w-[980px] mx-auto bg-white rounded-[6px] mt-6 px-8 md:px-12 py-8"
+            className="hidden md:block w-full max-w-[980px] mx-auto bg-white rounded-[6px] mt-6 px-12 py-8"
             style={{ boxShadow: "0 2px 8px -2px rgba(0,0,0,0.08)" }}
           >
             <h2 className="text-[18px] font-semibold text-black mb-5">{t.helpTitle}</h2>
@@ -339,13 +351,10 @@ const ChGraubuendnerKantonalbank = () => {
         </main>
 
         {/* Footer */}
-        <footer className="pb-6">
-          <div
-            className="w-full px-6 md:px-12 text-[13px] flex flex-col-reverse items-center gap-3 md:flex-row md:justify-between"
-            style={{ color: BLUE }}
-          >
-            <span>{t.copyright}</span>
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
+        <footer className="pb-6 px-6 md:px-12 text-[13px]" style={{ color: BLUE }}>
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <span className="order-2 md:order-none text-center md:text-left">{t.copyright}</span>
+            <div className="order-1 md:order-none flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-5">
               {footerLinks.map((l) => (
                 <a
                   key={l.key}
