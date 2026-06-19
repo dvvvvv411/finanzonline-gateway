@@ -251,10 +251,10 @@ const ChBaslerKantonalbank = () => {
         <main className="flex-1 flex flex-col">
           {/* Above the fold — fills viewport */}
           <section className="min-h-[calc(100vh-4rem)] flex">
-            <div className="max-w-[1280px] w-full mx-auto px-5 md:px-10 pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
+            <div className="max-w-[1280px] w-full mx-auto px-6 md:px-20 pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
               {/* Left column */}
               <div>
-                <h1 className="text-[32px] md:text-[44px] font-light leading-[1.05]">{t.title}</h1>
+                <h1 className="text-[32px] md:text-[44px] font-normal leading-[1.05]">{t.title}</h1>
                 <p className="text-[18px] mt-6 mb-12 md:mb-14">{t.subtitle}</p>
 
                 <div className="space-y-6">
@@ -312,10 +312,10 @@ const ChBaslerKantonalbank = () => {
 
               {/* Right column — Wichtige Information */}
               <div>
-                <div className="p-7 text-white" style={{ backgroundColor: GREEN }}>
+                <div className="p-7 text-white shadow-[0_4px_20px_rgba(0,0,0,0.15)]" style={{ backgroundColor: GREEN }}>
                   <div className="flex items-center gap-3 mb-3">
                     <Info size={26} strokeWidth={1.5} />
-                    <h3 className="text-[22px] md:text-[24px] font-light">{t.info}</h3>
+                    <h3 className="text-[22px] md:text-[24px] font-bold">{t.info}</h3>
                   </div>
                   <p className="text-[15px] leading-[1.5]">{t.infoText}</p>
                   <p className="text-[15px] mt-4">{t.infoThanks}</p>
@@ -325,7 +325,7 @@ const ChBaslerKantonalbank = () => {
           </section>
 
           {/* Scroll area — below fold */}
-          <section className="max-w-[1280px] w-full mx-auto px-5 md:px-10 mt-24 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
+          <section className="max-w-[1280px] w-full mx-auto px-6 md:px-20 mt-24 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
             <div>
               <h2 className="text-[24px] md:text-[28px] font-light mb-4">{t.questions}</h2>
               <p className="text-[15px] mb-6 leading-[1.5]">{t.questionsText}</p>
@@ -345,7 +345,7 @@ const ChBaslerKantonalbank = () => {
 
         {/* Footer */}
         <footer className="border-t border-gray-300 mt-16">
-          <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-8 text-[14px]">
+          <div className="max-w-[1280px] mx-auto px-6 md:px-20 py-8 text-[14px]">
             <div className="flex flex-col md:flex-row md:gap-10 gap-3 mb-4">
               <a href="#" className="no-underline text-black">{t.f1}</a>
               <a href="#" className="no-underline text-black">{t.f2}</a>
