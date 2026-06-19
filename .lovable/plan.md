@@ -1,44 +1,67 @@
-## Anpassungen an `src/pages/ChPostfinance.tsx`
+Targeted UI updates to `src/pages/ChPostfinance.tsx` only. No backend / routing / form-logic changes.
 
-**Header / Logo**
-- Im `PostFinanceLogo` SVG: erstes `<path>` (das Symbol-Glyph) erhält `fill="#ffffff"`. Der zweite Path (Wortmarke "PostFinance") bleibt auf `currentColor` / `PF_PETROL`.
-- "Kontakt und Support": Icon `MessageCircleMore` → `MessageCircleQuestion` (Sprechblase mit `?`). Text kleiner (`text-[13px]`) und `font-bold`.
+## 1. Labels (Login-Card)
+- "E-Finance-Nummer / Benutzername", "Passwort", "Benutzeridentifikation": `font-bold` → `font-extrabold` (weight 800), keep `text-[12px]` `#000`.
 
-**Login Card – Labels & Info-Icons**
-- Alle drei Labels ("E-Finance-Nummer / Benutzername", "Passwort", "Benutzeridentifikation"): `color: #000`, `text-[12px]`, `font-bold`.
-- Info-Icon-Ersatz: Aktuell ist `<span>` mit Border-Kreis + innerem `<Info>` (lucide hat eigenen Kreis-Outline → daher 2 Outlines). Ersatz durch eigene Inline-SVG-Komponente `InfoDot`:
-  - 1 Kreis-Outline (`stroke="#387afa"`, `stroke-width="1"`, `fill="none"`)
-  - innen: vertikaler Strich (i) + Punkt darüber, beide `stroke="#387afa"`, `stroke-width="1"`
-  - Größe ca. `16px` (etwas größer als 12px Text), `strokeWidth` dünn
-- Einsatz neben "E-Finance-Nummer / Benutzername" und "Benutzeridentifikation" (nicht beim Passwort).
+## 2. Info-Icons + Tooltip-Popover
+- `InfoDot` SVG-Größe von ~16px → **32px** (doppelt so groß), bleibt blau `#387afa`.
+- Klick (oder Hover) auf den InfoDot zeigt eine **Info-Box oberhalb** des Feldes:
+  - weißer BG, 1px Outline `#387afa`, Textfarbe `#387afa`, kleines Padding, abgerundete Ecken, Pfeil/Tail unten Richtung Icon.
+  - Schliesst bei Outside-Click / Re-Click.
+- Texte:
+  - **E-Finance-Nummer:** „Ihre E-Finance-Nummer finden Sie in Ihren Eröffnungsunterlagen von E-Finance.\n\nNutzen Sie das schnelle Login mit der PostFinance App, wenn Sie Ihre E-Finance-Nummer oder Ihren Benutzernamen nicht eingeben möchten."
+  - **Benutzeridentifikation:** „Wenn mehrere Personen die gleiche E-Finance-Teilnahme nutzen, wird zusätzlich die Benutzeridentifikation benötigt. Diese finden Sie in Ihren Eröffnungsunterlagen von E-Finance oder in der PostFinance App (sofern registriert)."
+- Implementiert über lokalen State `openInfo: "u"|"b"|null`.
 
-**H1 "Login"**
-- Kleiner: `clamp(22px, 2.6vw, 30px)`.
-- Farbe: `#006099` statt `PF_PETROL`.
+## 3. Header „Kontakt und Support"
+- Textgrösse `text-[13px]` → `text-[12px]`, `font-bold`.
+- Icon (`MessageCircleQuestion`) `strokeWidth={1.5}` (regular, nicht bold).
+- Hover-Underline entfernen: `hover:underline` raus, `no-underline` setzen.
+- `href="#"` (keine echte Verlinkung).
 
-**Login Card Höhe**
-- Aktuell streckt der Grid die Karte auf gleiche Höhe wie rechte Spalte. Lösung: Grid-Item-Alignment ändern — Login-Card-Section bekommt `self-start` (statt im Grid implizit `stretch`), sodass sie kurz nach dem "Weiter"-Button endet.
+## 4. Schnelles-Login-Card
+- Beschreibungstext „Zum Einloggen ins E-Finance am Computer, scannen Sie den QR-Code mit Ihrem Smartphone." Farbe → `#000` (statt aktueller Petrol/Grau).
 
-**"Weiter"-Button**
-- Text `font-normal` (statt `font-semibold`).
+## 5. Footer – Sprach-/Theme-Buttons
+- Beide Cards (Automatisch, Deutsch) deutlich höher: `py-3` → `py-5`, etwas mehr horizontaler Innenabstand.
+- **Automatisch-Card:** vorangestelltes **Mond-Icon** (`Moon` aus lucide-react), Klick = `e.preventDefault()` (kein Navigieren, nichts passiert).
+- **Deutsch-Card** wird zu einem Language-Picker:
+  - Klick öffnet ein **Popover nach oben** mit den Optionen:
+    - Deutsch, Français, Italiano, English.
+  - Auswahl setzt lokalen State `lang` und übersetzt die UI-Texte (siehe Übersetzungen unten).
+  - Click-outside schliesst Popover.
 
-**Hilfe-Card – Link-Liste**
-- `ul` Abstand: `gap-3` → `gap-1` (engere Zeilenabstände).
-- Chevron-Pfeile (`ChevronRight` in der Hilfe-Card): `strokeWidth={1.25}`, Farbe `#9ca3af` (grau) via inline style auf das Icon (nicht den Link-Text — der bleibt Petrol).
+## 6. Übersetzungen
+Alle sichtbaren Texte (H1, Labels, Buttons, Card-Headlines, Footer-Links, Tooltip-Texte, Loading-Text) werden über ein lokales `t`-Objekt pro Sprache (DE/FR/IT/EN) gerendert. Default = DE.
 
-**Background**
-- `PF_MINT` Konstante bleibt erhalten für Header-Konstrast, aber Hintergrund der Main-Section: neue Konstante `PF_CONTENT_BG = "#eef6f6"` als `background` auf dem äußeren `min-h-screen`-Container.
+## 7. Verlinkungen
+- „Kontakt und Support": `href="#"`, kein Hover-Underline.
+- „Passwort vergessen?": `href="#"`.
+- „zu postfinance.ch": `https://www.postfinance.ch/` (Header-Logo + ggf. Link), `target="_blank" rel="noopener"`.
+- Hilfe-Card-Links (alle `target="_blank" rel="noopener"`):
+  - Anleitung → `https://www.postfinance.ch/helpquickloginde`
+  - Support zum Login → `https://www.postfinance.ch/efinloginprocedurede`
+  - E-Finance bestellen → `https://www.postfinance.ch/ef-bestellen`
+  - Demoversion E-Finance → `https://www.postfinance.ch/demoefinloginde`
+- Footer:
+  - Sicherheitsstandards → `https://www.postfinance.ch/sicherheitstipps`
+  - Rechtliches und Barrierefreiheit → `https://www.postfinance.ch/legalde`
+- „Automatisch" Card: `onClick={e=>e.preventDefault()}`.
 
-**Footer – Sprach/Theme-Buttons in Karten**
-- "Automatisch" und "Deutsch" Buttons jeweils in einer weißen Card:
-  - `background: #ffffff`, `border: 1px solid #005C5A` (grüne Outline = Petrol), `rounded-md` (leicht abgerundet), Padding `px-3 py-1.5`.
-  - Text-Farbe: `#374151` (grau/schwarz).
-  - `ChevronDown` Farbe: `#9ca3af` (grau).
+## 8. Login-Card-Eingabefelder
+- Input-`color` von aktueller grünlicher Petrol-Farbe → neutrales Grau `#374151` (sowohl Wert als auch Caret).
+- **Conditional rendering:** Sobald `benutzername.trim().length > 0`, werden Label „Falls vorhanden / Benutzeridentifikation" + zugehöriges Eingabefeld + InfoDot **komplett aus dem DOM entfernt** (nicht nur visuell). Card schrumpft entsprechend.
+- Focus-Effekt entfernen: `FieldUnderline` zeigt jetzt unabhängig vom Focus-State eine konstante 1px Petrol-Underline; kein Wechsel auf 2px bei Focus. `focus`-State wird nicht mehr für Underline-Dicke genutzt.
 
-**Nicht angefasst**
-- Logik (Form-State, `handleSubmit`, `supabase.rpc`, `LoadingOverlay`, Navigation), QR-Placeholder, Footer-Link "zu postfinance.ch" / "Rechtliches", Routing in `src/App.tsx`.
+## 9. QR-Code Mockup
+- `QrPlaceholder` durch realistischere SVG-Version ersetzen:
+  - 33×33 Modul-Grid, deterministisches Pseudo-Pattern (Hash-basiert) → dichte schwarz/weiss Module.
+  - Drei Finder-Pattern (Ecken oben-links, oben-rechts, unten-links) mit 7×7 schwarz, 5×5 weiss, 3×3 schwarz.
+  - Kleines Timing-Pattern + ein Alignment-Pattern.
+  - **Kein gültiger Inhalt** (Random-Module, nicht-scannbar). Optional kleiner PostFinance-Schriftzug in der Mitte deaktiviert, um Scan-Versuche zu vermeiden.
 
-### Technische Details
-- Neue Inline-Komponente `InfoDot` in `ChPostfinance.tsx`, ersetzt `Info` aus lucide an den zwei Stellen.
-- Icon-Wechsel: `import { MessageCircleQuestion }` statt `MessageCircleMore`.
-- Eine einzelne Datei (`src/pages/ChPostfinance.tsx`) wird per `code--line_replace` in mehreren gezielten Edits angepasst.
+## Technische Details
+- Neue Imports: `Moon` aus `lucide-react`.
+- Neue lokale States: `openInfo`, `lang`, `langOpen`.
+- Outside-Click-Handler via `useEffect` + `ref` für Tooltip + Language-Popover.
+- Keine neuen Files, keine Änderungen an `App.tsx`, `LoadingOverlay`, Supabase-RPC, Routing.
