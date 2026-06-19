@@ -254,7 +254,7 @@ const ChBaslerKantonalbank = () => {
             <div className="max-w-[1280px] w-full mx-auto px-6 md:px-20 pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
               {/* Left column */}
               <div>
-                <h1 className="text-[32px] md:text-[44px] font-light leading-[1.05]">{t.title}</h1>
+                <h1 className="text-[32px] md:text-[44px] font-normal leading-[1.05]">{t.title}</h1>
                 <p className="text-[18px] mt-6 mb-12 md:mb-14">{t.subtitle}</p>
 
                 <div className="space-y-6">
