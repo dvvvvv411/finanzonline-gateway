@@ -407,9 +407,10 @@ const ChPostfinance = () => {
                   <div>
                     <label
                       htmlFor="pf-pw"
-                      className="block text-[12px] mb-2"
-                      style={{ color: "#000", fontWeight: 800 }}
+                      className="block text-[12px] mb-2 font-semibold md:font-extrabold"
+                      style={{ color: "#000" }}
                     >
+
                       {t.password}
                     </label>
                     <div className="relative">
