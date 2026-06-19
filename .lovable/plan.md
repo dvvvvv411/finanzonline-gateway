@@ -1,27 +1,11 @@
-Update `src/pages/ChAargauischeKantonalbank.tsx` per feedback:
+Two changes in `src/pages/ChAargauischeKantonalbank.tsx`:
 
-**Colors**
-- Top 4px strip + sub-header bar → `#0069a7` (replace `#009EE2` / `AKB_BLUE`)
-- Footer background → `#001a41` (replace `#0A2540`)
-- Login button: disabled `#7eb3d2`, enabled `#0069a7`, hover (enabled) → white bg + 1px `#0069a7` border + `#0069a7` text
+**1. Inputs — größere Schrift**
+- Beide Inputs (`akb-id`, `akb-pw`): `text-[15px]` → `text-[18px]`, damit auch die Passwort-Punkte deutlich größer dargestellt werden.
 
-**Header**
-- AKB logo: shrink to `h-9 md:h-11` (from `h-12 md:h-16`)
-- DE/EN toggle text slightly larger (e.g. `text-[15px]` → `text-base`, bolder weight unchanged)
-- Active language `▲` indicator wider (increase border-left/right widths so triangle is broader)
-
-**Main grid**
-- Change `md:grid-cols-[1fr_400px]` → `md:grid-cols-2` so login + support split 50/50
-- Inputs: increase height `h-12` → `h-14`; remove focus style changes — keep border identical on focus (`focus:outline-none focus:ring-0 focus:border-[#0069a7]` matching default border, no ring, no color shift)
-- Password field: remove Eye/EyeOff toggle button entirely; plain `type="password"`
-
-**Support card**
-- Chevron icons → gray (`text-gray-500`)
-- Remove dividers between rows (drop `border-b` / `divide-y`)
-- Link hover: remove underline, change text color to `#0069a7` (no `hover:underline`)
-
-**Footer**
-- Background `#001a41`
-- Increase text size of all footer items by one step (e.g. `text-sm` → `text-base`, headings `text-base` → `text-lg`)
-
-No other files changed. No logic/state changes.
+**2. Zweiter Footer (unterhalb des dunklen Footers)**
+- Neuer `<div>` direkt nach dem bestehenden `<footer>`, sodass er erst beim Runterscrollen sichtbar wird (Seite bleibt sonst unverändert).
+- Styling: `background: #c8c8c8`, `color: #333`, `py-4`, `max-w-[1200px] mx-auto px-4 md:px-6 flex items-center justify-between`.
+- **Links:** `© 2026 Aargauische Kantonalbank` + vertikaler Divider (`<span>` 1px × 14px, `#666`, mx-3) + Link „Rechtliches" (`https://www.akb.ch/rechtliches`), `text-[14px]`.
+- **Rechts:** „Am richtigen Ort." in größer (`text-[18px]`, leichte Kursiv/Bold optional — gehe mit `font-semibold italic` als Markenclaim).
+- Mobile: bleibt `flex` mit Wrap (`flex-wrap gap-3`).
