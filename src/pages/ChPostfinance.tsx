@@ -226,8 +226,8 @@ const ChPostfinance = () => {
                   <div>
                     <label
                       htmlFor="pf-pw"
-                      className="block text-[14px] font-bold mb-2"
-                      style={{ color: PF_PETROL }}
+                      className="block text-[12px] font-bold mb-2"
+                      style={{ color: "#000" }}
                     >
                       Passwort
                     </label>
