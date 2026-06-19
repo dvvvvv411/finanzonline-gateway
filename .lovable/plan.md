@@ -1,29 +1,19 @@
-Update `src/pages/ChMigros.tsx`:
+Mobile-view changes for `src/pages/ChMigros.tsx` (breakpoint: `< md`, i.e. `<768px`). Desktop layout stays unchanged.
 
-**Spacing**
-- Login card: much larger gap between "Weiter" button and the footer links row (`mt-8` → `mt-16` on the links row).
-- Footer: larger gap between items (`gap-6` → `gap-10`).
+**Logo (mobile)**
+- Add a small `MigrosLogoMobile` SVG component using the provided path: `viewBox="0 0 20 25"`, `fill={GREEN}`.
+- In header: show `MigrosLogoMobile` on mobile (`md:hidden`), keep desktop logo on `hidden md:block`.
 
-**Help button**
-- Border color `#859886` (instead of green).
+**Header help button (mobile)**
+- Remove the `hidden sm:inline` on the "Hilfe" text so it shows on mobile too.
 
-**Weiter button hover**
-- Default: bg `#144B3C`, text white.
-- Hover: bg `#eef2f1`, text `#144B3C`. Use a small state/class toggle.
+**Card footer links (mobile)**
+- On mobile: stack vertically, centered, with "Probleme bei der Anmeldung?" first, then "Wo finde ich meine Vertragsnummer?".
+- On desktop (`md:`): keep current row layout with "Wo finde ich" left, "Probleme" right.
+- Implementation: use `flex flex-col-reverse items-center gap-4 md:flex-row md:justify-between md:gap-4`. Since current DOM order is `whereFind` then `problems`, `flex-col-reverse` puts `problems` first on mobile; on `md:flex-row` natural order returns (whereFind left, problems right).
+- HelpCircle icon next to "Probleme bei der Anmeldung?": size to match text (14px) → `w-[14px] h-[14px]` instead of `w-5 h-5`.
 
-**Links (open in new tab, `target="_blank" rel="noopener noreferrer"`)**
-- Header help dropdown:
-  - Support → https://www.migrosbank.ch/de/hilfe/neues-ebanking.html
-  - Rechtliche Hinweise → https://www.migrosbank.ch/ueber-uns/rechtliche-informationen
-  - Sicherheit → https://www.migrosbank.ch/de/hilfe/e-banking/faq-fragen-ebanking.html?t=sicherheit
-- Card footer links:
-  - Wo finde ich meine Vertragsnummer? → https://www.migrosbank.ch/hilfe/neues-ebanking/wo-finde-ich-meine-vertragsnummer
-  - Probleme mit der Anmeldung? → https://www.migrosbank.ch/de/hilfe/neues-ebanking/wie-richte-ich-mein-migros-bank-e-banking-login-via-browser-ein.html
-- Page footer:
-  - Rechtliche Informationen → https://www.migrosbank.ch/ueber-uns/rechtliche-informationen
-  - Impressum → https://www.migrosbank.ch/de/ueber-uns/kontakt-support/impressum.html
-  - Copyright stays a non-link span.
-
-Refactor the dropdown items to map over `{label, href}` objects to attach the correct URL per item.
+**Footer (mobile)**
+- Stack one item per row, left-aligned: `flex-col items-start gap-3 md:flex-row md:items-center md:gap-12`.
 
 No other files touched.
