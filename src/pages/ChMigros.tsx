@@ -271,7 +271,7 @@ const ChMigros = () => {
 
         {/* Footer */}
         <footer className="px-5 md:px-10 py-5">
-          <ul className="flex flex-row flex-wrap items-center gap-12 text-[13px] font-semibold" style={{ color: GREEN }}>
+          <ul className="flex flex-col items-start gap-3 text-[13px] font-semibold md:flex-row md:items-center md:gap-12" style={{ color: GREEN }}>
             <li>
               <span>{t.copyright}</span>
             </li>
