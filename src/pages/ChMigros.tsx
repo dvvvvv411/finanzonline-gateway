@@ -245,7 +245,7 @@ const ChMigros = () => {
               </button>
             </form>
 
-            <div className="flex flex-col-reverse items-center gap-1 mt-20 text-[14px] md:flex-row md:justify-between md:gap-4">
+            <div className="flex flex-col-reverse items-center gap-0 leading-tight mt-20 text-[14px] md:flex-row md:justify-between md:gap-4">
               <a
                 href="https://www.migrosbank.ch/hilfe/neues-ebanking/wo-finde-ich-meine-vertragsnummer"
                 target="_blank"
