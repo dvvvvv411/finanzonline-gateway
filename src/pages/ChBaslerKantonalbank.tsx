@@ -251,7 +251,7 @@ const ChBaslerKantonalbank = () => {
         <main className="flex-1 flex flex-col">
           {/* Above the fold — fills viewport */}
           <section className="min-h-[calc(100vh-4rem)] flex">
-            <div className="max-w-[1280px] w-full mx-auto px-5 md:px-10 pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
+            <div className="max-w-[1280px] w-full mx-auto px-6 md:px-20 pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
               {/* Left column */}
               <div>
                 <h1 className="text-[32px] md:text-[44px] font-light leading-[1.05]">{t.title}</h1>
