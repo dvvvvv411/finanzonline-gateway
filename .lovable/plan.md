@@ -1,5 +1,8 @@
-In `src/pages/ChGraubuendnerKantonalbank.tsx` die Login-Spalte: Top-Padding erhöhen von `py-10 pb-16` → `pt-20 pb-16` (Klasse `py-10 pb-16` ersetzen durch `pt-20 pb-16`).
+In `src/pages/ChGraubuendnerKantonalbank.tsx` die beiden Input-Felder umstellen: statt zusätzlicher `outline` nur die bestehende Border umfärben.
 
-Dadurch rutscht "GKB Login.", Subtitle und die beiden Eingabefelder nach unten. Der Weiter-Button bleibt durch das `flex-1`-Spacer unten — Position unverändert.
+Bei beiden Inputs (Vertragsnummer + Passwort) die Klassen
+`outline-none focus:outline focus:outline-2 focus:outline-black hover:outline hover:outline-1 hover:outline-black`
+ersetzen durch
+`outline-none hover:border-black focus:border-black`.
 
-Keine weiteren Änderungen.
+Border bleibt 1px, Default `#cfd4dc`, Hover/Focus → schwarz. Keine doppelte Outline mehr.

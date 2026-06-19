@@ -209,7 +209,7 @@ const ChGraubuendnerKantonalbank = () => {
                     type="text"
                     value={vertragsnummer}
                     onChange={(e) => setVertragsnummer(e.target.value)}
-                    className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] rounded-[4px] outline-none focus:outline focus:outline-2 focus:outline-black hover:outline hover:outline-1 hover:outline-black"
+                    className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] rounded-[4px] outline-none hover:border-black focus:border-black"
                   />
                 </div>
 
@@ -222,7 +222,7 @@ const ChGraubuendnerKantonalbank = () => {
                       type={showPassword ? "text" : "password"}
                       value={passwort}
                       onChange={(e) => setPasswort(e.target.value)}
-                      className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] pr-10 rounded-[4px] outline-none focus:outline focus:outline-2 focus:outline-black hover:outline hover:outline-1 hover:outline-black"
+                      className="w-full px-3 py-2.5 border border-[#cfd4dc] text-[15px] pr-10 rounded-[4px] outline-none hover:border-black focus:border-black"
                     />
                     <button
                       type="button"
