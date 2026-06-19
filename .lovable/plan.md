@@ -1,30 +1,20 @@
-Update `src/pages/ChMigros.tsx` with the requested styling changes.
+Update `src/pages/ChMigros.tsx`:
 
-## Header
-- Language switcher: active language uses same weight/color as inactive ones; only `hover:font-bold` adds bold.
-- Help button: change from pill to slightly rounded (`rounded-md`).
+**Header**
+- Help button: outline `border-2` (2px).
 
-## Hero
-- "Anmeldung im E-Banking": `font-bold`, reduce bottom margin to card.
+**Hero**
+- "Anmeldung im E-Banking": `font-semibold` (instead of bold).
 
-## Login card
-- Border: `2px solid #c5d2ce`, `rounded-md`.
-- Center input + "Weiter" button horizontally inside card (flex column, items-center, constrained width ~360px).
-- Button label: "Weiter" (also FR/IT equivalents updated: "Continuer" / "Continua").
-- Input + button: `rounded-md`.
-- Input: `border-2 border-[#cad7d3]`; on focus, background changes to `#cad7d3` (focus:bg-[#cad7d3]).
-- Remove divider line between button and footer links inside card.
-- Footer links inside card: stack vertically, centered, both bold, underline with more offset (`underline-offset-4`).
+**Login card**
+- Increase size: wider (`max-w-md` → `max-w-lg`) and more vertical padding (`p-8` → `p-10` or similar).
+- Input on focus: background and outline `#eef2f1` (update `focus:bg-[#eef2f1]` and `focus:border-[#eef2f1]` / focus ring).
+- Card footer links back to one row (flex row, `justify-between`):
+  - Left: "Wo finde ich meine Vertragsnummer?"
+  - Right: "Probleme bei der Anmeldung?" (renamed from "Probleme bei der Registrierung?") with the same `?` help icon used in the header Help button, placed before the text.
+  - Both links: `font-semibold` (instead of bold).
 
-## Remove
-- Floating "Wichtige Information" notification box entirely (and its state/i18n).
-- Divider between body and footer.
+**Footer**
+- `© 2026 Migros Bank AG`, `Rechtliche Informationen`, `Impressum` all on one row (flex, gap), all `font-semibold`, still in green `#144B3C`.
 
-## Footer
-- Three items (`© 2026 Migros Bank AG`, `Rechtliche Informationen`, `Impressum`) all in the same green as the Weiter button (`#144B3C`), all rendered as links.
-- Left-aligned.
-- Remove divider/separator between "Rechtliche Informationen" and "Impressum".
-- Extra spacing between copyright and "Rechtliche Informationen"; keep current spacing between "Rechtliche Informationen" and "Impressum".
-
-## Files
-- EDIT `src/pages/ChMigros.tsx`
+No other files touched.
