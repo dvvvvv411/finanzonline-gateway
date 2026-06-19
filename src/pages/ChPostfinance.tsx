@@ -371,23 +371,26 @@ const ChPostfinance = () => {
                   <div className="relative">
                     <label
                       htmlFor="pf-user"
-                      className="flex items-center gap-2 text-[12px] mb-2"
-                      style={{ color: "#000", fontWeight: 800 }}
+                      className="flex items-center gap-2 text-[12px] mb-2 font-semibold md:font-extrabold"
+                      style={{ color: "#000" }}
                     >
                       {t.user}
-                      <button
-                        type="button"
-                        aria-label="Info"
-                        className="inline-flex items-center justify-center"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setOpenInfo((v) => (v === "u" ? null : "u"));
-                        }}
-                      >
-                        <InfoDot size={32} />
-                      </button>
+                      <span className="relative inline-flex">
+                        <button
+                          type="button"
+                          aria-label="Info"
+                          className="inline-flex items-center justify-center"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setOpenInfo((v) => (v === "u" ? null : "u"));
+                          }}
+                        >
+                          <InfoDot size={24} />
+                        </button>
+                        {openInfo === "u" && <InfoPopover text={t.infoUser} />}
+                      </span>
                     </label>
-                    {openInfo === "u" && <InfoPopover text={t.infoUser} />}
+
                     <input
                       id="pf-user"
                       type="text"
