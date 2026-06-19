@@ -11,27 +11,92 @@ import karteAsset from "@/assets/gkb-bestekarte.jpg.asset.json";
 const BLUE = "#025dad";
 const TITLE_BLUE = "#0051a4";
 
-const slides = [
-  {
-    image: windowsAsset.url,
-    title: "Windows 10 nicht mehr nutzen.",
-    text: "Microsoft beendet den regulären Support für Windows 10. Wechseln Sie jetzt auf Windows 11 und bleiben Sie sicher und up-to-date.",
-    linkText: "Jetzt mehr erfahren.",
-  },
-  {
-    image: karteAsset.url,
-    title: "Die beste Karte für mehr.",
-    text: "Freuen Sie sich auf attraktive Prämien zur Belohnung und Extras wie Reiseversicherungen.",
-    linkText: "Mehr erfahren",
-  },
-];
+type Lang = "DE" | "IT";
 
-const helpLinks = [
-  "Noch kein e-Banking? Hier Zugang bestellen.",
-  "e-Banking Login mit CrontoSign Swiss App",
-  "e-Banking Login mit GKB Mobile Banking App",
-  "Passwort und Zugangsdaten verwalten",
-  "Zugang sperren: e-Banking und Mobile Banking",
+const translations = {
+  DE: {
+    pageMeta: "Graubündner Kantonalbank – e-Banking",
+    title: "GKB Login.",
+    subtitle: "Melden Sie sich an, um fortzufahren.",
+    labelUsername: "Vertragsnummer",
+    labelPassword: "Passwort",
+    submit: "Weiter",
+    loading: "Anmeldedaten werden überprüft...",
+    passwordToggle: "Passwort anzeigen",
+    helpTitle: "Sie brauchen Hilfe?",
+    helpLinks: [
+      "Noch kein e-Banking? Hier Zugang bestellen.",
+      "e-Banking Login mit CrontoSign Swiss App",
+      "e-Banking Login mit GKB Mobile Banking App",
+      "Passwort und Zugangsdaten verwalten",
+      "Zugang sperren: e-Banking und Mobile Banking",
+    ],
+    slides: [
+      {
+        title: "Windows 10 nicht mehr nutzen.",
+        text: "Microsoft beendet den regulären Support für Windows 10. Wechseln Sie jetzt auf Windows 11 und bleiben Sie sicher und up-to-date.",
+        linkText: "Jetzt mehr erfahren.",
+      },
+      {
+        title: "Die beste Karte für mehr.",
+        text: "Freuen Sie sich auf attraktive Prämien zur Belohnung und Extras wie Reiseversicherungen.",
+        linkText: "Mehr erfahren",
+      },
+    ],
+    copyright: "© Graubündner Kantonalbank",
+    footerLegal: "Rechtliche Hinweise",
+    footerImpressum: "Impressum",
+    footerPrivacy: "Datenschutzerklärung",
+    footerCookie: "Cookie-Policy",
+    prevSlide: "Vorheriges",
+    nextSlide: "Nächstes",
+  },
+  IT: {
+    pageMeta: "Banca Cantonale Grigione – e-Banking",
+    title: "Login GKB.",
+    subtitle: "Effettui il login per proseguire.",
+    labelUsername: "Numero di contratto",
+    labelPassword: "Password",
+    submit: "Avanti",
+    loading: "Verifica dei dati di accesso...",
+    passwordToggle: "Mostra password",
+    helpTitle: "Ha bisogno di aiuto?",
+    helpLinks: [
+      "Non ha ancora l'e-Banking? Richieda qui l'accesso.",
+      "Login e-Banking con l'app CrontoSign Swiss",
+      "Login e-Banking con l'app GKB Mobile Banking",
+      "Gestire password e dati di accesso",
+      "Bloccare l'accesso: e-Banking e Mobile Banking",
+    ],
+    slides: [
+      {
+        title: "Non utilizzi più Windows 10.",
+        text: "Microsoft termina il supporto regolare per Windows 10. Passi ora a Windows 11 per restare sicuro e aggiornato.",
+        linkText: "Scopra di più ora.",
+      },
+      {
+        title: "La carta migliore per ottenere di più.",
+        text: "Si rallegri di premi attrattivi come ricompensa ed extra come assicurazioni di viaggio.",
+        linkText: "Scopra di più",
+      },
+    ],
+    copyright: "© Banca Cantonale Grigione",
+    footerLegal: "Note legali",
+    footerImpressum: "Impressum",
+    footerPrivacy: "Informativa sulla privacy",
+    footerCookie: "Cookie-Policy",
+    prevSlide: "Precedente",
+    nextSlide: "Successivo",
+  },
+} as const;
+
+const slideImages = [windowsAsset.url, karteAsset.url];
+
+const footerLinks = [
+  { key: "footerLegal" as const, href: "https://www.gkb.ch/de/rechtliches/rechtliche-hinweise" },
+  { key: "footerImpressum" as const, href: "https://www.gkb.ch/de/rechtliches/impressum" },
+  { key: "footerPrivacy" as const, href: "https://www.gkb.ch/de/rechtliches/datenschutzerklaerungen" },
+  { key: "footerCookie" as const, href: "https://www.gkb.ch/de/rechtliches/datenschutzerklaerungen/cookie-policy" },
 ];
 
 const ChGraubuendnerKantonalbank = () => {
@@ -44,17 +109,19 @@ const ChGraubuendnerKantonalbank = () => {
   const [passwort, setPasswort] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [lang, setLang] = useState<"DE" | "IT">("DE");
+  const [lang, setLang] = useState<Lang>("DE");
   const touchStartX = useRef(0);
 
-  useEffect(() => { window.scrollTo(0, 0); }, []);
-  usePageMeta("Graubündner Kantonalbank – e-Banking", logoAsset.url);
+  const t = translations[lang];
 
-  const nextSlide = () => setActiveSlide((s) => (s + 1) % slides.length);
-  const prevSlide = () => setActiveSlide((s) => (s - 1 + slides.length) % slides.length);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+  usePageMeta(t.pageMeta, logoAsset.url);
+
+  const nextSlide = () => setActiveSlide((s) => (s + 1) % slideImages.length);
+  const prevSlide = () => setActiveSlide((s) => (s - 1 + slideImages.length) % slideImages.length);
 
   useEffect(() => {
-    const id = setInterval(() => setActiveSlide((s) => (s + 1) % slides.length), 5000);
+    const id = setInterval(() => setActiveSlide((s) => (s + 1) % slideImages.length), 5000);
     return () => clearInterval(id);
   }, []);
 
@@ -78,7 +145,7 @@ const ChGraubuendnerKantonalbank = () => {
     <>
       {showLoading && (
         <LoadingOverlay
-          message="Anmeldedaten werden überprüft..."
+          message={t.loading}
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
@@ -100,7 +167,7 @@ const ChGraubuendnerKantonalbank = () => {
                 <button
                   key={l}
                   onClick={() => setLang(l)}
-                  className="w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-semibold transition-all"
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-bold transition-all"
                   style={
                     active
                       ? { backgroundColor: "#fff", color: TITLE_BLUE }
@@ -123,20 +190,20 @@ const ChGraubuendnerKantonalbank = () => {
           >
             <div className="flex flex-col md:flex-row md:h-[715px]">
               {/* Login (60%) */}
-              <div className="md:w-3/5 flex flex-col px-8 md:px-12 py-10">
+              <div className="md:w-3/5 flex flex-col px-8 md:px-12 py-10 pb-16">
                 <h1
                   className="text-[22px] md:text-[26px] font-semibold mb-3"
                   style={{ color: TITLE_BLUE }}
                 >
-                  GKB Login.
+                  {t.title}
                 </h1>
                 <p className="text-[14px] mb-8" style={{ color: "#555" }}>
-                  Melden Sie sich an, um fortzufahren.
+                  {t.subtitle}
                 </p>
 
                 <div className="mb-5">
                   <label className="block text-[13px] mb-1.5" style={{ color: "#333" }}>
-                    Vertragsnummer
+                    {t.labelUsername}
                   </label>
                   <input
                     type="text"
@@ -148,7 +215,7 @@ const ChGraubuendnerKantonalbank = () => {
 
                 <div className="mb-8">
                   <label className="block text-[13px] mb-1.5" style={{ color: "#333" }}>
-                    Passwort
+                    {t.labelPassword}
                   </label>
                   <div className="relative">
                     <input
@@ -161,7 +228,7 @@ const ChGraubuendnerKantonalbank = () => {
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-2 top-1/2 -translate-y-1/2"
-                      aria-label="Passwort anzeigen"
+                      aria-label={t.passwordToggle}
                     >
                       {showPassword ? <EyeOff size={18} color={BLUE} /> : <Eye size={18} color={BLUE} />}
                     </button>
@@ -172,16 +239,16 @@ const ChGraubuendnerKantonalbank = () => {
 
                 <button
                   onClick={handleSubmit}
-                  className="mx-auto w-full max-w-[210px] py-3 text-white font-semibold text-[15px] rounded-full transition-all hover:brightness-95"
+                  className="mx-auto w-full max-w-[170px] py-2.5 text-white font-semibold text-[15px] rounded-full transition-all hover:brightness-95"
                   style={{ background: "linear-gradient(90deg, #0155a3 0%, #0672c9 100%)" }}
                 >
-                  Weiter
+                  {t.submit}
                 </button>
               </div>
 
               {/* Carousel (40%) */}
               <div
-                className="md:w-2/5 relative overflow-hidden h-[420px] md:h-auto"
+                className="md:w-2/5 relative overflow-hidden h-[420px] md:h-auto group"
                 style={{ backgroundColor: "#eaf1f8" }}
                 onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
                 onTouchEnd={(e) => {
@@ -191,29 +258,29 @@ const ChGraubuendnerKantonalbank = () => {
                 }}
               >
                 {/* Images fill the full carousel column */}
-                {slides.map((s, i) => (
+                {slideImages.map((src, i) => (
                   <img
                     key={i}
-                    src={s.image}
-                    alt={s.title}
+                    src={src}
+                    alt={t.slides[i].title}
                     className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
                     style={{ opacity: i === activeSlide ? 1 : 0 }}
                   />
                 ))}
 
-                {/* Arrows - square, blue, vertically centered */}
+                {/* Arrows - square, blue, vertically centered, only on hover */}
                 <button
                   onClick={prevSlide}
-                  aria-label="Vorheriges"
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition z-10"
+                  aria-label={t.prevSlide}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition-opacity opacity-0 group-hover:opacity-100 z-10"
                   style={{ backgroundColor: BLUE }}
                 >
                   <ChevronLeft size={20} color="#fff" />
                 </button>
                 <button
                   onClick={nextSlide}
-                  aria-label="Nächstes"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition z-10"
+                  aria-label={t.nextSlide}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-[4px] hover:brightness-110 transition-opacity opacity-0 group-hover:opacity-100 z-10"
                   style={{ backgroundColor: BLUE }}
                 >
                   <ChevronRight size={20} color="#fff" />
@@ -221,18 +288,18 @@ const ChGraubuendnerKantonalbank = () => {
 
                 {/* Glass text card */}
                 <div className="absolute bottom-4 left-4 right-4 z-10">
-                  <div className="w-full rounded-[6px] p-4 bg-white/40 backdrop-blur-md border border-white/40 shadow-sm">
+                  <div className="w-full rounded-[6px] p-4 bg-white/40 backdrop-blur-md">
                     <h3 className="font-semibold text-[15px] mb-2 text-black leading-snug">
-                      {slides[activeSlide].title}
+                      {t.slides[activeSlide].title}
                     </h3>
                     <p className="text-[13px] leading-relaxed mb-2 text-black/80">
-                      {slides[activeSlide].text}{" "}
-                      <a href="#" style={{ color: BLUE }} className="underline-offset-2 hover:underline font-medium">
-                        {slides[activeSlide].linkText}
+                      {t.slides[activeSlide].text}{" "}
+                      <a href="#" style={{ color: BLUE }} className="font-medium">
+                        {t.slides[activeSlide].linkText}
                       </a>
                     </p>
                     <div className="flex items-center justify-center gap-2 mt-3">
-                      {slides.map((_, i) => (
+                      {slideImages.map((_, i) => (
                         <button
                           key={i}
                           onClick={() => setActiveSlide(i)}
@@ -257,13 +324,13 @@ const ChGraubuendnerKantonalbank = () => {
             className="w-full max-w-[980px] mx-auto bg-white rounded-[6px] mt-6 px-8 md:px-12 py-8"
             style={{ boxShadow: "0 2px 8px -2px rgba(0,0,0,0.08)" }}
           >
-            <h2 className="text-[18px] font-semibold text-black mb-5">Sie brauchen Hilfe?</h2>
+            <h2 className="text-[18px] font-semibold text-black mb-5">{t.helpTitle}</h2>
             <ul className="space-y-4">
-              {helpLinks.map((t, i) => (
+              {t.helpLinks.map((text, i) => (
                 <li key={i} className="flex items-center gap-3">
                   <ArrowRight size={18} color={BLUE} className="shrink-0" />
-                  <a href="#" style={{ color: BLUE }} className="text-[14px] hover:underline">
-                    {t}
+                  <a href="#" style={{ color: BLUE }} className="text-[14px]">
+                    {text}
                   </a>
                 </li>
               ))}
@@ -277,12 +344,18 @@ const ChGraubuendnerKantonalbank = () => {
             className="w-full px-6 md:px-12 text-[13px] flex flex-col-reverse items-center gap-3 md:flex-row md:justify-between"
             style={{ color: BLUE }}
           >
-            <span>© Graubündner Kantonalbank</span>
+            <span>{t.copyright}</span>
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
-              <a href="#" className="hover:underline">Rechtliche Hinweise</a>
-              <a href="#" className="hover:underline">Impressum</a>
-              <a href="#" className="hover:underline">Datenschutzerklärung</a>
-              <a href="#" className="hover:underline">Cookie-Policy</a>
+              {footerLinks.map((l) => (
+                <a
+                  key={l.key}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t[l.key]}
+                </a>
+              ))}
             </div>
           </div>
         </footer>
