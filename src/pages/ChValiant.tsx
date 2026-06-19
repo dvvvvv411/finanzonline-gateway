@@ -118,16 +118,17 @@ const ChValiant = () => {
         {/* Header */}
         <header className="w-full bg-white">
           <div className="relative w-full px-4 py-5">
-            {/* Centered track matching the card width; logo sits at its left edge */}
+            {/* Centered track matching the card width; logo ends at the card's left edge */}
             <div className="mx-auto relative" style={{ maxWidth: CARD_MAX }}>
               <a
                 href="https://www.valiant.ch"
                 aria-label="Valiant"
-                className="inline-block"
+                className="absolute right-full top-1/2 -translate-y-1/2 pr-4 inline-block"
               >
                 <img src={valiantLogo} alt="Valiant" className="h-9 md:h-10 w-auto" />
               </a>
             </div>
+
             {/* Language selector pinned to the right of the header */}
             <div
               className="absolute top-1/2 -translate-y-1/2 right-6 md:right-10"
