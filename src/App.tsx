@@ -38,6 +38,7 @@ import ChBaloise from "./pages/ChBaloise.tsx";
 import ChValiant from "./pages/ChValiant.tsx";
 import ChAargauischeKantonalbank from "./pages/ChAargauischeKantonalbank.tsx";
 import ChAppenzellerKantonalbank from "./pages/ChAppenzellerKantonalbank.tsx";
+import ChBasellandschaftlicheKantonalbank from "./pages/ChBasellandschaftlicheKantonalbank.tsx";
 
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
