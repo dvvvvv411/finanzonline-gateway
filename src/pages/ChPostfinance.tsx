@@ -189,7 +189,7 @@ const ChPostfinance = () => {
           <div className="max-w-[1180px] mx-auto">
             <h1
               className="font-normal mb-8 md:mb-10"
-              style={{ color: PF_PETROL, fontSize: "clamp(28px, 4vw, 40px)" }}
+              style={{ color: "#006099", fontSize: "clamp(22px, 2.6vw, 30px)" }}
             >
               Login
             </h1>
