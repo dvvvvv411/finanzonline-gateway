@@ -86,8 +86,11 @@ const ChAppenzellerKantonalbank = () => {
               {/* Left column: header + form */}
               <div className="md:w-1/2 flex flex-col">
                 {/* Header */}
-                <div className="px-6 pt-2 pb-2" style={{ borderBottom: `3px solid ${RED}` }}>
-                  <img src={logoAsset.url} alt="Appenzeller Kantonalbank" className="h-9" />
+                <div
+                  className="flex items-center"
+                  style={{ height: 25, paddingLeft: 24, paddingRight: 24, borderBottom: `3px solid ${RED}` }}
+                >
+                  <img src={logoAsset.url} alt="Appenzeller Kantonalbank" className="h-[18px]" />
                 </div>
 
                 {/* Form */}
@@ -168,9 +171,11 @@ const ChAppenzellerKantonalbank = () => {
               {/* Right column: carousel */}
               <div className="md:w-1/2 flex flex-col">
                 {/* top divider matching header height */}
-                <div className="px-8 pt-6 pb-4 hidden md:block" style={{ borderBottom: "2px solid #ddd" }}>
-                  <div className="h-6" />
-                </div>
+                <div
+                  className="hidden md:block"
+                  style={{ height: 25, borderBottom: "2px solid #ddd" }}
+                />
+
 
                 <div className="relative group flex-1 min-h-[360px] overflow-hidden">
                   {slides.map((s, i) => (
