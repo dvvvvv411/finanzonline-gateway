@@ -105,8 +105,8 @@ const ChAppenzellerKantonalbank = () => {
                       type="text"
                       value={vertragsnummer}
                       onChange={(e) => setVertragsnummer(e.target.value)}
-                      className="w-full px-3 py-2 border outline-none text-[15px] rounded-[3px]"
-                      style={{ borderColor: "#cccccc", backgroundColor: "#fff" }}
+                      className="w-full px-3 py-2 border outline-none text-[15px] rounded-[5px] border-[#cccccc] hover:border-black focus:border-black transition-colors"
+                      style={{ backgroundColor: "#fff" }}
                     />
                   </div>
 
