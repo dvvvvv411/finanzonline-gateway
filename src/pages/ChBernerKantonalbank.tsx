@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { Eye, EyeOff, Home, ChevronRight } from "lucide-react";
+import { Eye, EyeOff, Home, ChevronRight, X } from "lucide-react";
 import logoAsset from "@/assets/bekb-bcbe-logo.svg.asset.json";
 
 const RED = "#d00035";
