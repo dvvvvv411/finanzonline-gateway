@@ -166,7 +166,7 @@ const ChAppenzellerKantonalbank = () => {
 
                   <a
                     href="#"
-                    className="mt-10 text-center text-[14px]"
+                    className="mt-4 md:mt-10 text-center text-[14px]"
                     style={{ color: RED }}
                   >
                     Brauchen Sie Hilfe?
