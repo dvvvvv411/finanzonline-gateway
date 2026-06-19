@@ -312,10 +312,10 @@ const ChBaslerKantonalbank = () => {
 
               {/* Right column — Wichtige Information */}
               <div>
-                <div className="p-7 text-white" style={{ backgroundColor: GREEN }}>
+                <div className="p-7 text-white shadow-[0_4px_20px_rgba(0,0,0,0.15)]" style={{ backgroundColor: GREEN }}>
                   <div className="flex items-center gap-3 mb-3">
                     <Info size={26} strokeWidth={1.5} />
-                    <h3 className="text-[22px] md:text-[24px] font-light">{t.info}</h3>
+                    <h3 className="text-[22px] md:text-[24px] font-bold">{t.info}</h3>
                   </div>
                   <p className="text-[15px] leading-[1.5]">{t.infoText}</p>
                   <p className="text-[15px] mt-4">{t.infoThanks}</p>
