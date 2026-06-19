@@ -77,10 +77,9 @@ const ChAppenzellerKantonalbank = () => {
         {/* Roter Top-Balken */}
         <div style={{ height: 6, backgroundColor: RED }} />
 
-        <main className="flex-1 px-4">
+        <main className="flex-1 px-0 md:px-4">
           <div
-            className="w-full max-w-[988px] mx-auto mt-10 md:mt-16 bg-white shadow-sm rounded-lg overflow-hidden md:aspect-[988/700]"
-            style={{ border: "1px solid #d9d9d9" }}
+            className="w-full md:max-w-[988px] mx-auto mt-0 md:mt-16 bg-white overflow-hidden md:shadow-sm md:rounded-lg md:aspect-[988/700] md:border md:border-[#d9d9d9]"
           >
             <div className="flex flex-col md:flex-row h-full">
               {/* Left column: header + form */}
@@ -88,17 +87,24 @@ const ChAppenzellerKantonalbank = () => {
                 {/* Header */}
                 <div
                   className="flex items-center"
-                  style={{ height: 40, paddingLeft: 24, paddingRight: 24, borderBottom: `3px solid ${RED}` }}
+                  style={{ height: 40, paddingLeft: 24, paddingRight: 24 }}
                 >
                   <img src={logoAsset.url} alt="Appenzeller Kantonalbank" className="h-[30px]" />
                 </div>
+                {/* Divider unter Logo: mobile 50/50 rot+grau, desktop vollrot */}
+                <div className="flex h-[3px] md:hidden">
+                  <div className="flex-1" style={{ backgroundColor: RED }} />
+                  <div className="flex-1 bg-[#ddd]" />
+                </div>
+                <div className="hidden md:block" style={{ height: 3, backgroundColor: RED }} />
 
                 {/* Form */}
                 <div className="px-8 py-8 flex flex-col flex-1">
-                  <h1 className="text-[26px] font-semibold text-black mb-2">Willkommen</h1>
-                  <p className="text-[14px] mb-8" style={{ color: RED }}>
+                  <h1 className="text-[22px] md:text-[26px] font-semibold text-black mb-2">Willkommen</h1>
+                  <p className="text-[14px] mb-8" style={{ color: "#666" }}>
                     Melden Sie sich an, um fortzufahren.
                   </p>
+
 
                   <div className="mb-5">
                     <label className="block text-[13px] mb-1" style={{ color: "#555" }}>
@@ -160,7 +166,7 @@ const ChAppenzellerKantonalbank = () => {
 
                   <a
                     href="#"
-                    className="mt-10 text-center text-[14px]"
+                    className="mt-4 md:mt-10 text-center text-[14px]"
                     style={{ color: RED }}
                   >
                     Brauchen Sie Hilfe?
@@ -245,8 +251,10 @@ const ChAppenzellerKantonalbank = () => {
 
         {/* Footer */}
         <footer className="mt-12" style={{ backgroundColor: "#353535" }}>
-          <div className="max-w-[1100px] mx-auto px-8 py-4 flex items-center justify-between text-[13px]" style={{ color: "#fff" }}>
-            <span>© Appenzeller Kantonalbank 2026</span>
+          <div
+            className="max-w-[1100px] mx-auto px-8 py-4 text-[13px] flex flex-col items-center gap-1 md:flex-row md:justify-between md:flex-row-reverse"
+            style={{ color: "#fff" }}
+          >
             <a
               href="https://www.appkb.ch/ihre-appkb/services/rechtliche-hinweise"
               target="_blank"
@@ -255,6 +263,7 @@ const ChAppenzellerKantonalbank = () => {
             >
               Rechtliche Hinweise
             </a>
+            <span>© Appenzeller Kantonalbank 2026</span>
           </div>
         </footer>
       </div>
