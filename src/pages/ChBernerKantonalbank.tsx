@@ -32,6 +32,161 @@ const XingIcon = () => (
   </svg>
 );
 
+const LINKS = {
+  terms: "http://www.bekb.ch/de/bekb-ebanking.vertragsgrundlagen.pdf",
+  support: "https://www.bekb.ch/de/services/support/ebanking-app",
+  callback: "https://www.bekb.ch/de/rueckruf-buchen",
+  jobs: "https://www.bekb.ch/de/die-bekb/arbeitgeberin/stellen",
+  media: "https://www.bekb.ch/de/die-bekb/publikationen/medienmitteilungen",
+  glossary: "https://www.bekb.ch/de/glossar",
+  helpFooter: "https://www.bekb.ch/de/services/support",
+  youtube: "https://www.youtube.com/user/bekbbcbe",
+  xing: "https://www.xing.com/companies/bernerkantonalbankag",
+  legal: "https://www.bekb.ch/-/media/bekb/portal/documents/legal/disclaimer.pdf?la=de&vs=2",
+  privacy: "https://www.bekb.ch/-/media/bekb/portal/documents/legal/datenschutz.pdf?la=de&vs=1",
+};
+
+type Dict = {
+  meinPortal: string;
+  headline: string;
+  benutzer: string;
+  passwort: string;
+  legalBefore: string;
+  legalLink: string;
+  legalAfter: string;
+  weiter: string;
+  setupLink: string;
+  nuetzlicheLinks: string;
+  supportPage: string;
+  fraudDetect: string;
+  unserSupport: string;
+  supportIntro: string;
+  callback: string;
+  monFri: string;
+  monFriHours: string;
+  sat: string;
+  satHours: string;
+  anschrift: string;
+  bankdaten: string;
+  schnellzugriff: string;
+  socialMedia: string;
+  postfach: string;
+  jobs: string;
+  media: string;
+  glossary: string;
+  helpFooter: string;
+  legal: string;
+  privacy: string;
+  clearAria: string;
+  showPwdAria: string;
+};
+
+const T: Record<Lang, Dict> = {
+  DE: {
+    meinPortal: "Mein Portal",
+    headline: "Bitte geben Sie Ihre Zugangsdaten an",
+    benutzer: "Benutzeridentifikation",
+    passwort: "Passwort",
+    legalBefore: "Mit der Anmeldung akzeptiere ich die ",
+    legalLink: "Geschäftsbedingungen",
+    legalAfter: " der BEKB | BCBE für das E-Banking.",
+    weiter: "Weiter",
+    setupLink: "E-Banking Schritt für Schritt einrichten",
+    nuetzlicheLinks: "Nützliche Links",
+    supportPage: "Zur Support und Hilfe-Seite",
+    fraudDetect: "So erkennen Sie Betrugsmaschen im E-Banking",
+    unserSupport: "Unser Support",
+    supportIntro: "Wir rufen Sie an, wann es Ihnen am besten passt:",
+    callback: "Telefontermin vereinbaren",
+    monFri: "Montag bis Freitag",
+    monFriHours: "08:00 bis 20:00 Uhr",
+    sat: "Samstag",
+    satHours: "09:00 bis 16:00 Uhr",
+    anschrift: "Anschrift",
+    bankdaten: "Bankdaten",
+    schnellzugriff: "Schnellzugriff",
+    socialMedia: "Social Media",
+    postfach: "Postfach",
+    jobs: "Offene Stellen",
+    media: "Medien",
+    glossary: "Glossar",
+    helpFooter: "Support und Hilfe",
+    legal: "Rechtliche Hinweise",
+    privacy: "Datenschutz",
+    clearAria: "Eingabe löschen",
+    showPwdAria: "Passwort anzeigen",
+  },
+  FR: {
+    meinPortal: "Mon portail",
+    headline: "Veuillez saisir vos identifiants",
+    benutzer: "Identification utilisateur",
+    passwort: "Mot de passe",
+    legalBefore: "En me connectant, j'accepte les ",
+    legalLink: "conditions générales",
+    legalAfter: " de la BEKB | BCBE pour l'e-banking.",
+    weiter: "Continuer",
+    setupLink: "Configurer l'e-banking étape par étape",
+    nuetzlicheLinks: "Liens utiles",
+    supportPage: "Vers la page d'aide et de support",
+    fraudDetect: "Comment détecter les fraudes dans l'e-banking",
+    unserSupport: "Notre support",
+    supportIntro: "Nous vous appelons au moment qui vous convient le mieux:",
+    callback: "Prendre rendez-vous téléphonique",
+    monFri: "Lundi à vendredi",
+    monFriHours: "08h00 à 20h00",
+    sat: "Samedi",
+    satHours: "09h00 à 16h00",
+    anschrift: "Adresse",
+    bankdaten: "Coordonnées bancaires",
+    schnellzugriff: "Accès rapide",
+    socialMedia: "Médias sociaux",
+    postfach: "Case postale",
+    jobs: "Postes vacants",
+    media: "Médias",
+    glossary: "Glossaire",
+    helpFooter: "Support et aide",
+    legal: "Mentions légales",
+    privacy: "Protection des données",
+    clearAria: "Effacer la saisie",
+    showPwdAria: "Afficher le mot de passe",
+  },
+  EN: {
+    meinPortal: "My portal",
+    headline: "Please enter your credentials",
+    benutzer: "User identification",
+    passwort: "Password",
+    legalBefore: "By logging in, I accept the ",
+    legalLink: "terms and conditions",
+    legalAfter: " of BEKB | BCBE for e-banking.",
+    weiter: "Continue",
+    setupLink: "Set up e-banking step by step",
+    nuetzlicheLinks: "Useful links",
+    supportPage: "To support and help page",
+    fraudDetect: "How to detect e-banking scams",
+    unserSupport: "Our support",
+    supportIntro: "We'll call you when it suits you best:",
+    callback: "Schedule a phone appointment",
+    monFri: "Monday to Friday",
+    monFriHours: "8:00 to 20:00",
+    sat: "Saturday",
+    satHours: "9:00 to 16:00",
+    anschrift: "Address",
+    bankdaten: "Bank details",
+    schnellzugriff: "Quick access",
+    socialMedia: "Social media",
+    postfach: "PO Box",
+    jobs: "Job openings",
+    media: "Media",
+    glossary: "Glossary",
+    helpFooter: "Support and help",
+    legal: "Legal notice",
+    privacy: "Data protection",
+    clearAria: "Clear input",
+    showPwdAria: "Show password",
+  },
+};
+
+
 const ChBernerKantonalbank = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
