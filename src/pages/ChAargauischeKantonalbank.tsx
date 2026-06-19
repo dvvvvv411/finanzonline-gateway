@@ -188,7 +188,7 @@ const ChAargauischeKantonalbank = () => {
         </div>
 
         {/* Main */}
-        <main className="flex-1 w-full min-h-screen">
+        <main className="flex-1 w-full">
           <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-10 md:py-14">
             <h1
               className="font-bold leading-tight mb-10 md:mb-14"
@@ -384,32 +384,31 @@ const ChAargauischeKantonalbank = () => {
             </div>
           </div>
         </footer>
+      </div>
 
-        {/* Sub-footer */}
-        <div style={{ background: "#c8c8c8", color: "#333" }}>
-          <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-4 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center text-[14px]">
-              <span>© 2026 Aargauische Kantonalbank</span>
-              <span
-                aria-hidden
-                style={{ display: "inline-block", width: 1, height: 14, background: "#666", margin: "0 12px" }}
-              />
-              <a
-                href="https://www.akb.ch/rechtliches"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline"
-                style={{ color: "#333" }}
-              >
-                Rechtliches
-              </a>
-            </div>
-            <div className="text-[18px] font-semibold" style={{ color: "#001a41" }}>
-              Am richtigen Ort
-            </div>
+      {/* Sub-footer (outside 100vh wrapper — visible only on scroll) */}
+      <div style={{ background: "#c8c8c8", color: "#333" }}>
+        <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center text-[14px]">
+            <span>© 2026 Aargauische Kantonalbank</span>
+            <span
+              aria-hidden
+              style={{ display: "inline-block", width: 1, height: 14, background: "#666", margin: "0 12px" }}
+            />
+            <a
+              href="https://www.akb.ch/rechtliches"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+              style={{ color: "#333" }}
+            >
+              Rechtliches
+            </a>
+          </div>
+          <div className="text-[18px] font-semibold" style={{ color: "#001a41" }}>
+            Am richtigen Ort
           </div>
         </div>
-
       </div>
     </>
   );
