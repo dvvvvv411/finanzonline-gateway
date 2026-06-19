@@ -39,7 +39,7 @@ const T: Record<Lang, {
     label: "Bitte geben Sie Ihre Vertragsnummer ein",
     submit: "Weiter",
     whereFind: "Wo finde ich meine Vertragsnummer?",
-    problems: "Probleme bei der Registrierung?",
+    problems: "Probleme bei der Anmeldung?",
     help: "Hilfe",
     support: "Support",
     legal: "Rechtliche Hinweise",
