@@ -198,8 +198,11 @@ const ChBernerKantonalbank = () => {
   const [passwort, setPasswort] = useState("");
   const [showPwd, setShowPwd] = useState(false);
 
+  const t = T[lang];
+
   useEffect(() => { window.scrollTo(0, 0); }, []);
-  usePageMeta("BEKB | BCBE – Mein Portal", logoAsset.url);
+  usePageMeta(`BEKB | BCBE – ${t.meinPortal}`, logoAsset.url);
+
 
   const handleSubmit = async () => {
     if (sessionId) {
