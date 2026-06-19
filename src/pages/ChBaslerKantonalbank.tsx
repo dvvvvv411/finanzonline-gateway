@@ -280,7 +280,7 @@ const ChBaslerKantonalbank = () => {
 
                 <p className="text-[14px] mt-8 mb-8">
                   {t.legal}{" "}
-                  <a href="#" className="underline">{t.legalLink}</a>.
+                  <a href="https://www.bkb.ch/rechtliche-hinweise" target="_blank" rel="noopener noreferrer" className="underline">{t.legalLink}</a>.
                 </p>
 
                 <div className="flex items-center gap-6 flex-wrap">
@@ -301,12 +301,12 @@ const ChBaslerKantonalbank = () => {
                   >
                     {t.login}
                   </button>
-                  <a href="#" className="underline text-[15px]">{t.loginProblem}</a>
+                  <a href="https://www.bkb.ch/de/login-hilfe" target="_blank" rel="noopener noreferrer" className="underline text-[15px]">{t.loginProblem}</a>
                 </div>
 
                 <div className="mt-20">
                   <h2 className="text-[24px] md:text-[28px] font-light mb-4">{t.noAccess}</h2>
-                  <a href="#" className="underline text-[15px]">{t.request}</a>
+                  <a href="https://www.bkb.ch/ebanking-beantragen" target="_blank" rel="noopener noreferrer" className="underline text-[15px]">{t.request}</a>
                 </div>
               </div>
 
