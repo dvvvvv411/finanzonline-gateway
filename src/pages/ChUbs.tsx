@@ -298,7 +298,7 @@ const ChUbs = () => {
 
               <button
                 onClick={handleNext}
-                className="w-full bg-[#444] hover:bg-[#1a1a1a] text-white py-3 text-[15px] font-normal transition-colors"
+                className="w-full bg-[#444] hover:bg-[#1a1a1a] text-white py-3 text-[15px] font-bold transition-colors"
               >
                 {t.next}
               </button>
