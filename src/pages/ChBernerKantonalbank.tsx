@@ -290,7 +290,7 @@ const ChBernerKantonalbank = () => {
 
           {/* Mobile-only: grüner Streifen (#b4c5a8) hinter Mein-Portal-Card */}
           <div className="lg:hidden" style={{ backgroundColor: '#b4c5a8' }}>
-            <div className="max-w-[1200px] w-full mx-auto px-3 pt-12">
+            <div className="max-w-[1200px] w-full mx-auto px-3 pt-2">
               <div className="p-4" style={{ backgroundColor: GREEN }}>
                 <span
                   className="inline-block pb-1 text-[15px] font-bold"
