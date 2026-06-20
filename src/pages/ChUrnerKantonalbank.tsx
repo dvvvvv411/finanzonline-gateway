@@ -298,13 +298,13 @@ const ChUrnerKantonalbank = () => {
         </main>
 
         {/* Footer: white, no divider, blue text */}
-        <footer className="bg-white">
+        <footer className="bg-[#f5f5f5] md:bg-white">
           <div
-            className="max-w-[1000px] mx-auto px-4 py-6 text-[13px] flex flex-col gap-2 md:flex-row md:items-center md:justify-between"
+            className="max-w-[1000px] mx-auto px-4 py-6 text-[13px] flex flex-col-reverse items-center text-center gap-2 md:flex-row md:justify-between md:text-left"
             style={{ color: BLUE }}
           >
             <span>© 2026 Urner Kantonalbank, Altdorf</span>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-center gap-6">
               <a
                 href="https://www.ukb.ch/dam/dokumente/rechtliches/Basisdokumente.pdf"
                 target="_blank"
