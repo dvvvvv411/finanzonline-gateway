@@ -79,7 +79,7 @@ const FloatingField = ({
 
   return (
     <div
-      className="group relative w-full border-[2px] transition-colors rounded-none hover:border-[#0a6cff] focus-within:border-[#0a6cff]"
+      className="group relative w-full border-[2px] transition-colors rounded-none hover:border-[#003CB4] focus-within:border-[#003CB4]"
       style={{ borderColor: OUTLINE }}
     >
       <input
@@ -95,7 +95,7 @@ const FloatingField = ({
       <label
         htmlFor={id}
         className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-[#003CB4] transition-all duration-200
-                   group-hover:text-[#0a6cff] group-focus-within:text-[#0a6cff]
+                   
                    peer-focus:top-1.5 peer-focus:translate-y-0 peer-focus:text-[11px]
                    peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-[11px]"
       >
@@ -250,7 +250,7 @@ const ChZuercherKantonalbank = () => {
                 <ChevronDown size={16} strokeWidth={2} />
               </button>
               {popover === "lang" && (
-                <div className={popoverShell} style={popoverStyle}>
+                <div className="absolute right-0 top-full mt-2 bg-white px-4 py-3 z-50 inline-block" style={popoverStyle}>
                   <div className="flex flex-col gap-2 text-[15px]">
                     {(["de", "en"] as Lang[]).map((l) => (
                       <button
@@ -344,7 +344,7 @@ const ChZuercherKantonalbank = () => {
 
               <button
                 onClick={handleSubmit}
-                className="mt-8 text-white text-[15px] font-bold px-8 py-2.5 rounded-none transition-colors"
+                className="mt-8 text-white text-[15px] font-bold px-12 py-2.5 rounded-none transition-colors"
                 style={{ backgroundColor: BLUE }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.backgroundColor = BLUE_HOVER)
