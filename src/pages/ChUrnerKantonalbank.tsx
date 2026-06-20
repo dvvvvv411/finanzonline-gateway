@@ -274,9 +274,9 @@ const ChUrnerKantonalbank = () => {
               </div>
             </div>
 
-            {/* Quicklinks card (same width as main card) */}
+            {/* Quicklinks card desktop-only (mobile renders inside main column) */}
             <div
-              className="mt-6 rounded-md px-6 py-4 bg-transparent"
+              className="hidden md:block mt-6 rounded-md px-6 py-4 bg-transparent"
               style={{ border: `1px solid ${OUTLINE}` }}
             >
               <ul className="flex flex-col gap-1.5">
