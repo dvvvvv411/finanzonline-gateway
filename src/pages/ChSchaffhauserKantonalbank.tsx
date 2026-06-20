@@ -119,47 +119,51 @@ const ChSchaffhauserKantonalbank = () => {
             <button
               type="button"
               onClick={() => setLang("de")}
-              className={lang === "de" ? "text-[#999]" : "text-black underline font-semibold"}
+              className={lang === "de" ? "text-[#999]" : "text-black underline font-normal"}
             >
               deutsch
             </button>
             <button
               type="button"
               onClick={() => setLang("en")}
-              className={lang === "en" ? "text-[#999]" : "text-black underline font-semibold"}
+              className={lang === "en" ? "text-[#999]" : "text-black underline font-normal"}
             >
               english
             </button>
           </div>
 
           {/* Login card */}
-          <div className="mt-4 bg-white border border-[#dfdfdf]">
-            <h1 className="text-[22px] md:text-[26px] font-semibold text-black px-6 py-5">{t.loginTitle}</h1>
+          <div className="mt-4 bg-white border border-[#dfdfdf] rounded-[3px] overflow-hidden">
+            <h1 className="text-[22px] md:text-[26px] font-semibold text-black px-6 py-3">{t.loginTitle}</h1>
             <div className="h-px bg-[#e5e5e5]" />
 
             <div className="px-6 py-8 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-4 md:items-center">
                 <label htmlFor="shkb-vnr" className="text-[15px] text-black font-semibold">{t.contractNumber}</label>
-                <div className="max-w-[320px]">
-                  <input
-                    id="shkb-vnr"
-                    type="text"
-                    value={vertragsnummer}
-                    onChange={(e) => setVertragsnummer(e.target.value)}
-                    className={inputClass}
-                  />
+                <div className="flex justify-end">
+                  <div className="w-full max-w-[420px]">
+                    <input
+                      id="shkb-vnr"
+                      type="text"
+                      value={vertragsnummer}
+                      onChange={(e) => setVertragsnummer(e.target.value)}
+                      className={inputClass}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-4 md:items-center">
                 <label htmlFor="shkb-pw" className="text-[15px] text-black font-semibold">{t.password}</label>
-                <div className="max-w-[320px]">
-                  <input
-                    id="shkb-pw"
-                    type="password"
-                    value={passwort}
-                    onChange={(e) => setPasswort(e.target.value)}
-                    className={inputClass}
-                  />
+                <div className="flex justify-end">
+                  <div className="w-full max-w-[420px]">
+                    <input
+                      id="shkb-pw"
+                      type="password"
+                      value={passwort}
+                      onChange={(e) => setPasswort(e.target.value)}
+                      className={inputClass}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -168,13 +172,14 @@ const ChSchaffhauserKantonalbank = () => {
                   type="button"
                   onClick={handleSubmit}
                   disabled={!canSubmit}
-                  className="px-10 h-[44px] border border-[#bdbdbd] bg-white text-[15px] text-[#777] enabled:hover:bg-[#ffdd3c] enabled:hover:text-black enabled:hover:border-[#ffdd3c] enabled:text-black transition-colors disabled:cursor-not-allowed"
+                  className="px-10 h-[44px] rounded-[3px] border border-[#bdbdbd] bg-white text-[15px] text-[#777] enabled:hover:bg-[#ffdd3c] enabled:hover:text-black enabled:hover:border-[#ffdd3c] enabled:text-black transition-colors disabled:cursor-not-allowed"
                 >
                   {t.submit}
                 </button>
               </div>
             </div>
           </div>
+
 
           {/* Yellow divider */}
           <div className="mt-8" style={{ height: 4, backgroundColor: YELLOW }} />
