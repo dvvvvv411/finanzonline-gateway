@@ -1,9 +1,13 @@
-## Mobile Login-Card-Höhe anpassen
+## Info-Card & Footer Anpassungen (`src/pages/ChObwaldnerKantonalbank.tsx`)
 
-In `src/pages/ChObwaldnerKantonalbank.tsx`:
+### Info-Card (Hilfe-Links)
+- Mobile: vertikales Padding der Items von `py-4` → **`py-2`** (Desktop bleibt `py-4` via `md:py-4`)
+- Icon `ChevronRight` (Klammer) → **`ArrowRight`** (richtiger Pfeil)
+- Schatten verstärken: `shadow-md` → **`shadow-xl`** im Mobile
 
-- `min-h-[720px]` nur noch auf **Desktop** anwenden: `md:min-h-[720px]` (kein min-height im Mobile)
-- Den `<div className="flex-1" />`-Spacer nur auf Desktop wirken lassen: `hidden md:block`
-- Dadurch sitzt im Mobile der Weiter-Button + Sperr-Text **direkt unter den Eingabefeldern** ohne Abstand zum unteren Cardrand, während Desktop weiterhin 720px hoch ist mit Button am unteren Rand.
+### Footer
+- `flex-col` am Root entfernen damit Footer NICHT mehr durch `flex-1`-Main ans Seitenende gedrückt wird → stattdessen Standard-Blocklayout
+- Footer-Margin im Mobile auf **`mt-6`** (klein, sichtbar unter der Card, nicht vom Schatten überlagert)
+- Page-Root behält `min-h-screen` aber ohne `flex flex-col`/`flex-1` – stattdessen normales Stacking, Mobile-BG `#f5f5f5` bleibt
 
 Keine weiteren Änderungen.

