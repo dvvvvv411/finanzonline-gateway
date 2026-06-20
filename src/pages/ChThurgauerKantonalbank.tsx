@@ -297,11 +297,11 @@ const ChThurgauerKantonalbank = () => {
                     onClick={l.external ? undefined : (e) => e.preventDefault()}
                     target={l.external ? "_blank" : undefined}
                     rel={l.external ? "noopener noreferrer" : undefined}
-                    className="link-underline-grow inline-flex items-center gap-2 text-[15px] self-start"
+                    className="flex w-fit items-center gap-2 text-[15px]"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
-                    {l.label}
+                    <span className="link-underline-grow">{l.label}</span>
                   </a>
                 ))}
               </div>
@@ -324,21 +324,21 @@ const ChThurgauerKantonalbank = () => {
                     href="https://www.tkb.ch/loginprozess-login"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="link-underline-grow inline-flex items-center gap-2 text-[15px]"
+                    className="flex w-fit items-center gap-2 text-[15px]"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
-                    {t.card1Link1}
+                    <span className="link-underline-grow">{t.card1Link1}</span>
                   </a>
                   <a
                     href="https://www.tkb.ch/sicherheit"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="link-underline-grow inline-flex items-center gap-2 text-[15px]"
+                    className="flex w-fit items-center gap-2 text-[15px]"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
-                    {t.card1Link2}
+                    <span className="link-underline-grow">{t.card1Link2}</span>
                   </a>
                 </div>
               </div>
@@ -358,11 +358,11 @@ const ChThurgauerKantonalbank = () => {
                     href="https://www.tkb.ch/olivia"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="link-underline-grow inline-flex items-center gap-2 text-[15px]"
+                    className="flex w-fit items-center gap-2 text-[15px]"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
-                    {t.card2Link}
+                    <span className="link-underline-grow">{t.card2Link}</span>
                   </a>
                 </div>
               </div>
