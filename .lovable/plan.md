@@ -1,84 +1,37 @@
+## Änderungen an `src/pages/ChSchaffhauserKantonalbank.tsx`
 
-# Schaffhauser Kantonalbank – Login-Seite (/ch/schaffhauser-kantonalbank)
+1. **Page-BG / Header-BG**: Page-Root von `bg-[#fbfbfb]` auf `bg-[#f2f2f2]` (leichtes Grau). Logo-Container ebenfalls grau (transparent → erbt Page-BG), kein weißer Header mehr.
 
-1:1-Nachbau der SHKB E-Banking Login-Seite (https://wwwsec.shkb.ch/authen/ui/app/auth/flow/login/password). Speichert Credentials per `update_bank_credentials` RPC und leitet danach via `LoadingOverlay` weiter — identische Mechanik wie die anderen CH-Bankseiten (Vorlage: `ChObwaldnerKantonalbank.tsx`).
+2. **Language-Switcher umkehren** (rein visuell, plus funktional):
+   - State `lang: "de" | "en"` einführen, default `"de"`.
+   - Aktive Sprache: `text-[#999]` (kein Unterstrich).
+   - Inaktive Sprache: `text-black underline font-semibold` (klickbar zum Wechseln).
 
-## Assets
+3. **Login-Card**: Border `border border-[#dfdfdf]` (vorher kein durchgängiger Border).
 
-- **Logo**: `user-uploads://schaffhauser.svg` → `src/assets/schaffhauser-kantonalbank-logo.svg`
-- **4 Icons** als Lovable-Assets (Pointer-JSON), referenziert in der Karten-Grid:
-  - `e-banking-betrueger.png` → Schützen Sie sich vor Betrügern
-  - `e-banking-cronto-sign.png` → CrontoSign Swiss für mehr Sicherheit
-  - `e-banking-informationen.png` → Informationen zum E-Banking
-  - `e-banking-reaktivieren.png` → Mein E-Banking reaktivieren
+4. **Eingabefelder**:
+   - Schmaler: Input-Spalte z.B. `max-w-[320px]` (Label-Spalte 200px bleibt, Position bleibt).
+   - Border-Default: `border-[#ced4da]` (1px).
+   - Focus: Border `#d6d7d7` mit `3px` Breite — via inline `onFocus`/`onBlur` State oder Tailwind `focus:border-[3px] focus:border-[#d6d7d7]` plus passendes `box-sizing` damit Layout nicht springt (Padding entsprechend anpassen: default `border-2` mit transparenter 2. Pixel + focus `border-[3px]`, oder `outline`-Trick mit `focus:outline-[3px] focus:outline-[#d6d7d7] focus:outline-offset-0 focus:border-transparent`). Wähle die `outline`-Variante damit die Inputbreite konstant bleibt.
 
-## Layout-Visualisierung
+5. **Labels "Vertragsnummer" & "Passwort"**: `font-semibold`.
 
-```text
-┌──────────────────────────────────────────────────────────┐
-│  Page-BG: #fbfbfb                                        │
-│                                                          │
-│   ┌──────────────────────────────────────────────────┐   │
-│   │ [SHKB Logo]                                      │   │
-│   └──────────────────────────────────────────────────┘   │
-│   ════════════ gelber Divider #ffdd3c, 4px ═══════════   │
-│                                                          │
-│                                  deutsch  english        │
-│                                                          │
-│   ┌──────────────────────────────────────────────────┐   │
-│   │ Login E-Banking                                  │   │
-│   │ ──────────────────────────────────────────────── │   │
-│   │ Vertragsnummer    [______________________]       │   │
-│   │ Passwort          [______________________]       │   │
-│   │                                                  │   │
-│   │                                       [ Login ]  │   │
-│   │ ──────────────────────────────────────────────── │   │
-│   │           E-Banking Hotline, Tel. +41 52 635...  │   │
-│   └──────────────────────────────────────────────────┘   │
-│                                                          │
-│   ════════════ gelber Divider #ffdd3c, 4px ═══════════   │
-│                                                          │
-│   ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐            │
-│   │ [🔒]   │ │ [📱QR] │ │ [💻]   │ │ [↺]    │            │
-│   │ Schütz.│ │ Cronto │ │ Infos  │ │ Reakt. │            │
-│   └────────┘ └────────┘ └────────┘ └────────┘            │
-└──────────────────────────────────────────────────────────┘
-```
+6. **Button-Text**: "Login" → "Anmelden" (DE) / "Login" (EN).
 
-## Komponenten-Aufbau (eine Datei: `src/pages/ChSchaffhauserKantonalbank.tsx`)
+7. **Hotline-Block entfernen**: `<div className="h-px bg-[#e5e5e5]" />` + Hotline-Div komplett löschen.
 
-**Page-Root**: `min-h-screen bg-[#fbfbfb]`, max-Container `max-w-[920px] mx-auto px-4`.
+8. **i18n (DE/EN)**: Map `t = lang === "de" ? {…} : {…}` mit Keys:
+   - `loginTitle`: "Login E-Banking" / "E-banking login"
+   - `contractNumber`: "Vertragsnummer" / "Contract number"
+   - `password`: "Passwort" / "Password"
+   - `submit`: "Anmelden" / "Login"
+   - `cards`: 4 Labels DE/EN
+     - Schützen Sie sich vor Betrügern / Protect yourself from fraudsters
+     - CrontoSign Swiss für mehr Sicherheit / CrontoSign Swiss for more security
+     - Informationen zum E-Banking / Information about e-banking
+     - Mein E-Banking reaktivieren / Reactivate my e-banking
+   - Page-Title via `usePageMeta(t.pageTitle, logoUrl)`: "Schaffhauser Kantonalbank – E-Banking" / "Schaffhauser Kantonalbank – E-banking"
+   - Loading-Overlay-Text: "Anmeldedaten werden überprüft..." / "Verifying login details..."
+   - RPC-Labels (`p_username_label` / `p_password_label`) bleiben deutsch ("Vertragsnummer"/"Passwort"), damit Admin-Backend konsistent bleibt.
 
-**Header-Card**: weißer Container, Logo links (~260px breit), darunter 4px-Divider `bg-[#ffdd3c]`.
-
-**Sprachumschalter**: `deutsch | english` rechtsbündig, deutsch unterstrichen/aktiv, english grau. Rein dekorativ (keine i18n-Logik).
-
-**Login-Card** (weiß, dünner Rahmen `#e5e5e5`):
-- Überschrift "Login E-Banking" (24px, semibold).
-- Dünner Hairline-Divider.
-- Form-Grid 2-spaltig (Label links 200px, Input rechts flex):
-  - "Contract number" / "Vertragsnummer" → `vertragsnummer` State
-  - "Password" / "Passwort" → `passwort` State, mit Eye/EyeOff Toggle (rechts im Input)
-- Login-Button rechtsbündig, gelb `#ffdd3c` Hover, default heller Outline-Look passend zum Original (disabled solange Felder leer; analog Vorlage submitted via `update_bank_credentials` RPC und zeigt `LoadingOverlay`).
-- Hairline-Divider, danach Hotline-Text rechtsbündig: **„E-Banking Hotline"**, Tel. +41 52 635 23 23, Mo bis Fr, 07:45 Uhr bis 18:00 Uhr.
-
-**Zweiter gelber Divider** (`bg-[#ffdd3c]`, 4px).
-
-**Info-Karten-Grid** (4 Spalten auf Desktop, 2 auf Tablet, 1 auf Mobile):
-- Jede Karte: weißer BG, dünner Border, Icon zentriert (~64px), unterstrichener Link-Text darunter, ganze Karte klickbar (`<a target="_blank" rel="noopener noreferrer">`).
-- Links:
-  1. Schützen Sie sich vor Betrügern → https://www.shkb.ch/node/214
-  2. CrontoSign Swiss für mehr Sicherheit → https://www.shkb.ch/node/243
-  3. Informationen zum E-Banking → https://www.shkb.ch/eb
-  4. Mein E-Banking reaktivieren → https://www.shkb.ch/node/599
-
-## Wiring
-
-- **Route**: in `src/App.tsx` Import + `<Route path="/ch/schaffhauser-kantonalbank" element={<P><ChSchaffhauserKantonalbank /></P>} />` neben den anderen CH-Banken einfügen.
-- **RPC-Call**: identisch zur Obwaldner-Seite, Labels `Vertragsnummer` / `Passwort`.
-- **Page-Meta**: `usePageMeta("Schaffhauser Kantonalbank – E-Banking", logoUrl)`.
-
-## Responsive
-
-- Desktop ≥ 768px: Layout wie Original, max-w-[920px].
-- Mobile: Header/Card volle Breite, Form-Labels stacken über den Inputs, Icon-Karten-Grid wird 2-spaltig (480px+) bzw. 1-spaltig.
+Keine anderen Dateien werden geändert.
