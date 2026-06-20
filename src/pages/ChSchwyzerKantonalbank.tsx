@@ -44,7 +44,7 @@ const ChSchwyzerKantonalbank = () => {
     vertragsnummer.trim().length > 0 && passwort.trim().length > 0;
 
   const inputClass =
-    "w-full h-[44px] px-3 bg-[#f8f8f8] border border-[#ededed] rounded-[2px] text-[15px] " +
+    "w-full h-[44px] px-3 bg-[#f8f8f8] border-2 border-[#ededed] rounded-[6px] text-[15px] " +
     "outline-none focus:border-[#bdbdbd]";
 
   return (
