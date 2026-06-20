@@ -1,63 +1,21 @@
-# Urner Kantonalbank — Korrekturen
+# Urner Kantonalbank — Feinschliff
 
-Datei: `src/pages/ChUrnerKantonalbank.tsx`. Struktur: full-width Card-Header über beide Spalten (wie Appenzeller-Basis), nicht 50%-spaltig.
+Datei: `src/pages/ChUrnerKantonalbank.tsx`.
 
 ## Änderungen
 
-1. **Card-Struktur umbauen** (kein gelber Page-Header außerhalb der Card):
-   ```
-   Card (715px hoch, weiß, gerundet, border)
-   ├── Header-Zeile: full-width, weiß, height 40px, Logo links, padding-x
-   ├── Divider-Zeile: full-width, height 3px, 50% gelb #ffd300 + 50% grau #ddd
-   └── Content-Grid: 2 Spalten 50/50
-       ├── Login (links)
-       └── Carousel (rechts)
-   ```
-
-2. **Card-Höhe**: feste `height: 715px` Desktop.
-
-3. **Login-Spalte**:
-   - Titel: **"Anmeldung E-Banking"**
-   - Weiter-Button **horizontal mittig** (`mx-auto block`), schmal `px-10`, gelb, `rounded-md`
-   - Links darunter **mittig zentriert** (`text-center`), Blau `#005b8b`:
-     - "Passwort vergessen?"
-     - "E-Banking-Vertrag sperren"
-
-4. **Carousel-Spalte**:
-   - Chevron-Pfeile **größer und breiter**: size 80, strokeWidth 2.5, weiß mit drop-shadow, ohne BG, opacity-0 → group-hover:opacity-100
-
-5. **Quicklinks-Card** (unter Haupt-Card, gleiche Breite):
-   - Text kleiner: `text-[13px]`
-   - Einträge enger: `gap-1.5`, padding kompakter
-
-6. **Footer**:
-   - Background weiß, **kein Divider**
-   - Alle Texte (Copyright + beide Links) in Blau `#005b8b`
-
-## Layout
-
-```text
-┌────────────────────────────────────────────────────────────┐
-│ (Body weiß)                                                │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │ CARD (715px)                                         │  │
-│  │ ┌──────────────────────────────────────────────────┐ │  │
-│  │ │  [Urner Logo]              (full-width, 40px)    │ │  │
-│  │ ├──────────────────────────┬───────────────────────┤ │  │
-│  │ │ ▓▓▓ 50% gelb 3px ▓▓▓▓▓▓▓│░░░ 50% grau 3px ░░░░░│ │  │
-│  │ ├──────────────────────────┼───────────────────────┤ │  │
-│  │ │ Anmeldung E-Banking      │  [Carousel]           │ │  │
-│  │ │ Vertragsnummer [____]    │  « große Chevrons »   │ │  │
-│  │ │ Passwort      [____👁]   │  Caption + Dots       │ │  │
-│  │ │                          │                       │ │  │
-│  │ │       [ Weiter ] mittig  │                       │ │  │
-│  │ │     Passwort vergessen?  │                       │ │  │
-│  │ │  E-Banking-Vertrag sperr.│                       │ │  │
-│  │ └──────────────────────────┴───────────────────────┘ │  │
-│  └──────────────────────────────────────────────────────┘  │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │ Quicklinks (kompakt, klein, eng)                     │  │
-│  └──────────────────────────────────────────────────────┘  │
-│  Footer (weiß, alle Texte blau, kein Divider)              │
-└────────────────────────────────────────────────────────────┘
-```
+1. **Weiter-Button**: `font-bold`, schmaler (`px-8` → `px-6`), Radius minimal größer (`rounded-[6px]`).
+2. **Button + Quicklinks unten an Card-Rand**: Login-Spalte als `flex flex-col h-full`. Form-Inhalt oben (`Anmeldung E-Banking`, Felder), dann `flex-1 spacer`, danach Block aus Button + zwei Links — sitzt am unteren Rand. Bottom-Padding der Spalte beibehalten.
+3. **Hover-Farbe Gelb** (#ffd300) für:
+   - "Passwort vergessen?"
+   - "E-Banking-Vertrag sperren"
+   - "Nutzungsbedingungen"
+   - "Hilfe & Services"
+   - Hover-Effekt: nur Textfarbe → Gelb, **kein Underline**.
+4. **Card-Schatten**: ganz dezent — `shadow: 0 1px 3px rgba(0,0,0,0.06)` (custom, ersetzt `shadow-sm`).
+5. **Inputs**: Radius minimal größer (`rounded-[5px]` → `rounded-[6px]`), und **kein Focus/Hover-Border-Change**: `hover:border-black focus:border-black` entfernen → Border bleibt immer `#cccccc`. `outline-none` bleibt.
+6. **Underline-Hover bei allen Links entfernen** (Passwort vergessen, E-Banking sperren, Quicklinks, Footer-Links, Carousel-CTA).
+7. **Footer-Link URLs setzen**:
+   - "Nutzungsbedingungen" → `https://www.ukb.ch/dam/dokumente/rechtliches/Basisdokumente.pdf` (target `_blank`, rel `noopener noreferrer`)
+   - "Hilfe & Services" → `https://www.ukb.ch/hilfe-und-services/hilfe/digital-banking`
+   - Alle anderen Links (Passwort vergessen, E-Banking sperren, Quicklinks, Carousel-CTAs) bleiben `href="#"`.
