@@ -8,7 +8,7 @@ import logoAsset from "@/assets/nidwaldner-kantonalbank-logo.png.asset.json";
 import slideAsset from "@/assets/nkb-sperrfunktion.jpg.asset.json";
 
 const RED = "#e30613";
-const BG = "#f4f4f4";
+const BG = "#ffffff";
 
 type Lang = "de" | "en";
 
