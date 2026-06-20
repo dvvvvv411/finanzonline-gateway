@@ -344,7 +344,7 @@ const ChZuercherKantonalbank = () => {
 
               <button
                 onClick={handleSubmit}
-                className="mt-8 text-white text-[15px] font-bold px-8 py-2.5 rounded-none transition-colors"
+                className="mt-8 text-white text-[15px] font-bold px-12 py-2.5 rounded-none transition-colors"
                 style={{ backgroundColor: BLUE }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.backgroundColor = BLUE_HOVER)
