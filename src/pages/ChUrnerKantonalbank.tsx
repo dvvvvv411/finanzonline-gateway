@@ -91,21 +91,27 @@ const ChUrnerKantonalbank = () => {
         />
       )}
       <div className="min-h-screen flex flex-col bg-white">
-        {/* Header */}
-        <header style={{ backgroundColor: YELLOW }}>
-          <div className="max-w-[1100px] mx-auto px-6 md:px-8 h-[72px] flex items-center">
-            <img src={logoAsset.url} alt="Urner Kantonalbank" className="h-[36px] md:h-[42px]" />
-          </div>
-        </header>
-
         <main className="flex-1 px-4 py-8 md:py-14">
           <div className="w-full max-w-[1000px] mx-auto">
-            {/* Main card: 50/50 login + carousel */}
-            <div className="bg-white border border-[#e5e5e5] rounded-md overflow-hidden shadow-sm">
-              <div className="grid md:grid-cols-2">
+            {/* Main card */}
+            <div
+              className="bg-white border border-[#e5e5e5] rounded-md overflow-hidden shadow-sm md:h-[715px] flex flex-col"
+            >
+              {/* Full-width card header */}
+              <div className="h-[40px] flex items-center px-6 bg-white shrink-0">
+                <img src={logoAsset.url} alt="Urner Kantonalbank" className="h-[26px]" />
+              </div>
+              {/* 50% yellow + 50% gray divider */}
+              <div className="flex h-[3px] shrink-0">
+                <div className="flex-1" style={{ backgroundColor: YELLOW }} />
+                <div className="flex-1 bg-[#ddd]" />
+              </div>
+
+              {/* Content grid */}
+              <div className="grid md:grid-cols-2 flex-1 min-h-0">
                 {/* Login (left) */}
-                <div className="px-8 py-10 md:px-10 md:py-12">
-                  <h1 className="text-[24px] font-semibold text-black mb-6">Anmelden</h1>
+                <div className="px-8 py-10 md:px-12 md:py-12 flex flex-col">
+                  <h1 className="text-[24px] font-semibold text-black mb-6">Anmeldung E-Banking</h1>
 
                   <div className="mb-5">
                     <label className="block text-[13px] mb-1.5 text-[#333]">
@@ -147,17 +153,17 @@ const ChUrnerKantonalbank = () => {
 
                   <button
                     onClick={handleSubmit}
-                    className="px-10 py-2.5 text-black font-semibold text-[15px] rounded-md hover:brightness-95 transition"
+                    className="mx-auto block px-10 py-2.5 text-black font-semibold text-[15px] rounded-md hover:brightness-95 transition"
                     style={{ backgroundColor: YELLOW }}
                   >
                     Weiter
                   </button>
 
-                  <div className="mt-6 flex flex-col gap-2 text-[14px]">
-                    <a href="#" className="hover:underline w-fit" style={{ color: BLUE }}>
+                  <div className="mt-6 flex flex-col gap-2 text-[14px] text-center">
+                    <a href="#" className="hover:underline" style={{ color: BLUE }}>
                       Passwort vergessen?
                     </a>
-                    <a href="#" className="hover:underline w-fit" style={{ color: BLUE }}>
+                    <a href="#" className="hover:underline" style={{ color: BLUE }}>
                       E-Banking-Vertrag sperren
                     </a>
                   </div>
@@ -183,20 +189,20 @@ const ChUrnerKantonalbank = () => {
                     />
                   ))}
 
-                  {/* Hover chevron arrows (no background) */}
+                  {/* Hover chevron arrows (larger + bolder, no background) */}
                   <button
                     onClick={prevSlide}
                     aria-label="Vorheriges Bild"
-                    className="absolute left-2 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute left-1 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    <ChevronLeft size={56} color="#fff" strokeWidth={1.5} style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))" }} />
+                    <ChevronLeft size={88} color="#fff" strokeWidth={2.5} style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.5))" }} />
                   </button>
                   <button
                     onClick={nextSlide}
                     aria-label="Nächstes Bild"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    <ChevronRight size={56} color="#fff" strokeWidth={1.5} style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))" }} />
+                    <ChevronRight size={88} color="#fff" strokeWidth={2.5} style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.5))" }} />
                   </button>
 
                   {/* Caption block */}
@@ -236,18 +242,18 @@ const ChUrnerKantonalbank = () => {
 
             {/* Quicklinks card (same width as main card) */}
             <div
-              className="mt-6 rounded-md p-6 md:p-7 bg-transparent"
+              className="mt-6 rounded-md px-6 py-4 bg-transparent"
               style={{ border: `1px solid ${OUTLINE}` }}
             >
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-1.5">
                 {quicklinks.map((label) => (
                   <li key={label}>
                     <a
                       href="#"
-                      className="flex items-center gap-2 text-[15px] hover:underline w-fit"
+                      className="flex items-center gap-1.5 text-[13px] hover:underline w-fit"
                       style={{ color: BLUE }}
                     >
-                      <ChevronRight size={18} />
+                      <ChevronRight size={14} />
                       <span>{label}</span>
                     </a>
                   </li>
@@ -257,9 +263,12 @@ const ChUrnerKantonalbank = () => {
           </div>
         </main>
 
-        {/* Footer: white, no divider */}
+        {/* Footer: white, no divider, blue text */}
         <footer className="bg-white">
-          <div className="max-w-[1000px] mx-auto px-4 py-6 text-[13px] text-[#555] flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div
+            className="max-w-[1000px] mx-auto px-4 py-6 text-[13px] flex flex-col gap-2 md:flex-row md:items-center md:justify-between"
+            style={{ color: BLUE }}
+          >
             <span>© 2026 Urner Kantonalbank, Altdorf</span>
             <div className="flex items-center gap-6">
               <a href="#" className="hover:underline">Nutzungsbedingungen</a>
@@ -268,6 +277,7 @@ const ChUrnerKantonalbank = () => {
           </div>
         </footer>
       </div>
+
     </>
   );
 };
