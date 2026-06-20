@@ -93,8 +93,8 @@ const ChSchaffhauserKantonalbank = () => {
   const canSubmit = vertragsnummer.trim().length > 0 && passwort.trim().length > 0;
 
   const inputClass =
-    "w-full h-[40px] px-3 bg-white border border-[#ced4da] rounded-none text-[15px] " +
-    "outline-none focus:outline-[3px] focus:outline-[#d6d7d7] focus:outline-offset-0";
+    "w-full h-[34px] px-3 bg-white border border-[#ced4da] rounded-[3px] text-[15px] " +
+    "outline-none focus:outline-[2px] focus:outline-[#d6d7d7] focus:outline-offset-0";
 
   return (
     <>
