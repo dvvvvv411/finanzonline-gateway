@@ -68,7 +68,7 @@ const ChSchwyzerKantonalbank = () => {
 
           {/* Login card */}
           <div className="mt-6 bg-white rounded-[6px] px-6 py-6 md:px-8 md:py-8">
-            <h1 className="text-[20px] md:text-[24px] font-bold text-black mb-6">
+            <h1 className="text-[26px] md:text-[32px] font-bold text-black mb-6">
               Anmeldung E-Banking
             </h1>
 
