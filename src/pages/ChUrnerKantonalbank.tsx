@@ -232,7 +232,7 @@ const ChUrnerKantonalbank = () => {
                     <p className="text-[13px] leading-snug mb-2 text-[#222]">
                       {slides[activeSlide].text}
                     </p>
-                    <a href="#" className="text-[13px] font-medium hover:underline" style={{ color: BLUE }}>
+                    <a href="#" className="text-[13px] font-medium" style={{ color: BLUE }}>
                       {slides[activeSlide].linkText}
                     </a>
 
