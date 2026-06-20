@@ -1,9 +1,6 @@
-# Input-Schatten: nur außen (drop-shadow), kein inset
+# Input-Schatten gleichmäßig rundum
 
-`src/pages/ChZugerKantonalbank.tsx` — beide Inputs:
+`src/pages/ChZugerKantonalbank.tsx` – beide Inputs:
 
-- `inset_0_2px_4px_rgba(0,0,0,0.35)` entfernen.
-- Schatten nur als äußerer Drop-Shadow:
-  `focus:shadow-[0_4px_10px_rgba(0,0,0,0.35)]`
-
-Border bleibt blau (`#0085ca`) im Focus. Sonst nichts ändern.
+- `focus:shadow-[0_4px_10px_rgba(0,0,0,0.35)]` → `focus:shadow-[0_0_10px_2px_rgba(0,0,0,0.35)]`
+  (Offset 0/0, gleichmäßiger Blur+Spread rundum.)
