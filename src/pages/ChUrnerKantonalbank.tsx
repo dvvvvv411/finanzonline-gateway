@@ -151,7 +151,7 @@ const ChUrnerKantonalbank = () => {
                     </div>
                   </div>
 
-                  <div className="flex-1" />
+                  <div className="hidden md:block md:flex-1" />
 
                   <button
                     onClick={handleSubmit}
