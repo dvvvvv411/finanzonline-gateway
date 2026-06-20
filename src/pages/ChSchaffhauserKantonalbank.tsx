@@ -104,11 +104,11 @@ const ChSchaffhauserKantonalbank = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen bg-[#f2f2f2]">
+      <div className="min-h-screen bg-[#fbfbfb]">
         <div className="max-w-[920px] mx-auto px-4 pt-6 md:pt-10">
           {/* Logo / Header (grey bg) */}
-          <div className="bg-[#f2f2f2]">
-            <img src={logoUrl} alt="Schaffhauser Kantonalbank" className="h-[60px] md:h-[70px] object-contain" />
+          <div className="bg-[#fbfbfb]">
+            <img src={logoUrl} alt="Schaffhauser Kantonalbank" className="h-[44px] md:h-[54px] object-contain" />
           </div>
 
           {/* Yellow divider */}
@@ -172,7 +172,7 @@ const ChSchaffhauserKantonalbank = () => {
                   type="button"
                   onClick={handleSubmit}
                   disabled={!canSubmit}
-                  className="px-10 h-[44px] rounded-[3px] border border-[#bdbdbd] bg-white text-[15px] text-[#777] enabled:hover:bg-[#ffdd3c] enabled:hover:text-black enabled:hover:border-[#ffdd3c] enabled:text-black transition-colors disabled:cursor-not-allowed"
+                  className="w-full md:w-auto px-10 h-[44px] rounded-[3px] border border-[#bdbdbd] bg-white text-[15px] text-[#777] enabled:hover:bg-[#ffdd3c] enabled:hover:text-black enabled:hover:border-[#ffdd3c] enabled:text-black transition-colors disabled:cursor-not-allowed"
                 >
                   {t.submit}
                 </button>
@@ -185,17 +185,17 @@ const ChSchaffhauserKantonalbank = () => {
           <div className="mt-8" style={{ height: 4, backgroundColor: YELLOW }} />
 
           {/* Info cards grid */}
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-12">
+          <div className="mt-6 grid grid-cols-4 gap-2 sm:gap-4 pb-12">
             {t.cards.map((label, i) => (
               <a
                 key={infoLinks[i]}
                 href={infoLinks[i]}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white border border-[#cccccc] rounded-[3px] flex flex-col items-center justify-start text-center px-4 py-6 hover:border-[#bdbdbd] transition-colors"
+                className="bg-white border border-[#cccccc] rounded-[3px] flex flex-col items-center justify-start text-center px-2 py-4 sm:px-4 sm:py-6 hover:border-[#bdbdbd] transition-colors"
               >
-                <img src={infoIcons[i]} alt="" className="h-[56px] w-auto object-contain mb-4" />
-                <span className="text-[14px] text-[#555] underline">{label}</span>
+                <img src={infoIcons[i]} alt="" className="h-[40px] sm:h-[56px] w-auto object-contain mb-4" />
+                <span className="text-[11px] sm:text-[14px] text-[#555] underline">{label}</span>
               </a>
             ))}
           </div>
