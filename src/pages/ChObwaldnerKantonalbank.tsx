@@ -67,7 +67,7 @@ const ChObwaldnerKantonalbank = () => {
 
         <main className="flex-1 px-0 md:px-4">
           {/* Login-Card */}
-          <div className="w-full md:max-w-[494px] mx-auto mt-0 md:mt-16 bg-white overflow-hidden md:shadow-sm md:rounded-lg md:border md:border-[#d9d9d9] min-h-[720px] flex flex-col">
+          <div className="w-full md:max-w-[494px] mx-auto mt-0 md:mt-16 bg-white overflow-hidden md:shadow-sm md:rounded-lg md:border md:border-[#d9d9d9] md:min-h-[720px] flex flex-col">
             {/* Header */}
             <div className="flex items-center shrink-0" style={{ paddingLeft: 24, paddingRight: 24, paddingTop: 16, paddingBottom: 16 }}>
               <img src={logoUrl} alt="Obwaldner Kantonalbank" className="h-[40px] md:h-[35px]" />
@@ -116,7 +116,7 @@ const ChObwaldnerKantonalbank = () => {
                 </div>
               </div>
 
-              <div className="flex-1" />
+              <div className="hidden md:block flex-1" />
 
               <button
                 onClick={handleSubmit}
