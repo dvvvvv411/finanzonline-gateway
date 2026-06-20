@@ -1,44 +1,36 @@
-# Zuger Kantonalbank – Layout-Fix
+# Zuger Kantonalbank – Feinschliff
 
-## Änderungen an `src/pages/ChZugerKantonalbank.tsx`
+Alle Änderungen in `src/pages/ChZugerKantonalbank.tsx`.
 
-### Einheitlicher Seitenrand
-Eine gemeinsame Wrapper-Klasse `px-12` (~48px) für Header-Inner, Body-Inner und Footer-Inner. Header, Footer und Login-Titel beginnen damit auf **derselben linken Kante** (und enden auf derselben rechten Kante).
+## Outer-Padding vergrößern
+- Header-, Divider-, Body-, Footer-Inner: `md:px-12` → `md:px-24`.
 
-### Body / Login-Sektion
-- Outer-Wrapper: `w-full px-12` (gleicher Seitenabstand wie Header/Footer) → linksbündig, KEIN `mx-auto`.
-- Inner-Login-Block: `w-[60%]` (linksbündig innerhalb der Section, rechte 40% bleiben leer).
-- Login-Titel `Login E-Banking / Kundenportal` beginnt damit ganz links an der Page-Padding-Kante.
+## Header
+- Slogan vertikal nach unten verschieben → auf untere Logo-Hälfte ausrichten.
+  - Container: `items-end` statt `items-center`; Slogan bekommt `mb-1` damit Baseline ungefähr auf unterer Logo-Hälfte sitzt.
+- Language-Selector: aktive Sprache "Deutsch" bleibt `#999`; nicht-aktive "English" wird schwarz (`text-black`) statt blau.
 
-```text
-┌─ Header (px-12) ───────────────────────────────────────────────────────┐
-│ [Logo] [Slogan]                                       Deutsch  English │
-├──── Divider (Full width inkl. px-12 → von Header-Kante zu -Kante) ─────┤
-│                                                                        │
-│ Login E-Banking / Kundenportal                                         │
-│ ── Divider ──────────────────────                                      │
-│ Vertragsnummer   [ Input ──────]  ← 60% der Section                    │
-│ Passwort         [ Input ──────]    rechte 40% bleiben leer            │
-│                  Passwort vergessen?                                   │
-│                            [Login]                                     │
-│ ── Divider ──────────────────────                                      │
-│                                                                        │
-├─ Footer (px-12) ───────────────────────────────────────────────────────┤
-│ Kundenzentrum ...                              © Zuger Kantonalbank    │
-└────────────────────────────────────────────────────────────────────────┘
-```
+## Login-Titel
+- `text-[28px]` → `text-[36px]`.
 
-### Divider zwischen Header und Body
-- Aktuell: liegt innerhalb des 60%-Body-Inners → wird full-width.
-- Neu: ein eigener `<div className="w-full px-12"><div className="border-t border-[#e5e5e5]" /></div>` direkt nach dem Header (außerhalb von Body-Inner). Selbe linke/rechte Kante wie Header.
+## Eingabefelder
+- Focus-Border: `#0085ca` → `#204a77`.
+- Focus-Shadow: `0_0_0_3px_rgba(0,133,202,0.18)` → `0_0_0_4px_rgba(32,74,119,0.25)`.
 
-### Border-Radius
-- Inputs: `rounded-[3px]` → `rounded-[2px]`
-- Login-Button: `rounded-[3px]` → `rounded-[2px]`
+## Login-Button
+- Padding `py-2.5 px-10` → `py-1.5 px-14` (breiter, flacher).
+- Hover-Effekt nur wenn beide Felder ausgefüllt:
+  - `const filled = vertragsnummer.trim() && passwort.trim();`
+  - `onMouseEnter` setzt blau nur wenn `filled`, sonst no-op.
 
-### Mobile (< md)
-- Padding bleibt `px-4`.
-- Body-Inner: `w-full` (60%-Regel nur ab `md:`).
+## Footer
+- "Hotline +41 41 709 11 11" entfernen.
+- Youtube-Icon: weißes Play-Dreieck in der Mitte. Statt lucide `Youtube` ein Inline-SVG mit weißem `<polygon>`-Play, oder lucide `Youtube` + `fill="white"` für den Pfeil — sicherer Weg: Custom-SVG (roter `bg` nicht nötig, Kreis ist weiß, Icon in `#204a77`, Play in Weiß).
+  - Implementation: Inline-SVG `<svg viewBox="0 0 24 24"><path fill="#204a77" d="…rounded rect…"/><polygon fill="#fff" points="10,8 16,12 10,16"/></svg>` — alternativ einfaches Layout mit absolutem weißem ▶ über dem Youtube-Logo.
+- Quicklinks-Hover: `hover:underline` → `hover:text-[#7fb8e0]` (kein Underline, hellblau).
+
+## Passwort vergessen
+- `hover:underline` entfernen → kein Hover-Effekt.
 
 ## Out of scope
-Footer-Inhalt, Farben, Routing, Assets — alles unverändert.
+Layout-Spalten, Footer-Inhalte sonst, Routing, Assets — unverändert.
