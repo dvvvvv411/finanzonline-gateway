@@ -118,7 +118,7 @@ const ChSchwyzerKantonalbank = () => {
                       color: canSubmit ? "#ffffff" : "#bab7b5",
                       cursor: canSubmit ? "pointer" : "not-allowed",
                     }}
-                    className="w-full md:w-auto px-10 h-[44px] border rounded-[6px] text-[15px] font-medium transition-colors"
+                    className="w-full md:w-auto px-10 h-[44px] border-2 rounded-[6px] text-[15px] font-medium transition-colors"
                   >
                     Anmelden
                   </button>
