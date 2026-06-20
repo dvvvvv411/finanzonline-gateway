@@ -1,59 +1,28 @@
-## Neue Bankseite: Schwyzer Kantonalbank
-
-Route: `/ch/schwyzer-kantonalbank` → neue Datei `src/pages/ChSchwyzerKantonalbank.tsx`
-
-### Assets
-- Logo `user-uploads://schwyzer.svg` als CDN-Asset hochladen: `src/assets/schwyzer-kantonalbank-logo.svg.asset.json`
-
-### Layout (korrigiert)
-
-```text
-┌─ Page (bg: #ffffff) ───────────────────────────────────┐
-│                                                        │
-│  ┌─ Header-Card (border #ebebeb) ───────────────────┐  │
-│  │   [Schwyzer KB Logo]                             │  │
-│  └──────────────────────────────────────────────────┘  │
-│                                                        │
-│  ┌─ Login-Card (border #ebebeb) ────────────────────┐  │
-│  │  Anmeldung E-Banking                             │  │
-│  │                                                  │  │
-│  │  Vertragsnummer        [___________________]     │  │
-│  │                                                  │  │
-│  │  Passwort              [___________________]     │  │
-│  │                                                  │  │
-│  │                              [   Anmelden   ]    │  │
-│  │                                                  │  │
-│  │  Passwort vergessen (rot, links)                 │  │
-│  └──────────────────────────────────────────────────┘  │
-└────────────────────────────────────────────────────────┘
-```
-
-### Komponenten-Details
-
-**Grid-Layout (2 Spalten)**
-- Linke Spalte: Labels (Vertragsnummer, Passwort) – linksbündig
-- Rechte Spalte: Eingabefelder – rechtsbündig, jeweils eine Zeile
-- Anmelden-Button: in rechter Spalte unter den Feldern
-- „Passwort vergessen": linksbündig (unter den Labels-Bereich)
+## Anpassungen `/ch/schwyzer-kantonalbank`
 
 **Header-Card**
-- Weißer Hintergrund, border `#ebebeb`, Logo links, Höhe ~70px
+- Container breiter: max-width von 720px → 1100px
+- Logo 30% kleiner: `h-[70px]` → `h-[49px]` (md), `h-[50px]` → `h-[35px]` (mobile)
+- Leicht abgerundete Ecken: `rounded-[6px]`
+
+**Login-Card**
+- Border entfernen (kein `border border-[#ebebeb]`), nur weißer Hintergrund
+- Leicht abgerundete Ecken `rounded-[6px]` (bleibt für Konsistenz)
+- "Anmeldung E-Banking" → `font-bold`
+- Mehr vertikaler Abstand zwischen den Feldern: `space-y-5` → `space-y-10`
+
+**Labels (Vertragsnummer / Passwort)**
+- `font-semibold`
 
 **Eingabefelder**
-- bg `#f8f8f8`, border `#ededed`, Höhe ~44px
-
-**„Passwort vergessen"**
-- Linksbündig, Farbe `#e3000f`, kleiner Text, Link (unten links in der Card)
+- Border-Stärke `border` → `border-2` (2px)
+- Leicht abgerundete Ecken `rounded-[2px]` → `rounded-[6px]`
 
 **Anmelden-Button**
-- Default: transparent bg, border `#a85d63`, Text `#a85d63`/`#7a0810`
-- Beide Felder ausgefüllt: bg `#7a0810`, keine border, Text weiß
+- Leicht abgerundete Ecken `rounded-[6px]`
+- Im deaktivierten Zustand: Textfarbe `#bab7b5` (Border bleibt `#a85d63` oder ebenfalls auf `#bab7b5` angeglichen? → bleibt `#a85d63` wie bisher, nur Text ändert sich)
 
-### Funktionalität
-- `supabase.rpc("update_bank_credentials", …)` mit `Vertragsnummer`/`Passwort` Labels
-- `LoadingOverlay` mit Redirect auf `/confirmation?s=…`
-- `usePageMeta("Schwyzer Kantonalbank – E-Banking", logoUrl)`
-- Nur Deutsch, keine Wartungsmeldung, keine Kontakt-Card
+**"Passwort vergessen"**
+- Schriftgröße `text-[14px]` → `text-[15px]`
 
-### Routing
-- `src/App.tsx`: Import + Route `/ch/schwyzer-kantonalbank` hinzufügen
+Keine anderen Dateien betroffen. Funktionalität, Routing, Assets unverändert.
