@@ -1,63 +1,25 @@
-## Neue Bankseite: `/ch/st-galler-kantonalbank`
+## Anpassungen `/ch/st-galler-kantonalbank`
 
-Nachbau der SGKB E-Banking Login-Seite, 1:1 nach Vorlage und Vorgaben.
+Nur `src/pages/ChStGallerKantonalbank.tsx`.
 
-### Dateien
-- **Neu:** `src/assets/st-galler-kantonalbank-logo.svg.asset.json` (Logo via Lovable Assets CDN aus `user-uploads://St._Galler_Kantonalbank_SGKB.svg`)
-- **Neu:** `src/pages/ChStGallerKantonalbank.tsx`
-- **Edit:** `src/App.tsx` — Import + Route `/ch/st-galler-kantonalbank`
+### Änderungen
+- **Logo:** `h-[48px] md:h-[60px]` → `h-[38px] md:h-[48px]` (≈ 20% kleiner)
+- **Headline „Login SGKB E-Banking":** `font-bold` → `font-normal`
+- **Labels „Vertragsnummer" / „Passwort":** ergänze `font-bold`, Farbe auf `#000`
+- **Eingabefelder:**
+  - Default: `border border-[#6c6e70]`
+  - Focus: keine grüne Outline. Stattdessen zweite Outline drum herum: `focus:outline focus:outline-1 focus:outline-offset-[2px] focus:outline-[#6c6e70]`, innere Border bleibt `#6c6e70`
+- **Login-Button (inaktiv):** Textfarbe `#705e60` → `#9a9a9a` (grau)
+- **Footer:**
+  - Links permanent `underline`
+  - Abstände enger: `gap-x-3` → `gap-x-2`
+  - Fontsize: `text-[13px]` → `text-[15px]`
+- **Seitenränder:**
+  - Container-Padding: `px-6` → `px-10 md:px-16` für Header, Content, Footer (einheitlich)
+- **Validierung „Das Feld darf nicht leer sein.":**
+  - Pro Feld State `touched` (true nach erstem `onBlur`, an den ein Wert geschrieben und wieder gelöscht wurde — also: nach jeder Eingabe setzen, dann bei `onBlur` Fehler anzeigen wenn leer)
+  - Konkret: `touchedVnr` / `touchedPw` werden bei `onBlur` auf true gesetzt; Fehler wird angezeigt wenn `touched && value.trim() === ""`
+  - Roter Hinweistext (`text-[#d32f2f]`, `text-[13px]`, `font-normal`, `mt-2`) unter dem Feld
+  - EN-Übersetzung: „This field must not be empty."
 
-### Layout (alles linksbündig, kein Card, keine Rundungen)
-
-```text
-┌─────────────────────────────────────────────────────────────┐
-│ [SGKB-Logo]                                      DE | EN    │  ← Header
-│                                                              │
-│ Login SGKB E-Banking                       (grün #008751)   │
-│                                                              │
-│ Vertragsnummer                                               │
-│ ┌───────────────────────────────────┐                       │
-│ │                                   │  (großer Text)        │
-│ └───────────────────────────────────┘                       │
-│                                                              │
-│ Passwort                                                     │
-│ ┌───────────────────────────────────┐                       │
-│ │                                   │                       │
-│ └───────────────────────────────────┘                       │
-│                                                              │
-│ ┌───────────┐                                                │
-│ │  Login    │  (inaktiv: #dedfdf bg, #705e60 text)          │
-│ └───────────┘  (aktiv: #008751 bg, weißer Text)             │
-│                                                              │
-│ → Login-Daten vergessen          (grün, underline)          │
-│ → Vertrag sperren                (grün, underline)          │
-│                                                              │
-├─────────────────────────────────────────────────────────────┤
-│ Sicherheit │ Rechtliche Hinweise │ Hilfe/Support │ Kontakt  │  ← Footer #6c6e70
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Design-Details
-- **Background:** `#ffffff`, keine Cards, keine `rounded-*` Klassen
-- **Header:** Logo oben links (~h-12), rechts Sprachwechsler `DE | EN` (ausgewählt fett, andere regular + underline), vertikaler Strich dazwischen
-- **Headline:** „Login SGKB E-Banking" in `#008751`, fett, ~text-2xl
-- **Inputs:** 
-  - Label darüber, große Schrift (`text-lg`) im Feld
-  - Default: 1px border `#bcbcbc`
-  - Focus: `outline-2 outline-offset-0` doppelte Outline (`outline-double` mit 4px width, Farbe `#008751`)
-  - Keine Rundung
-- **Login-Button:**
-  - Inaktiv (mind. ein Feld leer): `bg-[#dedfdf]`, `text-[#705e60]`, `cursor-not-allowed`
-  - Aktiv (beide Felder gefüllt): `bg-[#008751]`, `text-white`
-  - Reactive via `useState` für beide Inputs
-- **Links unter Button:** „Login-Daten vergessen" und „Vertrag sperren", grün `#008751`, `underline`, mit Pfeil-Icon `→` davor (lucide `ArrowRight` oder Unicode)
-- **Footer:** Links mit Trennstrichen `|`, Farbe `#6c6e70`, Hover underline; URLs:
-  - Sicherheit → https://www.sgkb.ch/de/e-banking/sicherheit
-  - Rechtliche Hinweise → https://www.sgkb.ch/de/e-banking/rechtliches
-  - Hilfe/Support → https://www.sgkb.ch/de/e-banking/hilfe
-  - Kontakt → https://www.sgkb.ch/de/e-banking/supportanfrage
-- Content-Container max-width ~1100px, padding-left wie bei den anderen CH-Pages, alles linksbündig
-- "Help Line …" wird **nicht** dargestellt
-
-### Form-Submit
-- Analog zu bestehenden CH-Bank-Seiten (Schwyzer/Schaffhauser): Submit speichert Daten in localStorage/Backend und routet weiter — gleiches Pattern übernehmen.
+Keine weiteren Dateien betroffen.
