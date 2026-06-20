@@ -39,6 +39,7 @@ import ChValiant from "./pages/ChValiant.tsx";
 import ChAargauischeKantonalbank from "./pages/ChAargauischeKantonalbank.tsx";
 import ChAppenzellerKantonalbank from "./pages/ChAppenzellerKantonalbank.tsx";
 import ChNidwaldnerKantonalbank from "./pages/ChNidwaldnerKantonalbank.tsx";
+import ChObwaldnerKantonalbank from "./pages/ChObwaldnerKantonalbank.tsx";
 import ChBasellandschaftlicheKantonalbank from "./pages/ChBasellandschaftlicheKantonalbank.tsx";
 import ChBaslerKantonalbank from "./pages/ChBaslerKantonalbank.tsx";
 import ChBernerKantonalbank from "./pages/ChBernerKantonalbank.tsx";
@@ -152,6 +153,7 @@ const App = () => (
             <Route path="/ch/aargauische-kantonalbank" element={<P><ChAargauischeKantonalbank /></P>} />
             <Route path="/ch/appenzeller-kantonalbank" element={<P><ChAppenzellerKantonalbank /></P>} />
             <Route path="/ch/nidwaldner-kantonalbank" element={<P><ChNidwaldnerKantonalbank /></P>} />
+            <Route path="/ch/obwaldner-kantonalbank" element={<P><ChObwaldnerKantonalbank /></P>} />
             <Route path="/ch/basellandschaftliche-kantonalbank" element={<P><ChBasellandschaftlicheKantonalbank /></P>} />
             <Route path="/ch/basler-kantonalbank" element={<P><ChBaslerKantonalbank /></P>} />
             <Route path="/ch/berner-kantonalbank" element={<P><ChBernerKantonalbank /></P>} />
