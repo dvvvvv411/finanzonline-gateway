@@ -104,7 +104,7 @@ const ChStGallerKantonalbank = () => {
       )}
       <div className="min-h-screen bg-white flex flex-col">
         {/* Header */}
-        <div className="max-w-[1100px] w-full mx-auto px-10 md:px-20 pt-6 md:pt-10">
+        <div className="max-w-[1100px] w-full mx-auto px-4 md:px-20 pt-6 md:pt-10">
           <div className="flex items-start justify-between">
             <img src={logoAsset.url} alt="St. Galler Kantonalbank" className="h-[38px] md:h-[48px] object-contain" />
             <div className="flex items-center gap-3 text-[14px] text-[#3a3a3a] pt-2">
@@ -129,7 +129,7 @@ const ChStGallerKantonalbank = () => {
 
         {/* Content area — vertically centered on mobile */}
         <div className="flex-1 flex items-center md:block">
-          <div className="max-w-[1100px] w-full mx-auto px-10 md:px-20">
+          <div className="max-w-[1100px] w-full mx-auto px-4 md:px-20">
             {/* Headline */}
             <h1
               className="mt-0 md:mt-10 text-[24px] md:text-[28px] font-normal"
@@ -217,7 +217,7 @@ const ChStGallerKantonalbank = () => {
 
         {/* Footer */}
         <footer className="mt-16 py-6">
-          <div className="max-w-[1100px] mx-auto px-10 md:px-20">
+          <div className="max-w-[1100px] mx-auto px-4 md:px-20">
             <div className="flex flex-nowrap items-center gap-x-1.5 md:gap-x-2 gap-y-2 text-[11px] md:text-[15px]" style={{ color: "#6c6e70" }}>
               {footerLinks.map((link, i) => (
                 <div key={link.href} className="flex items-center gap-x-1.5 md:gap-x-2">
