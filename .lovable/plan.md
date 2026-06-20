@@ -1,16 +1,11 @@
-## Mobile-Anpassungen `/ch/st-galler-kantonalbank`
+## Mobile-Padding entfernen `/ch/st-galler-kantonalbank`
 
 Nur `src/pages/ChStGallerKantonalbank.tsx`.
 
-### Änderungen
-- **Vertikale Zentrierung des Form-Blocks auf Mobile:**
-  - Der Content-Block (Headline + Form + Links) wird auf Mobile vertikal in der Viewport-Höhe zentriert. Desktop bleibt unverändert (oben ausgerichtet wie bisher).
-  - Umsetzung: Container `flex-1` bekommt auf Mobile `flex items-center` (über `flex md:block`); innerer Wrapper unverändert. Headline-`mt-10` wird auf Mobile auf `mt-0` reduziert (`mt-0 md:mt-10`), damit die Zentrierung sauber sitzt.
-  - Header (Logo + Sprachwechsler) bleibt oben, Footer bleibt unten.
+Mobile-Seitenabstand auf das Minimum reduzieren (kleiner Atemabstand, damit Inputs nicht direkt am Rand kleben), Desktop bleibt wie bisher.
 
-- **Footer auf Mobile in eine Zeile:**
-  - Fontsize auf Mobile kleiner: `text-[15px]` → `text-[11px] md:text-[15px]`
-  - Horizontaler Abstand auf Mobile enger: `gap-x-2` → `gap-x-1.5 md:gap-x-2` (innen und außen)
-  - `flex-wrap` bleibt; mit kleinerer Schrift passt es in eine Zeile.
+- Header-Container: `px-10 md:px-20` → `px-4 md:px-20`
+- Content-Container: `px-10 md:px-20` → `px-4 md:px-20`
+- Footer-Container: `px-10 md:px-20` → `px-4 md:px-20`
 
 Keine weiteren Änderungen.
