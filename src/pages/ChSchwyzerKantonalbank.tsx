@@ -125,7 +125,7 @@ const ChSchwyzerKantonalbank = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-4 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-4 -mt-6 md:mt-0 md:pt-2">
                 <a
                   href="#"
                   onClick={(e) => e.preventDefault()}
