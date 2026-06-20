@@ -250,7 +250,7 @@ const ChZuercherKantonalbank = () => {
                 <ChevronDown size={16} strokeWidth={2} />
               </button>
               {popover === "lang" && (
-                <div className={popoverShell} style={popoverStyle}>
+                <div className="absolute right-0 top-full mt-2 bg-white px-4 py-3 z-50 inline-block" style={popoverStyle}>
                   <div className="flex flex-col gap-2 text-[15px]">
                     {(["de", "en"] as Lang[]).map((l) => (
                       <button
