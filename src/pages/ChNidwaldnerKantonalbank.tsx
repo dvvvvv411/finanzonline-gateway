@@ -256,19 +256,6 @@ const ChNidwaldnerKantonalbank = () => {
           >
             <span>{t.footer.copyright}</span>
             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-5">
-              {t.footer.links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors hover:underline"
-                  style={{ color: RED }}
-                >
-                  {l.label}
-                </a>
-              ))}
-
               <div className="relative" ref={langRef}>
                 <button
                   type="button"
@@ -302,6 +289,19 @@ const ChNidwaldnerKantonalbank = () => {
                   </div>
                 )}
               </div>
+
+              {t.footer.links.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:underline"
+                  style={{ color: RED }}
+                >
+                  {l.label}
+                </a>
+              ))}
             </div>
           </div>
         </footer>
