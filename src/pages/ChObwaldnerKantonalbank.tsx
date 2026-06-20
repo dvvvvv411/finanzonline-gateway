@@ -116,7 +116,7 @@ const ChObwaldnerKantonalbank = () => {
                 </div>
               </div>
 
-              <div className="flex-1" />
+              <div className="hidden md:block flex-1" />
 
               <button
                 onClick={handleSubmit}
