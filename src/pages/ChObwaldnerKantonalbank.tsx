@@ -134,7 +134,7 @@ const ChObwaldnerKantonalbank = () => {
           </div>
 
           {/* Info-Card */}
-          <div className="w-full md:max-w-[988px] mx-auto mt-[30px] md:mt-8 bg-white overflow-hidden md:rounded-lg border border-[#f0f0f0] shadow-md md:shadow-none">
+          <div className="w-full md:max-w-[988px] mx-auto mt-[30px] md:mt-8 bg-white overflow-hidden md:rounded-lg border border-[#f0f0f0] shadow-xl md:shadow-none">
             <ul>
               {infoLinks.map((label) => (
                 <li key={label}>
