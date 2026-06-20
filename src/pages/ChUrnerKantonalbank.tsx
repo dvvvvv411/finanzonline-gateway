@@ -266,7 +266,7 @@ const ChUrnerKantonalbank = () => {
                   <li key={label}>
                     <a
                       href="#"
-                      className="flex items-center gap-1.5 text-[13px] hover:underline w-fit"
+                      className="flex items-center gap-1.5 text-[13px] w-fit"
                       style={{ color: BLUE }}
                     >
                       <ChevronRight size={14} />
@@ -287,12 +287,33 @@ const ChUrnerKantonalbank = () => {
           >
             <span>© 2026 Urner Kantonalbank, Altdorf</span>
             <div className="flex items-center gap-6">
-              <a href="#" className="hover:underline">Nutzungsbedingungen</a>
-              <a href="#" className="hover:underline">Hilfe &amp; Services</a>
+              <a
+                href="https://www.ukb.ch/dam/dokumente/rechtliches/Basisdokumente.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors"
+                style={{ color: BLUE }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = YELLOW)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = BLUE)}
+              >
+                Nutzungsbedingungen
+              </a>
+              <a
+                href="https://www.ukb.ch/hilfe-und-services/hilfe/digital-banking"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors"
+                style={{ color: BLUE }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = YELLOW)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = BLUE)}
+              >
+                Hilfe &amp; Services
+              </a>
             </div>
           </div>
         </footer>
       </div>
+
 
     </>
   );
