@@ -140,10 +140,10 @@ const ChObwaldnerKantonalbank = () => {
                 <li key={label}>
                   <a
                     href="#"
-                    className="flex items-center gap-2 px-6 py-4 text-[15px] hover:underline"
+                    className="flex items-center gap-2 px-6 py-2 md:py-4 text-[15px] hover:underline"
                     style={{ color: RED }}
                   >
-                    <ChevronRight size={18} color={RED} />
+                    <ArrowRight size={18} color={RED} />
                     <span>{label}</span>
                   </a>
                 </li>
