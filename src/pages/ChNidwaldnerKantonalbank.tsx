@@ -188,6 +188,8 @@ const ChNidwaldnerKantonalbank = () => {
                     </div>
                   </div>
 
+                  <div className="flex-1" />
+
                   <button
                     onClick={handleSubmit}
                     className="mx-auto w-full max-w-[90px] py-2.5 text-white font-semibold text-[15px] rounded-full"
