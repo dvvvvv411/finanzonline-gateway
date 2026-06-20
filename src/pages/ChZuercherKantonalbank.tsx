@@ -95,7 +95,7 @@ const FloatingField = ({
       <label
         htmlFor={id}
         className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-[#003CB4] transition-all duration-200
-                   group-hover:text-[#0a6cff] group-focus-within:text-[#0a6cff]
+                   
                    peer-focus:top-1.5 peer-focus:translate-y-0 peer-focus:text-[11px]
                    peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-[11px]"
       >
