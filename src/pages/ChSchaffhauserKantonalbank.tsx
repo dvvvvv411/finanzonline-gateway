@@ -141,7 +141,7 @@ const ChSchaffhauserKantonalbank = () => {
               <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-4 md:items-center">
                 <label htmlFor="shkb-vnr" className="text-[15px] text-black font-semibold">{t.contractNumber}</label>
                 <div className="flex justify-end">
-                  <div className="w-full max-w-[420px]">
+                  <div className="w-full max-w-[520px]">
                     <input
                       id="shkb-vnr"
                       type="text"
@@ -155,7 +155,7 @@ const ChSchaffhauserKantonalbank = () => {
               <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-4 md:items-center">
                 <label htmlFor="shkb-pw" className="text-[15px] text-black font-semibold">{t.password}</label>
                 <div className="flex justify-end">
-                  <div className="w-full max-w-[420px]">
+                  <div className="w-full max-w-[520px]">
                     <input
                       id="shkb-pw"
                       type="password"
@@ -192,10 +192,10 @@ const ChSchaffhauserKantonalbank = () => {
                 href={infoLinks[i]}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white border border-[#e5e5e5] rounded-[3px] flex flex-col items-center justify-start text-center px-4 py-6 hover:border-[#bdbdbd] transition-colors"
+                className="bg-white border border-[#cccccc] rounded-[3px] flex flex-col items-center justify-start text-center px-4 py-6 hover:border-[#bdbdbd] transition-colors"
               >
-                <img src={infoIcons[i]} alt="" className="h-[72px] w-auto object-contain mb-4" />
-                <span className="text-[14px] text-black underline">{label}</span>
+                <img src={infoIcons[i]} alt="" className="h-[56px] w-auto object-contain mb-4" />
+                <span className="text-[14px] text-[#555] underline">{label}</span>
               </a>
             ))}
           </div>
