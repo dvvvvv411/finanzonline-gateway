@@ -183,10 +183,29 @@ const ChUrnerKantonalbank = () => {
                   </div>
                 </div>
 
+                {/* Mobile quicklinks (between login and carousel) */}
+                <div className="h-3 bg-[#f5f5f5] md:hidden order-2" />
+                <div className="md:hidden order-2 bg-white px-6 py-4">
+                  <ul className="flex flex-col gap-1.5">
+                    {quicklinks.map((label) => (
+                      <li key={label}>
+                        <a
+                          href="#"
+                          className="flex items-center gap-1.5 text-[13px] w-fit"
+                          style={{ color: BLUE }}
+                        >
+                          <ChevronRight size={14} />
+                          <span>{label}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="h-3 bg-[#f5f5f5] md:hidden order-2" />
 
                 {/* Carousel (right) */}
                 <div
-                  className="relative group min-h-[420px] md:min-h-0 overflow-hidden bg-[#f5f5f5]"
+                  className="relative group min-h-[420px] md:min-h-0 overflow-hidden bg-[#f5f5f5] order-3 md:order-none"
                   onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
                   onTouchEnd={(e) => {
                     const dx = e.changedTouches[0].clientX - touchStartX.current;
