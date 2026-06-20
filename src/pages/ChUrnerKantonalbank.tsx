@@ -95,7 +95,8 @@ const ChUrnerKantonalbank = () => {
           <div className="w-full max-w-[1000px] mx-auto">
             {/* Main card */}
             <div
-              className="bg-white border border-[#e5e5e5] rounded-md overflow-hidden shadow-sm md:h-[715px] flex flex-col"
+              className="bg-white border border-[#e5e5e5] rounded-md overflow-hidden md:h-[715px] flex flex-col"
+              style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}
             >
               {/* Full-width card header */}
               <div className="h-[40px] flex items-center px-6 bg-white shrink-0">
@@ -110,7 +111,7 @@ const ChUrnerKantonalbank = () => {
               {/* Content grid */}
               <div className="grid md:grid-cols-2 flex-1 min-h-0">
                 {/* Login (left) */}
-                <div className="px-8 py-10 md:px-12 md:py-12 flex flex-col">
+                <div className="px-8 py-10 md:px-12 md:py-12 flex flex-col h-full">
                   <h1 className="text-[24px] font-semibold text-black mb-6">Anmeldung E-Banking</h1>
 
                   <div className="mb-5">
@@ -121,7 +122,7 @@ const ChUrnerKantonalbank = () => {
                       type="text"
                       value={vertragsnummer}
                       onChange={(e) => setVertragsnummer(e.target.value)}
-                      className="w-full px-3 py-2.5 border border-[#cccccc] outline-none text-[15px] rounded-[3px] hover:border-black focus:border-black transition-colors bg-white"
+                      className="w-full px-3 py-2.5 border border-[#cccccc] outline-none text-[15px] rounded-[6px] bg-white"
                     />
                   </div>
 
@@ -134,7 +135,7 @@ const ChUrnerKantonalbank = () => {
                         type={showPassword ? "text" : "password"}
                         value={passwort}
                         onChange={(e) => setPasswort(e.target.value)}
-                        className="w-full px-3 py-2.5 border border-[#cccccc] outline-none text-[15px] pr-10 rounded-[3px] hover:border-black focus:border-black transition-colors bg-white"
+                        className="w-full px-3 py-2.5 border border-[#cccccc] outline-none text-[15px] pr-10 rounded-[6px] bg-white"
                       />
                       <button
                         type="button"
@@ -151,23 +152,38 @@ const ChUrnerKantonalbank = () => {
                     </div>
                   </div>
 
+                  <div className="flex-1" />
+
                   <button
                     onClick={handleSubmit}
-                    className="mx-auto block px-10 py-2.5 text-black font-semibold text-[15px] rounded-md hover:brightness-95 transition"
+                    className="mx-auto block px-6 py-2.5 text-black font-bold text-[15px] rounded-[6px] hover:brightness-95 transition"
                     style={{ backgroundColor: YELLOW }}
                   >
                     Weiter
                   </button>
 
-                  <div className="mt-6 flex flex-col gap-2 text-[14px] text-center">
-                    <a href="#" className="hover:underline" style={{ color: BLUE }}>
+                  <div className="mt-5 flex flex-col gap-2 text-[14px] text-center">
+                    <a
+                      href="#"
+                      className="transition-colors"
+                      style={{ color: BLUE }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = YELLOW)}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = BLUE)}
+                    >
                       Passwort vergessen?
                     </a>
-                    <a href="#" className="hover:underline" style={{ color: BLUE }}>
+                    <a
+                      href="#"
+                      className="transition-colors"
+                      style={{ color: BLUE }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = YELLOW)}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = BLUE)}
+                    >
                       E-Banking-Vertrag sperren
                     </a>
                   </div>
                 </div>
+
 
                 {/* Carousel (right) */}
                 <div
