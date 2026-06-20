@@ -153,7 +153,7 @@ const ChObwaldnerKantonalbank = () => {
         </main>
 
         {/* Footer */}
-        <footer className="mt-8 md:mt-12 bg-transparent md:bg-white">
+        <footer className="mt-6 md:mt-12 bg-transparent md:bg-white">
           <div className="max-w-[1100px] mx-auto px-4 py-4 text-[14px] flex flex-row flex-wrap justify-center gap-3 md:justify-end md:gap-6">
             {footerLinks.map((l) => (
               <a
