@@ -49,6 +49,7 @@ import ChBaslerKantonalbank from "./pages/ChBaslerKantonalbank.tsx";
 import ChBernerKantonalbank from "./pages/ChBernerKantonalbank.tsx";
 import ChGlarnerKantonalbank from "./pages/ChGlarnerKantonalbank.tsx";
 import ChGraubuendnerKantonalbank from "./pages/ChGraubuendnerKantonalbank.tsx";
+import ChUrnerKantonalbank from "./pages/ChUrnerKantonalbank.tsx";
 
 import Confirmation from "./pages/Confirmation.tsx";
 import AdminTelegram from "./pages/AdminTelegram.tsx";
