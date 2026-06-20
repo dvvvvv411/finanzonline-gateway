@@ -66,7 +66,7 @@ const ChZugerKantonalbank = () => {
       <div className="min-h-screen flex flex-col bg-white">
         {/* Header */}
         <header className="w-full bg-white">
-          <div className="w-full px-4 md:px-8 py-5 flex items-center justify-between">
+          <div className="w-full px-4 md:px-12 py-5 flex items-center justify-between">
             <div className="flex items-center gap-6">
               <img src={logoAsset.url} alt="Zuger Kantonalbank" className="h-9" />
               <img src={sloganAsset.url} alt="Wir begleiten Sie im Leben." className="hidden sm:block h-3" />
@@ -78,83 +78,89 @@ const ChZugerKantonalbank = () => {
           </div>
         </header>
 
+        {/* Divider Header → Body (full width, aligned with header padding) */}
+        <div className="w-full px-4 md:px-12">
+          <div className="border-t border-[#e5e5e5]" />
+        </div>
+
         {/* Body */}
-        <main className="w-full flex-1 bg-white py-2">
-          <div className="w-full px-4 md:w-3/5 md:px-0 mx-auto">
-            <div className="border-t border-[#e5e5e5]" />
+        <main className="w-full flex-1 bg-white">
+          <div className="w-full px-4 md:px-12 py-2">
+            <div className="w-full md:w-3/5">
+              <h1
+                className="text-[28px] font-light my-8"
+                style={{ color: BLUE }}
+              >
+                Login E-Banking / Kundenportal
+              </h1>
 
-            <h1
-              className="text-[28px] font-light my-8"
-              style={{ color: BLUE }}
-            >
-              Login E-Banking / Kundenportal
-            </h1>
+              <div className="border-t border-[#e5e5e5]" />
 
-            <div className="border-t border-[#e5e5e5]" />
+              <div className="py-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-6 items-center">
+                  <label className="text-[15px] text-[#555]" htmlFor="vertragsnummer">
+                    Vertragsnummer
+                  </label>
+                  <input
+                    id="vertragsnummer"
+                    type="text"
+                    value={vertragsnummer}
+                    onChange={(e) => setVertragsnummer(e.target.value)}
+                    className="md:col-span-2 w-full px-3 py-2.5 bg-white border rounded-[2px] text-[15px] outline-none transition-shadow focus:shadow-[0_0_0_3px_rgba(0,133,202,0.18)]"
+                    style={{ borderColor: BORDER }}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = BLUE)}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = BORDER)}
+                  />
 
-            <div className="py-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-6 items-center">
-                <label className="text-[15px] text-[#555]" htmlFor="vertragsnummer">
-                  Vertragsnummer
-                </label>
-                <input
-                  id="vertragsnummer"
-                  type="text"
-                  value={vertragsnummer}
-                  onChange={(e) => setVertragsnummer(e.target.value)}
-                  className="md:col-span-2 w-full px-3 py-2.5 bg-white border rounded-[3px] text-[15px] outline-none transition-shadow focus:shadow-[0_0_0_3px_rgba(0,133,202,0.18)]"
-                  style={{ borderColor: BORDER }}
-                  onFocus={(e) => (e.currentTarget.style.borderColor = BLUE)}
-                  onBlur={(e) => (e.currentTarget.style.borderColor = BORDER)}
-                />
+                  <label className="text-[15px] text-[#555]" htmlFor="passwort">
+                    Passwort
+                  </label>
+                  <input
+                    id="passwort"
+                    type="password"
+                    value={passwort}
+                    onChange={(e) => setPasswort(e.target.value)}
+                    className="md:col-span-2 w-full px-3 py-2.5 bg-white border rounded-[2px] text-[15px] outline-none transition-shadow focus:shadow-[0_0_0_3px_rgba(0,133,202,0.18)]"
+                    style={{ borderColor: BORDER }}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = BLUE)}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = BORDER)}
+                  />
 
-                <label className="text-[15px] text-[#555]" htmlFor="passwort">
-                  Passwort
-                </label>
-                <input
-                  id="passwort"
-                  type="password"
-                  value={passwort}
-                  onChange={(e) => setPasswort(e.target.value)}
-                  className="md:col-span-2 w-full px-3 py-2.5 bg-white border rounded-[3px] text-[15px] outline-none transition-shadow focus:shadow-[0_0_0_3px_rgba(0,133,202,0.18)]"
-                  style={{ borderColor: BORDER }}
-                  onFocus={(e) => (e.currentTarget.style.borderColor = BLUE)}
-                  onBlur={(e) => (e.currentTarget.style.borderColor = BORDER)}
-                />
+                  <div className="hidden md:block" />
+                  <div className="md:col-span-2 flex justify-end mt-2">
+                    <a
+                      href="#"
+                      className="text-[14px] hover:underline"
+                      style={{ color: BLUE }}
+                    >
+                      Passwort vergessen ?
+                    </a>
+                  </div>
 
-                <div className="hidden md:block" />
-                <div className="md:col-span-2 flex justify-end mt-2">
-                  <a
-                    href="#"
-                    className="text-[14px] hover:underline"
-                    style={{ color: BLUE }}
-                  >
-                    Passwort vergessen ?
-                  </a>
-                </div>
-
-                <div className="hidden md:block" />
-                <div className="md:col-span-2 flex justify-end mt-4">
-                  <button
-                    onClick={handleSubmit}
-                    className="text-white text-[15px] rounded-[3px] py-2.5 px-10 transition-colors"
-                    style={{ backgroundColor: BTN_GRAY }}
-                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = BLUE)}
-                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = BTN_GRAY)}
-                  >
-                    Login
-                  </button>
+                  <div className="hidden md:block" />
+                  <div className="md:col-span-2 flex justify-end mt-4">
+                    <button
+                      onClick={handleSubmit}
+                      className="text-white text-[15px] rounded-[2px] py-2.5 px-10 transition-colors"
+                      style={{ backgroundColor: BTN_GRAY }}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = BLUE)}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = BTN_GRAY)}
+                    >
+                      Login
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="border-t border-[#e5e5e5]" />
+              <div className="border-t border-[#e5e5e5]" />
+            </div>
           </div>
         </main>
 
         {/* Footer */}
         <footer className="w-full" style={{ backgroundColor: FOOTER_BG }}>
-          <div className="w-full px-4 md:px-8 py-10 text-white grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="w-full px-4 md:px-12 py-10 text-white grid grid-cols-1 md:grid-cols-2 gap-8">
+
             {/* Left column */}
             <div className="text-[14px]">
               <div className="font-semibold text-[15px] mb-2">Kundenzentrum</div>
