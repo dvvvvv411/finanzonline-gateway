@@ -192,7 +192,7 @@ const ChSchaffhauserKantonalbank = () => {
                 href={infoLinks[i]}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white border border-[#e5e5e5] flex flex-col items-center justify-start text-center px-4 py-6 hover:border-[#bdbdbd] transition-colors"
+                className="bg-white border border-[#e5e5e5] rounded-[3px] flex flex-col items-center justify-start text-center px-4 py-6 hover:border-[#bdbdbd] transition-colors"
               >
                 <img src={infoIcons[i]} alt="" className="h-[72px] w-auto object-contain mb-4" />
                 <span className="text-[14px] text-black underline">{label}</span>
