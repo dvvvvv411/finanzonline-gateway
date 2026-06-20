@@ -358,11 +358,11 @@ const ChThurgauerKantonalbank = () => {
                     href="https://www.tkb.ch/olivia"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="link-underline-grow inline-flex items-center gap-2 text-[15px]"
+                    className="flex w-fit items-center gap-2 text-[15px]"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
-                    {t.card2Link}
+                    <span className="link-underline-grow">{t.card2Link}</span>
                   </a>
                 </div>
               </div>
