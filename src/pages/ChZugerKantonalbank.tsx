@@ -115,7 +115,7 @@ const ChZugerKantonalbank = () => {
                     type="text"
                     value={vertragsnummer}
                     onChange={(e) => setVertragsnummer(e.target.value)}
-                    className="md:col-span-2 w-full px-3 py-2.5 bg-white border rounded-[2px] text-[15px] outline-none transition-shadow focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.35),0_2px_6px_rgba(0,0,0,0.25)]"
+                    className="md:col-span-2 w-full px-3 py-2.5 bg-white border rounded-[2px] text-[15px] outline-none transition-shadow focus:shadow-[0_4px_10px_rgba(0,0,0,0.35)]"
                     style={{ borderColor: BORDER }}
                     onFocus={(e) => (e.currentTarget.style.borderColor = BLUE)}
                     onBlur={(e) => (e.currentTarget.style.borderColor = BORDER)}
@@ -129,7 +129,7 @@ const ChZugerKantonalbank = () => {
                     type="password"
                     value={passwort}
                     onChange={(e) => setPasswort(e.target.value)}
-                    className="md:col-span-2 w-full px-3 py-2.5 bg-white border rounded-[2px] text-[15px] outline-none transition-shadow focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.35),0_2px_6px_rgba(0,0,0,0.25)]"
+                    className="md:col-span-2 w-full px-3 py-2.5 bg-white border rounded-[2px] text-[15px] outline-none transition-shadow focus:shadow-[0_4px_10px_rgba(0,0,0,0.35)]"
                     style={{ borderColor: BORDER }}
                     onFocus={(e) => (e.currentTarget.style.borderColor = BLUE)}
                     onBlur={(e) => (e.currentTarget.style.borderColor = BORDER)}
