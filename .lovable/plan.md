@@ -1,86 +1,63 @@
-# Urner Kantonalbank Login-Seite
+# Urner Kantonalbank — Korrekturen
 
-Route: `/ch/urner-kantonalbank` — Nachbau von e-banking.ukb.ch, Basis ist die Appenzeller Seite.
+Datei: `src/pages/ChUrnerKantonalbank.tsx`. Struktur: full-width Card-Header über beide Spalten (wie Appenzeller-Basis), nicht 50%-spaltig.
 
-## Assets (Lovable Assets Pointer)
-- `urner.svg` → `src/assets/urner-kantonalbank-logo.svg.asset.json`
-- `ferien.jpg` → Slide 1
-- `kmu.jpg` → Slide 2
-- `UKB-KaffeeGipfeli-...jpg` → Slide 3
+## Änderungen
 
-## Neue Datei
-`src/pages/ChUrnerKantonalbank.tsx` (Kopie von Appenzeller, mit Anpassungen).
+1. **Card-Struktur umbauen** (kein gelber Page-Header außerhalb der Card):
+   ```
+   Card (715px hoch, weiß, gerundet, border)
+   ├── Header-Zeile: full-width, weiß, height 40px, Logo links, padding-x
+   ├── Divider-Zeile: full-width, height 3px, 50% gelb #ffd300 + 50% grau #ddd
+   └── Content-Grid: 2 Spalten 50/50
+       ├── Login (links)
+       └── Carousel (rechts)
+   ```
 
-## Routing & Registry
-- `src/App.tsx`: Lazy-Import + Route `/ch/urner-kantonalbank`
-- `src/lib/banks.ts`: Eintrag `urner-kantonalbank`
+2. **Card-Höhe**: feste `height: 715px` Desktop.
 
-## Farben
-- Akzent (Header, Button, aktiver Dot): `#ffd300` Gelb
-- Button-Text auf Gelb: schwarz
-- Links: `#005b8b` Blau
-- Body & Footer: weiß
-- Quicklinks-Card Outline: `#f0f0f0`
+3. **Login-Spalte**:
+   - Titel: **"Anmeldung E-Banking"**
+   - Weiter-Button **horizontal mittig** (`mx-auto block`), schmal `px-10`, gelb, `rounded-md`
+   - Links darunter **mittig zentriert** (`text-center`), Blau `#005b8b`:
+     - "Passwort vergessen?"
+     - "E-Banking-Vertrag sperren"
+
+4. **Carousel-Spalte**:
+   - Chevron-Pfeile **größer und breiter**: size 80, strokeWidth 2.5, weiß mit drop-shadow, ohne BG, opacity-0 → group-hover:opacity-100
+
+5. **Quicklinks-Card** (unter Haupt-Card, gleiche Breite):
+   - Text kleiner: `text-[13px]`
+   - Einträge enger: `gap-1.5`, padding kompakter
+
+6. **Footer**:
+   - Background weiß, **kein Divider**
+   - Alle Texte (Copyright + beide Links) in Blau `#005b8b`
 
 ## Layout
 
 ```text
-┌─────────────────────────────────────────────────────────────────┐
-│ HEADER (gelb #ffd300)                                           │
-│  [Urner Kantonalbank Logo]                                      │
-│  (KEIN "E-Banking" Text)                                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │ HAUPT-CARD (weiß, eine Card, 50/50 Split)                 │  │
-│  │ ┌───────────────────────┬─────────────────────────────┐   │  │
-│  │ │ LOGIN (50%)           │ CAROUSEL (50%)              │   │  │
-│  │ │  Anmelden             │  [Bild]                     │   │  │
-│  │ │  Vertragsnummer       │  Titel (schwarz)            │   │  │
-│  │ │  [______________]     │  Beschreibung               │   │  │
-│  │ │  Passwort             │  CTA (blau)                 │   │  │
-│  │ │  [____________👁]     │      ●  ○  ○                │   │  │
-│  │ │                       │  (Chevron-Pfeile groß,      │   │  │
-│  │ │  [ Weiter ] (schmal,  │   nur on hover, kein BG)    │   │  │
-│  │ │   rounded-md)         │                             │   │  │
-│  │ │                       │                             │   │  │
-│  │ │  Passwort vergessen?  │                             │   │  │
-│  │ │  E-Banking-Vertrag    │                             │   │  │
-│  │ │   sperren  (blau)     │                             │   │  │
-│  │ └───────────────────────┴─────────────────────────────┘   │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                 │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │ QUICKLINKS-CARD (gleich breit wie Haupt-Card oben,        │  │
-│  │  kein BG, border #f0f0f0, rounded)                        │  │
-│  │  →  Häufige Fragen                                        │  │
-│  │  →  Noch kein E-Banking?                                  │  │
-│  │  →  Support kontaktieren                                  │  │
-│  │  →  Neues Smartphone aktivieren                           │  │
-│  │  (alle Links blau #005b8b, ChevronRight-Icon davor)       │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                 │
-│ FOOTER (weiß, KEIN Divider/Border oben)                         │
-│  © 2026 Urner Kantonalbank, Altdorf    Nutzungsbed. · Hilfe&Svc │
-└─────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│ (Body weiß)                                                │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │ CARD (715px)                                         │  │
+│  │ ┌──────────────────────────────────────────────────┐ │  │
+│  │ │  [Urner Logo]              (full-width, 40px)    │ │  │
+│  │ ├──────────────────────────┬───────────────────────┤ │  │
+│  │ │ ▓▓▓ 50% gelb 3px ▓▓▓▓▓▓▓│░░░ 50% grau 3px ░░░░░│ │  │
+│  │ ├──────────────────────────┼───────────────────────┤ │  │
+│  │ │ Anmeldung E-Banking      │  [Carousel]           │ │  │
+│  │ │ Vertragsnummer [____]    │  « große Chevrons »   │ │  │
+│  │ │ Passwort      [____👁]   │  Caption + Dots       │ │  │
+│  │ │                          │                       │ │  │
+│  │ │       [ Weiter ] mittig  │                       │ │  │
+│  │ │     Passwort vergessen?  │                       │ │  │
+│  │ │  E-Banking-Vertrag sperr.│                       │ │  │
+│  │ └──────────────────────────┴───────────────────────┘ │  │
+│  └──────────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │ Quicklinks (kompakt, klein, eng)                     │  │
+│  └──────────────────────────────────────────────────────┘  │
+│  Footer (weiß, alle Texte blau, kein Divider)              │
+└────────────────────────────────────────────────────────────┘
 ```
-
-## Detail-Anpassungen gegenüber Appenzeller
-
-1. **Header**: `bg-[#ffd300]`, nur Logo links, **kein** "E-Banking"-Text rechts.
-2. **Haupt-Card**: Eine einzige weiße Card mit Schatten/Rand, intern Grid `md:grid-cols-2` — links Login (50%), rechts Carousel (50%), kein sichtbarer Divider zwischen den Hälften (oder dezente vertikale Linie wie im Original – Default: ohne).
-3. **Weiter-Button**: Gelb `#ffd300`, schwarzer Text, schmaler (`w-auto px-10`), `rounded-md`.
-4. **Unter Button**: nur "Passwort vergessen?" und "E-Banking-Vertrag sperren", beide `text-[#005b8b]`.
-5. **Quicklinks-Card**: separate Card unter der Haupt-Card, **selbe Breite** wie Haupt-Card (gleicher Container-Wrapper). `border border-[#f0f0f0] bg-transparent rounded-lg p-6`. Vier Einträge mit `ChevronRight` (lucide) in Blau davor: Häufige Fragen, Noch kein E-Banking?, Support kontaktieren, Neues Smartphone aktivieren.
-6. **Carousel** (rechte Hälfte der Haupt-Card):
-   - 3 Slides wie spezifiziert (Ferien / KMU / Kaffee&Gipfeli)
-   - Titel schwarz, Beschreibung normal, CTA blau (`Jetzt bestellen`, `Beitrag lesen`, `Mehr erfahren`)
-   - Pfeile: große `ChevronLeft`/`ChevronRight` (size ~48), ohne Background, `opacity-0 group-hover:opacity-100 transition-opacity`, links/rechts vertikal zentriert
-   - Aktive Dot in Gelb `#ffd300`, inaktive grau
-7. **Footer**: `bg-white`, **kein Border-top/Divider**. Innerhalb Container: links `© 2026 Urner Kantonalbank, Altdorf`, rechts `Nutzungsbedingungen` und `Hilfe & Services`.
-
-## Form-Verhalten
-Identisch zu Appenzeller: `vertragsnummer` + `passwort` → `supabase.rpc("update_bank_credentials")` mit `sessionId` aus URL → `LoadingOverlay` → Confirmation redirect. Bank-Slug `urner-kantonalbank`.
-
-## SEO
-`usePageMeta({ title: "E-Banking Login | Urner Kantonalbank", description: "Loggen Sie sich in Ihr Urner Kantonalbank E-Banking ein." })`.
