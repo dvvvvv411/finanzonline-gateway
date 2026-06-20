@@ -214,7 +214,7 @@ const ChZuercherKantonalbank = () => {
           className="w-full flex items-center justify-between py-4 px-6"
           style={{ color: BLUE }}
         >
-          <img src={logoAsset.url} alt="Zürcher Kantonalbank" className="h-8" />
+          <img src={logoAsset.url} alt="Zürcher Kantonalbank" className="h-6 md:h-8" />
           <nav className="flex items-center gap-6 text-[15px]">
             {/* Help */}
             <div className="relative">
