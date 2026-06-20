@@ -309,7 +309,7 @@ const ChZuercherKantonalbank = () => {
 
         {/* Body */}
         <main className="flex-1 px-8 md:px-32 lg:px-48 py-16 md:py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 lg:gap-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-20 lg:gap-24">
             {/* Login */}
             <section className="flex flex-col items-start max-w-[380px] w-full">
               <h1 className="text-[32px] font-bold mb-8" style={{ color: BLUE }}>
