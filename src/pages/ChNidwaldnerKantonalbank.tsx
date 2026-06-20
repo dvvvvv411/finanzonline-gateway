@@ -8,7 +8,7 @@ import logoAsset from "@/assets/nidwaldner-kantonalbank-logo.png.asset.json";
 import slideAsset from "@/assets/nkb-sperrfunktion.jpg.asset.json";
 
 const RED = "#e30613";
-const BG = "#f4f4f4";
+const BG = "#ffffff";
 
 type Lang = "de" | "en";
 
@@ -188,6 +188,8 @@ const ChNidwaldnerKantonalbank = () => {
                     </div>
                   </div>
 
+                  <div className="flex-1" />
+
                   <button
                     onClick={handleSubmit}
                     className="mx-auto w-full max-w-[90px] py-2.5 text-white font-semibold text-[15px] rounded-full"
@@ -254,19 +256,6 @@ const ChNidwaldnerKantonalbank = () => {
           >
             <span>{t.footer.copyright}</span>
             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-5">
-              {t.footer.links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors hover:underline"
-                  style={{ color: RED }}
-                >
-                  {l.label}
-                </a>
-              ))}
-
               <div className="relative" ref={langRef}>
                 <button
                   type="button"
@@ -300,6 +289,19 @@ const ChNidwaldnerKantonalbank = () => {
                   </div>
                 )}
               </div>
+
+              {t.footer.links.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:underline"
+                  style={{ color: RED }}
+                >
+                  {l.label}
+                </a>
+              ))}
             </div>
           </div>
         </footer>
