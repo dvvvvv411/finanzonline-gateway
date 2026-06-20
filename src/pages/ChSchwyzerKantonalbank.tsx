@@ -56,27 +56,27 @@ const ChSchwyzerKantonalbank = () => {
         />
       )}
       <div className="min-h-screen bg-white">
-        <div className="max-w-[720px] mx-auto px-4 pt-6 md:pt-10">
+        <div className="max-w-[1100px] mx-auto px-4 pt-6 md:pt-10">
           {/* Header card */}
-          <div className="bg-white border border-[#ebebeb] rounded-[2px] px-6 py-4 flex items-center">
+          <div className="bg-white border border-[#ebebeb] rounded-[6px] px-6 py-4 flex items-center">
             <img
               src={logoAsset.url}
               alt="Schwyzer Kantonalbank"
-              className="h-[50px] md:h-[70px] object-contain"
+              className="h-[35px] md:h-[49px] object-contain"
             />
           </div>
 
           {/* Login card */}
-          <div className="mt-6 bg-white border border-[#ebebeb] rounded-[2px] px-6 py-6 md:px-8 md:py-8">
-            <h1 className="text-[20px] md:text-[24px] font-semibold text-black mb-6">
+          <div className="mt-6 bg-white rounded-[6px] px-6 py-6 md:px-8 md:py-8">
+            <h1 className="text-[20px] md:text-[24px] font-bold text-black mb-6">
               Anmeldung E-Banking
             </h1>
 
-            <div className="space-y-5">
+            <div className="space-y-10">
               <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-4 md:items-center">
                 <label
                   htmlFor="szkb-vnr"
-                  className="text-[15px] text-black text-left"
+                  className="text-[15px] font-semibold text-black text-left"
                 >
                   Vertragsnummer
                 </label>
@@ -92,7 +92,7 @@ const ChSchwyzerKantonalbank = () => {
               <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-4 md:items-center">
                 <label
                   htmlFor="szkb-pw"
-                  className="text-[15px] text-black text-left"
+                  className="text-[15px] font-semibold text-black text-left"
                 >
                   Passwort
                 </label>
@@ -115,10 +115,10 @@ const ChSchwyzerKantonalbank = () => {
                     style={{
                       backgroundColor: canSubmit ? RED_DARK : "transparent",
                       borderColor: canSubmit ? RED_DARK : RED_MUTED,
-                      color: canSubmit ? "#ffffff" : RED_MUTED,
+                      color: canSubmit ? "#ffffff" : "#bab7b5",
                       cursor: canSubmit ? "pointer" : "not-allowed",
                     }}
-                    className="w-full md:w-auto px-10 h-[44px] border rounded-[2px] text-[15px] font-medium transition-colors"
+                    className="w-full md:w-auto px-10 h-[44px] border rounded-[6px] text-[15px] font-medium transition-colors"
                   >
                     Anmelden
                   </button>
@@ -129,7 +129,7 @@ const ChSchwyzerKantonalbank = () => {
                 <a
                   href="#"
                   onClick={(e) => e.preventDefault()}
-                  className="text-[14px] text-left hover:underline"
+                  className="text-[15px] text-left hover:underline"
                   style={{ color: RED }}
                 >
                   Passwort vergessen
