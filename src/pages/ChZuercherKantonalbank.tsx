@@ -79,7 +79,7 @@ const FloatingField = ({
 
   return (
     <div
-      className="group relative w-full border-[2px] transition-colors rounded-none hover:border-[#0a6cff] focus-within:border-[#0a6cff]"
+      className="group relative w-full border-[2px] transition-colors rounded-none hover:border-[#003CB4] focus-within:border-[#003CB4]"
       style={{ borderColor: OUTLINE }}
     >
       <input
