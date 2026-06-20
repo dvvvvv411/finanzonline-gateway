@@ -297,11 +297,11 @@ const ChThurgauerKantonalbank = () => {
                     onClick={l.external ? undefined : (e) => e.preventDefault()}
                     target={l.external ? "_blank" : undefined}
                     rel={l.external ? "noopener noreferrer" : undefined}
-                    className="link-underline-grow inline-flex items-center gap-2 text-[15px] self-start"
+                    className="flex w-fit items-center gap-2 text-[15px]"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
-                    {l.label}
+                    <span className="link-underline-grow">{l.label}</span>
                   </a>
                 ))}
               </div>
