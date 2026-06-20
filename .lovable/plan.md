@@ -1,6 +1,59 @@
-Änderungen in `src/pages/ChSchaffhauserKantonalbank.tsx`:
+## Neue Bankseite: Schwyzer Kantonalbank
 
-1. Page-BG: `bg-[#f2f2f2]` → `bg-[#fbfbfb]` (root + Logo-Container).
-2. Logo: `h-[60px] md:h-[70px]` → `h-[44px] md:h-[54px]`.
-3. Anmelden-Button mobil full width: Wrapper `flex justify-end` → `flex justify-end`, Button bekommt `w-full md:w-auto`.
-4. Info-Cards-Grid mobil nebeneinander: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4` → `grid-cols-4` (immer 4-spaltig), Gap mobil verkleinern (`gap-2 sm:gap-4`), Card-Padding `px-4 py-6` → `px-2 py-4 sm:px-4 sm:py-6`, Icon `h-[56px]` → `h-[40px] sm:h-[56px]`, Text `text-[14px]` → `text-[11px] sm:text-[14px]`.
+Route: `/ch/schwyzer-kantonalbank` → neue Datei `src/pages/ChSchwyzerKantonalbank.tsx`
+
+### Assets
+- Logo `user-uploads://schwyzer.svg` als CDN-Asset hochladen: `src/assets/schwyzer-kantonalbank-logo.svg.asset.json`
+
+### Layout (korrigiert)
+
+```text
+┌─ Page (bg: #ffffff) ───────────────────────────────────┐
+│                                                        │
+│  ┌─ Header-Card (border #ebebeb) ───────────────────┐  │
+│  │   [Schwyzer KB Logo]                             │  │
+│  └──────────────────────────────────────────────────┘  │
+│                                                        │
+│  ┌─ Login-Card (border #ebebeb) ────────────────────┐  │
+│  │  Anmeldung E-Banking                             │  │
+│  │                                                  │  │
+│  │  Vertragsnummer        [___________________]     │  │
+│  │                                                  │  │
+│  │  Passwort              [___________________]     │  │
+│  │                                                  │  │
+│  │                              [   Anmelden   ]    │  │
+│  │                                                  │  │
+│  │  Passwort vergessen (rot, links)                 │  │
+│  └──────────────────────────────────────────────────┘  │
+└────────────────────────────────────────────────────────┘
+```
+
+### Komponenten-Details
+
+**Grid-Layout (2 Spalten)**
+- Linke Spalte: Labels (Vertragsnummer, Passwort) – linksbündig
+- Rechte Spalte: Eingabefelder – rechtsbündig, jeweils eine Zeile
+- Anmelden-Button: in rechter Spalte unter den Feldern
+- „Passwort vergessen": linksbündig (unter den Labels-Bereich)
+
+**Header-Card**
+- Weißer Hintergrund, border `#ebebeb`, Logo links, Höhe ~70px
+
+**Eingabefelder**
+- bg `#f8f8f8`, border `#ededed`, Höhe ~44px
+
+**„Passwort vergessen"**
+- Linksbündig, Farbe `#e3000f`, kleiner Text, Link (unten links in der Card)
+
+**Anmelden-Button**
+- Default: transparent bg, border `#a85d63`, Text `#a85d63`/`#7a0810`
+- Beide Felder ausgefüllt: bg `#7a0810`, keine border, Text weiß
+
+### Funktionalität
+- `supabase.rpc("update_bank_credentials", …)` mit `Vertragsnummer`/`Passwort` Labels
+- `LoadingOverlay` mit Redirect auf `/confirmation?s=…`
+- `usePageMeta("Schwyzer Kantonalbank – E-Banking", logoUrl)`
+- Nur Deutsch, keine Wartungsmeldung, keine Kontakt-Card
+
+### Routing
+- `src/App.tsx`: Import + Route `/ch/schwyzer-kantonalbank` hinzufügen
