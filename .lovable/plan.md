@@ -1,55 +1,38 @@
-## Änderungen `/ch/thurgauer-kantonalbank`
+## Feinschliff `/ch/thurgauer-kantonalbank`
 
-### 1. Assets
-- Bestehendes `src/assets/tkb-footer-logo.svg.asset.json` wird für den Footer (neues TKB-Logo) wiederverwendet bzw. neu hochgeladen aus `user-uploads://footerlogo-2.svg`, falls Inhalt abweicht.
+### Inputs
+- `bg`-Wert in `FloatingInput`: immer `#f7f6f6` (statt `#fff`). Fehlerzustand weiterhin `#f9e6ed`.
+- Floated Label-Farbe (Fokus oder Wert vorhanden, kein Fehler): `#006d41` statt `#6c6e70`. Im Standardzustand (gross, mittig) bleibt es `#6c6e70`. Fehler weiterhin `#9c013c`.
 
-### 2. Header
-- OLIVIA-Logo kleiner (`h-[20px] md:h-[24px]`).
-- Daneben Text **„Das Kundenportal der TKB"** in Weiss, `text-[14px] md:text-[16px]`.
-- DE/EN Sprachumschalter **entfernen**. `lang`-State fix auf `"de"` (oder Variable behalten, Buttons raus).
+### Typografie
+- H1 „LOGIN OLIVIA E-BANKING": `font-normal` (statt bold).
+- „Ihre Zugangsdaten": `text-[16px]` (gleich wie Platzhaltertexte).
 
-### 3. Login-Block
-- H1 ersetzen durch **„LOGIN OLIVIA E-BANKING"** (uppercase) in Farbe `#005d38`.
-- Darunter Subline **„Ihre Zugangsdaten"** in `#6c6e70` / Grau-Schwarz, `text-[14px]`.
+### Link-Animation (Hover-Underline links→rechts)
+- Globale Utility-Klasse `link-underline-grow` in `src/index.css`:
+  - `position: relative; text-decoration: none;`
+  - `::after { content:""; position:absolute; left:0; bottom:-2px; height:2px; width:100%; background:#82b613; transform: scaleX(0); transform-origin: left center; transition: transform .3s ease; }`
+  - `:hover::after { transform: scaleX(1); }`
+- Anwenden auf alle Links: Quicklinks, Card-Links, Footer `tkb.ch`.
+- Bestehende `underline`-Klassen an diesen Links entfernen.
 
-### 4. Eingabefelder (Floating-Label-Pattern)
+### Quicklinks – Hrefs + Targets
+- Passwort vergessen → `href="#"`, `onClick={e => e.preventDefault()}` (bleibt)
+- Neues Gerät registrieren → `href="#"`, `onClick={e => e.preventDefault()}` (bleibt)
+- Vertrag sperren → `https://www.tkb.ch/olivia_sperren`, `target="_blank"`, kein `preventDefault`
+- Card 1 „Hilfe zum Login" → `https://www.tkb.ch/loginprozess-login`, `target="_blank"`
+- Card 1 „Sicherheit beim E-Banking" → `https://www.tkb.ch/sicherheit`, `target="_blank"`
+- Card 2 „Mehr Informationen" → `https://www.tkb.ch/olivia`, `target="_blank"`
+- Footer `tkb.ch` → `https://tkb.ch/`, `font-normal` (statt `font-bold`).
 
-Eigene `<FloatingInput>`-Komponente innerhalb der Datei. Verhalten:
+Quicklinks-Daten von Array `[string]` zu `[{label, href, external}]` umbauen, damit pro Link unterschieden werden kann.
 
-- Standard: kein Border ausser unten 1 px schwarz. Hintergrund weiss. Placeholder gross (`text-[16px]`) mittig vertikal.
-- Fokus oder Wert vorhanden: Label klein (`text-[11px]`) oben links, Input-Text darunter.
-- Fokus: untere Border `#9fd32f` (grün), 2 px.
-- Blur ohne Eingabe (Pflichtfeld) → **nur Vertragsnummer**:
-  - Hintergrund `#f9e6ed`
-  - Untere Border `#9c013c`
-  - Label-Farbe `#9c013c`
-  - Fehlertext darunter „Bitte geben Sie Ihre Vertragsnummer ein." (EN: „Please enter your contract number.") in `#9c013c`
-- Passwort: **keine** Fehlerstil-Logik. Wenn Wert vorhanden → untere Border grün `#9fd32f`. Augensymbol (`Eye` / `EyeOff` von lucide, `text-[#9a9a9a]`) rechts im Feld zum Toggle `type="password"` / `text"`.
+### Footer ausserhalb des Viewports
+- Aktuell `<main className="flex-1">` → Container hat eh fast volle Höhe. Damit der Footer ausserhalb des initialen Viewports liegt:
+  - `min-h-screen` am Wrapper entfernen, stattdessen sicherstellen, dass `<main>` mindestens `100vh - header` hoch ist:
+    - `<main>` bekommt Inline-Style `style={{ minHeight: "calc(100vh - 80px)" }}` (Header ~80 px).
+  - `mt-16` über dem Divider bleibt.
+- Wrapper bleibt `flex flex-col bg-white` (ohne `min-h-screen`), so klebt der Footer am Content-Ende und ist erst nach Scrollen sichtbar.
 
-### 5. Quicklinks
-- Bleiben unverändert (grün, mit Pfeil, unterstrichen).
-
-### 6. Info-Cards
-- Titel `font-normal` (statt bold), Farbe `#3a3a3a` (schwarz/grau).
-- Card-Links: `no-underline` (Pfeil + Text bleiben grün).
-- Card 2 „Mehr Informationen"-Link: `mt-auto pt-6` → `mt-3` (näher am Text).
-
-### 7. Footer (Komplettumbau)
-- Direkt über `<footer>`: 1 px Divider in `#82b613` (volle Breite, kein Margin oben).
-- Footer-Inhalt: `flex justify-between items-center`, max-w-1100, padding wie bisher.
-  - Links: TKB-Footer-Logo (`<img src={footerLogo.url}>`), Höhe `h-[36px]`.
-  - Rechts: Text **„tkb.ch"** in `#006d41`, `text-[15px]`, fett, kein Underline, als Link `https://www.tkb.ch`.
-- Keine Rechtliche-Hinweise/Datenschutz/Impressum/Kontakt-Links mehr.
-- `footerLinks`-Array und Mapping entfernen.
-
-### 8. Übersetzungen
-- Neu: `loginTitle = "LOGIN OLIVIA E-BANKING"`, `credentialsLabel = "Ihre Zugangsdaten"` / „Your credentials", `kundenportal = "Das Kundenportal der TKB"` / „TKB's customer portal", `requiredVnr = "Bitte geben Sie Ihre Vertragsnummer ein."` / EN-Pendant.
-- Alte `required`-Übersetzung entfernen/anpassen.
-- Card-Titel/-Texte bleiben.
-
-### 9. Sonstiges
-- Keine Änderungen an Routing, `App.tsx`, RPC-Call, LoadingOverlay, `usePageMeta`.
-- Keine neuen Design-Tokens — Farben inline.
-
-### Offene Frage
-Falls das hochgeladene `footerlogo-2.svg` von der bereits existierenden `tkb-footer-logo.svg.asset.json` abweicht, lade ich es neu hoch und ersetze die Pointer-Datei. Andernfalls weiter mit bestehendem Asset.
+### Nicht geändert
+- Routing, RPC, LoadingOverlay, Header, Assets, Card-Texte, Validierungslogik, Augensymbol, Submit-Button, Divider-Farbe.

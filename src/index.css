@@ -148,3 +148,25 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Animated underline that grows from left to right on hover */
+.link-underline-grow {
+  position: relative;
+  text-decoration: none;
+}
+.link-underline-grow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: #82b613;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+.link-underline-grow:hover::after {
+  transform: scaleX(1);
+}
+
