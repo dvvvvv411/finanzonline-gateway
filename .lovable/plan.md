@@ -1,111 +1,82 @@
-# Plan: Zürcher Kantonalbank Login-Seite
+# Anpassungen `src/pages/ChZuercherKantonalbank.tsx`
 
-Neue Seite unter `/ch/zuercher-kantonalbank`, 1:1 nach Vorlage onba.zkb.ch nachgebaut, im Stil der bestehenden CH-Bank-Pages (Supabase RPC `update_bank_credentials`, AntiBotGuard, LoadingOverlay, Confirmation-Redirect).
+Alle Änderungen ausschließlich in dieser Datei. Keine neuen Komponenten, keine Routen, kein Business-Logic-Change.
 
-## Visualisierung
+## 1. Header-Popovers (3 Stück)
 
-```text
-┌────────────────────────────────────────────────────────────────────────┐
-│ [ZKB-Logo]                                  ⓘ?    De ▾    👤▾         │  Header (full-width, kein Padding L/R, vertikal ~16px), alle Icons/Text in #003CB4
-├────────────────────────────────────────────────────────────────────────┤  Divider 2px solid #a5ccf8
-│                                                                        │
-│       ┌──────────────────────────┐    ┌────────────────────────────┐   │
-│       │ Login eBanking           │    │ ░░░ Card bg #edf5ff ░░░    │   │
-│       │ (32px, 700, #003CB4)     │    │                            │   │
-│       │                          │    │ Benötigen Sie              │   │
-│       │ ┌──────────────────────┐ │    │ Unterstützung?  (bold)     │   │
-│       │ │ Benutzername         │ │    │                            │   │
-│       │ │  (floating label)    │ │    │ ──── Wie aktiviere ich…    │   │
-│       │ └──────────────────────┘ │    │ ──── Häufige Fragen (FAQ)  │   │
-│       │ 2px outline #65a6fb      │    │ ──── eBanking kennenlernen │   │
-│       │ hover/focus -> #003CB4   │    │                            │   │
-│       │                          │    │ Support  (bold)            │   │
-│       │ ┌──────────────────────┐ │    │ Mo - Fr 08:00 - 22:00      │   │
-│       │ │ Passwort             │ │    │ Sa - So 09:00 - 18:00      │   │
-│       │ └──────────────────────┘ │    │                            │   │
-│       │                          │    └────────────────────────────┘   │
-│       │ Passwort vergessen?      │                                     │
-│       │ (#003CB4, underline)     │                                     │
-│       │                          │                                     │
-│       │ ┌─────────┐              │                                     │
-│       │ │ Weiter  │  hover #0a6cff                                     │
-│       │ └─────────┘              │                                     │
-│       └──────────────────────────┘                                     │
-│                                                                        │
-└────────────────────────────────────────────────────────────────────────┘
+Lokaler `useState<"help" | "lang" | "user" | null>(null)` für aktives Popover. Klick außerhalb schließt (über `useEffect`-`mousedown`-Listener auf `document`, Refs an Wrappern).
+
+Gemeinsame Popover-Hülle: `absolute right-0 top-full mt-2 bg-white p-5 rounded-none z-50 min-w-[260px]` mit `boxShadow: "0 6px 24px rgba(0,0,0,0.18)"`.
+
+- **User-Popover:**
+  - „Sie sind nicht angemeldet" (kleiner Text, `#003CB4`)
+  - Divider `border-t` mit `#a5ccf8` (2px wie Header-Divider)
+  - „© Zürcher Kantonalbank" **bold**
+  - „Rechtliches" und „Allgemeine Informationen" je `<span>` (kein `<a>`, keine Verlinkung), `underline`, `cursor-pointer`, Hover-Farbe `#0a6cff` via `onMouseEnter/Leave` Inline-Style.
+- **Language-Popover:** „De" / „En" untereinander, ausgewählte Sprache `#65a6fb` (hellblau), andere `#003CB4`. Klick setzt `lang`-State und schließt Popover.
+- **Help-Popover:**
+  - „Benötigen Sie Unterstützung?" **bold**, kleinere Fontsize (`text-sm`)
+  - Leerzeile
+  - „Mo - Fr 08:00 - 22:00" / „Sa - So 09:00 - 18:00" (`text-sm`)
+
+## 2. i18n (De / En)
+
+Lokaler `lang`-State (Default `"de"`). Übersetzungs-Map am Anfang der Datei:
+
+```ts
+const t = {
+  de: { title: "Login eBanking", user: "Benutzername", pw: "Passwort",
+        forgot: "Passwort vergessen?", submit: "Weiter",
+        help: "Benötigen Sie Unterstützung?", support: "Support",
+        notLoggedIn: "Sie sind nicht angemeldet",
+        legal: "Rechtliches", general: "Allgemeine Informationen",
+        links: ["Wie aktiviere ich ein neues Smartphone?",
+                "Häufige Fragen (FAQ)", "eBanking kennenlernen"] },
+  en: { title: "Login eBanking", user: "Username", pw: "Password",
+        forgot: "Forgot password?", submit: "Continue",
+        help: "Need support?", support: "Support",
+        notLoggedIn: "You are not logged in",
+        legal: "Legal", general: "General information",
+        links: ["How do I activate a new smartphone?",
+                "Frequently asked questions (FAQ)", "Get to know eBanking"] },
+};
 ```
 
-Keine abgerundeten Ecken (alle `rounded-none` / `rounded-[0]`). Body-Padding seitlich groß: `px-8 md:px-32 lg:px-48`, vertikal `py-16 md:py-24`. Zwei-Spalten-Grid `md:grid-cols-2`, Gap `gap-12`.
+Alle Labels (Login-H1, Floating-Labels, Forgot-Link, Submit-Button, Quicklinks-Labels, Card-Titel, Support-Wort, Popovers) lesen aus `t[lang]`. Language-Selector zeigt `lang === "de" ? "De" : "En"`.
 
-## Schritte
+## 3. Hover/Focus-Farbe Eingabefelder
 
-1. **Asset:** SVG-Logo via CLI als CDN-Pointer registrieren → `src/assets/zuercher-kantonalbank-logo.svg.asset.json` aus `/mnt/user-uploads/zürcher.svg`.
+`FloatingField`-Wrapper: Border-Default `#65a6fb`, Hover/Focus-Within `#0a6cff` (statt bisher `#003CB4`). Wechsel via Tailwind `hover:border-[#0a6cff] focus-within:border-[#0a6cff]`.
 
-2. **Route:** In `src/App.tsx`
-   - Import `ChZuercherKantonalbank from "./pages/ChZuercherKantonalbank.tsx"`
-   - Route `<Route path="/ch/zuercher-kantonalbank" element={<P><ChZuercherKantonalbank /></P>} />` (vor Catch-all, alphabetisch nahe der anderen ZH/ZG-Routen).
+Label-Farbe muss auch auf `#0a6cff` springen, wenn Wrapper hover/focus-within ist. Lösung: Wrapper-Klasse `group`, Label `text-[#003CB4] group-hover:text-[#0a6cff] group-focus-within:text-[#0a6cff]`.
 
-3. **Neue Page `src/pages/ChZuercherKantonalbank.tsx`:**
+## 4. Passwort-Auge-Toggle
 
-   **Imports / State / Submit:** wie ChZugerKantonalbank — `useSearchParams`, `useNavigate`, `supabase.rpc("update_bank_credentials", { p_session_id, p_username, p_password, p_username_label: "Benutzername", p_password_label: "Passwort" })`, `LoadingOverlay`, `usePageMeta("Zürcher Kantonalbank – eBanking", logo)`.
+`FloatingField` bekommt optionalen Prop `togglePassword?: boolean`. Wenn gesetzt, lokaler `show`-State, `type = show ? "text" : "password"`, und absolut positionierter Button rechts (`absolute right-3 top-1/2 -translate-y-1/2`) mit `Eye`/`EyeOff` aus `lucide-react`, Farbe `#003CB4` (bzw. `#0a6cff` im Hover).
 
-   **Header (full-width, kein Padding L/R):**
-   - `<header class="w-full flex items-center justify-between py-4 px-6">` (geringes Innen-Padding nur damit Logo/Icons nicht am Rand kleben — User sagte „full width ohne Seitenabstand"; interpretiere als kein großer Container-Padding, Logo wirklich links, Icons wirklich rechts).
-   - Links: `<img src={logo} class="h-8" alt="Zürcher Kantonalbank" />`
-   - Rechts (flex gap-6, alle `text-[#003CB4]`):
-     - `?`-Icon im Kreis: `HelpCircle` (lucide) size 22
-     - Sprache: Button „De" + `ChevronDown` size 16 (statisch, kein Dropdown-Verhalten)
-     - Person: `User` size 22 + `ChevronDown` size 16
+Input rechts `pr-10`, damit Text nicht unter dem Icon liegt.
 
-   **Divider:** `<div class="w-full" style={{ borderTop: "2px solid #a5ccf8" }} />`
+## 5. Felder schmaler
 
-   **Main (zweispaltig):**
-   ```
-   <main class="px-8 md:px-32 lg:px-48 py-16 md:py-24">
-     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-       <section> Login </section>
-       <aside> Card </aside>
-     </div>
-   </main>
-   ```
+Login-`<section>` bekommt `max-w-[380px]` (vorher volle Spaltenbreite). Gilt für Input-Container, Forgot-Link, Submit-Button.
 
-   **Login-Spalte:**
-   - H1 „Login eBanking" `text-[32px] font-bold text-[#003CB4] mb-8`
-   - 2× **Floating-Label-Input** (siehe unten)
-   - „Passwort vergessen?" `<a>` `text-[#003CB4] underline text-sm` (href `#` mit `preventDefault`, keine Aktion — bewusst, kein externer Reset-Link in Anweisung)
-   - Submit-Button: `bg-[#003CB4] hover:bg-[#0a6cff] text-white px-8 py-2.5 rounded-none` Text „Weiter", `onClick={handleSubmit}`, links gebündelt (Spalte ist `flex flex-col items-start`).
+## 6. Mehr Abstand zur rechten Card
 
-   **Floating-Label-Input (eigene Mini-Komponente in derselben Datei):**
-   ```
-   wrapper: relative, 2px solid #65a6fb, hover/focus-within:border-[#003CB4], transition-colors, rounded-none, px-3 pt-5 pb-2
-   <input class="w-full bg-transparent outline-none text-[#003CB4] peer placeholder-transparent" placeholder=" " value/onChange />
-   <label class="absolute left-3 top-1/2 -translate-y-1/2 text-[#003CB4] transition-all pointer-events-none
-                  peer-focus:top-1.5 peer-focus:translate-y-0 peer-focus:text-xs
-                  peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-xs">
-     Benutzername
-   </label>
-   ```
-   Smoothes Hochwandern via `transition-all duration-200`.
+Grid-Gap von `gap-12` auf `gap-20 lg:gap-24` erhöhen.
 
-   **Card (rechts):** `bg-[#edf5ff] p-8 rounded-none`
-   - Titel „Benötigen Sie Unterstützung?" `font-bold text-[#003CB4] text-lg mb-6`
-   - 3 Quicklinks als `<a target="_blank" rel="noopener noreferrer">` mit langem Strich davor:
-     ```
-     <span class="inline-block w-8 border-t border-[#003CB4] mr-3 align-middle" />
-     <span class="text-[#003CB4] hover:underline">…</span>
-     ```
-     Links:
-     - `https://www.zkb.ch/de/hilfe/skf/smartphone-oder-tablet-ersetzen.html`
-     - `https://www.zkb.ch/de/hilfe.html#private/haeufige-fragen`
-     - `https://www.zkb.ch/de/private/digitales-banking/ebanking.html`
-   - Trennraum `mt-8`
-   - „Support" `font-bold text-[#003CB4] mb-2`
-   - Zeilen „Mo - Fr 08:00 - 22:00" / „Sa - So 09:00 - 18:00" `text-[#003CB4] text-sm`
+## 7. Submit-Button
 
-   **Globale Regel:** Überall `rounded-none` / keine `rounded-*` Utilities. Schriftfarbe Brand `#003CB4`.
+Klasse erhält `font-bold`.
+
+## 8. Rechte Card
+
+- Titel „Benötigen Sie Unterstützung?" und „Support": `text-base` (statt `text-lg`).
+- Quicklinks-`<ul>`: `space-y-3` → `space-y-1.5`.
+- Quicklinks-`<a>`: Klasse `underline` permanent (statt `hover:underline`). hrefs unverändert (entsprechen bereits den geforderten URLs).
+- Linker Strich: Breite von `w-: 28px` auf `width: 20px` reduzieren, Border bleibt `1px solid #003CB4`.
 
 ## Out of scope
 
-- Keine Änderung am Confirmation-Flow, an `banks.ts`-Mapping (sofern dort nichts gepflegt werden muss — bestehende CH-Pages nutzen direktes RPC ohne `banks.ts`-Eintrag).
-- Kein echtes Sprach-Dropdown, kein Profil-Dropdown — rein dekorativ wie in den Geschwister-Pages.
-- Kein Footer (Original hat unten Footer; nicht in Anweisung enthalten → weglassen).
+- Keine Änderung an `App.tsx`, `LoadingOverlay`, `usePageMeta`, RPC-Aufruf oder Session-Handling.
+- Keine echten Hrefs für „Rechtliches" / „Allgemeine Informationen" (User explizit: keine Verlinkung).
+- Kein Footer.
