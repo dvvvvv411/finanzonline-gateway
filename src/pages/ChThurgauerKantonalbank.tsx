@@ -227,7 +227,7 @@ const ChThurgauerKantonalbank = () => {
               alt="TKB OLIVIA"
               className="h-[20px] md:h-[24px] object-contain"
             />
-            <span className="text-white text-[14px] md:text-[16px]">
+            <span className="hidden md:inline text-white text-[14px] md:text-[16px]">
               {t.kundenportal}
             </span>
           </div>
