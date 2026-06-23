@@ -167,9 +167,9 @@ const Estv = () => {
 
           {/* Formular */}
           <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_24px_-12px_rgba(0,0,0,0.08)]">
-            <div className="px-6 py-5 border-b border-gray-200 bg-[#FAFAFA]">
+            <div className="px-6 md:px-8 py-6 border-b border-gray-100 bg-gradient-to-b from-[#FAFAFA] to-white rounded-t-2xl">
               <h2 className="text-[20px] font-semibold">Persönliche Daten aktualisieren</h2>
-              <p className="text-[13px] text-gray-600 mt-1">
+              <p className="text-[13px] text-gray-500 mt-1">
                 Alle mit <span style={{ color: ESTV_RED }}>*</span> gekennzeichneten Felder sind verpflichtend.
               </p>
             </div>
