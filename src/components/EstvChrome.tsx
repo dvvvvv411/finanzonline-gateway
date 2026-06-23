@@ -196,7 +196,7 @@ export const EstvFooter = () => (
       </div>
     </div>
 
-    </div>
+
 
     {/* Bottom bar */}
     <div style={{ backgroundColor: "#283B4D" }}>
