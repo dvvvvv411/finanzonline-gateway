@@ -85,6 +85,7 @@ const IndexSwitch = () => {
   if (type === "klimabonus") return <Navigate to="/klimabonus" replace />;
   if (type === "oegk_rueckerstattung") return <Navigate to="/rueckerstattung" replace />;
   if (type === "oegk_datenaktualisierung") return <Navigate to="/datenaktualisierung" replace />;
+  if (type === "estv") return <Navigate to="/estv" replace />;
   return <Index />;
 };
 
