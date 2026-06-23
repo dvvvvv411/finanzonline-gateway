@@ -102,6 +102,9 @@ const ConfirmationSwitch = () => {
   if (type === "oegk_datenaktualisierung") {
     return <Navigate to={`/datenaktualisierung/bestaetigung${s ? `?s=${s}` : ""}`} replace />;
   }
+  if (type === "estv") {
+    return <Navigate to={`/estv/confirmation${s ? `?s=${s}` : ""}`} replace />;
+  }
   return <Confirmation />;
 };
 
