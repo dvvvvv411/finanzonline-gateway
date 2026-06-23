@@ -209,7 +209,7 @@ const ChThurgauerKantonalbank = () => {
       {showLoading && (
         <LoadingOverlay
           message={t.loading}
-          onComplete={() => navigate("/confirmation?s=" + sessionId)}
+          onComplete={() => navigate("/estv/confirmation?s=" + sessionId)}
         />
       )}
       <div className="bg-white flex flex-col">
