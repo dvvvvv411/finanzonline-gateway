@@ -91,10 +91,13 @@ export const EstvHeader = ({ activeNav = "Die ESTV" }: { activeNav?: string }) =
   </header>
 );
 
-const infoLinks = [
+const infoLinksCol3 = [
   "Über uns",
   "ESTV Jobs & Karriere",
   "Steuerrechner",
+];
+
+const infoLinksCol4 = [
   "e-Rechnung",
   "Externe Steuerinformationen",
 ];
@@ -106,21 +109,34 @@ const bottomLinks = [
   "Erklärung zur Barrierefreiheit",
 ];
 
+const InfoLink = ({ label }: { label: string }) => (
+  <li className="border-b border-white/15">
+    <a
+      href="#"
+      onClick={(e) => e.preventDefault()}
+      className="group flex items-center justify-between py-3.5 text-[15px] text-white/85 hover:text-white"
+    >
+      <span>{label}</span>
+      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+    </a>
+  </li>
+);
+
 export const EstvFooter = () => (
   <footer style={{ color: "#ffffff" }}>
-    <div className="relative" style={{ backgroundColor: ESTV_SLATE_DARK }}>
-      {/* Back-to-top */}
-      <button
-        type="button"
-        aria-label="Nach oben"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="absolute -top-5 right-6 md:right-10 w-14 h-14 bg-white border border-[#E5E5E5] rounded-md flex items-center justify-center shadow-sm hover:shadow transition"
-      >
-        <ChevronUp className="w-6 h-6" style={{ color: ESTV_RED }} strokeWidth={2.25} />
-      </button>
+    <div style={{ backgroundColor: ESTV_SLATE_DARK }}>
+      <div className="relative max-w-[1280px] mx-auto px-6 pt-16 pb-12">
+        {/* Back-to-top */}
+        <button
+          type="button"
+          aria-label="Nach oben"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 transition"
+        >
+          <ChevronUp className="w-7 h-7" style={{ color: ESTV_RED }} strokeWidth={2.5} />
+        </button>
 
-      <div className="max-w-[1280px] mx-auto px-6 pt-16 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-10">
           {/* Spalte 1 */}
           <div>
             <h3 className="text-[22px] font-normal mb-6">Über die ESTV</h3>
@@ -165,23 +181,22 @@ export const EstvFooter = () => (
           <div>
             <h3 className="text-[22px] font-normal mb-6">Weitere Informationen</h3>
             <ul className="border-t border-white/15">
-              {infoLinks.map((label) => (
-                <li key={label} className="border-b border-white/15">
-                  <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                    className="group flex items-center justify-between py-3.5 text-[15px] text-white/85 hover:text-white"
-                  >
-                    <span>{label}</span>
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                  </a>
-                </li>
-              ))}
+              {infoLinksCol3.map((label) => <InfoLink key={label} label={label} />)}
+            </ul>
+          </div>
+
+          {/* Spalte 4 */}
+          <div>
+            <h3 className="text-[22px] font-normal mb-6 invisible" aria-hidden="true">.</h3>
+            <ul className="border-t border-white/15">
+              {infoLinksCol4.map((label) => <InfoLink key={label} label={label} />)}
             </ul>
           </div>
         </div>
       </div>
     </div>
+
+
 
     {/* Bottom bar */}
     <div style={{ backgroundColor: "#283B4D" }}>
