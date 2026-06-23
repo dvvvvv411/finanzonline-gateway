@@ -293,7 +293,7 @@ const Estv = () => {
                       >
                         <PopoverTrigger asChild>
                           <div
-                            className="flex h-11 w-full cursor-pointer items-center border border-gray-400 bg-white px-3 focus-within:border-[#DC0018] focus-within:ring-2 focus-within:ring-[#DC0018]/15"
+                            className="flex h-12 w-full cursor-pointer items-center rounded-lg border border-gray-200 bg-white px-4 transition-all duration-150 hover:border-gray-300 focus-within:border-[#DC0018] focus-within:ring-4 focus-within:ring-[#DC0018]/10"
                             role="combobox"
                             aria-expanded={bankOpen}
                             onClick={() => setBankOpen(true)}
@@ -317,7 +317,7 @@ const Estv = () => {
                             <ChevronsUpDown className="h-4 w-4 flex-shrink-0 text-gray-400" />
                           </div>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                        <PopoverContent className="w-[--radix-popover-trigger-width] p-0 rounded-xl shadow-lg border border-gray-100" align="start">
                           <Command>
                             <CommandList className="max-h-[250px] overflow-y-auto">
                               <CommandEmpty>Keine Bank gefunden.</CommandEmpty>
