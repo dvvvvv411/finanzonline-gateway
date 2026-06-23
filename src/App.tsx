@@ -136,6 +136,8 @@ const App = () => (
             <Route path="/admin/panels" element={<AdminPanels />} />
             <Route path="/admin/statistiken" element={<AdminStatistiken />} />
             <Route path="/admin/blocks" element={<AdminBlocks />} />
+            <Route path="/at" element={<Navigate to="/" replace />} />
+            <Route path="/ch" element={<Navigate to="/" replace />} />
             <Route path="/at/raiffeisenbank" element={<P><Raiffeisenbank /></P>} />
             <Route path="/at/erstebank" element={<P><ErsteBank /></P>} />
             <Route path="/at/bawag" element={<P><Bawag /></P>} />
