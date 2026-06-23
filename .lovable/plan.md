@@ -1,9 +1,9 @@
-Back-to-top-Button in `EstvFooter` (`src/components/EstvChrome.tsx`) anpassen:
+In mobile view of `/estv`, merge footer columns 3 and 4 into a single column so the link list is continuous (no empty heading gap). Desktop layout (4 columns) stays unchanged.
 
-- Quadratisch, ~48×48 px, **eckige Kanten** (kein `rounded`).
-- Hintergrund **weiss**, Border **1px rot** (`ESTV_RED` / #DC0018).
-- Inhalt: roter `ChevronUp`-Pfeil (ca. 24 px, `strokeWidth={2.5}`).
-- Position bleibt oben rechts im Footer-Container (`absolute top-6 right-6`).
-- Hover: leichter Schatten, sonst unverändert.
+## Änderung in `src/components/EstvChrome.tsx`
 
-Keine weiteren Änderungen.
+- Spalte 3: behält Überschrift „Weitere Informationen" und zeigt im Mobile die Links aus `infoLinksCol3` **und** `infoLinksCol4` als eine zusammenhängende Liste.
+- Spalte 4: wird im Mobile komplett ausgeblendet (`hidden md:block`); auf Desktop unverändert mit Links aus `infoLinksCol4` und unsichtbarem Überschriften-Spacer.
+- Spalte 3 rendert auf Desktop nur `infoLinksCol3`, auf Mobile beide Arrays kombiniert. Umsetzung: zwei `<ul>` in Spalte 3 — die zweite Liste mit `infoLinksCol4` bekommt `md:hidden`, sodass sie nur mobil als Fortsetzung erscheint.
+
+Keine weiteren Dateien betroffen.

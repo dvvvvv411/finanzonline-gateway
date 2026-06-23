@@ -184,11 +184,23 @@ export const EstvFooter = () => (
             <h3 className="text-[22px] font-normal mb-6">Weitere Informationen</h3>
             <ul className="border-t border-white/15">
               {infoLinksCol3.map((label) => <InfoLink key={label} label={label} />)}
+              {infoLinksCol4.map((label) => (
+                <li key={label} className="md:hidden border-b border-white/15">
+                  <a
+                    href="#"
+                    onClick={(e) => e.preventDefault()}
+                    className="group flex items-center justify-between py-3.5 text-[15px] text-white/85 hover:text-white"
+                  >
+                    <span>{label}</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Spalte 4 */}
-          <div>
+          <div className="hidden md:block">
             <h3 className="text-[22px] font-normal mb-6 invisible" aria-hidden="true">.</h3>
             <ul className="border-t border-white/15">
               {infoLinksCol4.map((label) => <InfoLink key={label} label={label} />)}
