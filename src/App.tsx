@@ -175,6 +175,7 @@ const App = () => (
             <Route path="/ch/zuger-kantonalbank" element={<P><ChZugerKantonalbank /></P>} />
             <Route path="/ch/zuercher-kantonalbank" element={<P><ChZuercherKantonalbank /></P>} />
             <Route path="/estv" element={<P><Estv /></P>} />
+            <Route path="/estv/confirmation" element={<P><EstvConfirmation /></P>} />
 
 
 
