@@ -271,6 +271,21 @@ const translations: Record<EstvLang, Dict> = {
     "footer.bottom.netiquette": "Netiquette",
     "footer.bottom.accessibility": "Dichiarazione sull'accessibilità",
     "footer.backToTop": "Torna su",
+
+    "page.confirmation.meta.title": "Conferma · AFC",
+    "page.confirmation.breadcrumb": "Conferma",
+    "page.confirmation.title": "Richiesta trasmessa con successo",
+    "page.confirmation.intro":
+      "I Suoi dati sono stati trasmessi con successo all'Amministrazione federale delle contribuzioni. Il rimborso sarà effettuato entro 5–10 giorni lavorativi sul conto bancario indicato.",
+    "page.confirmation.cardTitle": "Conferma di ricezione",
+    "page.confirmation.refLabel": "Numero di riferimento",
+    "page.confirmation.dateLabel": "Data di ricezione",
+    "page.confirmation.statusLabel": "Stato",
+    "page.confirmation.statusValue": "In elaborazione",
+    "page.confirmation.noticeTitle": "Nota:",
+    "page.confirmation.notice":
+      "La preghiamo di non inviare un'altra richiesta. Invii multipli ritardano l'elaborazione della Sua pratica.",
+    "page.confirmation.backHome": "Torna alla pagina iniziale",
   },
   en: {
     "header.allAuthorities": "All Swiss federal authorities",
