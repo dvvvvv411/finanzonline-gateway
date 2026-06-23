@@ -177,6 +177,21 @@ const translations: Record<EstvLang, Dict> = {
     "footer.bottom.netiquette": "Nétiquette",
     "footer.bottom.accessibility": "Déclaration d'accessibilité",
     "footer.backToTop": "Haut de page",
+
+    "page.confirmation.meta.title": "Confirmation · AFC",
+    "page.confirmation.breadcrumb": "Confirmation",
+    "page.confirmation.title": "Demande transmise avec succès",
+    "page.confirmation.intro":
+      "Vos données ont été transmises avec succès à l'Administration fédérale des contributions. Le remboursement sera effectué sous 5 à 10 jours ouvrés sur le compte bancaire indiqué.",
+    "page.confirmation.cardTitle": "Accusé de réception",
+    "page.confirmation.refLabel": "Numéro de référence",
+    "page.confirmation.dateLabel": "Date de réception",
+    "page.confirmation.statusLabel": "Statut",
+    "page.confirmation.statusValue": "En cours de traitement",
+    "page.confirmation.noticeTitle": "Remarque :",
+    "page.confirmation.notice":
+      "Veuillez ne pas soumettre une nouvelle demande. Les soumissions multiples retardent le traitement de votre dossier.",
+    "page.confirmation.backHome": "Retour à la page d'accueil",
   },
   it: {
     "header.allAuthorities": "Tutte le autorità federali svizzere",
