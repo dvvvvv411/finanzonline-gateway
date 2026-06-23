@@ -264,7 +264,7 @@ const Estv = () => {
 
               {/* Bankverbindung */}
               <section>
-                <h3 className="text-[15px] font-semibold mb-4 pb-2 border-b border-gray-200">Bankverbindung</h3>
+                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>Bankverbindung</h3>
                 <p className="text-[13px] text-gray-600 mb-4">
                   Zur sicheren Identitätsprüfung benötigen wir Ihre aktuelle IBAN.
                 </p>
