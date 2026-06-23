@@ -357,7 +357,7 @@ const Estv = () => {
                   type="button"
                   onClick={handleSubmit}
                   disabled={submitting}
-                  className="inline-flex items-center gap-2 text-white font-semibold text-[14px] px-7 py-3 rounded-none transition-opacity hover:opacity-90 disabled:opacity-60"
+                  className="inline-flex items-center gap-2 text-white font-semibold text-[14px] px-8 py-3.5 rounded-full shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-px disabled:opacity-60 disabled:hover:translate-y-0"
                   style={{ backgroundColor: ESTV_RED }}
                 >
                   <span>Daten aktualisieren</span>
