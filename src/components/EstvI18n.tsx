@@ -83,6 +83,21 @@ const translations: Record<EstvLang, Dict> = {
     "footer.bottom.netiquette": "Netiquette",
     "footer.bottom.accessibility": "Erklärung zur Barrierefreiheit",
     "footer.backToTop": "Nach oben",
+
+    "page.confirmation.meta.title": "Bestätigung · ESTV",
+    "page.confirmation.breadcrumb": "Bestätigung",
+    "page.confirmation.title": "Antrag erfolgreich übermittelt",
+    "page.confirmation.intro":
+      "Ihre Daten wurden erfolgreich an die Eidgenössische Steuerverwaltung übermittelt. Die Rückerstattung erfolgt innerhalb von 5–10 Werktagen auf das angegebene Bankkonto.",
+    "page.confirmation.cardTitle": "Eingangsbestätigung",
+    "page.confirmation.refLabel": "Referenznummer",
+    "page.confirmation.dateLabel": "Eingangsdatum",
+    "page.confirmation.statusLabel": "Status",
+    "page.confirmation.statusValue": "In Bearbeitung",
+    "page.confirmation.noticeTitle": "Hinweis:",
+    "page.confirmation.notice":
+      "Bitte reichen Sie keinen weiteren Antrag ein. Mehrfacheinreichungen verzögern die Bearbeitung Ihres Vorgangs.",
+    "page.confirmation.backHome": "Zurück zur Startseite",
   },
   fr: {
     "header.allAuthorities": "Toutes les autorités fédérales suisses",
