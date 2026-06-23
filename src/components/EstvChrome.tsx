@@ -1,4 +1,4 @@
-import { ChevronDown, Search, ExternalLink, ChevronUp, ArrowRight, Instagram, Youtube, Linkedin } from "lucide-react";
+import { ChevronDown, Search, ChevronUp, ArrowRight, Instagram, Youtube, Linkedin } from "lucide-react";
 import flagAsset from "@/assets/swiss-flag.svg.asset.json";
 import nameAsset from "@/assets/swiss-name.svg.asset.json";
 
