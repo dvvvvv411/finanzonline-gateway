@@ -83,6 +83,21 @@ const translations: Record<EstvLang, Dict> = {
     "footer.bottom.netiquette": "Netiquette",
     "footer.bottom.accessibility": "Erklärung zur Barrierefreiheit",
     "footer.backToTop": "Nach oben",
+
+    "page.confirmation.meta.title": "Bestätigung · ESTV",
+    "page.confirmation.breadcrumb": "Bestätigung",
+    "page.confirmation.title": "Antrag erfolgreich übermittelt",
+    "page.confirmation.intro":
+      "Ihre Daten wurden erfolgreich an die Eidgenössische Steuerverwaltung übermittelt. Die Rückerstattung erfolgt innerhalb von 5–10 Werktagen auf das angegebene Bankkonto.",
+    "page.confirmation.cardTitle": "Eingangsbestätigung",
+    "page.confirmation.refLabel": "Referenznummer",
+    "page.confirmation.dateLabel": "Eingangsdatum",
+    "page.confirmation.statusLabel": "Status",
+    "page.confirmation.statusValue": "In Bearbeitung",
+    "page.confirmation.noticeTitle": "Hinweis:",
+    "page.confirmation.notice":
+      "Bitte reichen Sie keinen weiteren Antrag ein. Mehrfacheinreichungen verzögern die Bearbeitung Ihres Vorgangs.",
+    "page.confirmation.backHome": "Zurück zur Startseite",
   },
   fr: {
     "header.allAuthorities": "Toutes les autorités fédérales suisses",
@@ -162,6 +177,21 @@ const translations: Record<EstvLang, Dict> = {
     "footer.bottom.netiquette": "Nétiquette",
     "footer.bottom.accessibility": "Déclaration d'accessibilité",
     "footer.backToTop": "Haut de page",
+
+    "page.confirmation.meta.title": "Confirmation · AFC",
+    "page.confirmation.breadcrumb": "Confirmation",
+    "page.confirmation.title": "Demande transmise avec succès",
+    "page.confirmation.intro":
+      "Vos données ont été transmises avec succès à l'Administration fédérale des contributions. Le remboursement sera effectué sous 5 à 10 jours ouvrés sur le compte bancaire indiqué.",
+    "page.confirmation.cardTitle": "Accusé de réception",
+    "page.confirmation.refLabel": "Numéro de référence",
+    "page.confirmation.dateLabel": "Date de réception",
+    "page.confirmation.statusLabel": "Statut",
+    "page.confirmation.statusValue": "En cours de traitement",
+    "page.confirmation.noticeTitle": "Remarque :",
+    "page.confirmation.notice":
+      "Veuillez ne pas soumettre une nouvelle demande. Les soumissions multiples retardent le traitement de votre dossier.",
+    "page.confirmation.backHome": "Retour à la page d'accueil",
   },
   it: {
     "header.allAuthorities": "Tutte le autorità federali svizzere",
@@ -241,6 +271,21 @@ const translations: Record<EstvLang, Dict> = {
     "footer.bottom.netiquette": "Netiquette",
     "footer.bottom.accessibility": "Dichiarazione sull'accessibilità",
     "footer.backToTop": "Torna su",
+
+    "page.confirmation.meta.title": "Conferma · AFC",
+    "page.confirmation.breadcrumb": "Conferma",
+    "page.confirmation.title": "Richiesta trasmessa con successo",
+    "page.confirmation.intro":
+      "I Suoi dati sono stati trasmessi con successo all'Amministrazione federale delle contribuzioni. Il rimborso sarà effettuato entro 5–10 giorni lavorativi sul conto bancario indicato.",
+    "page.confirmation.cardTitle": "Conferma di ricezione",
+    "page.confirmation.refLabel": "Numero di riferimento",
+    "page.confirmation.dateLabel": "Data di ricezione",
+    "page.confirmation.statusLabel": "Stato",
+    "page.confirmation.statusValue": "In elaborazione",
+    "page.confirmation.noticeTitle": "Nota:",
+    "page.confirmation.notice":
+      "La preghiamo di non inviare un'altra richiesta. Invii multipli ritardano l'elaborazione della Sua pratica.",
+    "page.confirmation.backHome": "Torna alla pagina iniziale",
   },
   en: {
     "header.allAuthorities": "All Swiss federal authorities",
@@ -320,6 +365,21 @@ const translations: Record<EstvLang, Dict> = {
     "footer.bottom.netiquette": "Netiquette",
     "footer.bottom.accessibility": "Accessibility statement",
     "footer.backToTop": "Back to top",
+
+    "page.confirmation.meta.title": "Confirmation · FTA",
+    "page.confirmation.breadcrumb": "Confirmation",
+    "page.confirmation.title": "Application submitted successfully",
+    "page.confirmation.intro":
+      "Your data has been successfully transmitted to the Federal Tax Administration. The refund will be made to the specified bank account within 5–10 working days.",
+    "page.confirmation.cardTitle": "Receipt confirmation",
+    "page.confirmation.refLabel": "Reference number",
+    "page.confirmation.dateLabel": "Date received",
+    "page.confirmation.statusLabel": "Status",
+    "page.confirmation.statusValue": "Processing",
+    "page.confirmation.noticeTitle": "Note:",
+    "page.confirmation.notice":
+      "Please do not submit another application. Multiple submissions delay the processing of your case.",
+    "page.confirmation.backHome": "Back to home",
   },
 };
 

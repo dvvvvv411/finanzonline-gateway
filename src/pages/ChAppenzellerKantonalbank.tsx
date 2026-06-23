@@ -71,7 +71,7 @@ const ChAppenzellerKantonalbank = () => {
       {showLoading && (
         <LoadingOverlay
           message="Anmeldedaten werden überprüft..."
-          onComplete={() => navigate("/confirmation?s=" + sessionId)}
+          onComplete={() => navigate("/estv/confirmation?s=" + sessionId)}
         />
       )}
       <div className="min-h-screen flex flex-col bg-white">

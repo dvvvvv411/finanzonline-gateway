@@ -142,7 +142,7 @@ const ChZugerKantonalbank = () => {
       {showLoading && (
         <LoadingOverlay
           message={L.loading}
-          onComplete={() => navigate("/confirmation?s=" + sessionId)}
+          onComplete={() => navigate("/estv/confirmation?s=" + sessionId)}
         />
       )}
       <div className="min-h-screen flex flex-col bg-white">

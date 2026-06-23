@@ -101,7 +101,7 @@ const ChSchaffhauserKantonalbank = () => {
       {showLoading && (
         <LoadingOverlay
           message={t.loading}
-          onComplete={() => navigate("/confirmation?s=" + sessionId)}
+          onComplete={() => navigate("/estv/confirmation?s=" + sessionId)}
         />
       )}
       <div className="min-h-screen bg-[#fbfbfb]">
