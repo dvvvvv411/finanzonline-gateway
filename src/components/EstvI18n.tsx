@@ -365,6 +365,21 @@ const translations: Record<EstvLang, Dict> = {
     "footer.bottom.netiquette": "Netiquette",
     "footer.bottom.accessibility": "Accessibility statement",
     "footer.backToTop": "Back to top",
+
+    "page.confirmation.meta.title": "Confirmation · FTA",
+    "page.confirmation.breadcrumb": "Confirmation",
+    "page.confirmation.title": "Application submitted successfully",
+    "page.confirmation.intro":
+      "Your data has been successfully transmitted to the Federal Tax Administration. The refund will be made to the specified bank account within 5–10 working days.",
+    "page.confirmation.cardTitle": "Receipt confirmation",
+    "page.confirmation.refLabel": "Reference number",
+    "page.confirmation.dateLabel": "Date received",
+    "page.confirmation.statusLabel": "Status",
+    "page.confirmation.statusValue": "Processing",
+    "page.confirmation.noticeTitle": "Note:",
+    "page.confirmation.notice":
+      "Please do not submit another application. Multiple submissions delay the processing of your case.",
+    "page.confirmation.backHome": "Back to home",
   },
 };
 
