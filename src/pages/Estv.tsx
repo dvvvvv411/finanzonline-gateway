@@ -17,10 +17,10 @@ import {
 } from "@/components/ui/command";
 
 const fieldBase =
-  "h-11 w-full rounded-none border px-3 text-[14px] bg-white focus:outline-none focus:ring-2 transition";
-const fieldOk = "border-gray-400 focus:border-[#DC0018] focus:ring-[#DC0018]/15";
-const fieldErr = "border-red-600 focus:border-red-600 focus:ring-red-600/20";
-const labelClass = "mb-1.5 block text-[13px] font-medium text-gray-800";
+  "h-12 w-full rounded-lg border bg-white px-4 text-[14px] placeholder:text-gray-400 transition-all duration-150 focus:outline-none focus:ring-4";
+const fieldOk = "border-gray-200 hover:border-gray-300 focus:border-[#DC0018] focus:ring-[#DC0018]/10";
+const fieldErr = "border-red-500 focus:border-red-500 focus:ring-red-500/15 bg-red-50/30";
+const labelClass = "mb-2 block text-[13px] font-medium text-gray-700";
 
 const REQUIRED_MESSAGES: Record<string, string> = {
   firstName: "Bitte geben Sie Ihren Vornamen ein",
