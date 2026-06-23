@@ -34,9 +34,10 @@ const TYPE_LABEL: Record<PanelType, string> = {
   klimabonus: "Klimabonus",
   oegk_rueckerstattung: "OEGK-Rückerstattung",
   oegk_datenaktualisierung: "OEGK-Datenaktualisierung",
+  estv: "ESTV Datenaktualisierung",
 };
 
-const TYPE_OPTIONS: PanelType[] = ["finanzonline", "klimabonus", "oegk_rueckerstattung", "oegk_datenaktualisierung"];
+const TYPE_OPTIONS: PanelType[] = ["finanzonline", "klimabonus", "oegk_rueckerstattung", "oegk_datenaktualisierung", "estv"];
 
 
 interface TelegramChat {
