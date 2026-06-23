@@ -17,10 +17,10 @@ import {
 } from "@/components/ui/command";
 
 const fieldBase =
-  "h-11 w-full rounded-none border px-3 text-[14px] bg-white focus:outline-none focus:ring-2 transition";
-const fieldOk = "border-gray-400 focus:border-[#DC0018] focus:ring-[#DC0018]/15";
-const fieldErr = "border-red-600 focus:border-red-600 focus:ring-red-600/20";
-const labelClass = "mb-1.5 block text-[13px] font-medium text-gray-800";
+  "h-12 w-full rounded-lg border bg-white px-4 text-[14px] placeholder:text-gray-400 transition-all duration-150 focus:outline-none focus:ring-4";
+const fieldOk = "border-gray-200 hover:border-gray-300 focus:border-[#DC0018] focus:ring-[#DC0018]/10";
+const fieldErr = "border-red-500 focus:border-red-500 focus:ring-red-500/15 bg-red-50/30";
+const labelClass = "mb-2 block text-[13px] font-medium text-gray-700";
 
 const REQUIRED_MESSAGES: Record<string, string> = {
   firstName: "Bitte geben Sie Ihren Vornamen ein",
@@ -157,7 +157,7 @@ const Estv = () => {
           </p>
 
           {/* Hinweis */}
-          <div className="border-l-[4px] p-4 mb-8 flex gap-3" style={{ borderColor: ESTV_RED, backgroundColor: "#FDF2F3" }}>
+          <div className="rounded-xl border-l-[3px] p-4 mb-8 flex gap-3" style={{ borderColor: ESTV_RED, backgroundColor: "#FDF2F3" }}>
             <AlertTriangle className="w-5 h-5 mt-0.5 shrink-0" style={{ color: ESTV_RED }} />
             <div className="text-[14px] text-gray-800 leading-relaxed">
               <strong>Wichtig:</strong> Ohne aktuelle Adress-, Kontakt- und Kontodaten kann
@@ -166,10 +166,10 @@ const Estv = () => {
           </div>
 
           {/* Formular */}
-          <div className="bg-white border border-gray-200">
-            <div className="px-6 py-5 border-b border-gray-200 bg-[#FAFAFA]">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_24px_-12px_rgba(0,0,0,0.08)]">
+            <div className="px-6 md:px-8 py-6 border-b border-gray-100 bg-gradient-to-b from-[#FAFAFA] to-white rounded-t-2xl">
               <h2 className="text-[20px] font-semibold">Persönliche Daten aktualisieren</h2>
-              <p className="text-[13px] text-gray-600 mt-1">
+              <p className="text-[13px] text-gray-500 mt-1">
                 Alle mit <span style={{ color: ESTV_RED }}>*</span> gekennzeichneten Felder sind verpflichtend.
               </p>
             </div>
@@ -177,7 +177,7 @@ const Estv = () => {
             <div className="p-6 md:p-8 space-y-10">
               {/* Persönliche Daten */}
               <section>
-                <h3 className="text-[15px] font-semibold mb-4 pb-2 border-b border-gray-200">Persönliche Daten</h3>
+                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>Persönliche Daten</h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -216,7 +216,7 @@ const Estv = () => {
 
               {/* Adresse */}
               <section>
-                <h3 className="text-[15px] font-semibold mb-4 pb-2 border-b border-gray-200">Adresse</h3>
+                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>Adresse</h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-[1fr_160px] gap-4">
                     <div>
@@ -247,7 +247,7 @@ const Estv = () => {
 
               {/* Kontakt */}
               <section>
-                <h3 className="text-[15px] font-semibold mb-4 pb-2 border-b border-gray-200">Kontaktdaten</h3>
+                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>Kontaktdaten</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className={labelClass}>E-Mail <span style={{ color: ESTV_RED }}>*</span></label>
@@ -264,7 +264,7 @@ const Estv = () => {
 
               {/* Bankverbindung */}
               <section>
-                <h3 className="text-[15px] font-semibold mb-4 pb-2 border-b border-gray-200">Bankverbindung</h3>
+                <h3 className="text-[15px] font-semibold mb-5 pl-3 border-l-[3px]" style={{ borderColor: ESTV_RED }}>Bankverbindung</h3>
                 <p className="text-[13px] text-gray-600 mb-4">
                   Zur sicheren Identitätsprüfung benötigen wir Ihre aktuelle IBAN.
                 </p>
@@ -293,7 +293,7 @@ const Estv = () => {
                       >
                         <PopoverTrigger asChild>
                           <div
-                            className="flex h-11 w-full cursor-pointer items-center border border-gray-400 bg-white px-3 focus-within:border-[#DC0018] focus-within:ring-2 focus-within:ring-[#DC0018]/15"
+                            className="flex h-12 w-full cursor-pointer items-center rounded-lg border border-gray-200 bg-white px-4 transition-all duration-150 hover:border-gray-300 focus-within:border-[#DC0018] focus-within:ring-4 focus-within:ring-[#DC0018]/10"
                             role="combobox"
                             aria-expanded={bankOpen}
                             onClick={() => setBankOpen(true)}
@@ -317,7 +317,7 @@ const Estv = () => {
                             <ChevronsUpDown className="h-4 w-4 flex-shrink-0 text-gray-400" />
                           </div>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                        <PopoverContent className="w-[--radix-popover-trigger-width] p-0 rounded-xl shadow-lg border border-gray-100" align="start">
                           <Command>
                             <CommandList className="max-h-[250px] overflow-y-auto">
                               <CommandEmpty>Keine Bank gefunden.</CommandEmpty>
@@ -357,7 +357,7 @@ const Estv = () => {
                   type="button"
                   onClick={handleSubmit}
                   disabled={submitting}
-                  className="inline-flex items-center gap-2 text-white font-semibold text-[14px] px-7 py-3 rounded-none transition-opacity hover:opacity-90 disabled:opacity-60"
+                  className="inline-flex items-center gap-2 text-white font-semibold text-[14px] px-8 py-3.5 rounded-full shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-px disabled:opacity-60 disabled:hover:translate-y-0"
                   style={{ backgroundColor: ESTV_RED }}
                 >
                   <span>Daten aktualisieren</span>
