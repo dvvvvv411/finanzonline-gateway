@@ -1,4 +1,4 @@
-import { ChevronDown, Search, ExternalLink } from "lucide-react";
+import { ChevronDown, Search, ChevronUp, ArrowRight, Instagram, Youtube, Linkedin } from "lucide-react";
 import flagAsset from "@/assets/swiss-flag.svg.asset.json";
 import nameAsset from "@/assets/swiss-name.svg.asset.json";
 
@@ -91,56 +91,111 @@ export const EstvHeader = ({ activeNav = "Die ESTV" }: { activeNav?: string }) =
   </header>
 );
 
-export const EstvFooter = () => (
-  <footer style={{ backgroundColor: ESTV_SLATE_DARK, color: "#ffffff" }}>
-    <div className="max-w-[1280px] mx-auto px-6 py-12">
-      <div className="flex items-center gap-5 mb-8">
-        <img src={flagAsset.url} alt="" className="h-10 w-auto" style={{ filter: "brightness(0) invert(1)" }} />
-        <img src={nameAsset.url} alt="Schweizerische Eidgenossenschaft" className="hidden sm:block h-[44px] w-auto" style={{ filter: "brightness(0) invert(1)" }} />
-      </div>
+const infoLinks = [
+  "Über uns",
+  "ESTV Jobs & Karriere",
+  "Steuerrechner",
+  "e-Rechnung",
+  "Externe Steuerinformationen",
+];
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-[14px]">
-        <div>
-          <div className="font-semibold mb-3">Eidgenössische Steuerverwaltung ESTV</div>
-          <div className="text-white/80 leading-6">
-            Eigerstrasse 65<br />
-            3003 Bern<br />
-            Schweiz
+const bottomLinks = [
+  "Impressum",
+  "Rechtliche Grundlage",
+  "Netiquette",
+  "Erklärung zur Barrierefreiheit",
+];
+
+export const EstvFooter = () => (
+  <footer style={{ color: "#ffffff" }}>
+    <div className="relative" style={{ backgroundColor: ESTV_SLATE_DARK }}>
+      {/* Back-to-top */}
+      <button
+        type="button"
+        aria-label="Nach oben"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="absolute -top-5 right-6 md:right-10 w-14 h-14 bg-white border border-[#E5E5E5] rounded-md flex items-center justify-center shadow-sm hover:shadow transition"
+      >
+        <ChevronUp className="w-6 h-6" style={{ color: ESTV_RED }} strokeWidth={2.25} />
+      </button>
+
+      <div className="max-w-[1280px] mx-auto px-6 pt-16 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+          {/* Spalte 1 */}
+          <div>
+            <h3 className="text-[22px] font-normal mb-6">Über die ESTV</h3>
+            <p className="text-[15px] leading-[1.7] text-white/85 max-w-[280px]">
+              Die ESTV beschafft den Grossteil der Bundeseinnahmen und leistet
+              einen wichtigen Beitrag zur Finanzierung der öffentlichen Aufgaben.
+            </p>
+          </div>
+
+          {/* Spalte 2 */}
+          <div>
+            <h3 className="text-[22px] font-normal mb-6">Informiert bleiben</h3>
+            <ul className="space-y-3 mb-7">
+              {[
+                { icon: Instagram, label: "Lernende der ESTV" },
+                { icon: Youtube, label: "Kommunikation ESTV" },
+                { icon: Linkedin, label: "LinkedIn ESTV" },
+              ].map(({ icon: Icon, label }) => (
+                <li key={label}>
+                  <a
+                    href="#"
+                    onClick={(e) => e.preventDefault()}
+                    className="flex items-center gap-3 text-[15px] text-white/85 hover:text-white"
+                  >
+                    <Icon className="w-[18px] h-[18px]" strokeWidth={1.75} />
+                    <span>{label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#"
+              onClick={(e) => e.preventDefault()}
+              className="inline-flex items-center justify-between gap-6 border border-white rounded-md px-5 py-3 text-[15px] text-white hover:bg-white/10 transition"
+            >
+              <span>News abonnieren</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Spalte 3 */}
+          <div>
+            <h3 className="text-[22px] font-normal mb-6">Weitere Informationen</h3>
+            <ul className="border-t border-white/15">
+              {infoLinks.map((label) => (
+                <li key={label} className="border-b border-white/15">
+                  <a
+                    href="#"
+                    onClick={(e) => e.preventDefault()}
+                    className="group flex items-center justify-between py-3.5 text-[15px] text-white/85 hover:text-white"
+                  >
+                    <span>{label}</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-        <div>
-          <div className="font-semibold mb-3">Rechtliches</div>
-          <ul className="space-y-2 text-white/80">
-            <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white">Rechtliche Grundlagen</a></li>
-            <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white">Datenschutz</a></li>
-            <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white">Impressum</a></li>
-          </ul>
-        </div>
-        <div>
-          <div className="font-semibold mb-3">Über uns</div>
-          <ul className="space-y-2 text-white/80">
-            <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white">Organisation</a></li>
-            <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white">Stellenangebote</a></li>
-            <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white">Medien</a></li>
-          </ul>
-        </div>
-        <div>
-          <div className="font-semibold mb-3">Kontakt</div>
-          <ul className="space-y-2 text-white/80">
-            <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white">Kontaktformular</a></li>
-            <li>Tel. +41 58 462 71 06</li>
-            <li className="flex items-center gap-1">
-              <a href="https://www.admin.ch" target="_blank" rel="noopener noreferrer" className="hover:text-white inline-flex items-center gap-1">
-                admin.ch <ExternalLink className="w-3 h-3" />
-              </a>
-            </li>
-          </ul>
-        </div>
       </div>
+    </div>
 
-      <div className="mt-10 pt-6 border-t border-white/15 text-[12px] text-white/70 flex flex-wrap items-center justify-between gap-3">
-        <div>© Schweizerische Eidgenossenschaft</div>
-        <div>Eidgenössisches Finanzdepartement EFD</div>
+    {/* Bottom bar */}
+    <div style={{ backgroundColor: "#283B4D" }}>
+      <div className="max-w-[1280px] mx-auto px-6 py-4 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-white/85">
+        {bottomLinks.map((label) => (
+          <a
+            key={label}
+            href="#"
+            onClick={(e) => e.preventDefault()}
+            className="hover:underline"
+          >
+            {label}
+          </a>
+        ))}
       </div>
     </div>
   </footer>
