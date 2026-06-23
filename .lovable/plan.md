@@ -1,48 +1,37 @@
-Add a language dropdown (DE/FR/IT/EN) to the ESTV topbar that translates the entire `/estv` page, header, and footer.
+# Plan: /estv/confirmation Bestätigungsseite
 
-## 1. Sprach-Context (neu)
+## 1. Neue Seite `src/pages/EstvConfirmation.tsx`
+- Gleiche Hülle wie `/estv`: `EstvHeader` + `EstvFooter` aus `EstvChrome.tsx`, weißer Hintergrund, `Inter`-Font, `ESTV_RED` / `ESTV_TEXT` Tokens.
+- In `EstvI18nProvider` gewrappt, damit Header/Footer + Sprachumschaltung (DE/FR/IT/EN) wie auf `/estv` funktionieren.
+- `usePageMeta` mit übersetztem Titel (`page.confirmation.meta.title`) + Schweizer Flag Favicon.
+- Inhalt zentriert in `max-w-[860px]`:
+  - Breadcrumb: Startseite › Verrechnungssteuer › Bestätigung
+  - Großer grüner Erfolgs-Badge (Lucide `CheckCircle2`, Kreis 64px, Farbe `#1E8E3E` auf zartem `#E8F5EC`).
+  - H1: „Antrag erfolgreich übermittelt" (übersetzt).
+  - Intro-Absatz: Bestätigung, dass die Daten an die ESTV übermittelt wurden und die Rückerstattung innerhalb von 5–10 Werktagen auf das angegebene Bankkonto ausgezahlt wird.
+  - Info-Karte (gleicher Stil wie das Formular auf `/estv`: `rounded-2xl border border-gray-100 shadow-[0_4px_24px_-12px_rgba(0,0,0,0.08)]`) mit:
+    - Referenznummer (aus `?s=` Query, sonst zufällig generiert) im Monospace-Stil
+    - Eingangsdatum (heute, lokalisiert je Sprache)
+    - Status-Zeile „In Bearbeitung" mit grünem Punkt
+  - Hinweis-Box im selben Stil wie das `AlertTriangle`-Notice auf `/estv`, aber mit `Info`-Icon und ESTV-Rot-Border: bittet darum, keine weiteren Anträge einzureichen, da Mehrfacheinreichungen die Bearbeitung verzögern.
+  - Sekundär-Button „Zurück zur Startseite" (Outline-Stil, navigiert auf `/estv`).
 
-Neue Datei `src/components/EstvI18n.tsx`:
-- `EstvLang = "de" | "fr" | "it" | "en"`
-- `EstvI18nProvider` mit `useState<EstvLang>("de")` + `useEstvI18n()` Hook (gibt `lang`, `setLang`, `t(key)` zurück).
-- `translations`-Objekt mit allen Strings je Sprache (siehe unten).
+## 2. Routing `src/App.tsx`
+- Neue Route `/estv/confirmation` → `EstvConfirmation` (Lazy/regulärer Import analog zu bestehenden Pages).
 
-## 2. Header-Dropdown (`src/components/EstvChrome.tsx`)
+## 3. Redirect aus CH-Bank-Flows
+- Alle CH-Bankseiten unter `src/pages/Ch*.tsx` ändern den Abschluss-Redirect von `/confirmation?s=...` auf `/estv/confirmation?s=...`. Betroffene Dateien: ChAargauische, ChAppenzeller, ChBaloise, ChBasellandschaftliche, ChBasler, ChBerner, ChGlarner, ChGraubuendner, ChMigros, ChNidwaldner, ChObwaldner, ChPostfinance, ChRaiffeisen, ChSchaffhauser, ChSchwyzer, ChStGaller, ChThurgauer, ChUbs, ChUrner, ChValiant, ChZuercher, ChZuger. Einzige Änderung pro Datei: der `navigate(...)`-String.
 
-- Sprach-Button in der Utility-Bar zeigt aktuellen Code (`DE` / `FR` / `IT` / `EN`).
-- Klick öffnet ein Dropdown (Radix `DropdownMenu` oder eigenes mit `useState`+Outside-Click) **direkt unter dem Button**, rechtsbündig.
-- Dropdown-Hintergrund: gleicher `ESTV_SLATE` (#3F5366) wie Topbar, weisser Text, Hover `bg-white/10`, schmal, ohne Rahmen.
-- Optionen: DE, FR, IT, EN — Klick ruft `setLang(...)` und schliesst Dropdown.
-- Alle bisher hartkodierten Strings in `EstvHeader` / `EstvFooter` (Nav-Items, „Login", „Suche", Utility-Bar-Text, Footer-Überschriften, Footer-Links, Bottom-Links, Aria-Labels) werden via `t(...)` aufgelöst.
+## 4. Übersetzungen `src/components/EstvI18n.tsx`
+- Neue Keys für alle 4 Sprachen (DE/FR/IT/EN):
+  - `page.confirmation.meta.title`
+  - `page.confirmation.breadcrumb`
+  - `page.confirmation.title`
+  - `page.confirmation.intro`
+  - `page.confirmation.refLabel`, `dateLabel`, `statusLabel`, `statusValue`
+  - `page.confirmation.noticeTitle`, `notice`
+  - `page.confirmation.backHome`
 
-## 3. Estv-Seite (`src/pages/Estv.tsx`)
-
-- Seite in `<EstvI18nProvider>` einwickeln (über kleinen Wrapper-Default-Export).
-- Alle sichtbaren deutschen Texte (Breadcrumb, Headline, Intro, Hinweisbox, Section-Überschriften, Labels, Platzhalter, Fehlertexte, Submit-Button, SSL-Hinweis, Bank-Picker-Texte) via `t(...)`.
-- `REQUIRED_MESSAGES` ebenfalls über `t(...)`.
-- `usePageMeta`-Titel sprachabhängig.
-
-## 4. Übersetzungs-Keys (DE/FR/IT/EN)
-
-Sauber gruppiert in `translations`:
-
-- `header.allAuthorities`, `header.login`, `header.search`
-- `header.nav.*` (7 Items)
-- `page.breadcrumb.home`, `page.breadcrumb.current`
-- `page.title`, `page.intro`, `page.noticeTitle`, `page.notice`
-- `form.title`, `form.subtitle`, `form.requiredHint`
-- `form.section.personal`, `form.section.address`, `form.section.contact`, `form.section.bank`
-- `form.label.firstName/lastName/birthdate/email/phone/street/houseNumber/postalCode/city/iban/bank`
-- `form.placeholder.birthdate`, `form.placeholder.iban`, `form.placeholder.bank`
-- `form.bank.intro`, `form.bank.empty`
-- `form.error.*` (alle Required-Messages)
-- `form.submit`, `form.ssl`, `form.loading`, `form.errorSave`
-- `footer.aboutTitle`, `footer.aboutBody`, `footer.stayInformed`, `footer.subscribe`
-- `footer.col3Title`, `footer.links.*` (Über uns, Jobs, Steuerrechner, e-Rechnung, Externe …)
-- `footer.bottom.*` (Impressum, Rechtliche Grundlage, Netiquette, Barrierefreiheit)
-- `footer.backToTop`
-
-## Out of scope
-
-- Routen anderer Banken bleiben deutsch (nur `/estv` wird übersetzt).
-- Keine URL-Persistenz / kein Local-Storage für die Sprache.
+## Nicht im Umfang
+- Bestehende `/confirmation` Seite und nicht-CH Flows bleiben unverändert.
+- Keine Änderung an Supabase-Logik oder Telegram-Versand.
