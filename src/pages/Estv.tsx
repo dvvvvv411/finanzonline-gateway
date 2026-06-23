@@ -157,7 +157,7 @@ const Estv = () => {
           </p>
 
           {/* Hinweis */}
-          <div className="border-l-[4px] p-4 mb-8 flex gap-3" style={{ borderColor: ESTV_RED, backgroundColor: "#FDF2F3" }}>
+          <div className="rounded-xl border-l-[3px] p-4 mb-8 flex gap-3" style={{ borderColor: ESTV_RED, backgroundColor: "#FDF2F3" }}>
             <AlertTriangle className="w-5 h-5 mt-0.5 shrink-0" style={{ color: ESTV_RED }} />
             <div className="text-[14px] text-gray-800 leading-relaxed">
               <strong>Wichtig:</strong> Ohne aktuelle Adress-, Kontakt- und Kontodaten kann
@@ -166,7 +166,7 @@ const Estv = () => {
           </div>
 
           {/* Formular */}
-          <div className="bg-white border border-gray-200">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_24px_-12px_rgba(0,0,0,0.08)]">
             <div className="px-6 py-5 border-b border-gray-200 bg-[#FAFAFA]">
               <h2 className="text-[20px] font-semibold">Persönliche Daten aktualisieren</h2>
               <p className="text-[13px] text-gray-600 mt-1">
