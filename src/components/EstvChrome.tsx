@@ -64,7 +64,7 @@ export const EstvHeader = ({ activeNav = "Die ESTV" }: { activeNav?: string }) =
     <div className="border-b border-[#E5E5E5]">
       <div
         className="max-w-[1280px] mx-auto px-6 flex items-end gap-8 overflow-x-auto md:overflow-visible [&::-webkit-scrollbar]:hidden"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
+        style={{ scrollbarWidth: "none" }}
       >
         {navItems.map((item) => {
           const active = item === activeNav;
