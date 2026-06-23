@@ -131,10 +131,12 @@ export const EstvFooter = () => (
           type="button"
           aria-label="Nach oben"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 transition"
+          className="absolute top-6 right-6 w-12 h-12 bg-white flex items-center justify-center hover:shadow-md transition"
+          style={{ border: `1px solid ${ESTV_RED}` }}
         >
-          <ChevronUp className="w-7 h-7" style={{ color: ESTV_RED }} strokeWidth={2.5} />
+          <ChevronUp className="w-6 h-6" style={{ color: ESTV_RED }} strokeWidth={2.5} />
         </button>
+
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-10">
           {/* Spalte 1 */}
