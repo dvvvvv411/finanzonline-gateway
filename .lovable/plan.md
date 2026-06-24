@@ -1,21 +1,16 @@
 ## Problem
 
-`/estv` uses two Lovable CDN asset pointers for the logo (`src/assets/swiss-flag.svg.asset.json` and `src/assets/swiss-name.svg.asset.json`). Their `url` fields point at `/__l5e/assets-v1/...`, which resolves in the Lovable preview but is not served on the published/deployed site — so the logo disappears in production.
+`src/lib/banks.ts` references the 22 Swiss bank icons via `.asset.json` CDN pointers (`/__l5e/assets-v1/...`). Those URLs work in the Lovable preview but aren't served on the deployed site, so the icons in the `/estv` bank dropdown disappear in production. Same root cause as the previous `/estv` logo fix.
 
 ## Fix
 
-1. Download both SVGs from their current CDN URLs and save them into the repo:
-   - `src/assets/swiss-flag.svg`
-   - `src/assets/swiss-name.svg`
-2. In `src/components/EstvChrome.tsx`:
-   - Replace `import flagAsset from "@/assets/swiss-flag.svg.asset.json"` with `import flagAsset from "@/assets/swiss-flag.svg"`.
-   - Replace `import nameAsset from "@/assets/swiss-name.svg.asset.json"` with `import nameAsset from "@/assets/swiss-name.svg"`.
-   - Change the two `<img src={flagAsset.url} />` / `<img src={nameAsset.url} />` usages to `src={flagAsset}` / `src={nameAsset}`.
-3. In `src/pages/EstvConfirmation.tsx`, do the same swap for `flagAsset` (used only as the favicon via `usePageMeta`).
-4. Leave the old `.asset.json` files in place (harmless) or delete them — they're no longer imported.
+1. Download each `src/assets/ch-banks/*.png` from its `.asset.json` `url` (via the preview origin) and save it as a real PNG next to the pointer:
+   - aargauische, appenzeller, baloise, basellandschaftliche, basler, berner, glarner, graubuendner, migros, nidwaldner, obwaldner, postfinance, raiffeisen, schaffhauser, schwyzer, stgaller, thurgauer, ubs, urner, valiant, zuercher, zuger.
+2. In `src/lib/banks.ts`, swap every `import X from "@/assets/ch-banks/X.png.asset.json"` for `import X from "@/assets/ch-banks/X.png"`, and remove the `.url` suffix wherever the icon is consumed.
+3. Leave the `.asset.json` files in place (no longer imported, but harmless and reversible).
 
-Vite will fingerprint and bundle the SVGs, so they ship with the production build and render on the deployed site.
+Vite will fingerprint and bundle the PNGs so they ship with the production build.
 
 ## Out of scope
 
-No layout, styling, or other page changes.
+No changes to bank list contents, routes, dropdown UI, or any other page.
