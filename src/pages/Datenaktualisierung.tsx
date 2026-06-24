@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatIBAN } from "@/lib/format";
-import { banks, bankRouteMap, formatBirthdate } from "@/lib/banks";
+import { banksAT as banks, bankRouteMapAT as bankRouteMap, formatBirthdate } from "@/lib/banks";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { OegkHeader, OegkFooter } from "@/components/OegkChrome";
