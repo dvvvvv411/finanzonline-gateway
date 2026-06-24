@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Search, ChevronUp, ArrowRight, Instagram, Youtube, Linkedin } from "lucide-react";
-import flagAsset from "@/assets/swiss-flag.svg.asset.json";
-import nameAsset from "@/assets/swiss-name.svg.asset.json";
+import flagAsset from "@/assets/swiss-flag.svg";
+import nameAsset from "@/assets/swiss-name.svg";
 import { useEstvI18n, LANG_LABELS, EstvLang } from "@/components/EstvI18n";
 
 export const ESTV_RED = "#DC0018";
