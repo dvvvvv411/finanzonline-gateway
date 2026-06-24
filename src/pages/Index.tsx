@@ -22,6 +22,11 @@ import {
 
 import { banksAT as banks, bankRouteMapAT as bankRouteMap } from "@/lib/banks";
 
+import idAustriaImg from "@/assets/IDAustria.png";
+import finanznaviImg from "@/assets/Finanznavi.jpg";
+import kundenserviceImg from "@/assets/Kundenservice.png";
+import steuerbuchImg from "@/assets/steuerbuch.jpg";
+
 
 function formatBirthdate(input: string): string {
   const d = input.replace(/\D/g, "").slice(0, 8);
