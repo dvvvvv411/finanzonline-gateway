@@ -18,7 +18,7 @@ const Inner = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
 
-  usePageMeta(t("page.confirmation.meta.title"), flagAsset.url);
+  usePageMeta(t("page.confirmation.meta.title"), flagAsset);
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const ref = useMemo(() => {
