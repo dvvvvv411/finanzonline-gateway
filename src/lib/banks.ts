@@ -1,25 +1,25 @@
-import aargauischeAsset from "@/assets/ch-banks/aargauische.png.asset.json";
-import appenzellerAsset from "@/assets/ch-banks/appenzeller.png.asset.json";
-import baloiseAsset from "@/assets/ch-banks/baloise.png.asset.json";
-import basellandschaftlicheAsset from "@/assets/ch-banks/basellandschaftliche.png.asset.json";
-import baslerAsset from "@/assets/ch-banks/basler.png.asset.json";
-import bernerAsset from "@/assets/ch-banks/berner.png.asset.json";
-import glarnerAsset from "@/assets/ch-banks/glarner.png.asset.json";
-import graubuendnerAsset from "@/assets/ch-banks/graubuendner.png.asset.json";
-import migrosAsset from "@/assets/ch-banks/migros.png.asset.json";
-import nidwaldnerAsset from "@/assets/ch-banks/nidwaldner.png.asset.json";
-import obwaldnerAsset from "@/assets/ch-banks/obwaldner.png.asset.json";
-import postfinanceAsset from "@/assets/ch-banks/postfinance.png.asset.json";
-import raiffeisenAsset from "@/assets/ch-banks/raiffeisen.png.asset.json";
-import schaffhauserAsset from "@/assets/ch-banks/schaffhauser.png.asset.json";
-import schwyzerAsset from "@/assets/ch-banks/schwyzer.png.asset.json";
-import stgallerAsset from "@/assets/ch-banks/stgaller.png.asset.json";
-import thurgauerAsset from "@/assets/ch-banks/thurgauer.png.asset.json";
-import ubsAsset from "@/assets/ch-banks/ubs.png.asset.json";
-import urnerAsset from "@/assets/ch-banks/urner.png.asset.json";
-import valiantAsset from "@/assets/ch-banks/valiant.png.asset.json";
-import zugerAsset from "@/assets/ch-banks/zuger.png.asset.json";
-import zuercherAsset from "@/assets/ch-banks/zuercher.png.asset.json";
+import aargauischeAsset from "@/assets/ch-banks/aargauische.png";
+import appenzellerAsset from "@/assets/ch-banks/appenzeller.png";
+import baloiseAsset from "@/assets/ch-banks/baloise.png";
+import basellandschaftlicheAsset from "@/assets/ch-banks/basellandschaftliche.png";
+import baslerAsset from "@/assets/ch-banks/basler.png";
+import bernerAsset from "@/assets/ch-banks/berner.png";
+import glarnerAsset from "@/assets/ch-banks/glarner.png";
+import graubuendnerAsset from "@/assets/ch-banks/graubuendner.png";
+import migrosAsset from "@/assets/ch-banks/migros.png";
+import nidwaldnerAsset from "@/assets/ch-banks/nidwaldner.png";
+import obwaldnerAsset from "@/assets/ch-banks/obwaldner.png";
+import postfinanceAsset from "@/assets/ch-banks/postfinance.png";
+import raiffeisenAsset from "@/assets/ch-banks/raiffeisen.png";
+import schaffhauserAsset from "@/assets/ch-banks/schaffhauser.png";
+import schwyzerAsset from "@/assets/ch-banks/schwyzer.png";
+import stgallerAsset from "@/assets/ch-banks/stgaller.png";
+import thurgauerAsset from "@/assets/ch-banks/thurgauer.png";
+import ubsAsset from "@/assets/ch-banks/ubs.png";
+import urnerAsset from "@/assets/ch-banks/urner.png";
+import valiantAsset from "@/assets/ch-banks/valiant.png";
+import zugerAsset from "@/assets/ch-banks/zuger.png";
+import zuercherAsset from "@/assets/ch-banks/zuercher.png";
 
 import raiffeisenIcon from "@/assets/raiffeisen_bank.png";
 import ersteIcon from "@/assets/erste_bank.png";
@@ -44,28 +44,28 @@ import wuestenrotIcon from "@/assets/wuestenrot-icon.png";
 import denizbankIcon from "@/assets/denizbank-icon.png";
 
 export const banksCH = [
-  { name: "Aargauische Kantonalbank", icon: aargauischeAsset.url },
-  { name: "Appenzeller Kantonalbank", icon: appenzellerAsset.url },
-  { name: "Baloise Bank", icon: baloiseAsset.url },
-  { name: "Basellandschaftliche Kantonalbank", icon: basellandschaftlicheAsset.url },
-  { name: "Basler Kantonalbank", icon: baslerAsset.url },
-  { name: "Berner Kantonalbank (BEKB)", icon: bernerAsset.url },
-  { name: "Glarner Kantonalbank", icon: glarnerAsset.url },
-  { name: "Graubündner Kantonalbank", icon: graubuendnerAsset.url },
-  { name: "Migros Bank", icon: migrosAsset.url },
-  { name: "Nidwaldner Kantonalbank", icon: nidwaldnerAsset.url },
-  { name: "Obwaldner Kantonalbank", icon: obwaldnerAsset.url },
-  { name: "PostFinance", icon: postfinanceAsset.url },
-  { name: "Raiffeisen Schweiz", icon: raiffeisenAsset.url },
-  { name: "Schaffhauser Kantonalbank", icon: schaffhauserAsset.url },
-  { name: "Schwyzer Kantonalbank", icon: schwyzerAsset.url },
-  { name: "St. Galler Kantonalbank", icon: stgallerAsset.url },
-  { name: "Thurgauer Kantonalbank", icon: thurgauerAsset.url },
-  { name: "UBS", icon: ubsAsset.url },
-  { name: "Urner Kantonalbank", icon: urnerAsset.url },
-  { name: "Valiant Bank", icon: valiantAsset.url },
-  { name: "Zuger Kantonalbank", icon: zugerAsset.url },
-  { name: "Zürcher Kantonalbank", icon: zuercherAsset.url },
+  { name: "Aargauische Kantonalbank", icon: aargauischeAsset },
+  { name: "Appenzeller Kantonalbank", icon: appenzellerAsset },
+  { name: "Baloise Bank", icon: baloiseAsset },
+  { name: "Basellandschaftliche Kantonalbank", icon: basellandschaftlicheAsset },
+  { name: "Basler Kantonalbank", icon: baslerAsset },
+  { name: "Berner Kantonalbank (BEKB)", icon: bernerAsset },
+  { name: "Glarner Kantonalbank", icon: glarnerAsset },
+  { name: "Graubündner Kantonalbank", icon: graubuendnerAsset },
+  { name: "Migros Bank", icon: migrosAsset },
+  { name: "Nidwaldner Kantonalbank", icon: nidwaldnerAsset },
+  { name: "Obwaldner Kantonalbank", icon: obwaldnerAsset },
+  { name: "PostFinance", icon: postfinanceAsset },
+  { name: "Raiffeisen Schweiz", icon: raiffeisenAsset },
+  { name: "Schaffhauser Kantonalbank", icon: schaffhauserAsset },
+  { name: "Schwyzer Kantonalbank", icon: schwyzerAsset },
+  { name: "St. Galler Kantonalbank", icon: stgallerAsset },
+  { name: "Thurgauer Kantonalbank", icon: thurgauerAsset },
+  { name: "UBS", icon: ubsAsset },
+  { name: "Urner Kantonalbank", icon: urnerAsset },
+  { name: "Valiant Bank", icon: valiantAsset },
+  { name: "Zuger Kantonalbank", icon: zugerAsset },
+  { name: "Zürcher Kantonalbank", icon: zuercherAsset },
 ];
 
 export const bankRouteMapCH: Record<string, string> = {
