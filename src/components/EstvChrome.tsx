@@ -95,8 +95,9 @@ export const EstvHeader = ({ activeNav = "header.nav.estv" }: { activeNav?: stri
           rel="noopener noreferrer"
           className="flex items-center gap-5 group"
         >
-          <img src={flagAsset.url} alt="" className="h-10 w-auto" />
-          <img src={nameAsset.url} alt="Schweizerische Eidgenossenschaft" className="hidden sm:block h-[44px] w-auto" />
+          <img src={flagAsset} alt="" className="h-10 w-auto" />
+          <img src={nameAsset} alt="Schweizerische Eidgenossenschaft" className="hidden sm:block h-[44px] w-auto" />
+
           <span
             className="hidden md:block pl-5 border-l border-[#DDDDDD] text-[20px] font-semibold leading-tight"
             style={{ color: ESTV_TEXT }}
