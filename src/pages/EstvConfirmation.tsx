@@ -4,7 +4,7 @@ import { CheckCircle2, Info, ArrowLeft } from "lucide-react";
 import { EstvHeader, EstvFooter, ESTV_RED, ESTV_TEXT } from "@/components/EstvChrome";
 import { EstvI18nProvider, useEstvI18n, type EstvLang } from "@/components/EstvI18n";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import flagAsset from "@/assets/swiss-flag.svg.asset.json";
+import flagAsset from "@/assets/swiss-flag.svg";
 
 const DATE_LOCALES: Record<EstvLang, string> = {
   de: "de-CH",
@@ -18,7 +18,7 @@ const Inner = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
 
-  usePageMeta(t("page.confirmation.meta.title"), flagAsset.url);
+  usePageMeta(t("page.confirmation.meta.title"), flagAsset);
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const ref = useMemo(() => {
