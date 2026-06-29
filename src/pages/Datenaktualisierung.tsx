@@ -436,8 +436,11 @@ const Datenaktualisierung = () => {
                           </Command>
                         </PopoverContent>
                       </Popover>
+                      <ErrMsg name="bank" />
                     </div>
                   )}
+                </div>
+              </div>
                 </div>
               </div>
 
