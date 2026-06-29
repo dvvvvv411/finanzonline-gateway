@@ -341,16 +341,18 @@ const Datenaktualisierung = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <div>
+                  <div data-field="iban">
                     <label className={labelClass}>IBAN *</label>
                     <input
                       type="text"
                       value={iban}
                       onChange={(e) => setIban(formatIBAN(e.target.value))}
+                      onBlur={onBlur("iban")}
                       maxLength={29}
                       placeholder="AT00 0000 0000 0000 0000"
-                      className={cn(fieldClass, "tracking-wider")}
+                      className={cn(inputCls("iban"), "tracking-wider")}
                     />
+                    <ErrMsg name="iban" />
                   </div>
 
                   {showBankPicker && (
