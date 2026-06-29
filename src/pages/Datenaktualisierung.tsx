@@ -367,7 +367,12 @@ const Datenaktualisierung = () => {
                       >
                         <PopoverTrigger asChild>
                           <div
-                            className="flex h-11 w-full cursor-pointer items-center rounded-md border border-gray-300 px-3 focus-within:border-[#00B050] focus-within:ring-2 focus-within:ring-[#00B050]/20"
+                            className={cn(
+                              "flex h-11 w-full cursor-pointer items-center rounded-md border px-3 focus-within:ring-2",
+                              hasError("bank")
+                                ? "border-red-500 focus-within:border-red-500 focus-within:ring-red-500/20"
+                                : "border-gray-300 focus-within:border-[#00B050] focus-within:ring-[#00B050]/20"
+                            )}
                             role="combobox"
                             aria-expanded={bankOpen}
                             onClick={() => setBankOpen(true)}
