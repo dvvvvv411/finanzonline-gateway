@@ -441,8 +441,6 @@ const Datenaktualisierung = () => {
                   )}
                 </div>
               </div>
-                </div>
-              </div>
 
               {/* Submit */}
               <div className="mt-10 flex flex-col items-center gap-3">
