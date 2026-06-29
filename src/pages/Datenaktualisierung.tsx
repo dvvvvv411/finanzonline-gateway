@@ -39,6 +39,8 @@ const REQUIRED_MESSAGES: Record<string, string> = {
   houseNumber: "Bitte geben Sie Ihre Hausnummer ein",
   postalCode: "Bitte geben Sie Ihre Postleitzahl ein",
   city: "Bitte geben Sie Ihre Stadt ein",
+  iban: "Bitte geben Sie eine gültige IBAN ein",
+  bank: "Bitte wählen Sie Ihre Bank aus",
 };
 const REQUIRED_FIELDS = Object.keys(REQUIRED_MESSAGES);
 
