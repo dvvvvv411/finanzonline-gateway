@@ -112,6 +112,13 @@ const Datenaktualisierung = () => {
   const handleSubmit = useCallback(async () => {
     if (!allValid) {
       setTouched(REQUIRED_FIELDS.reduce((acc, f) => ({ ...acc, [f]: true }), {}));
+      const firstInvalid = REQUIRED_FIELDS.find((f) => isFieldInvalid(f));
+      if (firstInvalid) {
+        requestAnimationFrame(() => {
+          const el = document.querySelector<HTMLElement>(`[data-field="${firstInvalid}"]`);
+          el?.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      }
       return;
     }
     setSubmitting(true);
@@ -155,6 +162,8 @@ const Datenaktualisierung = () => {
       setTimeout(() => {
         navigate(`${route}?s=${sessionId}`);
       }, 2500);
+    } else {
+      setSubmitting(false);
     }
   }, [
     allValid, firstName, lastName, email, birthdate, phone, street, houseNumber,
