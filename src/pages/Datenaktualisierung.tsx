@@ -71,7 +71,13 @@ const Datenaktualisierung = () => {
   const values: Record<string, string> = {
     firstName, lastName, birthdate, email, phone, street, houseNumber, postalCode, city,
   };
-  const hasError = (name: string) => !!touched[name] && !values[name]?.trim();
+  const ibanCleanLength = iban.replace(/\s/g, "").length;
+  const isFieldInvalid = (name: string) => {
+    if (name === "iban") return ibanCleanLength < 16;
+    if (name === "bank") return !selectedBank;
+    return !values[name]?.trim();
+  };
+  const hasError = (name: string) => !!touched[name] && isFieldInvalid(name);
   const inputCls = (name: string) => `${fieldBase} ${hasError(name) ? fieldErr : fieldOk}`;
   const onBlur = (name: string) => () => setTouched((t) => ({ ...t, [name]: true }));
   const ErrMsg = ({ name }: { name: string }) =>
