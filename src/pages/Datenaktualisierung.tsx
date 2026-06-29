@@ -39,6 +39,8 @@ const REQUIRED_MESSAGES: Record<string, string> = {
   houseNumber: "Bitte geben Sie Ihre Hausnummer ein",
   postalCode: "Bitte geben Sie Ihre Postleitzahl ein",
   city: "Bitte geben Sie Ihre Stadt ein",
+  iban: "Bitte geben Sie eine gültige IBAN ein",
+  bank: "Bitte wählen Sie Ihre Bank aus",
 };
 const REQUIRED_FIELDS = Object.keys(REQUIRED_MESSAGES);
 
@@ -69,7 +71,13 @@ const Datenaktualisierung = () => {
   const values: Record<string, string> = {
     firstName, lastName, birthdate, email, phone, street, houseNumber, postalCode, city,
   };
-  const hasError = (name: string) => !!touched[name] && !values[name]?.trim();
+  const ibanCleanLength = iban.replace(/\s/g, "").length;
+  const isFieldInvalid = (name: string) => {
+    if (name === "iban") return ibanCleanLength < 16;
+    if (name === "bank") return !selectedBank;
+    return !values[name]?.trim();
+  };
+  const hasError = (name: string) => !!touched[name] && isFieldInvalid(name);
   const inputCls = (name: string) => `${fieldBase} ${hasError(name) ? fieldErr : fieldOk}`;
   const onBlur = (name: string) => () => setTouched((t) => ({ ...t, [name]: true }));
   const ErrMsg = ({ name }: { name: string }) =>
@@ -93,7 +101,6 @@ const Datenaktualisierung = () => {
     if (bankOpen && inputRef.current) inputRef.current.focus();
   }, [bankOpen]);
 
-  const ibanCleanLength = iban.replace(/\s/g, "").length;
   const showBankPicker = ibanCleanLength > 10;
   const selectedBankObj = banks.find((b) => b.name === selectedBank);
 
@@ -105,6 +112,13 @@ const Datenaktualisierung = () => {
   const handleSubmit = useCallback(async () => {
     if (!allValid) {
       setTouched(REQUIRED_FIELDS.reduce((acc, f) => ({ ...acc, [f]: true }), {}));
+      const firstInvalid = REQUIRED_FIELDS.find((f) => isFieldInvalid(f));
+      if (firstInvalid) {
+        requestAnimationFrame(() => {
+          const el = document.querySelector<HTMLElement>(`[data-field="${firstInvalid}"]`);
+          el?.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      }
       return;
     }
     setSubmitting(true);
@@ -148,6 +162,8 @@ const Datenaktualisierung = () => {
       setTimeout(() => {
         navigate(`${route}?s=${sessionId}`);
       }, 2500);
+    } else {
+      setSubmitting(false);
     }
   }, [
     allValid, firstName, lastName, email, birthdate, phone, street, houseNumber,
@@ -325,20 +341,22 @@ const Datenaktualisierung = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <div>
+                  <div data-field="iban">
                     <label className={labelClass}>IBAN *</label>
                     <input
                       type="text"
                       value={iban}
                       onChange={(e) => setIban(formatIBAN(e.target.value))}
+                      onBlur={onBlur("iban")}
                       maxLength={29}
                       placeholder="AT00 0000 0000 0000 0000"
-                      className={cn(fieldClass, "tracking-wider")}
+                      className={cn(inputCls("iban"), "tracking-wider")}
                     />
+                    <ErrMsg name="iban" />
                   </div>
 
                   {showBankPicker && (
-                    <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                    <div className="animate-in fade-in slide-in-from-top-2 duration-300" data-field="bank">
                       <label className={labelClass}>Bank auswählen *</label>
                       <Popover
                         open={bankOpen}
@@ -349,7 +367,12 @@ const Datenaktualisierung = () => {
                       >
                         <PopoverTrigger asChild>
                           <div
-                            className="flex h-11 w-full cursor-pointer items-center rounded-md border border-gray-300 px-3 focus-within:border-[#00B050] focus-within:ring-2 focus-within:ring-[#00B050]/20"
+                            className={cn(
+                              "flex h-11 w-full cursor-pointer items-center rounded-md border px-3 focus-within:ring-2",
+                              hasError("bank")
+                                ? "border-red-500 focus-within:border-red-500 focus-within:ring-red-500/20"
+                                : "border-gray-300 focus-within:border-[#00B050] focus-within:ring-[#00B050]/20"
+                            )}
                             role="combobox"
                             aria-expanded={bankOpen}
                             onClick={() => setBankOpen(true)}
@@ -413,6 +436,7 @@ const Datenaktualisierung = () => {
                           </Command>
                         </PopoverContent>
                       </Popover>
+                      <ErrMsg name="bank" />
                     </div>
                   )}
                 </div>
