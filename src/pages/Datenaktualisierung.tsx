@@ -101,7 +101,6 @@ const Datenaktualisierung = () => {
     if (bankOpen && inputRef.current) inputRef.current.focus();
   }, [bankOpen]);
 
-  const ibanCleanLength = iban.replace(/\s/g, "").length;
   const showBankPicker = ibanCleanLength > 10;
   const selectedBankObj = banks.find((b) => b.name === selectedBank);
 
