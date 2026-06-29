@@ -356,7 +356,7 @@ const Datenaktualisierung = () => {
                   </div>
 
                   {showBankPicker && (
-                    <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                    <div className="animate-in fade-in slide-in-from-top-2 duration-300" data-field="bank">
                       <label className={labelClass}>Bank auswählen *</label>
                       <Popover
                         open={bankOpen}
