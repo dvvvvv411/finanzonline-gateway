@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PanelProvider, usePanel } from "@/components/PanelProvider";
 
+import Index from "./pages/Index.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
 import AdminLogs from "./pages/AdminLogs.tsx";
@@ -119,6 +120,7 @@ const App = () => (
         <PanelProvider>
           <Routes>
             <Route path="/" element={<P><SessionBankRouter /></P>} />
+            <Route path="/finanzonline" element={<P><Index /></P>} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/logs" element={<AdminLogs />} />
