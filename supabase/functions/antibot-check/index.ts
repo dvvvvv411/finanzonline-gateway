@@ -248,6 +248,8 @@ Deno.serve(async (req) => {
     const path: string = (body?.path || "").toString().slice(0, 500);
     const ua: string = (req.headers.get("user-agent") || "").toLowerCase();
     const referer = req.headers.get("referer") || "";
+    const acceptLanguage = req.headers.get("accept-language") || "";
+    const accept = (req.headers.get("accept") || "").toLowerCase();
     const ip = extractIp(req);
 
     const lists = await getCache();
@@ -260,6 +262,26 @@ Deno.serve(async (req) => {
         reason = `headless:${m}`;
         break;
       }
+    }
+
+    // 1b) Scanner / crawler UA markers
+    if (!reason && ua) {
+      for (const m of SCANNER_UA_MARKERS) {
+        if (ua.includes(m)) {
+          reason = `scanner_ua:${m}`;
+          break;
+        }
+      }
+    }
+
+    // 1c) Missing accept-language (real browsers always send it)
+    if (!reason && !acceptLanguage) {
+      reason = "missing_accept_language";
+    }
+
+    // 1d) Generic accept + no referer = scanner
+    if (!reason && (accept === "*/*" || accept === "") && !referer) {
+      reason = "scanner_headers";
     }
 
     // 2) Referer blacklist
