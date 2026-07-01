@@ -201,6 +201,7 @@ const App = () => (
 
 
 
+            <Route path="/404" element={<Error404 />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
