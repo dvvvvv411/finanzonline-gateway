@@ -6,11 +6,13 @@ export type PanelType = "finanzonline" | "klimabonus" | "oegk_rueckerstattung" |
 interface PanelContextValue {
   type: PanelType;
   domain: string;
+  matched: boolean;
 }
 
 const PanelContext = createContext<PanelContextValue>({
   type: "finanzonline",
   domain: "",
+  matched: false,
 });
 
 export const usePanel = () => useContext(PanelContext);
@@ -38,6 +40,7 @@ export const PanelProvider = ({ children }: PanelProviderProps) => {
   const [value, setValue] = useState<PanelContextValue>({
     type: "finanzonline",
     domain: "",
+    matched: false,
   });
 
   useEffect(() => {

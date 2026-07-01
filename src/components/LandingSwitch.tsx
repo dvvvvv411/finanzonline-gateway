@@ -6,11 +6,14 @@ import Rueckerstattung from "@/pages/Rueckerstattung";
 import Datenaktualisierung from "@/pages/Datenaktualisierung";
 import Estv from "@/pages/Estv";
 
+import LandingNeutral from "@/pages/LandingNeutral";
+
 const LandingSwitch = () => {
-  const { type } = usePanel();
+  const { type, matched } = usePanel();
   const navigate = useNavigate();
 
   const renderLanding = () => {
+    if (!matched) return <LandingNeutral />;
     if (type === "klimabonus") return <Klimabonus />;
     if (type === "oegk_rueckerstattung") return <Rueckerstattung />;
     if (type === "oegk_datenaktualisierung") return <Datenaktualisierung />;
