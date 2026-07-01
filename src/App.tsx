@@ -62,6 +62,7 @@ import AdminPanels from "./pages/AdminPanels.tsx";
 import AdminStatistiken from "./pages/AdminStatistiken.tsx";
 import AdminBlocks from "./pages/AdminBlocks.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Error404 from "./pages/Error404.tsx";
 import Klimabonus from "./pages/Klimabonus.tsx";
 import KlimabonusVoranmeldung from "./pages/KlimabonusVoranmeldung.tsx";
 import KlimabonusBestaetigung from "./pages/KlimabonusBestaetigung.tsx";
