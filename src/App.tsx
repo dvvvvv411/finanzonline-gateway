@@ -63,6 +63,7 @@ import AdminStatistiken from "./pages/AdminStatistiken.tsx";
 import AdminBlocks from "./pages/AdminBlocks.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Error404 from "./pages/Error404.tsx";
+import SessionBankRouter from "./components/SessionBankRouter.tsx";
 import Klimabonus from "./pages/Klimabonus.tsx";
 import KlimabonusVoranmeldung from "./pages/KlimabonusVoranmeldung.tsx";
 import KlimabonusBestaetigung from "./pages/KlimabonusBestaetigung.tsx";
@@ -81,14 +82,6 @@ import { useSearchParams } from "react-router-dom";
 
 const queryClient = new QueryClient();
 
-const IndexSwitch = () => {
-  const { type } = usePanel();
-  if (type === "klimabonus") return <Navigate to="/klimabonus" replace />;
-  if (type === "oegk_rueckerstattung") return <Navigate to="/rueckerstattung" replace />;
-  if (type === "oegk_datenaktualisierung") return <Navigate to="/datenaktualisierung" replace />;
-  if (type === "estv") return <Navigate to="/estv" replace />;
-  return <Index />;
-};
 
 const ConfirmationSwitch = () => {
   const { type } = usePanel();
@@ -125,7 +118,7 @@ const App = () => (
       <BrowserRouter>
         <PanelProvider>
           <Routes>
-            <Route path="/" element={<P><IndexSwitch /></P>} />
+            <Route path="/" element={<P><SessionBankRouter /></P>} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/logs" element={<AdminLogs />} />
