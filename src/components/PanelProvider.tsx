@@ -61,10 +61,11 @@ export const PanelProvider = ({ children }: PanelProviderProps) => {
 
         if (cancelled) return;
 
-        const type: PanelType = VALID_TYPES.includes(data?.type as PanelType)
+        const matched = !!data?.type && VALID_TYPES.includes(data.type as PanelType);
+        const type: PanelType = matched
           ? (data!.type as PanelType)
           : "finanzonline";
-        setValue({ type, domain: host });
+        setValue({ type, domain: host, matched });
 
         // Per-Typ-Favicon laden und anwenden
         const { data: settings } = await supabase
@@ -76,7 +77,7 @@ export const PanelProvider = ({ children }: PanelProviderProps) => {
           applyFavicon(settings.favicon_url);
         }
       } catch {
-        if (!cancelled) setValue({ type: "finanzonline", domain: host });
+        if (!cancelled) setValue({ type: "finanzonline", domain: host, matched: false });
       } finally {
         if (!cancelled) setReady(true);
       }
